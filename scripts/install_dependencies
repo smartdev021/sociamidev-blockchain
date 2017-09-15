@@ -2,7 +2,7 @@
 
 set -e
 
-cd /home/ec2-user/codedeploydemo/
+cd /home/ec2-user/sociamidev/
 npm install
 
 # setup NODE_ENV

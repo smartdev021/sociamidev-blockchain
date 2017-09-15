@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/codedeploydemo/
+    destination: /home/ec2-user/sociamidev/
 hooks:
   BeforeInstall:
     - location: scripts/setup_env
