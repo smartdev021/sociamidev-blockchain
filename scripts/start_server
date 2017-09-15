@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ ! -z "$DEPLOYMENT_GROUP_NAME" ]; then
+ export NODE_ENV=$DEPLOYMENT_GROUP_NAME
+fi
+
+cd /home/ec2-user/codedeploydemo/
+pm2 start index.js --name "codedeploydemo"
+
