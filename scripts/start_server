@@ -4,5 +4,5 @@ if [ ! -z "$DEPLOYMENT_GROUP_NAME" ]; then
 fi
 
 cd /home/ec2-user/sociamidev/
-pm2 start app.js --name "sociamidev"
+pm2 start -f --silent app.js --name "sociamidev"
 

@@ -1,5 +1,4 @@
 #!/bin/bash
 
 cd /home/ec2-user/sociamidev
-pm2 stop app.js
-
+pm2 stop --silent sociamidev
