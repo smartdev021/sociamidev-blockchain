@@ -13,5 +13,5 @@ npm install -g pm2
 pm2 update
 
 #create sociami app folder
-cd cd /home/ec2-user/
+cd /home/ec2-user/
 mkdir -p sociamidev
