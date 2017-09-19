@@ -1,0 +1,11 @@
+.ad_list_element_title {
+    color: red;
+}
+
+.ad_list_element_description {
+    color: green;
+}
+
+.ad_list_element_timestamp {
+    color: blue;
+}

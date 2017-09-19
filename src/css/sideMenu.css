@@ -1,0 +1,29 @@
+/*#slider_menu {
+    clear: both;
+    float: left;
+}*/
+
+ul.side_menu_nav_list {
+    transform: translate(-110px,0);
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.side_menu_nav_list li.side_menu_nav_list_item button {
+    min-width: 120px;
+    border: 1px solid green;
+    background-color: #84BDB1;
+    color: #F00442;
+    text-align: left;
+    padding: 2px;
+}
+
+/*.anim-appear {
+    transform: translate(-150px,0);
+}*/
+
+.anim-appear.anim-appear-active {
+    transform: translate(0px,0);
+    transition: transform 0.5s ease-in;
+}
