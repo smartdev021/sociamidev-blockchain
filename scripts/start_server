@@ -4,6 +4,13 @@ if [ ! -z "$DEPLOYMENT_GROUP_NAME" ]; then
 fi
 
 cd /home/ec2-user/sociamidev/
-pm2 start -f --silent server.js --name "sociamidev"
 
 
+pm2 describe "sociamidev" > /dev/null
+RUNNING=$?
+
+if [ "${RUNNING}" -ne 0 ]; then
+  pm2 start server.js --name "sociamidev"
+else
+  pm2 restart "sociamidev"
+fi
