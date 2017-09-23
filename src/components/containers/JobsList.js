@@ -11,7 +11,6 @@ class JobsList extends React.Component {
   render() {
     return (
          <div>
-           JobsList
            </div>
     );
   }

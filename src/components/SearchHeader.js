@@ -5,7 +5,7 @@ class SearchHeader extends React.Component {
   constructor(props) {
     super(props);
     this.countrys = {Singapore:"sg", USA:"us", China:"cn"};
-    this.state = {country: this.countrys.Singapore, items: [], jobTitle : "programmer"};
+    this.state = {country: this.countrys.Singapore, items: [], jobTitle : this.props.initialQuery};
     this.handleChange = this.handleChange.bind(this);
     this.dataUpdated = this.dataUpdated.bind(this);
   }
@@ -133,7 +133,7 @@ class SearchHeader extends React.Component {
       <div>
        <p>Search parameters:</p>
        <form action="">
-         <input type="text" placeholder="job name" id="job_title" onChange={this.handleChange}/>
+         <input type="text" placeholder="job name" id="job_title" onChange={this.handleChange} value={this.state.jobTitle}/>
          <select name="country" value={this.state.value} onChange={this.handleChange} id="country_select">
            {countryOptions}
            </select>

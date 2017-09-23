@@ -10,8 +10,7 @@ class Jobs extends React.Component {
 
   render() {
     return (
-      <div>
-       <h3>Found Jobs</h3>
+      <div className="container">
        <JobsList/>
       </div>
     );

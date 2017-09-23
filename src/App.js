@@ -30,6 +30,31 @@ import Image_Pic3 from '../assets/img/pic3.jpg'
 //Finish me!
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {searchQuery: "", currentPage: "landing_page"};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({searchQuery: event.target.value});
+  }
+
+  handleClick(event) {
+    if (this.state.currentPage != "search_results_page" && this.state.searchQuery != "") {
+      this.setState({currentPage: "search_results_page"});
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.currentPage == "search_results_page") {
+      console.log(this.state.searchQuery);
+    }
+  }
+
   render() {
 
     /*Nav Bar*/
@@ -51,18 +76,18 @@ export default class App extends Component {
   </div>
   </div>;
 
-//TODO: split into separate components
+//TODO: refactor the code, split into components
   const HeadWrap = <div id="headerwrap">
   <div className="container">
     <div className="row">
       <div className="col-lg-6">
         <h1>Make your landing page<br/>
         look really good.</h1>
-        <form className="form-inline" role="form">
+        <form className="form-inline" role="form" action="#">
           <div className="form-group">
-            <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter your email address"/>
+            <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={this.handleChange}/>
           </div>
-          <button type="submit" className="btn btn-warning btn-lg">Invite Me!</button>
+          <button type="submit" className="btn btn-warning btn-lg" onClick={this.handleClick}>Check out the future!</button>
         </form>					
       </div>
       <div className="col-lg-6">
@@ -216,19 +241,34 @@ const Container_6 = <div className="container">
 		<hr/>
 		<p className="centered">Created by BlackTie.co - Attribution License 3.0 - 2013</p>
   </div>;
+
+  let RenderData = <div>{NavBar}
+  {HeadWrap}
+  {Container_1}
+  {Container_2}
+  {Container_3}
+  {Container_4}
+  {Container_5}
+  {Container_6}</div>;
+
+if (this.state.currentPage == "search_results_page") {
+  RenderData = <div>{NavBar}
+  {HeadWrap}
   
+  <div className="container">
+  <div className="row mt left">
+    <div className="col-lg-12">
+    <SearchHeader initialQuery={this.state.searchQuery}/>
+    <Jobs/>
+    </div>
+    </div>
+  </div>
+  {Container_6}</div>;
+}
+
     return (
       <div>
-      {NavBar}
-      {HeadWrap}
-      {Container_1}
-      {Container_2}
-      {Container_3}
-      {Container_4}
-      {Container_5}
-      {Container_6}
-      <SearchHeader/>
-      <Jobs/>
+      {RenderData}
       </div>
     );
   }
