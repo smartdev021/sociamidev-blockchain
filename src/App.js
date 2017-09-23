@@ -1,6 +1,14 @@
+/*
+    author: Alexander Zolotov
+    Main application class.
+    It is bound to JobsList class to SearchHeader by callbacks.
+    It uses JobsList to display information, received from DataProvider.
+    It requests data from DataProvider, each time country or query is changed in state.
+*/
+
 import React, { Component } from 'react';
 import SearchHeader from './components/SearchHeader';
-import Jobs from './components/Jobs';
+import JobsList from './components/containers/JobsList';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -27,36 +35,92 @@ import Image_Pic1 from '../assets/img/pic1.jpg'
 import Image_Pic2 from '../assets/img/pic2.jpg'
 import Image_Pic3 from '../assets/img/pic3.jpg'
 
-//Finish me!
+let DataProvider = require("./data_providers/DataProvider");
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {searchQuery: "", currentPage: "landing_page"};
+    this.handleCountryChange = this.handleCountryChange.bind(this);
+    this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.dataUpdated = this.dataUpdated.bind(this);
 
+    //TODO: refactor this place-----------------------
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    //------------------------------------------------
+
+    this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
+
+    this.initialCountry = this.countries.Singapore;
+    this.initialQuery = "";
+
+    this.state = {country: "sg", items: [], query : "", currentPage: "landing_page"};
   }
 
+  //TODO: refactor this place-----------------------
   handleChange(event) {
-    this.setState({searchQuery: event.target.value});
+    this.setState({query: event.target.value});
   }
 
   handleClick(event) {
-    if (this.state.currentPage != "search_results_page" && this.state.searchQuery != "") {
+    if (this.state.currentPage != "search_results_page" && this.state.query != "") {
       this.setState({currentPage: "search_results_page"});
     }
   }
+  //------------------------------------------------
+
+  handleCountryChange(country) {
+    let copy = Object.assign({}, this.state, {country: country});
+    this.setState(copy);
+  }
+
+  handleQueryChange(query) {
+    //make query state change asynchronously with some delay, in order to reduce amount of data refreshes, when each symbol is typed
+    let changeQueryAsync = function(query) {
+      let copy = Object.assign({}, this.state, {query: query});
+      this.setState(copy);
+    }
+
+    if (this.changeQUeryStateTimeoutHandle) {
+      clearTimeout(this.changeQUeryStateTimeoutHandle);
+    }
+
+    this.changeQUeryStateTimeoutHandle = setTimeout(changeQueryAsync.bind(this, query), 500)
+  }
+
+  dataUpdated(items) {
+    if (typeof items !== "undefined") {
+      this.state.items = [];
+      
+      let copy = Object.assign({}, this.state, {items: []});
+      this.setState(copy);
+      
+      copy = Object.assign({}, this.state, {items: items});
+      this.setState(copy);
+    }
+  }
+
+  refreshData() {
+    const PUBLISHER_ID = "4201738803816157";
+    let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
+
+    DataProvider.requestApiData(url, this.dataUpdated, true);
+  }
+
+  componentDidMount() {
+    this.refreshData();
+  }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.currentPage == "search_results_page") {
-      console.log(this.state.searchQuery);
+    if (this.state.country != prevState.country || this.state.query != prevState.query) {
+      this.refreshData();
     }
   }
 
   render() {
 
+    //TODO: refactor this place----------------------------------------------------------
     /*Nav Bar*/
     const NavBar = <div className="navbar navbar-default navbar-fixed-top">
     <div className="container">
@@ -253,18 +317,19 @@ const Container_6 = <div className="container">
 
 if (this.state.currentPage == "search_results_page") {
   RenderData = <div>{NavBar}
-  {HeadWrap}
-  
-  <div className="container">
+  <div className="container search_results" >
   <div className="row mt left">
     <div className="col-lg-12">
-    <SearchHeader initialQuery={this.state.searchQuery}/>
-    <Jobs/>
+    <SearchHeader onHandleCountryChange={(country) => this.handleCountryChange(country)} 
+    onHandleQueryChange={(query) => this.handleQueryChange(query)} 
+    country={this.initialCountry} query={this.state.query} countries={this.countries}/>
+    {<JobsList items={this.state.items}/>}
     </div>
     </div>
   </div>
   {Container_6}</div>;
 }
+//----------------------------------------------------------
 
     return (
       <div>

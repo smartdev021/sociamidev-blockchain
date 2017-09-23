@@ -150,3 +150,7 @@ i {
 	font-weight: 300;
 	letter-spacing: 1px;
 }
+
+.search_results {
+    margin-top: 20px;
+}

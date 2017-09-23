@@ -1,20 +1,39 @@
+/*
+    author: Alexander Zolotov
+    This is a component for rendering single job item in form of table row containing table data
+*/
 import React, { Component } from 'react';
 
 class JobItem extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
-    return (
-         <div>
-           JobItem
-           </div>
-    );
-  }
+    //output table row and table data, where table data is taken from props passed inside from parent component
+    if (typeof this.props !== "undefined" && typeof this.props.item !== "undefined") {
+      var company = this.props.item.company ? this.props.item.company: "N/A";
+      
+      //pack all <td> tags and their data into array
+      var tdItems = [<td key="0">{this.props.item.jobtitle}</td>,
+                      <td key="1">{company}</td>,
+                      <td key="2">{this.props.item.country}</td>,
+                      <td key="3">{this.props.item.formattedLocation}</td>,
+                      <td key="4"><a href={this.props.item.url}>Apply</a></td>,
+                      <td key="5">{this.props.item.date}</td>,
+                      <td key="6">{this.props.item.formattedRelativeTime}</td>
+                    ];
+      return (
+        //output table row and table data inside it
+        <tr key={this.props.index}>
+          {tdItems}
+        </tr>
+      )
+    }
 
+    return null;
+  }
 }
 
 export default JobItem;
