@@ -23,7 +23,7 @@ if [ -z "$hasRc" ]; then
 fi
 
 # Staging deployment by default
-DEPLOYMENT_PATH = '/home/ec2-user/sociami_staging/'
+DEPLOYMENT_PATH='/home/ec2-user/sociami_staging/'
 
 # Identify whether it is a production or staging deployment
 if [ "$DEPLOYMENT_GROUP_NAME" == "Production" ]; then
