@@ -14,4 +14,5 @@ pm2 update
 
 #create sociami app folder
 cd /home/ec2-user/
-mkdir -p sociamidev
+rm -R sociamidev
+mkdir sociamidev
