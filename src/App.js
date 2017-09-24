@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 import SearchHeader from './components/SearchHeader';
 import JobsList from './components/containers/JobsList';
+import EventBrightItemList from './components/containers/EventBrightItemList';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -36,6 +37,7 @@ import Image_Pic2 from '../assets/img/pic2.jpg'
 import Image_Pic3 from '../assets/img/pic3.jpg'
 
 let DataProvider = require("./data_providers/DataProvider");
+let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
 
 export default class App extends Component {
   constructor(props) {
@@ -44,6 +46,8 @@ export default class App extends Component {
     this.handleCountryChange = this.handleCountryChange.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.dataUpdated = this.dataUpdated.bind(this);
+
+    this.dataUpdatedEventBright = this.dataUpdatedEventBright.bind(this);
 
     //TODO: refactor this place-----------------------
     this.handleChange = this.handleChange.bind(this);
@@ -55,7 +59,7 @@ export default class App extends Component {
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
 
-    this.state = {country: "sg", items: [], query : "", currentPage: "landing_page"};
+    this.state = {country: "sg", items: [], eventBrightItems: [], query : "", currentPage: "landing_page"};
   }
 
   //TODO: refactor this place-----------------------
@@ -101,15 +105,34 @@ export default class App extends Component {
     }
   }
 
+  dataUpdatedEventBright(items) {
+    if (typeof items !== "undefined") {
+      this.state.eventBrightItems = [];
+      
+      let copy = Object.assign({}, this.state, {eventBrightItems: []});
+      this.setState(copy);
+      
+      copy = Object.assign({}, this.state, {eventBrightItems: items});
+      this.setState(copy);
+    }
+  }
+
   refreshData() {
     const PUBLISHER_ID = "4201738803816157";
     let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
 
     DataProvider.requestApiData(url, this.dataUpdated, true);
   }
+  
+  refreshDataEventBright() {
+    let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php";
+
+    DataProviderEventBright.requestApiData(url, this.dataUpdatedEventBright);
+  }
 
   componentDidMount() {
     this.refreshData();
+    this.refreshDataEventBright();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -323,7 +346,8 @@ if (this.state.currentPage == "search_results_page") {
     <SearchHeader onHandleCountryChange={(country) => this.handleCountryChange(country)} 
     onHandleQueryChange={(query) => this.handleQueryChange(query)} 
     country={this.initialCountry} query={this.state.query} countries={this.countries}/>
-    {<JobsList items={this.state.items}/>}
+    {<JobsList items={this.state.items}/>}    
+    {<EventBrightItemList items={this.state.eventBrightItems}/>}
     </div>
     </div>
   </div>

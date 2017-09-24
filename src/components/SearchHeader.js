@@ -51,8 +51,8 @@ class SearchHeader extends React.Component {
     }
 
     return (
-      <div class>
-        <form action="#" onsubmit="return false;">
+      <div>
+        <form action="#" onSubmit={function () {return false;}}>
           <input type="text" placeholder="job name" id="job_title" onChange={this.handleChange} value={this.state.query}/>
           <select name="country" value={this.state.country} onChange={this.handleChange} id="country_select">{countriesSelectOptions}</select>
         </form>

@@ -4,26 +4,26 @@
 */
 
 import React, { Component } from 'react';
-import JobItem from './JobItem';
-import "../../css/jobslist.css";
+import EventBrightItem from './EventBrightItem';
+import "../../css/eventBrightEventsList.css";
 
-class JobsList extends React.Component {
+class EventBrightItemList extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   _getTableHeader() {
+    /*<th>Description</th>*/
     return (
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Company</th>
-          <th>Country</th>
-          <th>Location</th>
+          <th>Name</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Status</th>
           <th>Link</th>
-          <th>Date</th>
-          <th>Posted</th>
+          <th>Logo</th>
         </tr>
       </thead>);
   }
@@ -36,25 +36,25 @@ class JobsList extends React.Component {
     if (typeof this.props !== "undefined" && typeof this.props.items !== "undefined" && this.props.items.length > 0) {
       
       //array of JobItem components
-      let jobItems = [];
+      let eventBrightItems = [];
       
       //create JobItem for each this.props.items element
       for (let i = 0; i < this.props.items.length; ++i) {
-        jobItems.push(<JobItem key={i} item={this.props.items[i]}/>);
+        eventBrightItems.push(<EventBrightItem key={i} item={this.props.items[i]}/>);
       }
 
         listContent = (
         <table id="job_list_table">
           {this._getTableHeader()}
           <tbody>
-            {jobItems}
+            {eventBrightItems}
           </tbody>
         </table>);
     }
 
     return (
         <div>
-          <h2>Indeed Jobs List:</h2>
+          <h2>Event Bright List:</h2>
           {listContent}
         </div>
     );
@@ -62,4 +62,4 @@ class JobsList extends React.Component {
 
 }
 
-export default JobsList;
+export default EventBrightItemList;
