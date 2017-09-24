@@ -3,12 +3,12 @@ if [ ! -z "$DEPLOYMENT_GROUP_NAME" ]; then
  export NODE_ENV=$DEPLOYMENT_GROUP_NAME
 fi
 
-DEPLOYMENT_PATH = '/home/ec2-user/sociami_staging/'
-APP_NAME = 'sociami_stg'
+DEPLOYMENT_PATH='/home/ec2-user/sociami_staging/'
+APP_NAME='sociami_stg'
 
 if [ "$DEPLOYMENT_GROUP_NAME" == "Production" ]; then
   DEPLOYMENT_PATH = '/home/ec2-user/sociami_production/'
-  APP_NAME = 'sociami_prd'
+  APP_NAME='sociami_prd'
 fi
 
 
