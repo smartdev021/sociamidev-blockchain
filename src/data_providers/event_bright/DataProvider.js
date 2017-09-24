@@ -37,7 +37,11 @@
                   var end = events[event].end.utc;
                   var status = events[event].status;
                   var url = events[event].url;
-                  var logoUrl = events[event].logo.url;
+                  var logoUrl = "";
+
+                  if (events[event].logo) {
+                    logoUrl = events[event].logo.url;
+                  }
 
                   var eventBrightItem = {};
 

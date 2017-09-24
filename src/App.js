@@ -90,7 +90,7 @@ export default class App extends Component {
       clearTimeout(this.changeQUeryStateTimeoutHandle);
     }
 
-    this.changeQUeryStateTimeoutHandle = setTimeout(changeQueryAsync.bind(this, query), 500)
+    this.changeQUeryStateTimeoutHandle = setTimeout(changeQueryAsync.bind(this, query), 1000)
   }
 
   dataUpdated(items) {
@@ -118,16 +118,26 @@ export default class App extends Component {
   }
 
   refreshData() {
-    const PUBLISHER_ID = "4201738803816157";
-    let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
-
-    DataProvider.requestApiData(url, this.dataUpdated, true);
+    let copy = Object.assign({}, this.state, {items: []});
+    this.setState(copy);
+    
+    if (this.state.query != "") {
+      const PUBLISHER_ID = "4201738803816157";
+      let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
+  
+      DataProvider.requestApiData(url, this.dataUpdated, true);
+    }
   }
   
   refreshDataEventBright() {
-    let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php";
+    let copy = Object.assign({}, this.state, {eventBrightItems: []});
+    this.setState(copy);
 
-    DataProviderEventBright.requestApiData(url, this.dataUpdatedEventBright);
+    if (this.state.query != "") {
+      let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php?query=" + this.state.query;
+      console.log(url);
+      DataProviderEventBright.requestApiData(url, this.dataUpdatedEventBright);
+    }
   }
 
   componentDidMount() {
@@ -139,6 +149,13 @@ export default class App extends Component {
     if (this.state.country != prevState.country || this.state.query != prevState.query) {
       this.refreshData();
     }
+
+    if (this.state.query != prevState.query) {
+      let copy = Object.assign({}, this.state, {eventBrightItems: []});
+      this.setState(copy);
+
+      this.refreshDataEventBright();
+    }    
   }
 
   render() {

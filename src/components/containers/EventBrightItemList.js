@@ -30,7 +30,7 @@ class EventBrightItemList extends React.Component {
 
   render() {
 
-    let listContent = <p>No Jobs Found</p>;
+    let listContent = <p>No Events Found</p>;
     
     //Parse this.props, and create table of list of jobs. Use JobItem copmonent for single row of the table
     if (typeof this.props !== "undefined" && typeof this.props.items !== "undefined" && this.props.items.length > 0) {
