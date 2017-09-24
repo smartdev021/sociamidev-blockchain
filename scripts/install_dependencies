@@ -2,8 +2,7 @@
 
 set -e
 
-cd /home/ec2-user/sociamidev/
-npm install
+TEMP_FOLDER = '/home/ec2-user/sociamidev/'
 
 # setup NODE_ENV
 if [ ! -z "$DEPLOYMENT_GROUP_NAME" ]; then
@@ -22,3 +21,20 @@ hasRc=`grep "su -l $USER" /etc/rc.d/rc.local | cat`
 if [ -z "$hasRc" ]; then
     sudo sh -c "echo 'su -l $USER -c \"cd ~/node;sh ./run.sh\"' >> /etc/rc.d/rc.local"
 fi
+
+# Staging deployment by default
+DEPLOYMENT_PATH = '/home/ec2-user/sociami_staging/'
+
+# Identify whether it is a production or staging deployment
+if [ "$DEPLOYMENT_GROUP_NAME" == "Production" ]; then
+  DEPLOYMENT_PATH = '/home/ec2-user/sociami_production/'
+fi
+
+# copy the code to deployment folder
+cp -r "$TEMP_FOLDER"* $DEPLOYMENT_PATH
+
+# update existing dependecies and install new dependencies if there're any changes
+cd $DEPLOYMENT_PATH
+npm install
+npm update
+
