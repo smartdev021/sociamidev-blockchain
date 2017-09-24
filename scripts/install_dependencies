@@ -34,7 +34,7 @@ fi
 mkdir -p $DEPLOYMENT_PATH
 
 # copy the code to deployment folder
-cp -r "$TEMP_FOLDER"* $DEPLOYMENT_PATH
+cp -Ru "$TEMP_FOLDER"* $DEPLOYMENT_PATH
 
 # update existing dependecies and install new dependencies if there're any changes
 cd $DEPLOYMENT_PATH
