@@ -130,9 +130,9 @@ export default class App extends Component {
         <div className="row">
           <div className="col-lg-6">
             <h1>Make your landing page<br/>look really good.</h1>
-            <form className="form-inline" action="#">
+            <form className="form-inline" action="#" onSubmit={(e) => this.handleStartSearch(e)}>
               <div className="form-group">
-                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.handleChange(e)}/>
+                <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.handleChange(e)}/>
               </div>
               <button type="button" className="btn btn-warning btn-lg" onClick={(e) => this.handleStartSearch(e)}>Check out the future!</button>
             </form>					

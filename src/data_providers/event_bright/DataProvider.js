@@ -29,36 +29,39 @@ import 'whatwg-fetch'
         response.text().then(function(text) {
             let eventBrightItems = [];
 
-            let parsedJSON = JSON.parse(text);
-            
-            let events = parsedJSON.events;
-            
-            for (var event in events) {
-                  var name = events[event].name.html;
-                  var description = events[event].description.text;
-                  var start = events[event].start.utc;
-                  var end = events[event].end.utc;
-                  var status = events[event].status;
-                  var url = events[event].url;
-                  var logoUrl = "";
-
-                  if (events[event].logo) {
-                    logoUrl = events[event].logo.url;
-                  }
-
-                  var eventBrightItem = {};
-
-                  eventBrightItem["name"] = name;
-                  eventBrightItem["description"] = description;
-                  eventBrightItem["start"] = start;
-                  eventBrightItem["end"] = end;
-                  eventBrightItem["status"] = status;
-                  eventBrightItem["url"] = url;
-                  eventBrightItem["logoUrl"] = logoUrl;
-
-                  eventBrightItems.push(eventBrightItem);
+            if (text != "") {
+              let parsedJSON = JSON.parse(text);
+              
+              let events = parsedJSON.events;
+              
+              for (var event in events) {
+                    var name = events[event].name.html;
+                    var description = events[event].description.text;
+                    var start = events[event].start.utc;
+                    var end = events[event].end.utc;
+                    var status = events[event].status;
+                    var url = events[event].url;
+                    var logoUrl = "";
+  
+                    if (events[event].logo) {
+                      logoUrl = events[event].logo.url;
+                    }
+  
+                    var eventBrightItem = {};
+  
+                    eventBrightItem["name"] = name;
+                    eventBrightItem["description"] = description;
+                    eventBrightItem["start"] = start;
+                    eventBrightItem["end"] = end;
+                    eventBrightItem["status"] = status;
+                    eventBrightItem["url"] = url;
+                    eventBrightItem["logoUrl"] = logoUrl;
+  
+                    eventBrightItems.push(eventBrightItem);
+              }
+  
             }
-
+            
           listener(eventBrightItems);
         });
       }  

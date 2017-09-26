@@ -54,7 +54,7 @@ class EventBrightItemList extends React.Component {
 
     return (
         <div>
-          <h2>Event Bright List:</h2>
+          <h2>Eventbrite List:</h2>
           {listContent}
         </div>
     );

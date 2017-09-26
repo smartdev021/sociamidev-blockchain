@@ -20,10 +20,20 @@ class SearchHeader extends React.Component {
 
   render() {
     return (<div>
-    <input type="text" placeholder="Key in a job or a skill you are exploring" id="query" onChange={(e) => this.handleValueChange(e)} value={this.state.query}/>
-    <button type="button" onClick={this.props.onHandleSearchClicked}>Check out the future!</button>
+    <form className="form-inline" action="#" onSubmit={this.props.onHandleSearchClicked}>
+    <div className="form-group">
+      <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" 
+          placeholder="Key in a job or a skill you are exploring" 
+              value={this.state.query} onChange={(e) => this.handleValueChange(e)}/>
+    </div>
+    <button type="button" className="btn btn-warning btn-lg" onClick={this.props.onHandleSearchClicked}>Check out the future!</button>
+  </form>					
     </div>);
+
+    this.props.onHandleSearchClicked
   }
+
+  
 
 }
 
