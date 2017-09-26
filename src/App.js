@@ -59,18 +59,21 @@ export default class App extends Component {
 
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
-
+    console.log("constructor");
     this.state = {country: "sg", items: [], eventBrightItems: [], query : "", currentPage: "landing_page"};
   }
 
   //TODO: refactor this place-----------------------
   handleChange(event) {
-    this.setState({query: event.target.value});
+    let copy = Object.assign({}, this.state, {query: event.target.value});
+    this.setState(copy);
   }
 
   handleClick(event) {
     if (this.state.currentPage != "search_results_page" && this.state.query != "") {
-      this.setState({currentPage: "search_results_page"});
+      let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
+      this.setState(copy);
+      e.preventDefault();
     }
   }
   //------------------------------------------------
@@ -156,7 +159,7 @@ export default class App extends Component {
       this.setState(copy);
 
       this.refreshDataEventBright();
-    }    
+    }
   }
 
   render() {
@@ -170,11 +173,11 @@ export default class App extends Component {
       <div className="col-lg-6">
         <h1>Make your landing page<br/>
         look really good.</h1>
-        <form className="form-inline" role="form" action="#">
+        <form className="form-inline" action="#">
           <div className="form-group">
             <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={this.handleChange}/>
           </div>
-          <button type="submit" className="btn btn-warning btn-lg" onClick={this.handleClick}>Check out the future!</button>
+          <button type="button" className="btn btn-warning btn-lg" onClick={this.handleClick}>Check out the future!</button>
         </form>					
       </div>
       <div className="col-lg-6">
@@ -194,6 +197,7 @@ export default class App extends Component {
   <ThemeFooterContainer/></div>;
 
 if (this.state.currentPage == "search_results_page") {
+  console.log("search_results_page");
   RenderData = <div><ThemeNavBar/>
   <div className="container search_results" >
   <div className="row mt left">
@@ -207,6 +211,9 @@ if (this.state.currentPage == "search_results_page") {
     </div>
   </div>
   <ThemeFooterContainer/></div>;
+}
+else{
+  console.log("IT IS NOT search_results_page");
 }
 //----------------------------------------------------------
 
