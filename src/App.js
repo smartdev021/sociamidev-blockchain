@@ -6,6 +6,9 @@
     It requests data from DataProvider, each time country or query is changed in state.
 */
 
+require('es6-object-assign').polyfill();
+require('es6-promise').polyfill();
+
 import React, { Component } from 'react';
 import JobsList from './components/containers/JobsList';
 import EventBrightItemList from './components/containers/EventBrightItemList';

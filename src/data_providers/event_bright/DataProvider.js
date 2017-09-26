@@ -8,6 +8,9 @@
     @listener(result): callback to invoke on success
     @convertToArrayOfObjects: should we convert result to array of objects, or return plain xml
  */
+
+import 'whatwg-fetch'
+
   const requestApiData = function (url, listener) {
 
     const headers = new Headers();

@@ -7,6 +7,9 @@
     @data: input data in xml format
     returns array of objects in a form of 'object{xmlNodeName: xmlNodeValue}'
 */
+
+import 'whatwg-fetch'
+
 function xmlToArrayOfObjects(data) {
     if (typeof data === "undefined" || !data) {
       return [];
