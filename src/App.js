@@ -44,178 +44,131 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.handleCountryChange = this.handleCountryChange.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
-    this.dataUpdated = this.dataUpdated.bind(this);
-
-    this.dataUpdatedEventBright = this.dataUpdatedEventBright.bind(this);
-
-    //TODO: refactor this place-----------------------
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    //------------------------------------------------
-
     this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
 
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
     console.log("constructor");
-    this.state = {country: "sg", items: [], eventBrightItems: [], query : "", currentPage: "landing_page"};
+    this.state = {country: "sg", jobItems: [], eventBrightItems: [], query : "", currentPage: "landing_page"};
+
+    this.isSearchingJobs = false;
+    this.isSearchingEvents = false;
   }
 
-  //TODO: refactor this place-----------------------
   handleChange(event) {
-    let copy = Object.assign({}, this.state, {query: event.target.value});
+    this.handleQueryChange(event.target.value);
+  }
+
+  handleStartSearch(event) {
+    event.preventDefault();
+
+    if (!this.isSearchingJobs && !this.isSearchingEvents) {
+      this.isSearchingJobs = true;
+      this.isSearchingEvents = true;
+      this.startNewSearch();
+    }
+  }
+
+  startNewSearch() {
+    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: []});
     this.setState(copy);
+
+    this.refreshData();
+    this.refreshDataEventBright();
   }
 
-  handleClick(event) {
-    if (this.state.currentPage != "search_results_page" && this.state.query != "") {
-      let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
-      this.setState(copy);
-      e.preventDefault();
-    }
-  }
-  //------------------------------------------------
-
-  handleCountryChange(country) {
-    let copy = Object.assign({}, this.state, {country: country});
+  handleQueryChange(newQuery) {
+    console.log("QUERY: " + newQuery)
+    let copy = Object.assign({}, this.state, {query: newQuery});
     this.setState(copy);
-  }
-
-  handleQueryChange(query) {
-    //make query state change asynchronously with some delay, in order to reduce amount of data refreshes, when each symbol is typed
-    let changeQueryAsync = function(query) {
-      let copy = Object.assign({}, this.state, {query: query});
-      this.setState(copy);
-    }
-
-    if (this.changeQUeryStateTimeoutHandle) {
-      clearTimeout(this.changeQUeryStateTimeoutHandle);
-    }
-
-    this.changeQUeryStateTimeoutHandle = setTimeout(changeQueryAsync.bind(this, query), 1000)
   }
 
   dataUpdated(items) {
     if (typeof items !== "undefined") {
-      this.state.items = [];
-      
-      let copy = Object.assign({}, this.state, {items: []});
+      let copy = Object.assign({}, this.state, {jobItems: items});
       this.setState(copy);
-      
-      copy = Object.assign({}, this.state, {items: items});
-      this.setState(copy);
+
+      this.isSearchingJobs = false;
     }
   }
 
   dataUpdatedEventBright(items) {
     if (typeof items !== "undefined") {
-      this.state.eventBrightItems = [];
-      
-      let copy = Object.assign({}, this.state, {eventBrightItems: []});
+      let copy = Object.assign({}, this.state, {eventBrightItems: items});
       this.setState(copy);
-      
-      copy = Object.assign({}, this.state, {eventBrightItems: items});
-      this.setState(copy);
+
+      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
+        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
+        this.setState(copy);
+      }
+
+      this.isSearchingEvents = false;
     }
   }
 
   refreshData() {
-    let copy = Object.assign({}, this.state, {items: []});
-    this.setState(copy);
-    
     if (this.state.query != "") {
       const PUBLISHER_ID = "4201738803816157";
       let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
   
-      DataProvider.requestApiData(url, this.dataUpdated, true);
+      DataProvider.requestApiData(url, (items) => this.dataUpdated(items) , true);
     }
   }
   
   refreshDataEventBright() {
-    let copy = Object.assign({}, this.state, {eventBrightItems: []});
-    this.setState(copy);
-
     if (this.state.query != "") {
-      let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php?query=" + this.state.query;
+      let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php?query=" + this.state.query + "&location=" + this.state.country;
       console.log(url);
-      DataProviderEventBright.requestApiData(url, this.dataUpdatedEventBright);
+      DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
     }
   }
-
-  componentDidMount() {
-    this.refreshData();
-    this.refreshDataEventBright();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.country != prevState.country || this.state.query != prevState.query) {
-      this.refreshData();
-    }
-
-    if (this.state.query != prevState.query) {
-      let copy = Object.assign({}, this.state, {eventBrightItems: []});
-      this.setState(copy);
-
-      this.refreshDataEventBright();
-    }
-  }
-
+  
   render() {
-
-    //TODO: refactor this place----------------------------------------------------------
-
-//TODO: refactor the code, split into components
-  const HeadWrap = <div id="headerwrap">
-  <div className="container">
-    <div className="row">
-      <div className="col-lg-6">
-        <h1>Make your landing page<br/>
-        look really good.</h1>
-        <form className="form-inline" action="#">
-          <div className="form-group">
-            <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={this.handleChange}/>
+    const HeadWrap = <div id="headerwrap">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6">
+            <h1>Make your landing page<br/>look really good.</h1>
+            <form className="form-inline" action="#">
+              <div className="form-group">
+                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.handleChange(e)}/>
+              </div>
+              <button type="button" className="btn btn-warning btn-lg" onClick={(e) => this.handleStartSearch(e)}>Check out the future!</button>
+            </form>					
           </div>
-          <button type="button" className="btn btn-warning btn-lg" onClick={this.handleClick}>Check out the future!</button>
-        </form>					
-      </div>
-      <div className="col-lg-6">
-        <img className="img-responsive" src={Image_Ipad_Hand} alt="ipad-hand.png"/>
-      </div>
+        <div className="col-lg-6">
+      <img className="img-responsive" src={Image_Ipad_Hand} alt="ipad-hand.png"/>
     </div>
   </div>
+</div>
 </div>;
 
-  let RenderData = <div><ThemeNavBar/>
-  {HeadWrap}
-  <ThemeMainContainer/>
-  <ThemeInviteMeContainer/>
-  <ThemeCarouselContainer/>
-  <ThemeInviteMeContainer/>
-  <ThemeMeetTheTeamContainer/>
-  <ThemeFooterContainer/></div>;
-
-if (this.state.currentPage == "search_results_page") {
-  console.log("search_results_page");
-  RenderData = <div><ThemeNavBar/>
-  <div className="container search_results" >
-  <div className="row mt left">
-    <div className="col-lg-12">
-    <SearchHeader onHandleCountryChange={(country) => this.handleCountryChange(country)} 
-    onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-    country={this.initialCountry} query={this.state.query} countries={this.countries}/>
-    {<JobsList items={this.state.items}/>}    
-    {<EventBrightItemList items={this.state.eventBrightItems}/>}
-    </div>
-    </div>
-  </div>
-  <ThemeFooterContainer/></div>;
-}
-else{
-  console.log("IT IS NOT search_results_page");
-}
-//----------------------------------------------------------
+    let RenderData = (<div><ThemeNavBar/>
+                        {HeadWrap}
+                        <ThemeMainContainer/>
+                        <ThemeInviteMeContainer/>
+                        <ThemeCarouselContainer/>
+                        <ThemeInviteMeContainer/>
+                        <ThemeMeetTheTeamContainer/>
+                        <ThemeFooterContainer/></div>
+                        );
+                        
+    if (this.state.currentPage == "search_results_page") {
+      console.log("search_results_page");
+      RenderData = (<div><ThemeNavBar/>
+      <div className="container search_results" >
+        <div className="row mt left">
+          <div className="col-lg-12">
+            <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
+              onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query}/>
+              {<JobsList items={this.state.jobItems}/>}    
+              {<EventBrightItemList items={this.state.eventBrightItems}/>}
+          </div>
+        </div>
+      </div>
+      <ThemeFooterContainer/></div>);
+    }
 
     return (
       <div>
