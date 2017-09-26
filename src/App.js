@@ -50,7 +50,7 @@ export default class App extends Component {
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
     console.log("constructor");
-    this.state = {country: "sg", jobItems: [], eventBrightItems: [], query : "", currentPage: "landing_page"};
+    this.state = {country: "sg", jobItems: [], eventBrightItems: [], query : "", currentPage: "landing_page", isSearchInProgress: false};
 
     this.isSearchingJobs = false;
     this.isSearchingEvents = false;
@@ -64,14 +64,16 @@ export default class App extends Component {
     event.preventDefault();
 
     if (!this.isSearchingJobs && !this.isSearchingEvents) {
-      this.isSearchingJobs = true;
-      this.isSearchingEvents = true;
       this.startNewSearch();
     }
   }
 
   startNewSearch() {
-    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: []});
+    this.isSearchingJobs = true;
+    this.isSearchingEvents = true;
+    
+    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [],
+       isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
     this.setState(copy);
 
     this.refreshData();
@@ -86,24 +88,27 @@ export default class App extends Component {
 
   dataUpdated(items) {
     if (typeof items !== "undefined") {
-      let copy = Object.assign({}, this.state, {jobItems: items});
-      this.setState(copy);
-
       this.isSearchingJobs = false;
+
+      let copy = Object.assign({}, this.state, {jobItems: items, 
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+      this.setState(copy);
     }
   }
 
   dataUpdatedEventBright(items) {
     if (typeof items !== "undefined") {
-      let copy = Object.assign({}, this.state, {eventBrightItems: items});
+
+      this.isSearchingEvents = false;
+
+      let copy = Object.assign({}, this.state, {eventBrightItems: items, 
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
       this.setState(copy);
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
         this.setState(copy);
       }
-
-      this.isSearchingEvents = false;
     }
   }
 
@@ -125,6 +130,7 @@ export default class App extends Component {
   }
   
   render() {
+    const waitingText = (this.state.isSearchInProgress) ? <b>(Processing...)</b> : "";
     const HeadWrap = <div id="headerwrap">
       <div className="container">
         <div className="row">
@@ -134,7 +140,8 @@ export default class App extends Component {
               <div className="form-group">
                 <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.handleChange(e)}/>
               </div>
-              <button type="button" className="btn btn-warning btn-lg" onClick={(e) => this.handleStartSearch(e)}>Check out the future!</button>
+              <button type="button" className="btn btn-warning btn-lg" 
+              onClick={(e) => this.handleStartSearch(e)}>Check out the future!{waitingText}</button>
             </form>					
           </div>
         <div className="col-lg-6">
@@ -161,7 +168,7 @@ export default class App extends Component {
         <div className="row mt left">
           <div className="col-lg-12">
             <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-              onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query}/>
+              onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}/>
               {<JobsList items={this.state.jobItems}/>}    
               {<EventBrightItemList items={this.state.eventBrightItems}/>}
           </div>

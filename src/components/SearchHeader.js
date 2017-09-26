@@ -19,6 +19,7 @@ class SearchHeader extends React.Component {
   }
 
   render() {
+    const waitingText = (this.props.isSearchInProgress) ? <b>(Processing...)</b> : "";
     return (<div>
     <form className="form-inline" action="#" onSubmit={this.props.onHandleSearchClicked}>
     <div className="form-group">
@@ -26,7 +27,7 @@ class SearchHeader extends React.Component {
           placeholder="Key in a job or a skill you are exploring" 
               value={this.state.query} onChange={(e) => this.handleValueChange(e)}/>
     </div>
-    <button type="button" className="btn btn-warning btn-lg" onClick={this.props.onHandleSearchClicked}>Check out the future!</button>
+    <button type="button" className="btn btn-warning btn-lg" onClick={this.props.onHandleSearchClicked}>Check out the future!{waitingText}</button>
   </form>					
     </div>);
 
