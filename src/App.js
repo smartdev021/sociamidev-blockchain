@@ -21,10 +21,6 @@ import ThemeFooterContainer from './components/ThemeFooterContainer';
 import ThemeCarouselContainer from './components/ThemeCarouselContainer';
 import ThemeNavBar from './components/ThemeNavBar';
 
-import 'bootstrap/dist/css/bootstrap.css';
-
-import './css/main.css';
-
 //load fonts
 import WebFont from 'webfontloader';
 
@@ -33,6 +29,9 @@ WebFont.load({
     families: ['Lato:300,400,900']
   }
 });
+
+import '../assets/css/bootstrap.css';
+import './css/main.css';
 
 //load images
 import Image_Ipad_Hand from '../assets/img/ipad-hand.png'
@@ -130,7 +129,7 @@ export default class App extends Component {
   }
   
   render() {
-    const waitingText = (this.state.isSearchInProgress) ? <b>(Processing...)</b> : "";
+    const waitingText = (this.state.isSearchInProgress) ? <b>(Wait...)</b> : "";
     const HeadWrap = <div id="headerwrap">
       <div className="container">
         <div className="row">

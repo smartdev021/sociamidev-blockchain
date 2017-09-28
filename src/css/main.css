@@ -111,7 +111,8 @@ a:after {
 .form-control {
 	height: 42px;
 	font-size: 18px;
-	width: 280px;
+    width: 280px;
+    margin-right: 3px;
 }
 
 i {

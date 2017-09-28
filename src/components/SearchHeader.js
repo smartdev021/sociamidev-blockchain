@@ -19,7 +19,7 @@ class SearchHeader extends React.Component {
   }
 
   render() {
-    const waitingText = (this.props.isSearchInProgress) ? <b>(Processing...)</b> : "";
+    const waitingText = (this.props.isSearchInProgress) ? <b>(Wait...)</b> : "";
     return (<div>
     <form className="form-inline" action="#" onSubmit={this.props.onHandleSearchClicked}>
     <div className="form-group">
