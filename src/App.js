@@ -33,9 +33,6 @@ WebFont.load({
 import '../assets/css/bootstrap.css';
 import './css/main.css';
 
-//load images
-import Image_Ipad_Hand from '../assets/img/ipad-hand.png'
-
 let DataProvider = require("./data_providers/DataProvider");
 let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
 
@@ -144,7 +141,7 @@ export default class App extends Component {
             </form>					
           </div>
         <div className="col-lg-6">
-      <img className="img-responsive" src={Image_Ipad_Hand} alt="ipad-hand.png"/>
+      <img className="img-responsive" src="https://sociamibucket.s3.amazonaws.com/assets/images/ipad-hand.png" alt="ipad-hand.png"/>
     </div>
   </div>
 </div>

@@ -4,10 +4,6 @@
 
 import React, { Component } from 'react';
 
-import Image_P01 from '../../assets/img/p01.png'
-import Image_P02 from '../../assets/img/p02.png'
-import Image_P03 from '../../assets/img/p03.png'
-
 class ThemeCarouselContainer extends React.Component {
   render() {
     return (<div className="container">
@@ -28,13 +24,13 @@ class ThemeCarouselContainer extends React.Component {
 
 				  <div className="carousel-inner">
 				    <div className="item active">
-				      <img src={Image_P01} alt="p01.png"/>
+				      <img src="https://sociamibucket.s3.amazonaws.com/assets/images/p01.png" alt="p01.png"/>
 				    </div>
 				    <div className="item">
-				      <img src={Image_P02} alt="p02.png"/>
+				      <img src="https://sociamibucket.s3.amazonaws.com/assets/images/p02.png" alt="p02.png"/>
 				    </div>
 				    <div className="item">
-				      <img src={Image_P03} alt="p03.png"/>
+				      <img src="https://sociamibucket.s3.amazonaws.com/assets/images/p03.png" alt="p03.png"/>
 				    </div>
 				  </div>
 				</div>			
