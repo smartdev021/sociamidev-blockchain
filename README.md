@@ -14,7 +14,7 @@ region=AWS_REGION
 ```
 python deploy.py Staging dist/artifact.zip
 ```
-
+---
 
 
 
