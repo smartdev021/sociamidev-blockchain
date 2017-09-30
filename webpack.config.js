@@ -1,5 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
+var Path = require('path');
+var Webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -9,12 +9,12 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: Path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    new Webpack.HotModuleReplacementPlugin(),
+    new Webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }
@@ -22,7 +22,7 @@ module.exports = {
     })
     ,
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src/index.ejs'),
+      template: Path.join(__dirname, 'src/index.ejs'),
       title: 'Sociami App',
       inject: 'body',
     })
@@ -30,7 +30,7 @@ module.exports = {
   module: {
     loaders: 
     [
-      { test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader'], include: path.join(__dirname, 'src')},
+      { test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader'], include: Path.join(__dirname, 'src')},
       { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: 'url-loader'},
       //{ test: /\.(png|jpg)$/, loader: 'url-loader' },

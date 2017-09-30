@@ -8,7 +8,11 @@
     "compile": "webpack -p",
     "dev": "webpack -d --watch",
     "clean": "rimraf dist",
-    "build": "npm run clean && npm run compile"
+    "build": "npm run clean && npm run compile",
+    "deploy:dev": "python deploy.py Staging",
+    "deploy:prod": "python deploy.py Production",
+    "publish:dev": "npm run build && npm run deploy:dev",
+    "publish:prod": "npm run build && npm run deploy:prod"
   },
   "repository": {
     "type": "git",
