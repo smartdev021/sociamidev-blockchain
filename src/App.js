@@ -30,7 +30,6 @@ WebFont.load({
   }
 });
 
-import '../assets/css/bootstrap.css';
 import './css/main.css';
 
 let DataProvider = require("./data_providers/DataProvider");

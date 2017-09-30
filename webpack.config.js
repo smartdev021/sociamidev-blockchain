@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -10,7 +11,6 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -19,6 +19,12 @@ module.exports = {
         warnings: false
       }
       , sourceMap: true
+    })
+    ,
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/index.ejs'),
+      title: 'Sociami App',
+      inject: 'body',
     })
   ],
   module: {
