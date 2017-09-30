@@ -12,8 +12,10 @@ region=AWS_REGION
 ```
 ### Run command to deploy to AWS
 ```
-python deploy.py Staging dist/artifact.zip
+python deploy.py Staging
 ```
+Whatever inside folder `dist` will be deployed to the indicated environment.
+
 ---
 
 

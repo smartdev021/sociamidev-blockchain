@@ -16,6 +16,8 @@ v1.0.0
 from __future__ import print_function
 import os
 import sys
+import shutil
+import distutils.dir_util
 from time import strftime, sleep
 import boto3
 from botocore.exceptions import ClientError
@@ -26,6 +28,9 @@ S3_BUCKET               = 'sociamibucket'
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
 BUCKET_KEY = APPLICATION_NAME + '/' + VERSION_LABEL + \
     '-bitbucket_builds.zip'
+
+build_path = 'dist'
+zip_path = 'tmp/artifact'
 
 def upload_to_s3(artifact):
     """
@@ -102,30 +107,37 @@ def deploy_new_revision(env):
             return False      
     return True
 
+def copy_deployment_script(build_path):
+    shutil.copyfile('appspec2.yml', build_path + '/appspec.yml')
+    distutils.dir_util.copy_tree('scripts2', build_path +'/scripts')
+
+def compress_artifact(build_path):
+    return shutil.make_archive(zip_path, 'zip', build_path)
+
 def validate_command():
     """
     get the deployment environment name input from command line.
     """
-    if (len(sys.argv) <3):
-        print("Please specify environemnt path to the artifact to deploy.\n" +\
+    if (len(sys.argv) <2):
+        print("Please specify environemnt to deploy.\n" +\
         "Example:\n" +\
-        "\tpython deploy.py Staging dist/artifact.zip")
+        "\tpython deploy.py Staging")
         sys.exit(1)
     if not sys.argv[1] in ['Staging', 'Production']:
         print("The environment is not correct, please specify the correct environment to deploy. \n[Staging, Production]")
         sys.exit(1)
-    if not os.path.isfile(sys.argv[2]):
-        print("Artifact location is not correct, please check again.")
-        sys.exit(1)
 
 def main():
     validate_command()
+    environemnt = sys.argv[1]
+    copy_deployment_script(build_path);
+    zipped_artifact = compress_artifact(build_path)
     print("Start uploading...");
-    if not upload_to_s3(sys.argv[2]):
+    if not upload_to_s3(zipped_artifact):
         sys.exit(1)
     print("Upload sucessfully.\n");
     print("Start deploying...");
-    if not deploy_new_revision(sys.argv[1]):
+    if not deploy_new_revision(environemnt):
         sys.exit(1)
 
 if __name__ == "__main__":
