@@ -25,6 +25,8 @@ from botocore.exceptions import ClientError
 APPLICATION_NAME        = 'Sociami'
 DEPLOYMENT_CONFIG       = 'CodeDeployDefault.OneAtATime'
 S3_BUCKET               = 'sociamibucket'
+AWS_ACCESS_KEY_ID = 'AKIAJ5N6YPHUFUK3WX7Q'
+AWS_SECRET_ACCESS_KEY = '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'
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
 BUCKET_KEY = APPLICATION_NAME + '/' + VERSION_LABEL + \
     '-bitbucket_builds.zip'
@@ -37,7 +39,11 @@ def upload_to_s3(artifact):
     Uploads an artifact to Amazon S3
     """
     try:
-        client = boto3.client('s3')
+        client = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+        )
     except ClientError as err:
         print("Failed to create boto3 client.\n" + str(err))
         return False
@@ -60,7 +66,11 @@ def deploy_new_revision(env):
     Deploy a new application revision to AWS CodeDeploy Deployment Group
     """
     try:
-        client = boto3.client('codedeploy')
+        client = boto3.client(
+            'codedeploy',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+        )
     except ClientError as err:
         print("Failed to create boto3 client.\n" + str(err))
         return False
