@@ -24,7 +24,8 @@ from botocore.exceptions import ClientError
 
 APPLICATION_NAME        = 'Sociami'
 DEPLOYMENT_CONFIG       = 'CodeDeployDefault.OneAtATime'
-S3_BUCKET               = 'sociamibucket'
+PRD_S3_BUCKET           = 'sociami.com'
+DEV_S3_BUCKET           = 'sociamidev.com'
 AWS_ACCESS_KEY_ID = 'AKIAJ5N6YPHUFUK3WX7Q'
 AWS_SECRET_ACCESS_KEY = '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'
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
@@ -117,6 +118,36 @@ def deploy_new_revision(env):
             return False      
     return True
 
+def upload_folder_to_s3_recursively (folder, bucket):
+    try:
+        client = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+        )
+    except ClientError as err:
+        print("Failed to create boto3 client.\n" + str(err))
+        return False
+
+    for root, dirs, files in os.walk(folder):
+        for filename in files:
+            # construct the full local path
+            local_path = os.path.join(root, filename)
+
+            # construct the full Dropbox path
+            relative_path =os.path.relpath(local_path, folder)
+            # s3_path = os.path.join("/", relative_path)
+
+            print('Searching "%s" in "%s"' % (relative_path, bucket))
+            try:
+                print("Uploading %s..." % relative_path)
+                client.upload_file(local_path, bucket, relative_path)
+            except ClientError as err:
+                print ("Cannot upload %s..." % relative_path)
+                print("Error: " + str(err))
+                return False
+    return True
+
 def copy_deployment_script(build_path):
     shutil.copyfile('appspec2.yml', build_path + '/appspec.yml')
     distutils.dir_util.copy_tree('scripts2', build_path +'/scripts')
@@ -140,15 +171,27 @@ def validate_command():
 def main():
     validate_command()
     environemnt = sys.argv[1]
-    copy_deployment_script(build_path);
-    zipped_artifact = compress_artifact(build_path)
-    print("Start uploading...");
-    if not upload_to_s3(zipped_artifact):
-        sys.exit(1)
-    print("Upload sucessfully.\n");
-    print("Start deploying...");
-    if not deploy_new_revision(environemnt):
-        sys.exit(1)
+    # copy_deployment_script(build_path);
+    # zipped_artifact = compress_artifact(build_path)
+    # print("Start uploading...");
+    # if not upload_to_s3(zipped_artifact):
+    #     sys.exit(1)
+    # print("Upload sucessfully.\n");
+    # print("Start deploying...");
+    # if not deploy_new_revision(environemnt):
+    #     sys.exit(1)
+
+    print("Start uploading to S3...")
+    result = False
+    if environemnt == 'Production':
+        result = upload_folder_to_s3_recursively(build_path, PRD_S3_BUCKET)
+    else:
+        result = upload_folder_to_s3_recursively(build_path, DEV_S3_BUCKET)
+
+    if result:
+        print("Uploaded successfully.")
+    else:
+        print("Upload has not succeeded.")
 
 if __name__ == "__main__":
     main()
