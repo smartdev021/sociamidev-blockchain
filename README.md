@@ -1,6 +1,7 @@
 ## How to deploy from dev local machine
 ### Pre-requisite:
 - Python is installed. If not, download and install from the following link https://www.python.org/downloads/
+- python-pip Python package manager is installed. If not, run the following command: ```apt-get install python-pip```
 - boto3 is installed. If not, run the following command: ```pip install boto3==1.3.0```
 ### Configure AWS Credential
 Open/create file ~/.aws/config , add the following:
