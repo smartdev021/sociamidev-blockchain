@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class EventBrightItem extends React.Component {
+class EventBriteItem extends React.Component {
 
   constructor(props) {
     super(props);
@@ -32,4 +32,4 @@ class EventBrightItem extends React.Component {
   }
 }
 
-export default EventBrightItem;
+export default EventBriteItem;

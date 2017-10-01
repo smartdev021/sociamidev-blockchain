@@ -11,7 +11,7 @@ require('es6-promise').polyfill();
 
 import React, { Component } from 'react';
 import JobsList from './components/containers/JobsList';
-import EventBrightItemList from './components/containers/EventBrightItemList';
+import EventBriteItemList from './components/containers/EventBriteItemList';
 import UdemyItemList from './components/containers/UdemyItemList';
 
 import SearchHeader from './components/SearchHeader';
@@ -248,7 +248,7 @@ export default class App extends Component {
     ? <JobsList items={this.state.jobItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
 
     const eventsList = (this.state.selectedCategory == "category_events") 
-    ? <EventBrightItemList items={this.state.eventBrightItems} onAddToFavorites={(e) => this.handleAddEventToFavorites(e)}/> : null;
+    ? <EventBriteItemList items={this.state.eventBrightItems} onAddToFavorites={(e) => this.handleAddEventToFavorites(e)}/> : null;
 
     const udemyCoursesList = (this.state.selectedCategory == "category_courses") 
     ? <UdemyItemList items={this.state.udemyItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;

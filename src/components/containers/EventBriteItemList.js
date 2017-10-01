@@ -4,10 +4,10 @@
 */
 
 import React, { Component } from 'react';
-import EventBrightItem from './EventBrightItem';
+import EventBriteItem from './EventBriteItem';
 import {Table} from 'react-bootstrap';
 
-class EventBrightItemList extends React.Component {
+class EventBriteItemList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -41,7 +41,7 @@ class EventBrightItemList extends React.Component {
       
       //create JobItem for each this.props.items element
       for (let i = 0; i < this.props.items.length; ++i) {
-        eventBrightItems.push(<EventBrightItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
+        eventBrightItems.push(<EventBriteItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
       }
 
         listContent = (
@@ -55,7 +55,7 @@ class EventBrightItemList extends React.Component {
 
     return (
         <div>
-          <h2>Eventbrite List:</h2>
+          <h2>EventBrite List:</h2>
           {listContent}
         </div>
     );
@@ -63,4 +63,4 @@ class EventBrightItemList extends React.Component {
 
 }
 
-export default EventBrightItemList;
+export default EventBriteItemList;

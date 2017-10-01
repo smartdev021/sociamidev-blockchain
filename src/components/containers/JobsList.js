@@ -55,7 +55,7 @@ class JobsList extends React.Component {
 
     return (
         <div>
-          <h2>Indeed Jobs List:</h2>
+          <h2>Indeed Jobs:</h2>
           {listContent}
         </div>
     );
