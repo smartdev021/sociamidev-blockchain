@@ -35,36 +35,50 @@ class SearchHeader extends React.Component {
   }
 
   renderResultsNavigation() {
-    const selectedCategory = this.props.selectedCategory;
-    console.log("selectedCategory: " + selectedCategory);
+    console.log("selectedCategory: " + this.props.selectedCategory);
     return (<span>
       <div className="col-lg-6">
          <div className="trend_widget">
          Trend Rating
+         <div>
+         <span className="glyphicon glyphicon-star"></span>
+         <span className="glyphicon glyphicon-star"></span>
+         <span className="glyphicon glyphicon-star-empty"></span>
+         <span className="glyphicon glyphicon-star-empty"></span>
+           </div>
          </div>
       </div>
        <div className="col-lg-2">
-         <div className="navigation_button" id="category_jobs" onClick={this.props.onSelectCategory}>
+         <div className={"navigation_button " + (this.props.selectedCategory == "category_jobs" ? 'active_category' : '')}
+          id="category_jobs" onClick={(e) => this.props.onSelectCategory(e)}>
          Jobs
+         <div className="category_items_count">
          <hr></hr>
          <h1>{this.props.numJobs}</h1>
          <hr></hr>
          </div>
-      </div>
-      <div className="col-lg-2">
-      <div className="navigation_button" id="category_events" onClick={this.props.onSelectCategory}>
-      Events
-      <hr></hr>
-      <h1>{this.props.numEvents}</h1>
-      <hr></hr>
          </div>
       </div>
       <div className="col-lg-2">
-      <div className="navigation_button" id="category_courses" onClick={this.props.onSelectCategory}>
+      <div className={"navigation_button " + (this.props.selectedCategory == "category_events" ? 'active_category' : '')}
+      id="category_events" onClick={(e) => this.props.onSelectCategory(e)}>
+      Events
+      <div className="category_items_count">
+      <hr></hr>
+      <h1>{this.props.numEvents}</h1>
+      <hr></hr>
+      </div>
+         </div>
+      </div>
+      <div className="col-lg-2">
+      <div className={"navigation_button " + (this.props.selectedCategory == "category_courses" ? 'active_category' : '')}
+       id="category_courses" onClick={(e) => this.props.onSelectCategory(e)}>
          Courses
+         <div className="category_items_count">
          <hr></hr>
          <h1>{this.props.numCourses}</h1>
          <hr></hr>
+         </div>
          </div>
       </div>
       </span>);

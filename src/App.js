@@ -47,8 +47,6 @@ export default class App extends Component {
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
 
-    console.log("constructor");
-
     this.state = {
       country: "sg", 
       jobItems: [], 
@@ -78,9 +76,9 @@ export default class App extends Component {
   }
 
   handleCategorySelect(event) {
-    let copy = Object.assign({}, this.state, {selectedCategory: event.target.id});
+    event.preventDefault();
+    let copy = Object.assign({}, this.state, {selectedCategory: event.currentTarget.id});
     this.setState(copy);
-    console.log("category is: " + event.target.id);
   }
 
   startNewSearch() {
@@ -98,7 +96,6 @@ export default class App extends Component {
   }
 
   handleQueryChange(newQuery) {
-    console.log("QUERY: " + newQuery)
     let copy = Object.assign({}, this.state, {query: newQuery});
     this.setState(copy);
   }
@@ -192,6 +189,10 @@ export default class App extends Component {
 </div>
 </div>;
 
+    const jobsList = (this.state.selectedCategory == "category_jobs")? <JobsList items={this.state.jobItems}/> : null;
+    const eventsList = (this.state.selectedCategory == "category_events")? <EventBrightItemList items={this.state.eventBrightItems}/> : null;
+    const udemyCoursesList = (this.state.selectedCategory == "category_courses")? <UdemyItemList items={this.state.udemyItems}/> : null;
+
     let RenderData = (<div><ThemeNavBar/>
                         {HeadWrap}
                         <ThemeMainContainer/>
@@ -203,7 +204,6 @@ export default class App extends Component {
                         );
                         
     if (this.state.currentPage == "search_results_page") {
-      console.log("search_results_page");
       RenderData = (<div><ThemeNavBar/>
       <div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
@@ -212,9 +212,9 @@ export default class App extends Component {
       onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}/>
         <div className="row mt left">
           <div className="col-lg-12">
-              {<JobsList items={this.state.jobItems}/>}    
-              {<EventBrightItemList items={this.state.eventBrightItems}/>}
-              {<UdemyItemList items={this.state.udemyItems}/>}
+              {jobsList}    
+              {eventsList}
+              {udemyCoursesList}
           </div>
         </div>
       </div>

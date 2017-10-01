@@ -6,10 +6,34 @@
     color: black;
 }
 
+/*.navigation_button:hover {
+    background-color: #3498db;
+}*/
+
+.active_category {
+    background-color: #3498db;
+}
+
+.navigation_button, .navigation_button h1 {
+    cursor: pointer;
+}
+
+.navigation_button hr {
+    border: none;
+    color: black; 
+    background-color: black;
+    height: 2px;
+}
+
+.category_items_count {
+    text-align: center;
+    min-width: 100%;
+}
+
 .trend_widget {
     min-width: 100%;
     min-height: 200px;
-    background-color: transparent;
-    border: 2px solid #8B8585;
+    background-color: #E4E4E4;
+    /*border: 1px solid #8B8585;*/
     color: black;
 }

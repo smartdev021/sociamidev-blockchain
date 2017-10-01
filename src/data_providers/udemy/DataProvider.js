@@ -67,7 +67,6 @@ import 'whatwg-fetch'
               }
   
             }
-          console.dir(udemyItems);
           listener(udemyItems);
         });
       }  
