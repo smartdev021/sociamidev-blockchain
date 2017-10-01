@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import UdemyItem from './UdemyItem';
 import {Table} from 'react-bootstrap';
+import "../../css/jobslist.css";
 
 class UdemyItemList extends React.Component {
 
@@ -40,7 +41,7 @@ class UdemyItemList extends React.Component {
       }
 
         listContent = (
-        <Table id="job_list_table" responsive striped bordered condensed hover>
+        <Table responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
             {udemyItems}

@@ -44,7 +44,7 @@ class EventBrightItemList extends React.Component {
       }
 
         listContent = (
-        <Table id="job_list_table" responsive striped bordered condensed hover>
+        <Table responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
             {eventBrightItems}
