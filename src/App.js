@@ -12,6 +12,7 @@ require('es6-promise').polyfill();
 import React, { Component } from 'react';
 import JobsList from './components/containers/JobsList';
 import EventBrightItemList from './components/containers/EventBrightItemList';
+import UdemyItemList from './components/containers/UdemyItemList';
 
 import SearchHeader from './components/SearchHeader';
 import ThemeMainContainer from './components/ThemeMainContainer';
@@ -34,6 +35,7 @@ import './css/main.css';
 
 let DataProvider = require("./data_providers/DataProvider");
 let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
+let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
 
 export default class App extends Component {
   constructor(props) {
@@ -44,11 +46,22 @@ export default class App extends Component {
 
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
+
     console.log("constructor");
-    this.state = {country: "sg", jobItems: [], eventBrightItems: [], query : "", currentPage: "landing_page", isSearchInProgress: false};
+
+    this.state = {
+      country: "sg", 
+      jobItems: [], 
+      eventBrightItems: [], 
+      udemyItems: [], 
+      query : "", 
+      currentPage: "landing_page", 
+      isSearchInProgress: false
+    };
 
     this.isSearchingJobs = false;
     this.isSearchingEvents = false;
+    this.isSearchingForUdemyItems = false;
   }
 
   handleChange(event) {
@@ -58,7 +71,7 @@ export default class App extends Component {
   handleStartSearch(event) {
     event.preventDefault();
 
-    if (!this.isSearchingJobs && !this.isSearchingEvents) {
+    if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems) {
       this.startNewSearch();
     }
   }
@@ -66,13 +79,15 @@ export default class App extends Component {
   startNewSearch() {
     this.isSearchingJobs = true;
     this.isSearchingEvents = true;
+    this.isSearchingForUdemyItems = true;
     
-    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [],
-       isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: [],
+       isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
     this.setState(copy);
 
     this.refreshData();
     this.refreshDataEventBright();
+    this.refreshDataUdemy();
   }
 
   handleQueryChange(newQuery) {
@@ -86,7 +101,7 @@ export default class App extends Component {
       this.isSearchingJobs = false;
 
       let copy = Object.assign({}, this.state, {jobItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
       this.setState(copy);
     }
   }
@@ -97,7 +112,23 @@ export default class App extends Component {
       this.isSearchingEvents = false;
 
       let copy = Object.assign({}, this.state, {eventBrightItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
+      this.setState(copy);
+
+      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
+        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
+        this.setState(copy);
+      }
+    }
+  }
+
+  dataUpdatedUdemy(items) {
+    if (typeof items !== "undefined") {
+
+      this.isSearchingForUdemyItems = false;
+
+      let copy = Object.assign({}, this.state, {udemyItems: items, 
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
       this.setState(copy);
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
@@ -121,6 +152,14 @@ export default class App extends Component {
       let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php?query=" + this.state.query + "&location=" + this.state.country;
       console.log(url);
       DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
+    }
+  }
+
+  refreshDataUdemy() {
+    if (this.state.query != "") {
+      let url = "https://devfortest.000webhostapp.com/udemy_api/?query=" + this.state.query;
+      console.log(url);
+      DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
     }
   }
   
@@ -166,6 +205,7 @@ export default class App extends Component {
               onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}/>
               {<JobsList items={this.state.jobItems}/>}    
               {<EventBrightItemList items={this.state.eventBrightItems}/>}
+              {<UdemyItemList items={this.state.udemyItems}/>}
           </div>
         </div>
       </div>
