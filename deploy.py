@@ -20,6 +20,7 @@ import shutil
 import distutils.dir_util
 from time import strftime, sleep
 import boto3
+import mimetypes
 from botocore.exceptions import ClientError
 
 APPLICATION_NAME        = 'Sociami'
@@ -141,12 +142,24 @@ def upload_folder_to_s3_recursively (folder, bucket):
             print('Searching "%s" in "%s"' % (relative_path, bucket))
             try:
                 print("Uploading %s..." % relative_path)
-                client.upload_file(local_path, bucket, relative_path)
+                client.put_object(
+                    Body=open(local_path, 'rb'),
+                    Bucket=bucket,
+                    Key=relative_path,
+                    ContentType=get_mimetype(local_path)
+                )
             except ClientError as err:
                 print ("Cannot upload %s..." % relative_path)
                 print("Error: " + str(err))
                 return False
     return True
+
+def get_mimetype(filename):
+    file_ext = filename[filename.rfind('.'):]
+    if file_ext in mimetypes.types_map:
+        return mimetypes.types_map[file_ext]
+    else:
+        return ""
 
 def copy_deployment_script(build_path):
     shutil.copyfile('appspec2.yml', build_path + '/appspec.yml')
