@@ -55,7 +55,8 @@ export default class App extends Component {
       eventBrightItems: [], 
       udemyItems: [], 
       query : "", 
-      currentPage: "landing_page", 
+      currentPage: "landing_page",
+      selectedCategory: "category_jobs",
       isSearchInProgress: false
     };
 
@@ -74,6 +75,12 @@ export default class App extends Component {
     if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems) {
       this.startNewSearch();
     }
+  }
+
+  handleCategorySelect(event) {
+    let copy = Object.assign({}, this.state, {selectedCategory: event.target.id});
+    this.setState(copy);
+    console.log("category is: " + event.target.id);
   }
 
   startNewSearch() {
@@ -199,10 +206,12 @@ export default class App extends Component {
       console.log("search_results_page");
       RenderData = (<div><ThemeNavBar/>
       <div className="container search_results" >
+      <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
+      onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}
+      numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length} numCourses={this.state.udemyItems.length}
+      onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}/>
         <div className="row mt left">
           <div className="col-lg-12">
-            <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-              onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}/>
               {<JobsList items={this.state.jobItems}/>}    
               {<EventBrightItemList items={this.state.eventBrightItems}/>}
               {<UdemyItemList items={this.state.udemyItems}/>}

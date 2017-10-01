@@ -1,0 +1,15 @@
+.navigation_button {
+    min-width: 100%;
+    min-height: 200px;
+    background-color: transparent;
+    border: 2px solid black;
+    color: black;
+}
+
+.trend_widget {
+    min-width: 100%;
+    min-height: 200px;
+    background-color: transparent;
+    border: 2px solid #8B8585;
+    color: black;
+}
