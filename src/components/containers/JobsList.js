@@ -24,6 +24,7 @@ class JobsList extends React.Component {
           <th>Link</th>
           <th>Date</th>
           <th>Posted</th>
+          <th></th>
         </tr>
       </thead>);
   }
@@ -40,7 +41,7 @@ class JobsList extends React.Component {
       
       //create JobItem for each this.props.items element
       for (let i = 0; i < this.props.items.length; ++i) {
-        jobItems.push(<JobItem key={i} item={this.props.items[i]}/>);
+        jobItems.push(<JobItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
       }
 
         listContent = (

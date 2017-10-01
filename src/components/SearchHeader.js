@@ -9,7 +9,7 @@ class SearchHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {query : this.props.query};
+    this.state = {query : this.props.query}
   }
 
   handleValueChange(e) {

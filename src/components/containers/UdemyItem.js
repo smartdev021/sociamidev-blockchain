@@ -21,7 +21,9 @@ class UdemyItem extends React.Component {
                       <td key="1"><img src={this.props.item.image}/></td>,
                       <td key="2">{instructors}</td>,
                       <td key="3">{this.props.item.price}</td>,
-                      <td key="4"><a href={this.props.item.url} target="_blank">Got to course</a></td>
+                      <td key="4"><a href={this.props.item.url} target="_blank">Got to course</a></td>,
+                      <td key="5"><button type="button" className="btn btn-warning btn-lg" 
+                      onClick={(e) => this.props.onAddToFavorites(e)}>Bookmark</button></td>
                     ];
       return (
         //output table row and table data inside it

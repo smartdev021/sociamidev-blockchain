@@ -24,6 +24,7 @@ class UdemyItemList extends React.Component {
           <th>Instructors</th>
           <th>Price</th>
           <th>Link</th>
+          <th></th>
         </tr>
       </thead>);
   }
@@ -37,7 +38,7 @@ class UdemyItemList extends React.Component {
       let udemyItems = [];
 
       for (let i = 0; i < this.props.items.length; ++i) {
-        udemyItems.push(<UdemyItem key={i} item={this.props.items[i]}/>);
+        udemyItems.push(<UdemyItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
       }
 
         listContent = (

@@ -22,6 +22,10 @@ import ThemeFooterContainer from './components/ThemeFooterContainer';
 import ThemeCarouselContainer from './components/ThemeCarouselContainer';
 import ThemeNavBar from './components/ThemeNavBar';
 
+import "./css/loginFormPopup.css"
+
+import Modal from 'react-modal';
+
 //load fonts
 import WebFont from 'webfontloader';
 
@@ -55,8 +59,10 @@ export default class App extends Component {
       query : "", 
       currentPage: "landing_page",
       selectedCategory: "category_jobs",
-      isSearchInProgress: false
-    };
+      isSearchInProgress: false, modalIsOpen: false};
+      
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
 
     this.isSearchingJobs = false;
     this.isSearchingEvents = false;
@@ -78,6 +84,21 @@ export default class App extends Component {
   handleCategorySelect(event) {
     event.preventDefault();
     let copy = Object.assign({}, this.state, {selectedCategory: event.currentTarget.id});
+    this.setState(copy);
+  }
+
+  handleAddJobToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    this.setState(copy);
+  }
+
+  handleAddCourseToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    this.setState(copy);
+  }
+
+  handleAddEventToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
     this.setState(copy);
   }
 
@@ -166,6 +187,40 @@ export default class App extends Component {
       DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
     }
   }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
+  renderLoginPopup() {
+    return (<div>
+      <Modal
+      className={{
+    base: 'modal_base'
+  }}
+        isOpen={this.state.modalIsOpen}
+        onRequestClose={this.closeModal}
+        contentLabel="Login Form"
+      >
+
+      <div className="wrapper" onClick={this.closeModal}>
+    <form className="form-signin">       
+      <h2 className="form-signin-heading">Coming Soon</h2>
+      <input type="text" className="form-control" name="username" placeholder="Email Address" required="" autoFocus="" />
+      <input type="password" className="form-control" name="password" placeholder="Password" required=""/>      
+      <label className="checkbox">
+        <input type="checkbox" className="remember-me" id="rememberMe" name="rememberMe"/> Remember me
+      </label>
+      <button className="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
+    </form>
+  </div>
+      </Modal>
+    </div>);
+  }
   
   render() {
     const waitingText = (this.state.isSearchInProgress) ? <b>(Wait...)</b> : "";
@@ -189,11 +244,18 @@ export default class App extends Component {
 </div>
 </div>;
 
-    const jobsList = (this.state.selectedCategory == "category_jobs")? <JobsList items={this.state.jobItems}/> : null;
-    const eventsList = (this.state.selectedCategory == "category_events")? <EventBrightItemList items={this.state.eventBrightItems}/> : null;
-    const udemyCoursesList = (this.state.selectedCategory == "category_courses")? <UdemyItemList items={this.state.udemyItems}/> : null;
+    const jobsList = (this.state.selectedCategory == "category_jobs") 
+    ? <JobsList items={this.state.jobItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
 
-    let RenderData = (<div><ThemeNavBar/>
+    const eventsList = (this.state.selectedCategory == "category_events") 
+    ? <EventBrightItemList items={this.state.eventBrightItems} onAddToFavorites={(e) => this.handleAddEventToFavorites(e)}/> : null;
+
+    const udemyCoursesList = (this.state.selectedCategory == "category_courses") 
+    ? <UdemyItemList items={this.state.udemyItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
+
+    let RenderData = (<div>
+                        {this.renderLoginPopup()}
+                        <ThemeNavBar/>
                         {HeadWrap}
                         <ThemeMainContainer/>
                         <ThemeInviteMeContainer/>
@@ -204,7 +266,9 @@ export default class App extends Component {
                         );
                         
     if (this.state.currentPage == "search_results_page") {
-      RenderData = (<div><ThemeNavBar/>
+      RenderData = (<div>
+        {this.renderLoginPopup()}
+        <ThemeNavBar/>
       <div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}
