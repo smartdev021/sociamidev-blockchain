@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import EventBrightItem from './EventBrightItem';
-import "../../css/eventBrightEventsList.css";
+import {Table} from 'react-bootstrap';
 
 class EventBrightItemList extends React.Component {
 
@@ -44,12 +44,12 @@ class EventBrightItemList extends React.Component {
       }
 
         listContent = (
-        <table id="job_list_table">
+        <Table id="job_list_table" responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
             {eventBrightItems}
           </tbody>
-        </table>);
+        </Table>);
     }
 
     return (

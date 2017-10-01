@@ -4,8 +4,9 @@
 */
 
 import React, { Component } from 'react';
+import {Table} from 'react-bootstrap';
 import JobItem from './JobItem';
-import "../../css/jobslist.css";
+// import "../../css/jobslist.css";
 
 class JobsList extends React.Component {
 
@@ -44,12 +45,12 @@ class JobsList extends React.Component {
       }
 
         listContent = (
-        <table id="job_list_table">
+        <Table id="job_list_table" responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
             {jobItems}
           </tbody>
-        </table>);
+        </Table>);
     }
 
     return (
