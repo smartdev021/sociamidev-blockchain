@@ -11,7 +11,8 @@ require('es6-promise').polyfill();
 
 import React, { Component } from 'react';
 import JobsList from './components/containers/JobsList';
-import EventBrightItemList from './components/containers/EventBrightItemList';
+import EventBriteItemList from './components/containers/EventBriteItemList';
+import UdemyItemList from './components/containers/UdemyItemList';
 
 import SearchHeader from './components/SearchHeader';
 import ThemeMainContainer from './components/ThemeMainContainer';
@@ -20,6 +21,10 @@ import ThemeMeetTheTeamContainer from './components/ThemeMeetTheTeamContainer';
 import ThemeFooterContainer from './components/ThemeFooterContainer';
 import ThemeCarouselContainer from './components/ThemeCarouselContainer';
 import ThemeNavBar from './components/ThemeNavBar';
+
+import "./css/loginFormPopup.css"
+
+import Modal from 'react-modal';
 
 //load fonts
 import WebFont from 'webfontloader';
@@ -34,6 +39,7 @@ import './css/main.css';
 
 let DataProvider = require("./data_providers/DataProvider");
 let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
+let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
 
 export default class App extends Component {
   constructor(props) {
@@ -44,11 +50,23 @@ export default class App extends Component {
 
     this.initialCountry = this.countries.Singapore;
     this.initialQuery = "";
-    console.log("constructor");
-    this.state = {country: "sg", jobItems: [], eventBrightItems: [], query : "", currentPage: "landing_page", isSearchInProgress: false};
+
+    this.state = {
+      country: "sg", 
+      jobItems: [], 
+      eventBrightItems: [], 
+      udemyItems: [], 
+      query : "", 
+      currentPage: "landing_page",
+      selectedCategory: "category_jobs",
+      isSearchInProgress: false, modalIsOpen: false};
+      
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
 
     this.isSearchingJobs = false;
     this.isSearchingEvents = false;
+    this.isSearchingForUdemyItems = false;
   }
 
   handleChange(event) {
@@ -58,25 +76,47 @@ export default class App extends Component {
   handleStartSearch(event) {
     event.preventDefault();
 
-    if (!this.isSearchingJobs && !this.isSearchingEvents) {
+    if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems) {
       this.startNewSearch();
     }
+  }
+
+  handleCategorySelect(event) {
+    event.preventDefault();
+    let copy = Object.assign({}, this.state, {selectedCategory: event.currentTarget.id});
+    this.setState(copy);
+  }
+
+  handleAddJobToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    this.setState(copy);
+  }
+
+  handleAddCourseToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    this.setState(copy);
+  }
+
+  handleAddEventToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    this.setState(copy);
   }
 
   startNewSearch() {
     this.isSearchingJobs = true;
     this.isSearchingEvents = true;
+    this.isSearchingForUdemyItems = true;
     
-    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [],
-       isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: [],
+       isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
     this.setState(copy);
 
     this.refreshData();
     this.refreshDataEventBright();
+    this.refreshDataUdemy();
   }
 
   handleQueryChange(newQuery) {
-    console.log("QUERY: " + newQuery)
     let copy = Object.assign({}, this.state, {query: newQuery});
     this.setState(copy);
   }
@@ -86,7 +126,7 @@ export default class App extends Component {
       this.isSearchingJobs = false;
 
       let copy = Object.assign({}, this.state, {jobItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
       this.setState(copy);
     }
   }
@@ -97,7 +137,23 @@ export default class App extends Component {
       this.isSearchingEvents = false;
 
       let copy = Object.assign({}, this.state, {eventBrightItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents});
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
+      this.setState(copy);
+
+      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
+        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
+        this.setState(copy);
+      }
+    }
+  }
+
+  dataUpdatedUdemy(items) {
+    if (typeof items !== "undefined") {
+
+      this.isSearchingForUdemyItems = false;
+
+      let copy = Object.assign({}, this.state, {udemyItems: items, 
+        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
       this.setState(copy);
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
@@ -123,6 +179,48 @@ export default class App extends Component {
       DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
     }
   }
+
+  refreshDataUdemy() {
+    if (this.state.query != "") {
+      let url = "https://devfortest.000webhostapp.com/udemy_api/?query=" + this.state.query;
+      console.log(url);
+      DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
+    }
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
+  renderLoginPopup() {
+    return (<div>
+      <Modal
+      className={{
+    base: 'modal_base'
+  }}
+        isOpen={this.state.modalIsOpen}
+        onRequestClose={this.closeModal}
+        contentLabel="Login Form"
+      >
+
+      <div className="wrapper" onClick={this.closeModal}>
+    <form className="form-signin">       
+      <h2 className="form-signin-heading">Coming Soon</h2>
+      <input type="text" className="form-control" name="username" placeholder="Email Address" required="" autoFocus="" />
+      <input type="password" className="form-control" name="password" placeholder="Password" required=""/>      
+      <label className="checkbox">
+        <input type="checkbox" className="remember-me" id="rememberMe" name="rememberMe"/> Remember me
+      </label>
+      <button className="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
+    </form>
+  </div>
+      </Modal>
+    </div>);
+  }
   
   render() {
     const waitingText = (this.state.isSearchInProgress) ? <b>(Wait...)</b> : "";
@@ -146,7 +244,18 @@ export default class App extends Component {
 </div>
 </div>;
 
-    let RenderData = (<div><ThemeNavBar/>
+    const jobsList = (this.state.selectedCategory == "category_jobs") 
+    ? <JobsList items={this.state.jobItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
+
+    const eventsList = (this.state.selectedCategory == "category_events") 
+    ? <EventBriteItemList items={this.state.eventBrightItems} onAddToFavorites={(e) => this.handleAddEventToFavorites(e)}/> : null;
+
+    const udemyCoursesList = (this.state.selectedCategory == "category_courses") 
+    ? <UdemyItemList items={this.state.udemyItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
+
+    let RenderData = (<div>
+                        {this.renderLoginPopup()}
+                        <ThemeNavBar/>
                         {HeadWrap}
                         <ThemeMainContainer/>
                         <ThemeInviteMeContainer/>
@@ -157,15 +266,19 @@ export default class App extends Component {
                         );
                         
     if (this.state.currentPage == "search_results_page") {
-      console.log("search_results_page");
-      RenderData = (<div><ThemeNavBar/>
+      RenderData = (<div>
+        {this.renderLoginPopup()}
+        <ThemeNavBar/>
       <div className="container search_results" >
+      <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
+      onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}
+      numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length} numCourses={this.state.udemyItems.length}
+      onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}/>
         <div className="row mt left">
           <div className="col-lg-12">
-            <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-              onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}/>
-              {<JobsList items={this.state.jobItems}/>}    
-              {<EventBrightItemList items={this.state.eventBrightItems}/>}
+              {jobsList}    
+              {eventsList}
+              {udemyCoursesList}
           </div>
         </div>
       </div>

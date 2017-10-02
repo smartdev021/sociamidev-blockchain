@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class EventBrightItem extends React.Component {
+class EventBriteItem extends React.Component {
 
   constructor(props) {
     super(props);
@@ -16,7 +16,9 @@ class EventBrightItem extends React.Component {
                       <td key="2">{this.props.item.end}</td>,
                       <td key="3">{this.props.item.status}</td>,
                       <td key="4"><a href={this.props.item.url} target="_blank">Details</a></td>,
-                      <td key="5"><img src={this.props.item.logoUrl}/></td>
+                      <td key="5"><img src={this.props.item.logoUrl}/></td>,
+                      <td key="6"><button type="button" className="btn btn-warning btn-lg" 
+                      onClick={(e) => this.props.onAddToFavorites(e)}>Bookmark</button></td>
                     ];
       return (
         //output table row and table data inside it
@@ -30,4 +32,4 @@ class EventBrightItem extends React.Component {
   }
 }
 
-export default EventBrightItem;
+export default EventBriteItem;

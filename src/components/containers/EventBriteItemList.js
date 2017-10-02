@@ -4,10 +4,10 @@
 */
 
 import React, { Component } from 'react';
-import EventBrightItem from './EventBrightItem';
-import "../../css/eventBrightEventsList.css";
+import EventBriteItem from './EventBriteItem';
+import {Table} from 'react-bootstrap';
 
-class EventBrightItemList extends React.Component {
+class EventBriteItemList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,6 +24,7 @@ class EventBrightItemList extends React.Component {
           <th>Status</th>
           <th>Link</th>
           <th>Logo</th>
+          <th></th>
         </tr>
       </thead>);
   }
@@ -40,21 +41,21 @@ class EventBrightItemList extends React.Component {
       
       //create JobItem for each this.props.items element
       for (let i = 0; i < this.props.items.length; ++i) {
-        eventBrightItems.push(<EventBrightItem key={i} item={this.props.items[i]}/>);
+        eventBrightItems.push(<EventBriteItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
       }
 
         listContent = (
-        <table id="job_list_table">
+        <Table responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
             {eventBrightItems}
           </tbody>
-        </table>);
+        </Table>);
     }
 
     return (
         <div>
-          <h2>Eventbrite List:</h2>
+          <h2>EventBrite List:</h2>
           {listContent}
         </div>
     );
@@ -62,4 +63,4 @@ class EventBrightItemList extends React.Component {
 
 }
 
-export default EventBrightItemList;
+export default EventBriteItemList;

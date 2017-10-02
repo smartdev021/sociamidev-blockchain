@@ -1,29 +1,29 @@
 /*
     author: Alexander Zolotov
-    This is a container(parent) component for JobItem components
+    This is a container(parent) component for UdemyItem components
 */
 
 import React, { Component } from 'react';
+import UdemyItem from './UdemyItem';
 import {Table} from 'react-bootstrap';
-import JobItem from './JobItem';
+import "../../css/jobslist.css";
 
-class JobsList extends React.Component {
+class UdemyItemList extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   _getTableHeader() {
+    /*<th>Description</th>*/
     return (
       <thead>
         <tr>
           <th>Title</th>
-          <th>Company</th>
-          <th>Country</th>
-          <th>Location</th>
+          <th>Image</th>
+          <th>Instructors</th>
+          <th>Price</th>
           <th>Link</th>
-          <th>Date</th>
-          <th>Posted</th>
           <th></th>
         </tr>
       </thead>);
@@ -31,31 +31,28 @@ class JobsList extends React.Component {
 
   render() {
 
-    let listContent = <p>No Jobs Found</p>;
+    let listContent = <p>No Courses Found</p>;
     
-    //Parse this.props, and create table of list of jobs. Use JobItem copmonent for single row of the table
     if (typeof this.props !== "undefined" && typeof this.props.items !== "undefined" && this.props.items.length > 0) {
       
-      //array of JobItem components
-      let jobItems = [];
-      
-      //create JobItem for each this.props.items element
+      let udemyItems = [];
+
       for (let i = 0; i < this.props.items.length; ++i) {
-        jobItems.push(<JobItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
+        udemyItems.push(<UdemyItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
       }
 
         listContent = (
         <Table responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
-            {jobItems}
+            {udemyItems}
           </tbody>
         </Table>);
     }
 
     return (
         <div>
-          <h2>Indeed Jobs:</h2>
+          <h2>Udemy Courses:</h2>
           {listContent}
         </div>
     );
@@ -63,4 +60,4 @@ class JobsList extends React.Component {
 
 }
 
-export default JobsList;
+export default UdemyItemList;
