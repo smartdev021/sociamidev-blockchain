@@ -37,7 +37,7 @@ WebFont.load({
 
 import './css/main.css';
 
-let DataProvider = require("./data_providers/DataProvider");
+let DataProviderIndeed = require("./data_providers/indeed/DataProvider");
 let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
 let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
 
@@ -168,7 +168,7 @@ export default class App extends Component {
       const PUBLISHER_ID = "4201738803816157";
       let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
   
-      DataProvider.requestApiData(url, (items) => this.dataUpdated(items) , true);
+      DataProviderIndeed.requestApiData(url, (items) => this.dataUpdated(items) , true);
     }
   }
   
