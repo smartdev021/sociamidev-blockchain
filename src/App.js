@@ -130,7 +130,7 @@ export default class App extends Component {
       <div className="container">
         <div className="row">
           <div className="col-lg-6">
-            <h1>Make your landing page<br/>look really good.</h1>
+            <h1>Prepare for the future with what you can learn now</h1>
             <form className="form-inline" action="#" onSubmit={(e) => this.handleStartSearch(e)}>
               <div className="form-group">
                 <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.handleChange(e)}/>
@@ -140,7 +140,7 @@ export default class App extends Component {
             </form>					
           </div>
         <div className="col-lg-6">
-      <img className="img-responsive" src="https://sociamibucket.s3.amazonaws.com/assets/images/ipad-hand.png" alt="ipad-hand.png"/>
+      <img className="img-responsive" src="https://sociamibucket.s3.amazonaws.com/assets/images/Howwelive_resized.jpg" alt="Howwelive_resized.jpg"/>
     </div>
   </div>
 </div>

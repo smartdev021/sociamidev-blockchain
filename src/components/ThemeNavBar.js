@@ -15,7 +15,7 @@ class ThemeNavBar extends React.Component {
           <span className="icon-bar"></span>
           <span className="icon-bar"></span>
         </button>
-        <a className="navbar-brand" href="#"><b>FLATTY</b></a>
+        <a className="navbar-brand" href="#"><b>Sociami</b></a>
       </div>
       <div className="navbar-collapse collapse">
         <ul className="nav navbar-nav navbar-right">
