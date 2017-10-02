@@ -16,7 +16,7 @@ class ThemeCarouselContainer extends React.Component {
     </div>
     <div className="row mt centered">
       <div className="col-lg-6 col-lg-offset-3">
-        <Carousel>
+        <Carousel controls={false}>
           <Carousel.Item>
             <img width={900} height={500} alt="900x500" src="https://sociamibucket.s3.amazonaws.com/assets/images/p01.png"/>
             <Carousel.Caption>
