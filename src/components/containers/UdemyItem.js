@@ -15,9 +15,9 @@ class UdemyItem extends React.Component {
       const instructorListItems = this.props.item.instructors.map((instructor, index) =>
       <li key={index.toString()}><a href={instructor.url} target="_blank">{instructor.title}</a></li>);
       
-      var instructors = <ul>{instructorListItems}</ul>;
+      let instructors = <ul>{instructorListItems}</ul>;
 
-      var tdItems = [<td key="0">{this.props.item.title}</td>,
+      let tdItems = [<td key="0">{this.props.item.title}</td>,
                       <td key="1"><img src={this.props.item.image}/></td>,
                       <td key="2">{instructors}</td>,
                       <td key="3">{this.props.item.price}</td>,

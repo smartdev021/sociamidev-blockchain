@@ -35,18 +35,18 @@ import 'whatwg-fetch'
 
               let courses = parsedJSON.results;
               
-              for (var course in courses) {
-                    var title = courses[course].title;
-                    var image = courses[course].image_240x135;
-                    var price = courses[course].price;
-                    var url = urlPrefix + courses[course].url;
+              for (let course in courses) {
+                    let title = courses[course].title;
+                    let image = courses[course].image_240x135;
+                    let price = courses[course].price;
+                    let url = urlPrefix + courses[course].url;
 
-                    var instructors = [];
+                    let instructors = [];
 
                     if (courses[course].visible_instructors.length > 0) {
 
                       for (let i = 0; i < courses[course].visible_instructors.length; ++i) {
-                        var instructor = {};
+                        let instructor = {};
 
                         instructor["title"] = courses[course].visible_instructors[i].title;
                         instructor["url"] = urlPrefix + courses[course].visible_instructors[i].url;
@@ -55,7 +55,7 @@ import 'whatwg-fetch'
                       }
                     }
 
-                    var udemyItem = {};
+                    let udemyItem = {};
   
                     udemyItem["title"] = title;
                     udemyItem["image"] = image;

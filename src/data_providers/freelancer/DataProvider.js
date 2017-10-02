@@ -36,7 +36,7 @@ import 'whatwg-fetch'
 
               let projects = parsedJSON.result.projects;
               
-              for (var project in projects) {
+              for (let project in projects) {
                 
                 let title = projects[project].title;
                 let description = projects[project].preview_description;
@@ -52,7 +52,7 @@ import 'whatwg-fetch'
                 freelanceProjectItem["status"] = status;
                 freelanceProjectItem["url"] = url;
                 freelanceProjectItem["submitdate"] = submitdate;
-                
+
                 freelancerProjectItems.push(freelanceProjectItem);
               }
   

@@ -34,20 +34,20 @@ import 'whatwg-fetch'
               
               let events = parsedJSON.events;
               
-              for (var event in events) {
-                    var name = events[event].name.html;
-                    var description = events[event].description.text;
-                    var start = events[event].start.utc;
-                    var end = events[event].end.utc;
-                    var status = events[event].status;
-                    var url = events[event].url;
-                    var logoUrl = "";
+              for (let event in events) {
+                    let name = events[event].name.html;
+                    let description = events[event].description.text;
+                    let start = events[event].start.utc;
+                    let end = events[event].end.utc;
+                    let status = events[event].status;
+                    let url = events[event].url;
+                    let logoUrl = "";
   
                     if (events[event].logo) {
                       logoUrl = events[event].logo.url;
                     }
   
-                    var eventBrightItem = {};
+                    let eventBrightItem = {};
   
                     eventBrightItem["name"] = name;
                     eventBrightItem["description"] = description;

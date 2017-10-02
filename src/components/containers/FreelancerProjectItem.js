@@ -22,7 +22,7 @@ class FreelancerProjectItemList extends React.Component {
 
     if (typeof this.props !== "undefined") {
 
-      var tdItems = [<td key="0">{this.props.item.title}</td>,
+      let tdItems = [<td key="0">{this.props.item.title}</td>,
                      <td key="1">{this.props.item.description}</td>,
                      <td key="2" className={tdStatusClass}>{this.props.item.status}</td>,
                      <td key="3"><a href={this.props.item.url} target="_blank">Details</a></td>,

@@ -13,10 +13,10 @@ class JobItem extends React.Component {
   render() {
     //output table row and table data, where table data is taken from props passed inside from parent component
     if (typeof this.props !== "undefined" && typeof this.props.item !== "undefined") {
-      var company = this.props.item.company ? this.props.item.company: "N/A";
+      let company = this.props.item.company ? this.props.item.company: "N/A";
       
       //pack all <td> tags and their data into array
-      var tdItems = [<td key="0">{this.props.item.jobtitle}</td>,
+      let tdItems = [<td key="0">{this.props.item.jobtitle}</td>,
                       <td key="1">{company}</td>,
                       <td key="2">{this.props.item.country}</td>,
                       <td key="3">{this.props.item.formattedLocation}</td>,

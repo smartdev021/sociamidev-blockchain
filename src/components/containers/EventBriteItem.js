@@ -11,7 +11,7 @@ class EventBriteItem extends React.Component {
     if (typeof this.props !== "undefined") {
       //pack all <td> tags and their data into array
       // <td key="1">{this.props.item.description}</td>,
-      var tdItems = [<td key="0">{this.props.item.name}</td>,
+      let tdItems = [<td key="0">{this.props.item.name}</td>,
                       <td key="1">{this.props.item.start}</td>,
                       <td key="2">{this.props.item.end}</td>,
                       <td key="3">{this.props.item.status}</td>,

@@ -62,11 +62,8 @@ export default class App extends Component {
       query : "", 
       currentPage: "landing_page",
       selectedCategory: "category_jobs",
-      isSearchInProgress: false, modalIsOpen: false};
-      
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.refreshBusyState = this.refreshBusyState.bind(this);
+      isSearchInProgress: false, modalIsOpen: false
+    };
 
     this.isSearchingJobs = false;
     this.isSearchingEvents = false;
@@ -128,9 +125,9 @@ export default class App extends Component {
     let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
     this.setState(copy);
 
-    this.refreshBusyState();
+    () => this.refreshBusyState();
 
-    this.refreshData();
+    this.refreshDataIndeed();
     this.refreshDataEventBright();
     this.refreshDataUdemy();
     this.refreshDataFreelancer();
@@ -141,14 +138,14 @@ export default class App extends Component {
     this.setState(copy);
   }
 
-  dataUpdated(items) {
+  dataUpdatedIndeed(items) {
     if (typeof items !== "undefined") {
       this.isSearchingJobs = false;
 
       let copy = Object.assign({}, this.state, {jobItems: items});
       this.setState(copy);
 
-      this.refreshBusyState();
+      () => this.refreshBusyState();
     }
   }
 
@@ -160,7 +157,7 @@ export default class App extends Component {
       let copy = Object.assign({}, this.state, {eventBrightItems: items});
       this.setState(copy);
 
-      this.refreshBusyState();
+      () => this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -177,7 +174,7 @@ export default class App extends Component {
       let copy = Object.assign({}, this.state, {udemyItems: items});
       this.setState(copy);
 
-      this.refreshBusyState();
+      () => this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -193,8 +190,8 @@ export default class App extends Component {
 
       let copy = Object.assign({}, this.state, {freelancerProjectItems: items});
       this.setState(copy);
-
-      this.refreshBusyState();
+      
+      () => this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -203,12 +200,12 @@ export default class App extends Component {
     }
   }
 
-  refreshData() {
+  refreshDataIndeed() {
     if (this.state.query != "") {
       const PUBLISHER_ID = "4201738803816157";
       let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
   
-      DataProviderIndeed.requestApiData(url, (items) => this.dataUpdated(items) , true);
+      DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
     }
   }
   
@@ -236,10 +233,6 @@ export default class App extends Component {
     }
   }
 
-  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
   closeModal() {
     this.setState({modalIsOpen: false});
   }
@@ -251,11 +244,11 @@ export default class App extends Component {
     base: 'modal_base'
   }}
         isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal}
+        onRequestClose={() => this.closeModal()}
         contentLabel="Login Form"
       >
 
-      <div className="wrapper" onClick={this.closeModal}>
+      <div className="wrapper" onClick={() => this.closeModal()}>
     <form className="form-signin">       
       <h2 className="form-signin-heading">Coming Soon</h2>
       <input type="text" className="form-control" name="username" placeholder="Email Address" required="" autoFocus="" />
