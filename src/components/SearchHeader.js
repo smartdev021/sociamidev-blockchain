@@ -37,7 +37,7 @@ class SearchHeader extends React.Component {
   renderResultsNavigation() {
     console.log("selectedCategory: " + this.props.selectedCategory);
     return (<span>
-      <div className="col-lg-6">
+      <div className="col-lg-4">
          <div className="trend_widget">
          Trend Rating
          <div>
@@ -74,6 +74,17 @@ class SearchHeader extends React.Component {
       <div className={"navigation_button " + (this.props.selectedCategory == "category_courses" ? 'active_category' : '')}
        id="category_courses" onClick={(e) => this.props.onSelectCategory(e)}>
          Courses
+         <div className="category_items_count">
+         <hr></hr>
+         <h1>{this.props.numCourses}</h1>
+         <hr></hr>
+         </div>
+         </div>
+      </div>
+      <div className="col-lg-2">
+      <div className={"navigation_button " + (this.props.selectedCategory == "category_freelancer_projects" ? 'active_category' : '')}
+       id="category_freelancer_projects" onClick={(e) => this.props.onSelectCategory(e)}>
+         Freelancer Projects
          <div className="category_items_count">
          <hr></hr>
          <h1>{this.props.numCourses}</h1>

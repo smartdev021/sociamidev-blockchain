@@ -1,0 +1,11 @@
+.status_td_default {
+    color: initial;
+}
+
+.status_td_active {
+    color: green;
+}
+
+.status_td_closed {
+    color: red;
+}

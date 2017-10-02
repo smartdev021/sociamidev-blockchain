@@ -13,6 +13,7 @@ import React, { Component } from 'react';
 import JobsList from './components/containers/JobsList';
 import EventBriteItemList from './components/containers/EventBriteItemList';
 import UdemyItemList from './components/containers/UdemyItemList';
+import FreelancerProjectItemList from './components/containers/FreelancerProjectItemList';
 
 import SearchHeader from './components/SearchHeader';
 import ThemeMainContainer from './components/ThemeMainContainer';
@@ -40,6 +41,7 @@ import './css/main.css';
 let DataProviderIndeed = require("./data_providers/indeed/DataProvider");
 let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
 let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
+let DataProviderFreelancer = require("./data_providers/freelancer/DataProvider");
 
 export default class App extends Component {
   constructor(props) {
@@ -56,6 +58,7 @@ export default class App extends Component {
       jobItems: [], 
       eventBrightItems: [], 
       udemyItems: [], 
+      freelancerProjectItems: [], 
       query : "", 
       currentPage: "landing_page",
       selectedCategory: "category_jobs",
@@ -63,10 +66,12 @@ export default class App extends Component {
       
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.refreshBusyState = this.refreshBusyState.bind(this);
 
     this.isSearchingJobs = false;
     this.isSearchingEvents = false;
     this.isSearchingForUdemyItems = false;
+    this.isSearchingForFreelancerItems = false;
   }
 
   handleChange(event) {
@@ -76,7 +81,7 @@ export default class App extends Component {
   handleStartSearch(event) {
     event.preventDefault();
 
-    if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems) {
+    if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems && !this.isSearchingForFreelancerItems) {
       this.startNewSearch();
     }
   }
@@ -102,18 +107,33 @@ export default class App extends Component {
     this.setState(copy);
   }
 
+  handleAddFreelancerProjectToFavorites(event) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    this.setState(copy);
+  }
+
+  refreshBusyState() {
+    let copy = Object.assign({}, this.state, { isSearchInProgress: (
+      this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems || this.isSearchingForFreelancerItems)});
+      
+      this.setState(copy);
+  }
+
   startNewSearch() {
     this.isSearchingJobs = true;
     this.isSearchingEvents = true;
     this.isSearchingForUdemyItems = true;
+    this.isSearchingForFreelancerItems = true;
     
-    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: [],
-       isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
+    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
     this.setState(copy);
+
+    this.refreshBusyState();
 
     this.refreshData();
     this.refreshDataEventBright();
     this.refreshDataUdemy();
+    this.refreshDataFreelancer();
   }
 
   handleQueryChange(newQuery) {
@@ -125,9 +145,10 @@ export default class App extends Component {
     if (typeof items !== "undefined") {
       this.isSearchingJobs = false;
 
-      let copy = Object.assign({}, this.state, {jobItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
+      let copy = Object.assign({}, this.state, {jobItems: items});
       this.setState(copy);
+
+      this.refreshBusyState();
     }
   }
 
@@ -136,9 +157,10 @@ export default class App extends Component {
 
       this.isSearchingEvents = false;
 
-      let copy = Object.assign({}, this.state, {eventBrightItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
+      let copy = Object.assign({}, this.state, {eventBrightItems: items});
       this.setState(copy);
+
+      this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -152,9 +174,27 @@ export default class App extends Component {
 
       this.isSearchingForUdemyItems = false;
 
-      let copy = Object.assign({}, this.state, {udemyItems: items, 
-        isSearchInProgress: this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems});
+      let copy = Object.assign({}, this.state, {udemyItems: items});
       this.setState(copy);
+
+      this.refreshBusyState();
+
+      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
+        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
+        this.setState(copy);
+      }
+    }
+  }
+
+  dataUpdatedFreelancer(items) {
+    if (typeof items !== "undefined") {
+
+      this.isSearchingForFreelancerItems = false;
+
+      let copy = Object.assign({}, this.state, {freelancerProjectItems: items});
+      this.setState(copy);
+
+      this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -185,6 +225,14 @@ export default class App extends Component {
       let url = "https://devfortest.000webhostapp.com/udemy_api/?query=" + this.state.query;
       console.log(url);
       DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
+    }
+  }
+
+  refreshDataFreelancer() {
+    if (this.state.query != "") {
+      let url = "https://devfortest.000webhostapp.com/freelancer_api/?query=" + this.state.query;
+      console.log(url);
+      DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
     }
   }
 
@@ -253,6 +301,10 @@ export default class App extends Component {
     const udemyCoursesList = (this.state.selectedCategory == "category_courses") 
     ? <UdemyItemList items={this.state.udemyItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
 
+    const freelancerProjectList = (this.state.selectedCategory == "category_freelancer_projects") 
+    ? <FreelancerProjectItemList items={this.state.freelancerProjectItems} 
+        onAddToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)}/> : null;
+
     let RenderData = (<div>
                         {this.renderLoginPopup()}
                         <ThemeNavBar/>
@@ -279,6 +331,7 @@ export default class App extends Component {
               {jobsList}    
               {eventsList}
               {udemyCoursesList}
+              {freelancerProjectList}
           </div>
         </div>
       </div>
