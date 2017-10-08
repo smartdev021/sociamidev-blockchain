@@ -64,6 +64,7 @@
     "react-dom": "^15.6.1",
     "react-facebook-login": "^3.6.2",
     "react-fb-auth": "^1.1.0",
+    "react-linkedin-login": "^1.0.3",
     "react-modal": "^2.3.2",
     "url-loader": "^0.5.9",
     "webfontloader": "^1.6.28"

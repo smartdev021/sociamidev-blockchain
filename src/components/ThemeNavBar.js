@@ -4,14 +4,13 @@
 
 import React, { Component } from 'react';
 import FaceBookLoginComponent from './FaceBookLogin';
+import LinkedInLoginComponent from './LinkedInLogin';
 
 class ThemeNavBar extends React.Component {
   render() {
     const FaceBookLoginButton =
-    <span className><FaceBookLoginComponent
-    width="250"
-    dataScope="public_profile,email"
-  />
+    <span className>
+      <FaceBookLoginComponent/>
     </span>;
 
     return (
@@ -29,6 +28,7 @@ class ThemeNavBar extends React.Component {
         <ul className="nav navbar-nav navbar-right">
           <li><a href="#">Already a member?</a></li>
           <li>{FaceBookLoginButton}</li>
+          <li><LinkedInLoginComponent/></li>
         </ul>
     </div>
   </div>
