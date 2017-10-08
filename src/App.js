@@ -284,7 +284,6 @@ export default class App extends Component {
   </div>
 </div>
 </div>;
-
     const jobsList = (this.state.selectedCategory == "category_jobs") 
     ? <JobsList items={this.state.jobItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
 
