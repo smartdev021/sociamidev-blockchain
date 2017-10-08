@@ -1,10 +1,11 @@
 import React from 'react';
-import styles from '../css/main.css'
 
 class FaceBookLoginComponent extends React.Component {
     constructor(props) {
       super(props);
       this.state = {};
+
+      this.testAPI = this.testAPI.bind(this);
     }
     
     initalizeFacebookAPI() {
@@ -36,11 +37,11 @@ class FaceBookLoginComponent extends React.Component {
     }
     
     testAPI() {
+        var that = this;
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function(response) {
         console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-          'Thanks for logging in, ' + response.name + '!';
+        that.props.onResponse(response);
         });
     }
     
@@ -68,13 +69,7 @@ class FaceBookLoginComponent extends React.Component {
   
     render() {
         return (
-        <div>
-            <div className="fb-login-button facebook_button_login" data-max-rows="1"
-               data-size="large" data-button-type="continue_with"
-               data-show-faces="false" data-auto-logout-link="false"
-               data-use-continue-as="false" onClick = {() => this.handleFBLogin()}>
-            </div>
-        </div>
+            <button className={this.props.buttonClassName} type="button" onClick = {() => this.handleFBLogin()}>{this.props.text}</button>
         );
       }
   }

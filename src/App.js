@@ -23,9 +23,14 @@ import ThemeFooterContainer from './components/ThemeFooterContainer';
 import ThemeCarouselContainer from './components/ThemeCarouselContainer';
 import ThemeNavBar from './components/ThemeNavBar';
 
+import AuthenticationHelper from './authentication/AuthenticationHelper';
+import SignUpFormPopup from './authentication/SignUpForm';
+import FillUserProfileForm from './authentication/FillProfileForm';
+
 import "./css/loginFormPopup.css"
 
 import Modal from 'react-modal';
+const enhanceWithClickOutside = require('react-click-outside');
 
 //load fonts
 import WebFont from 'webfontloader';
@@ -43,11 +48,12 @@ let DataProviderEventBright = require("./data_providers/event_bright/DataProvide
 let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
 let DataProviderFreelancer = require("./data_providers/freelancer/DataProvider");
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
 
     this.initialCountry = this.countries.Singapore;
@@ -62,7 +68,13 @@ export default class App extends Component {
       query : "", 
       currentPage: "landing_page",
       selectedCategory: "category_jobs",
-      isSearchInProgress: false, modalIsOpen: false
+      isSearchInProgress: false, modalIsOpen: false,
+      isSignUpFormOpen: false,
+      isSettingsFormOpen: false,
+      isAuthorized: false,
+      linkedInToken: "",
+      faceBookToken: "",
+      userProfileSettings: "",
     };
 
     this.isSearchingJobs = false;
@@ -114,6 +126,14 @@ export default class App extends Component {
       this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems || this.isSearchingForFreelancerItems)});
       
       this.setState(copy);
+  }
+
+  handleClickOutside() {
+    this.closeModal();
+  }
+
+  handleLinkedInSignUpRequest() {
+    
   }
 
   startNewSearch() {
@@ -234,7 +254,34 @@ export default class App extends Component {
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false});
+    let copy = Object.assign({}, this.state, {modalIsOpen: false});
+    this.setState(copy);
+  }
+
+  closeSignUpModal() {
+    let copy = Object.assign({}, this.state, {isSignUpFormOpen: false});
+    this.setState(copy);
+  }
+
+  handleSignUpButtonClick() {
+    let copy = Object.assign({}, this.state, {isSignUpFormOpen: !this.state.isSignUpFormOpen});
+    this.setState(copy);
+  }
+
+  handleSettingsButtonClick() {
+    let copy = Object.assign({}, this.state, {isSettingsFormOpen: !this.state.isSettingsFormOpen});
+    this.setState(copy);
+  }
+
+  handleSettingsFormSubmit(settings) {
+    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfileSettings: settings});
+    this.setState(copy);
+  }
+
+  handleCloseSettings() {
+    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false});
+    this.setState(copy);
+    console.log("Settings form closed!");
   }
 
   renderLoginPopup() {
@@ -248,7 +295,7 @@ export default class App extends Component {
         contentLabel="Login Form"
       >
 
-      <div className="wrapper" onClick={() => this.closeModal()}>
+      <div className="wrapper">
     <form className="form-signin">       
       <h2 className="form-signin-heading">Coming Soon</h2>
       <input type="text" className="form-control" name="username" placeholder="Email Address" required="" autoFocus="" />
@@ -261,6 +308,35 @@ export default class App extends Component {
   </div>
       </Modal>
     </div>);
+  }
+
+  componentDidMount() {
+    let urlParams = new URLSearchParams(window.location.search);
+
+    let code = urlParams.get("code");
+
+    if (urlParams.get("code")) {
+      let copy = Object.assign({}, this.state, {linkedInToken: code});
+      this.setState(copy);
+    }
+  }
+
+  resetAuthentication() {
+    let copy = Object.assign({}, this.state, {linkedInToken: "", faceBookToken: ""});
+    this.setState(copy);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.linkedInToken != this.state.linkedInToken || prevState.faceBookToken != this.state.faceBookToken) {
+      if(!this.state.linkedInToken && !this.state.faceBookToken) {
+        let copy = Object.assign({}, this.state, {isAuthorized: false});
+        this.setState(copy);
+      }
+      else if(this.state.linkedInToken || this.state.faceBookToken) {
+        let copy = Object.assign({}, this.state, {isAuthorized: true});
+        this.setState(copy);
+      }
+    }
   }
   
   render() {
@@ -297,9 +373,19 @@ export default class App extends Component {
     ? <FreelancerProjectItemList items={this.state.freelancerProjectItems} 
         onAddToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)}/> : null;
 
+    const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} onCloseModal={() => this.closeSignUpModal()}/>;
+
+    const SettingsForm = <FillUserProfileForm modalIsOpen={this.state.isSettingsFormOpen} 
+    onCloseModal={() => this.handleCloseSettings()} 
+    onSubmitSettings={(settings) => this.handleSettingsFormSubmit(settings)} settings={this.state.userProfileSettings}/>;
+
+
     let RenderData = (<div>
                         {this.renderLoginPopup()}
-                        <ThemeNavBar/>
+                        {SignUpForm}
+                        {SettingsForm}
+                        <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
+                          onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
                         {HeadWrap}
                         <ThemeMainContainer/>
                         <ThemeInviteMeContainer/>
@@ -312,7 +398,10 @@ export default class App extends Component {
     if (this.state.currentPage == "search_results_page") {
       RenderData = (<div>
         {this.renderLoginPopup()}
-        <ThemeNavBar/>
+        {SignUpForm}
+        {SettingsForm}
+        <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
+        onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       <div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}
@@ -337,3 +426,6 @@ export default class App extends Component {
     );
   }
 }
+
+
+module.exports = enhanceWithClickOutside(App);

@@ -61,6 +61,7 @@
     "file-loader": "^0.11.2",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
+    "react-click-outside": "^3.0.0",
     "react-dom": "^15.6.1",
     "react-fb-auth": "^1.1.0",
     "react-linkedin-login": "^1.0.3",

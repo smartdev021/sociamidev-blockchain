@@ -3,15 +3,14 @@
 */
 
 import React, { Component } from 'react';
-import FaceBookLoginComponent from './FaceBookLogin';
-import LinkedInLoginComponent from './LinkedInLogin';
 
 class ThemeNavBar extends React.Component {
   render() {
-    const FaceBookLoginButton =
-    <span className>
-      <FaceBookLoginComponent/>
-    </span>;
+    const SignUpButton = (!this.props.isAuthorized) ? <li><button className="btn btn-lg btn-primary btn-block" type="button" 
+    onClick = {() => this.props.onHandleSignUp()}>Sign Up</button></li> : null;
+
+const SettingsButton = (this.props.isAuthorized) ? <li><button className="btn btn-lg btn-info btn-block" type="button" 
+onClick = {() => this.props.onHandleOpenSettings()}>Settings</button></li> : null;
 
     return (
         <div className="navbar navbar-default navbar-fixed-top">
@@ -27,8 +26,8 @@ class ThemeNavBar extends React.Component {
       <div className="navbar-collapse collapse">
         <ul className="nav navbar-nav navbar-right">
           <li><a href="#">Already a member?</a></li>
-          <li>{FaceBookLoginButton}</li>
-          <li><LinkedInLoginComponent/></li>
+          {SignUpButton}
+          {SettingsButton}
         </ul>
     </div>
   </div>
