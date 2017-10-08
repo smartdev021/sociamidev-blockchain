@@ -155,3 +155,37 @@ i {
 .search_results {
     margin-top: 20px;
 }
+
+.button_linkedin_small {
+    min-width: 146px;
+    min-height: 26px;
+    background-image: url("../images_temp/Sign-in-Small---Default.png");
+}
+
+.button_linkedin_small:hover {
+    background-image: url("../images_temp/Sign-in-Small---Hover.png");
+}
+
+.button_linkedin_small:active {
+    background-image: url("../images_temp/Sign-in-Small---Active.png");
+}
+
+.button_linkedin_large {
+    min-width: 215px;
+    min-height: 46px;
+    background-image: url("../images_temp/Sign-in-Large---Default.png");
+    background-repeat: no-repeat;
+    padding: 0;
+}
+
+.button_linkedin_large:hover {
+    background-image: url("../images_temp/Sign-in-Large---Hover.png");
+}
+
+.button_linkedin_large:active {
+    background-image: url("../images_temp/Sign-in-Large---Active.png");
+}
+
+facebook_button_login {
+    height: 46px;
+}

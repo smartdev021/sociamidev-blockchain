@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../css/main.css'
 
 class FaceBookLoginComponent extends React.Component {
     constructor(props) {
@@ -68,7 +69,7 @@ class FaceBookLoginComponent extends React.Component {
     render() {
         return (
         <div>
-            <div className="fb-login-button" data-max-rows="1"
+            <div className="fb-login-button facebook_button_login" data-max-rows="1"
                data-size="large" data-button-type="continue_with"
                data-show-faces="false" data-auto-logout-link="false"
                data-use-continue-as="false" onClick = {() => this.handleFBLogin()}>
