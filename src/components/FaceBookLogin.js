@@ -10,8 +10,8 @@ class FaceBookLoginComponent extends React.Component {
     
     initalizeFacebookAPI() {
         window.fbAsyncInit = function() { FB.init({
-                 // appId: 829265920570128,
-                  appId: 375282336236539,
+                 appId: 829265920570128,
+                  //appId: 375282336236539,
                   cookie: true,  // enable cookies to allow the server to access
                   // the session
                   xfbml: true,  // parse social plugins on this page
