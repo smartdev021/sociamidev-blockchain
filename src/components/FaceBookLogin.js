@@ -10,7 +10,8 @@ class FaceBookLoginComponent extends React.Component {
     
     initalizeFacebookAPI() {
         window.fbAsyncInit = function() { FB.init({
-                  appId: 829265920570128,
+                 // appId: 829265920570128,
+                  appId: 375282336236539,
                   cookie: true,  // enable cookies to allow the server to access
                   // the session
                   xfbml: true,  // parse social plugins on this page
@@ -41,7 +42,7 @@ class FaceBookLoginComponent extends React.Component {
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function(response) {
         console.log('Successful login for: ' + response.name);
-        that.props.onResponse(response);
+        //that.props.onResponse(response);
         });
     }
     
@@ -50,6 +51,7 @@ class FaceBookLoginComponent extends React.Component {
         console.log(response);
         if (response.status === 'connected') {
           this.testAPI();
+          this.props.onResponse(response);
         } else if (response.status === 'not_authorized') {
             console.log("Please log into this app.");
         } else {

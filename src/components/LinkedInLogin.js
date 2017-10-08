@@ -11,7 +11,6 @@ export default class LoginWithLinkedin extends React.Component {
  
   callbackLinkedIn ({code, redirectUri}) {
     console.log("code: " + code + "redirectUri " + redirectUri);
-    that.props.onResponse({statusCode: code, redirect: redirectUri});
   }
  
   render () {

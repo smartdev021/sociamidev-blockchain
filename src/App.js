@@ -132,8 +132,12 @@ class App extends Component {
     this.closeModal();
   }
 
-  handleLinkedInSignUpRequest() {
-    
+  handleFaceBookLoginResponse(response) {
+    if (response.authResponse.accessToken) {
+      let copy = Object.assign({}, this.state, {faceBookToken: response.authResponse.accessToken});
+      this.setState(copy);
+    }
+    this.closeSignUpModal();
   }
 
   startNewSearch() {
@@ -327,6 +331,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log("this.state.faceBookToken: " + this.state.faceBookToken);
     if (prevState.linkedInToken != this.state.linkedInToken || prevState.faceBookToken != this.state.faceBookToken) {
       if(!this.state.linkedInToken && !this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: false});
@@ -373,7 +378,8 @@ class App extends Component {
     ? <FreelancerProjectItemList items={this.state.freelancerProjectItems} 
         onAddToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)}/> : null;
 
-    const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} onCloseModal={() => this.closeSignUpModal()}/>;
+    const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} 
+    onCloseModal={() => this.closeSignUpModal()} onFaceBookLoginResponse = {(response) => this.handleFaceBookLoginResponse(response)}/>;
 
     const SettingsForm = <FillUserProfileForm modalIsOpen={this.state.isSettingsFormOpen} 
     onCloseModal={() => this.handleCloseSettings()} 
