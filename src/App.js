@@ -25,7 +25,7 @@ import ThemeNavBar from './components/ThemeNavBar';
 
 import AuthenticationHelper from './authentication/AuthenticationHelper';
 import SignUpFormPopup from './authentication/SignUpForm';
-import FillUserProfileForm from './authentication/FillProfileForm';
+import UserProfile from './components/UserProfile';
 
 import "./css/loginFormPopup.css"
 
@@ -381,15 +381,13 @@ class App extends Component {
     const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} 
     onCloseModal={() => this.closeSignUpModal()} onFaceBookLoginResponse = {(response) => this.handleFaceBookLoginResponse(response)}/>;
 
-    const SettingsForm = <FillUserProfileForm modalIsOpen={this.state.isSettingsFormOpen} 
-    onCloseModal={() => this.handleCloseSettings()} 
+    const UserProfileForm = <UserProfile
     onSubmitSettings={(settings) => this.handleSettingsFormSubmit(settings)} settings={this.state.userProfileSettings}/>;
 
 
     let RenderData = (<div>
                         {this.renderLoginPopup()}
                         {SignUpForm}
-                        {SettingsForm}
                         <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
                           onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
                         {HeadWrap}
@@ -405,7 +403,6 @@ class App extends Component {
       RenderData = (<div>
         {this.renderLoginPopup()}
         {SignUpForm}
-        {SettingsForm}
         <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
         onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       <div className="container search_results" >
@@ -422,6 +419,14 @@ class App extends Component {
           </div>
         </div>
       </div>
+      <ThemeFooterContainer/></div>);
+    }
+
+    if (this.state.isSettingsFormOpen) {
+      RenderData = (<div>
+        <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
+        onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
+      {UserProfileForm}
       <ThemeFooterContainer/></div>);
     }
 
