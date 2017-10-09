@@ -29,6 +29,8 @@ import UserProfile from './components/UserProfile';
 
 import "./css/loginFormPopup.css"
 
+import Axios from 'axios'
+
 import Modal from 'react-modal';
 const enhanceWithClickOutside = require('react-click-outside');
 
@@ -74,6 +76,8 @@ class App extends Component {
       isAuthorized: false,
       linkedInToken: "",
       faceBookToken: "",
+      faceBookID: null,
+      linkedInID: null,
       userProfileSettings: "",
     };
 
@@ -133,11 +137,27 @@ class App extends Component {
   }
 
   handleFaceBookLoginResponse(response) {
+    console.log("handleFaceBookLoginResponse");
     if (response.authResponse.accessToken) {
-      let copy = Object.assign({}, this.state, {faceBookToken: response.authResponse.accessToken});
+      let copy = Object.assign({}, this.state, {faceBookToken: response.authResponse.accessToken, faceBookID: response.authResponse.userID});
       this.setState(copy);
+
+      console.log(response);
+
+      Axios.get(`http://localhost:3001/signIn?facebookID=${response.authResponse.userID}`)
+      .then((response) =>this.handleFaceBookSignInResponse(response))
+      .catch(function(error){Axios.get(`http://localhost:3001/signUp?facebookID=${response.authResponse.userID}`)
+      .then(function(){})
+      .catch(function(){})});
     }
-    this.closeSignUpModal();
+  }
+
+  handleFaceBookSignInResponse(response) {
+    console.log("handleFaceBookSignInResponse");
+    console.log(response.data.profile);
+    
+    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfileSettings: response.data.profile});
+    this.setState(copy);
   }
 
   startNewSearch() {
@@ -382,7 +402,8 @@ class App extends Component {
     onCloseModal={() => this.closeSignUpModal()} onFaceBookLoginResponse = {(response) => this.handleFaceBookLoginResponse(response)}/>;
 
     const UserProfileForm = <UserProfile
-    onSubmitSettings={(settings) => this.handleSettingsFormSubmit(settings)} settings={this.state.userProfileSettings}/>;
+    onSubmitSettings={(settings) => this.handleSettingsFormSubmit(settings)} 
+    settings={this.state.userProfileSettings} linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>;
 
 
     let RenderData = (<div>
