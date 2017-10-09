@@ -144,9 +144,9 @@ class App extends Component {
 
       console.log(response);
 
-      Axios.get(`http://localhost:3001/signIn?facebookID=${response.authResponse.userID}`)
+      Axios.get(`http://13.59.19.153:3000//signIn?facebookID=${response.authResponse.userID}`)
       .then((response) =>this.handleFaceBookSignInResponse(response))
-      .catch(function(error){Axios.get(`http://localhost:3001/signUp?facebookID=${response.authResponse.userID}`)
+      .catch(function(error){Axios.get(`http://13.59.19.153:3000//signUp?facebookID=${response.authResponse.userID}`)
       .then(function(){})
       .catch(function(){})});
     }

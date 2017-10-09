@@ -84,7 +84,7 @@ class UserProfile extends React.Component {
     if (!this.state.isBusy) {
       this.setBusyState(true);
   
-      Axios.get(`http://localhost:3001/updateProfile?linedInID=${this.props.linedInID}&facebookID=${this.props.faceBookID}&education=${this.state.education}&experience=${this.state.workExperience}&skills=${this.state.skills}&interests=${this.state.interests}`)
+      Axios.get(`http://13.59.19.153:3000//updateProfile?linedInID=${this.props.linedInID}&facebookID=${this.props.faceBookID}&education=${this.state.education}&experience=${this.state.workExperience}&skills=${this.state.skills}&interests=${this.state.interests}`)
       .then((response) =>this.handleBackendResponse(response))
       .catch((error) =>this.handledError(error));
   
