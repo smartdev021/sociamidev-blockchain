@@ -36,6 +36,8 @@ import ConfigMain from '../configs/main'
 import Modal from 'react-modal';
 const enhanceWithClickOutside = require('react-click-outside');
 
+import ConfigsSocial from '../configs/social'
+
 //load fonts
 import WebFont from 'webfontloader';
 
@@ -76,7 +78,8 @@ class App extends Component {
       isSignUpFormOpen: false,
       isSettingsFormOpen: false,
       isAuthorized: false,
-      linkedInToken: "",
+      linkedInCode: "",
+      linkedInToken:"",
       faceBookToken: "",
       faceBookID: null,
       linkedInID: null,
@@ -343,24 +346,39 @@ class App extends Component {
     let code = urlParams.get("code");
 
     if (urlParams.get("code")) {
-      let copy = Object.assign({}, this.state, {linkedInToken: code});
+      Axios.get(`https://www.linkedin.com/oauth/v2/accessToken/?grant_type=authorization_code&code=${this.state.linkedInCode}&redirect_uri=${window.location.href }&client_id=${ConfigsSocial.LinkedInClientID}&client_secret=${ConfigsSocial.LinkedInSecret}`)
+      .then((response) =>this.handlelinkedInTokenRequest(response))
+      .catch((error) =>this.handlelinkedInTokenRequestError(error));
+
+      let copy = Object.assign({}, this.state, {linkedInCode: code});
       this.setState(copy);
     }
   }
 
+  handlelinkedInTokenRequest(response) {
+    console.log(response);
+    let copy = Object.assign({}, this.state, {linkedInToken: response.access_token});
+    this.setState(copy);
+  }
+
+  handlelinkedInCodeRequestError(error) {
+   
+    console.log(error);
+  }
+
   resetAuthentication() {
-    let copy = Object.assign({}, this.state, {linkedInToken: "", faceBookToken: ""});
+    let copy = Object.assign({}, this.state, {linkedInCode: "", faceBookToken: ""});
     this.setState(copy);
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("this.state.faceBookToken: " + this.state.faceBookToken);
-    if (prevState.linkedInToken != this.state.linkedInToken || prevState.faceBookToken != this.state.faceBookToken) {
-      if(!this.state.linkedInToken && !this.state.faceBookToken) {
+    if (prevState.linkedInCode != this.state.linkedInCode || prevState.faceBookToken != this.state.faceBookToken) {
+      if(!this.state.linkedInCode && !this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: false});
         this.setState(copy);
       }
-      else if(this.state.linkedInToken || this.state.faceBookToken) {
+      else if(this.state.linkedInCode || this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: true});
         this.setState(copy);
       }
