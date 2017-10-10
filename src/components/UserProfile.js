@@ -8,6 +8,8 @@ import Axios from 'axios'
 
 import ConfigMain from '../../configs/main'
 
+import "../css/userProfile.css"
+
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -42,24 +44,28 @@ class UserProfile extends React.Component {
     this.setState(copy);
   }
 
+  handleFormAction() {
+    event.preventDefault();
+  }
+
   renderForm() {
     return (
-      <div className="i-am-centered">
-    <form className="form-inline" action="#" onSubmit={this.props.onHandleSearchClicked}>
+      <div className="user_profole_form">
+    <form className="form-inline" action="#" onSubmit={this.handleFormAction}>
       <div className="form-group">
-      <h2 className="form-signin-heading">Fill your profile data:</h2>
-      <input type="text" className="form-control" name="Education" placeholder="Where did you study?" required="" 
+      <h2 className="form-signin-heading">User profile summary</h2>
+      <input type="text" className="form-control control_user_profile" name="Education" placeholder="Where did you study?" required="" 
       autoFocus="" required="" onChange={(e) => this.handleChangeEducation(e)} value={this.state.education}/>
 
-      <input type="text" className="form-control" name="Work Experience" 
+      <input type="text" className="form-control control_user_profile" name="Working Experience" 
       placeholder="What is your working experience?" required="" onChange={(e) => this.handleChangeWorkExperience(e)} 
       value={this.state.workExperience}/>  
 
-      <input type="text" className="form-control" name="Interests" 
+      <input type="text" className="form-control control_user_profile" name="Yourinterests" 
       placeholder="What are your interests?" required="" onChange={(e) => this.handleChangeInterests(e)} 
       value={this.state.interests}/>  
 
-      <input type="text" className="form-control" name="Interests" 
+      <input type="text" className="form-control control_user_profile" name="Your skills" 
       placeholder="What are your skills?" required="" onChange={(e) => this.handleChangeSkills(e)} 
       value={this.state.skills}/>  
 

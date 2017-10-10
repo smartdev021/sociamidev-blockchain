@@ -152,6 +152,7 @@ class App extends Component {
       .then(function(){})
       .catch(function(){})});
     }
+    this.closeSignUpModal();
   }
 
   handleFaceBookSignInResponse(response) {
