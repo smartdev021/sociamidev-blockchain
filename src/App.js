@@ -31,6 +31,8 @@ import "./css/loginFormPopup.css"
 
 import Axios from 'axios'
 
+import ConfigMain from '../configs/main'
+
 import Modal from 'react-modal';
 const enhanceWithClickOutside = require('react-click-outside');
 
@@ -144,9 +146,9 @@ class App extends Component {
 
       console.log(response);
 
-      Axios.get(`http://13.59.19.153:3000//signIn?facebookID=${response.authResponse.userID}`)
+      Axios.get(`${ConfigMain.BackendURL}/signIn?facebookID=${response.authResponse.userID}`)
       .then((response) =>this.handleFaceBookSignInResponse(response))
-      .catch(function(error){Axios.get(`http://13.59.19.153:3000//signUp?facebookID=${response.authResponse.userID}`)
+      .catch(function(error){Axios.get(`${ConfigMain.BackendURL}/signUp?facebookID=${response.authResponse.userID}`)
       .then(function(){})
       .catch(function(){})});
     }

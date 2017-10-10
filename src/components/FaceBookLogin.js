@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ConfigsSocial from '../../configs/social'
+
 class FaceBookLoginComponent extends React.Component {
     constructor(props) {
       super(props);
@@ -10,8 +12,7 @@ class FaceBookLoginComponent extends React.Component {
     
     initalizeFacebookAPI() {
         window.fbAsyncInit = function() { FB.init({
-                 appId: 829265920570128,
-                  //appId: 375282336236539,
+                 appId: ConfigsSocial.FaceBookAppID,
                   cookie: true,  // enable cookies to allow the server to access
                   // the session
                   xfbml: true,  // parse social plugins on this page
