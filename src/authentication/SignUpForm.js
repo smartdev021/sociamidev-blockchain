@@ -28,7 +28,7 @@ class SignupForm extends React.Component {
           <h2 className="form-sign-u-heading">Sign Up</h2>
           <FaceBookLoginComponent buttonClassName="btn btn-lg btn-primary btn-block" text="FaceBook" 
           onResponse={(response) => this.props.onFaceBookLoginResponse(response)}/>
-          <LinkedInLogin buttonClassName="btn btn-lg btn-warning btn-block" text="LinkedIn"/> 
+          <button type="button" className="btn btn-lg btn-warning btn-block" onClick={this.handleLinkedInSignUp}>LinkedIn</button>
         </div>
       </div>
           </Modal>
@@ -42,6 +42,10 @@ class SignupForm extends React.Component {
       handleFormSubmit(event) {
         event.preventDefault();
         return;
+      }
+
+      handleLinkedInSignUp() {
+        window.location.href = 'http://localhost:3001/auth/linkedin';
       }
 
     render() {
