@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import "../css/signUpFormPopup.css"
 import LinkedInLogin from '../components/LinkedInLogin';
 import FaceBookLoginComponent from '../components/FaceBookLogin';
+import ConfigMain from '../../configs/main';
 
 const enhanceWithClickOutside = require('react-click-outside');
 
@@ -45,7 +46,7 @@ class SignupForm extends React.Component {
       }
 
       handleLinkedInSignUp() {
-        window.location.href = 'http://localhost:3001/auth/linkedin';
+        window.location.href = `${ConfigMain.BackendURL}/auth/linkedin`;
       }
 
     render() {
