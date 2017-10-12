@@ -79,7 +79,7 @@ class App extends Component {
       isSettingsFormOpen: false,
       isAuthorized: false,
       linkedInCode: "",
-      linkedInToken:"",
+      linkedInProfileID: "",
       faceBookToken: "",
       faceBookID: null,
       linkedInID: null,
@@ -343,42 +343,50 @@ class App extends Component {
   componentDidMount() {
     let urlParams = new URLSearchParams(window.location.search);
 
-    let code = urlParams.get("code");
+    console.log("urlParams: " + urlParams);
 
-    if (urlParams.get("code")) {
-      Axios.get(`https://www.linkedin.com/oauth/v2/accessToken/?grant_type=authorization_code&code=${this.state.linkedInCode}&redirect_uri=${window.location.href }&client_id=${ConfigsSocial.LinkedInClientID}&client_secret=${ConfigsSocial.LinkedInSecret}`)
-      .then((response) =>this.handlelinkedInTokenRequest(response))
-      .catch((error) =>this.handlelinkedInTokenRequestError(error));
+    let linkedInId = urlParams.get("linkedInId");
+    let facebookId = urlParams.get("facebookId");
+    if (linkedInId) {
+      console.log(`Received LinkedIn id ${linkedInId} in URL`);
 
-      let copy = Object.assign({}, this.state, {linkedInCode: code});
-      this.setState(copy);
+      console.log("Fetching user profile...");
+
+     Axios.get(`${ConfigMain.BackendURL}/fetchUserProfile?linkedInId=${linkedInId}`)
+        .then((response) =>this.handlelinkedInUserProfileFetch(response))
+        .catch((error) =>this.handlelinkedInUserProfileFetchError(error));
+    }
+    else if (facebookId) {
+      console.log(`Received FaceBook id ${facebookId} in URL`);
+
+      console.log("Fetching user profile...");
     }
   }
 
-  handlelinkedInTokenRequest(response) {
-    console.log(response);
-    let copy = Object.assign({}, this.state, {linkedInToken: response.access_token});
+  handlelinkedInUserProfileFetch(response) {
+    console.log("Fetch successfull: " + response.data.linkedInID);
+    console.dir(response.data);
+
+    let copy = Object.assign({}, this.state, {linkedInProfileID: response.data.linkedInID, userProfileSettings : response.data.profile});
     this.setState(copy);
   }
 
-  handlelinkedInCodeRequestError(error) {
-   
-    console.log(error);
+  handlelinkedInUserProfileFetchError(error) {
+    console.log("Error fetching result: " + error);
   }
 
   resetAuthentication() {
-    let copy = Object.assign({}, this.state, {linkedInCode: "", faceBookToken: ""});
+    let copy = Object.assign({}, this.state, {linkedInProfileID: "", faceBookToken: ""});
     this.setState(copy);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("this.state.faceBookToken: " + this.state.faceBookToken);
-    if (prevState.linkedInCode != this.state.linkedInCode || prevState.faceBookToken != this.state.faceBookToken) {
-      if(!this.state.linkedInCode && !this.state.faceBookToken) {
+    if (prevState.linkedInProfileID != this.state.linkedInProfileID || prevState.faceBookToken != this.state.faceBookToken) {
+      if(!this.state.linkedInProfileID && !this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: false});
         this.setState(copy);
       }
-      else if(this.state.linkedInCode || this.state.faceBookToken) {
+      else if(this.state.linkedInProfileID || this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: true});
         this.setState(copy);
       }
