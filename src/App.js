@@ -253,7 +253,7 @@ class App extends Component {
   refreshDataIndeed() {
     if (this.state.query != "") {
       const PUBLISHER_ID = "4201738803816157";
-      let url = "https://devfortest.000webhostapp.com/indeed_api/index.php?publisher=" + PUBLISHER_ID + "&query=" + this.state.query + "&country=" + this.state.country;
+      let url = `${ConfigMain.BackendURL}/indeed/jobs?query=${this.state.query}&country=${this.state.country}`;
   
       DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
     }

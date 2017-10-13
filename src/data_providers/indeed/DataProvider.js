@@ -9,50 +9,6 @@
 */
 
 import 'whatwg-fetch'
-
-function xmlToArrayOfObjects(data) {
-    if (typeof data === "undefined" || !data) {
-      return [];
-    }
-    //init DomParser, and parse data to xml Document
-    let domParser = new DOMParser();
-    let dom = domParser.parseFromString(data, "text/xml");
-
-    //array to be filled with objects 'object{xmlNodeName: xmlNodeValue}'
-    let jobItems = [];
-
-    //get first node <results> - there should always be only one such node
-    let results = dom.getElementsByTagName("results")[0].childNodes;
-
-    //for eacth <result> node child inside <results> node
-    for (let i = 0; i < results.length; ++i) {
-      //save <result> to local variable
-      let currentResult = results[i];
-
-      //empty single jobItem object
-      let jobItem = {};
-
-      //for each node inside <result> node
-      for (let j = 0; i < currentResult.childNodes.length; ++j) {
-
-        //save current node to local variable
-        let resultChildNode = currentResult.childNodes[j];
-        
-        if (resultChildNode === currentResult.lastChild) {
-          //skip last node
-          break;
-        }
-        //add new {key, value} into jobItem
-        jobItem[resultChildNode.nodeName] = resultChildNode.textContent;
-      }
-
-      //push new single jobItem entry into array
-      jobItems.push(jobItem);
-    }
-
-    return jobItems;
-  }
-
   /*
     @url: API url
     @listener(result): callback to invoke on success
@@ -61,7 +17,7 @@ function xmlToArrayOfObjects(data) {
   const requestApiData = function (url, listener, convertToArrayOfObjects) {
 
     const headers = new Headers();
-    headers.set('Content-Type', 'text/xml');
+    headers.set('Content-Type', 'text/json');
 
     //use fetch API to get response from remote API
     fetch(url, headers)  
@@ -72,10 +28,42 @@ function xmlToArrayOfObjects(data) {
             listener();
           return;  
         }
+        const urlPrefix = "https://www.freelancer.com/projects/";
+        //devfortest.000webhostapp.com/udemy_api/?query=php
         //upon success - invoke callback, and pass 'result' as an argument
         response.text().then(function(text) {
-          let result = (convertToArrayOfObjects === true) ? xmlToArrayOfObjects((text)) : text;
-          listener(result); 
+            let indeedJobs = [];
+
+            if (text != "") {
+              let parsedJSON = JSON.parse(text);
+              
+              let jobs = parsedJSON.results;
+              
+             for (let i = 0; i < jobs.length; ++i) {
+
+                let indeedJob = {};
+
+              let jobtitle = jobs[i].jobtitle;
+              let company = jobs[i].company;
+              let formattedLocation = jobs[i].formattedLocation;
+              let country = jobs[i].country;
+              let url = jobs[i].url;
+              let date = jobs[i].date;
+              let formattedRelativeTime = jobs[i].formattedRelativeTime;
+
+              indeedJob["jobtitle"] = jobtitle;
+              indeedJob["company"] = company;
+              indeedJob["formattedLocation"] = formattedLocation;
+              indeedJob["country"] = formattedLocation;
+              indeedJob["url"] = url;
+              indeedJob["date"] = date;
+              indeedJob["formattedRelativeTime"] = formattedRelativeTime;
+
+                indeedJobs.push(indeedJob);
+              }
+  
+            }
+          listener(indeedJobs);
         });
       }  
     )  
