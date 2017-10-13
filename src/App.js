@@ -261,7 +261,7 @@ class App extends Component {
   
   refreshDataEventBright() {
     if (this.state.query != "") {
-      let url = "https://devfortest.000webhostapp.com/eventbright_api/index.php?query=" + this.state.query + "&location=" + this.state.country;
+      let url = `${ConfigMain.BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
       console.log(url);
       DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
     }
@@ -269,7 +269,7 @@ class App extends Component {
 
   refreshDataUdemy() {
     if (this.state.query != "") {
-      let url = "https://devfortest.000webhostapp.com/udemy_api/?query=" + this.state.query;
+      let url = `${ConfigMain.BackendURL}/udemy/courses/?query=${this.state.query}`;
       console.log(url);
       DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
     }
@@ -277,7 +277,7 @@ class App extends Component {
 
   refreshDataFreelancer() {
     if (this.state.query != "") {
-      let url = "https://devfortest.000webhostapp.com/freelancer_api/?query=" + this.state.query;
+      let url = `${ConfigMain.BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
       console.log(url);
       DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
     }
