@@ -8,13 +8,10 @@ import { Redirect} from 'react-router-dom'
 class Authorize extends React.Component {
   constructor(props) {
     super(props);
-    console.log('Authorize');
     this.redirectRequired = false;
   }
 
   componentWillMount () {
-      console.log("Authorize componentWillMount: ");
-      console.dir(this.props);
       
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
@@ -38,7 +35,6 @@ class Authorize extends React.Component {
   }
 
   render() {
-    console.log("render: ");
     let RedirectTo = null;
     
     if (this.redirectRequired) {

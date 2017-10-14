@@ -158,14 +158,6 @@ class App extends Component {
     this.closeModal();
   }
 
-  handleFaceBookSignInResponse(response) {
-    console.log("handleFaceBookSignInResponse");
-    console.log(response.data.profile);
-    
-    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfile: response.data.profile});
-    this.setState(copy);
-  }
-
   startNewSearch() {
     this.isSearchingJobs = true;
     this.isSearchingEvents = true;
@@ -262,7 +254,6 @@ class App extends Component {
   refreshDataEventBright() {
     if (this.state.query != "") {
       let url = `${ConfigMain.BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
-      console.log(url);
       DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
     }
   }
@@ -270,7 +261,6 @@ class App extends Component {
   refreshDataUdemy() {
     if (this.state.query != "") {
       let url = `${ConfigMain.BackendURL}/udemy/courses/?query=${this.state.query}`;
-      console.log(url);
       DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
     }
   }
@@ -278,7 +268,6 @@ class App extends Component {
   refreshDataFreelancer() {
     if (this.state.query != "") {
       let url = `${ConfigMain.BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
-      console.log(url);
       DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
     }
   }
@@ -311,7 +300,6 @@ class App extends Component {
   handleCloseSettings() {
     let copy = Object.assign({}, this.state, {isSettingsFormOpen: false});
     this.setState(copy);
-    console.log("Settings form closed!");
   }
 
   renderLoginPopup() {
@@ -373,23 +361,32 @@ class App extends Component {
 
     let copy = Object.assign({}, this.state, {isAuthorized: true, userProfile: newUserProfile});
     this.setState(copy);
-    console.dir(response.data);
   }
 
   handleLinkedInUserProfileFetchError(error) {
-    console.log("handleLinkedInUserProfileFetchError: " + error);
+    console.log("Error fetching LinkedIn profile: " + error);
   }
 
   handleFaceBookUserProfileFetch(response) {
     console.log("handleFaceBookUserProfileFetch: ");
+    
+    const responseProfile = response.data.profile;
 
-    let copy = Object.assign({}, this.state, {isAuthorized: true});
+    let newUserProfile = {
+      firstName: responseProfile.firstName, 
+      lastName: responseProfile.lastName, 
+      interests: 'N/A due to lack of FaceBook parmissions', //TODO: receive FaceBook advanced permissions
+      skills: 'N/A due to lack of FaceBook parmissions', //TODO: receive FaceBook advanced permissions
+      experience: responseProfile.experience,
+      education: responseProfile.education
+    }
+
+    let copy = Object.assign({}, this.state, {isAuthorized: true, userProfile: newUserProfile});
     this.setState(copy);
-    console.dir(response.data);
   }
     
   handleFaceBookUserProfileFetchError(error) {
-    console.log("handleFaceBookUserProfileFetchError: " + error);
+    console.log("Error fetching FaceBook profile: " + error);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -414,9 +411,6 @@ class App extends Component {
         this.setState(copy);
       }
     }
-
-    console.log("App state: ");
-    console.dir(this.state);
   }
 
   getRedirectLocation() {

@@ -8,10 +8,6 @@ import ActionLink from './ActionLink'
 
 class ThemeNavBar extends React.Component {
   render() {
-    console.log("Navbar props: ");
-    console.dir(this.props);
-    console.log("this.props.isAuthorized: " + this.props.isAuthorized);
-
 let ProfileLink = '';
 if (this.props.isAuthorized) {
   ProfileLink = <Link className='navbar-brand' to='/userProfile'>Your account</Link>;
