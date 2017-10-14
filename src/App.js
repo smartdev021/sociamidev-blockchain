@@ -37,6 +37,8 @@ import ConfigsSocial from '../configs/social'
 //load fonts
 import WebFont from 'webfontloader';
 
+import { Redirect} from 'react-router-dom'
+
 WebFont.load({
   google: {
     families: ['Lato:300,400,900']
@@ -79,7 +81,8 @@ class App extends Component {
       faceBookToken: "",
       faceBookID: null,
       linkedInID: null,
-      userProfileSettings: "",
+      userProfile: {settings: null},
+      redirectToSearchResults: false,
     };
 
     this.isSearchingJobs = false;
@@ -159,7 +162,7 @@ class App extends Component {
     console.log("handleFaceBookSignInResponse");
     console.log(response.data.profile);
     
-    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfileSettings: response.data.profile});
+    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfile: response.data.profile});
     this.setState(copy);
   }
 
@@ -172,7 +175,7 @@ class App extends Component {
     let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
     this.setState(copy);
 
-    () => this.refreshBusyState();
+    this.refreshBusyState();
 
     this.refreshDataIndeed();
     this.refreshDataEventBright();
@@ -192,7 +195,7 @@ class App extends Component {
       let copy = Object.assign({}, this.state, {jobItems: items});
       this.setState(copy);
 
-      () => this.refreshBusyState();
+      this.refreshBusyState();
     }
   }
 
@@ -204,7 +207,7 @@ class App extends Component {
       let copy = Object.assign({}, this.state, {eventBrightItems: items});
       this.setState(copy);
 
-      () => this.refreshBusyState();
+      this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -221,7 +224,7 @@ class App extends Component {
       let copy = Object.assign({}, this.state, {udemyItems: items});
       this.setState(copy);
 
-      () => this.refreshBusyState();
+      this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -238,7 +241,7 @@ class App extends Component {
       let copy = Object.assign({}, this.state, {freelancerProjectItems: items});
       this.setState(copy);
       
-      () => this.refreshBusyState();
+      this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
         let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
@@ -301,7 +304,7 @@ class App extends Component {
   }
 
   handleSettingsFormSubmit(settings) {
-    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfileSettings: settings});
+    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfile: settings});
     this.setState(copy);
   }
 
@@ -364,7 +367,7 @@ class App extends Component {
     console.log("Fetch successfull: " + response.data.linkedInID);
     console.dir(response.data);
 
-    let copy = Object.assign({}, this.state, {linkedInProfileID: response.data.linkedInID, userProfileSettings : response.data.profile});
+    let copy = Object.assign({}, this.state, {linkedInProfileID: response.data.linkedInID, userProfile : response.data.profile});
     this.setState(copy);
   }
 
@@ -388,6 +391,12 @@ class App extends Component {
         this.setState(copy);
       }
     }
+    if (prevState.isSearchInProgress != this.state.isSearchInProgress) {
+      if (!this.state.isSearchInProgress) {
+        let copy = Object.assign({}, this.state, {redirectToSearchResults: true});
+        this.setState(copy);
+      }
+    }
   }
   
   render() {
@@ -396,7 +405,7 @@ class App extends Component {
 
     const UserProfileForm = <UserProfile
     onSubmitSettings={(settings) => this.handleSettingsFormSubmit(settings)} 
-    settings={this.state.userProfileSettings} linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>;
+    settings={this.state.userProfile} linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>;
     let RenderData = (<div>
       
     <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
@@ -414,7 +423,9 @@ class App extends Component {
           onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
           onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
           onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
-          currentPage={this.state.currentPage}/>
+          currentPage={this.state.currentPage}
+          userProfile={this.state.userProfile}
+          linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>
           </div>);
     if (this.state.isSettingsFormOpen) {
       RenderData = (<div>
@@ -422,13 +433,41 @@ class App extends Component {
       </div>);
     }
 
+    let redirect = null;
+    
+    if (this.state.redirectToSearchResults) {
+      redirect = <Redirect to="/searchResults" push />;
+
+      let copy = Object.assign({}, this.state, {redirectToSearchResults: false});
+      this.setState(copy);
+    }
+
     return (
+      
       <div>
         {this.renderLoginPopup()}
+        {redirect}
       <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
                           onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       {SignUpForm}
-      {RenderData}
+      <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
+          onHandleChange={(e) => this.handleChange(e)} 
+          onHandleQueryChange={(query) => this.handleQueryChange(query)} 
+          onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
+          isSearchInProgress={this.state.isSearchInProgress}
+          numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length}
+          numCourses={this.state.udemyItems.length}
+          onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}
+          selectedCategory={this.state.selectedCategory} jobItems={this.state.jobItems}
+          eventBriteItems={this.state.eventBrightItems} udemyItems={this.state.udemyItems}
+          freelancerProjectItems={this.state.freelancerProjectItems}
+          onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
+          onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
+          onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
+          onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
+          currentPage={this.state.currentPage}
+          userProfile={this.state.userProfile}
+          linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>
       <ThemeFooterContainer/>
       </div>
     );

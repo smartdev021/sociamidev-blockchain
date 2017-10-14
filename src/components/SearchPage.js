@@ -7,8 +7,11 @@ import React, { Component } from 'react';
 import SearchHeader from './SearchHeader';
 import SearchResults from './SearchResults';
 
-class HomePage extends React.Component {
+class SearchPage extends React.Component {
   render() {
+    console.log("Props in SearchPage");
+    console.dir(this.props);
+
     return (<div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.props.onHandleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.props.onHandleStartSearch(e)} query={this.props.query} 
@@ -30,4 +33,4 @@ class HomePage extends React.Component {
 
 }
 
-export default HomePage;
+export default SearchPage;
