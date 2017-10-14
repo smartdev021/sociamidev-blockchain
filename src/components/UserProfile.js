@@ -19,6 +19,23 @@ class UserProfile extends React.Component {
   }
 
   renderForm() {
+
+    let firstName = '';
+    let lastName = '';
+    let interests = '';
+    let skills = '';
+    let education = '';
+    let experience = '';
+
+    if (this.props.userProfile) {
+      firstName = this.props.userProfile.firstName;
+      lastName = this.props.userProfile.lastName;
+      interests = this.props.userProfile.interests;
+      skills = this.props.userProfile.skills; 
+      education = this.props.userProfile.education;
+      experience = this.props.userProfile.experience;
+    }
+
     return (
       <div className="user_profole_form">
     <form className="form-inline" action="#" onSubmit={this.handleFormAction}>
@@ -27,27 +44,27 @@ class UserProfile extends React.Component {
 
       <input type="text" className="form-control control_user_profile" name="first-name" 
       placeholder="First Name" readOnly 
-      value={''}/>
+      value={firstName}/>
 
       <input type="text" className="form-control control_user_profile" name="last-name" 
       placeholder="Last Name" readOnly 
-      value={''}/> 
+      value={lastName}/> 
 
       <input type="text" className="form-control control_user_profile" name="interests" 
       placeholder="What are your interests?" readOnly 
-      value={''}/>  
+      value={interests}/>  
 
       <input type="text" className="form-control control_user_profile" name="skills" 
       placeholder="What are your skills?" readOnly
-      value={''}/>  
+      value={skills}/>  
 
       <input type="text" className="form-control control_user_profile" name="education" 
       placeholder="Where did you study?" readOnly
-      value={''}/>
+      value={education}/>
 
       <input type="text" className="form-control control_user_profile" name="experience" 
       placeholder="What is your working experience?" required="" onChange={(e) => this.handleChangeWorkExperience(e)} 
-      value={''} readOnly/>
+      value={experience} readOnly/>
 
       <Link className="btn btn-primary btn-lg btn-block" to='/'>Back to Main</Link>
 

@@ -77,7 +77,15 @@ class App extends Component {
       isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
-      userProfile: {settings: null},
+
+      userProfile: {
+      firstName: 'John', 
+      lastName: 'Doe', 
+      interests: 'programming, study',
+      skills: 'javascript, c++', 
+      experience: 'Google',
+      education: 'Harvard'},
+
       redirectToSearchResults: false,
     };
 
@@ -331,32 +339,44 @@ class App extends Component {
     </div>);
   }
 
-  componentDidMount() {
-    /*let urlParams = new URLSearchParams(window.location.search);
-
-   console.log("urlParams: " + urlParams);
-
-    let linkedInId = urlParams.get("linkedInId");
-    let facebookId = urlParams.get("facebookId");
-    if (linkedInId) {
-      console.log(`Received LinkedIn id ${linkedInId} in URL`);
-
-      console.log("Fetching user profile...");
-
-     Axios.get(`${ConfigMain.BackendURL}/fetchUserProfile?linkedInId=${linkedInId}`)
-        .then((response) =>this.handlelinkedInUserProfileFetch(response))
-        .catch((error) =>this.handlelinkedInUserProfileFetchError(error));
-    }
-    else if (facebookId) {
-      console.log(`Received FaceBook id ${facebookId} in URL`);
-
-      console.log("Fetching user profile...");
-    }*/
+  resetAuthentication() {
+    let copy = Object.assign({}, this.state, {linkedInID: "", faceBookID: "", profule: null});
+    this.setState(copy);
   }
 
-  resetAuthentication() {
-    let copy = Object.assign({}, this.state, {linkedInID: "", faceBookID: ""});
+  fetchUserInfoFromDataBase() {
+    if (this.state.linkedInID) {
+      Axios.get(`${ConfigMain.BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`)
+      .then((response) =>this.handleLinkedInUserProfileFetch(response))
+      .catch((error) =>this.handleLinkedInUserProfileFetchError(error));
+    }
+    else if (this.state.faceBookID) {
+      Axios.get(`${ConfigMain.BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`)
+      .then((response) =>this.handleFaceBookUserProfileFetch(response))
+      .catch((error) =>this.handleFaceBookUserProfileFetchError(error));
+    }
+  }
+
+  handleLinkedInUserProfileFetch(response) {
+    console.log("handleLinkedInUserProfileFetch: ");
+    let copy = Object.assign({}, this.state, {isAuthorized: true});
     this.setState(copy);
+    dir(response);
+  }
+
+  handleLinkedInUserProfileFetchError(error) {
+    console.log("handleLinkedInUserProfileFetchError: " + error);
+  }
+
+  handleFaceBookUserProfileFetch(response) {
+    console.log("handleFaceBookUserProfileFetch: ");
+    let copy = Object.assign({}, this.state, {isAuthorized: true});
+    this.setState(copy);
+    dir(response);
+  }
+    
+  handleFaceBookUserProfileFetchError(error) {
+    console.log("handleFaceBookUserProfileFetchError: " + error);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -366,8 +386,7 @@ class App extends Component {
         this.setState(copy);
       }
       else if(this.state.linkedInID || this.state.faceBookID) {
-        let copy = Object.assign({}, this.state, {isAuthorized: true});
-        this.setState(copy);
+        this.fetchUserInfoFromDataBase();
       }
     }
     if (prevState.isSearchInProgress != this.state.isSearchInProgress) {
@@ -415,12 +434,12 @@ class App extends Component {
           onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
           onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
           currentPage={this.state.currentPage}
-          userProfile={this.state.userProfile}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.closeSignUpModal()}
           isSignUpFormOpen={this.state.isSignUpFormOpen}
           onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
-          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}/>
+          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+          userProfile={this.state.userProfile}/>
       <ThemeFooterContainer/>
       </div>
     );
