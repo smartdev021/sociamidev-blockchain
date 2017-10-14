@@ -36,7 +36,7 @@ class SearchHeader extends React.Component {
 
   renderResultsNavigation() {
     console.log("selectedCategory: " + this.props.selectedCategory);
-    return (<span>
+    return (<div className="container search_results" >
       <div className="col-lg-4">
          <div className="trend_widget">
          Trend Rating
@@ -92,7 +92,7 @@ class SearchHeader extends React.Component {
          </div>
          </div>
       </div>
-      </span>);
+      </div>);
   }
 
   render() {

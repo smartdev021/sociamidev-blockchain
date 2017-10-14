@@ -10,10 +10,6 @@ require('es6-object-assign').polyfill();
 require('es6-promise').polyfill();
 
 import React, { Component } from 'react';
-import JobsList from './components/containers/JobsList';
-import EventBriteItemList from './components/containers/EventBriteItemList';
-import UdemyItemList from './components/containers/UdemyItemList';
-import FreelancerProjectItemList from './components/containers/FreelancerProjectItemList';
 
 import SearchHeader from './components/SearchHeader';
 import ThemeMainContainer from './components/ThemeMainContainer';
@@ -22,6 +18,8 @@ import ThemeMeetTheTeamContainer from './components/ThemeMeetTheTeamContainer';
 import ThemeFooterContainer from './components/ThemeFooterContainer';
 import ThemeCarouselContainer from './components/ThemeCarouselContainer';
 import ThemeNavBar from './components/ThemeNavBar';
+import Main from './components/Main';
+import SearchResults from './components/SearchResults';
 
 import AuthenticationHelper from './authentication/AuthenticationHelper';
 import SignUpFormPopup from './authentication/SignUpForm';
@@ -414,19 +412,6 @@ class App extends Component {
   </div>
 </div>
 </div>;
-    const jobsList = (this.state.selectedCategory == "category_jobs") 
-    ? <JobsList items={this.state.jobItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
-
-    const eventsList = (this.state.selectedCategory == "category_events") 
-    ? <EventBriteItemList items={this.state.eventBrightItems} onAddToFavorites={(e) => this.handleAddEventToFavorites(e)}/> : null;
-
-    const udemyCoursesList = (this.state.selectedCategory == "category_courses") 
-    ? <UdemyItemList items={this.state.udemyItems} onAddToFavorites={(e) => this.handleAddJobToFavorites(e)}/> : null;
-
-    const freelancerProjectList = (this.state.selectedCategory == "category_freelancer_projects") 
-    ? <FreelancerProjectItemList items={this.state.freelancerProjectItems} 
-        onAddToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)}/> : null;
-
     const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} 
     onCloseModal={() => this.closeSignUpModal()} onFaceBookLoginResponse = {(response) => this.handleFaceBookLoginResponse(response)}/>;
 
@@ -438,51 +423,49 @@ class App extends Component {
     let RenderData = (<div>
                         {this.renderLoginPopup()}
                         {SignUpForm}
-                        <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
-                          onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
                         {HeadWrap}
                         <ThemeMainContainer/>
                         <ThemeInviteMeContainer/>
                         <ThemeCarouselContainer/>
                         <ThemeInviteMeContainer/>
                         <ThemeMeetTheTeamContainer/>
-                        <ThemeFooterContainer/></div>
+                        </div>
                         );
                         
     if (this.state.currentPage == "search_results_page") {
       RenderData = (<div>
         {this.renderLoginPopup()}
         {SignUpForm}
-        <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
-        onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       <div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}
       numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length} numCourses={this.state.udemyItems.length}
       onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}/>
-        <div className="row mt left">
-          <div className="col-lg-12">
-              {jobsList}    
-              {eventsList}
-              {udemyCoursesList}
-              {freelancerProjectList}
-          </div>
-        </div>
+        <SearchResults selectedCategory={this.state.selectedCategory}
+        jobItems={this.state.jobItems}
+        eventBriteItems={this.state.eventBrightItems}
+        udemyItems={this.state.udemyItems}
+        freelancerProjectItems={this.state.freelancerProjectItems}
+        onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
+        onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
+        onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
+        onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)}/>
       </div>
-      <ThemeFooterContainer/></div>);
+      </div>);
     }
 
     if (this.state.isSettingsFormOpen) {
       RenderData = (<div>
-        <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
-        onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       {UserProfileForm}
-      <ThemeFooterContainer/></div>);
+      </div>);
     }
 
     return (
       <div>
+      <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
+                          onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       {RenderData}
+      <ThemeFooterContainer/>
       </div>
     );
   }
