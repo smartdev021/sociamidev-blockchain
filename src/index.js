@@ -5,7 +5,7 @@ import App from './App';
 
 ReactDOM.render((
     <BrowserRouter>
-         <App/>
+         <App RouteProps/>
     </BrowserRouter>
     ),
     document.getElementById('root')

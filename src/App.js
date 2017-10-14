@@ -87,6 +87,7 @@ class App extends Component {
       education: 'Harvard'},
 
       redirectToSearchResults: false,
+      redirectToUserProfile: false
     };
 
     this.isSearchingJobs = false;
@@ -359,9 +360,20 @@ class App extends Component {
 
   handleLinkedInUserProfileFetch(response) {
     console.log("handleLinkedInUserProfileFetch: ");
-    let copy = Object.assign({}, this.state, {isAuthorized: true});
+    const responseProfile = response.data.profile;
+
+    let newUserProfile = {
+      firstName: responseProfile.firstName, 
+      lastName: responseProfile.lastName, 
+      interests: 'N/A due to lack of LinkedIn parmissions', //TODO: receive LinkedIn advanced permissions
+      skills: 'N/A due to lack of LinkedIn parmissions', //TODO: receive LinkedIn advanced permissions
+      experience: responseProfile.experience,
+      education: responseProfile.education
+    }
+
+    let copy = Object.assign({}, this.state, {isAuthorized: true, userProfile: newUserProfile});
     this.setState(copy);
-    dir(response);
+    console.dir(response.data);
   }
 
   handleLinkedInUserProfileFetchError(error) {
@@ -370,9 +382,10 @@ class App extends Component {
 
   handleFaceBookUserProfileFetch(response) {
     console.log("handleFaceBookUserProfileFetch: ");
+
     let copy = Object.assign({}, this.state, {isAuthorized: true});
     this.setState(copy);
-    dir(response);
+    console.dir(response.data);
   }
     
   handleFaceBookUserProfileFetchError(error) {
@@ -395,27 +408,40 @@ class App extends Component {
         this.setState(copy);
       }
     }
+    if (prevState.isAuthorized != this.state.isAuthorized) {
+      if (this.state.isAuthorized) {
+        let copy = Object.assign({}, this.state, {redirectToUserProfile: true});
+        this.setState(copy);
+      }
+    }
 
     console.log("App state: ");
     console.dir(this.state);
   }
+
+  getRedirectLocation() {
+    let RedirectTo = null;
+    if (this.state.redirectToSearchResults) {
+      RedirectTo = <Redirect to="/searchResults" push />;
+      this.state.redirectToSearchResults = false;
+    }
+    else if (this.state.redirectToUserProfile) {
+      RedirectTo = <Redirect to="/userProfile" push />;
+      this.state.redirectToUserProfile = false;
+    }
+
+    return RedirectTo;
+  }
   
   render() {
 
-    let RedirectToSearchResults = null;
-    
-    if (this.state.redirectToSearchResults) {
-      RedirectToSearchResults = <Redirect to="/searchResults" push />;
-
-      let copy = Object.assign({}, this.state, {redirectToSearchResults: false});
-      this.setState(copy);
-    }
+    let RedirectTo = this.getRedirectLocation();
 
     return (
       
       <div>
         {this.renderLoginPopup()}
-        {RedirectToSearchResults}
+        {RedirectTo}
       <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
                           onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
       <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
