@@ -90,6 +90,18 @@ class App extends Component {
     this.isSearchingForFreelancerItems = false;
   }
 
+  handleAuthorizeLinked(id) {
+    let copy = Object.assign({}, this.state, {linkedInID: id});
+    this.setState(copy);
+    console.log("handleAuthorizeLinked id: " + id);
+  }
+
+  handleAuthorizeFaceBook(id) {
+    let copy = Object.assign({}, this.state, {faceBookID: id});
+    this.setState(copy);
+    console.log("handleAuthorizeFaceBook id: " + id);
+  }
+
   handleChange(event) {
     this.handleQueryChange(event.target.value);
   }
@@ -380,12 +392,12 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.linkedInProfileID != this.state.linkedInProfileID || prevState.faceBookToken != this.state.faceBookToken) {
-      if(!this.state.linkedInProfileID && !this.state.faceBookToken) {
+    if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookToken != this.state.faceBookToken) {
+      if(!this.state.linkedInID && !this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: false});
         this.setState(copy);
       }
-      else if(this.state.linkedInProfileID || this.state.faceBookToken) {
+      else if(this.state.linkedInID || this.state.faceBookToken) {
         let copy = Object.assign({}, this.state, {isAuthorized: true});
         this.setState(copy);
       }
@@ -396,6 +408,9 @@ class App extends Component {
         this.setState(copy);
       }
     }
+
+    console.log("App state: ");
+    console.dir(this.state);
   }
   
   render() {
@@ -436,7 +451,9 @@ class App extends Component {
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.closeSignUpModal()}
           onHandleFaceBookLoginResponse={(response) => this.handleFaceBookLoginResponse(response)}
-          isSignUpFormOpen={this.state.isSignUpFormOpen}/>
+          isSignUpFormOpen={this.state.isSignUpFormOpen}
+          onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
+          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}/>
       <ThemeFooterContainer/>
       </div>
     );

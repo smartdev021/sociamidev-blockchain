@@ -8,8 +8,18 @@ import ActionLink from './ActionLink'
 
 class ThemeNavBar extends React.Component {
   render() {
-const SettingsButton = (this.props.isAuthorized) ? <li><button className="btn btn-lg btn-info btn-block" type="button" 
-onClick = {() => this.props.onHandleOpenSettings()}>Settings</button></li> : null;
+    console.log("Navbar props: ");
+    console.dir(this.props);
+    console.log("this.props.isAuthorized: " + this.props.isAuthorized);
+
+let ProfileLink = '';
+if (this.props.isAuthorized) {
+  ProfileLink = <Link className='navbar-brand' to='/userProfile'>Your account</Link>;
+}
+else
+{
+  ProfileLink = <ActionLink text='Already a member?' onClick={()=> this.props.onHandleSignUp()}/>;
+}
 
     return (
         <div className="navbar navbar-default navbar-fixed-top">
@@ -24,8 +34,7 @@ onClick = {() => this.props.onHandleOpenSettings()}>Settings</button></li> : nul
       </div>
       <div className="navbar-collapse collapse">
         <ul className="nav navbar-nav navbar-right">
-          <li><ActionLink text='Already a member?' onClick={(e)=> this.props.onHandleSignUp()}/></li>
-          {SettingsButton}
+          <li>{ProfileLink}</li>
         </ul>
     </div>
   </div>

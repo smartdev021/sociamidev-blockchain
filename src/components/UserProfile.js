@@ -15,10 +15,18 @@ class UserProfile extends React.Component {
     super(props);
 
     this.state = {
-      education: this.props.settings.education, 
+      /*education: this.props.settings.education, 
       workExperience: this.props.settings.experience,
       firstName : this.props.settings.firstName,
       lastName : this.props.settings.lastName,
+      interests: "", 
+      skills: "",
+      facebookID: null,
+      linkedInID: null*/
+      education: "Coming soon...", 
+      workExperience: "Coming soon...",
+      firstName : "Coming soon...",
+      lastName : "Coming soon...",
       interests: "", 
       skills: "",
       facebookID: null,
@@ -39,19 +47,19 @@ class UserProfile extends React.Component {
 
       <input type="text" className="form-control control_user_profile" name="Yourinterests" 
       placeholder="What are your interests?" required="" readOnly 
-      value={this.props.settings.firstName}/>  
+      value={''}/>  
 
       <input type="text" className="form-control control_user_profile" name="Your skills" 
       placeholder="What are your skills?" required="" readOnly
-      value={this.props.settings.lastName}/>  
+      value={''}/>  
 
 
       <input type="text" className="form-control control_user_profile" name="Education" placeholder="Where did you study?" required="" readOnly
-      autoFocus="" required="" value={this.props.settings.education}/>
+      autoFocus="" required="" value={''}/>
 
       <input type="text" className="form-control control_user_profile" name="Working Experience" 
       placeholder="What is your working experience?" required="" onChange={(e) => this.handleChangeWorkExperience(e)} 
-      value={this.props.settings.experience} readOnly/>  
+      value={''} readOnly/>  
 
       <button className="btn btn-lg btn-primary btn-block" type="button" onClick={()=>this.handleClose()}>OK</button>   
       </div>
