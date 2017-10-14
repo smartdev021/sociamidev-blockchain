@@ -3,8 +3,7 @@
 */
 
 import React, { Component } from 'react';
-import Promise from 'bluebird'
-import Axios from 'axios'
+import {Link} from 'react-router-dom'
 
 import ConfigMain from '../../configs/main'
 
@@ -13,25 +12,6 @@ import "../css/userProfile.css"
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      /*education: this.props.settings.education, 
-      workExperience: this.props.settings.experience,
-      firstName : this.props.settings.firstName,
-      lastName : this.props.settings.lastName,
-      interests: "", 
-      skills: "",
-      facebookID: null,
-      linkedInID: null*/
-      education: "Coming soon...", 
-      workExperience: "Coming soon...",
-      firstName : "Coming soon...",
-      lastName : "Coming soon...",
-      interests: "", 
-      skills: "",
-      facebookID: null,
-      linkedInID: null
-    };
   }
 
   handleFormAction() {
@@ -45,21 +25,32 @@ class UserProfile extends React.Component {
       <div className="form-group">
       <h2 className="form-signin-heading">User profile summary</h2>
 
-      <input type="text" className="form-control control_user_profile" name="Yourinterests" 
-      placeholder="What are your interests?" required="" readOnly 
+      <input type="text" className="form-control control_user_profile" name="first-name" 
+      placeholder="First Name" readOnly 
+      value={''}/>
+
+      <input type="text" className="form-control control_user_profile" name="last-name" 
+      placeholder="Last Name" readOnly 
+      value={''}/> 
+
+      <input type="text" className="form-control control_user_profile" name="interests" 
+      placeholder="What are your interests?" readOnly 
       value={''}/>  
 
-      <input type="text" className="form-control control_user_profile" name="Your skills" 
-      placeholder="What are your skills?" required="" readOnly
+      <input type="text" className="form-control control_user_profile" name="skills" 
+      placeholder="What are your skills?" readOnly
       value={''}/>  
 
+      <input type="text" className="form-control control_user_profile" name="education" 
+      placeholder="Where did you study?" readOnly
+      value={''}/>
 
-      <input type="text" className="form-control control_user_profile" name="Education" placeholder="Where did you study?" required="" readOnly
-      autoFocus="" required="" value={''}/>
-
-      <input type="text" className="form-control control_user_profile" name="Working Experience" 
+      <input type="text" className="form-control control_user_profile" name="experience" 
       placeholder="What is your working experience?" required="" onChange={(e) => this.handleChangeWorkExperience(e)} 
-      value={''} readOnly/>  
+      value={''} readOnly/>
+
+      <Link className="btn btn-primary btn-lg btn-block" to='/'>Back to Main</Link>
+
       </div>
     </form>
   </div>)
