@@ -30,7 +30,6 @@ class JobsList extends React.Component {
   }
 
   render() {
-
     let listContent = <p>No Jobs Found</p>;
     
     //Parse this.props, and create table of list of jobs. Use JobItem copmonent for single row of the table
