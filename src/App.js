@@ -20,7 +20,6 @@ import ThemeNavBar from './components/ThemeNavBar';
 import Main from './components/Main';
 
 import AuthenticationHelper from './authentication/AuthenticationHelper';
-import SignUpFormPopup from './authentication/SignUpForm';
 import UserProfile from './components/UserProfile';
 
 import "./css/loginFormPopup.css"
@@ -400,43 +399,11 @@ class App extends Component {
   }
   
   render() {
-    const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} 
-    onCloseModal={() => this.closeSignUpModal()} onFaceBookLoginResponse = {(response) => this.handleFaceBookLoginResponse(response)}/>;
 
-    const UserProfileForm = <UserProfile
-    onSubmitSettings={(settings) => this.handleSettingsFormSubmit(settings)} 
-    settings={this.state.userProfile} linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>;
-    let RenderData = (<div>
-      
-    <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
-          onHandleChange={(e) => this.handleChange(e)} 
-          onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-          onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
-          isSearchInProgress={this.state.isSearchInProgress}
-          numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length}
-          numCourses={this.state.udemyItems.length}
-          onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}
-          selectedCategory={this.state.selectedCategory} jobItems={this.state.jobItems}
-          eventBriteItems={this.state.eventBrightItems} udemyItems={this.state.udemyItems}
-          freelancerProjectItems={this.state.freelancerProjectItems}
-          onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
-          onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
-          onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
-          onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
-          currentPage={this.state.currentPage}
-          userProfile={this.state.userProfile}
-          linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>
-          </div>);
-    if (this.state.isSettingsFormOpen) {
-      RenderData = (<div>
-      {UserProfileForm}
-      </div>);
-    }
-
-    let redirect = null;
+    let RedirectToSearchResults = null;
     
     if (this.state.redirectToSearchResults) {
-      redirect = <Redirect to="/searchResults" push />;
+      RedirectToSearchResults = <Redirect to="/searchResults" push />;
 
       let copy = Object.assign({}, this.state, {redirectToSearchResults: false});
       this.setState(copy);
@@ -446,10 +413,9 @@ class App extends Component {
       
       <div>
         {this.renderLoginPopup()}
-        {redirect}
+        {RedirectToSearchResults}
       <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
                           onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
-      {SignUpForm}
       <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
@@ -467,7 +433,10 @@ class App extends Component {
           onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
           currentPage={this.state.currentPage}
           userProfile={this.state.userProfile}
-          linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}/>
+          linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
+          onCloseSignUpModal={() => this.closeSignUpModal()}
+          onHandleFaceBookLoginResponse={(response) => this.handleFaceBookLoginResponse(response)}
+          isSignUpFormOpen={this.state.isSignUpFormOpen}/>
       <ThemeFooterContainer/>
       </div>
     );

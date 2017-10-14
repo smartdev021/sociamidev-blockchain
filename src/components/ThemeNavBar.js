@@ -3,12 +3,11 @@
 */
 
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
+import ActionLink from './ActionLink'
 
 class ThemeNavBar extends React.Component {
   render() {
-    const SignUpButton = (!this.props.isAuthorized) ? <li><button className="btn btn-lg btn-primary btn-block" type="button" 
-    onClick = {() => this.props.onHandleSignUp()}>Sign Up</button></li> : null;
-
 const SettingsButton = (this.props.isAuthorized) ? <li><button className="btn btn-lg btn-info btn-block" type="button" 
 onClick = {() => this.props.onHandleOpenSettings()}>Settings</button></li> : null;
 
@@ -21,12 +20,11 @@ onClick = {() => this.props.onHandleOpenSettings()}>Settings</button></li> : nul
           <span className="icon-bar"></span>
           <span className="icon-bar"></span>
         </button>
-        <a className="navbar-brand" href="#"><b>Sociami</b></a>
+        <Link className='navbar-brand' to='/'>Sociami</Link>
       </div>
       <div className="navbar-collapse collapse">
         <ul className="nav navbar-nav navbar-right">
-          <li><a href="#">Already a member?</a></li>
-          {SignUpButton}
+          <li><ActionLink text='Already a member?' onClick={(e)=> this.props.onHandleSignUp()}/></li>
           {SettingsButton}
         </ul>
     </div>
