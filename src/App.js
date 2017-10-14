@@ -12,9 +12,6 @@ require('es6-promise').polyfill();
 import React, { Component } from 'react';
 
 import SearchHeader from './components/SearchHeader';
-import ThemeMainContainer from './components/ThemeMainContainer';
-import ThemeInviteMeContainer from './components/ThemeInviteMeContainer';
-import ThemeMeetTheTeamContainer from './components/ThemeMeetTheTeamContainer';
 import ThemeFooterContainer from './components/ThemeFooterContainer';
 import ThemeCarouselContainer from './components/ThemeCarouselContainer';
 import ThemeNavBar from './components/ThemeNavBar';
@@ -392,26 +389,6 @@ class App extends Component {
   }
   
   render() {
-    const waitingText = (this.state.isSearchInProgress) ? <b>(Wait...)</b> : "";
-    const HeadWrap = <div id="headerwrap">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6">
-            <h1>Prepare for the future with what you can learn now</h1>
-            <form className="form-inline" action="#" onSubmit={(e) => this.handleStartSearch(e)}>
-              <div className="form-group">
-                <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.handleChange(e)}/>
-              </div>
-              <button type="button" className="btn btn-warning btn-lg" 
-              onClick={(e) => this.handleStartSearch(e)}>Check out the future!{waitingText}</button>
-            </form>					
-          </div>
-        <div className="col-lg-6">
-      <img className="img-responsive" src="https://sociamibucket.s3.amazonaws.com/assets/images/Howwelive_resized.jpg" alt="Howwelive_resized.jpg"/>
-    </div>
-  </div>
-</div>
-</div>;
     const SignUpForm = <SignUpFormPopup modalIsOpen={this.state.isSignUpFormOpen} 
     onCloseModal={() => this.closeSignUpModal()} onFaceBookLoginResponse = {(response) => this.handleFaceBookLoginResponse(response)}/>;
 
@@ -421,21 +398,12 @@ class App extends Component {
 
 
     let RenderData = (<div>
-                        {this.renderLoginPopup()}
-                        {SignUpForm}
-                        {HeadWrap}
-                        <ThemeMainContainer/>
-                        <ThemeInviteMeContainer/>
-                        <ThemeCarouselContainer/>
-                        <ThemeInviteMeContainer/>
-                        <ThemeMeetTheTeamContainer/>
+                        <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} onHandleChange={(e) => this.handleChange(e)}/>
                         </div>
                         );
                         
     if (this.state.currentPage == "search_results_page") {
       RenderData = (<div>
-        {this.renderLoginPopup()}
-        {SignUpForm}
       <div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.handleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} isSearchInProgress={this.state.isSearchInProgress}
@@ -464,6 +432,7 @@ class App extends Component {
       <div>
       <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
                           onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
+      {SignUpForm}
       {RenderData}
       <ThemeFooterContainer/>
       </div>
