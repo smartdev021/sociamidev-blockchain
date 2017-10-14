@@ -75,9 +75,6 @@ class App extends Component {
       isSignUpFormOpen: false,
       isSettingsFormOpen: false,
       isAuthorized: false,
-      linkedInCode: "",
-      linkedInProfileID: "",
-      faceBookToken: "",
       faceBookID: null,
       linkedInID: null,
       userProfile: {settings: null},
@@ -150,23 +147,6 @@ class App extends Component {
 
   handleClickOutside() {
     this.closeModal();
-  }
-
-  handleFaceBookLoginResponse(response) {
-    console.log("handleFaceBookLoginResponse");
-    if (response.authResponse.accessToken) {
-      let copy = Object.assign({}, this.state, {faceBookToken: response.authResponse.accessToken, faceBookID: response.authResponse.userID});
-      this.setState(copy);
-
-      console.log(response);
-
-      Axios.get(`${ConfigMain.BackendURL}/signIn?facebookID=${response.authResponse.userID}`)
-      .then((response) =>this.handleFaceBookSignInResponse(response))
-      .catch(function(error){Axios.get(`${ConfigMain.BackendURL}/signUp?facebookID=${response.authResponse.userID}`)
-      .then(function(){})
-      .catch(function(){})});
-    }
-    this.closeSignUpModal();
   }
 
   handleFaceBookSignInResponse(response) {
@@ -352,9 +332,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let urlParams = new URLSearchParams(window.location.search);
+    /*let urlParams = new URLSearchParams(window.location.search);
 
-    console.log("urlParams: " + urlParams);
+   console.log("urlParams: " + urlParams);
 
     let linkedInId = urlParams.get("linkedInId");
     let facebookId = urlParams.get("facebookId");
@@ -371,33 +351,21 @@ class App extends Component {
       console.log(`Received FaceBook id ${facebookId} in URL`);
 
       console.log("Fetching user profile...");
-    }
-  }
-
-  handlelinkedInUserProfileFetch(response) {
-    console.log("Fetch successfull: " + response.data.linkedInID);
-    console.dir(response.data);
-
-    let copy = Object.assign({}, this.state, {linkedInProfileID: response.data.linkedInID, userProfile : response.data.profile});
-    this.setState(copy);
-  }
-
-  handlelinkedInUserProfileFetchError(error) {
-    console.log("Error fetching result: " + error);
+    }*/
   }
 
   resetAuthentication() {
-    let copy = Object.assign({}, this.state, {linkedInProfileID: "", faceBookToken: ""});
+    let copy = Object.assign({}, this.state, {linkedInID: "", faceBookID: ""});
     this.setState(copy);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookToken != this.state.faceBookToken) {
-      if(!this.state.linkedInID && !this.state.faceBookToken) {
+    if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
+      if(!this.state.linkedInID && !this.state.faceBookID) {
         let copy = Object.assign({}, this.state, {isAuthorized: false});
         this.setState(copy);
       }
-      else if(this.state.linkedInID || this.state.faceBookToken) {
+      else if(this.state.linkedInID || this.state.faceBookID) {
         let copy = Object.assign({}, this.state, {isAuthorized: true});
         this.setState(copy);
       }
@@ -450,7 +418,6 @@ class App extends Component {
           userProfile={this.state.userProfile}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.closeSignUpModal()}
-          onHandleFaceBookLoginResponse={(response) => this.handleFaceBookLoginResponse(response)}
           isSignUpFormOpen={this.state.isSignUpFormOpen}
           onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
           onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}/>

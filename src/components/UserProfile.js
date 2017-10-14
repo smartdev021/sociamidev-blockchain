@@ -60,16 +60,11 @@ class UserProfile extends React.Component {
       <input type="text" className="form-control control_user_profile" name="Working Experience" 
       placeholder="What is your working experience?" required="" onChange={(e) => this.handleChangeWorkExperience(e)} 
       value={''} readOnly/>  
-
-      <button className="btn btn-lg btn-primary btn-block" type="button" onClick={()=>this.handleClose()}>OK</button>   
       </div>
     </form>
   </div>)
   }
 
-  handleClose() {
-    this.props.onSubmitSettings();
-  }
 
   render() {
     return (<span>

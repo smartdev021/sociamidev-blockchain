@@ -1,8 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import "../css/signUpFormPopup.css"
-import LinkedInLogin from '../components/LinkedInLogin';
-import FaceBookLoginComponent from '../components/FaceBookLogin';
 import ConfigMain from '../../configs/main';
 
 const enhanceWithClickOutside = require('react-click-outside');
@@ -27,8 +25,7 @@ class SignupForm extends React.Component {
           <div className="wrapper">
         <div className="form-sign-up" >       
           <h2 className="form-sign-u-heading">Sign Up</h2>
-          <FaceBookLoginComponent buttonClassName="btn btn-lg btn-primary btn-block" text="FaceBook" 
-          onResponse={(response) => this.props.onFaceBookLoginResponse(response)}/>
+          <button type="button" className="btn btn-lg btn-primary btn-block" onClick={this.handleFaceBookSignUp}>FaceBook</button>
           <button type="button" className="btn btn-lg btn-warning btn-block" onClick={this.handleLinkedInSignUp}>LinkedIn</button>
         </div>
       </div>
@@ -47,6 +44,10 @@ class SignupForm extends React.Component {
 
       handleLinkedInSignUp() {
         window.location.href = `${ConfigMain.BackendURL}/auth/linkedin`;
+      }
+
+      handleFaceBookSignUp() {
+        window.location.href = `${ConfigMain.BackendURL}/auth/facebook`;
       }
 
     render() {
