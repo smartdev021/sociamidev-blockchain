@@ -3,7 +3,15 @@ const BACKEND_URL_REMOTE_PROD = 'http://13.59.19.153:3000';
 const BACKEND_URL_REMOTE_STAGING = 'http://13.59.19.153:8080';
 
 var ConfigMain = {
-    BackendURL: BACKEND_URL_REMOTE_PROD,
+    getBackendURL : function() {
+        if (process.env.dev_env =="local") {
+            return BACKEND_URL_LOCAL;
+        }
+        else {
+            return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
+        }
+    },
+
     S3BucketURL: 'https://sociamibucket.s3.amazonaws.com'
 }
 

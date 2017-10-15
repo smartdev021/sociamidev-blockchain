@@ -31,8 +31,6 @@ import ConfigMain from '../configs/main'
 import Modal from 'react-modal';
 const enhanceWithClickOutside = require('react-click-outside');
 
-import ConfigsSocial from '../configs/social'
-
 //load fonts
 import WebFont from 'webfontloader';
 
@@ -50,6 +48,8 @@ let DataProviderIndeed = require("./data_providers/indeed/DataProvider");
 let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
 let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
 let DataProviderFreelancer = require("./data_providers/freelancer/DataProvider");
+
+const BackendURL = ConfigMain.getBackendURL();
 
 class App extends Component {
   constructor(props) {
@@ -94,6 +94,8 @@ class App extends Component {
     this.isSearchingEvents = false;
     this.isSearchingForUdemyItems = false;
     this.isSearchingForFreelancerItems = false;
+
+    console.log(`Config BackendURL: ${BackendURL}`);
   }
 
   handleAuthorizeLinked(id) {
@@ -245,7 +247,7 @@ class App extends Component {
   refreshDataIndeed() {
     if (this.state.query != "") {
       const PUBLISHER_ID = "4201738803816157";
-      let url = `${ConfigMain.BackendURL}/indeed/jobs?query=${this.state.query}&country=${this.state.country}`;
+      let url = `${BackendURL}/indeed/jobs?query=${this.state.query}&country=${this.state.country}`;
   
       DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
     }
@@ -253,21 +255,21 @@ class App extends Component {
   
   refreshDataEventBright() {
     if (this.state.query != "") {
-      let url = `${ConfigMain.BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
+      let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
       DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
     }
   }
 
   refreshDataUdemy() {
     if (this.state.query != "") {
-      let url = `${ConfigMain.BackendURL}/udemy/courses/?query=${this.state.query}`;
+      let url = `${BackendURL}/udemy/courses/?query=${this.state.query}`;
       DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
     }
   }
 
   refreshDataFreelancer() {
     if (this.state.query != "") {
-      let url = `${ConfigMain.BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
+      let url = `${BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
       DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
     }
   }
@@ -335,12 +337,12 @@ class App extends Component {
 
   fetchUserInfoFromDataBase() {
     if (this.state.linkedInID) {
-      Axios.get(`${ConfigMain.BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`)
+      Axios.get(`${BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`)
       .then((response) =>this.handleLinkedInUserProfileFetch(response))
       .catch((error) =>this.handleLinkedInUserProfileFetchError(error));
     }
     else if (this.state.faceBookID) {
-      Axios.get(`${ConfigMain.BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`)
+      Axios.get(`${BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`)
       .then((response) =>this.handleFaceBookUserProfileFetch(response))
       .catch((error) =>this.handleFaceBookUserProfileFetchError(error));
     }

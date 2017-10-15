@@ -5,6 +5,8 @@ import ConfigMain from '../../configs/main';
 
 const enhanceWithClickOutside = require('react-click-outside');
 
+const BackendURL = ConfigMain.getBackendURL();
+
 class SignupForm extends React.Component {
     constructor(props) {
       super(props);
@@ -43,11 +45,11 @@ class SignupForm extends React.Component {
       }
 
       handleLinkedInSignUp() {
-        window.location.href = `${ConfigMain.BackendURL}/auth/linkedin`;
+        window.location.href = `${BackendURL}/auth/linkedin`;
       }
 
       handleFaceBookSignUp() {
-        window.location.href = `${ConfigMain.BackendURL}/auth/facebook`;
+        window.location.href = `${BackendURL}/auth/facebook`;
       }
 
     render() {

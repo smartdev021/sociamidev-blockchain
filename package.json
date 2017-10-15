@@ -4,6 +4,7 @@
   "description": "ReactIndeedJobsList",
   "scripts": {
     "start": "node server.js",
+    "startLocal" : "dev_env=local node server.js",
     "lint": "eslint src",
     "compile": "webpack -p",
     "dev": "webpack -d --watch",
