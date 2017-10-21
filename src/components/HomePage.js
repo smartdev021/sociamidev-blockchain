@@ -14,7 +14,9 @@ class HomePage extends React.Component {
   render() {
 
     return (<div>
-      <HeadWrap onHandleStartSearch={(e) => this.props.onHandleStartSearch(e)} onHandleChange={(e) => this.props.onHandleChange(e)}/>
+      <HeadWrap onHandleStartSearch={(e) => this.props.onHandleStartSearch(e)} 
+      onHandleChange={(e) => this.props.onHandleChange(e)} 
+      isFetchInProgress={this.props.isFetchInProgress}/>
       <ThemeMainContainer/>
       <ThemeCarouselContainer/>
       <ThemeInviteMeContainer/>

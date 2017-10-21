@@ -14,7 +14,7 @@ if (this.props.isAuthorized) {
 }
 else
 {
-  ProfileLink = <ActionLink text='Already a member?' onClick={()=> this.props.onHandleSignUp()}/>;
+  ProfileLink = <ActionLink onClick={()=> this.props.onHandleSignUp()}>Already a member?</ActionLink>;
 }
 
     return (

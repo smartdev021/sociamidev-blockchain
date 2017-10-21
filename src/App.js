@@ -28,9 +28,6 @@ import Axios from 'axios'
 
 import ConfigMain from '../configs/main'
 
-import Modal from 'react-modal';
-const enhanceWithClickOutside = require('react-click-outside');
-
 //load fonts
 import WebFont from 'webfontloader';
 
@@ -52,6 +49,8 @@ import {
   fetchGigItemsComplete,
   fetchResultsInitiate,
   fetchResultsComplete,
+  bookmarkAdd,
+  bookmarkRemoveAll,
 } from './redux/actions/actions'
 
 WebFont.load({
@@ -74,7 +73,6 @@ class App extends Component {
     super(props);
 
     this.handleQueryChange = this.handleQueryChange.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
 
     this.initialCountry = this.countries.Singapore;
@@ -83,7 +81,7 @@ class App extends Component {
     this.state = {
       country: "sg", 
       query : "",
-      isSearchInProgress: false, modalIsOpen: false,
+      isSearchInProgress: false,
       isSignUpFormOpen: false,
       isAuthorized: false,
       faceBookID: null,
@@ -120,30 +118,23 @@ class App extends Component {
   handleStartSearch(event) {
     event.preventDefault();
 
-    if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems && !this.isSearchingForFreelancerItems) {
-      this.startNewSearch();
-    }
+    this.startNewSearch();
   }
 
   handleAddJobToFavorites(event) {
-    console.log("handleAddJobToFavorites");
-    let copy = Object.assign({}, this.state, {modalIsOpen: true});
-    this.setState(copy);
+    this.props.addBookmark({});
   }
 
   handleAddCourseToFavorites(event) {
-    let copy = Object.assign({}, this.state, {modalIsOpen: true});
-    this.setState(copy);
+    this.props.addBookmark({});
   }
 
   handleAddEventToFavorites(event) {
-    let copy = Object.assign({}, this.state, {modalIsOpen: true});
-    this.setState(copy);
+    this.props.addBookmark({});
   }
 
   handleAddFreelancerProjectToFavorites(event) {
-    let copy = Object.assign({}, this.state, {modalIsOpen: true});
-    this.setState(copy);
+    this.props.addBookmark({});
   }
 
   refreshBusyState() {
@@ -153,32 +144,30 @@ class App extends Component {
       this.setState(copy);
   }
 
-  handleClickOutside() {
-    this.closeModal();
-  }
-
   startNewSearch() {
-    this.isSearchingJobs = true;
-    this.isSearchingEvents = true;
-    this.isSearchingForUdemyItems = true;
-    this.isSearchingForFreelancerItems = true;
+    if (!this.props.isFetchInProgress && this.state.query != "") {
+      this.isSearchingJobs = true;
+      this.isSearchingEvents = true;
+      this.isSearchingForUdemyItems = true;
+      this.isSearchingForFreelancerItems = true;
 
-    this.props.populateJobItems([]);
-    this.props.populateEventItems([]);
-    this.props.populateCourseItems([]);
-    this.props.populateGigItems([]);
-    
-    let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
-    this.setState(copy);
-
-    this.props.fetchResultsInitiate();
-
-    this.refreshBusyState();
-
-    this.refreshDataIndeed();
-    this.refreshDataEventBright();
-    this.refreshDataUdemy();
-    this.refreshDataFreelancer();
+      this.refreshBusyState();
+  
+      this.props.populateJobItems([]);
+      this.props.populateEventItems([]);
+      this.props.populateCourseItems([]);
+      this.props.populateGigItems([]);
+      
+      let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
+      this.setState(copy);
+  
+      this.props.fetchResultsInitiate();
+  
+      this.refreshData("jobs");
+      this.refreshData("events");
+      this.refreshData("courses");
+      this.refreshData("gigs");
+    }
   }
 
   handleQueryChange(newQuery) {
@@ -189,10 +178,7 @@ class App extends Component {
   dataUpdatedIndeed(items) {
     if (typeof items !== "undefined") {
       this.isSearchingJobs = false;
-
-      let copy = Object.assign({}, this.state, {jobItems: items});
-      this.setState(copy);
-
+      
       this.props.populateJobItems(items);
 
       this.refreshBusyState();
@@ -203,9 +189,6 @@ class App extends Component {
     if (typeof items !== "undefined") {
 
       this.isSearchingEvents = false;
-
-      let copy = Object.assign({}, this.state, {eventBrightItems: items});
-      this.setState(copy);
 
       this.props.populateEventItems(items);
 
@@ -218,9 +201,6 @@ class App extends Component {
 
       this.isSearchingForUdemyItems = false;
 
-      let copy = Object.assign({}, this.state, {udemyItems: items});
-      this.setState(copy);
-
       this.props.populateCourseItems(items);
 
       this.refreshBusyState();
@@ -232,48 +212,43 @@ class App extends Component {
 
       this.isSearchingForFreelancerItems = false;
 
-      let copy = Object.assign({}, this.state, {freelancerProjectItems: items});
-      this.setState(copy);
-
       this.props.populateGigItems(items);
       
       this.refreshBusyState();
     }
   }
 
-  refreshDataIndeed() {
-    if (this.state.query != "") {
-      const PUBLISHER_ID = "4201738803816157";
-      let url = `${BackendURL}/indeed/jobs?query=${this.state.query}&country=${this.state.country}`;
-  
-      DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
+  refreshData(type) {
+    switch(type) {
+      case "jobs":
+      {
+        const PUBLISHER_ID = "4201738803816157";
+        let url = `${BackendURL}/indeed/jobs?query=${this.state.query}&country=${this.state.country}`;
+    
+        DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
+        break;
+      }
+      case "events":
+      {
+        let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
+        DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
+        break;
+      }
+      case "courses":
+      {
+        let url = `${BackendURL}/udemy/courses/?query=${this.state.query}`;
+        DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
+        break;
+      }
+      case "gigs":
+      {
+        let url = `${BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
+        DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
+        break;
+      }
+      default:
+       break;
     }
-  }
-  
-  refreshDataEventBright() {
-    if (this.state.query != "") {
-      let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
-      DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
-    }
-  }
-
-  refreshDataUdemy() {
-    if (this.state.query != "") {
-      let url = `${BackendURL}/udemy/courses/?query=${this.state.query}`;
-      DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
-    }
-  }
-
-  refreshDataFreelancer() {
-    if (this.state.query != "") {
-      let url = `${BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
-      DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
-    }
-  }
-
-  closeModal() {
-    let copy = Object.assign({}, this.state, {modalIsOpen: false});
-    this.setState(copy);
   }
 
   closeSignUpModal() {
@@ -285,33 +260,7 @@ class App extends Component {
     let copy = Object.assign({}, this.state, {isSignUpFormOpen: !this.state.isSignUpFormOpen});
     this.setState(copy);
   }
-
-  renderLoginPopup() {
-    return (<div>
-      <Modal
-      className={{
-    base: 'modal_base'
-  }}
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={() => this.closeModal()}
-        contentLabel="Login Form"
-      >
-
-      <div className="wrapper">
-    <form className="form-signin">       
-      <h2 className="form-signin-heading">Coming Soon</h2>
-      <input type="text" className="form-control" name="username" placeholder="Email Address" required="" autoFocus="" />
-      <input type="password" className="form-control" name="password" placeholder="Password" required=""/>      
-      <label className="checkbox">
-        <input type="checkbox" className="remember-me" id="rememberMe" name="rememberMe"/> Remember me
-      </label>
-      <button className="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
-    </form>
-  </div>
-      </Modal>
-    </div>);
-  }
-
+  
   resetAuthentication() {
     let copy = Object.assign({}, this.state, {linkedInID: "", faceBookID: "", profule: null});
     this.setState(copy);
@@ -320,40 +269,18 @@ class App extends Component {
   fetchUserInfoFromDataBase() {
     if (this.state.linkedInID) {
       Axios.get(`${BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`)
-      .then((response) =>this.handleLinkedInUserProfileFetch(response))
-      .catch((error) =>this.handleLinkedInUserProfileFetchError(error));
+      .then((response) =>this.handleUserProfileFetchFromDB(response))
+      .catch((error) =>this.handleUserProfileFetchFromDBError(error));
     }
     else if (this.state.faceBookID) {
       Axios.get(`${BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`)
-      .then((response) =>this.handleFaceBookUserProfileFetch(response))
-      .catch((error) =>this.handleFaceBookUserProfileFetchError(error));
+      .then((response) =>this.handleUserProfileFetchFromDB(response))
+      .catch((error) =>this.handleUserProfileFetchFromDBError(error));
     }
   }
 
-  handleLinkedInUserProfileFetch(response) {
-    console.log("handleLinkedInUserProfileFetch: ");
-    const responseProfile = response.data.profile;
-
-    let newUserProfile = {
-      firstName: responseProfile.firstName, 
-      lastName: responseProfile.lastName, 
-      interests: responseProfile.interests, //TODO: receive LinkedIn advanced permissions
-      skills: responseProfile.skills, //TODO: receive LinkedIn advanced permissions
-      experience: responseProfile.experience,
-      education: responseProfile.education
-    }
-
-    this.props.fetchUserProfileComplete(newUserProfile);
-    let copy = Object.assign({}, this.state, {isAuthorized: true});
-    this.setState(copy);
-  }
-
-  handleLinkedInUserProfileFetchError(error) {
-    console.log("Error fetching LinkedIn profile: " + error);
-  }
-
-  handleFaceBookUserProfileFetch(response) {
-    console.log("handleFaceBookUserProfileFetch: ");
+  handleUserProfileFetchFromDB(response) {
+    console.log("handleUserProfileFetchFromDB: ");
     
     const responseProfile = response.data.profile;
 
@@ -371,7 +298,7 @@ class App extends Component {
     this.setState(copy);
   }
     
-  handleFaceBookUserProfileFetchError(error) {
+  handleUserProfileFetchFromDBError(error) {
     console.log("Error fetching FaceBook profile: " + error);
   }
 
@@ -387,13 +314,24 @@ class App extends Component {
     }
     if (prevState.isSearchInProgress != this.state.isSearchInProgress) {
       if (!this.state.isSearchInProgress) {
-        this.props.openSearchResults();
+        this.props.fetchResultsComplete();
       }
     }
     if (prevState.isAuthorized != this.state.isAuthorized) {
       if (this.state.isAuthorized) {
         this.props.openUserProfile();
       }
+    }
+
+    if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
+      if (!this.props.isFetchInProgress) {
+        this.props.openSearchResults();
+      }
+    }
+
+    if (prevProps != this.props) {
+      console.log("App props updated: ");
+      console.dir(this.props);
     }
   }
 
@@ -420,14 +358,13 @@ class App extends Component {
     return (
       
       <div>
-        {this.renderLoginPopup()}
         {RedirectTo}
       <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} isAuthorized={this.state.isAuthorized}/>
       <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
           onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
-          isSearchInProgress={this.state.isSearchInProgress}
+          isFetchInProgress={this.props.isFetchInProgress}
           onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
           onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
           onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
@@ -469,6 +406,8 @@ const mapDispatchToProps = dispatch => ({
   fetchUserProfileComplete: bindActionCreators(fetchUserProfileComplete, dispatch),
   fetchResultsInitiate: bindActionCreators(fetchResultsInitiate, dispatch),
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
+  addBookmark: bindActionCreators(bookmarkAdd, dispatch),
+  removeAllBookmarks: bindActionCreators(bookmarkRemoveAll, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -479,4 +418,4 @@ const mapStateToProps = state => ({
 
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(enhanceWithClickOutside(App)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

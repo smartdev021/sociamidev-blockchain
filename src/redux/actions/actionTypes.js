@@ -13,3 +13,7 @@ export const FETCH_GIG_ITEMS_COMPLETE = "fetch_gig_items_complete";
 
 export const FETCH_RESULTS_INITIATE = "fetch_results_initiate";
 export const FETCH_RESULTS_COMPLETE = "fetch_results_complete";
+
+export const BOOKMARK_ADD = "bookmark_add";
+export const BOOKMARK_REMOVE = "bookmark_remove";
+export const BOOKMARK_REMOVE_ALL = "bookmark_remove_all";

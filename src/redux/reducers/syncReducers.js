@@ -14,6 +14,10 @@ import {
   
   FETCH_RESULTS_INITIATE,
   FETCH_RESULTS_COMPLETE,
+
+  BOOKMARK_ADD,
+  BOOKMARK_REMOVE,
+  BOOKMARK_REMOVE_ALL,
 } from '../actions/actionTypes';
 
 export function currentCategory(state = "RESULTS_CATEGORY_JOBS", action) {
@@ -88,6 +92,21 @@ export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
       case FETCH_USER_PROFILE_COMPLETE:
         return action.profile;
+      default:
+        return state;
+    }
+}
+
+const bookmarksInitialState = {bookmarks: [], amount: 0};
+
+export function bookmarks(state = bookmarksInitialState, action) {
+  switch (action.type) {
+      case BOOKMARK_ADD:
+          return {...state, amount: state.amount + 1};
+      case BOOKMARK_REMOVE:
+          return state.amount > 0 ? {...state, amount: state.amount + 1} : state;
+      case BOOKMARK_REMOVE_ALL:
+          return bookmarksInitialState;
       default:
         return state;
     }

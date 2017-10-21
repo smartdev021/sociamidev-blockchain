@@ -6,9 +6,12 @@ class ActionLink extends React.Component {
     this.props.onClick(e);
   }
   render() {
+    const style = this.props.className ? this.props.className : "";
+    const tagId = this.props.id ? this.props.id : "";
+
     return (
-      <a href="#" onClick={(e)=> this.handleClick(e)}>
-        {this.props.text}</a>
+      <a className={style} id={tagId} href="#" onClick={(e)=> this.handleClick(e)}>
+        {this.props.children}</a>
     );
   }
 

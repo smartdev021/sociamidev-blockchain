@@ -10,10 +10,6 @@
     background-color: #3498db;
 }*/
 
-.active_category {
-    background-color: #3498db;
-}
-
 .navigation_button, .navigation_button h1 {
     cursor: pointer;
 }
@@ -31,9 +27,30 @@
 }
 
 .trend_widget {
-    min-width: 100%;
+    width: 100%;
     min-height: 200px;
     background-color: #E4E4E4;
     /*border: 1px solid #8B8585;*/
     color: black;
+}
+
+.glyphicon-big {
+    font-size: 32px;
+}
+
+.glyphicon-text {
+    line-height: 14px;
+}
+
+.li-with-spacing {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.customLink, .customLinkActive:hover, .customLinkActive:visited, .customLinkActive:active{
+    color: #3498db;
+}
+
+.customLink, .customLink:hover, .customLink:visited, .customLink:active{
+    color: grey;
 }

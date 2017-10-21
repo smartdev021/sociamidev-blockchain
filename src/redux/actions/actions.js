@@ -11,6 +11,9 @@ import {
     FETCH_USER_PROFILE_COMPLETE,
     FETCH_RESULTS_INITIATE,
     FETCH_RESULTS_COMPLETE,
+
+    BOOKMARK_ADD,
+    BOOKMARK_REMOVE,
 } from './actionTypes';
 
 //selects category 'RESULTS_CATEGORY_JOBS', 'RESULTS_CATEGORY_EVENTS', etc.
@@ -94,4 +97,22 @@ export function fetchResultsComplete() {
     }
 }
 
+export function bookmarkAdd(newBookmark) {
+    return {
+        type: BOOKMARK_ADD,
+        bookmark: newBookmark
+    }
+}
 
+export function bookmarkRemove(idToRemove) {
+    return {
+        type: BOOKMARK_REMOVE,
+        id: idToRemove
+    }
+}
+
+export function bookmarkRemoveAll(idToRemove) {
+    return {
+        type: BOOKMARK_REMOVE_ALL,
+    }
+}

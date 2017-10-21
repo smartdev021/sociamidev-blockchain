@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 class HeadWrap extends React.Component {
   render() {
-    const waitingText = (this.props.isSearchInProgress) ? <b>(Wait...)</b> : "";
+    const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
     return (
         <div id="headerwrap">
       <div className="container">
