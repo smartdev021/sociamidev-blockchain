@@ -34,7 +34,12 @@ const enhanceWithClickOutside = require('react-click-outside');
 //load fonts
 import WebFont from 'webfontloader';
 
+import { withRouter } from 'react-router-dom'
+
 import { Redirect} from 'react-router-dom'
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 
 WebFont.load({
   google: {
@@ -70,7 +75,6 @@ class App extends Component {
       freelancerProjectItems: [], 
       query : "", 
       currentPage: "landing_page",
-      selectedCategory: "category_jobs",
       isSearchInProgress: false, modalIsOpen: false,
       isSignUpFormOpen: false,
       isSettingsFormOpen: false,
@@ -96,6 +100,9 @@ class App extends Component {
     this.isSearchingForFreelancerItems = false;
 
     console.log(`Config BackendURL: ${BackendURL}`);
+
+    console.log("App props: ");
+    console.dir(this.props);
   }
 
   handleAuthorizeLinked(id) {
@@ -120,12 +127,6 @@ class App extends Component {
     if (!this.isSearchingJobs && !this.isSearchingEvents && !this.isSearchingForUdemyItems && !this.isSearchingForFreelancerItems) {
       this.startNewSearch();
     }
-  }
-
-  handleCategorySelect(event) {
-    event.preventDefault();
-    let copy = Object.assign({}, this.state, {selectedCategory: event.currentTarget.id});
-    this.setState(copy);
   }
 
   handleAddJobToFavorites(event) {
@@ -444,11 +445,9 @@ class App extends Component {
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
           onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
-          isSearchInProgress={this.state.isSearchInProgress}
+          isSearchInProgress={this.state.isSearchInProgress} jobItems={this.state.jobItems}
           numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length}
           numCourses={this.state.udemyItems.length}
-          onSelectCategory={(e) => this.handleCategorySelect(e)} selectedCategory={this.state.selectedCategory}
-          selectedCategory={this.state.selectedCategory} jobItems={this.state.jobItems}
           eventBriteItems={this.state.eventBrightItems} udemyItems={this.state.udemyItems}
           freelancerProjectItems={this.state.freelancerProjectItems}
           onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
@@ -468,5 +467,13 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  store: PropTypes.object.isRequired,
+}
 
-module.exports = enhanceWithClickOutside(App);
+const mapStateToProps = state => ({
+  store: state
+})
+
+//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
+export default withRouter(connect(mapStateToProps)(enhanceWithClickOutside(App)));

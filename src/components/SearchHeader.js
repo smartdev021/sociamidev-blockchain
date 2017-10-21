@@ -3,6 +3,12 @@
 */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
+
+import {selectResultsCategory} from '../redux/actions/actions'
 import "../css/searchHeader.css"
 
 class SearchHeader extends React.Component {
@@ -17,6 +23,10 @@ class SearchHeader extends React.Component {
     this.setState(copy);
 
     this.props.onHandleQueryChange(e.target.value);
+  }
+
+  handleSelectCategory(e) {
+    this.props.selectResultsCategory(e.currentTarget.id);
   }
 
   renderForm() {
@@ -35,7 +45,6 @@ class SearchHeader extends React.Component {
   }
 
   renderResultsNavigation() {
-    console.log("selectedCategory: " + this.props.selectedCategory);
     return (<div className="container search_results" >
       <div className="col-lg-4">
          <div className="trend_widget">
@@ -49,8 +58,8 @@ class SearchHeader extends React.Component {
          </div>
       </div>
        <div className="col-lg-2">
-         <div className={"navigation_button " + (this.props.selectedCategory == "category_jobs" ? 'active_category' : '')}
-          id="category_jobs" onClick={(e) => this.props.onSelectCategory(e)}>
+         <div className={"navigation_button " + (this.props.currentCategory == "RESULTS_CATEGORY_JOBS" ? 'active_category' : '')}
+          id="RESULTS_CATEGORY_JOBS" onClick={(e) => this.handleSelectCategory(e)}>
          Jobs
          <div className="category_items_count">
          <hr></hr>
@@ -60,8 +69,8 @@ class SearchHeader extends React.Component {
          </div>
       </div>
       <div className="col-lg-2">
-      <div className={"navigation_button " + (this.props.selectedCategory == "category_events" ? 'active_category' : '')}
-      id="category_events" onClick={(e) => this.props.onSelectCategory(e)}>
+      <div className={"navigation_button " + (this.props.currentCategory == "RESULTS_CATEGORY_EVENTS" ? 'active_category' : '')}
+      id="RESULTS_CATEGORY_EVENTS" onClick={(e) => this.handleSelectCategory(e)}>
       Events
       <div className="category_items_count">
       <hr></hr>
@@ -71,8 +80,8 @@ class SearchHeader extends React.Component {
          </div>
       </div>
       <div className="col-lg-2">
-      <div className={"navigation_button " + (this.props.selectedCategory == "category_courses" ? 'active_category' : '')}
-       id="category_courses" onClick={(e) => this.props.onSelectCategory(e)}>
+      <div className={"navigation_button " + (this.props.currentCategory == "RESULTS_CATEGORY_COURSES" ? 'active_category' : '')}
+       id="RESULTS_CATEGORY_COURSES" onClick={(e) => this.handleSelectCategory(e)}>
          Courses
          <div className="category_items_count">
          <hr></hr>
@@ -82,8 +91,8 @@ class SearchHeader extends React.Component {
          </div>
       </div>
       <div className="col-lg-2">
-      <div className={"navigation_button " + (this.props.selectedCategory == "category_freelancer_projects" ? 'active_category' : '')}
-       id="category_freelancer_projects" onClick={(e) => this.props.onSelectCategory(e)}>
+      <div className={"navigation_button " + (this.props.currentCategory == "RESULTS_CATEGORY_GIGS" ? 'active_category' : '')}
+       id="RESULTS_CATEGORY_GIGS" onClick={(e) => this.handleSelectCategory(e)}>
          Freelancer Projects
          <div className="category_items_count">
          <hr></hr>
@@ -108,9 +117,19 @@ class SearchHeader extends React.Component {
     </span>
     );
   }
-
-  
-
 }
 
-export default SearchHeader;
+const mapDispatchToProps = dispatch => ({
+  selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch)
+})
+
+SearchHeader.propTypes = {
+  currentCategory: PropTypes.string.isRequired,
+}
+
+const mapStateToProps = state => ({
+  currentCategory: state.currentCategory
+})
+
+//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchHeader));

@@ -9,17 +9,12 @@ import SearchResults from './SearchResults';
 
 class SearchPage extends React.Component {
   render() {
-    console.log("Props in SearchPage");
-    console.dir(this.props);
-
     return (<div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.props.onHandleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.props.onHandleStartSearch(e)} query={this.props.query} 
       isSearchInProgress={this.props.isSearchInProgress}
-      numJobs={this.props.numJobs} numEvents={this.props.numEvents} numCourses={this.props.numCourses}
-      onSelectCategory={(e) => this.props.onSelectCategory(e)} selectedCategory={this.props.selectedCategory}/>
-        <SearchResults selectedCategory={this.props.selectedCategory}
-        jobItems={this.props.jobItems}
+      numJobs={this.props.numJobs} numEvents={this.props.numEvents} numCourses={this.props.numCourses}/>
+        <SearchResults jobItems={this.props.jobItems}
         eventBriteItems={this.props.eventBriteItems}
         udemyItems={this.props.udemyItems}
         freelancerProjectItems={this.props.freelancerProjectItems}
