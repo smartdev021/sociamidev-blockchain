@@ -8,6 +8,7 @@ import {
     FETCH_EVENT_ITEMS_COMPLETE,
     FETCH_COURSE_ITEMS_COMPLETE,
     FETCH_GIG_ITEMS_COMPLETE,
+    FETCH_USER_PROFILE_COMPLETE,
 } from './actionTypes';
 
 //selects category 'RESULTS_CATEGORY_JOBS', 'RESULTS_CATEGORY_EVENTS', etc.
@@ -69,6 +70,13 @@ export function fetchGigItemsComplete(newItems) {
     return {
         type: FETCH_GIG_ITEMS_COMPLETE,
         items: newItems
+    }
+}
+
+export function fetchUserProfileComplete(userProfile) {
+    return {
+        type: FETCH_USER_PROFILE_COMPLETE,
+        profile: userProfile
     }
 }
 

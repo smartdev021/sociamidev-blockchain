@@ -45,6 +45,7 @@ import { bindActionCreators } from 'redux'
 import {
   openUserProfile,
   openSearchResults,
+  fetchUserProfileComplete,
   fetchJobItemsComplete,
   fetchEventItemsComplete,
   fetchCourseItemsComplete,
@@ -83,18 +84,9 @@ class App extends Component {
       currentPage: "landing_page",
       isSearchInProgress: false, modalIsOpen: false,
       isSignUpFormOpen: false,
-      isSettingsFormOpen: false,
       isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
-
-      userProfile: {
-      firstName: 'John', 
-      lastName: 'Doe', 
-      interests: 'programming, study',
-      skills: 'javascript, c++', 
-      experience: 'Google',
-      education: 'Harvard'}
     };
 
     this.isSearchingJobs = false;
@@ -306,21 +298,6 @@ class App extends Component {
     this.setState(copy);
   }
 
-  handleSettingsButtonClick() {
-    let copy = Object.assign({}, this.state, {isSettingsFormOpen: !this.state.isSettingsFormOpen});
-    this.setState(copy);
-  }
-
-  handleSettingsFormSubmit(settings) {
-    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false, userProfile: settings});
-    this.setState(copy);
-  }
-
-  handleCloseSettings() {
-    let copy = Object.assign({}, this.state, {isSettingsFormOpen: false});
-    this.setState(copy);
-  }
-
   renderLoginPopup() {
     return (<div>
       <Modal
@@ -372,13 +349,14 @@ class App extends Component {
     let newUserProfile = {
       firstName: responseProfile.firstName, 
       lastName: responseProfile.lastName, 
-      interests: 'N/A due to lack of LinkedIn parmissions', //TODO: receive LinkedIn advanced permissions
-      skills: 'N/A due to lack of LinkedIn parmissions', //TODO: receive LinkedIn advanced permissions
+      interests: responseProfile.interests, //TODO: receive LinkedIn advanced permissions
+      skills: responseProfile.skills, //TODO: receive LinkedIn advanced permissions
       experience: responseProfile.experience,
       education: responseProfile.education
     }
 
-    let copy = Object.assign({}, this.state, {isAuthorized: true, userProfile: newUserProfile});
+    this.props.fetchUserProfileComplete(newUserProfile);
+    let copy = Object.assign({}, this.state, {isAuthorized: true});
     this.setState(copy);
   }
 
@@ -394,13 +372,14 @@ class App extends Component {
     let newUserProfile = {
       firstName: responseProfile.firstName, 
       lastName: responseProfile.lastName, 
-      interests: 'N/A due to lack of FaceBook parmissions', //TODO: receive FaceBook advanced permissions
-      skills: 'N/A due to lack of FaceBook parmissions', //TODO: receive FaceBook advanced permissions
+      interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions
+      skills: responseProfile.skills, //TODO: receive FaceBook advanced permissions
       experience: responseProfile.experience,
       education: responseProfile.education
     }
 
-    let copy = Object.assign({}, this.state, {isAuthorized: true, userProfile: newUserProfile});
+    this.props.fetchUserProfileComplete(newUserProfile);
+    let copy = Object.assign({}, this.state, {isAuthorized: true});
     this.setState(copy);
   }
     
@@ -455,8 +434,7 @@ class App extends Component {
       <div>
         {this.renderLoginPopup()}
         {RedirectTo}
-      <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} 
-                          onHandleOpenSettings={()=> this.handleSettingsButtonClick()} isAuthorized={this.state.isAuthorized}/>
+      <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} isAuthorized={this.state.isAuthorized}/>
       <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
@@ -471,8 +449,7 @@ class App extends Component {
           onCloseSignUpModal={() => this.closeSignUpModal()}
           isSignUpFormOpen={this.state.isSignUpFormOpen}
           onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
-          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-          userProfile={this.state.userProfile}/>
+          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}/>
       <ThemeFooterContainer/>
       </div>
     );
@@ -483,6 +460,7 @@ App.propTypes = {
   isOpenProfilePending: PropTypes.bool.isRequired,
   isOpenSearchResultsPending: PropTypes.bool.isRequired,
   
+  fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
   populateJobItems: PropTypes.func.isRequired,
@@ -498,6 +476,7 @@ const mapDispatchToProps = dispatch => ({
   populateEventItems: bindActionCreators(fetchEventItemsComplete, dispatch),
   populateCourseItems: bindActionCreators(fetchCourseItemsComplete, dispatch),
   populateGigItems: bindActionCreators(fetchGigItemsComplete, dispatch),
+  fetchUserProfileComplete: bindActionCreators(fetchUserProfileComplete, dispatch),
 })
 
 const mapStateToProps = state => ({

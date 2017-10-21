@@ -4,6 +4,7 @@ import {currentCategory,
   isOpenProfilePending, 
   isOpenSearchResultsPending, 
   searchResults,
+  userProfile,
 } from "./syncReducers"
 
 export default combineReducers({
@@ -11,4 +12,5 @@ export default combineReducers({
   isOpenProfilePending,
   isOpenSearchResultsPending,
   searchResults,
+  userProfile,
 });

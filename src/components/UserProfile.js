@@ -23,8 +23,6 @@ import "../css/userProfile.css"
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-
-    console.dir(this.props);
   }
   handleFormAction() {
     event.preventDefault();
@@ -35,23 +33,6 @@ class UserProfile extends React.Component {
   }
 
   renderForm() {
-
-    let firstName = '';
-    let lastName = '';
-    let interests = '';
-    let skills = '';
-    let education = '';
-    let experience = '';
-
-    if (this.props.userProfile) {
-      firstName = this.props.userProfile.firstName;
-      lastName = this.props.userProfile.lastName;
-      interests = this.props.userProfile.interests;
-      skills = this.props.userProfile.skills; 
-      education = this.props.userProfile.education;
-      experience = this.props.userProfile.experience;
-    }
-
     return (
       <div className="user_profole_form">
     <form className="form-inline" action="#" onSubmit={this.handleFormAction}>
@@ -60,27 +41,27 @@ class UserProfile extends React.Component {
 
       <input type="text" className="form-control control_user_profile" name="first-name" 
       placeholder="First Name" readOnly 
-      value={firstName}/>
+      value={this.props.userProfile.firstName}/>
 
       <input type="text" className="form-control control_user_profile" name="last-name" 
       placeholder="Last Name" readOnly 
-      value={lastName}/> 
+      value={this.props.userProfile.lastName}/> 
 
       <input type="text" className="form-control control_user_profile" name="interests" 
       placeholder="What are your interests?" readOnly 
-      value={interests}/>  
+      value={this.props.userProfile.interests}/>  
 
       <input type="text" className="form-control control_user_profile" name="skills" 
       placeholder="What are your skills?" readOnly
-      value={skills}/>  
+      value={this.props.userProfile.skills}/>  
 
       <input type="text" className="form-control control_user_profile" name="education" 
       placeholder="Where did you study?" readOnly
-      value={education}/>
+      value={this.props.userProfile.education}/>
 
       <input type="text" className="form-control control_user_profile" name="experience" 
-      placeholder="What is your working experience?" required="" onChange={(e) => this.handleChangeWorkExperience(e)} 
-      value={experience} readOnly/>
+      placeholder="What is your working experience?" required="" 
+      value={this.props.userProfile.experience} readOnly/>
 
       <Link className="btn btn-primary btn-lg btn-block" to='/'>Back to Main</Link>
 
@@ -89,33 +70,30 @@ class UserProfile extends React.Component {
   </div>)
   }
 
-
   render() {
     return (<span>
     <div className="row mt center">
     <div className="col-lg-4 center-block">
-      
       </div>
       <div className="col-lg-4 center-block">
        {this.renderForm()}
       </div>
       <div className="col-lg-4 center-block">
-       
       </div>
     </div>
     </span>
     );
   }
-
-  
-
 }
 
 UserProfile.propTypes = {
   openUserProfileComplete: PropTypes.func.isRequired,
+
+  userProfile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
+  userProfile: state.userProfile
 })
 
 const mapDispatchToProps = dispatch => ({

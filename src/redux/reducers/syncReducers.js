@@ -4,6 +4,9 @@ import {
   OPEN_USER_PROFILE_COMPLETE,
   OPEN_SEARCH_RESULTS,
   OPEN_SEARCH_RESULTS_COMPLETE,
+
+  FETCH_USER_PROFILE_COMPLETE,
+
   FETCH_JOB_ITEMS_COMPLETE,
   FETCH_EVENT_ITEMS_COMPLETE,
   FETCH_COURSE_ITEMS_COMPLETE,
@@ -53,6 +56,28 @@ export function searchResults(state = searchResultsInitialState, action) {
         return {...state, courses : action.items, numCourses: action.items.length};
       case FETCH_GIG_ITEMS_COMPLETE:
         return {...state, gigs : action.items, numGigs: action.items.length};
+      default:
+        return state;
+    }
+}
+
+const userProfileInitialState = {
+  firstName: 'John', 
+  lastName: 'Doe', 
+  interests: 'programming, study',
+  skills: 'javascript, c++', 
+  experience: 'Google',
+  education: 'Harvard'
+};
+
+export function userProfile(state = userProfileInitialState, action) {
+  switch (action.type) {
+      case FETCH_USER_PROFILE_COMPLETE:
+      {
+      console.log("userProfile: ");
+      console.dir(action);
+        return action.profile;
+      }
       default:
         return state;
     }
