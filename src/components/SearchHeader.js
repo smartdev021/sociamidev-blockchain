@@ -96,7 +96,7 @@ class SearchHeader extends React.Component {
          Freelancer Projects
          <div className="category_items_count">
          <hr></hr>
-         <h1>{this.props.numCourses}</h1>
+         <h1>{this.props.numGigs}</h1>
          <hr></hr>
          </div>
          </div>
@@ -128,7 +128,11 @@ SearchHeader.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  currentCategory: state.currentCategory
+  currentCategory: state.currentCategory,
+  numJobs: state.searchResults.numJobs,
+  numCourses: state.searchResults.numCourses,
+  numEvents: state.searchResults.numEvents,
+  numGigs: state.searchResults.numGigs,
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

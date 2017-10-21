@@ -12,12 +12,8 @@ class SearchPage extends React.Component {
     return (<div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.props.onHandleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.props.onHandleStartSearch(e)} query={this.props.query} 
-      isSearchInProgress={this.props.isSearchInProgress}
-      numJobs={this.props.numJobs} numEvents={this.props.numEvents} numCourses={this.props.numCourses}/>
-        <SearchResults jobItems={this.props.jobItems}
-        eventBriteItems={this.props.eventBriteItems}
-        udemyItems={this.props.udemyItems}
-        freelancerProjectItems={this.props.freelancerProjectItems}
+      isSearchInProgress={this.props.isSearchInProgress}/>
+        <SearchResults 
         onHandleAddJobToFavorites={(e) => this.props.onHandleAddJobToFavorites(e)}
         onHandleAddEventToFavorites={(e) => this.props.onHandleAddEventToFavorites(e)}
         onHandleAddCourseToFavorites={(e) => this.props.onHandleAddCourseToFavorites(e)}

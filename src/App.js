@@ -42,7 +42,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import {openUserProfile, openSearchResults} from './redux/actions/actions'
+import {
+  openUserProfile,
+  openSearchResults,
+  fetchJobItemsComplete,
+  fetchEventItemsComplete,
+  fetchCourseItemsComplete,
+  fetchGigItemsComplete,
+} from './redux/actions/actions'
 
 WebFont.load({
   google: {
@@ -72,10 +79,6 @@ class App extends Component {
 
     this.state = {
       country: "sg", 
-      jobItems: [], 
-      eventBrightItems: [], 
-      udemyItems: [], 
-      freelancerProjectItems: [], 
       query : "", 
       currentPage: "landing_page",
       isSearchInProgress: false, modalIsOpen: false,
@@ -166,6 +169,11 @@ class App extends Component {
     this.isSearchingEvents = true;
     this.isSearchingForUdemyItems = true;
     this.isSearchingForFreelancerItems = true;
+
+    this.props.populateJobItems([]);
+    this.props.populateEventItems([]);
+    this.props.populateCourseItems([]);
+    this.props.populateGigItems([]);
     
     let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
     this.setState(copy);
@@ -190,6 +198,8 @@ class App extends Component {
       let copy = Object.assign({}, this.state, {jobItems: items});
       this.setState(copy);
 
+      this.props.populateJobItems(items);
+
       this.refreshBusyState();
     }
   }
@@ -201,6 +211,8 @@ class App extends Component {
 
       let copy = Object.assign({}, this.state, {eventBrightItems: items});
       this.setState(copy);
+
+      this.props.populateEventItems(items);
 
       this.refreshBusyState();
 
@@ -219,6 +231,8 @@ class App extends Component {
       let copy = Object.assign({}, this.state, {udemyItems: items});
       this.setState(copy);
 
+      this.props.populateCourseItems(items);
+
       this.refreshBusyState();
 
       if (this.state.currentPage != "search_results_page" && this.state.query != "") {
@@ -235,6 +249,8 @@ class App extends Component {
 
       let copy = Object.assign({}, this.state, {freelancerProjectItems: items});
       this.setState(copy);
+
+      this.props.populateGigItems(items);
       
       this.refreshBusyState();
 
@@ -445,11 +461,7 @@ class App extends Component {
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
           onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
-          isSearchInProgress={this.state.isSearchInProgress} jobItems={this.state.jobItems}
-          numJobs={this.state.jobItems.length} numEvents={this.state.eventBrightItems.length}
-          numCourses={this.state.udemyItems.length}
-          eventBriteItems={this.state.eventBrightItems} udemyItems={this.state.udemyItems}
-          freelancerProjectItems={this.state.freelancerProjectItems}
+          isSearchInProgress={this.state.isSearchInProgress}
           onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
           onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
           onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
@@ -473,10 +485,19 @@ App.propTypes = {
   
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
+  populateJobItems: PropTypes.func.isRequired,
+  populateEventItems: PropTypes.func.isRequired,
+  populateCourseItems: PropTypes.func.isRequired,
+  populateGigItems: PropTypes.func.isRequired,
 }
+
 const mapDispatchToProps = dispatch => ({
   openUserProfile: bindActionCreators(openUserProfile, dispatch),
   openSearchResults: bindActionCreators(openSearchResults, dispatch),
+  populateJobItems: bindActionCreators(fetchJobItemsComplete, dispatch),
+  populateEventItems: bindActionCreators(fetchEventItemsComplete, dispatch),
+  populateCourseItems: bindActionCreators(fetchCourseItemsComplete, dispatch),
+  populateGigItems: bindActionCreators(fetchGigItemsComplete, dispatch),
 })
 
 const mapStateToProps = state => ({
