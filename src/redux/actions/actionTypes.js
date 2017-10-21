@@ -10,3 +10,6 @@ export const FETCH_JOB_ITEMS_COMPLETE = "fetch_job_items_complete";
 export const FETCH_EVENT_ITEMS_COMPLETE = "fetch_event_items_complete";
 export const FETCH_COURSE_ITEMS_COMPLETE = "fetch_course_items_complete";
 export const FETCH_GIG_ITEMS_COMPLETE = "fetch_gig_items_complete";
+
+export const FETCH_RESULTS_INITIATE = "fetch_results_initiate";
+export const FETCH_RESULTS_COMPLETE = "fetch_results_complete";

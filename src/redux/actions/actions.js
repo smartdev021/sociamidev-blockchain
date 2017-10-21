@@ -9,6 +9,8 @@ import {
     FETCH_COURSE_ITEMS_COMPLETE,
     FETCH_GIG_ITEMS_COMPLETE,
     FETCH_USER_PROFILE_COMPLETE,
+    FETCH_RESULTS_INITIATE,
+    FETCH_RESULTS_COMPLETE,
 } from './actionTypes';
 
 //selects category 'RESULTS_CATEGORY_JOBS', 'RESULTS_CATEGORY_EVENTS', etc.
@@ -77,6 +79,18 @@ export function fetchUserProfileComplete(userProfile) {
     return {
         type: FETCH_USER_PROFILE_COMPLETE,
         profile: userProfile
+    }
+}
+
+export function fetchResultsInitiate() {
+    return {
+        type: FETCH_RESULTS_INITIATE,
+    }
+}
+
+export function fetchResultsComplete() {
+    return {
+        type: FETCH_RESULTS_COMPLETE,
     }
 }
 

@@ -50,6 +50,8 @@ import {
   fetchEventItemsComplete,
   fetchCourseItemsComplete,
   fetchGigItemsComplete,
+  fetchResultsInitiate,
+  fetchResultsComplete,
 } from './redux/actions/actions'
 
 WebFont.load({
@@ -80,8 +82,7 @@ class App extends Component {
 
     this.state = {
       country: "sg", 
-      query : "", 
-      currentPage: "landing_page",
+      query : "",
       isSearchInProgress: false, modalIsOpen: false,
       isSignUpFormOpen: false,
       isAuthorized: false,
@@ -170,6 +171,8 @@ class App extends Component {
     let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
     this.setState(copy);
 
+    this.props.fetchResultsInitiate();
+
     this.refreshBusyState();
 
     this.refreshDataIndeed();
@@ -207,11 +210,6 @@ class App extends Component {
       this.props.populateEventItems(items);
 
       this.refreshBusyState();
-
-      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
-        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
-        this.setState(copy);
-      }
     }
   }
 
@@ -226,11 +224,6 @@ class App extends Component {
       this.props.populateCourseItems(items);
 
       this.refreshBusyState();
-
-      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
-        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
-        this.setState(copy);
-      }
     }
   }
 
@@ -245,11 +238,6 @@ class App extends Component {
       this.props.populateGigItems(items);
       
       this.refreshBusyState();
-
-      if (this.state.currentPage != "search_results_page" && this.state.query != "") {
-        let copy = Object.assign({}, this.state, {currentPage: "search_results_page"});
-        this.setState(copy);
-      }
     }
   }
 
@@ -444,7 +432,6 @@ class App extends Component {
           onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
           onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
           onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
-          currentPage={this.state.currentPage}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.closeSignUpModal()}
           isSignUpFormOpen={this.state.isSignUpFormOpen}
@@ -459,6 +446,7 @@ class App extends Component {
 App.propTypes = {
   isOpenProfilePending: PropTypes.bool.isRequired,
   isOpenSearchResultsPending: PropTypes.bool.isRequired,
+  isFetchInProgress: PropTypes.bool.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -467,6 +455,8 @@ App.propTypes = {
   populateEventItems: PropTypes.func.isRequired,
   populateCourseItems: PropTypes.func.isRequired,
   populateGigItems: PropTypes.func.isRequired,
+  fetchResultsInitiate: PropTypes.func.isRequired,
+  fetchResultsComplete: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -477,11 +467,14 @@ const mapDispatchToProps = dispatch => ({
   populateCourseItems: bindActionCreators(fetchCourseItemsComplete, dispatch),
   populateGigItems: bindActionCreators(fetchGigItemsComplete, dispatch),
   fetchUserProfileComplete: bindActionCreators(fetchUserProfileComplete, dispatch),
+  fetchResultsInitiate: bindActionCreators(fetchResultsInitiate, dispatch),
+  fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
 })
 
 const mapStateToProps = state => ({
   isOpenProfilePending: state.isOpenProfilePending,
   isOpenSearchResultsPending: state.isOpenSearchResultsPending,
+  isFetchInProgress: state.isFetchInProgress,
 })
 
 

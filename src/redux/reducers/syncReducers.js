@@ -11,6 +11,9 @@ import {
   FETCH_EVENT_ITEMS_COMPLETE,
   FETCH_COURSE_ITEMS_COMPLETE,
   FETCH_GIG_ITEMS_COMPLETE,
+  
+  FETCH_RESULTS_INITIATE,
+  FETCH_RESULTS_COMPLETE,
 } from '../actions/actionTypes';
 
 export function currentCategory(state = "RESULTS_CATEGORY_JOBS", action) {
@@ -38,6 +41,17 @@ export function isOpenSearchResultsPending(state = false, action) {
       case OPEN_SEARCH_RESULTS:
         return (!state) ? true : state;
       case OPEN_SEARCH_RESULTS_COMPLETE:
+        return (state) ? false : state;
+      default:
+        return state;
+    }
+}
+
+export function isFetchInProgress(state = false, action) {
+  switch (action.type) {
+      case FETCH_RESULTS_INITIATE:
+        return (!state) ? true : state;
+      case FETCH_RESULTS_COMPLETE:
         return (state) ? false : state;
       default:
         return state;
@@ -73,11 +87,7 @@ const userProfileInitialState = {
 export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
       case FETCH_USER_PROFILE_COMPLETE:
-      {
-      console.log("userProfile: ");
-      console.dir(action);
         return action.profile;
-      }
       default:
         return state;
     }
