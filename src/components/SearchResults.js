@@ -13,7 +13,13 @@ import EventBriteItemList from './containers/EventBriteItemList';
 import UdemyItemList from './containers/UdemyItemList';
 import FreelancerProjectItemList from './containers/FreelancerProjectItemList';
 
+import {openSearchResultsComplete} from '../redux/actions/actions'
+
 class SearchResults extends React.Component {
+  componentWillMount() {
+    this.props.openSearchResultsComplete();
+  }
+
   render() {
     const jobsList = (this.props.currentCategory == "RESULTS_CATEGORY_JOBS") 
     ? <JobsList items={this.props.jobItems} onAddToFavorites={(e) => this.props.onHandleAddJobToFavorites(e)}/> : null;
@@ -44,11 +50,17 @@ class SearchResults extends React.Component {
 
 SearchResults.propTypes = {
   currentCategory: PropTypes.string.isRequired,
+  openSearchResultsComplete: PropTypes.func.isRequired,
 }
   
 const mapStateToProps = state => ({
   currentCategory: state.currentCategory
 })
+
+const mapDispatchToProps = dispatch => ({
+  openSearchResultsComplete: bindActionCreators(openSearchResultsComplete, dispatch)
+})
+
   
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps)(SearchResults));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchResults));

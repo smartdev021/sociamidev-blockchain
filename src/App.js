@@ -40,6 +40,9 @@ import { Redirect} from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import {openUserProfile, openSearchResults} from './redux/actions/actions'
 
 WebFont.load({
   google: {
@@ -88,10 +91,7 @@ class App extends Component {
       interests: 'programming, study',
       skills: 'javascript, c++', 
       experience: 'Google',
-      education: 'Harvard'},
-
-      redirectToSearchResults: false,
-      redirectToUserProfile: false
+      education: 'Harvard'}
     };
 
     this.isSearchingJobs = false;
@@ -404,27 +404,27 @@ class App extends Component {
     }
     if (prevState.isSearchInProgress != this.state.isSearchInProgress) {
       if (!this.state.isSearchInProgress) {
-        let copy = Object.assign({}, this.state, {redirectToSearchResults: true});
-        this.setState(copy);
+        this.props.openSearchResults();
       }
     }
     if (prevState.isAuthorized != this.state.isAuthorized) {
       if (this.state.isAuthorized) {
-        let copy = Object.assign({}, this.state, {redirectToUserProfile: true});
-        this.setState(copy);
+        this.props.openUserProfile();
       }
     }
   }
 
   getRedirectLocation() {
     let RedirectTo = null;
-    if (this.state.redirectToSearchResults) {
-      RedirectTo = <Redirect to="/searchResults" push />;
-      this.state.redirectToSearchResults = false;
+    if (this.props.isOpenSearchResultsPending) {
+      if (this.props.location.pathname != '/searchResults') {
+        RedirectTo = <Redirect to="/searchResults" push />;
+      }
     }
-    else if (this.state.redirectToUserProfile) {
-      RedirectTo = <Redirect to="/userProfile" push />;
-      this.state.redirectToUserProfile = false;
+    else if (this.props.isOpenProfilePending) {
+      if (this.props.location.pathname != '/userProfile') {
+        RedirectTo = <Redirect to="/userProfile" push />;
+      }
     }
 
     return RedirectTo;
@@ -468,12 +468,22 @@ class App extends Component {
 }
 
 App.propTypes = {
-  store: PropTypes.object.isRequired,
+  isOpenProfilePending: PropTypes.bool.isRequired,
+  isOpenSearchResultsPending: PropTypes.bool.isRequired,
+  
+  openUserProfile: PropTypes.func.isRequired,
+  openSearchResults: PropTypes.func.isRequired,
 }
-
-const mapStateToProps = state => ({
-  store: state
+const mapDispatchToProps = dispatch => ({
+  openUserProfile: bindActionCreators(openUserProfile, dispatch),
+  openSearchResults: bindActionCreators(openSearchResults, dispatch),
 })
 
+const mapStateToProps = state => ({
+  isOpenProfilePending: state.isOpenProfilePending,
+  isOpenSearchResultsPending: state.isOpenSearchResultsPending,
+})
+
+
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps)(enhanceWithClickOutside(App)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(enhanceWithClickOutside(App)));

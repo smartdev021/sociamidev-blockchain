@@ -5,17 +5,33 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 
+import { withRouter } from 'react-router-dom'
+
+import { Redirect} from 'react-router-dom'
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+
 import ConfigMain from '../../configs/main'
+
+import {openUserProfileComplete} from '../redux/actions/actions'
 
 import "../css/userProfile.css"
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-  }
 
+    console.dir(this.props);
+  }
   handleFormAction() {
     event.preventDefault();
+  }
+
+  componentWillMount() {
+    this.props.openUserProfileComplete();
   }
 
   renderForm() {
@@ -95,4 +111,16 @@ class UserProfile extends React.Component {
 
 }
 
-export default UserProfile;
+UserProfile.propTypes = {
+  openUserProfileComplete: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => ({
+  openUserProfileComplete: bindActionCreators(openUserProfileComplete, dispatch)
+})
+
+//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserProfile));
