@@ -220,7 +220,7 @@ class App extends Component {
       }
       case "events":
       {
-        let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location${this.state.country}`;
+        let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location=${this.state.country}`;
         DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
         break;
       }
