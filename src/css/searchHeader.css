@@ -26,14 +26,6 @@
     min-width: 100%;
 }
 
-.trend_widget {
-    width: 100%;
-    min-height: 200px;
-    background-color: #E4E4E4;
-    /*border: 1px solid #8B8585;*/
-    color: black;
-}
-
 .glyphicon-big {
     font-size: 32px;
 }
@@ -53,4 +45,30 @@
 
 .customLink, .customLink:hover, .customLink:visited, .customLink:active{
     color: grey;
+}
+
+.roadmaps_widget {
+    width: 100%;
+    min-height: 140px;
+    background-color: #E4E4E4;
+    /*border: 1px solid #8B8585;*/
+    color: black;
+}
+
+.skillTag {
+    min-width: 20px;
+    min-height: 10px;
+    background: grey;
+    border: 1px solid black;
+}
+
+.roadMap{
+    min-width: 140px;
+    min-height: 160px;
+    background: grey;
+    border: 1px solid black;
+}
+
+.roadMap:hover{
+    background: yellow;
 }

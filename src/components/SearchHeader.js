@@ -13,11 +13,38 @@ import ActionLink from './ActionLink'
 import {selectResultsCategory} from '../redux/actions/actions'
 import "../css/searchHeader.css"
 
+import DemoCarousel from './DemoCarousel'
+
 class SearchHeader extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {query : this.props.query}
+  }
+
+  renderSkill(title) {
+    return (<span className="skillTag"><b>{title}</b></span>);
+  }
+
+  renderSkills() {
+    return (
+    <span>
+      {this.renderSkill("JavaScript")}{this.renderSkill("Java")}{this.renderSkill("AJAX")}
+      <br/>{this.renderSkill("NodeJS")}{this.renderSkill("ReacJS")}{this.renderSkill("XML")}
+    </span>);
+  }
+
+  renderRoadMap(title) {
+    return (<div className="col-lg-2"> <div className="roadMap">
+      <h4>{title}</h4>{this.renderSkills()}
+      </div></div>);
+  }
+
+  renderRoadMaps() {
+    return(<span>{this.renderRoadMap("Java")}{this.renderRoadMap("JavaScript")}
+    {this.renderRoadMap("Front-End")}{this.renderRoadMap("Full-Stack")}
+    {this.renderRoadMap("Java")}{this.renderRoadMap("JavaScript")}</span>
+     );
   }
 
   handleValueChange(e) {
@@ -76,8 +103,11 @@ class SearchHeader extends React.Component {
   renderResultsNavigation() {
     return (<div>
       <div className="col-lg-12">
-        <h2>Roadmaps coming soon...</h2>
-         <div className="trend_widget">
+        <h2>Roadmaps</h2>
+         <div className="roadmaps_widget">
+         <div className="row">
+         {this.renderRoadMaps()}
+          </div>
          </div>
       </div>
       </div>);
