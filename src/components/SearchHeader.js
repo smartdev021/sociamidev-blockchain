@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
+import Axios from 'axios'
+import ConfigMain from '../../configs/main'
+
 import ActionLink from './ActionLink'
 
 import {selectResultsCategory} from '../redux/actions/actions'
@@ -15,7 +18,7 @@ import "../css/searchHeader.css"
 
 import DemoCarousel from './DemoCarousel'
 
-import RoadmapHelper from '../helpers/roadmapHelper'
+import RoadmapsWidget from './RoadmapsWidget';
 
 class SearchHeader extends React.Component {
   constructor(props) {
@@ -24,38 +27,16 @@ class SearchHeader extends React.Component {
     this.state = {query : this.props.query, roadmaps: []}
   }
 
-  renderSkill(title) {
-    return (<span className="skillTag"><b>{title}</b></span>);
-  }
-
-  renderSkills(skills=[]) {
-    let listSkills = null;
-
-    for (let i = 0; i < skills.length; ++i) {
-      listSkills += this.renderSkill(skills[i]);
+  onStartSearch(e) {
+    e.preventDefault();
+    if (!this.props.isFetchInProgress) {
+      this.fetchRoadmapsFromBackend();
+      this.props.onHandleSearchClicked();
     }
-
-    return (
-    <span>
-     {listSkills}
-    </span>);
   }
 
-  renderRoadMap(roadMap) {
-    return (<div className="col-lg-2"> <div className="roadMap">
-      <h4>{roadMap.name}</h4>{this.renderSkills(roadMap.skills)}
-      </div></div>);
-  }
-
-  renderRoadMaps() {
-    let roadmaps = null;
-
-    for (let i = 0; i < this.state.roadmaps.length; ++i) {
-      roadmaps += this.renderRoadMap(this.state.roadmaps[i]);
-    }
-
-    return(<span>{roadmaps}</span>
-     );
+  componentWillMount() {
+    this.fetchRoadmapsFromBackend();
   }
 
   handleValueChange(e) {
@@ -85,7 +66,7 @@ class SearchHeader extends React.Component {
     const linkGigsClassName = this.props.currentCategory == "RESULTS_CATEGORY_GIGS" ? 'customLinkActive' : "customLink";
 
     return (
-    <form className="form-inline" action="#" onSubmit={this.props.onHandleSearchClicked}>
+    <form className="form-inline" action="#" onSubmit={(e) => this.onStartSearch(e)}>
       <div className="form-group">
         <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder={inputPlaceHolder} 
         value={this.state.query} onChange={(e) => this.handleValueChange(e)}/>
@@ -107,7 +88,7 @@ class SearchHeader extends React.Component {
           <li className={liClassNameGigs}><p className="glyphicon-text">Gigs</p></li>
         </ActionLink>
       </ul>
-      <button type="button" className="btn btn-warning btn-lg" onClick={this.props.onHandleSearchClicked}>{buttonText}{waitingText}</button>
+      <button type="button" className="btn btn-warning btn-lg" onClick={(e) => this.onStartSearch(e)}>{buttonText}{waitingText}</button>
     </form>)
   }
 
@@ -115,10 +96,8 @@ class SearchHeader extends React.Component {
     return (<div>
       <div className="col-lg-12">
         <h2>Roadmaps</h2>
-         <div className="roadmaps_widget">
          <div className="row">
-         {this.renderRoadMaps()}
-          </div>
+         <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress}/>
          </div>
       </div>
       </div>);
@@ -142,19 +121,26 @@ class SearchHeader extends React.Component {
     </span>
     );
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
-      if (!this.props.isFetchInProgress) {
-        let matchingRoadmaps = RoadmapHelper.findMatchingRoadmaps(this.state.query);
-        console.log('matchingRoadmaps: ');
-        console.dir(matchingRoadmaps);
-
-        let copy = Object.assign({}, this.state, {roadmaps: matchingRoadmaps});
-        this.setState(copy);
-      }
+  
+  fetchRoadmapsFromBackend() {
+    if (this.state.query) {
+      Axios.get(`${ConfigMain.getBackendURL()}/findRoadmaps?query=${this.state.query}`)
+      .then((response) =>this.handleRoadmapsFetch(response))
+      .catch((error) =>this.handleRoadmapsFetchError(error));
     }
-  }  
+  }
+
+  handleRoadmapsFetch(response) {
+    const matchingRoadmaps = response.data.results;
+
+    let copy = Object.assign({}, this.state, {roadmaps: matchingRoadmaps});
+    this.setState(copy);
+  }
+    
+  handleRoadmapsFetchError(error) {
+    let copy = Object.assign({}, this.state, {roadmaps: []});
+    this.setState(copy);
+  }
 }
 const mapDispatchToProps = dispatch => ({
   selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch)

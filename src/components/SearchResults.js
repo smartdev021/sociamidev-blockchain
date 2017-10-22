@@ -13,12 +13,13 @@ import EventBriteItemList from './containers/EventBriteItemList';
 import UdemyItemList from './containers/UdemyItemList';
 import FreelancerProjectItemList from './containers/FreelancerProjectItemList';
 
+import "../css/searchResults.css"
+
 import {openSearchResultsComplete} from '../redux/actions/actions'
 
 class SearchResults extends React.Component {
   componentWillMount() {
     this.props.openSearchResultsComplete();
-    console.dir(this.props.searchResults);
   }
 
   render() {
@@ -34,9 +35,13 @@ class SearchResults extends React.Component {
     const freelancerProjectList = (this.props.currentCategory == "RESULTS_CATEGORY_GIGS") 
     ? <FreelancerProjectItemList items={this.props.searchResults.gigs} 
         onAddBookmark={(e) => this.props.onAddBookmark(e)}/> : null;
-    
-    return (
-        <div className="row mt left">
+
+    if(this.props.isFetchInProgress) {
+      return <div className="row mt left search_results_container"><h2>Searching...</h2></div>;
+    }
+    else {
+      return (
+        <div className="row mt left search_results_container">
         <div className="col-lg-12">
             {jobsList}    
             {eventsList}
@@ -45,6 +50,7 @@ class SearchResults extends React.Component {
         </div>
       </div>
     );
+    }
   }
 
 }
@@ -52,6 +58,7 @@ class SearchResults extends React.Component {
 SearchResults.propTypes = {
   currentCategory: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
+  isFetchInProgress: PropTypes.bool.isRequired,
 
   openSearchResultsComplete: PropTypes.func.isRequired,
 }
@@ -59,6 +66,7 @@ SearchResults.propTypes = {
 const mapStateToProps = state => ({
   currentCategory: state.currentCategory,
   searchResults : state.searchResults,
+  isFetchInProgress : state.isFetchInProgress
 })
 
 const mapDispatchToProps = dispatch => ({

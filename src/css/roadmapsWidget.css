@@ -1,0 +1,63 @@
+.roadmaps_widget {
+    width: 100%;
+    min-height: 200px;
+    background-color: #E4E4E4;
+    border: 1px solid black;
+    color: black;
+    padding-top: 10px;
+    padding-top: 10px;
+}
+
+.skillTag {
+    background: transparent;
+    border: 1px solid black;
+    margin:5px;
+    font-size: 12px;
+    line-height: initial;
+    width:initial;
+}
+
+.roadMap{
+    width: 100%;
+    min-height: 180px;
+    height: 180px;
+    max-height: 180px;
+    background: grey;
+    border: 1px solid black;
+}
+
+.roadMap:hover{
+    background: yellow;
+}
+
+.roadMap, .roadMap h1, skillTag{
+    cursor: pointer;
+}
+
+.roadMap .roadmapControls {
+    /*margin-left: 10px;*/
+    visibility: hidden;
+}
+
+.roadMap:hover .roadmapControls {
+    /*margin-left: 10px;*/
+    visibility: initial;
+}
+
+.roadmapControl {
+    padding-right: 10px;
+}
+
+.mentor_widget {
+    width: 100%;
+    min-height: 200px;
+    background-color: #E4E4E4;
+    border: 1px solid black;
+    color: black;
+    padding-top: 10px;
+    padding-top: 10px;
+}
+
+.mentor_widget, .mentor_widget h2{
+    cursor: pointer;
+}

@@ -73,7 +73,7 @@ import 'whatwg-fetch'
     )  
     .catch(function(err) {  
       console.log('Fetch Error :-S', err);
-      listener();
+      listener([]);
     });
   }
 

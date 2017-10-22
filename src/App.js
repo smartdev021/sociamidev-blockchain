@@ -117,9 +117,7 @@ class App extends Component {
     this.handleQueryChange(event.target.value);
   }
 
-  handleStartSearch(event) {
-    event.preventDefault();
-
+  handleStartSearch() {
     this.startNewSearch();
   }
 
@@ -257,13 +255,11 @@ class App extends Component {
   }
 
   fetchUserInfoFromDataBase() {
-    if (this.state.linkedInID) {
-      Axios.get(`${BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`)
-      .then((response) =>this.handleUserProfileFetchFromDB(response))
-      .catch((error) =>this.handleUserProfileFetchFromDBError(error));
-    }
-    else if (this.state.faceBookID) {
-      Axios.get(`${BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`)
+    if (this.state.faceBookID || this.state.linkedInID) {
+      const url = this.state.faceBookID ? `${BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`
+      : `${BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`;
+  
+      Axios.get(url)
       .then((response) =>this.handleUserProfileFetchFromDB(response))
       .catch((error) =>this.handleUserProfileFetchFromDBError(error));
     }
@@ -323,11 +319,6 @@ class App extends Component {
       console.log("App props updated: ");
       console.dir(this.props);
     }
-
-    if (prevProps.store != this.props.store) {
-      console.log("Store has changed: ");
-      console.dir(this.props.store);
-    }
   }
 
   getRedirectLocation() {
@@ -355,7 +346,7 @@ class App extends Component {
       <div>
         {RedirectTo}
       <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} isAuthorized={this.state.isAuthorized}/>
-      <Main onHandleStartSearch={(e) => this.handleStartSearch(e)} 
+      <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
           onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
