@@ -102,9 +102,26 @@ const bookmarksInitialState = {bookmarks: [], amount: 0};
 export function bookmarks(state = bookmarksInitialState, action) {
   switch (action.type) {
       case BOOKMARK_ADD:
-          return {...state, amount: state.amount + 1};
+      {
+        for (let i = 0; i < state.bookmarks.length; ++i) {
+          if (state.bookmarks[i]._id == action.bookmark._id) {
+            return state;
+          }
+        }
+        let newBookMarks = state.bookmarks.concat(action.bookmark);
+        return {...state, bookmarks: newBookMarks, amount: newBookMarks.length};
+      }
       case BOOKMARK_REMOVE:
-          return state.amount > 0 ? {...state, amount: state.amount + 1} : state;
+      {
+        for (let i = 0; i < state.bookmarks.length; ++i) {
+          if (state.bookmarks[i]._id == action._id) {
+            let newBookMarks = Object.assign(state.bookmarks);
+            newBookMarks.splice(i, 1);
+            return {...state, bookmarks: newBookMarks, amount: newBookMarks.length};
+          }
+        }
+        return state;
+      }
       case BOOKMARK_REMOVE_ALL:
           return bookmarksInitialState;
       default:

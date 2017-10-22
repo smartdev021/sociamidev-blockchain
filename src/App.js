@@ -39,6 +39,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import ObjectHash from 'object-hash'
+
 import {
   openUserProfile,
   openSearchResults,
@@ -121,20 +123,8 @@ class App extends Component {
     this.startNewSearch();
   }
 
-  handleAddJobToFavorites(event) {
-    this.props.addBookmark({});
-  }
-
-  handleAddCourseToFavorites(event) {
-    this.props.addBookmark({});
-  }
-
-  handleAddEventToFavorites(event) {
-    this.props.addBookmark({});
-  }
-
-  handleAddFreelancerProjectToFavorites(event) {
-    this.props.addBookmark({});
+  handleAddBookmark(item) {
+    this.props.addBookmark(Object.assign(item, {_id: ObjectHash(item)}));
   }
 
   refreshBusyState() {
@@ -333,6 +323,11 @@ class App extends Component {
       console.log("App props updated: ");
       console.dir(this.props);
     }
+
+    if (prevProps.store != this.props.store) {
+      console.log("Store has changed: ");
+      console.dir(this.props.store);
+    }
   }
 
   getRedirectLocation() {
@@ -365,10 +360,7 @@ class App extends Component {
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
           onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
           isFetchInProgress={this.props.isFetchInProgress}
-          onHandleAddJobToFavorites={(e) => this.handleAddJobToFavorites(e)}
-          onHandleAddEventToFavorites={(e) => this.handleAddEventToFavorites(e)}
-          onHandleAddCourseToFavorites={(e) => this.handleAddCourseToFavorites(e)}
-          onHandleAddFreelancerProjectToFavorites={(e) => this.handleAddFreelancerProjectToFavorites(e)} 
+          onAddBookmark={(e) => this.handleAddBookmark(e)}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.closeSignUpModal()}
           isSignUpFormOpen={this.state.isSignUpFormOpen}
@@ -414,6 +406,7 @@ const mapStateToProps = state => ({
   isOpenProfilePending: state.isOpenProfilePending,
   isOpenSearchResultsPending: state.isOpenSearchResultsPending,
   isFetchInProgress: state.isFetchInProgress,
+  store: state,
 })
 
 

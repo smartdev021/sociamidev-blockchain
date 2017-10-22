@@ -14,6 +14,9 @@ class JobItem extends React.Component {
     //output table row and table data, where table data is taken from props passed inside from parent component
     if (typeof this.props !== "undefined" && typeof this.props.item !== "undefined") {
       let company = this.props.item.company ? this.props.item.company: "N/A";
+
+      let itemObject = this.props.item;
+      itemObject.type = "indeed_job";
       
       //pack all <td> tags and their data into array
       let tdItems = [<td key="0">{this.props.item.jobtitle}</td>,
@@ -24,7 +27,7 @@ class JobItem extends React.Component {
                       <td key="5">{this.props.item.date}</td>,
                       <td key="6">{this.props.item.formattedRelativeTime}</td>,
                       <td key="7"><button type="button" className="btn btn-warning btn-lg" 
-                      onClick={(e) => this.props.onAddToFavorites(e)}>Bookmark</button></td>
+                      onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (
         //output table row and table data inside it

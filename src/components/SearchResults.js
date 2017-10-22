@@ -23,17 +23,17 @@ class SearchResults extends React.Component {
 
   render() {
     const jobsList = (this.props.currentCategory == "RESULTS_CATEGORY_JOBS") 
-    ? <JobsList items={this.props.searchResults.jobs} onAddToFavorites={(e) => this.props.onHandleAddJobToFavorites(e)}/> : null;
+    ? <JobsList items={this.props.searchResults.jobs} onAddBookmark={(e) => this.props.onAddBookmark(e)}/> : null;
     
     const eventsList = (this.props.currentCategory == "RESULTS_CATEGORY_EVENTS") 
-    ? <EventBriteItemList items={this.props.searchResults.events} onAddToFavorites={(e) => this.props.onHandleAddEventToFavorites(e)}/> : null;
+    ? <EventBriteItemList items={this.props.searchResults.events} onAddBookmark={(e) => this.props.onAddBookmark(e)}/> : null;
     
     const udemyCoursesList = (this.props.currentCategory == "RESULTS_CATEGORY_COURSES") 
-    ? <UdemyItemList items={this.props.searchResults.courses} onAddToFavorites={(e) => this.props.onHandleAddCourseToFavorites(e)}/> : null;
+    ? <UdemyItemList items={this.props.searchResults.courses} onAddBookmark={(e) => this.props.onAddBookmark(e)}/> : null;
     
     const freelancerProjectList = (this.props.currentCategory == "RESULTS_CATEGORY_GIGS") 
     ? <FreelancerProjectItemList items={this.props.searchResults.gigs} 
-        onAddToFavorites={(e) => this.props.onHandleAddFreelancerProjectToFavorites(e)}/> : null;
+        onAddBookmark={(e) => this.props.onAddBookmark(e)}/> : null;
     
     return (
         <div className="row mt left">

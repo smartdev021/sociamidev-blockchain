@@ -38,7 +38,7 @@ class FreelancerProjectItemList extends React.Component {
       let freelanceProjectItems = [];
 
       for (let i = 0; i < this.props.items.length; ++i) {
-        freelanceProjectItems.push(<FreelancerProjectItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
+        freelanceProjectItems.push(<FreelancerProjectItem key={i} item={this.props.items[i]} onAddBookmark={(e) => this.props.onAddBookmark(e)}/>);
       }
 
         listContent = (

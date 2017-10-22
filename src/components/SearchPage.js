@@ -14,10 +14,7 @@ class SearchPage extends React.Component {
       onHandleSearchClicked={(e) => this.props.onHandleStartSearch(e)} query={this.props.query} 
       isSearchInProgress={this.props.isSearchInProgress}/>
         <SearchResults 
-        onHandleAddJobToFavorites={(e) => this.props.onHandleAddJobToFavorites(e)}
-        onHandleAddEventToFavorites={(e) => this.props.onHandleAddEventToFavorites(e)}
-        onHandleAddCourseToFavorites={(e) => this.props.onHandleAddCourseToFavorites(e)}
-        onHandleAddFreelancerProjectToFavorites={(e) => this.props.onHandleAddFreelancerProjectToFavorites(e)}/>
+        onAddBookmark={(item) => this.props.onAddBookmark(item)}/>
       </div>
     );
   }

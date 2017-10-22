@@ -40,7 +40,7 @@ class JobsList extends React.Component {
       
       //create JobItem for each this.props.items element
       for (let i = 0; i < this.props.items.length; ++i) {
-        jobItems.push(<JobItem key={i} item={this.props.items[i]} onAddToFavorites={(e) => this.props.onAddToFavorites(e)}/>);
+        jobItems.push(<JobItem key={i} item={this.props.items[i]} onAddBookmark={(e) => this.props.onAddBookmark(e)}/>);
       }
 
         listContent = (
