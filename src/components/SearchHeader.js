@@ -15,35 +15,46 @@ import "../css/searchHeader.css"
 
 import DemoCarousel from './DemoCarousel'
 
+import RoadmapHelper from '../helpers/roadmapHelper'
+
 class SearchHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {query : this.props.query}
+    this.state = {query : this.props.query, roadmaps: []}
   }
 
   renderSkill(title) {
     return (<span className="skillTag"><b>{title}</b></span>);
   }
 
-  renderSkills() {
+  renderSkills(skills=[]) {
+    let listSkills = null;
+
+    for (let i = 0; i < skills.length; ++i) {
+      listSkills += this.renderSkill(skills[i]);
+    }
+
     return (
     <span>
-      {this.renderSkill("JavaScript")}{this.renderSkill("Java")}{this.renderSkill("AJAX")}
-      <br/>{this.renderSkill("NodeJS")}{this.renderSkill("ReacJS")}{this.renderSkill("XML")}
+     {listSkills}
     </span>);
   }
 
-  renderRoadMap(title) {
+  renderRoadMap(roadMap) {
     return (<div className="col-lg-2"> <div className="roadMap">
-      <h4>{title}</h4>{this.renderSkills()}
+      <h4>{roadMap.name}</h4>{this.renderSkills(roadMap.skills)}
       </div></div>);
   }
 
   renderRoadMaps() {
-    return(<span>{this.renderRoadMap("Java")}{this.renderRoadMap("JavaScript")}
-    {this.renderRoadMap("Front-End")}{this.renderRoadMap("Full-Stack")}
-    {this.renderRoadMap("Java")}{this.renderRoadMap("JavaScript")}</span>
+    let roadmaps = null;
+
+    for (let i = 0; i < this.state.roadmaps.length; ++i) {
+      roadmaps += this.renderRoadMap(this.state.roadmaps[i]);
+    }
+
+    return(<span>{roadmaps}</span>
      );
   }
 
@@ -131,8 +142,20 @@ class SearchHeader extends React.Component {
     </span>
     );
   }
-}
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
+      if (!this.props.isFetchInProgress) {
+        let matchingRoadmaps = RoadmapHelper.findMatchingRoadmaps(this.state.query);
+        console.log('matchingRoadmaps: ');
+        console.dir(matchingRoadmaps);
+
+        let copy = Object.assign({}, this.state, {roadmaps: matchingRoadmaps});
+        this.setState(copy);
+      }
+    }
+  }  
+}
 const mapDispatchToProps = dispatch => ({
   selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch)
 })
