@@ -6,6 +6,7 @@
     color: black;
     padding-top: 10px;
     padding-top: 10px;
+    overflow-y:auto;
 }
 
 .skillTag {
@@ -24,6 +25,7 @@
     max-height: 180px;
     background: grey;
     border: 1px solid black;
+    margin-bottom: 5px;
 }
 
 .roadMap:hover{

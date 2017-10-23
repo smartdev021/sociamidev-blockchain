@@ -92,6 +92,14 @@ class SearchHeader extends React.Component {
     </form>)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.numBookmarks != this.props.numBookmarks && this.props.numBookmarks > 0) {
+      let latestBookmark = this.props.bookmarks[this.props.bookmarks.length-1];
+
+      this.fetchBookmarkRoadmapFromBackend(latestBookmark);
+    }
+  }
+
   renderResultsNavigation() {
     return (<div>
       <div className="col-lg-12">
@@ -141,6 +149,44 @@ class SearchHeader extends React.Component {
     let copy = Object.assign({}, this.state, {roadmaps: []});
     this.setState(copy);
   }
+
+  fetchBookmarkRoadmapFromBackend(bookmark) {
+    if (bookmark.type == "indeed_job") {
+      if (this.state.query) {
+        Axios.get(`${ConfigMain.getBackendURL()}/roadmapFromBookmark?bookmarkType=${bookmark.type}&jobKey=${bookmark.jobkey}`)
+        .then((response) =>this.handleFetchBookmarkRoadmap(response))
+        .catch((error) =>this.handleFetchBookmarkRoadmapError(error));
+      }
+    }
+  }
+
+  handleFetchBookmarkRoadmap(response) {
+    const roadmap = response.data;
+
+    //add additional roadmap
+    //check if it's valid ny name, for now, TODO: better way of checking for validity
+    if (roadmap.name) {
+      let copy = Object.assign({}, this.state, {roadmaps: this.state.roadmaps.concat(roadmap)});
+      this.setState(copy);
+    }
+  }
+    
+  handleFetchBookmarkRoadmapError(error) {
+    console.log("handleFetchBookmarkRoadmapError: " + error);
+  }
+
+  handleRoadmapsFetch(response) {
+    const matchingRoadmaps = response.data.results;
+
+    let copy = Object.assign({}, this.state, {roadmaps: matchingRoadmaps});
+    this.setState(copy);
+  }
+    
+  handleRoadmapsFetchError(error) {
+    let copy = Object.assign({}, this.state, {roadmaps: []});
+    this.setState(copy);
+  }
+
 }
 const mapDispatchToProps = dispatch => ({
   selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch)
@@ -150,6 +196,7 @@ SearchHeader.propTypes = {
   currentCategory: PropTypes.string.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   numBookmarks: PropTypes.number.isRequired,
+  bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -160,6 +207,7 @@ const mapStateToProps = state => ({
   numGigs: state.searchResults.numGigs,
   isFetchInProgress: state.isFetchInProgress,
   numBookmarks: state.bookmarks.amount,
+  bookmarks: state.bookmarks.bookmarks,
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

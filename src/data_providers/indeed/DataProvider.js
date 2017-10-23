@@ -49,6 +49,7 @@ import 'whatwg-fetch'
               let country = jobs[i].country;
               let url = jobs[i].url;
               let date = jobs[i].date;
+              let jobkey = jobs[i].jobkey;
               let formattedRelativeTime = jobs[i].formattedRelativeTime;
 
               indeedJob["jobtitle"] = jobtitle;
@@ -57,6 +58,7 @@ import 'whatwg-fetch'
               indeedJob["country"] = formattedLocation;
               indeedJob["url"] = url;
               indeedJob["date"] = date;
+              indeedJob["jobkey"] = jobkey;
               indeedJob["formattedRelativeTime"] = formattedRelativeTime;
 
                 indeedJobs.push(indeedJob);

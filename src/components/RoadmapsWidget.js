@@ -8,6 +8,9 @@ import { withRouter } from 'react-router-dom'
 
 import "../css/roadmapsWidget.css"
 
+//TODO: remove, as soon as layout is fixed
+const MAX_SKILLS_AMOUNT = 4;
+
 class RoadmapsWidget extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +66,12 @@ class RoadmapsWidget extends React.Component {
                           {roadmapControls}
                           <div className="row">
                             {roadmap.skills.map(function(skill, i) {
-                              return<div className="col-lg-2 skillTag" key={i}>{skill}</div>;
+                                if (i < MAX_SKILLS_AMOUNT) {
+                                    return<div className="col-lg-2 skillTag" key={i}>{skill}</div>;
+                                }
+                                else {
+                                    return null;
+                                }
                             })}
                           </div>
                       </div>
@@ -98,7 +106,7 @@ class RoadmapsWidget extends React.Component {
 
 RoadmapsWidget.propTypes = {
   roadmaps: PropTypes.arrayOf(PropTypes.object).isRequired,
-  isFetchInProgress: PropTypes.bool.isRequired
+  isFetchInProgress: PropTypes.bool.isRequired,
 }
 
 export default withRouter(RoadmapsWidget);
