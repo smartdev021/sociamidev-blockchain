@@ -163,12 +163,9 @@ class SearchHeader extends React.Component {
   handleFetchBookmarkRoadmap(response) {
     const roadmap = response.data;
 
-    //add additional roadmap
-    //check if it's valid ny name, for now, TODO: better way of checking for validity
-    if (roadmap.name) {
-      let copy = Object.assign({}, this.state, {roadmaps: this.state.roadmaps.concat(roadmap)});
-      this.setState(copy);
-    }
+    console.log("Found roadmap from bookmark: ");
+    console.dir(roadmap);
+
   }
     
   handleFetchBookmarkRoadmapError(error) {

@@ -1,0 +1,74 @@
+.roadmap_details_widget {
+    width: 100%;
+    min-height: 200px;
+    background-color: #E4E4E4;
+    border: 1px solid black;
+    color: black;
+    padding-top: 10px;
+    padding-top: 10px;
+}
+
+.roadmapStart {
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    border-radius: 40px;
+    text-align: center;
+    line-height: 80px;
+    margin-left: 20px;
+
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    margin-top: auto; 
+    margin-bottom: auto; 
+}
+
+.skillsArrow {
+    border: none;
+    height: 2px;
+    width:70%;
+    /* Set the hr color */
+    color: black; /* old IE */
+    background-color: black; /* Modern Browsers */
+    margin-left: 100px;
+    position: absolute; 
+    top: 0; 
+    bottom: 0;
+    margin-top: auto; 
+    margin-bottom: auto; 
+}
+
+.detailsSkill {
+    margin-left: 10px;
+}
+
+.detailsSkills {
+    margin-left: 150px;
+    margin-top: 70px;
+}
+
+.roadmapWayContainer {
+    border:1px solid black;
+}
+
+.detailsClose {
+    cursor: pointer;
+    position: absolute; 
+    top: 5px; 
+    right:20px;
+}
+
+.detailsButtons {
+    list-style-type: none;
+    position: absolute; 
+    right: 90px;
+    top: 0; 
+    bottom: 0;
+    margin-top: 55px;
+    margin-bottom: auto; 
+  }
+
+  .detailsButton {
+      min-width: 145px;
+  }

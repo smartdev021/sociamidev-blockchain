@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
 
+import RoadmapWidgetDetails from './RoadmapWidgetDetails'
+
 import "../css/roadmapsWidget.css"
 
 //TODO: remove, as soon as layout is fixed
@@ -17,7 +19,15 @@ class RoadmapsWidget extends React.Component {
 
     this.renderRoadmaps = this.renderRoadmaps.bind(this);
 
-    this.state = {addedRoadmaps: [], isViewingMentor: false};
+    this.state = {addedRoadmaps: [], isViewingDetails: false, currentRoadmapSelected: {}};
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+      if (this.props.isFetchInProgress != prevProps.isFetchInProgress) {
+          if (this.props.isFetchInProgress) {
+              this.handleViewDefault();
+          }
+      }
   }
 
   handleAdd(e) {
@@ -29,17 +39,15 @@ class RoadmapsWidget extends React.Component {
       }
   }
 
-  handleViewMentor(e) {
-    console.log("HandleViewMentor: " + e.target.id);
+  handleViewDetails(e) {
+    console.log("HandleViewDetails: " + e.target.id);
 
-    let copy = Object.assign(this.state, {}, {isViewingMentor: true});
+    let copy = Object.assign(this.state, {}, {isViewingDetails: true, currentRoadmapSelected: this.props.roadmaps[Number(e.target.id)]});
     this.setState(copy);
   }
 
-  handleViewDefault(e) {
-    console.log("HandleViewDefault: " + e.target.id);
-
-    let copy = Object.assign(this.state, {}, {isViewingMentor: false});
+  handleViewDefault() {
+    let copy = Object.assign(this.state, {}, {isViewingDetails: false});
     this.setState(copy);
   }
 
@@ -47,7 +55,7 @@ class RoadmapsWidget extends React.Component {
       const addControlClassName = this.state.addedRoadmaps.indexOf(String(roadmapId)) != -1 ? "	glyphicon glyphicon-ok roadmapControl" 
       : "glyphicon glyphicon-plus roadmapControl";
       return (<span className="roadmapControls">
-          <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewMentor(e)}></span>
+          <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewDetails(e)}></span>
           <span className={addControlClassName} id={roadmapId} onClick={(e)=> this.handleAdd(e)}></span>
       </span>);
   }
@@ -91,10 +99,8 @@ class RoadmapsWidget extends React.Component {
   }
 
   render() {
-      if (this.state.isViewingMentor) {
-        return(<div className="col-lg-12">
-                <div className="mentor_widget" onClick={(e)=> this.handleViewDefault(e)}><h2>Mentor coming soon... Click to go back</h2></div>
-            </div>);
+      if (this.state.isViewingDetails) {
+        return(<RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} currentRoadmap = {this.state.currentRoadmapSelected}/>);
       }
       else {
         return(<div className="roadmaps_widget">

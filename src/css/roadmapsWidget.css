@@ -42,8 +42,11 @@
 }
 
 .roadMap:hover .roadmapControls {
-    /*margin-left: 10px;*/
     visibility: initial;
+}
+
+.roadMap:hover .skillTag {
+    visibility: hidden;
 }
 
 .roadmapControl {
