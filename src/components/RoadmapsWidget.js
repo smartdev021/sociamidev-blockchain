@@ -100,9 +100,9 @@ class RoadmapsWidget extends React.Component {
 
   render() {
       if (this.state.isViewingDetails) {
-        return(<RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
+        return(<div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
         currentRoadmap = {this.state.currentRoadmapSelected}
-        openSignUpForm = {this.props.openSignUpForm}/>);
+        openSignUpForm = {this.props.openSignUpForm}/></div>);
       }
       else {
         return(<div className="roadmaps_widget">
