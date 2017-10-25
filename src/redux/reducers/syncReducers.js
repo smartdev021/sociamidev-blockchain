@@ -18,7 +18,21 @@ import {
   BOOKMARK_ADD,
   BOOKMARK_REMOVE,
   BOOKMARK_REMOVE_ALL,
+
+  SIGNUP_FORM_OPEN,
+  SIGNUP_FORM_CLOSE
 } from '../actions/actionTypes';
+
+export function isSignUpFormOpen(state = false, action) {
+  switch (action.type) {
+      case SIGNUP_FORM_OPEN:
+        return (!state) ? true : state;
+      case SIGNUP_FORM_CLOSE:
+        return (state) ? false : state;
+      default:
+        return state;
+    }
+}
 
 export function currentCategory(state = "RESULTS_CATEGORY_JOBS", action) {
     switch (action.type) {

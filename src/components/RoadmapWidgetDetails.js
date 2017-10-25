@@ -30,8 +30,8 @@ class RoadmapsWidgetDetails extends React.Component {
         })}
       </div>
       <ul className="detailsButtons">
-          <li><button type="button" className="btn btn-primary btn-lg detailsButton">Find a Mentor</button></li>
-          <li><button type="button" className="btn btn-warning btn-lg detailsButton">Find friends</button></li>
+          <li><button type="button" className="btn btn-primary btn-lg detailsButton" onClick={()=>this.props.openSignUpForm()}>Find a Mentor</button></li>
+          <li><button type="button" className="btn btn-warning btn-lg detailsButton" onClick={()=>this.props.openSignUpForm()}>Find friends</button></li>
       </ul>
       <span className="glyphicon glyphicon-remove detailsClose" onClick={()=> this.props.onViewDefault()}></span>
     </div>
@@ -42,6 +42,7 @@ class RoadmapsWidgetDetails extends React.Component {
 RoadmapsWidgetDetails.propTypes = {
   currentRoadmap: PropTypes.object.isRequired,
   onViewDefault: PropTypes.func.isRequired,
+  openSignUpForm: PropTypes.func.isRequired,
 }
 
 export default withRouter(RoadmapsWidgetDetails);
