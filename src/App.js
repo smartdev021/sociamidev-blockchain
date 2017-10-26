@@ -53,6 +53,8 @@ import {
   fetchResultsComplete,
   bookmarkAdd,
   bookmarkRemoveAll,
+  openSignUpForm,
+  closeSignUpForm,
 } from './redux/actions/actions'
 
 WebFont.load({
@@ -84,7 +86,6 @@ class App extends Component {
       country: "sg", 
       query : "",
       isSearchInProgress: false,
-      isSignUpFormOpen: false,
       isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
@@ -238,16 +239,6 @@ class App extends Component {
        break;
     }
   }
-
-  closeSignUpModal() {
-    let copy = Object.assign({}, this.state, {isSignUpFormOpen: false});
-    this.setState(copy);
-  }
-
-  handleSignUpButtonClick() {
-    let copy = Object.assign({}, this.state, {isSignUpFormOpen: !this.state.isSignUpFormOpen});
-    this.setState(copy);
-  }
   
   resetAuthentication() {
     let copy = Object.assign({}, this.state, {linkedInID: "", faceBookID: "", profule: null});
@@ -345,7 +336,7 @@ class App extends Component {
       
       <div>
         {RedirectTo}
-      <ThemeNavBar onHandleSignUp={()=> this.handleSignUpButtonClick()} isAuthorized={this.state.isAuthorized}/>
+      <ThemeNavBar onHandleSignUp={()=> this.props.openSignUpForm()} isAuthorized={this.state.isAuthorized}/>
       <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
@@ -353,8 +344,8 @@ class App extends Component {
           isFetchInProgress={this.props.isFetchInProgress}
           onAddBookmark={(e) => this.handleAddBookmark(e)}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
-          onCloseSignUpModal={() => this.closeSignUpModal()}
-          isSignUpFormOpen={this.state.isSignUpFormOpen}
+          onCloseSignUpModal={() => this.props.closeSignUpForm()}
+          isSignUpFormOpen={this.props.isSignUpFormOpen}
           onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
           onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}/>
       <ThemeFooterContainer/>
@@ -367,6 +358,7 @@ App.propTypes = {
   isOpenProfilePending: PropTypes.bool.isRequired,
   isOpenSearchResultsPending: PropTypes.bool.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
+  isSignUpFormOpen: PropTypes.bool.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -391,12 +383,16 @@ const mapDispatchToProps = dispatch => ({
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
   addBookmark: bindActionCreators(bookmarkAdd, dispatch),
   removeAllBookmarks: bindActionCreators(bookmarkRemoveAll, dispatch),
+  openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
 })
 
 const mapStateToProps = state => ({
   isOpenProfilePending: state.isOpenProfilePending,
   isOpenSearchResultsPending: state.isOpenSearchResultsPending,
   isFetchInProgress: state.isFetchInProgress,
+  isSignUpFormOpen: state.isSignUpFormOpen,
+  //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })
 

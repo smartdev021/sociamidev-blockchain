@@ -13,7 +13,10 @@ import ConfigMain from '../../configs/main'
 
 import ActionLink from './ActionLink'
 
-import {selectResultsCategory} from '../redux/actions/actions'
+import {
+  selectResultsCategory,
+  openSignUpForm,
+} from '../redux/actions/actions'
 import "../css/searchHeader.css"
 
 import DemoCarousel from './DemoCarousel'
@@ -105,7 +108,8 @@ class SearchHeader extends React.Component {
       <div className="col-lg-12">
         <h2>Roadmaps</h2>
          <div className="row">
-         <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress}/>
+         <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
+         openSignUpForm={this.props.openSignUpForm}/>
          </div>
       </div>
       </div>);
@@ -186,7 +190,8 @@ class SearchHeader extends React.Component {
 
 }
 const mapDispatchToProps = dispatch => ({
-  selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch)
+  selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch),
+  openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
 })
 
 SearchHeader.propTypes = {
@@ -194,6 +199,7 @@ SearchHeader.propTypes = {
   isFetchInProgress: PropTypes.bool.isRequired,
   numBookmarks: PropTypes.number.isRequired,
   bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  openSignUpForm: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
