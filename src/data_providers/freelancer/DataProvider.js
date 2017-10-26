@@ -11,6 +11,8 @@
 
 import 'whatwg-fetch'
 
+const OnlyActiveProjects = true;
+
   const requestApiData = function (url, listener) {
 
     const headers = new Headers();
@@ -37,6 +39,10 @@ import 'whatwg-fetch'
               let projects = parsedJSON.result.projects;
               
               for (let project in projects) {
+
+                if (projects[project].status != "active" && OnlyActiveProjects) {
+                  continue;
+                }
                 
                 let title = projects[project].title;
                 let description = projects[project].preview_description;
