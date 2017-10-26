@@ -17,3 +17,6 @@ export const FETCH_RESULTS_COMPLETE = "fetch_results_complete";
 export const BOOKMARK_ADD = "bookmark_add";
 export const BOOKMARK_REMOVE = "bookmark_remove";
 export const BOOKMARK_REMOVE_ALL = "bookmark_remove_all";
+
+export const SIGNUP_FORM_OPEN = "signup_form_open";
+export const SIGNUP_FORM_CLOSE = "signup_form_close";
