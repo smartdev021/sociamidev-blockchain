@@ -14,22 +14,7 @@ import {
 
     BOOKMARK_ADD,
     BOOKMARK_REMOVE,
-
-    SIGNUP_FORM_OPEN,
-    SIGNUP_FORM_CLOSE,
 } from './actionTypes';
-
-export function openSignUpForm() {
-    return {
-        type: SIGNUP_FORM_OPEN,
-    }
-}
-
-export function closeSignUpForm() {
-    return {
-        type: SIGNUP_FORM_CLOSE,
-    }
-}
 
 //selects category 'RESULTS_CATEGORY_JOBS', 'RESULTS_CATEGORY_EVENTS', etc.
 export function selectResultsCategory(newCategory) {

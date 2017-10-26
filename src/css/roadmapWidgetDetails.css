@@ -4,35 +4,48 @@
     background-color: #E4E4E4;
     border: 1px solid black;
     color: black;
+    padding-top: 10px;
+    padding-top: 10px;
 }
 
 .roadmapStart {
     width: 80px;
     height: 80px;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 40px;
     text-align: center;
     line-height: 80px;
-}
+    margin-left: 20px;
 
-.roadmapStartContainer {
-    width: 80px;
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    margin-top: auto; 
+    margin-bottom: auto; 
 }
 
 .skillsArrow {
-    
+    border: none;
+    height: 2px;
+    width:70%;
+    /* Set the hr color */
+    color: black; /* old IE */
+    background-color: black; /* Modern Browsers */
     margin-left: 100px;
+    position: absolute; 
+    top: 0; 
+    bottom: 0;
     margin-top: auto; 
     margin-bottom: auto; 
 }
 
 .detailsSkill {
-    padding-top: 5px;
     margin-left: 10px;
 }
 
 .detailsSkills {
-    margin-left: 20px;
+    margin-left: 150px;
+    margin-top: 70px;
 }
 
 .roadmapWayContainer {
@@ -43,61 +56,19 @@
     cursor: pointer;
     position: absolute; 
     top: 5px; 
-    right:5px;
+    right:20px;
 }
 
 .detailsButtons {
     list-style-type: none;
+    position: absolute; 
+    right: 90px;
+    top: 0; 
+    bottom: 0;
+    margin-top: 55px;
+    margin-bottom: auto; 
   }
 
   .detailsButton {
       min-width: 145px;
-      margin-bottom: 10px;
   }
-
-  .roadmapDetailsDescription {
-      width: 100%;
-      height: 200px;
-  }
-
-  .roadmapDetailsControls {
-    width: 100%;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-  }
-
-
-  .roadmapDetailsDescriptionHeader {
-      height: 30%;
-  }
-
-  .roadmapDetailsDescriptionContent {
-    height: 40%;
-    width: 100%;
-}
-
-.roadmapDetailsDescriptionFooter {
-    height: 30%;
-}
-
-.roadmapDetailsDescriptionHeader h4 {
-    display: inline-block;
-}
-
-.detailsArrow {
-    height: 80px;
-    margin-left: 10px;
-}
-
-.detailsArrow hr {
-    border: none;
-    height: 2px;
-    width:100%;
-    /* Set the hr color */
-    color: black; /* old IE */
-    background-color: black; /* Modern Browsers */
-}
-
-

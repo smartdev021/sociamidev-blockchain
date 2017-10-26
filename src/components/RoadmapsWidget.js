@@ -100,9 +100,7 @@ class RoadmapsWidget extends React.Component {
 
   render() {
       if (this.state.isViewingDetails) {
-        return(<div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
-        currentRoadmap = {this.state.currentRoadmapSelected}
-        openSignUpForm = {this.props.openSignUpForm}/></div>);
+        return(<RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} currentRoadmap = {this.state.currentRoadmapSelected}/>);
       }
       else {
         return(<div className="roadmaps_widget">
@@ -115,7 +113,6 @@ class RoadmapsWidget extends React.Component {
 RoadmapsWidget.propTypes = {
   roadmaps: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
-  openSignUpForm: PropTypes.func.isRequired,
 }
 
 export default withRouter(RoadmapsWidget);
