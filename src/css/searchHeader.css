@@ -39,7 +39,7 @@
     padding-right: 15px;
 }
 
-.customLink, .customLinkActive:hover, .customLinkActive:visited, .customLinkActive:active{
+.customLink, .customLinkActive:hover, .customLinkActive:visited, .customLinkActive:active, .customLinkActive:focus {
     color: #3498db;
 }
 
