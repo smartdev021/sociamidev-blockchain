@@ -36,10 +36,13 @@ import { withRouter } from 'react-router-dom'
 import { Redirect} from 'react-router-dom'
 
 import PropTypes from 'prop-types';
+import { instanceOf } from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import ObjectHash from 'object-hash'
+
+import { withCookies, Cookies } from 'react-cookie';
 
 import {
   openUserProfile,
@@ -359,6 +362,7 @@ App.propTypes = {
   isOpenSearchResultsPending: PropTypes.bool.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
+  cookies: instanceOf(Cookies).isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -398,4 +402,4 @@ const mapStateToProps = state => ({
 
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(App)));
