@@ -126,7 +126,7 @@ class App extends Component {
   }
 
   handleAddBookmark(item) {
-    this.props.addBookmark(Object.assign(item, {_id: ObjectHash(item)}));
+    this.props.addBookmark(Object.assign({}, item, {_id: ObjectHash(item)}));
   }
 
   refreshBusyState() {

@@ -4,7 +4,9 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { instanceOf } from 'prop-types';
 import { withRouter } from 'react-router-dom'
+import { withCookies, Cookies } from 'react-cookie';
 
 import RoadmapWidgetDetails from './RoadmapWidgetDetails'
 
@@ -22,19 +24,70 @@ class RoadmapsWidget extends React.Component {
     this.state = {addedRoadmaps: [], isViewingDetails: false, currentRoadmapSelected: {}};
   }
 
+  componentWillMount() {
+    const savedRoadmaps = this.props.cookies.get('addedRoadmaps');
+
+    if (savedRoadmaps && savedRoadmaps.length > 0) {
+        //if user was adding roadmaps previously - set them to state
+        let copy = Object.assign({}, this.state, {addedRoadmaps: savedRoadmaps});
+        this.setState(copy);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
+      console.log("componentDidUpdate: ");
+      console.log("prevState");
+      console.dir(prevState);
+      console.log("this.state");
+      console.log(this.state);
       if (this.props.isFetchInProgress != prevProps.isFetchInProgress) {
           if (this.props.isFetchInProgress) {
               this.handleViewDefault();
           }
       }
+
+      console.log("prevState.addedRoadmaps.length: " + prevState.addedRoadmaps.length + " this.state.addedRoadmaps.length: " + this.state.addedRoadmaps.length);
+
+      if (prevState.addedRoadmaps.length != this.state.addedRoadmaps.length) {
+        const { cookies } = this.props;
+
+        const savedRoadmaps = cookies.get('addedRoadmaps');
+
+        console.log("Trying to set cookies savedRoadmaps: ");
+        console.dir(savedRoadmaps);
+
+        //only add roadmaps to cookies if they differ in length or not set yet
+        if (!savedRoadmaps || savedRoadmaps.length != this.state.addedRoadmaps.length) {
+            let lifetimeMinutes = 10;
+            let dateExpire = new Date();
+            dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+            
+            let options = { path: '/', expires: dateExpire};
+            
+            cookies.set('addedRoadmaps', this.state.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
+        }
+      }
+
+      console.log("RoadmapsWidget state is: ");
+      console.dir(this.state);
   }
 
-  handleAdd(e) {
+  toggleAdd(e) {
       let roadmapId = e.target.id;
 
-      if (this.state.addedRoadmaps.indexOf(roadmapId) == -1) {
-        let copy = Object.assign(this.state, {}, {addedRoadmaps: this.state.addedRoadmaps.concat(roadmapId)})
+      let indexFound = this.state.addedRoadmaps.indexOf(roadmapId);
+
+      if (indexFound == -1) {
+        let copy = Object.assign({}, this.state, {addedRoadmaps: this.state.addedRoadmaps.concat(roadmapId)});
+        this.setState(copy);
+      }
+      else {
+        let copy = Object.assign({}, this.state, {addedRoadmaps: this.state.addedRoadmaps.filter(function(id) 
+            {
+                return id != roadmapId})
+            }
+        );
+        
         this.setState(copy);
       }
   }
@@ -42,12 +95,19 @@ class RoadmapsWidget extends React.Component {
   handleViewDetails(e) {
     console.log("HandleViewDetails: " + e.target.id);
 
-    let copy = Object.assign(this.state, {}, {isViewingDetails: true, currentRoadmapSelected: this.props.roadmaps[Number(e.target.id)]});
-    this.setState(copy);
+    if (this.props.roadmaps && this.props.roadmaps.length > 0) {
+        for (let i = 0; i < this.props.roadmaps.length; ++i) {
+            if (this.props.roadmaps[i]._id == e.target.id) {
+                let copy = Object.assign({}, this.state, {isViewingDetails: true, currentRoadmapSelected: this.props.roadmaps[i]});
+                this.setState(copy);
+                break;
+            }
+        }
+    }
   }
 
   handleViewDefault() {
-    let copy = Object.assign(this.state, {}, {isViewingDetails: false});
+    let copy = Object.assign({}, this.state, {isViewingDetails: false});
     this.setState(copy);
   }
 
@@ -56,7 +116,7 @@ class RoadmapsWidget extends React.Component {
       : "glyphicon glyphicon-plus roadmapControl";
       return (<span className="roadmapControls">
           <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewDetails(e)}></span>
-          <span className={addControlClassName} id={roadmapId} onClick={(e)=> this.handleAdd(e)}></span>
+          <span className={addControlClassName} id={roadmapId} onClick={(e)=> this.toggleAdd(e)}></span>
       </span>);
   }
   
@@ -65,10 +125,10 @@ class RoadmapsWidget extends React.Component {
         let that = this;
         return (
             <span>
-              {this.props.roadmaps.map(function(roadmap, i){
-                  let roadmapControls = that.renderRoadmapsControls(i);
+              {this.props.roadmaps.map(function(roadmap){
+                  let roadmapControls = that.renderRoadmapsControls(roadmap._id);
                   return (
-                  <div className="col-lg-2" key={i}> 
+                  <div className="col-lg-2" key={roadmap._id}> 
                       <div className="container roadMap">
                           <h4>{roadmap.name}</h4>
                           {roadmapControls}
@@ -116,6 +176,7 @@ RoadmapsWidget.propTypes = {
   roadmaps: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
+  cookies: instanceOf(Cookies).isRequired,
 }
 
-export default withRouter(RoadmapsWidget);
+export default withRouter(withCookies(RoadmapsWidget));
