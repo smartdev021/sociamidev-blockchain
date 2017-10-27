@@ -31,6 +31,16 @@ class SearchResults extends React.Component {
     }
 
     this.props.openSearchResultsComplete();
+
+    if (this.props.searchResults.jobs.length == 0 
+      && this.props.searchResults.events.length == 0 
+      && this.props.searchResults.courses.length == 0 
+      && this.props.searchResults.gigs.length == 0) {
+        const { cookies } = this.props;
+        const savedQuery = cookies.get('query');
+
+        //TODO: add code for searching with saved 'query' from cookies
+      }
   }
 
 
@@ -91,6 +101,7 @@ SearchResults.propTypes = {
   searchResults: PropTypes.object.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  cookies: instanceOf(Cookies).isRequired,
 
   openSearchResultsComplete: PropTypes.func.isRequired,
   addBookmark: PropTypes.func.isRequired,
