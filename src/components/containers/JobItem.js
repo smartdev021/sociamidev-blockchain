@@ -16,7 +16,7 @@ class JobItem extends React.Component {
       let company = this.props.item.company ? this.props.item.company: "N/A";
 
       let itemObject = this.props.item;
-      itemObject.type = "indeed_job";
+      itemObject._type = "indeed_job";
       
       //pack all <td> tags and their data into array
       let tdItems = [<td key="0">{this.props.item.jobtitle}</td>,

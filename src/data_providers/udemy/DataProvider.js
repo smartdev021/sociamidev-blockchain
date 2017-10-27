@@ -41,6 +41,8 @@ import 'whatwg-fetch'
                     let price = courses[course].price;
                     let url = urlPrefix + courses[course].url;
 
+                    let id = courses[course].id;
+
                     let instructors = [];
 
                     if (courses[course].visible_instructors.length > 0) {
@@ -62,6 +64,8 @@ import 'whatwg-fetch'
                     udemyItem["price"] = price;
                     udemyItem["url"] = url;
                     udemyItem["instructors"] = instructors;
+
+                    udemyItem["_id"] = String(id);
 
                     udemyItems.push(udemyItem);
               }

@@ -27,7 +27,7 @@ import 'whatwg-fetch'
         }
         //upon success - invoke callback, and pass 'result' as an argument
         response.text().then(function(text) {
-            let eventBrightItems = [];
+            let eventBriteItems = [];
 
             if (text != "") {
               let parsedJSON = JSON.parse(text);
@@ -42,27 +42,30 @@ import 'whatwg-fetch'
                     let status = events[event].status;
                     let url = events[event].url;
                     let logoUrl = "";
+                    let id = events[event].id;
   
                     if (events[event].logo) {
                       logoUrl = events[event].logo.url;
                     }
   
-                    let eventBrightItem = {};
+                    let eventBriteItem = {};
   
-                    eventBrightItem["name"] = name;
-                    eventBrightItem["description"] = description;
-                    eventBrightItem["start"] = start;
-                    eventBrightItem["end"] = end;
-                    eventBrightItem["status"] = status;
-                    eventBrightItem["url"] = url;
-                    eventBrightItem["logoUrl"] = logoUrl;
-  
-                    eventBrightItems.push(eventBrightItem);
+                    eventBriteItem["name"] = name;
+                    eventBriteItem["description"] = description;
+                    eventBriteItem["start"] = start;
+                    eventBriteItem["end"] = end;
+                    eventBriteItem["status"] = status;
+                    eventBriteItem["url"] = url;
+                    eventBriteItem["logoUrl"] = logoUrl;
+
+                    eventBriteItem["_id"] = id;
+
+                    eventBriteItems.push(eventBriteItem);
               }
   
             }
             
-          listener(eventBrightItems);
+          listener(eventBriteItems);
         });
       }  
     )  

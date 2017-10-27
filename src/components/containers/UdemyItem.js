@@ -13,7 +13,7 @@ class UdemyItem extends React.Component {
       // <td key="1">{this.props.item.description}</td>,
 
       let itemObject = this.props.item;
-      itemObject.type = "udemy_course";
+      itemObject._type = "udemy_course";
 
       const instructorListItems = this.props.item.instructors.map((instructor, index) =>
       <li key={index.toString()}><a href={instructor.url} target="_blank">{instructor.title}</a></li>);

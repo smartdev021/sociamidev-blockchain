@@ -13,8 +13,7 @@ class SearchPage extends React.Component {
       <SearchHeader onHandleQueryChange={(query) => this.props.onHandleQueryChange(query)} 
       onHandleSearchClicked={(e) => this.props.onHandleStartSearch(e)} query={this.props.query} 
       isSearchInProgress={this.props.isSearchInProgress}/>
-        <SearchResults 
-        onAddBookmark={(item) => this.props.onAddBookmark(item)}/>
+        <SearchResults/>
       </div>
     );
   }

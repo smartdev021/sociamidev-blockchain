@@ -46,15 +46,10 @@ class RoadmapsWidget extends React.Component {
           }
       }
 
-      console.log("prevState.addedRoadmaps.length: " + prevState.addedRoadmaps.length + " this.state.addedRoadmaps.length: " + this.state.addedRoadmaps.length);
-
       if (prevState.addedRoadmaps.length != this.state.addedRoadmaps.length) {
         const { cookies } = this.props;
 
         const savedRoadmaps = cookies.get('addedRoadmaps');
-
-        console.log("Trying to set cookies savedRoadmaps: ");
-        console.dir(savedRoadmaps);
 
         //only add roadmaps to cookies if they differ in length or not set yet
         if (!savedRoadmaps || savedRoadmaps.length != this.state.addedRoadmaps.length) {
@@ -67,9 +62,6 @@ class RoadmapsWidget extends React.Component {
             cookies.set('addedRoadmaps', this.state.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
         }
       }
-
-      console.log("RoadmapsWidget state is: ");
-      console.dir(this.state);
   }
 
   toggleAdd(e) {

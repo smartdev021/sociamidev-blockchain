@@ -18,5 +18,7 @@ export const BOOKMARK_ADD = "bookmark_add";
 export const BOOKMARK_REMOVE = "bookmark_remove";
 export const BOOKMARK_REMOVE_ALL = "bookmark_remove_all";
 
+export const BOOKMARKS_SET = "bookmarks_set";
+
 export const SIGNUP_FORM_OPEN = "signup_form_open";
 export const SIGNUP_FORM_CLOSE = "signup_form_close";

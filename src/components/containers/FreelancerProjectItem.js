@@ -12,7 +12,7 @@ class FreelancerProjectItemList extends React.Component {
     let dateHR = new Date(this.props.item.submitdate * 1000).toUTCString();
 
     let itemObject = this.props.item;
-    itemObject.type = "freelancer_gig";
+    itemObject._type = "freelancer_gig";
 
     let tdStatusClass = "status_td_default";
 

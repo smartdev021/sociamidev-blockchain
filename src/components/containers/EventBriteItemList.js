@@ -37,18 +37,18 @@ class EventBriteItemList extends React.Component {
     if (typeof this.props !== "undefined" && typeof this.props.items !== "undefined" && this.props.items.length > 0) {
       
       //array of JobItem components
-      let eventBrightItems = [];
+      let eventBriteItems = [];
       
       //create JobItem for each this.props.items element
       for (let i = 0; i < this.props.items.length; ++i) {
-        eventBrightItems.push(<EventBriteItem key={i} item={this.props.items[i]} onAddBookmark={(e) => this.props.onAddBookmark(e)}/>);
+        eventBriteItems.push(<EventBriteItem key={i} item={this.props.items[i]} onAddBookmark={(e) => this.props.onAddBookmark(e)}/>);
       }
 
         listContent = (
         <Table responsive striped bordered condensed hover>
           {this._getTableHeader()}
           <tbody>
-            {eventBrightItems}
+            {eventBriteItems}
           </tbody>
         </Table>);
     }

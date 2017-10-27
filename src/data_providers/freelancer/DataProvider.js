@@ -49,6 +49,8 @@ const OnlyActiveProjects = true;
                 let status = projects[project].status;
                 let url = urlPrefix + projects[project].seo_url;
                 let submitdate = projects[project].submitdate;
+
+                let id = projects[project].id;
                    
 
                 let freelanceProjectItem = {};
@@ -58,6 +60,8 @@ const OnlyActiveProjects = true;
                 freelanceProjectItem["status"] = status;
                 freelanceProjectItem["url"] = url;
                 freelanceProjectItem["submitdate"] = submitdate;
+
+                freelanceProjectItem["_id"] = String(id);
 
                 freelancerProjectItems.push(freelanceProjectItem);
               }

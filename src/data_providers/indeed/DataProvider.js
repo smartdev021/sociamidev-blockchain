@@ -58,7 +58,7 @@ import 'whatwg-fetch'
               indeedJob["country"] = formattedLocation;
               indeedJob["url"] = url;
               indeedJob["date"] = date;
-              indeedJob["jobkey"] = jobkey;
+              indeedJob["_id"] = jobkey;
               indeedJob["formattedRelativeTime"] = formattedRelativeTime;
 
                 indeedJobs.push(indeedJob);

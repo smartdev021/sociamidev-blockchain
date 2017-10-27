@@ -40,8 +40,6 @@ import { instanceOf } from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import ObjectHash from 'object-hash'
-
 import { withCookies, Cookies } from 'react-cookie';
 
 import {
@@ -54,8 +52,6 @@ import {
   fetchGigItemsComplete,
   fetchResultsInitiate,
   fetchResultsComplete,
-  bookmarkAdd,
-  bookmarkRemoveAll,
   openSignUpForm,
   closeSignUpForm,
 } from './redux/actions/actions'
@@ -69,7 +65,7 @@ WebFont.load({
 import './css/main.css';
 
 let DataProviderIndeed = require("./data_providers/indeed/DataProvider");
-let DataProviderEventBright = require("./data_providers/event_bright/DataProvider");
+let DataProviderEventBrite = require("./data_providers/event_brite/DataProvider");
 let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
 let DataProviderFreelancer = require("./data_providers/freelancer/DataProvider");
 
@@ -125,10 +121,6 @@ class App extends Component {
     this.startNewSearch();
   }
 
-  handleAddBookmark(item) {
-    this.props.addBookmark(Object.assign({}, item, {_id: ObjectHash(item)}));
-  }
-
   refreshBusyState() {
     let copy = Object.assign({}, this.state, { isSearchInProgress: (
       this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems || this.isSearchingForFreelancerItems)});
@@ -150,7 +142,7 @@ class App extends Component {
       this.props.populateCourseItems([]);
       this.props.populateGigItems([]);
       
-      let copy = Object.assign({}, this.state, {jobItems: [], eventBrightItems: [], udemyItems: []});
+      let copy = Object.assign({}, this.state, {jobItems: [], eventBriteItems: [], udemyItems: []});
       this.setState(copy);
   
       this.props.fetchResultsInitiate();
@@ -177,7 +169,7 @@ class App extends Component {
     }
   }
 
-  dataUpdatedEventBright(items) {
+  dataUpdatedEventBrite(items) {
     if (typeof items !== "undefined") {
 
       this.isSearchingEvents = false;
@@ -223,7 +215,7 @@ class App extends Component {
       case "events":
       {
         let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location=${this.state.country}`;
-        DataProviderEventBright.requestApiData(url, (items) => this.dataUpdatedEventBright(items));
+        DataProviderEventBrite.requestApiData(url, (items) => this.dataUpdatedEventBrite(items));
         break;
       }
       case "courses":
@@ -345,7 +337,6 @@ class App extends Component {
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
           onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
           isFetchInProgress={this.props.isFetchInProgress}
-          onAddBookmark={(e) => this.handleAddBookmark(e)}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.props.closeSignUpForm()}
           isSignUpFormOpen={this.props.isSignUpFormOpen}
@@ -385,8 +376,6 @@ const mapDispatchToProps = dispatch => ({
   fetchUserProfileComplete: bindActionCreators(fetchUserProfileComplete, dispatch),
   fetchResultsInitiate: bindActionCreators(fetchResultsInitiate, dispatch),
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
-  addBookmark: bindActionCreators(bookmarkAdd, dispatch),
-  removeAllBookmarks: bindActionCreators(bookmarkRemoveAll, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
 })

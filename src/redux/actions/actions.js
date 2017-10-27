@@ -15,6 +15,8 @@ import {
     BOOKMARK_ADD,
     BOOKMARK_REMOVE,
 
+    BOOKMARKS_SET,
+
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
 } from './actionTypes';
@@ -119,10 +121,17 @@ export function bookmarkAdd(newBookmark) {
     }
 }
 
-export function bookmarkRemove(idToRemove) {
+export function bookmarksSet(newBookmarks) {
+    return {
+        type: BOOKMARKS_SET,
+        bookmarks: newBookmarks
+    }
+}
+
+export function bookmarkRemove(bookmarkToRemove) {
     return {
         type: BOOKMARK_REMOVE,
-        id: idToRemove
+        bookmark: bookmarkToRemove
     }
 }
 

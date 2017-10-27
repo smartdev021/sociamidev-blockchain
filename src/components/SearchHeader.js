@@ -157,7 +157,7 @@ class SearchHeader extends React.Component {
   fetchBookmarkRoadmapFromBackend(bookmark) {
     if (bookmark.type == "indeed_job") {
       if (this.state.query) {
-        Axios.get(`${ConfigMain.getBackendURL()}/roadmapFromBookmark?bookmarkType=${bookmark.type}&jobKey=${bookmark.jobkey}`)
+        Axios.get(`${ConfigMain.getBackendURL()}/roadmapFromBookmark?bookmarkType=${bookmark.type}&jobKey=${bookmark._id}`)
         .then((response) =>this.handleFetchBookmarkRoadmap(response))
         .catch((error) =>this.handleFetchBookmarkRoadmapError(error));
       }

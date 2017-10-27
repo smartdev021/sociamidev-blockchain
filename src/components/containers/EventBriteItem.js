@@ -10,7 +10,7 @@ class EventBriteItem extends React.Component {
     //output table row and table data, where table data is taken from props passed inside from parent component
     if (typeof this.props !== "undefined") {
       let itemObject = this.props.item;
-      itemObject.type = "eventbrite_event";
+      itemObject._type = "eventbrite_event";
 
       //pack all <td> tags and their data into array
       // <td key="1">{this.props.item.description}</td>,
