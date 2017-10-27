@@ -23,8 +23,6 @@ import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '../redux/act
 class SearchResults extends React.Component {
   componentWillMount() {
     const savedBookmarks = this.props.cookies.get('bookmarks');
-
-    console.log("savedBookmarks.length: " + savedBookmarks.length);
     
     if (savedBookmarks && savedBookmarks.length > 0) {
         if (this.props.bookmarks.length == 0) {

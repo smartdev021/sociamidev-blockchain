@@ -26,7 +26,7 @@ else
           <span className="icon-bar"></span>
           <span className="icon-bar"></span>
         </button>
-        <Link className='navbar-brand' to='/'>Sociami</Link>
+        <Link className='navbar-brand' to='/'>Soqqle</Link>
       </div>
       <div className="navbar-collapse collapse">
         <ul className="nav navbar-nav navbar-right">

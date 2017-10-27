@@ -23,7 +23,7 @@ module.exports = {
     ,
     new HtmlWebpackPlugin({
       template: Path.join(__dirname, 'src/index.ejs'),
-      title: 'Sociami App',
+      title: 'Soqqle',
       inject: 'body',
     })
   ],

@@ -35,11 +35,6 @@ class RoadmapsWidget extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-      console.log("componentDidUpdate: ");
-      console.log("prevState");
-      console.dir(prevState);
-      console.log("this.state");
-      console.log(this.state);
       if (this.props.isFetchInProgress != prevProps.isFetchInProgress) {
           if (this.props.isFetchInProgress) {
               this.handleViewDefault();
@@ -85,8 +80,6 @@ class RoadmapsWidget extends React.Component {
   }
 
   handleViewDetails(e) {
-    console.log("HandleViewDetails: " + e.target.id);
-
     if (this.props.roadmaps && this.props.roadmaps.length > 0) {
         for (let i = 0; i < this.props.roadmaps.length; ++i) {
             if (this.props.roadmaps[i]._id == e.target.id) {
