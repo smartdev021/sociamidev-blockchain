@@ -23,6 +23,12 @@ import {
     SEARCH_QUERY_SET,
 
     SET_USER_AUTHORIZED,
+
+    ROADMAP_ADD,
+    ROADMAPS_SET,
+    ROADMAP_REMOVE,
+    ROADMAP_REMOVE_ALL,
+
 } from './actionTypes';
 
 export function openSignUpForm() {
@@ -139,9 +145,36 @@ export function bookmarkRemove(bookmarkToRemove) {
     }
 }
 
-export function bookmarkRemoveAll(idToRemove) {
+export function bookmarkRemoveAll() {
     return {
         type: BOOKMARK_REMOVE_ALL,
+    }
+}
+
+export function roadmapAdd(newRoadmap) {
+    return {
+        type: ROADMAP_ADD,
+        roadmap: newRoadmap
+    }
+}
+
+export function roadmapsSet(newRoadmaps) {
+    return {
+        type: ROADMAPS_SET,
+        roadmaps: newRoadmaps
+    }
+}
+
+export function roadmapRemove(roadmapToRemove) {
+    return {
+        type: ROADMAP_REMOVE,
+        roadmap: roadmapToRemove
+    }
+}
+
+export function roadmapRemoveAll(idToRemove) {
+    return {
+        type: ROADMAP_REMOVE_ALL,
     }
 }
 

@@ -284,7 +284,12 @@ class App extends Component {
     
     const responseProfile = response.data.profile;
 
+    console.log("START response.data: ");
+    console.dir(response.data);
+    console.log("END response.data: ");
+
     let newUserProfile = {
+      _id: response.data._id,
       firstName: responseProfile.firstName, 
       lastName: responseProfile.lastName, 
       interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions

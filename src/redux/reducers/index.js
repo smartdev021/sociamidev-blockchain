@@ -7,9 +7,10 @@ import {currentCategory,
   userProfile,
   isFetchInProgress,
   bookmarks,
+  isAuthorized,
   isSignUpFormOpen,
   searchQuery,
-  isAuthorized,
+  userRoadmaps,
 } from "./syncReducers"
 
 export default combineReducers({
@@ -20,6 +21,7 @@ export default combineReducers({
   searchResults,
   userProfile,
   bookmarks,
+  userRoadmaps,
   isSignUpFormOpen,
   searchQuery,
   isAuthorized,

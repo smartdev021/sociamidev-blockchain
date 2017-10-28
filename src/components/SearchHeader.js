@@ -59,7 +59,68 @@ class SearchHeader extends React.Component {
     }
     else {
       console.log("Saving roadmaps to backend...");
+
+      this.saveUserRoadmapsToDatabase();
     }
+  }
+
+  /*parseRoadmapsForURL() {
+    let result = "";
+
+    let roadmaps = this.state.roadmaps;
+
+    if (roadmaps.length > 0) {
+      for (let i = 0; i < roadmaps.length; ++i) {
+        result += "roadmaps=" + JSON.stringify(roadmaps[i]);
+        if (i < roadmaps.length - 1) {
+          result += '&';
+        }
+      }
+    }
+
+    return result;
+  }*/
+
+  parseRoadmapsForURL() {
+    let result = "";
+
+    let roadmaps = this.props.addedRoadmaps;
+
+    if (roadmaps.length > 0) {
+      for (let i = 0; i < roadmaps.length; ++i) {
+        result += "roadmaps=" + roadmaps[i]._id;
+        if (i < roadmaps.length - 1) {
+          result += '&';
+        }
+      }
+    }
+
+    return result;
+  }
+
+  saveUserRoadmapsToDatabase() {
+    let url = `${ConfigMain.getBackendURL()}/saveUserRoadmaps?userId=${this.props.userProfile._id}`;
+
+    let parsedRoadmaps = this.parseRoadmapsForURL();
+
+    if (parsedRoadmaps != "") {
+      url += '&' + parsedRoadmaps;
+    }
+
+    console.log("saveUserRoadmapsToDatabase");
+    console.log(url);
+
+    Axios.get(url)
+    .then((response) =>this.handlesaveUserRoadmapsToDatabase(response))
+    .catch((error) =>this.handlesaveUserRoadmapsToDatabaseError(error));
+  }
+
+  handlesaveUserRoadmapsToDatabase(response) {
+    console.log("handlesaveUserRoadmapsToDatabase: " + response.status);
+  }
+    
+  handlesaveUserRoadmapsToDatabaseError(error) {
+    console.log("handlesaveUserRoadmapsToDatabaseError: " + error);
   }
 
   renderForm() {
@@ -113,12 +174,17 @@ class SearchHeader extends React.Component {
   }
 
   renderSaveRoadmaps() {
-    return (
-    <div className="col-lg-12">
-      <div className="saveRoadmaps">
-        <button type="button" className="btn btn-warning btn-lg" onClick={()=>this.handleSaveRoadmaps()}>Save</button>
-      </div>
-    </div>);
+    if (this.props.addedRoadmaps.length > 0) {
+      return (
+        <div className="col-lg-12">
+          <div className="saveRoadmaps">
+            <button type="button" className="btn btn-warning btn-lg" onClick={()=>this.handleSaveRoadmaps()}>Save</button>
+          </div>
+        </div>);
+    }
+    else {
+      return null;
+    }
   }
 
   renderRoadmaps() {
@@ -127,7 +193,7 @@ class SearchHeader extends React.Component {
         <h2>Roadmaps</h2>
          <div className="row">
          <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
-         openSignUpForm={this.props.openSignUpForm}/>
+         openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}/>
          </div>
          <div className="row">
            {this.renderSaveRoadmaps()}
@@ -218,6 +284,8 @@ SearchHeader.propTypes = {
   bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  userProfile: PropTypes.object.isRequired,
+  addedRoadmaps: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   openSignUpForm: PropTypes.func.isRequired,
 }
@@ -232,6 +300,8 @@ const mapStateToProps = state => ({
   numBookmarks: state.bookmarks.amount,
   bookmarks: state.bookmarks.bookmarks,
   searchQuery: state.searchQuery,
+  userProfile: state.userProfile,
+  addedRoadmaps: state.userRoadmaps.roadmaps,
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
