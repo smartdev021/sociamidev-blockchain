@@ -16,6 +16,8 @@ import FreelancerProjectItemList from './containers/FreelancerProjectItemList';
 
 import { withCookies, Cookies } from 'react-cookie';
 
+import ConfigMain from '../../configs/main'
+
 import "../css/searchResults.css"
 
 import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '../redux/actions/actions'
@@ -42,9 +44,8 @@ class SearchResults extends React.Component {
 
       //only add bookmarks to cookies if they differ in length or not set yet
       if (!savedBookmarks || savedBookmarks.length != this.props.bookmarks.length) {
-          let lifetimeMinutes = 10;
           let dateExpire = new Date();
-          dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+          dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
           
           let options = { path: '/', expires: dateExpire};
           

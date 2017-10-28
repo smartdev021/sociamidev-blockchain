@@ -122,14 +122,13 @@ class App extends Component {
     this.props.closeSignUpForm();
 
     const { cookies } = this.props;
-    
-    let lifetimeMinutes = 10;
+
     let dateExpire = new Date();
-    dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
     
     let options = { path: '/', expires: dateExpire};
     
-    cookies.set('lastLocation', this.props.history.location, options); //will expire in 'lifetimeMinutes' minutes
+    cookies.set('lastLocation', this.props.history.location, options);
 
     window.location.href = `${BackendURL}/auth/facebook`;
   }
@@ -139,13 +138,12 @@ class App extends Component {
 
     const { cookies } = this.props;
     
-    let lifetimeMinutes = 10;
     let dateExpire = new Date();
-    dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
     
     let options = { path: '/', expires: dateExpire};
     
-    cookies.set('lastLocation', this.props.history.location, options); //will expire in 'lifetimeMinutes' minutes
+    cookies.set('lastLocation', this.props.history.location, options);
 
     window.location.href = `${BackendURL}/auth/linkedin`;
   }
@@ -168,12 +166,11 @@ class App extends Component {
   startNewSearch() {
     if (!this.props.isFetchInProgress && this.state.query != "") {
 
-      let lifetimeMinutes = 10;
       let dateExpire = new Date();
-      dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));
+      dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
       let options = { path: '/', expires: dateExpire};
        
-      this.props.cookies.set('searchQuery', this.state.query, options); //will expire in 'lifetimeMinutes' minutes
+      this.props.cookies.set('searchQuery', this.state.query, options);
 
       this.isSearchingJobs = true;
       this.isSearchingEvents = true;

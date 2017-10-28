@@ -10,6 +10,8 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import RoadmapWidgetDetails from './RoadmapWidgetDetails'
 
+import ConfigMain from '../../configs/main'
+
 import "../css/roadmapsWidget.css"
 
 //TODO: remove, as soon as layout is fixed
@@ -48,9 +50,8 @@ class RoadmapsWidget extends React.Component {
 
         //only add roadmaps to cookies if they differ in length or not set yet
         if (!savedRoadmaps || savedRoadmaps.length != this.state.addedRoadmaps.length) {
-            let lifetimeMinutes = 10;
             let dateExpire = new Date();
-            dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+            dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
             
             let options = { path: '/', expires: dateExpire};
             

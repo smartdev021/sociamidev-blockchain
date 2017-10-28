@@ -11,6 +11,10 @@ var ConfigMain = {
             return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
         }
     },
+    getCookiesExpirationPeriod : function() {
+        //10 years
+        return (10 * 365 * 24 * 60 * 60 * 1000);
+    },
 
     S3BucketURL: 'https://sociamibucket.s3.amazonaws.com'
 }
