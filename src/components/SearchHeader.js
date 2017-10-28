@@ -34,7 +34,7 @@ class SearchHeader extends React.Component {
     e.preventDefault();
     if (!this.props.isFetchInProgress) {
       this.fetchRoadmapsFromBackend();
-      this.props.onHandleSearchClicked();
+      this.props.onHandleStartSearch();
     }
   }
 

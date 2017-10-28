@@ -75,8 +75,6 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.handleQueryChange = this.handleQueryChange.bind(this);
-
     this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
 
     this.initialCountry = this.countries.Singapore;
@@ -148,12 +146,8 @@ class App extends Component {
     window.location.href = `${BackendURL}/auth/linkedin`;
   }
 
-  handleChange(event) {
-    this.handleQueryChange(event.target.value);
-  }
-
-  handleStartSearch() {
-    this.startNewSearch();
+  handleStartSearch(query) {
+    this.startNewSearch(query);
   }
 
   refreshBusyState() {
@@ -163,14 +157,13 @@ class App extends Component {
       this.setState(copy);
   }
 
-  startNewSearch() {
-    if (!this.props.isFetchInProgress && this.state.query != "") {
-
+  startNewSearch(searchQuery) {
+    if (!this.props.isFetchInProgress && searchQuery != "") {
       let dateExpire = new Date();
       dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
       let options = { path: '/', expires: dateExpire};
        
-      this.props.cookies.set('searchQuery', this.state.query, options);
+      this.props.cookies.set('searchQuery', searchQuery, options);
 
       this.isSearchingJobs = true;
       this.isSearchingEvents = true;
@@ -184,22 +177,16 @@ class App extends Component {
       this.props.populateCourseItems([]);
       this.props.populateGigItems([]);
       
-      let copy = Object.assign({}, this.state, {jobItems: [], eventBriteItems: [], udemyItems: []});
+      let copy = Object.assign({}, this.state, {jobItems: [], eventBriteItems: [], udemyItems: [], query: searchQuery});
       this.setState(copy);
   
       this.props.fetchResultsInitiate();
-  
-      this.refreshData("jobs");
-      this.refreshData("events");
-      this.refreshData("courses");
-      this.refreshData("gigs");
-    }
-  }
 
-  handleQueryChange(newQuery) {
-    console.log("handleQueryChange " + newQuery);
-    let copy = Object.assign({}, this.state, {query: newQuery});
-    this.setState(copy);
+      this.refreshData("jobs", searchQuery);
+      this.refreshData("events", searchQuery);
+      this.refreshData("courses", searchQuery);
+      this.refreshData("gigs", searchQuery);
+    }
   }
 
   dataUpdatedIndeed(items) {
@@ -245,31 +232,31 @@ class App extends Component {
     }
   }
 
-  refreshData(type) {
+  refreshData(type, query) {
     switch(type) {
       case "jobs":
       {
         const PUBLISHER_ID = "4201738803816157";
-        let url = `${BackendURL}/indeed/jobs?query=${this.state.query}&country=${this.state.country}`;
+        let url = `${BackendURL}/indeed/jobs?query=${query}&country=${this.state.country}`;
     
         DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
         break;
       }
       case "events":
       {
-        let url = `${BackendURL}/eventbrite/events?query=${this.state.query}&location=${this.state.country}`;
+        let url = `${BackendURL}/eventbrite/events?query=${query}&location=${this.state.country}`;
         DataProviderEventBrite.requestApiData(url, (items) => this.dataUpdatedEventBrite(items));
         break;
       }
       case "courses":
       {
-        let url = `${BackendURL}/udemy/courses/?query=${this.state.query}`;
+        let url = `${BackendURL}/udemy/courses/?query=${query}`;
         DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
         break;
       }
       case "gigs":
       {
-        let url = `${BackendURL}/freelancer/gigs/?query= ${this.state.query}`;
+        let url = `${BackendURL}/freelancer/gigs/?query= ${query}`;
         DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
         break;
       }
@@ -375,10 +362,9 @@ class App extends Component {
       <div>
         {RedirectTo}
       <ThemeNavBar onHandleSignUp={()=> this.props.openSignUpForm()} isAuthorized={this.state.isAuthorized}/>
-      <Main onHandleStartSearch={() => this.handleStartSearch()} 
-          onHandleChange={(e) => this.handleChange(e)} 
-          onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-          onHandleSearchClicked={() => this.handleStartSearch()} query={this.state.query} 
+      <Main onHandleStartSearch={(query) => this.handleStartSearch(query)} 
+          onHandleChange={(e) => this.handleChange(e)}
+          onHandleSearchClicked={(query) => this.handleStartSearch(query)} query={this.state.query} 
           isFetchInProgress={this.props.isFetchInProgress}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.props.closeSignUpForm()}
