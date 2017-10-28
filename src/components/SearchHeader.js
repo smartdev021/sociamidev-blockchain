@@ -30,7 +30,11 @@ class SearchHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {searchQuery : this.props.searchQuery, roadmaps: []}
+    this.state = {
+      searchQuery : this.props.searchQuery, 
+      roadmaps: [],
+      isSavingRoadmaps: false,
+    };
   }
 
   onStartSearch(e) {
@@ -62,6 +66,9 @@ class SearchHeader extends React.Component {
     }
     else {
       console.log("Saving roadmaps to backend...");
+
+      let copy = Object.assign({}, this.state, {isSavingRoadmaps: true});
+      this.setState(copy);
 
       this.saveUserRoadmapsToDatabase();
     }
@@ -110,11 +117,6 @@ class SearchHeader extends React.Component {
       url += '&' + parsedRoadmaps;
     }
 
-    console.log("url: " + url);
-
-    console.log("saveUserRoadmapsToDatabase");
-    console.log(url);
-
     Axios.get(url)
     .then((response) =>this.handlesaveUserRoadmapsToDatabase(response))
     .catch((error) =>this.handlesaveUserRoadmapsToDatabaseError(error));
@@ -122,10 +124,16 @@ class SearchHeader extends React.Component {
 
   handlesaveUserRoadmapsToDatabase(response) {
     console.log("handlesaveUserRoadmapsToDatabase: " + response.status);
+
+    let copy = Object.assign({}, this.state, {isSavingRoadmaps: false});
+    this.setState(copy);
   }
     
   handlesaveUserRoadmapsToDatabaseError(error) {
     console.log("handlesaveUserRoadmapsToDatabaseError: " + error);
+
+    let copy = Object.assign({}, this.state, {isSavingRoadmaps: false});
+    this.setState(copy);
   }
 
   renderForm() {
@@ -180,10 +188,11 @@ class SearchHeader extends React.Component {
 
   renderSaveRoadmaps() {
     if (this.props.addedRoadmaps.length > 0) {
+      let buttonText = this.state.isSavingRoadmaps ? "Saving..." : "Save";
       return (
         <div className="col-lg-12">
           <div className="saveRoadmaps">
-            <button type="button" className="btn btn-warning btn-lg" onClick={()=>this.handleSaveRoadmaps()}>Save</button>
+            <button type="button" className="btn btn-warning btn-lg" onClick={()=>this.handleSaveRoadmaps()}>{buttonText}</button>
           </div>
         </div>);
     }
