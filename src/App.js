@@ -146,8 +146,9 @@ class App extends Component {
     window.location.href = `${BackendURL}/auth/linkedin`;
   }
 
-  handleStartSearch(query) {
-    this.startNewSearch(query);
+  handleStartSearch() {
+    console.log("handleStartSearch!!!!!!!!!!!!!!!!!!!!!!!!!!! this.props.searchQuery: " + this.props.searchQuery);
+    this.startNewSearch(this.props.searchQuery);
   }
 
   refreshBusyState() {
@@ -362,9 +363,9 @@ class App extends Component {
       <div>
         {RedirectTo}
       <ThemeNavBar onHandleSignUp={()=> this.props.openSignUpForm()} isAuthorized={this.state.isAuthorized}/>
-      <Main onHandleStartSearch={(query) => this.handleStartSearch(query)} 
+      <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)}
-          onHandleSearchClicked={(query) => this.handleStartSearch(query)} query={this.state.query} 
+          onHandleSearchClicked={() => this.handleStartSearch()}
           isFetchInProgress={this.props.isFetchInProgress}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.props.closeSignUpForm()}
@@ -385,6 +386,7 @@ App.propTypes = {
   isFetchInProgress: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
   cookies: instanceOf(Cookies).isRequired,
+  searchQuery: PropTypes.string.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -395,6 +397,8 @@ App.propTypes = {
   populateGigItems: PropTypes.func.isRequired,
   fetchResultsInitiate: PropTypes.func.isRequired,
   fetchResultsComplete: PropTypes.func.isRequired,
+  openSignUpForm: PropTypes.func.isRequired,
+  closeSignUpForm: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -416,6 +420,7 @@ const mapStateToProps = state => ({
   isOpenSearchResultsPending: state.isOpenSearchResultsPending,
   isFetchInProgress: state.isFetchInProgress,
   isSignUpFormOpen: state.isSignUpFormOpen,
+  searchQuery: state.searchQuery,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

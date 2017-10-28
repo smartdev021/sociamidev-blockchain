@@ -142,3 +142,10 @@ export function bookmarkRemoveAll(idToRemove) {
         type: BOOKMARK_REMOVE_ALL,
     }
 }
+
+export function setSearchQuery(searchQuery) {
+    return {
+        type: SEARCH_QUERY_SET,
+        query: searchQuery
+    }
+}

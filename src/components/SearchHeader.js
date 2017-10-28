@@ -27,7 +27,7 @@ class SearchHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {query : this.props.query, roadmaps: []}
+    this.state = {searchQuery : this.props.searchQuery, roadmaps: []}
   }
 
   onStartSearch(e) {
@@ -43,7 +43,7 @@ class SearchHeader extends React.Component {
   }
 
   handleValueChange(e) {
-    let copy = Object.assign({}, this.state, {query: e.target.value});
+    let copy = Object.assign({}, this.state, {searchQuery: e.target.value});
     this.setState(copy);
 
     this.props.onHandleQueryChange(e.target.value);
@@ -72,7 +72,7 @@ class SearchHeader extends React.Component {
     <form className="form-inline" action="#" onSubmit={(e) => this.onStartSearch(e)}>
       <div className="form-group">
         <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder={inputPlaceHolder} 
-        value={this.state.query} onChange={(e) => this.handleValueChange(e)}/>
+        value={this.state.searchQuery} onChange={(e) => this.handleValueChange(e)}/>
       </div>
       <ul className="nav navbar-nav pull-right nav_results_categories">
         <ActionLink className={linkJobsClassName} id="RESULTS_CATEGORY_JOBS" onClick={(e) => this.handleSelectCategory(e)}>
@@ -135,8 +135,8 @@ class SearchHeader extends React.Component {
   }
   
   fetchRoadmapsFromBackend() {
-    if (this.state.query) {
-      Axios.get(`${ConfigMain.getBackendURL()}/findRoadmaps?query=${this.state.query}`)
+    if (this.props.searchQuery) {
+      Axios.get(`${ConfigMain.getBackendURL()}/findRoadmaps?query=${this.props.searchQuery}`)
       .then((response) =>this.handleRoadmapsFetch(response))
       .catch((error) =>this.handleRoadmapsFetchError(error));
     }
@@ -156,7 +156,7 @@ class SearchHeader extends React.Component {
 
   fetchBookmarkRoadmapFromBackend(bookmark) {
     if (bookmark.type == "indeed_job") {
-      if (this.state.query) {
+      if (this.props.searchQuery) {
         Axios.get(`${ConfigMain.getBackendURL()}/roadmapFromBookmark?bookmarkType=${bookmark.type}&jobKey=${bookmark._id}`)
         .then((response) =>this.handleFetchBookmarkRoadmap(response))
         .catch((error) =>this.handleFetchBookmarkRoadmapError(error));
@@ -199,6 +199,8 @@ SearchHeader.propTypes = {
   isFetchInProgress: PropTypes.bool.isRequired,
   numBookmarks: PropTypes.number.isRequired,
   bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  searchQuery: PropTypes.string.isRequired,
+
   openSignUpForm: PropTypes.func.isRequired,
 }
 
@@ -211,6 +213,7 @@ const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
   numBookmarks: state.bookmarks.amount,
   bookmarks: state.bookmarks.bookmarks,
+  searchQuery: state.searchQuery,
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

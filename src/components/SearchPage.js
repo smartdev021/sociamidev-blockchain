@@ -15,26 +15,32 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
+import {
+  setSearchQuery,
+} from '../redux/actions/actions'
+
 class SearchPage extends React.Component {
-  constructor(props) {
+
+  /*constructor(props) {
     super(props);
+
     this.state = {
-      query : this.props.query,
+      isAutoSearchRequested: false,
     };
-  }
+
+  }*/
 
   HandleStartSearch() {
-    this.props.onHandleStartSearch(this.state.query);
+    this.props.onHandleStartSearch();
   }
 
   HandleQueryChange(newQuery) {
-    let copy = Object.assign({}, this.state, {query: newQuery});
-    this.setState(copy);
+    this.props.setSearchQuery(newQuery);
   }
 
   componentWillMount() {
     //TODO: refactor
-    if (this.props.query == "") {
+    if (this.props.searchQuery == "") {
       console.log("Warning: query not set!!!");
       const { cookies } = this.props;
       const savedQuery = cookies.get('searchQuery');
@@ -42,7 +48,20 @@ class SearchPage extends React.Component {
       if (savedQuery && savedQuery != "") {
         console.log("Search from cookies: " + savedQuery);
         this.HandleQueryChange(savedQuery);
-        this.props.onHandleStartSearch(savedQuery);
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.searchQuery != this.props.searchQuery) {
+      if (prevProps.searchQuery == "" && this.props.searchQuery != "") {
+        const savedQuery = this.props.cookies.get('searchQuery');
+  
+        if (savedQuery) {
+          if (this.props.searchQuery == savedQuery) {
+            this.HandleStartSearch();
+          }
+        }
       }
     }
   }
@@ -63,11 +82,16 @@ const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
 })
 
-
 SearchPage.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   cookies: instanceOf(Cookies).isRequired,
+
+  setSearchQuery: PropTypes.func.isRequired,
 }
 
+const mapDispatchToProps = dispatch => ({
+  setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+})
+
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps, null)(withCookies(SearchPage)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(SearchPage)));

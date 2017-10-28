@@ -3,24 +3,23 @@
 */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import {
+  setSearchQuery,
+} from '../redux/actions/actions'
 
 class HeadWrap extends React.Component 
 {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query : "",
-    };
-  }
-
   handleStartSearch(e) {
     e.preventDefault();
-    this.props.onHandleStartSearch(this.state.query);
+    this.props.onHandleStartSearch();
   }
 
   HandleChange(e) {
-    let copy = Object.assign({}, this.state, {query: e.target.value});
-    this.setState(copy);
+    this.props.setSearchQuery(e.target.value);
   }
 
   render() {
@@ -51,4 +50,19 @@ class HeadWrap extends React.Component
 
 }
 
-export default HeadWrap;
+HeadWrap.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+
+  setSearchQuery: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = dispatch => ({
+  setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+})
+
+const mapStateToProps = state => ({
+  searchQuery: state.searchQuery,
+})
+
+//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
+export default connect(mapStateToProps, mapDispatchToProps)(HeadWrap);
