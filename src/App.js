@@ -323,7 +323,9 @@ class App extends Component {
 
     if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
       if (!this.props.isFetchInProgress) {
-        this.props.openSearchResults();
+        if (this.props.history.location.pathname != "/searchResults") {
+          this.props.openSearchResults();
+        }
       }
     }
 
