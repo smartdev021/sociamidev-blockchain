@@ -9,6 +9,7 @@ import {currentCategory,
   bookmarks,
   isSignUpFormOpen,
   searchQuery,
+  isAuthorized,
 } from "./syncReducers"
 
 export default combineReducers({
@@ -21,4 +22,5 @@ export default combineReducers({
   bookmarks,
   isSignUpFormOpen,
   searchQuery,
+  isAuthorized,
 });

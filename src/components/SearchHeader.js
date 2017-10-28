@@ -53,6 +53,15 @@ class SearchHeader extends React.Component {
     this.props.selectResultsCategory(e.currentTarget.id);
   }
 
+  handleSaveRoadmaps() {
+    if (!this.props.isAuthorized) {
+      this.props.openSignUpForm();
+    }
+    else {
+      console.log("Saving roadmaps to backend...");
+    }
+  }
+
   renderForm() {
     const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
     const inputPlaceHolder = "Key in a job or a skill you are exploring";
@@ -103,7 +112,16 @@ class SearchHeader extends React.Component {
     }
   }
 
-  renderResultsNavigation() {
+  renderSaveRoadmaps() {
+    return (
+    <div className="col-lg-12">
+      <div className="saveRoadmaps">
+        <button type="button" className="btn btn-warning btn-lg" onClick={()=>this.handleSaveRoadmaps()}>Save</button>
+      </div>
+    </div>);
+  }
+
+  renderRoadmaps() {
     return (<div>
       <div className="col-lg-12">
         <h2>Roadmaps</h2>
@@ -111,6 +129,9 @@ class SearchHeader extends React.Component {
          <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
          openSignUpForm={this.props.openSignUpForm}/>
          </div>
+         <div className="row">
+           {this.renderSaveRoadmaps()}
+          </div>
       </div>
       </div>);
   }
@@ -128,7 +149,7 @@ class SearchHeader extends React.Component {
       </div>
     </div>
     <div className="row">
-      {this.renderResultsNavigation()}
+      {this.renderRoadmaps()}
     </div>
     </span>
     );
@@ -166,10 +187,6 @@ class SearchHeader extends React.Component {
 
   handleFetchBookmarkRoadmap(response) {
     const roadmap = response.data;
-
-    console.log("Found roadmap from bookmark: ");
-    console.dir(roadmap);
-
   }
     
   handleFetchBookmarkRoadmapError(error) {
@@ -200,6 +217,7 @@ SearchHeader.propTypes = {
   numBookmarks: PropTypes.number.isRequired,
   bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
 
   openSignUpForm: PropTypes.func.isRequired,
 }

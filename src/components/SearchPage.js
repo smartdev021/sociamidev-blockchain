@@ -69,7 +69,7 @@ class SearchPage extends React.Component {
   render() {
     return (<div className="container search_results" >
       <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} 
-      onHandleStartSearch={() => this.HandleStartSearch()} query={this.props.query} 
+      onHandleStartSearch={() => this.HandleStartSearch()} isAuthorized={this.props.isAuthorized} 
       isSearchInProgress={this.props.isSearchInProgress}/>
         <SearchResults/>
       </div>
@@ -80,11 +80,13 @@ class SearchPage extends React.Component {
 
 const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
+  isAuthorized: state.isAuthorized,
 })
 
 SearchPage.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   cookies: instanceOf(Cookies).isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
 
   setSearchQuery: PropTypes.func.isRequired,
 }

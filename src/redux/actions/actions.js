@@ -21,6 +21,8 @@ import {
     SIGNUP_FORM_CLOSE,
 
     SEARCH_QUERY_SET,
+
+    SET_USER_AUTHORIZED,
 } from './actionTypes';
 
 export function openSignUpForm() {
@@ -147,5 +149,12 @@ export function setSearchQuery(searchQuery) {
     return {
         type: SEARCH_QUERY_SET,
         query: searchQuery
+    }
+}
+
+export function setUserAuthorized(value) {
+    return {
+        type: SET_USER_AUTHORIZED,
+        authorized: value
     }
 }

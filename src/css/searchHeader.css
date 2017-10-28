@@ -46,3 +46,12 @@
 .customLink, .customLink:hover, .customLink:visited, .customLink:active{
     color: grey;
 }
+
+.saveRoadmaps {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.saveRoadmaps button{
+    min-width: 100px;
+}

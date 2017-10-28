@@ -50,8 +50,6 @@ class SignupForm extends React.Component {
       }
 
     render() {
-      console.log("render: ");
-      console.dir(this.props);
         return (
         <div>
             {this.renderForm()}

@@ -54,6 +54,7 @@ import {
   fetchResultsComplete,
   openSignUpForm,
   closeSignUpForm,
+  setUserAuthorized,
 } from './redux/actions/actions'
 
 WebFont.load({
@@ -84,7 +85,6 @@ class App extends Component {
       country: "sg", 
       query : "",
       isSearchInProgress: false,
-      isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
     };
@@ -95,9 +95,6 @@ class App extends Component {
     this.isSearchingForFreelancerItems = false;
 
     console.log(`Config BackendURL: ${BackendURL}`);
-
-    console.log("App props: ");
-    console.dir(this.props);
   }
 
   componentWillMount() {
@@ -297,8 +294,7 @@ class App extends Component {
     }
 
     this.props.fetchUserProfileComplete(newUserProfile);
-    let copy = Object.assign({}, this.state, {isAuthorized: true});
-    this.setState(copy);
+    this.props.setUserAuthorized(true);
   }
     
   handleUserProfileFetchFromDBError(error) {
@@ -308,8 +304,7 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
       if(!this.state.linkedInID && !this.state.faceBookID) {
-        let copy = Object.assign({}, this.state, {isAuthorized: false});
-        this.setState(copy);
+        this.props.setUserAuthorized(false);
       }
       else if(this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
@@ -336,7 +331,6 @@ class App extends Component {
 
     if (this.props.cookies != prevProps.cookies) {
       console.log("Cookies has been changed");
-      console.dir(this.props.cookies);
     }
   }
 
@@ -364,7 +358,7 @@ class App extends Component {
       
       <div>
         {RedirectTo}
-      <ThemeNavBar onHandleSignUp={()=> this.props.openSignUpForm()} isAuthorized={this.state.isAuthorized}/>
+      <ThemeNavBar onHandleSignUp={()=> this.props.openSignUpForm()} isAuthorized={this.props.isAuthorized}/>
       <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)}
           onHandleSearchClicked={() => this.handleStartSearch()}
@@ -389,6 +383,7 @@ App.propTypes = {
   isSignUpFormOpen: PropTypes.bool.isRequired,
   cookies: instanceOf(Cookies).isRequired,
   searchQuery: PropTypes.string.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -401,6 +396,7 @@ App.propTypes = {
   fetchResultsComplete: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
+  setUserAuthorized: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -415,6 +411,7 @@ const mapDispatchToProps = dispatch => ({
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
+  setUserAuthorized: bindActionCreators(setUserAuthorized, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -423,6 +420,7 @@ const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
   isSignUpFormOpen: state.isSignUpFormOpen,
   searchQuery: state.searchQuery,
+  isAuthorized: state.isAuthorized,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

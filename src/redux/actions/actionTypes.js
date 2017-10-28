@@ -24,3 +24,5 @@ export const SIGNUP_FORM_OPEN = "signup_form_open";
 export const SIGNUP_FORM_CLOSE = "signup_form_close";
 
 export const SEARCH_QUERY_SET = "search_query_set";
+
+export const SET_USER_AUTHORIZED = "set_user_authorized";

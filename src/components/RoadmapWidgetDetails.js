@@ -16,7 +16,6 @@ class RoadmapsWidgetDetails extends React.Component {
     super(props);
 
     console.log("Roadmap details");
-    console.dir(this.props.currentRoadmap);
   }
 
   /*render() {

@@ -25,6 +25,8 @@ import {
   SIGNUP_FORM_CLOSE,
 
   SEARCH_QUERY_SET,
+
+  SET_USER_AUTHORIZED,
 } from '../actions/actionTypes';
 
 export function isSignUpFormOpen(state = false, action) {
@@ -162,4 +164,13 @@ export function searchQuery(state = "", action) {
       default:
         return state;
     }
+}
+
+export function isAuthorized(state = false, action) {
+  switch (action.type) {
+    case SET_USER_AUTHORIZED:
+        return action.authorized;
+    default:
+        return state;
+  }
 }
