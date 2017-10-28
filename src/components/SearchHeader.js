@@ -16,6 +16,9 @@ import ActionLink from './ActionLink'
 import {
   selectResultsCategory,
   openSignUpForm,
+  roadmapAdd,
+  roadmapRemove,
+  roadmapsSet,
 } from '../redux/actions/actions'
 import "../css/searchHeader.css"
 
@@ -193,7 +196,11 @@ class SearchHeader extends React.Component {
         <h2>Roadmaps</h2>
          <div className="row">
          <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
-         openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}/>
+         openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}
+         addRoadmap={this.props.addRoadmap}
+         removeRoadmap={this.props.removeRoadmap}
+         setRoadmaps={this.props.setRoadmaps}
+         />
          </div>
          <div className="row">
            {this.renderSaveRoadmaps()}
@@ -275,6 +282,9 @@ class SearchHeader extends React.Component {
 const mapDispatchToProps = dispatch => ({
   selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  addRoadmap: bindActionCreators(roadmapAdd, dispatch),
+  removeRoadmap: bindActionCreators(roadmapRemove, dispatch),
+  setRoadmaps: bindActionCreators(roadmapsSet, dispatch),
 })
 
 SearchHeader.propTypes = {
@@ -285,9 +295,13 @@ SearchHeader.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
-  addedRoadmaps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addedRoadmaps: PropTypes.arrayOf(PropTypes.string).isRequired,
 
+  selectResultsCategory: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
+  addRoadmap: PropTypes.func.isRequired,
+  removeRoadmap: PropTypes.func.isRequired,
+  setRoadmaps: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

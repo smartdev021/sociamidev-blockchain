@@ -151,24 +151,24 @@ export function bookmarkRemoveAll() {
     }
 }
 
-export function roadmapAdd(newRoadmap) {
+export function roadmapAdd(newRoadmapId) {
     return {
         type: ROADMAP_ADD,
-        roadmap: newRoadmap
+        roadmapId: newRoadmapId
     }
 }
 
-export function roadmapsSet(newRoadmaps) {
+export function roadmapsSet(newRoadmapsIds) {
     return {
         type: ROADMAPS_SET,
-        roadmaps: newRoadmaps
+        roadmapIds: newRoadmapsIds
     }
 }
 
-export function roadmapRemove(roadmapToRemove) {
+export function roadmapRemove(roadmapIdToRemove) {
     return {
         type: ROADMAP_REMOVE,
-        roadmap: roadmapToRemove
+        roadmapId: roadmapIdToRemove
     }
 }
 

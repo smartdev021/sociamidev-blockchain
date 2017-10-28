@@ -23,16 +23,14 @@ class RoadmapsWidget extends React.Component {
 
     this.renderRoadmaps = this.renderRoadmaps.bind(this);
 
-    this.state = {addedRoadmaps: [], isViewingDetails: false, currentRoadmapSelected: {}};
+    this.state = {isViewingDetails: false, currentRoadmapSelected: {}};
   }
 
   componentWillMount() {
     const savedRoadmaps = this.props.cookies.get('addedRoadmaps');
 
     if (savedRoadmaps && savedRoadmaps.length > 0) {
-        //if user was adding roadmaps previously - set them to state
-        let copy = Object.assign({}, this.state, {addedRoadmaps: savedRoadmaps});
-        this.setState(copy);
+        this.props.setRoadmaps(savedRoadmaps);
     }
   }
 
@@ -43,41 +41,37 @@ class RoadmapsWidget extends React.Component {
           }
       }
 
-      if (prevState.addedRoadmaps.length != this.state.addedRoadmaps.length) {
+      console.log("props updated");
+      console.dir(this.props);
+
+      if (prevProps.addedRoadmaps.length != this.props.addedRoadmaps.length) {
         const { cookies } = this.props;
 
         const savedRoadmaps = cookies.get('addedRoadmaps');
 
+        console.log("componentDidUpdate roadmaps amount has changed!!!");
+
         //only add roadmaps to cookies if they differ in length or not set yet
-        if (!savedRoadmaps || savedRoadmaps.length != this.state.addedRoadmaps.length) {
+        if (!savedRoadmaps || savedRoadmaps.length != this.props.addedRoadmaps.length) {
             let dateExpire = new Date();
             dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
             
             let options = { path: '/', expires: dateExpire};
             
-            cookies.set('addedRoadmaps', this.state.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
+            cookies.set('addedRoadmaps', this.props.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
         }
       }
   }
 
   toggleAdd(e) {
-      let roadmapId = e.target.id;
+    let roadmapId = e.target.id;
 
-      let indexFound = this.state.addedRoadmaps.indexOf(roadmapId);
-
-      if (indexFound == -1) {
-        let copy = Object.assign({}, this.state, {addedRoadmaps: this.state.addedRoadmaps.concat(roadmapId)});
-        this.setState(copy);
-      }
-      else {
-        let copy = Object.assign({}, this.state, {addedRoadmaps: this.state.addedRoadmaps.filter(function(id) 
-            {
-                return id != roadmapId})
-            }
-        );
-        
-        this.setState(copy);
-      }
+    if (this.props.addedRoadmaps.indexOf(roadmapId) != -1) {
+        this.props.removeRoadmap(roadmapId);
+    }
+    else {
+        this.props.addRoadmap(roadmapId);
+    }
   }
 
   handleViewDetails(e) {
@@ -98,7 +92,7 @@ class RoadmapsWidget extends React.Component {
   }
 
   renderRoadmapsControls(roadmapId) {
-      const addControlClassName = this.state.addedRoadmaps.indexOf(String(roadmapId)) != -1 ? "	glyphicon glyphicon-ok roadmapControl" 
+      const addControlClassName = this.props.addedRoadmaps.indexOf(String(roadmapId)) != -1 ? "	glyphicon glyphicon-ok roadmapControl" 
       : "glyphicon glyphicon-plus roadmapControl";
       return (<span className="roadmapControls">
           <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewDetails(e)}></span>
@@ -159,7 +153,7 @@ class RoadmapsWidget extends React.Component {
 }
 
 RoadmapsWidget.propTypes = {
-  roadmaps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  roadmaps: PropTypes.array.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   cookies: instanceOf(Cookies).isRequired,
