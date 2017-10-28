@@ -27,11 +27,13 @@ class RoadmapsWidget extends React.Component {
   }
 
   componentWillMount() {
-    const savedRoadmaps = this.props.cookies.get('addedRoadmaps');
-
-    if (savedRoadmaps && savedRoadmaps.length > 0) {
-        this.props.setRoadmaps(savedRoadmaps);
-    }
+      if (this.props.addedRoadmaps.length == 0) {
+        const savedRoadmaps = this.props.cookies.get('addedRoadmaps');
+        
+        if (savedRoadmaps && savedRoadmaps.length > 0) {
+             this.props.setRoadmaps(savedRoadmaps);
+        }
+      }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,26 +43,25 @@ class RoadmapsWidget extends React.Component {
           }
       }
 
-      console.log("props updated");
-      console.dir(this.props);
+      console.log("props updated prevProps.addedRoadmaps: ");
+      console.dir(prevProps.addedRoadmaps);
 
-      if (prevProps.addedRoadmaps.length != this.props.addedRoadmaps.length) {
-        const { cookies } = this.props;
+      console.log("props updated this.props.addedRoadmaps: ");
+      console.dir(this.props.addedRoadmaps);
 
-        const savedRoadmaps = cookies.get('addedRoadmaps');
-
-        console.log("componentDidUpdate roadmaps amount has changed!!!");
-
-        //only add roadmaps to cookies if they differ in length or not set yet
-        if (!savedRoadmaps || savedRoadmaps.length != this.props.addedRoadmaps.length) {
-            let dateExpire = new Date();
-            dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
-            
-            let options = { path: '/', expires: dateExpire};
-            
-            cookies.set('addedRoadmaps', this.props.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
-        }
-      }
+      const { cookies } = this.props;
+      
+      const savedRoadmaps = cookies.get('addedRoadmaps');
+      
+      console.log("componentDidUpdate roadmaps amount has changed!!!");
+      
+      //only add roadmaps to cookies if they differ in length or not set yet
+      let dateExpire = new Date();
+      dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
+      
+      let options = { path: '/', expires: dateExpire};
+      
+      cookies.set('addedRoadmaps', this.props.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
   }
 
   toggleAdd(e) {
@@ -154,6 +155,7 @@ class RoadmapsWidget extends React.Component {
 
 RoadmapsWidget.propTypes = {
   roadmaps: PropTypes.array.isRequired,
+  addedRoadmaps: PropTypes.array.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   cookies: instanceOf(Cookies).isRequired,

@@ -91,7 +91,7 @@ class SearchHeader extends React.Component {
 
     if (roadmaps.length > 0) {
       for (let i = 0; i < roadmaps.length; ++i) {
-        result += "roadmaps=" + roadmaps[i]._id;
+        result += "roadmaps=" + roadmaps[i];
         if (i < roadmaps.length - 1) {
           result += '&';
         }
@@ -109,6 +109,8 @@ class SearchHeader extends React.Component {
     if (parsedRoadmaps != "") {
       url += '&' + parsedRoadmaps;
     }
+
+    console.log("url: " + url);
 
     console.log("saveUserRoadmapsToDatabase");
     console.log(url);
@@ -295,7 +297,7 @@ SearchHeader.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
-  addedRoadmaps: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addedRoadmaps: PropTypes.array.isRequired,
 
   selectResultsCategory: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
