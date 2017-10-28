@@ -19,6 +19,8 @@ import {
 
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
+
+    SEARCH_QUERY_SET,
 } from './actionTypes';
 
 export function openSignUpForm() {

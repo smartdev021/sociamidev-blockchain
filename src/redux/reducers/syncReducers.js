@@ -22,7 +22,9 @@ import {
   BOOKMARKS_SET,
 
   SIGNUP_FORM_OPEN,
-  SIGNUP_FORM_CLOSE
+  SIGNUP_FORM_CLOSE,
+
+  SEARCH_QUERY_SET,
 } from '../actions/actionTypes';
 
 export function isSignUpFormOpen(state = false, action) {
@@ -148,6 +150,15 @@ export function bookmarks(state = bookmarksInitialState, action) {
       }
       case BOOKMARK_REMOVE_ALL:
           return bookmarksInitialState;
+      default:
+        return state;
+    }
+}
+
+export function searchQuery(state = "", action) {
+  switch (action.type) {
+      case SEARCH_QUERY_SET:
+        return action.query;
       default:
         return state;
     }

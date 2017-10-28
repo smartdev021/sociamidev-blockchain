@@ -5,6 +5,11 @@
 import React, { Component } from 'react';
 import { Redirect} from 'react-router-dom'
 
+import PropTypes from 'prop-types';
+import { instanceOf } from 'prop-types';
+
+import { withCookies, Cookies } from 'react-cookie';
+
 class Authorize extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +45,23 @@ class Authorize extends React.Component {
     if (this.redirectRequired) {
         this.redirectRequired = false;
 
-        RedirectTo = <Redirect to="/" push />;
+        const { cookies } = this.props;
+
+        const lastLocationSaved = cookies.get('lastLocation');
+
+        if (lastLocationSaved) {
+
+            let redirectLocation = lastLocationSaved.pathname;
+
+            if (lastLocationSaved.search) {
+                redirectLocation += lastLocationSaved.search;
+            }
+
+            RedirectTo = <Redirect to={redirectLocation} push />;
+        }
+        else {
+            RedirectTo = <Redirect to="/" push />;
+        }
     }
 
     return RedirectTo;
@@ -48,4 +69,9 @@ class Authorize extends React.Component {
 
 }
 
-export default Authorize;
+Authorize.propTypes = {
+    cookies: instanceOf(Cookies).isRequired,
+}
+
+
+export default withCookies(Authorize);

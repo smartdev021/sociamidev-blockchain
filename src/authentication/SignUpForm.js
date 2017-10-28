@@ -3,6 +3,14 @@ import Modal from 'react-modal';
 import "../css/signUpFormPopup.css"
 import ConfigMain from '../../configs/main';
 
+import { withCookies, Cookies } from 'react-cookie';
+import PropTypes from 'prop-types';
+import { instanceOf } from 'prop-types';
+
+import { connect } from 'react-redux'
+
+import { withRouter } from 'react-router-dom'
+
 const enhanceWithClickOutside = require('react-click-outside');
 
 const BackendURL = ConfigMain.getBackendURL();
@@ -27,8 +35,10 @@ class SignupForm extends React.Component {
           <div className="wrapper">
         <div className="form-sign-up" >       
           <h2 className="form-sign-u-heading">Sign Up</h2>
-          <button type="button" className="btn btn-lg btn-primary btn-block" onClick={this.handleFaceBookSignUp}>FaceBook</button>
-          <button type="button" className="btn btn-lg btn-warning btn-block" onClick={this.handleLinkedInSignUp}>LinkedIn</button>
+          <button type="button" className="btn btn-lg btn-primary btn-block" 
+          onClick={()=>this.props.onHandleSignUpFacebook()}>FaceBook</button>
+          <button type="button" className="btn btn-lg btn-warning btn-block" 
+          onClick={()=>this.props.onHandleSignUpLinkedIn()}>LinkedIn</button>
         </div>
       </div>
           </Modal>
@@ -39,20 +49,9 @@ class SignupForm extends React.Component {
         () => this.props.onCloseModal();
       }
 
-      handleFormSubmit(event) {
-        event.preventDefault();
-        return;
-      }
-
-      handleLinkedInSignUp() {
-        window.location.href = `${BackendURL}/auth/linkedin`;
-      }
-
-      handleFaceBookSignUp() {
-        window.location.href = `${BackendURL}/auth/facebook`;
-      }
-
     render() {
+      console.log("render: ");
+      console.dir(this.props);
         return (
         <div>
             {this.renderForm()}
@@ -61,4 +60,12 @@ class SignupForm extends React.Component {
       }
   }
 
-  module.exports = enhanceWithClickOutside(SignupForm);
+  SignupForm.propTypes = {
+    cookies: instanceOf(Cookies).isRequired,
+  }
+
+  const mapStateToProps = state => ({
+    store: state,
+  })
+
+  export default withRouter(enhanceWithClickOutside(connect(mapStateToProps, null)(withCookies(SignupForm))));

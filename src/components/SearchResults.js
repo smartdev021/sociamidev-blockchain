@@ -31,16 +31,6 @@ class SearchResults extends React.Component {
     }
 
     this.props.openSearchResultsComplete();
-
-    if (this.props.searchResults.jobs.length == 0 
-      && this.props.searchResults.events.length == 0 
-      && this.props.searchResults.courses.length == 0 
-      && this.props.searchResults.gigs.length == 0) {
-        const { cookies } = this.props;
-        const savedQuery = cookies.get('query');
-
-        //TODO: add code for searching with saved 'query' from cookies
-      }
   }
 
 

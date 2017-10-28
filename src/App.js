@@ -76,6 +76,7 @@ class App extends Component {
     super(props);
 
     this.handleQueryChange = this.handleQueryChange.bind(this);
+
     this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
 
     this.initialCountry = this.countries.Singapore;
@@ -101,6 +102,10 @@ class App extends Component {
     console.dir(this.props);
   }
 
+  componentWillMount() {
+    this.props.cookies.getAll();
+  }
+
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, {linkedInID: id});
     this.setState(copy);
@@ -111,6 +116,38 @@ class App extends Component {
     let copy = Object.assign({}, this.state, {faceBookID: id});
     this.setState(copy);
     console.log("handleAuthorizeFaceBook id: " + id);
+  }
+
+  HandleSignUpFacebook() {
+    this.props.closeSignUpForm();
+
+    const { cookies } = this.props;
+    
+    let lifetimeMinutes = 10;
+    let dateExpire = new Date();
+    dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+    
+    let options = { path: '/', expires: dateExpire};
+    
+    cookies.set('lastLocation', this.props.history.location, options); //will expire in 'lifetimeMinutes' minutes
+
+    window.location.href = `${BackendURL}/auth/facebook`;
+  }
+
+  HandleSignUpLinkedIn() {
+    this.props.closeSignUpForm();
+
+    const { cookies } = this.props;
+    
+    let lifetimeMinutes = 10;
+    let dateExpire = new Date();
+    dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));  
+    
+    let options = { path: '/', expires: dateExpire};
+    
+    cookies.set('lastLocation', this.props.history.location, options); //will expire in 'lifetimeMinutes' minutes
+
+    window.location.href = `${BackendURL}/auth/linkedin`;
   }
 
   handleChange(event) {
@@ -130,6 +167,14 @@ class App extends Component {
 
   startNewSearch() {
     if (!this.props.isFetchInProgress && this.state.query != "") {
+
+      let lifetimeMinutes = 10;
+      let dateExpire = new Date();
+      dateExpire.setTime(dateExpire.getTime() + (lifetimeMinutes*60*1000));
+      let options = { path: '/', expires: dateExpire};
+       
+      this.props.cookies.set('searchQuery', this.state.query, options); //will expire in 'lifetimeMinutes' minutes
+
       this.isSearchingJobs = true;
       this.isSearchingEvents = true;
       this.isSearchingForUdemyItems = true;
@@ -155,6 +200,7 @@ class App extends Component {
   }
 
   handleQueryChange(newQuery) {
+    console.log("handleQueryChange " + newQuery);
     let copy = Object.assign({}, this.state, {query: newQuery});
     this.setState(copy);
   }
@@ -289,11 +335,6 @@ class App extends Component {
         this.props.fetchResultsComplete();
       }
     }
-    if (prevState.isAuthorized != this.state.isAuthorized) {
-      if (this.state.isAuthorized) {
-        this.props.openUserProfile();
-      }
-    }
 
     if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
       if (!this.props.isFetchInProgress) {
@@ -304,6 +345,11 @@ class App extends Component {
     if (prevProps != this.props) {
       console.log("App props updated: ");
       console.dir(this.props);
+    }
+
+    if (this.props.cookies != prevProps.cookies) {
+      console.log("Cookies has been changed");
+      console.dir(this.props.cookies);
     }
   }
 
@@ -335,13 +381,15 @@ class App extends Component {
       <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)} 
           onHandleQueryChange={(query) => this.handleQueryChange(query)} 
-          onHandleSearchClicked={(e) => this.handleStartSearch(e)} query={this.state.query} 
+          onHandleSearchClicked={() => this.handleStartSearch()} query={this.state.query} 
           isFetchInProgress={this.props.isFetchInProgress}
           linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
           onCloseSignUpModal={() => this.props.closeSignUpForm()}
           isSignUpFormOpen={this.props.isSignUpFormOpen}
           onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
-          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}/>
+          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+          onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()}
+          onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}/>/>
       <ThemeFooterContainer/>
       </div>
     );
