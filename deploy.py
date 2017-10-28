@@ -25,8 +25,8 @@ from botocore.exceptions import ClientError
 
 APPLICATION_NAME        = 'Sociami'
 DEPLOYMENT_CONFIG       = 'CodeDeployDefault.OneAtATime'
-PRD_S3_BUCKET           = 'sociami.com'
-DEV_S3_BUCKET           = 'sociamidev.com'
+PRD_S3_BUCKET           = 'soqqle.com'
+DEV_S3_BUCKET           = 'stg.soqqle.com'
 AWS_ACCESS_KEY_ID = 'AKIAJ5N6YPHUFUK3WX7Q'
 AWS_SECRET_ACCESS_KEY = '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'
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
