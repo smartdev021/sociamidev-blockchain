@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { withRouter } from 'react-router-dom'
+
 import {
   setSearchQuery,
 } from '../redux/actions/actions'
@@ -30,6 +32,9 @@ class MainMenuTwilliAir extends React.Component {
   }
 
   render() {
+    if (this.props.history.location.pathname == "/") {
+      return null;
+    }
 const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
     return (
           <section id="left-sidebar">
@@ -53,4 +58,4 @@ const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
 
 }
 
-export default MainMenuTwilliAir;
+export default withRouter(MainMenuTwilliAir);

@@ -22,6 +22,8 @@ import Main from './components/Main';
 import AuthenticationHelper from './authentication/AuthenticationHelper';
 import UserProfile from './components/UserProfile';
 
+import MainMenuTwilliAir from './twilli_air/MainMenu';
+
 import "./css/loginFormPopup.css"
 
 import Axios from 'axios'
@@ -63,7 +65,7 @@ WebFont.load({
   }
 });
 
-import './css/main.css';
+//import './css/main.css';
 
 let DataProviderIndeed = require("./data_providers/indeed/DataProvider");
 let DataProviderEventBrite = require("./data_providers/event_brite/DataProvider");
@@ -361,9 +363,10 @@ class App extends Component {
 
     return (
       
-      <div>
+      <div className="outer-container">
         {RedirectTo}
-      <ThemeNavBar onHandleSignUp={()=> this.props.openSignUpForm()} isAuthorized={this.props.isAuthorized}/>
+        <MainMenuTwilliAir/>
+        <section id="main-content" className="clearfix">
       <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)}
           onHandleSearchClicked={() => this.handleStartSearch()}
@@ -374,8 +377,8 @@ class App extends Component {
           onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
           onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
           onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()}
-          onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}/>/>
-      <ThemeFooterContainer/>
+          onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}/>
+          </section>
       </div>
     );
   }

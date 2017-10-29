@@ -11,6 +11,9 @@ import Authorize from './Authorize';
 import SignUpFormPopup from  '../authentication/SignUpForm';
 import {Route, Switch} from 'react-router-dom'
 
+//twilli_air
+import HomePageTwilliAir from '../twilli_air/HomePage.js';
+
 
 class Main extends React.Component {
   render() {
@@ -22,7 +25,7 @@ class Main extends React.Component {
           onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
       />
       <Switch>
-        <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
+        <Route exact path='/' render={routeProps => <HomePageTwilliAir {...routeProps}{...this.props}/>} />
         <Route path='/searchResults' render={routeProps => <SearchPage {...routeProps}{...this.props}/>} />
         <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>

@@ -12,8 +12,6 @@ import {
   setSearchQuery,
 } from '../redux/actions/actions'
 
-import MainMenuTwilliAir from './MainMenu';
-
 class HomePageTwilliAir extends React.Component {
 
   constructor(props) {
@@ -39,9 +37,6 @@ const TextInput = this.props.isFetchInProgress ? <h6>Searching...</h6>
       placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.HandleChange(e)} autoFocus/>);
 
     return (
-       <div id="outer-container">
-         <MainMenuTwilliAir/>
-          <section id="main-content" className="clearfix">
             <article id="intro" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
               <div className="clearfix" data-wow-delay="0.3s">
                 <div className="col-sm-10 col-md-9 pull-right">
@@ -57,8 +52,6 @@ const TextInput = this.props.isFetchInProgress ? <h6>Searching...</h6>
                 </div>
               </div>
             </article>
-          </section>
-        </div>
     );
   }
 
