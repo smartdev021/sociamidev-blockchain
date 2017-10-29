@@ -14,15 +14,9 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-/*app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});*/
-
 app.get('*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, 'dist/index.html'));
+  res.sendFile(path.resolve(__dirname, 'index.html'));
 });
-
-
 
 app.listen(port, function(err) {
   if (err) {
