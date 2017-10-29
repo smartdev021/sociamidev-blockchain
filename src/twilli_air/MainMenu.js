@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import {Link} from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -39,18 +39,18 @@ const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
     return (
           <section id="left-sidebar">
             <div className="logo">
-              <a href="#intro" className="link-scroll"><h2>Soqqle</h2></a>
+            <Link className='link-scroll' to='/'><h3>Soqqle</h3></Link>
             </div>
     
             <div id="mobile-menu-icon" className="visible-xs" onClick={()=>this.handleToggleMainMenu()}>
             <span className="glyphicon glyphicon-th"></span></div>
 
             <ul id="main-menu">
-              <li id="menu-item-text" className="menu-item"><a href="#text">About</a></li>
-              <li id="menu-item-carousel" className="menu-item"><a href="#carousel">How it Works</a></li>
-              <li id="menu-item-grid" className="menu-item"><a href="#grid">ICO</a></li>
-              <li id="menu-item-featured" className="menu-item"><a href="#featured">Results</a></li>
-              <li id="menu-item-tabs" className="menu-item"><a href="#tabs">Roadmap</a></li>
+              <li id="menu-item-text" className="menu-item"><Link to='/about'>About</Link></li>
+              <li id="menu-item-carousel" className="menu-item"><Link to='/howItWorks'>How it Works</Link></li>
+              <li id="menu-item-grid" className="menu-item"><Link to='/ico'>ICO</Link></li>
+              <li id="menu-item-featured" className="menu-item"><Link to='/searchResults'>Results</Link></li>
+              <li id="menu-item-tabs" className="menu-item"><Link to='/roadmap'>Roadmap</Link></li>
             </ul>
           </section>
     );
