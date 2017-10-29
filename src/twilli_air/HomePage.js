@@ -4,6 +4,15 @@
 
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import {
+  setSearchQuery,
+} from '../redux/actions/actions'
+
+import MainMenuTwilliAir from './MainMenu';
 
 class HomePageTwilliAir extends React.Component {
 
@@ -11,61 +20,65 @@ class HomePageTwilliAir extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
-    //Load 'functions.js'
-     const script = document.createElement("functions_js_script");
-     script.src = "http://sociamibucket.s3.amazonaws.com/twilli_air/assets/js/functions.js";
-     document.getElementsByTagName('head')[0].appendChild(script);
+  handleStartSearch(e) {
+    e.preventDefault();
+    this.props.onHandleStartSearch();
   }
 
-  handleToggleMainMenu() {
-    window.toggle_main_menu();
+  HandleChange(e) {
+    this.props.setSearchQuery(e.target.value);
   }
 
   render() {
 //<img src="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/logo.png"
-    return (<div id="outer-container">
-    
-          <section id="left-sidebar">
-            
-            <div className="logo">
-              <a href="#intro" className="link-scroll"><h2>Soqqle</h2></a>
-            </div>
-    
-            <div id="mobile-menu-icon" className="visible-xs" onClick={()=>this.handleToggleMainMenu()}>
-            <span className="glyphicon glyphicon-th"></span></div>
-    
-            <ul id="main-menu">
-              <li id="menu-item-text" className="menu-item scroll"><a href="#text">Text</a></li>
-              <li id="menu-item-carousel" className="menu-item scroll"><a href="#carousel">Carousel</a></li>
-              <li id="menu-item-grid" className="menu-item scroll"><a href="#grid">Grid</a></li>
-              <li id="menu-item-featured" className="menu-item scroll"><a href="#featured">Featured</a></li>
-              <li id="menu-item-tabs" className="menu-item scroll"><a href="#tabs">Results</a></li>
-              <li id="menu-item-contact" className="menu-item scroll"><a href="#contact">Contact</a></li>
-            </ul>
-    
-          </section>
-    
+const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
+
+const TextInput = this.props.isFetchInProgress ? <h6>Searching...</h6> 
+: (<input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
+    id="form-name" name="query" autoComplete="off"
+      placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.HandleChange(e)} autoFocus/>);
+
+    return (
+       <div id="outer-container">
+         <MainMenuTwilliAir/>
           <section id="main-content" className="clearfix">
-            
             <article id="intro" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
-              <div className="content-wrapper clearfix wow fadeInDown" data-wow-delay="0.3s">
+              <div className="clearfix" data-wow-delay="0.3s">
                 <div className="col-sm-10 col-md-9 pull-right">
-    
                     <section className="feature-text">
-                      <h1>Say more with less with TWILLI Air</h1>
-                      <p>TWILLI Air is a fully-responsive, minimalistic HTML template, designed to be ideal for websites with concise content.</p>
-                      <p><a href="#text" className="link-scroll btn btn-outline-inverse btn-lg">find out more</a></p>
+                      <h1>What should I learn next</h1>
+                      <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
+                      <form className="form-inline" action="#" onSubmit={(e) => this.handleStartSearch(e)}>
+                        <div className="form-group">
+                          {TextInput}
+                        </div>
+                      </form>
                     </section>
-    
                 </div>
               </div>
             </article>
           </section>
-          </div>
+        </div>
     );
   }
 
 }
 
-export default HomePageTwilliAir;
+HomePageTwilliAir.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  isFetchInProgress: PropTypes.bool.isRequired,
+
+  setSearchQuery: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = dispatch => ({
+  setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+})
+
+const mapStateToProps = state => ({
+  searchQuery: state.searchQuery,
+  isFetchInProgress: state.isFetchInProgress,
+})
+
+//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
+export default connect(mapStateToProps, mapDispatchToProps)(HomePageTwilliAir);
