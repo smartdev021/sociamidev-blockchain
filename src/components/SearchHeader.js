@@ -152,29 +152,12 @@ class SearchHeader extends React.Component {
     const linkGigsClassName = this.props.currentCategory == "RESULTS_CATEGORY_GIGS" ? 'customLinkActive' : "customLink";
 
     return (
-    <form className="form-inline" action="#" onSubmit={(e) => this.onStartSearch(e)}>
+    <form className="form-inline formSearchPage" action="#" onSubmit={(e) => this.onStartSearch(e)}>
       <div className="form-group">
         <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder={inputPlaceHolder} 
         value={this.state.searchQuery} onChange={(e) => this.handleValueChange(e)}/>
       </div>
-      <ul className="nav navbar-nav pull-right nav_results_categories">
-        <ActionLink className={linkJobsClassName} id="RESULTS_CATEGORY_JOBS" onClick={(e) => this.handleSelectCategory(e)}>
-          <li className={liClassNameJobs}><p className="glyphicon-text">Jobs</p></li>
-        </ActionLink>
-        
-        <ActionLink className={linkEventsClassName} id="RESULTS_CATEGORY_EVENTS" onClick={(e) => this.handleSelectCategory(e)}>
-          <li className={liClassNameEvents}><p className="glyphicon-text">Events</p></li>
-        </ActionLink>
-        
-        <ActionLink className={linkCoursesClassName} id="RESULTS_CATEGORY_COURSES" onClick={(e) => this.handleSelectCategory(e)}>
-          <li className={liClassNameTraining}><p className="glyphicon-text">Training</p></li>
-        </ActionLink>
-        
-        <ActionLink className={linkGigsClassName} id="RESULTS_CATEGORY_GIGS" onClick={(e) => this.handleSelectCategory(e)}>
-          <li className={liClassNameGigs}><p className="glyphicon-text">Gigs</p></li>
-        </ActionLink>
-      </ul>
-      <button type="button" className="btn btn-warning btn-lg" onClick={(e) => this.onStartSearch(e)}>{buttonText}{waitingText}</button>
+      <button type="button" className="btn btn-lg btn-outline-inverse" onClick={(e) => this.onStartSearch(e)}>{buttonText}{waitingText}</button>
     </form>)
   }
 
@@ -187,25 +170,21 @@ class SearchHeader extends React.Component {
   }
 
   renderSaveRoadmaps() {
-    if (this.props.addedRoadmaps.length > 0) {
+    let colStyle = this.props.addedRoadmaps.length > 0 ? {visibility:'initial'} : {visibility:'hidden'};
       let buttonText = this.state.isSavingRoadmaps ? "Saving..." : "Save";
       return (
-        <div className="col-lg-12">
+        <div className="col-lg-12" style={colStyle}>
           <div className="saveRoadmaps">
-            <button type="button" className="btn btn-warning btn-lg" onClick={()=>this.handleSaveRoadmaps()}>{buttonText}</button>
+            <button type="button" className="btn btn-lg btn-outline-inverse" onClick={()=>this.handleSaveRoadmaps()}>{buttonText}</button>
           </div>
         </div>);
-    }
-    else {
-      return null;
-    }
   }
 
   renderRoadmaps() {
     return (<div>
       <div className="col-lg-12">
         <h2>Roadmaps</h2>
-         <div className="row">
+         <div>
          <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
          openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}
          addRoadmap={this.props.addRoadmap}
@@ -222,19 +201,10 @@ class SearchHeader extends React.Component {
 
   render() {
     return (<span className="results_header">
-    <div className="row">
       <div className="col-lg-12">
        {this.renderForm()}
       </div>
-    </div>
-    <div className="row">
-      <div className="col-lg-12">
-      <span className="glyphicon glyphicon-book text-center glyphicon-big pull-right"><p className="glyphicon-text">Bookmarks({this.props.numBookmarks})</p></span>
-      </div>
-    </div>
-    <div className="row">
-      {this.renderRoadmaps()}
-    </div>
+    {this.renderRoadmaps()}
     </span>
     );
   }

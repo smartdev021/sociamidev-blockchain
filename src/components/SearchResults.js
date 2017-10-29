@@ -73,7 +73,7 @@ class SearchResults extends React.Component {
     }
     else {
       return (
-        <div className="row mt left search_results_container">
+        <div className="search_results_container">
         <div className="col-lg-12">
             {jobsList}    
             {eventsList}

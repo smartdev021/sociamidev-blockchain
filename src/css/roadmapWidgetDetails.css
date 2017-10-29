@@ -1,8 +1,8 @@
 .roadmap_details_widget {
     width: 100%;
     min-height: 200px;
-    background-color: #E4E4E4;
-    border: 1px solid black;
+    background-color: transparent;
+    border: 1px solid white;
     color: black;
 }
 

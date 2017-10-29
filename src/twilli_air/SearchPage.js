@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 
 //import SearchHeader from './SearchHeader';
 import SearchResults from '../components/SearchResults';
+import SearchHeader from '../components/SearchHeader';
 import SearchPageNavigation from './SearchPageNavigation';
 
 import { withCookies, Cookies } from 'react-cookie';
@@ -69,6 +70,9 @@ class SearchPageTwilliAir extends React.Component {
 
             <SearchPageNavigation/>
             <p>
+            <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} 
+      onHandleStartSearch={() => this.HandleStartSearch()} isAuthorized={this.props.isAuthorized} 
+      isSearchInProgress={this.props.isSearchInProgress}/>
             <div className="tab-content">
 
             <SearchResults/>

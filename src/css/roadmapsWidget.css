@@ -1,8 +1,8 @@
 .roadmaps_widget {
     width: 100%;
     min-height: 200px;
-    background-color: #E4E4E4;
-    border: 1px solid black;
+    background-color: transparent;
+    border: 1px solid white;
     color: black;
     padding-top: 10px;
     padding-top: 10px;
@@ -11,7 +11,7 @@
 
 .skillTag {
     background: transparent;
-    border: 1px solid black;
+    border: 1px solid white;
     margin:5px;
     font-size: 12px;
     line-height: initial;
@@ -23,9 +23,10 @@
     min-height: 180px;
     height: 180px;
     max-height: 180px;
-    background: grey;
-    border: 1px solid black;
+    background: transparent;
+    border: 1px solid white;
     margin-bottom: 5px;
+    font-size: 10px;
 }
 
 .roadMap:hover{
@@ -56,8 +57,8 @@
 .mentor_widget {
     width: 100%;
     min-height: 200px;
-    background-color: #E4E4E4;
-    border: 1px solid black;
+    background-color: transparent;
+    border: 1px solid white;
     color: black;
     padding-top: 10px;
     padding-top: 10px;
