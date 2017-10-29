@@ -63,7 +63,7 @@ class UserProfile extends React.Component {
       placeholder="What is your working experience?" required="" 
       value={this.props.userProfile.experience} readOnly/>
 
-      <Link className="btn btn-primary btn-lg btn-block" to='/'>Back to Main</Link>
+      <Link className="btn btn-lg btn-outline-inverse btn-block" to='/'>Back to Main</Link>
 
       </div>
     </form>

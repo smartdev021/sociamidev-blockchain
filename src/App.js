@@ -42,6 +42,9 @@ import { instanceOf } from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import {Link} from 'react-router-dom'
+import ActionLink from './components/ActionLink'
+
 import { withCookies, Cookies } from 'react-cookie';
 
 import {
@@ -356,6 +359,20 @@ class App extends Component {
 
     return RedirectTo;
   }
+
+  renderProfileLink() {
+    let ProfileLink = '';
+    if (this.props.isAuthorized) {
+      ProfileLink = <Link className='btn btn-lg btn-outline-inverse pull-right' to='/userProfile'>Your account</Link>;
+    }
+    else
+    {
+      ProfileLink = <ActionLink className="btn btn-lg btn-outline-inverse pull-right" 
+          onClick={()=> this.props.openSignUpForm()}>Connect with...</ActionLink>;
+    }
+
+    return ProfileLink;
+  }
   
   render() {
 
@@ -365,7 +382,7 @@ class App extends Component {
       <div className="outer-container">
         {RedirectTo}
         <div className="col-lg-12">
-        <button type="button" className="btn btn-lg btn-outline-inverse pull-right" onClick={()=>this.props.openSignUpForm()}>Connect with...</button>
+        {this.renderProfileLink()}
         </div>
         <MainMenuTwilliAir/>
         <section id="main-content" className="clearfix">
