@@ -3,13 +3,12 @@
     min-height: 200px;
     background-color: transparent;
     border: 1px solid white;
-    color: black;
 }
 
 .roadmapStart {
     width: 80px;
     height: 80px;
-    border: 2px solid black;
+    border: 2px solid white;
     border-radius: 40px;
     text-align: center;
     line-height: 80px;
@@ -51,7 +50,7 @@
   }
 
   .detailsButton {
-      min-width: 145px;
+      min-width: 178px;
       margin-bottom: 10px;
   }
 
@@ -96,8 +95,8 @@
     height: 2px;
     width:100%;
     /* Set the hr color */
-    color: black; /* old IE */
-    background-color: black; /* Modern Browsers */
+    color: white; /* old IE */
+    background-color: white; /* Modern Browsers */
 }
 
 

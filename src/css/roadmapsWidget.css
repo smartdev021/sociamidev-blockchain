@@ -3,7 +3,6 @@
     min-height: 200px;
     background-color: transparent;
     border: 1px solid white;
-    color: black;
     padding-top: 10px;
     padding-top: 10px;
     overflow-y:auto;
@@ -30,7 +29,9 @@
 }
 
 .roadMap:hover{
-    background: yellow;
+    background: white;
+    color: black;
+    opacity: 0.4;
 }
 
 .roadMap, .roadMap h1, skillTag{
@@ -51,6 +52,7 @@
 }
 
 .roadmapControl {
+    color: black;
     padding-right: 10px;
 }
 
@@ -59,7 +61,6 @@
     min-height: 200px;
     background-color: transparent;
     border: 1px solid white;
-    color: black;
     padding-top: 10px;
     padding-top: 10px;
 }

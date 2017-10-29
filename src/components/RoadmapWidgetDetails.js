@@ -21,7 +21,7 @@ class RoadmapsWidgetDetails extends React.Component {
   render() {
     return(
     <div className="container roadmap_details_widget">
-      <div className="row">
+      <div>
       <div className="col-lg-9">
         <div className="roadmapDetailsDescription">
           <div className="roadmapDetailsDescriptionHeader">
@@ -51,9 +51,9 @@ class RoadmapsWidgetDetails extends React.Component {
       <div className="col-lg-3">
         <div className="roadmapDetailsControls">
         <div className="detailsButtons">
-          <button type="button" className="btn btn-primary btn-lg detailsButton" onClick={()=>this.props.openSignUpForm()}>Find a Mentor</button>
+          <button type="button" className="btn btn-lg btn-outline-inverse detailsButton" onClick={()=>this.props.openSignUpForm()}>Find a Mentor</button>
           
-          <button type="button" className="btn btn-warning btn-lg detailsButton" onClick={()=>this.props.openSignUpForm()}>Find friends</button>
+          <button type="button" className="btn btn-lg btn-outline-inverse detailsButton" onClick={()=>this.props.openSignUpForm()}>Find friends</button>
       </div>
       <span className="glyphicon glyphicon-remove detailsClose" onClick={()=> this.props.onViewDefault()}></span>
         </div>
