@@ -362,9 +362,11 @@ class App extends Component {
     let RedirectTo = this.getRedirectLocation();
 
     return (
-      
       <div className="outer-container">
         {RedirectTo}
+        <div className="col-lg-12">
+        <button type="button" className="btn btn-lg pull-right" onClick={()=>this.props.openSignUpForm()}>Connect with...</button>
+        </div>
         <MainMenuTwilliAir/>
         <section id="main-content" className="clearfix">
       <Main onHandleStartSearch={() => this.handleStartSearch()} 
