@@ -44,7 +44,7 @@ class JobsList extends React.Component {
       }
 
         listContent = (
-        <Table responsive striped bordered condensed hover>
+        <Table responsive bordered condensed>
           {this._getTableHeader()}
           <tbody>
             {jobItems}
@@ -54,7 +54,6 @@ class JobsList extends React.Component {
 
     return (
         <div>
-          <h2>Indeed Jobs:</h2>
           {listContent}
         </div>
     );

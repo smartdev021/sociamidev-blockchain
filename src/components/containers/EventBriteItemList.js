@@ -45,7 +45,7 @@ class EventBriteItemList extends React.Component {
       }
 
         listContent = (
-        <Table responsive striped bordered condensed hover>
+        <Table responsive bordered condensed>
           {this._getTableHeader()}
           <tbody>
             {eventBriteItems}
@@ -55,7 +55,6 @@ class EventBriteItemList extends React.Component {
 
     return (
         <div>
-          <h2>EventBrite List:</h2>
           {listContent}
         </div>
     );

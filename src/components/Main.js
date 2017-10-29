@@ -17,6 +17,7 @@ import AboutTwilliAir from '../twilli_air/About.js';
 import HowItWorksTwilliAir from '../twilli_air/HowItWorks.js';
 import ICOTwilliAir from '../twilli_air/ICO.js';
 import RoadmapTwilliAir from '../twilli_air/Roadmap.js';
+import SearchPageTwilliAir from '../twilli_air/SearchPage.js'
 
 
 class Main extends React.Component {
@@ -34,7 +35,7 @@ class Main extends React.Component {
         <Route exact path='/howItWorks' render={routeProps => <HowItWorksTwilliAir {...routeProps}{...this.props}/>} />
         <Route exact path='/ico' render={routeProps => <ICOTwilliAir {...routeProps}{...this.props}/>} />
         <Route exact path='/roadmap' render={routeProps => <RoadmapTwilliAir {...routeProps}{...this.props}/>} />
-        <Route path='/searchResults' render={routeProps => <SearchPage {...routeProps}{...this.props}/>} />
+        <Route path='/searchResults' render={routeProps => <SearchPageTwilliAir {...routeProps}{...this.props}/>} />
         <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
   )}/>

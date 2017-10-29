@@ -69,7 +69,7 @@ class SearchResults extends React.Component {
         onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
 
     if(this.props.isFetchInProgress) {
-      return <div className="row mt left search_results_container"><h2>Searching...</h2></div>;
+      return <div className="search_results_container"><h2>Searching...</h2></div>;
     }
     else {
       return (

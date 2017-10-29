@@ -39,7 +39,7 @@ const TextInput = this.props.isFetchInProgress ? <h6>Searching...</h6>
     return (
             <article id="intro" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
               <div className="clearfix" data-wow-delay="0.3s">
-                <div className="col-sm-10 col-md-9 pull-right">
+                <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
                     <section className="feature-text">
                       <h1>What should I learn next</h1>
                       <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>

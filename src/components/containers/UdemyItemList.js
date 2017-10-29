@@ -42,7 +42,7 @@ class UdemyItemList extends React.Component {
       }
 
         listContent = (
-        <Table responsive striped bordered condensed hover>
+        <Table responsive bordered condensed>
           {this._getTableHeader()}
           <tbody>
             {udemyItems}
@@ -52,7 +52,6 @@ class UdemyItemList extends React.Component {
 
     return (
         <div>
-          <h2>Udemy Courses:</h2>
           {listContent}
         </div>
     );

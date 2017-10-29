@@ -26,7 +26,7 @@ class JobItem extends React.Component {
                       <td key="4"><a href={this.props.item.url} target="_blank">Apply</a></td>,
                       <td key="5">{this.props.item.date}</td>,
                       <td key="6">{this.props.item.formattedRelativeTime}</td>,
-                      <td key="7"><button type="button" className="btn btn-warning btn-lg" 
+                      <td key="7"><button type="button" className="btn btn-lg btn-outline-inverse" 
                       onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (

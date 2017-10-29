@@ -36,6 +36,13 @@ class MainMenuTwilliAir extends React.Component {
       return null;
     }
 const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
+
+const AboutItemActive = this.props.history.location.pathname == "/about" ? "menu-item active": "menu-item";
+const HowItWorksItemActive = this.props.history.location.pathname == "/howItWorks" ? "menu-item active": "menu-item";
+const ICOItemActive = this.props.history.location.pathname == "/ico" ? "menu-item active": "menu-item";
+const ResultsItemActive = this.props.history.location.pathname == "/searchResults" ? "menu-item active": "menu-item";
+const RoadmapItemActive = this.props.history.location.pathname == "/roadmap" ? "menu-item active": "menu-item";
+
     return (
           <section id="left-sidebar">
             <div className="logo">
@@ -46,11 +53,11 @@ const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
             <span className="glyphicon glyphicon-th"></span></div>
 
             <ul id="main-menu">
-              <li id="menu-item-text" className="menu-item"><Link to='/about'>About</Link></li>
-              <li id="menu-item-carousel" className="menu-item"><Link to='/howItWorks'>How it Works</Link></li>
-              <li id="menu-item-grid" className="menu-item"><Link to='/ico'>ICO</Link></li>
-              <li id="menu-item-featured" className="menu-item"><Link to='/searchResults'>Results</Link></li>
-              <li id="menu-item-tabs" className="menu-item"><Link to='/roadmap'>Roadmap</Link></li>
+              <li id="menu-item-text" className={AboutItemActive}><Link to='/about'>About</Link></li>
+              <li id="menu-item-carousel" className={HowItWorksItemActive}><Link to='/howItWorks'>How it Works</Link></li>
+              <li id="menu-item-grid" className={ICOItemActive}><Link to='/ico'>ICO</Link></li>
+              <li id="menu-item-featured" className={ResultsItemActive}><Link to='/searchResults'>Results</Link></li>
+              <li id="menu-item-tabs" className={RoadmapItemActive}><Link to='/roadmap'>Roadmap</Link></li>
             </ul>
           </section>
     );

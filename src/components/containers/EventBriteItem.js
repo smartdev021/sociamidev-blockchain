@@ -12,6 +12,8 @@ class EventBriteItem extends React.Component {
       let itemObject = this.props.item;
       itemObject._type = "eventbrite_event";
 
+      const imgStyle = {width: '200px', height: '100px'};
+
       //pack all <td> tags and their data into array
       // <td key="1">{this.props.item.description}</td>,
       let tdItems = [<td key="0">{this.props.item.name}</td>,
@@ -19,8 +21,8 @@ class EventBriteItem extends React.Component {
                       <td key="2">{this.props.item.end}</td>,
                       <td key="3">{this.props.item.status}</td>,
                       <td key="4"><a href={this.props.item.url} target="_blank">Details</a></td>,
-                      <td key="5"><img src={this.props.item.logoUrl}/></td>,
-                      <td key="6"><button type="button" className="btn btn-warning btn-lg" 
+                      <td key="5"><img src={this.props.item.logoUrl} style={imgStyle}/></td>,
+                      <td key="6"><button type="button" className="btn btn-lg btn-outline-inverse" 
                       onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (

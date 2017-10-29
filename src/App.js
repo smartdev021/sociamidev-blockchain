@@ -365,7 +365,7 @@ class App extends Component {
       <div className="outer-container">
         {RedirectTo}
         <div className="col-lg-12">
-        <button type="button" className="btn btn-lg pull-right" onClick={()=>this.props.openSignUpForm()}>Connect with...</button>
+        <button type="button" className="btn btn-lg btn-outline-inverse pull-right" onClick={()=>this.props.openSignUpForm()}>Connect with...</button>
         </div>
         <MainMenuTwilliAir/>
         <section id="main-content" className="clearfix">

@@ -42,7 +42,7 @@ class FreelancerProjectItemList extends React.Component {
       }
 
         listContent = (
-        <Table responsive striped bordered condensed hover>
+        <Table responsive bordered condensed>
           {this._getTableHeader()}
           <tbody>
             {freelanceProjectItems}
@@ -52,7 +52,6 @@ class FreelancerProjectItemList extends React.Component {
 
     return (
         <div>
-          <h2>Freelancer Projects:</h2>
           {listContent}
         </div>
     );
