@@ -96,6 +96,7 @@ class SearchPageTwilliAir extends React.Component {
 
 }
 
+
 const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,

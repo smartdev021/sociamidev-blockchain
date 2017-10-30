@@ -32,9 +32,6 @@ class MainMenuTwilliAir extends React.Component {
   }
 
   render() {
-    if (this.props.history.location.pathname == "/") {
-      return null;
-    }
 const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
 
 const AboutItemActive = this.props.history.location.pathname == "/about" ? "menu-item active": "menu-item";
