@@ -57,16 +57,7 @@ class SearchHeader extends React.Component {
         <input type="text" autoComplete="off" className="form-control" id="exampleInputEmail1" placeholder={inputPlaceHolder} 
         value={this.state.searchQuery} onChange={(e) => this.handleValueChange(e)}/>
       </div>
-      <button type="button" className="btn btn-lg btn-outline-inverse" onClick={(e) => this.onStartSearch(e)}>{buttonText}{waitingText}</button>
     </form>)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-   /* if (prevProps.numBookmarks != this.props.numBookmarks && this.props.numBookmarks > 0) {
-      let latestBookmark = this.props.bookmarks[this.props.bookmarks.length-1];
-
-      this.fetchBookmarkRoadmapFromBackend(latestBookmark);
-    }*/
   }
 
   render() {
@@ -77,25 +68,6 @@ class SearchHeader extends React.Component {
     </span>
     );
   }
-
-  /*fetchBookmarkRoadmapFromBackend(bookmark) {
-    if (bookmark.type == "indeed_job") {
-      if (this.props.searchQuery) {
-        Axios.get(`${ConfigMain.getBackendURL()}/roadmapFromBookmark?bookmarkType=${bookmark.type}&jobKey=${bookmark._id}`)
-        .then((response) =>this.handleFetchBookmarkRoadmap(response))
-        .catch((error) =>this.handleFetchBookmarkRoadmapError(error));
-      }
-    }
-  }
-
-  handleFetchBookmarkRoadmap(response) {
-    const roadmap = response.data;
-  }
-    
-  handleFetchBookmarkRoadmapError(error) {
-    console.log("handleFetchBookmarkRoadmapError: " + error);
-  }*/
-
 }
 
 SearchHeader.propTypes = {

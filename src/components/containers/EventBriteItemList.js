@@ -21,7 +21,6 @@ class EventBriteItemList extends React.Component {
           <th>Name</th>
           <th>Start</th>
           <th>End</th>
-          <th>Status</th>
           <th>Link</th>
           <th>Logo</th>
           <th></th>

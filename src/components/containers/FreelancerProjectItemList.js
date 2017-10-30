@@ -21,7 +21,6 @@ class FreelancerProjectItemList extends React.Component {
         <tr>
           <th>Title</th>
           <th>Description</th>
-          <th>Status</th>
           <th>Link</th>
           <th>Posted</th>
           <th></th>

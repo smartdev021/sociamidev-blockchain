@@ -27,10 +27,9 @@ class FreelancerProjectItemList extends React.Component {
 
       let tdItems = [<td key="0">{this.props.item.title}</td>,
                      <td key="1">{this.props.item.description}</td>,
-                     <td key="2" className={tdStatusClass}>{this.props.item.status}</td>,
-                     <td key="3"><a href={this.props.item.url} target="_blank">Details</a></td>,
-                     <td key="4">{dateHR}</td>,
-                     <td key="5"><button type="button" className="btn btn-lg btn-outline-inverse" 
+                     <td key="2"><a href={this.props.item.url} target="_blank">Details</a></td>,
+                     <td key="3">{dateHR}</td>,
+                     <td key="4"><button type="button" className="btn btn-lg btn-outline-inverse" 
                       onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (

@@ -63,13 +63,14 @@ class SearchPageTwilliAir extends React.Component {
     return (<article id="tabs" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
     <div className="mid-vertical-positioning clearfix">
       <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
-      <h1 className="section-title">Results<span className="glyphicon glyphicon-book text-center glyphicon-big pull-right">
-        <span className="glyphicon-text">Bookmarks({this.props.numBookmarks})</span></span>
+      <span className="searchHeaderTextAndBookmarks"><h1 className="section-title">Results
         </h1>
+        </span>
           <div className="tabpanel styled-tabs uniform-height" role="tabpanel">
 
             <SearchPageNavigation/>
-            <p>
+            <h4 className="glyphicon glyphicon-book text-center glyphicon-big pull-right glyphicon-text">Bookmarks({this.props.numBookmarks})
+        </h4>
             <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} 
       onHandleStartSearch={() => this.HandleStartSearch()} isAuthorized={this.props.isAuthorized} 
       isSearchInProgress={this.props.isSearchInProgress}/>
@@ -78,7 +79,6 @@ class SearchPageTwilliAir extends React.Component {
             <SearchResults/>
 
             </div>
-            </p>
           </div>
 
       </div>

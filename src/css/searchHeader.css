@@ -57,7 +57,14 @@
     min-width: 100px;
 }
 
+.formSearchPage{
+    padding-bottom: 20px;
+}
+
 .formSearchPage input[type="text"] {
     font-size: 22px;
-    margin-right: 10px;
+} 
+
+.searchHeaderTextAndBookmarks h1, searchHeaderTextAndBookmarks h4 {
+    display: inline-block;
 }

@@ -19,10 +19,9 @@ class EventBriteItem extends React.Component {
       let tdItems = [<td key="0">{this.props.item.name}</td>,
                       <td key="1">{this.props.item.start}</td>,
                       <td key="2">{this.props.item.end}</td>,
-                      <td key="3">{this.props.item.status}</td>,
-                      <td key="4"><a href={this.props.item.url} target="_blank">Details</a></td>,
-                      <td key="5"><img src={this.props.item.logoUrl} style={imgStyle}/></td>,
-                      <td key="6"><button type="button" className="btn btn-lg btn-outline-inverse" 
+                      <td key="3"><a href={this.props.item.url} target="_blank">Details</a></td>,
+                      <td key="4"><img src={this.props.item.logoUrl} style={imgStyle}/></td>,
+                      <td key="5"><button type="button" className="btn btn-lg btn-outline-inverse" 
                       onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (
