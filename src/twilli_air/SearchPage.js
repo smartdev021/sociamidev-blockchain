@@ -47,13 +47,8 @@ class SearchPageTwilliAir extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchQuery != this.props.searchQuery) {
       if (prevProps.searchQuery == "" && this.props.searchQuery != "") {
-        const savedQuery = this.props.cookies.get('searchQuery');
-  
-        if (savedQuery) {
-          if (this.props.searchQuery == savedQuery) {
-            this.HandleStartSearch();
-          }
-        }
+
+        this.HandleStartSearch();
       }
     }
   }
