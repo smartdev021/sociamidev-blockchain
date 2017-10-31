@@ -30,8 +30,6 @@ class EventBriteItemList extends React.Component {
 
   render() {
 
-    let listContent = <p>No Events Found</p>;
-    
     //Parse this.props, and create table of list of jobs. Use JobItem copmonent for single row of the table
     if (typeof this.props !== "undefined" && typeof this.props.items !== "undefined" && this.props.items.length > 0) {
       
@@ -43,20 +41,22 @@ class EventBriteItemList extends React.Component {
         eventBriteItems.push(<EventBriteItem key={i} item={this.props.items[i]} onAddBookmark={(e) => this.props.onAddBookmark(e)}/>);
       }
 
-        listContent = (
-        <Table responsive bordered condensed>
-          {this._getTableHeader()}
-          <tbody>
-            {eventBriteItems}
-          </tbody>
-        </Table>);
+      return (
+        <article id="featured" className="section-wrapper clearfix" 
+        data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg3.jpg">
+            <div className="mid-vertical-positioning clearfix">
+              <div className="col-sm-11">
+                  <section className="feature-columns row clearfix">          
+                    {eventBriteItems}
+                    </section>
+              </div>
+            </div>
+        </article>
+      );
     }
-
-    return (
-        <div>
-          {listContent}
-        </div>
-    );
+    else {
+    return (<p>No Events Found</p>);
+    }
   }
 
 }
