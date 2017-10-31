@@ -16,6 +16,7 @@ import Axios from 'axios'
 import { withCookies, Cookies } from 'react-cookie';
 
 import RoadmapsWidget from '../components/RoadmapsWidget';
+import RoadmapWidgetDetails from '../components/RoadmapWidgetDetails'
 
 import {
   selectResultsCategory,
@@ -32,10 +33,40 @@ class RoadmapTwilliAir extends React.Component {
     super(props);
 
     this.state = {
+      isViewingDetails: false, currentRoadmapSelected: {},
       isSavingRoadmaps: false,
       roadmaps: [],
     }
   }
+
+toggleAdd(e) {
+  let roadmapId = e.target.id;
+
+  if (this.props.addedRoadmaps.indexOf(roadmapId) != -1) {
+      this.props.removeRoadmap(roadmapId);
+  }
+  else {
+      this.props.addRoadmap(roadmapId);
+  }
+}
+
+handleViewDetails(e) {
+  if (this.state.roadmaps && this.state.roadmaps.length > 0) {
+      for (let i = 0; i < this.state.roadmaps.length; ++i) {
+          if (this.state.roadmaps[i]._id == e.target.id) {
+              let copy = Object.assign({}, this.state, {isViewingDetails: true, currentRoadmapSelected: this.state.roadmaps[i]});
+              this.setState(copy);
+              break;
+          }
+      }
+  }
+}
+
+handleViewDefault() {
+  let copy = Object.assign({}, this.state, {isViewingDetails: false});
+  this.setState(copy);
+}
+
 
   componentWillMount() {
 
@@ -53,6 +84,14 @@ class RoadmapTwilliAir extends React.Component {
     else {
       this.fetchRoadmapsFromBackend(); 
     }
+
+    if (this.props.addedRoadmaps.length == 0) {
+      const savedRoadmaps = this.props.cookies.get('addedRoadmaps');
+      
+      if (savedRoadmaps && savedRoadmaps.length > 0) {
+           this.props.setRoadmaps(savedRoadmaps);
+      }
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -67,6 +106,32 @@ class RoadmapTwilliAir extends React.Component {
         }
       }
     }
+
+    if (this.props.isFetchInProgress != prevProps.isFetchInProgress) {
+      if (this.props.isFetchInProgress) {
+          this.handleViewDefault();
+      }
+  }
+
+  console.log("props updated prevProps.addedRoadmaps: ");
+  console.dir(prevProps.addedRoadmaps);
+
+  console.log("props updated this.props.addedRoadmaps: ");
+  console.dir(this.props.addedRoadmaps);
+
+  const { cookies } = this.props;
+  
+  const savedRoadmaps = cookies.get('addedRoadmaps');
+  
+  console.log("componentDidUpdate roadmaps amount has changed!!!");
+  
+  //only add roadmaps to cookies if they differ in length or not set yet
+  let dateExpire = new Date();
+  dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
+  
+  let options = { path: '/', expires: dateExpire};
+  
+  cookies.set('addedRoadmaps', this.props.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
   }
 
   renderSaveRoadmaps() {
@@ -95,22 +160,16 @@ class RoadmapTwilliAir extends React.Component {
   }
 
   renderRoadmaps() {
-    return (<div>
-      <div className="col-lg-12">
-        <h2>Roadmaps</h2>
-         <div>
-         <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
-         openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}
-         addRoadmap={this.props.addRoadmap}
-         removeRoadmap={this.props.removeRoadmap}
-         setRoadmaps={this.props.setRoadmaps}
-         />
-         </div>
-         <div className="row">
-           {this.renderSaveRoadmaps()}
-          </div>
-      </div>
-      </div>);
+    return (
+      <span>
+        <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
+        openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}
+        addRoadmap={this.props.addRoadmap}
+        removeRoadmap={this.props.removeRoadmap}
+        setRoadmaps={this.props.setRoadmaps}
+        />
+
+      </span>);
   }
 
   saveUserRoadmapsToDatabase() {
@@ -177,9 +236,52 @@ class RoadmapTwilliAir extends React.Component {
 
     return result;
   }
+  
+  renderCarouselTabs() {
+    return (<ol className="carousel-indicators title-indicators">
+       {this.state.roadmaps.map(function(roadmap, i) {
+         return<li data-target="#features-carousel" data-slide-to={String(i)} className="" key={i}>{roadmap.name}</li>;
+       })}
+    </ol>);
+  }
+
+  renderRoadmapsControls(roadmapId) {
+    const addControlClassName = this.props.addedRoadmaps.indexOf(String(roadmapId)) != -1 ? "	glyphicon glyphicon-ok roadmapControl" 
+    : "glyphicon glyphicon-plus roadmapControl";
+    return (<span className="roadmapControls">
+        <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewDetails(e)}></span>
+        <span className={addControlClassName} id={roadmapId} onClick={(e)=> this.toggleAdd(e)}></span>
+    </span>);
+}
+
+  renderCarouselItems() {
+    let that = this;
+    return (
+      <div className="carousel-inner">
+       {this.state.roadmaps.map(function(roadmap, i) {
+         let roadmapControls = that.renderRoadmapsControls(roadmap._id);
+         return (<div className={i == 0 ? 'item active roadMap' : 'item roadMap'} key={i}>
+         <div className="carousel-text-content">
+           <img src="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/transp-image1.png" className="icon" alt="Lorem Ipsum"/>
+           <h2 className="title">{roadmap.name}</h2>
+           {roadmapControls}
+           <p className="roadmapSkillsParagraph">{roadmap.skills.map(function(skill, j) {
+                                if (j < 4) {
+                                    return<span className="skillTagContainer"><span className="skillTag" key={j}>{skill}</span></span>;
+                                }
+                                else {
+                                    return null;
+                                }
+                            })}</p>
+         </div>
+       </div>);
+       })}
+    </div>
+    );
+  }
 
   
-  render() {
+  /*render() {
   return (<article id="tabs" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
   <div className="mid-vertical-positioning clearfix">
     <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
@@ -187,7 +289,40 @@ class RoadmapTwilliAir extends React.Component {
     </div>
   </div>
 </article>);
+}*/
+render() {
+  if (this.state.isViewingDetails) {
+    return(
+      <article id="carousel" className="section-wrapper clearfix" 
+      data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
+    <div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
+    currentRoadmap = {this.state.currentRoadmapSelected}
+    openSignUpForm = {this.props.openSignUpForm}/></div>
+    </article>);
+  }
+  else 
+  {
+    return (<article id="carousel" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
+    <div className="mid-vertical-positioning clearfix">
+  
+        <div id="features-carousel" className="carousel slide with-title-indicators max-height" data-height-percent="70" data-ride="carousel">
+          
+         {this.renderCarouselTabs()}
+  
+            {this.renderCarouselItems()}
+          <a className="left carousel-control" href="#features-carousel" data-slide="prev"></a>
+          <a className="right carousel-control" href="#features-carousel" data-slide="next"></a>
+  
+        </div>
+  
+    </div>
+    {this.renderSaveRoadmaps()}
+  </article>);
+  }
+  
 }
+
+
 }
 
 const mapDispatchToProps = dispatch => ({

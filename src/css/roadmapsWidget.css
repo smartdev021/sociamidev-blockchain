@@ -18,21 +18,12 @@
 }
 
 .roadMap{
-    width: 100%;
-    min-height: 180px;
-    height: 180px;
-    max-height: 180px;
     background: transparent;
-    border: 1px solid white;
-    margin-bottom: 5px;
-    font-size: 10px;
 }
 
-.roadMap:hover{
-    background: white;
+/*.roadMap:hover{
     color: black;
-    opacity: 0.4;
-}
+}*/
 
 .roadMap, .roadMap h1, skillTag{
     cursor: pointer;
@@ -40,19 +31,37 @@
 
 .roadMap .roadmapControls {
     /*margin-left: 10px;*/
-    visibility: hidden;
+    opacity: 0.0;
+    transition: opacity 0.5s;
 }
 
 .roadMap:hover .roadmapControls {
-    visibility: initial;
+    opacity: initial;
+    transition: opacity 0.5s;
 }
 
 .roadMap:hover .skillTag {
-    visibility: hidden;
+    opacity: 0.0;
+    transition: opacity 0.5s;
 }
 
+.roadMap .skillTag {
+    opacity: initial;
+    transition: opacity 0.5s;
+}
+
+.roadMap .icon {
+    opacity: initial;
+    transition: opacity 0.5s;
+}
+
+.roadMap:hover .icon {
+    opacity: 0.0;
+    transition: opacity 0.5s;
+}
 .roadmapControl {
-    color: black;
+    opacity: initial;
+    transition: opacity 0.5s;
     padding-right: 10px;
 }
 
@@ -67,4 +76,8 @@
 
 .mentor_widget, .mentor_widget h2{
     cursor: pointer;
+}
+/*TODO: find more robust solution*/
+.roadmapSkillsParagraph {
+    min-height: 180px;
 }

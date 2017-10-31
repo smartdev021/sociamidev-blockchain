@@ -95,39 +95,39 @@ class RoadmapsWidget extends React.Component {
   renderRoadmapsControls(roadmapId) {
       const addControlClassName = this.props.addedRoadmaps.indexOf(String(roadmapId)) != -1 ? "	glyphicon glyphicon-ok roadmapControl" 
       : "glyphicon glyphicon-plus roadmapControl";
-      return (<span className="roadmapControls">
+      return (<p className="roadmapControls">
           <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewDetails(e)}></span>
           <span className={addControlClassName} id={roadmapId} onClick={(e)=> this.toggleAdd(e)}></span>
-      </span>);
+      </p>);
   }
   
   renderRoadmaps() {
     if (this.props.roadmaps.length > 0 && !this.props.isFetchInProgress) {
         let that = this;
         return (
-            <span>
-              {this.props.roadmaps.map(function(roadmap){
-                  let roadmapControls = that.renderRoadmapsControls(roadmap._id);
-                  return (
-                  <div className="col-lg-2" key={roadmap._id}> 
-                      <div className="container roadMap">
-                          <h4>{roadmap.name}</h4>
-                          {roadmapControls}
-                          <div className="row">
-                            {roadmap.skills.map(function(skill, i) {
-                                if (i < MAX_SKILLS_AMOUNT) {
-                                    return<div className="col-lg-2 skillTag" key={i}>{skill}</div>;
-                                }
-                                else {
-                                    return null;
-                                }
-                            })}
-                          </div>
-                      </div>
-                  </div>);
-                })}
-            </span>
-            );
+          <div className="carousel-inner">
+           {this.state.roadmaps.map(function(roadmap, i) {
+             let roadmapControls = that.renderRoadmapsControls(roadmap._id);
+             return (<div className={i == 0 ? 'item active roadMap' : 'item roadMap'} key={i}>
+             <div className="carousel-text-content">
+                
+               <img src="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/transp-image1.png" className="icon" alt="Lorem Ipsum"/>
+               <h2 className="title">{roadmap.name}</h2>
+               
+               
+               <p className="roadmapSkillsParagraph">{roadmap.skills.map(function(skill, i) {
+                                    if (i < 4) {
+                                        return<span className="skillTagContainer"><span className="skillTag" key={i}>{skill}</span></span>;
+                                    }
+                                    else {
+                                        return null;
+                                    }
+                                })}</p>
+             </div>
+           </div>);
+           })}
+        </div>
+        );
     }
     else {
         if (this.props.isFetchInProgress) {
