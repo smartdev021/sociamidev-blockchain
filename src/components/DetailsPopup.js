@@ -24,6 +24,11 @@ class DetailsPopup extends React.Component {
     trimmedString(original, limit) {
       let trimmed = original.substr(0, limit);
       trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
+      
+      if (trimmed.length < original.length) {
+        trimmed += "...";
+      }
+
       return trimmed;
     }
 
@@ -32,23 +37,50 @@ class DetailsPopup extends React.Component {
       let title = this.props.item.name ? this.trimmedString(this.props.item.name, 30) : '';
       let description = this.props.item.description ? this.trimmedString(this.props.item.description, 100) : '';
 
+      Modal.defaultStyles.content.border = "7px solid grey";
+      Modal.defaultStyles.content.background = "transparent";
+      Modal.defaultStyles.content.overflow = "visible";
+      Modal.defaultStyles.content.padding = '0';
+      Modal.defaultStyles.content["minWidth"] = '260px';
+      Modal.defaultStyles.content["maxWidth"] = '800px';
+      Modal.defaultStyles.content["height"] = '70%';
+      Modal.defaultStyles.content["marginLeft"] = 'auto';
+      Modal.defaultStyles.content["marginRight"] = 'auto';
+      Modal.defaultStyles.content["left"] = '0';
+      Modal.defaultStyles.content["right"] = '0';
+      Modal.defaultStyles.content["width"] = '800px';
+
         return (
-          <Modal className={{ base: 'modal_base' }}
+
+          <Modal 
             isOpen={this.props.modalIsOpen}
             onRequestClose={() => this.props.onCloseModal()}
-            contentLabel="Login Form">
-            <div className="wrapper">
-              <div className="default-popup-details">
-                <h2 className="popup-default-heading">{title}</h2>
-                  <img src={this.props.item.logoUrl} className="item-thumbnail" alt={title}/>
-                  <p>{description}</p>
-                  <p><button type="button" className="btn btn-lg btn-outline-inverse" 
-                      onClick={() => this.props.addBookMark(this.props.item)}>Bookmark</button></p>
-                  <p><a href={this.props.item.url} className="btn btn-lg btn-outline-inverse" target="_blank">Details</a></p>
-                  <p><button type="button" className="btn btn-lg btn-outline-inverse" 
-                      onClick={() => this.props.onCloseModal()}>Close</button></p>
-              </div>
-            </div>
+            contentLabel={title}>
+            <div className="container-fluid default-popup-details">
+            <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+                <div className="row">
+                  <div className="col-lg-12">
+                  <a href={this.props.item.url} target="_blank"><h2 className="popup-default-heading">{title}</h2></a>
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-lg-12">
+                <a href={this.props.item.url} target="_blank"><img src={this.props.item.logoUrl} alt={title}/></a>
+                  </div>
+                </div>
+                <div className="row">
+                <div className="col-lg-12">
+                <a href={this.props.item.url} target="_blank"><p>{description}</p></a>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                  <button type="button" className="btn btn-sm btn-outline-inverse" 
+                  onClick={() => this.props.addBookMark(this.props.item)}>Bookmark</button>
+                  </div>
+                </div>
+                
+                  </div>
           </Modal>);
       }
 

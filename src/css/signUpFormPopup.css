@@ -7,10 +7,19 @@
 }
 
 .default-popup-details {
-  padding: 15px 35px 45px;
+  padding: 40px;
   margin: 0 auto;
-  background-color: black;
-  border: 5px solid grey; 
+	background-color: black;
+	height: 100%;
+}
+.default-popup-details img {
+	max-width: 100%;
+}
+
+.default-popup-details .glyphicon {
+	position: absolute;
+	right: 10px;
+	top: 10px;
 }
   .default-popup-heading,
 	.checkbox {

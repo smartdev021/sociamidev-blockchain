@@ -34,10 +34,6 @@
 	  border-top-right-radius: 0;
 	}
 
-.modal_base {
-    background-color: transparent;
-    padding-top: 80px;
-}
 
 .wrapper:focus, .modal_base:focus {
     outline: 0;
