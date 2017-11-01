@@ -18,11 +18,22 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import ConfigMain from '../../configs/main'
 
+import DetailsPopup from './DetailsPopup';
+
 import "../css/searchResults.css"
 
 import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '../redux/actions/actions'
 
 class SearchResults extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isDetailsPopupOpen: false,
+      detailsPopupItem: {},
+    };
+  }
   componentWillMount() {
     const savedBookmarks = this.props.cookies.get('bookmarks');
     
@@ -54,12 +65,24 @@ class SearchResults extends React.Component {
     }
 }
 
+  handleOpenDetailsPopup(item) {
+    console.log("handleOpenDetailsPopup");
+    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true, detailsPopupItem: item});
+    this.setState(copy)
+  }
+
+  handleCloseDetailsPopup(item) {
+    console.log("handleCloseDetailsPopup");
+    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false, detailsPopupItem: {}});
+    this.setState(copy)
+  }
+
   render() {
     const jobsList = (this.props.currentCategory == "RESULTS_CATEGORY_JOBS") 
     ? <JobsList items={this.props.searchResults.jobs} onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
     
     const eventsList = (this.props.currentCategory == "RESULTS_CATEGORY_EVENTS") 
-    ? <EventBriteItemList items={this.props.searchResults.events} onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
+    ? <EventBriteItemList items={this.props.searchResults.events} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;
     
     const udemyCoursesList = (this.props.currentCategory == "RESULTS_CATEGORY_COURSES") 
     ? <UdemyItemList items={this.props.searchResults.courses} onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
@@ -74,6 +97,9 @@ class SearchResults extends React.Component {
     else {
       return (
         <div className="search_results_container">
+          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onCloseModal={()=>this.handleCloseDetailsPopup()} 
+          item={this.state.detailsPopupItem} addBookMark={(item)=>this.props.addBookmark(item)}
+      />
           <div className="row">
         <div className="col-lg-12">
             {jobsList}    

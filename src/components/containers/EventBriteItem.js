@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import ActionLink from '../ActionLink'
+
 class EventBriteItem extends React.Component {
 
   constructor(props) {
@@ -34,7 +36,7 @@ class EventBriteItem extends React.Component {
 
         
         <article className="feature-col col-md-4">
-        <a href={this.props.item.url} target="_blank" className="thumbnail linked">
+        <ActionLink href={this.props.item.url} className="thumbnail linked" onClick={()=> this.props.onAddBookmark(this.props.item)}>
           <div className="image-container">
             <img src={this.props.item.logoUrl}
             className="item-thumbnail" alt={title}/>
@@ -44,7 +46,7 @@ class EventBriteItem extends React.Component {
             <p>{description}</p>
             <p>{this.props.item.start}</p>
           </div>
-        </a>
+        </ActionLink>
       </article>
       )
     }

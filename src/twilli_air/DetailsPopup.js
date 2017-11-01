@@ -13,15 +13,13 @@ import { withRouter } from 'react-router-dom'
 
 const enhanceWithClickOutside = require('react-click-outside');
 
-const BackendURL = ConfigMain.getBackendURL();
-
-class SignupForm extends React.Component {
+class DetailsPopup extends React.Component {
     constructor(props) {
       super(props);
       this.state = {};
     }
 
-    renderForm() {
+    renderPopup() {
         return (<div>
           <Modal
           className={{
@@ -33,13 +31,12 @@ class SignupForm extends React.Component {
           >
     
           <div className="wrapper">
-        <div className="default-popup" >       
-          <h2 className="form-sign-u-heading">Sign Up</h2>
-          <button type="button" className="btn btn-lg btn-primary btn-block" 
-          onClick={()=>this.props.onHandleSignUpFacebook()}>FaceBook</button>
-          <button type="button" className="btn btn-lg btn-warning btn-block" 
-          onClick={()=>this.props.onHandleSignUpLinkedIn()}>LinkedIn</button>
-        </div>
+        <p>Details Popup</p>
+        <p>Details Popup</p>
+        <p>Details Popup</p>
+
+        <p>Details Popup</p>
+        
       </div>
           </Modal>
         </div>);
@@ -52,13 +49,13 @@ class SignupForm extends React.Component {
     render() {
         return (
         <div>
-            {this.renderForm()}
+            {this.renderPopup()}
         </div>
         );
       }
   }
 
-  SignupForm.propTypes = {
+  DetailsPopup.propTypes = {
     cookies: instanceOf(Cookies).isRequired,
   }
 
@@ -66,4 +63,4 @@ class SignupForm extends React.Component {
     store: state,
   })
 
-  export default withRouter(enhanceWithClickOutside(connect(mapStateToProps, null)(withCookies(SignupForm))));
+  export default withRouter(enhanceWithClickOutside(connect(mapStateToProps, null)(withCookies(DetailsPopup))));
