@@ -62,11 +62,6 @@ import {
   setUserAuthorized,
 } from './redux/actions/actions'
 
-WebFont.load({
-  google: {
-    families: ['Lato:300,400,900']
-  }
-});
 
 //import './css/main.css';
 

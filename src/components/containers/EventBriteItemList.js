@@ -45,7 +45,7 @@ class EventBriteItemList extends React.Component {
         <article id="featured" className="section-wrapper clearfix" 
         data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg3.jpg">
             <div className="mid-vertical-positioning clearfix">
-              <div className="col-sm-11">
+              <div className="">
                   <section className="feature-columns row clearfix">          
                     {eventBriteItems}
                     </section>

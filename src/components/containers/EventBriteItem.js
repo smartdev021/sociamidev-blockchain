@@ -6,47 +6,45 @@ class EventBriteItem extends React.Component {
     super(props);
   }
 
+  trimmedString(original, limit) {
+    let trimmed = original.substr(0, limit);
+    trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
+    return trimmed;
+  }
+
   render() {
     //output table row and table data, where table data is taken from props passed inside from parent component
     if (typeof this.props !== "undefined") {
       let itemObject = this.props.item;
       itemObject._type = "eventbrite_event";
 
-      const imgStyle = {width: '200px', height: '100px'};
 
       /*
       <img src={this.props.item.logoUrl} style={imgStyle} 
             className="lazy item-thumbnail" alt="Lorem Ipsum"/>*/
-
-      //pack all <td> tags and their data into array
-      // <td key="1">{this.props.item.description}</td>,
-      let description = this.props.item.description; //replace with your string.
-      let maxLength = 60 // maximum number of characters to extract
-      
-      //trim the string to the maximum length
-      description = description.substr(0, maxLength);
       
       //re-trim if we are in the middle of a word
-      description = description.substr(0, Math.min(description.length, description.lastIndexOf(" ")));
-
+      let title = this.trimmedString(this.props.item.name, 16);
+      let description = this.trimmedString(this.props.item.description, 60);
+/*<p><button type="button" className="btn btn-lg btn-outline-inverse" 
+                      onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></p>*/
 
       return (
         
 
+        
         <article className="feature-col col-md-4">
         <a href={this.props.item.url} target="_blank" className="thumbnail linked">
           <div className="image-container">
-            <img src={this.props.item.logoUrl} style={imgStyle} 
-            className="" alt={this.props.item.name}/>
+            <img src={this.props.item.logoUrl}
+            className="item-thumbnail" alt={title}/>
           </div>
           <div className="caption">
-            <h5>{this.props.item.name}</h5>
-            <p>{this.props.item.start}</p>
+            <h5>{title}</h5>
             <p>{description}</p>
+            <p>{this.props.item.start}</p>
           </div>
         </a>
-        <p><button type="button" className="btn btn-lg btn-outline-inverse" 
-                      onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></p>
       </article>
       )
     }
