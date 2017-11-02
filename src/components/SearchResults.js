@@ -67,6 +67,7 @@ class SearchResults extends React.Component {
 
   handleOpenDetailsPopup(item) {
     console.log("handleOpenDetailsPopup");
+    console.dir(item);
     let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true, detailsPopupItem: item});
     this.setState(copy)
   }
@@ -79,7 +80,7 @@ class SearchResults extends React.Component {
 
   render() {
     const jobsList = (this.props.currentCategory == "RESULTS_CATEGORY_JOBS") 
-    ? <JobsList items={this.props.searchResults.jobs} onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
+    ? <JobsList items={this.props.searchResults.jobs} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;
     
     const eventsList = (this.props.currentCategory == "RESULTS_CATEGORY_EVENTS") 
     ? <EventBriteItemList items={this.props.searchResults.events} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;

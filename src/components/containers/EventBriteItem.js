@@ -20,21 +20,10 @@ class EventBriteItem extends React.Component {
       let itemObject = this.props.item;
       itemObject._type = "eventbrite_event";
 
-
-      /*
-      <img src={this.props.item.logoUrl} style={imgStyle} 
-            className="lazy item-thumbnail" alt="Lorem Ipsum"/>*/
-      
-      //re-trim if we are in the middle of a word
       let title = this.trimmedString(this.props.item.name, 16);
       let description = this.trimmedString(this.props.item.description, 60);
-/*<p><button type="button" className="btn btn-lg btn-outline-inverse" 
-                      onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></p>*/
 
       return (
-        
-
-        
         <article className="feature-col col-md-4">
         <ActionLink href={this.props.item.url} className="thumbnail linked" onClick={()=> this.props.onAddBookmark(this.props.item)}>
           <div className="image-container">

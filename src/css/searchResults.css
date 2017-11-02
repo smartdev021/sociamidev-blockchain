@@ -11,3 +11,7 @@
     min-height: 300px;
     overflow: hidden;
 }
+
+#main-content .feature-columns .jobTile .thumbnail {
+    border: 1px solid white;
+}

@@ -4,36 +4,41 @@
 */
 import React, { Component } from 'react';
 
+import ActionLink from '../ActionLink'
+
 class JobItem extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  trimmedString(original, limit) {
+    let trimmed = original.substr(0, limit);
+    trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
+    return trimmed;
+  }
+
   render() {
     //output table row and table data, where table data is taken from props passed inside from parent component
-    if (typeof this.props !== "undefined" && typeof this.props.item !== "undefined") {
-      let company = this.props.item.company ? this.props.item.company: "N/A";
-
+    if (typeof this.props !== "undefined") {
       let itemObject = this.props.item;
       itemObject._type = "indeed_job";
-      
-      //pack all <td> tags and their data into array
-      let tdItems = [<td key="0">{this.props.item.jobtitle}</td>,
-                      <td key="1">{company}</td>,
-                      <td key="2">{this.props.item.country}</td>,
-                      <td key="3">{this.props.item.formattedLocation}</td>,
-                      <td key="4"><a href={this.props.item.url} target="_blank">Apply</a></td>,
-                      <td key="5">{this.props.item.date}</td>,
-                      <td key="6">{this.props.item.formattedRelativeTime}</td>,
-                      <td key="7"><button type="button" className="btn btn-lg btn-outline-inverse" 
-                      onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
-                    ];
+
+      let title = this.trimmedString(this.props.item.jobtitle, 16);
+      let company = this.props.item.company ? this.props.item.company: "N/A";
+
       return (
-        //output table row and table data inside it
-        <tr key={this.props.index}>
-          {tdItems}
-        </tr>
+        <article className="jobTile feature-col col-md-4">
+        <ActionLink href={this.props.item.url} className="thumbnail linked" onClick={()=> this.props.onAddBookmark(this.props.item)}>
+          <div className="caption">
+            <h5>{title}</h5>
+            <p>{company}</p>
+            <p>{this.props.item.formattedLocation}</p>
+            <p>{this.props.item.date}</p>
+            <p>{this.props.item.formattedRelativeTime}</p>
+          </div>
+        </ActionLink>
+      </article>
       )
     }
 
