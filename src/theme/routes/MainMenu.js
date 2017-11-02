@@ -10,10 +10,6 @@ import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
-import {
-  setSearchQuery,
-} from '~/src/redux/actions/actions'
-
 class MainMenu extends React.Component {
 
   constructor(props) {
@@ -32,13 +28,11 @@ class MainMenu extends React.Component {
   }
 
   render() {
-const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
-
-const AboutItemActive = this.props.history.location.pathname == "/about" ? "menu-item active": "menu-item";
-const HowItWorksItemActive = this.props.history.location.pathname == "/howItWorks" ? "menu-item active": "menu-item";
-const ICOItemActive = this.props.history.location.pathname == "/ico" ? "menu-item active": "menu-item";
-const ResultsItemActive = this.props.history.location.pathname == "/searchResults" ? "menu-item active": "menu-item";
-const RoadmapItemActive = this.props.history.location.pathname == "/roadmap" ? "menu-item active": "menu-item";
+    const AboutItemActive = this.props.history.location.pathname == "/about" ? "menu-item active": "menu-item";
+    const HowItWorksItemActive = this.props.history.location.pathname == "/howItWorks" ? "menu-item active": "menu-item";
+    const ICOItemActive = this.props.history.location.pathname == "/ico" ? "menu-item active": "menu-item";
+    const ResultsItemActive = this.props.history.location.pathname == "/searchResults" ? "menu-item active": "menu-item";
+    const RoadmapItemActive = this.props.history.location.pathname == "/roadmap" ? "menu-item active": "menu-item";
 
     return (
           <section id="left-sidebar">

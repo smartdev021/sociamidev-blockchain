@@ -349,29 +349,23 @@ class App extends Component {
   }
   
   render() {
-
     let RedirectTo = this.getRedirectLocation();
-
+    
     return (
       <div className="outer-container">
         {RedirectTo}
         <div className="col-lg-12">
-        {this.renderProfileLink()}
+          {this.renderProfileLink()}
         </div>
         <MainMenu/>
         <section id="main-content" className="clearfix">
-      <Main onHandleStartSearch={() => this.handleStartSearch()} 
-          onHandleChange={(e) => this.handleChange(e)}
-          onHandleSearchClicked={() => this.handleStartSearch()}
-          isFetchInProgress={this.props.isFetchInProgress}
-          linkedInID={this.state.linkedInID} faceBookID={this.state.faceBookID}
-          onCloseSignUpModal={() => this.props.closeSignUpForm()}
-          isSignUpFormOpen={this.props.isSignUpFormOpen}
-          onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
-          onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-          onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()}
-          onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}/>
-          </section>
+          <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+            onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+            onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+            onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+            onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+          />
+        </section>
       </div>
     );
   }

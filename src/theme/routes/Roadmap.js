@@ -3,7 +3,6 @@
 */
 
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 import { connect } from 'react-redux'
@@ -17,7 +16,6 @@ import RoadmapsWidget from '~/src/theme/components/RoadmapsWidget';
 import RoadmapWidgetDetails from '~/src/theme/components/RoadmapWidgetDetails'
 
 import {
-  selectResultsCategory,
   openSignUpForm,
   roadmapAdd,
   roadmapRemove,
@@ -26,7 +24,6 @@ import {
 } from '~/src/redux/actions/actions'
 
 class Roadmap extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -37,34 +34,36 @@ class Roadmap extends React.Component {
     }
   }
 
-toggleAdd(e) {
-  let roadmapId = e.target.id;
-
-  if (this.props.addedRoadmaps.indexOf(roadmapId) != -1) {
-      this.props.removeRoadmap(roadmapId);
+  saveCookies() {
+    const { cookies } = this.props;
+    
+    const savedRoadmaps = cookies.get('addedRoadmaps');
+    
+    //only add roadmaps to cookies if they differ in length or not set yet
+    let dateExpire = new Date();
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
+    
+    let options = { path: '/', expires: dateExpire};
+    
+    cookies.set('addedRoadmaps', this.props.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
   }
-  else {
-      this.props.addRoadmap(roadmapId);
+
+  handleViewDetails(roadmapId) {
+    if (this.state.roadmaps && this.state.roadmaps.length > 0) {
+        for (let i = 0; i < this.state.roadmaps.length; ++i) {
+            if (this.state.roadmaps[i]._id == roadmapId) {
+                let copy = Object.assign({}, this.state, {isViewingDetails: true, currentRoadmapSelected: this.state.roadmaps[i]});
+                this.setState(copy);
+                break;
+            }
+        }
+    }
   }
-}
-
-handleViewDetails(e) {
-  if (this.state.roadmaps && this.state.roadmaps.length > 0) {
-      for (let i = 0; i < this.state.roadmaps.length; ++i) {
-          if (this.state.roadmaps[i]._id == e.target.id) {
-              let copy = Object.assign({}, this.state, {isViewingDetails: true, currentRoadmapSelected: this.state.roadmaps[i]});
-              this.setState(copy);
-              break;
-          }
-      }
+  
+  handleViewDefault() {
+    let copy = Object.assign({}, this.state, {isViewingDetails: false});
+    this.setState(copy);
   }
-}
-
-handleViewDefault() {
-  let copy = Object.assign({}, this.state, {isViewingDetails: false});
-  this.setState(copy);
-}
-
 
   componentWillMount() {
 
@@ -109,30 +108,21 @@ handleViewDefault() {
       if (this.props.isFetchInProgress) {
           this.handleViewDefault();
       }
+    }
+
+    this.saveCookies();
   }
 
-  const { cookies } = this.props;
-  
-  const savedRoadmaps = cookies.get('addedRoadmaps');
-  
-  //only add roadmaps to cookies if they differ in length or not set yet
-  let dateExpire = new Date();
-  dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
-  
-  let options = { path: '/', expires: dateExpire};
-  
-  cookies.set('addedRoadmaps', this.props.addedRoadmaps, options); //will expire in 'lifetimeMinutes' minutes
-  }
-
-  renderSaveRoadmaps() {
+  renderSaveButton() {
     let colStyle = this.props.addedRoadmaps.length > 0 ? {visibility:'initial'} : {visibility:'hidden'};
-      let buttonText = this.state.isSavingRoadmaps ? "Saving..." : "Save";
-      return (
-        <div className="col-lg-12" style={colStyle}>
-          <div className="saveRoadmaps">
-            <button type="button" className="btn btn-lg btn-outline-inverse" onClick={()=>this.handleSaveRoadmaps()}>{buttonText}</button>
-          </div>
-        </div>);
+    let buttonText = this.state.isSavingRoadmaps ? "Saving..." : "Save";
+    return (
+      <div className="col-lg-12" style={colStyle}>
+        <div className="saveRoadmaps">
+          <button type="button" className="btn btn-lg btn-outline-inverse" onClick={()=>this.handleSaveRoadmaps()}>{buttonText}</button>
+        </div>
+      </div>
+    );
   }
 
   handleSaveRoadmaps() {
@@ -147,19 +137,6 @@ handleViewDefault() {
 
       this.saveUserRoadmapsToDatabase();
     }
-  }
-
-  renderRoadmaps() {
-    return (
-      <span>
-        <RoadmapsWidget roadmaps={this.state.roadmaps} isFetchInProgress={this.props.isFetchInProgress} 
-        openSignUpForm={this.props.openSignUpForm} addedRoadmaps={this.props.addedRoadmaps}
-        addRoadmap={this.props.addRoadmap}
-        removeRoadmap={this.props.removeRoadmap}
-        setRoadmaps={this.props.setRoadmaps}
-        />
-
-      </span>);
   }
 
   saveUserRoadmapsToDatabase() {
@@ -226,83 +203,35 @@ handleViewDefault() {
 
     return result;
   }
-  
-  renderCarouselTabs() {
-    return (<ol className="carousel-indicators title-indicators">
-       {this.state.roadmaps.map(function(roadmap, i) {
-         return<li data-target="#features-carousel" data-slide-to={String(i)} className="" key={i}>{roadmap.name}</li>;
-       })}
-    </ol>);
-  }
 
-  renderRoadmapsControls(roadmapId) {
-    const addControlClassName = this.props.addedRoadmaps.indexOf(String(roadmapId)) != -1 ? "	glyphicon glyphicon-ok roadmapControl" 
-    : "glyphicon glyphicon-plus roadmapControl";
-    return (<span className="roadmapControls">
-        <span className="glyphicon glyphicon-eye-open roadmapControl" id={roadmapId} onClick={(e)=> this.handleViewDetails(e)}></span>
-        <span className={addControlClassName} id={roadmapId} onClick={(e)=> this.toggleAdd(e)}></span>
-    </span>);
-}
-
-  renderCarouselItems() {
-    let that = this;
-    return (
-      <div className="carousel-inner">
-       {this.state.roadmaps.map(function(roadmap, i) {
-         let roadmapControls = that.renderRoadmapsControls(roadmap._id);
-         return (<div className={i == 0 ? 'item active roadMap' : 'item roadMap'} key={i}>
-         <div className="carousel-text-content">
-           <img src="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/transp-image1.png" className="icon" alt="Lorem Ipsum"/>
-           <h2 className="title">{roadmap.name}</h2>
-           {roadmapControls}
-           <p className="roadmapSkillsParagraph">{roadmap.skills.map(function(skill, j) {
-                                if (j < 4) {
-                                    return<span className="skillTagContainer"><span className="skillTag" key={j}>{skill}</span></span>;
-                                }
-                                else {
-                                    return null;
-                                }
-                            })}</p>
-         </div>
-       </div>);
-       })}
-    </div>
-    );
-  }
-
-render() {
-  if (this.state.isViewingDetails) {
-    return(
+  render() {
+    if (this.state.isViewingDetails) {
+      return (
+        <article id="carousel" className="section-wrapper clearfix" 
+          data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
+            <div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
+              currentRoadmap = {this.state.currentRoadmapSelected}
+              openSignUpForm = {this.props.openSignUpForm}/>
+            </div>
+        </article>
+      );
+    }
+    else 
+    {
+      return (
       <article id="carousel" className="section-wrapper clearfix" 
-      data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
-    <div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
-    currentRoadmap = {this.state.currentRoadmapSelected}
-    openSignUpForm = {this.props.openSignUpForm}/></div>
-    </article>);
+        data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
+          <div className="mid-vertical-positioning clearfix">
+            <RoadmapsWidget roadmaps={this.state.roadmaps} addedRoadmaps={this.props.addedRoadmaps}
+              addRoadmap={this.props.addRoadmap} removeRoadmap={this.props.removeRoadmap}
+              onHandleViewDetails={(roadmapId)=>this.handleViewDetails(roadmapId)}/>
+          </div>
+          {this.renderSaveButton()}
+      </article>
+      );
+    }
+    
   }
-  else 
-  {
-    return (<article id="carousel" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
-    <div className="mid-vertical-positioning clearfix">
-  
-        <div id="features-carousel" className="carousel slide with-title-indicators max-height" data-height-percent="70" data-ride="carousel">
-          
-         {this.renderCarouselTabs()}
-  
-            {this.renderCarouselItems()}
-          <a className="left carousel-control" href="#features-carousel" data-slide="prev"></a>
-          <a className="right carousel-control" href="#features-carousel" data-slide="next"></a>
-  
-        </div>
-  
-    </div>
-    {this.renderSaveRoadmaps()}
-  </article>);
-  }
-  
-}
-
-
 }
 
 const mapDispatchToProps = dispatch => ({

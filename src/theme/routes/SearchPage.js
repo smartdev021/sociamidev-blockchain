@@ -62,31 +62,20 @@ class SearchPage extends React.Component {
         </h1>
         </span>
           <div className="tabpanel styled-tabs uniform-height" role="tabpanel">
-
             <SearchPageNavigation/>
-            <h4 className="glyphicon glyphicon-book text-center glyphicon-big pull-right glyphicon-text">Bookmarks({this.props.numBookmarks})
-        </h4>
-            <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} 
-      onHandleStartSearch={() => this.HandleStartSearch()} isAuthorized={this.props.isAuthorized} 
-      isSearchInProgress={this.props.isSearchInProgress}/>
+              <h4 className="glyphicon glyphicon-book text-center glyphicon-big pull-right glyphicon-text">Bookmarks({this.props.numBookmarks})
+            </h4>
+            <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} onHandleStartSearch={() => this.HandleStartSearch()}
+              isSearchInProgress={this.props.isSearchInProgress}/>
+
             <div className="tab-content">
-
-            <SearchResults/>
-
+              <SearchResults/>
             </div>
           </div>
 
       </div>
     </div>
   </article>);
-
-    /*return (<div className="container search_results" >
-      <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} 
-      onHandleStartSearch={() => this.HandleStartSearch()} isAuthorized={this.props.isAuthorized} 
-      isSearchInProgress={this.props.isSearchInProgress}/>
-        <SearchResults/>
-      </div>
-    );*/
   }
 
 }
