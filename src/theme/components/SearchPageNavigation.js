@@ -12,16 +12,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
-import ActionLink from '../components/ActionLink'
+import ActionLink from '~/src/components/common/ActionLink'
 
 import {Icon} from 'react-fa'
 
 import {
   setSearchQuery,
   selectResultsCategory,
-} from '../redux/actions/actions'
+} from '~/src/redux/actions/actions'
 
-class SearchPageNavigationTwilliAir extends React.Component {
+class SearchPageNavigation extends React.Component {
     handleSelectCategory(e) {
         this.props.selectResultsCategory(e.currentTarget.id);
       }
@@ -69,7 +69,7 @@ const mapStateToProps = state => ({
   currentCategory: state.currentCategory,
 })
 
-SearchPageNavigationTwilliAir.propTypes = {
+SearchPageNavigation.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   cookies: instanceOf(Cookies).isRequired,
   isAuthorized: PropTypes.bool.isRequired,
@@ -82,4 +82,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(SearchPageNavigationTwilliAir)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(SearchPageNavigation)));

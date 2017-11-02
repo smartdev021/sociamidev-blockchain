@@ -10,9 +10,9 @@ import { bindActionCreators } from 'redux'
 
 import {
   setSearchQuery,
-} from '../redux/actions/actions'
+} from '~/src/redux/actions/actions'
 
-class HomePageTwilliAir extends React.Component {
+class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -57,7 +57,7 @@ const TextInput = this.props.isFetchInProgress ? <h6>Searching...</h6>
 
 }
 
-HomePageTwilliAir.propTypes = {
+HomePage.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
 
@@ -74,4 +74,4 @@ const mapStateToProps = state => ({
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(HomePageTwilliAir);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

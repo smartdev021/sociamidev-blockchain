@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import UdemyItem from './UdemyItem';
 import {Table} from 'react-bootstrap';
-import "../../css/jobslist.css";
+import "~/src/css/jobslist.css";
 
 class UdemyItemList extends React.Component {
 

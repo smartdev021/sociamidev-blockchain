@@ -36,5 +36,10 @@ module.exports = {
       //{ test: /\.(png|jpg)$/, loader: 'url-loader' },
       { test: /\.(jpg|png|svg)$/, loader: 'file-loader', options: {name: '[path][name].[hash].[ext]', }, },
     ]
-  }
+  },
+  resolve: {
+    alias: {
+      ['~']: Path.resolve(__dirname)
+    }
+  },
 };

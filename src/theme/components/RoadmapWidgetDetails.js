@@ -6,10 +6,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
 
-import "../css/roadmapWidgetDetails.css"
-
-//TODO: remove, as soon as layout is fixed
-const MAX_SKILLS_AMOUNT = 4;
+import "~/src/css/roadmapWidgetDetails.css"
 
 class RoadmapsWidgetDetails extends React.Component {
   constructor(props) {

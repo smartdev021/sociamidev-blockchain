@@ -4,15 +4,15 @@
 
 import React, { Component } from 'react';
 
-class HowItWorksTwilliAir extends React.Component {
+class About extends React.Component {
 
   constructor(props) {
     super(props);
   }
   
   render() {
-    return (<p>How it works...</p>);
+    return (<p>About...</p>);
   }
 }
 
-export default HowItWorksTwilliAir;
+export default About;

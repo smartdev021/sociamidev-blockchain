@@ -12,9 +12,9 @@ import { withRouter } from 'react-router-dom'
 
 import {
   setSearchQuery,
-} from '../redux/actions/actions'
+} from '~/src/redux/actions/actions'
 
-class MainMenuTwilliAir extends React.Component {
+class MainMenu extends React.Component {
 
   constructor(props) {
     super(props);
@@ -62,4 +62,4 @@ const RoadmapItemActive = this.props.history.location.pathname == "/roadmap" ? "
 
 }
 
-export default withRouter(MainMenuTwilliAir);
+export default withRouter(MainMenu);

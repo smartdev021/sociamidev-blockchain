@@ -14,11 +14,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 
-import ConfigMain from '../../configs/main'
+import ConfigMain from '~/configs/main'
 
-import {openUserProfileComplete} from '../redux/actions/actions'
+import {openUserProfileComplete} from '~/src/redux/actions/actions'
 
-import "../css/userProfile.css"
+import "~/src/css/userProfile.css"
 
 class UserProfile extends React.Component {
   constructor(props) {

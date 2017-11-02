@@ -6,44 +6,26 @@
     It requests data from DataProvider, each time country or query is changed in state.
 */
 
-require('es6-object-assign').polyfill();
-require('es6-promise').polyfill();
-
 import React, { Component } from 'react';
-
-import SearchHeader from './components/SearchHeader';
-import SearchResults from './components/SearchResults';
-
-import ThemeFooterContainer from './components/ThemeFooterContainer';
-import ThemeCarouselContainer from './components/ThemeCarouselContainer';
-import ThemeNavBar from './components/ThemeNavBar';
-import Main from './components/Main';
-
-import AuthenticationHelper from './authentication/AuthenticationHelper';
-import UserProfile from './components/UserProfile';
-
-import MainMenuTwilliAir from './twilli_air/MainMenu';
-
-import "./css/loginFormPopup.css"
-
 import Axios from 'axios'
-
-import ConfigMain from '../configs/main'
-
-//load fonts
 import WebFont from 'webfontloader';
-
 import { withRouter } from 'react-router-dom'
-
 import { Redirect} from 'react-router-dom'
-
-import PropTypes from 'prop-types';
-import { instanceOf } from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types';
+import { instanceOf } from 'prop-types';
 
 import {Link} from 'react-router-dom'
-import ActionLink from './components/ActionLink'
+
+import Main from './Main';
+
+import MainMenu from '~/src/theme/routes/MainMenu';
+
+
+import ConfigMain from '~/configs/main'
+
+import ActionLink from '~/src/components/common/ActionLink'
 
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -62,13 +44,10 @@ import {
   setUserAuthorized,
 } from './redux/actions/actions'
 
-
-//import './css/main.css';
-
-let DataProviderIndeed = require("./data_providers/indeed/DataProvider");
-let DataProviderEventBrite = require("./data_providers/event_brite/DataProvider");
-let DataProviderUdemy = require("./data_providers/udemy/DataProvider");
-let DataProviderFreelancer = require("./data_providers/freelancer/DataProvider");
+let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
+let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");
+let DataProviderUdemy = require("~/src/data_providers/udemy/DataProvider");
+let DataProviderFreelancer = require("~/src/data_providers/freelancer/DataProvider");
 
 const BackendURL = ConfigMain.getBackendURL();
 
@@ -379,7 +358,7 @@ class App extends Component {
         <div className="col-lg-12">
         {this.renderProfileLink()}
         </div>
-        <MainMenuTwilliAir/>
+        <MainMenu/>
         <section id="main-content" className="clearfix">
       <Main onHandleStartSearch={() => this.handleStartSearch()} 
           onHandleChange={(e) => this.handleChange(e)}

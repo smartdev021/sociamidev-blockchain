@@ -4,7 +4,7 @@
 */
 import React, { Component } from 'react';
 
-import ActionLink from '../ActionLink'
+import ActionLink from '~/src/components/common/ActionLink'
 
 class JobItem extends React.Component {
 

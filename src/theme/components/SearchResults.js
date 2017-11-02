@@ -9,20 +9,20 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
-import JobsList from './containers/JobsList';
-import EventBriteItemList from './containers/EventBriteItemList';
-import UdemyItemList from './containers/UdemyItemList';
-import FreelancerProjectItemList from './containers/FreelancerProjectItemList';
+import JobsList from '~/src/components/containers/JobsList';
+import EventBriteItemList from '~/src/components/containers/EventBriteItemList';
+import UdemyItemList from '~/src/components/containers/UdemyItemList';
+import FreelancerProjectItemList from '~/src/components/containers/FreelancerProjectItemList';
 
 import { withCookies, Cookies } from 'react-cookie';
 
-import ConfigMain from '../../configs/main'
+import ConfigMain from '~/configs/main'
 
-import DetailsPopup from './DetailsPopup';
+import DetailsPopup from '~/src/components/common/DetailsPopup';
 
-import "../css/searchResults.css"
+import "~/src/css/searchResults.css"
 
-import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '../redux/actions/actions'
+import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '~/src/redux/actions/actions'
 
 class SearchResults extends React.Component {
 

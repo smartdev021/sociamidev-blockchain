@@ -4,15 +4,15 @@
 
 import React, { Component } from 'react';
 
-class AboutTwilliAir extends React.Component {
+class ICO extends React.Component {
 
   constructor(props) {
     super(props);
   }
   
   render() {
-    return (<p>About...</p>);
+    return (<p>ICO...</p>);
   }
 }
 
-export default AboutTwilliAir;
+export default ICO;

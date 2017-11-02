@@ -9,14 +9,12 @@ import { instanceOf } from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-
-import ConfigMain from '../../configs/main'
+import ConfigMain from '~/configs/main'
 import Axios from 'axios'
-
 import { withCookies, Cookies } from 'react-cookie';
 
-import RoadmapsWidget from '../components/RoadmapsWidget';
-import RoadmapWidgetDetails from '../components/RoadmapWidgetDetails'
+import RoadmapsWidget from '~/src/theme/components/RoadmapsWidget';
+import RoadmapWidgetDetails from '~/src/theme/components/RoadmapWidgetDetails'
 
 import {
   selectResultsCategory,
@@ -25,9 +23,9 @@ import {
   roadmapRemove,
   roadmapsSet,
   setSearchQuery,
-} from '../redux/actions/actions'
+} from '~/src/redux/actions/actions'
 
-class RoadmapTwilliAir extends React.Component {
+class Roadmap extends React.Component {
 
   constructor(props) {
     super(props);
@@ -113,17 +111,9 @@ handleViewDefault() {
       }
   }
 
-  console.log("props updated prevProps.addedRoadmaps: ");
-  console.dir(prevProps.addedRoadmaps);
-
-  console.log("props updated this.props.addedRoadmaps: ");
-  console.dir(this.props.addedRoadmaps);
-
   const { cookies } = this.props;
   
   const savedRoadmaps = cookies.get('addedRoadmaps');
-  
-  console.log("componentDidUpdate roadmaps amount has changed!!!");
   
   //only add roadmaps to cookies if they differ in length or not set yet
   let dateExpire = new Date();
@@ -280,16 +270,6 @@ handleViewDefault() {
     );
   }
 
-  
-  /*render() {
-  return (<article id="tabs" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
-  <div className="mid-vertical-positioning clearfix">
-    <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
-      {this.renderRoadmaps()}
-    </div>
-  </div>
-</article>);
-}*/
 render() {
   if (this.state.isViewingDetails) {
     return(
@@ -333,7 +313,7 @@ const mapDispatchToProps = dispatch => ({
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
 })
 
-RoadmapTwilliAir.propTypes = {
+Roadmap.propTypes = {
   isFetchInProgress: PropTypes.bool.isRequired,
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
@@ -357,4 +337,4 @@ const mapStateToProps = state => ({
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(RoadmapTwilliAir)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(Roadmap)));

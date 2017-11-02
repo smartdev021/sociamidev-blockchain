@@ -33,7 +33,7 @@ import {
   SEARCH_QUERY_SET,
 
   SET_USER_AUTHORIZED,
-} from '../actions/actionTypes';
+} from '~/src/redux/actions/actionTypes';
 
 export function isSignUpFormOpen(state = false, action) {
   switch (action.type) {

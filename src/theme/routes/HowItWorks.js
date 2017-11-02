@@ -4,15 +4,15 @@
 
 import React, { Component } from 'react';
 
-class ICOTwilliAir extends React.Component {
+class HowItWorks extends React.Component {
 
   constructor(props) {
     super(props);
   }
   
   render() {
-    return (<p>ICO...</p>);
+    return (<p>How it works...</p>);
   }
 }
 
-export default ICOTwilliAir;
+export default HowItWorks;

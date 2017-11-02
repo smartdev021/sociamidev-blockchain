@@ -9,10 +9,8 @@ import { withRouter } from 'react-router-dom'
 import { withCookies, Cookies } from 'react-cookie';
 
 import RoadmapWidgetDetails from './RoadmapWidgetDetails'
-
-import ConfigMain from '../../configs/main'
-
-import "../css/roadmapsWidget.css"
+import ConfigMain from '~/configs/main'
+import "~/src/css/roadmapsWidget.css"
 
 //TODO: remove, as soon as layout is fixed
 const MAX_SKILLS_AMOUNT = 4;

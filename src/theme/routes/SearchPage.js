@@ -5,9 +5,9 @@
 import React, { Component } from 'react';
 
 //import SearchHeader from './SearchHeader';
-import SearchResults from '../components/SearchResults';
-import SearchHeader from '../components/SearchHeader';
-import SearchPageNavigation from './SearchPageNavigation';
+import SearchResults from '~/src/theme/components/SearchResults';
+import SearchHeader from '~/src/theme/components/SearchHeader';
+import SearchPageNavigation from '~/src/theme/components/SearchPageNavigation';
 
 import { withCookies, Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';
@@ -19,9 +19,9 @@ import { withRouter } from 'react-router-dom'
 
 import {
   setSearchQuery,
-} from '../redux/actions/actions'
+} from '~/src/redux/actions/actions'
 
-class SearchPageTwilliAir extends React.Component {
+class SearchPage extends React.Component {
   HandleStartSearch() {
     this.props.onHandleStartSearch();
   }
@@ -99,7 +99,7 @@ const mapStateToProps = state => ({
   numBookmarks: state.bookmarks.amount,
 })
 
-SearchPageTwilliAir.propTypes = {
+SearchPage.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   cookies: instanceOf(Cookies).isRequired,
   isAuthorized: PropTypes.bool.isRequired,
@@ -113,4 +113,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(SearchPageTwilliAir)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(SearchPage)));

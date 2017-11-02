@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import "../css/signUpFormPopup.css"
-import ConfigMain from '../../configs/main';
+import "~/src/css/signUpFormPopup.css"
+import ConfigMain from '~/configs/main';
 
 import { withCookies, Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';

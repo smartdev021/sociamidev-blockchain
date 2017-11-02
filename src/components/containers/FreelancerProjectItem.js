@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import "../../css/freelancerItem.css";
+import "~/src/css/freelancerItem.css";
 
 class FreelancerProjectItemList extends React.Component {
 

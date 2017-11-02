@@ -8,9 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
-import "../css/searchHeader.css"
-
-import DemoCarousel from './DemoCarousel'
+import "~/src/css/searchHeader.css"
 
 class SearchHeader extends React.Component {
   constructor(props) {
