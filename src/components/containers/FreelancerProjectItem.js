@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import "~/src/css/freelancerItem.css";
-
 class FreelancerProjectItemList extends React.Component {
 
   constructor(props) {
@@ -29,7 +27,7 @@ class FreelancerProjectItemList extends React.Component {
                      <td key="1">{this.props.item.description}</td>,
                      <td key="2"><a href={this.props.item.url} target="_blank">Details</a></td>,
                      <td key="3">{dateHR}</td>,
-                     <td key="4"><button type="button" className="btn btn-lg btn-outline-inverse" 
+                     <td key="4"><button type="button" className="btn btn-md btn-outline-inverse" 
                       onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (

@@ -25,7 +25,7 @@ class UdemyItem extends React.Component {
                       <td key="2">{instructors}</td>,
                       <td key="3">{this.props.item.price}</td>,
                       <td key="4"><a href={this.props.item.url} target="_blank">Got to course</a></td>,
-                      <td key="5"><button type="button" className="btn btn-lg btn-outline-inverse" 
+                      <td key="5"><button type="button" className="btn btn-md btn-outline-inverse" 
                       onClick={() => this.props.onAddBookmark(itemObject)}>Bookmark</button></td>
                     ];
       return (

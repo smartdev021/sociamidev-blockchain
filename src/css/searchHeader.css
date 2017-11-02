@@ -6,47 +6,6 @@
     color: black;
 }
 
-/*.navigation_button:hover {
-    background-color: #3498db;
-}*/
-
-.navigation_button, .navigation_button h1 {
-    cursor: pointer;
-}
-
-.navigation_button hr {
-    border: none;
-    color: black; 
-    background-color: black;
-    height: 2px;
-}
-
-.category_items_count {
-    text-align: center;
-    min-width: 100%;
-}
-
-.glyphicon-big {
-    font-size: 32px;
-}
-
-.glyphicon-text {
-    line-height: 14px;
-}
-
-.li-with-spacing {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.customLink, .customLinkActive:hover, .customLinkActive:visited, .customLinkActive:active, .customLinkActive:focus {
-    color: #3498db;
-}
-
-.customLink, .customLink:hover, .customLink:visited, .customLink:active{
-    color: grey;
-}
-
 .saveRoadmaps {
     text-align: center;
     padding-top: 40px;

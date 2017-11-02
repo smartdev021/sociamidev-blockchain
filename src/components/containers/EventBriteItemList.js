@@ -13,21 +13,6 @@ class EventBriteItemList extends React.Component {
     super(props);
   }
 
-  _getTableHeader() {
-    /*<th>Description</th>*/
-    return (
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Start</th>
-          <th>End</th>
-          <th>Link</th>
-          <th>Logo</th>
-          <th></th>
-        </tr>
-      </thead>);
-  }
-
   render() {
 
     //Parse this.props, and create table of list of jobs. Use JobItem copmonent for single row of the table

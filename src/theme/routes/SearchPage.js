@@ -54,32 +54,30 @@ class SearchPage extends React.Component {
   }
 
   render() {
-      
-    return (<article id="tabs" className="section-wrapper clearfix" data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
-    <div className="mid-vertical-positioning clearfix">
-      <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
-      <span className="searchHeaderTextAndBookmarks"><h1 className="section-title">Results
-        </h1>
-        </span>
-          <div className="tabpanel styled-tabs uniform-height" role="tabpanel">
-            <SearchPageNavigation/>
-              <h4 className="glyphicon glyphicon-book text-center glyphicon-big pull-right glyphicon-text">Bookmarks({this.props.numBookmarks})
-            </h4>
-            <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} onHandleStartSearch={() => this.HandleStartSearch()}
-              isSearchInProgress={this.props.isSearchInProgress}/>
-
-            <div className="tab-content">
-              <SearchResults/>
-            </div>
-          </div>
-
-      </div>
-    </div>
+    return (
+    <article id="tabs" className="section-wrapper clearfix" 
+      data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
+        <div className="mid-vertical-positioning clearfix">
+          <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
+            <span className="searchHeaderTextAndBookmarks"><h1 className="section-title">Results
+              </h1>
+              </span>
+                <div className="tabpanel styled-tabs uniform-height" role="tabpanel">
+                  <SearchPageNavigation/>
+                    <h4 className="glyphicon glyphicon-book text-center glyphicon-big pull-right glyphicon-text">Bookmarks({this.props.numBookmarks})
+                      </h4>
+                  <SearchHeader onHandleQueryChange={(query) => this.HandleQueryChange(query)} onHandleStartSearch={() => this.HandleStartSearch()}
+                    isSearchInProgress={this.props.isSearchInProgress}/>
+                  <div className="tab-content">
+                    <SearchResults/>
+                  </div>
+                </div>
+               </div>
+        </div>
   </article>);
   }
 
 }
-
 
 const mapStateToProps = state => ({
   searchQuery: state.searchQuery,

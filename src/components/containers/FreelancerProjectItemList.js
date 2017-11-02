@@ -5,8 +5,7 @@
 
 import React, { Component } from 'react';
 import FreelancerProjectItem from './FreelancerProjectItem';
-import {Table} from 'react-bootstrap';
-import "~/src/css/jobslist.css";
+import {Table} from 'react-bootstrap'
 
 class FreelancerProjectItemList extends React.Component {
 
