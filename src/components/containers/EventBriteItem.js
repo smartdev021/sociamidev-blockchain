@@ -20,7 +20,7 @@ class EventBriteItem extends React.Component {
       let itemObject = this.props.item;
       itemObject._type = "eventbrite_event";
 
-      let title = this.trimmedString(this.props.item.name, 16);
+      let title = this.trimmedString(this.props.item.name, 24);
       let description = this.trimmedString(this.props.item.description, 60);
 
       return (

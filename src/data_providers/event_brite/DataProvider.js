@@ -35,7 +35,7 @@ import 'whatwg-fetch'
               let events = parsedJSON.events;
               
               for (let event in events) {
-                    let name = events[event].name.html;
+                    let name = events[event].name.text;
                     let description = events[event].description.text;
                     let start = events[event].start.utc;
                     let end = events[event].end.utc;

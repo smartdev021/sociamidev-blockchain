@@ -31,7 +31,7 @@ class DetailsPopup extends React.Component {
       Modal.defaultStyles.content.padding = '0';
       Modal.defaultStyles.content["minWidth"] = '260px';
       Modal.defaultStyles.content["maxWidth"] = '800px';
-      Modal.defaultStyles.content["height"] = '70%';
+      Modal.defaultStyles.content["minHeight"] = '500px';
       Modal.defaultStyles.content["marginLeft"] = 'auto';
       Modal.defaultStyles.content["marginRight"] = 'auto';
       Modal.defaultStyles.content["left"] = '0';
@@ -44,10 +44,15 @@ class DetailsPopup extends React.Component {
     }
 
     trimmedString(original, limit) {
+      if (original.length < limit) {
+        return original;
+      }
+
       let trimmed = original.substr(0, limit);
       trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
       
       if (trimmed.length < original.length) {
+        console.log("original was: " + original);
         trimmed += "...";
       }
 
@@ -94,7 +99,7 @@ class DetailsPopup extends React.Component {
     }
 
     renderEventDetails() {
-      let title = this.props.item.name ? this.trimmedString(this.props.item.name, 30) : '';
+      let title = this.props.item.name ? this.trimmedString(this.props.item.name, 40) : '';
       let description = this.props.item.description ? this.trimmedString(this.props.item.description, 100) : '';
 
       return (
