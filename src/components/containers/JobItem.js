@@ -24,7 +24,7 @@ class JobItem extends React.Component {
       let itemObject = this.props.item;
       itemObject._type = "indeed_job";
 
-      let title = this.trimmedString(this.props.item.jobtitle, 16);
+      let title = this.props.item.jobtitle;
       let company = this.props.item.company ? this.props.item.company: "N/A";
 
       return (
