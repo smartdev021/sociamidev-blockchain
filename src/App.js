@@ -383,7 +383,7 @@ App.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  exactLocation: PropTypes.stri.isRequired,
+  exactLocation: PropTypes.string.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
