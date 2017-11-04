@@ -214,7 +214,8 @@ class Roadmap extends React.Component {
               currentRoadmap = {this.state.currentRoadmapSelected}
               isAuthorized = {this.props.isAuthorized}
               openSignUpForm = {this.props.openSignUpForm} 
-              setExactLocation={this.props.setExactLocation}/>
+              setExactLocation={this.props.setExactLocation}
+              cookies={this.props.cookies}/>
             </div>
         </article>
       );

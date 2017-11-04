@@ -83,6 +83,22 @@ class TaskManagement extends React.Component {
   handleFetchAllTasksError(error) {
     console.log("Fetch tasks error: " + error);
   }
+
+  createAndSaveNewTask(userID, roadmapID) {
+    const url = `${BackendURL}/taskSave?userID=${userID}&type=${'find_mentor'}&roadmapID=${roadmapID}`;
+
+    Axios.get(url)
+    .then((response) =>this.handleSaveNewTaskSuccess(response))
+    .catch((error) =>this.handleSaveNewTaskError(error));
+  }
+
+  handleSaveNewTaskSuccess(response) {
+    console.log("Task save success");
+  }
+
+  handleSaveNewTaskError(error) {
+    console.log("Save task error: " + error);
+  }
   
   render() {
     return (<TasksWidget cookies={this.props.cookies}
@@ -90,7 +106,8 @@ class TaskManagement extends React.Component {
     onSelectCategory={(categoryType)=>this.selectCategory(categoryType)}
     allTasks={this.state.allTasks}
     userProfileID={this.props.userProfileID}
-    onOpenSignUpForm={() => this.props.openSignUpForm()}/>);
+    onOpenSignUpForm={() => this.props.openSignUpForm()}
+    createAndSaveNewTask={(userID, roadmapID)=>this.createAndSaveNewTask(userID, roadmapID)}/>);
   }
 }
 

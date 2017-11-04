@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
 import { Redirect} from 'react-router-dom'
+import ConfigMain from '~/configs/main'
 
 import "~/src/css/roadmapWidgetDetails.css"
 
@@ -20,10 +21,17 @@ class RoadmapsWidgetDetails extends React.Component {
 
   componentDidMount() {
     this.props.setExactLocation("RoadmapsWidgetDetails");
+
+    const { cookies } = this.props;
+    let dateExpire = new Date();
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
+    let options = { path: '/', expires: dateExpire};
+    cookies.set('lastViewedRoadmapId', this.props.currentRoadmap._id, options);
   }
 
   componentWillUnmount() {
     this.props.setExactLocation("");
+    this.props.cookies.remove('lastViewedRoadmapId');
   }
 
   handleFindMentor() {

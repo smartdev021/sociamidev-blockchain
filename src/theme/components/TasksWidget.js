@@ -10,9 +10,33 @@ import PropTypes from 'prop-types';
 class TasksWidget extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: true,
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.userProfileID) {
+      const { cookies } = this.props;
+      
+      const lastViewedRoadmapId = cookies.get('lastViewedRoadmapId');
+  
+      if (lastViewedRoadmapId) {
+        this.createAndSaveNewTask(lastViewedRoadmapId);
+        cookies.remove('lastViewedRoadmapId');
+      }
+    }
+  }
+
+  createAndSaveNewTask(roadmapId) {
+    this.props.createAndSaveNewTask(this.props.userProfileID, roadmapId);
   }
 
   renderTasks() {
+    if (this.state.isLoading) {
+      return null;
+    }
+
     let userID = this.props.userProfileID;
 
     if (this.props.allTasks.length > 0) {
