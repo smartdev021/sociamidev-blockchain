@@ -100,12 +100,17 @@ class App extends Component {
         
     let options = { path: '/', expires: dateExpire};
     
-    let lastLocation = this.props.history.location;
+    let lastLocation = Object.assign({}, this.props.history.location);
 
-    //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
-    if (this.props.exactLocation && this.props.exactLocation == "RoadmapsWidgetDetails") {
-      lastLocation = '/taskManagement';
+    console.log("lastLocation: " + lastLocation);
+
+     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
+     if (this.props.exactLocation && this.props.exactLocation == "RoadmapsWidgetDetails") {
+      lastLocation.pathname = '/taskManagement';
     }
+
+
+    console.log("lastLocation1: " + lastLocation);
 
     cookies.set('lastLocation', lastLocation, options);
   }
