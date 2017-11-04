@@ -21,6 +21,7 @@ import {
   roadmapRemove,
   roadmapsSet,
   setSearchQuery,
+  setExactLocation,
 } from '~/src/redux/actions/actions'
 
 class Roadmap extends React.Component {
@@ -211,7 +212,7 @@ class Roadmap extends React.Component {
           data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
             <div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
               currentRoadmap = {this.state.currentRoadmapSelected}
-              openSignUpForm = {this.props.openSignUpForm}/>
+              openSignUpForm = {this.props.openSignUpForm} setExactLocation={this.props.setExactLocation}/>
             </div>
         </article>
       );
@@ -240,6 +241,7 @@ const mapDispatchToProps = dispatch => ({
   removeRoadmap: bindActionCreators(roadmapRemove, dispatch),
   setRoadmaps: bindActionCreators(roadmapsSet, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+  setExactLocation: bindActionCreators(setExactLocation, dispatch),
 })
 
 Roadmap.propTypes = {
@@ -255,6 +257,7 @@ Roadmap.propTypes = {
   removeRoadmap: PropTypes.func.isRequired,
   setRoadmaps: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
+  setExactLocation: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

@@ -11,6 +11,7 @@ import {currentCategory,
   isSignUpFormOpen,
   searchQuery,
   userRoadmaps,
+  exactLocation,
 } from "./syncReducers"
 
 export default combineReducers({
@@ -25,4 +26,5 @@ export default combineReducers({
   isSignUpFormOpen,
   searchQuery,
   isAuthorized,
+  exactLocation,
 });

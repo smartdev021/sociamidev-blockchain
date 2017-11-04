@@ -3,6 +3,7 @@
 */
 
 import React, { Component } from 'react';
+import { withCookies, Cookies } from 'react-cookie';
 
 import TasksWidget from '~/src/theme/components/TasksWidget'
 
@@ -13,8 +14,8 @@ class TaskManagement extends React.Component {
   }
   
   render() {
-    return (<TasksWidget/>);
+    return (<TasksWidget cookies={this.props.cookies}/>);
   }
 }
 
-export default TaskManagement;
+export default withCookies(TaskManagement);

@@ -15,6 +15,14 @@ class RoadmapsWidgetDetails extends React.Component {
     console.log("Roadmap details");
   }
 
+  componentDidMount() {
+    this.props.setExactLocation("RoadmapsWidgetDetails");
+  }
+
+  componentWillUnmount() {
+    this.props.setExactLocation("");
+  }
+
   render() {
     return(
     <div className="container roadmap_details_widget">
@@ -64,6 +72,7 @@ RoadmapsWidgetDetails.propTypes = {
   currentRoadmap: PropTypes.object.isRequired,
   onViewDefault: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
+  setExactLocation: PropTypes.func.isRequired,
 }
 
 export default withRouter(RoadmapsWidgetDetails);

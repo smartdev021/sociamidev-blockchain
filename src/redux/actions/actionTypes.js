@@ -31,3 +31,5 @@ export const ROADMAP_ADD = "roadmap_add";
 export const ROADMAPS_SET = "roadmaps_set";
 export const ROADMAP_REMOVE = "roadmap_remove";
 export const ROADMAP_REMOVE_ALL = "roadmap_remove_all";
+
+export const EXACT_LOCATION_SET = "exact_location_set";

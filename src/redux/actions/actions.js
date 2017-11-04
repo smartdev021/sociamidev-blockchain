@@ -29,6 +29,8 @@ import {
     ROADMAP_REMOVE,
     ROADMAP_REMOVE_ALL,
 
+    EXACT_LOCATION_SET,
+
 } from './actionTypes';
 
 export function openSignUpForm() {
@@ -189,5 +191,12 @@ export function setUserAuthorized(value) {
     return {
         type: SET_USER_AUTHORIZED,
         authorized: value
+    }
+}
+
+export function setExactLocation(exactLocation) {
+    return {
+        type: EXACT_LOCATION_SET,
+        location: exactLocation
     }
 }

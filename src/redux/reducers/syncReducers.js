@@ -33,6 +33,8 @@ import {
   SEARCH_QUERY_SET,
 
   SET_USER_AUTHORIZED,
+
+  EXACT_LOCATION_SET,
 } from '~/src/redux/actions/actionTypes';
 
 export function isSignUpFormOpen(state = false, action) {
@@ -216,4 +218,13 @@ export function isAuthorized(state = false, action) {
     default:
         return state;
   }
+}
+
+export function exactLocation(state = "", action) {
+  switch (action.type) {
+      case EXACT_LOCATION_SET:
+        return action.location;
+      default:
+        return state;
+    }
 }

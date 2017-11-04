@@ -2,11 +2,6 @@
     background-color: transparent;
 }
 
-.taskIcon {
-    float: right;
-}
-
-
 .tasksContainer li.list-group-item:hover{
     cursor: pointer;
     color: black;

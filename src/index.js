@@ -12,7 +12,7 @@ import App from './App';
 
 
 console.log("store: ")
-console.dir(store);
+console.dir(store.getState());
 
 ReactDOM.render((
     <Provider store={store}>
