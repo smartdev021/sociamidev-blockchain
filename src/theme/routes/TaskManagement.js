@@ -115,8 +115,9 @@ class TaskManagement extends React.Component {
   }
 
   createAndSaveNewTask(roadmap) {
-    let userName = `${this.props.userProfile.firstName}" " ${this.props.userProfile.lastName}`;
-    const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}&userID=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}`;
+    this.setLoading(true);
+    let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
+    const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}&userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}`;
 
     Axios.get(url)
     .then((response) =>this.handleSaveNewTaskSuccess(response))
@@ -132,6 +133,9 @@ class TaskManagement extends React.Component {
   }
   
   render() {
+    if (this.state.isLoading) {
+      return (<p>Loading tasks. Please wait...</p>);
+    }
 
     return (<TasksWidget cookies={this.props.cookies}
     tasksCategory={this.state.tasksCategory}

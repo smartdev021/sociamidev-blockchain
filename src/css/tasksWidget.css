@@ -9,3 +9,11 @@
     background-color: #ffffff;
     background-color: rgba(255,255,255,0.8);
 }
+
+.taskTextElement {
+    margin-right: 30px;
+}
+
+.taskUserName {
+    color: black;
+}
