@@ -40,11 +40,36 @@ class TaskManagement extends React.Component {
     this.state = {
       tasksCategory: this.props.isAuthorized ? TaskCategoryYour : TaskCategoryOther,
       allTasks: [],
+      isLoading: false,
+    }
+  }
+
+  storeAndFetchTasks() {
+    console.log("TaskManagement::storeAndFetchTasks");
+    const { cookies } = this.props;
+    const lastViewedRoadmapId = cookies.get('lastViewedRoadmapId');
+
+    if (this.props.userProfileID && lastViewedRoadmapId) {
+      console.log("TaskManagement::storeAndFetchTasks lastViewedRoadmapId: " + lastViewedRoadmapId);
+
+      this.createAndSaveNewTask(lastViewedRoadmapId);
+      cookies.remove('lastViewedRoadmapId');
+    }
+    else {
+      this.fetchAllTasks();
     }
   }
 
   componentWillMount() {
-    this.fetchAllTasks();
+    console.log("TaskManagement::componentWillMount");
+    this.storeAndFetchTasks();
+  }
+
+  omponentDidUpdate(prevProps, prevState) {
+    if (!prevProps.userProfileID && this.props.userProfileID) {
+      this.selectCategory("my_tasks");
+      this.storeAndFetchTasks();
+    }
   }
 
   selectCategory(newCategoryType) {
@@ -65,7 +90,14 @@ class TaskManagement extends React.Component {
     this.setState(copy);
   }
 
+  setLoading(value) {
+    let copy = Object.assign({}, this.state, {isLoading: value});
+    this.setState(copy);
+  }
+
   fetchAllTasks() {
+    console.log("TaskManagement::fetchAllTasks");
+    this.setLoading(true);
     const url = `${BackendURL}/tasksGet`;
 
     Axios.get(url)
@@ -78,14 +110,21 @@ class TaskManagement extends React.Component {
 
     let copy = Object.assign({}, this.state, {allTasks: tasks});
     this.setState(copy);
+
+    this.setLoading(false);
+    console.log("TaskManagement::handleFetchAllTasks");
   }
 
   handleFetchAllTasksError(error) {
     console.log("Fetch tasks error: " + error);
+    this.setLoading(false);
+    console.log("TaskManagement::handleFetchAllTasksError");
   }
 
-  createAndSaveNewTask(userID, roadmapID) {
-    const url = `${BackendURL}/taskSave?userID=${userID}&type=${'find_mentor'}&roadmapID=${roadmapID}`;
+  createAndSaveNewTask(roadmapID) {
+    const url = `${BackendURL}/taskSave?userID=${this.props.userProfileID}&type=${'find_mentor'}&roadmapID=${roadmapID}`;
+
+    console.log("TaskManagement::createAndSaveNewTask url: " + url);
 
     Axios.get(url)
     .then((response) =>this.handleSaveNewTaskSuccess(response))
@@ -94,13 +133,24 @@ class TaskManagement extends React.Component {
 
   handleSaveNewTaskSuccess(response) {
     console.log("Task save success");
+
+    this.fetchAllTasks();
+
+    console.log("TaskManagement::handleSaveNewTaskSuccess");
   }
 
   handleSaveNewTaskError(error) {
     console.log("Save task error: " + error);
+
+    this.fetchAllTasks();
   }
   
   render() {
+    console.log("userProfileID: " + this.props.userProfileID);
+    if (this.state.isLoading) {
+      return (<p>Fetching data. Please wait...</p>);
+    }
+
     return (<TasksWidget cookies={this.props.cookies}
     tasksCategory={this.state.tasksCategory}
     onSelectCategory={(categoryType)=>this.selectCategory(categoryType)}
