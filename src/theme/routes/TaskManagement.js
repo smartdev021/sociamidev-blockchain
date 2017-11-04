@@ -4,6 +4,8 @@
 
 import React, { Component } from 'react';
 
+import TasksWidget from '~/src/theme/components/TasksWidget'
+
 class TaskManagement extends React.Component {
 
   constructor(props) {
@@ -11,7 +13,7 @@ class TaskManagement extends React.Component {
   }
   
   render() {
-    return (<p>No tasks has been added yet. Go add some in "roadmaps"</p>);
+    return (<TasksWidget/>);
   }
 }
 
