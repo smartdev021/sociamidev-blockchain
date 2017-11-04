@@ -92,32 +92,36 @@ class App extends Component {
     console.log("handleAuthorizeFaceBook id: " + id);
   }
 
-  HandleSignUpFacebook() {
-    this.props.closeSignUpForm();
-
+  storeCurrentLocationInCookies() {
     const { cookies } = this.props;
 
     let dateExpire = new Date();
     dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
-    
+        
     let options = { path: '/', expires: dateExpire};
     
-    cookies.set('lastLocation', this.props.history.location, options);
+    let lastLocation = this.props.history.location;
+
+    //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
+    if (this.props.exactLocation && this.props.exactLocation == "RoadmapsWidgetDetails") {
+      lastLocation = '/taskManagement';
+    }
+
+    cookies.set('lastLocation', lastLocation, options);
+  }
+
+  HandleSignUpFacebook() {
+    this.props.closeSignUpForm();
+
+    this.storeCurrentLocationInCookies();
 
     window.location.href = `${BackendURL}/auth/facebook`;
   }
 
   HandleSignUpLinkedIn() {
     this.props.closeSignUpForm();
-
-    const { cookies } = this.props;
     
-    let dateExpire = new Date();
-    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
-    
-    let options = { path: '/', expires: dateExpire};
-    
-    cookies.set('lastLocation', this.props.history.location, options);
+    this.storeCurrentLocationInCookies();
 
     window.location.href = `${BackendURL}/auth/linkedin`;
   }
@@ -379,6 +383,7 @@ App.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  exactLocation: PropTypes.stri.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -416,6 +421,7 @@ const mapStateToProps = state => ({
   isSignUpFormOpen: state.isSignUpFormOpen,
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
+  exactLocation: state.exactLocation,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })
