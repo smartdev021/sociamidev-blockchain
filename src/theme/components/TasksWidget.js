@@ -13,7 +13,7 @@ class TasksWidget extends React.Component {
   }
 
   renderTasks() {
-    let userID = this.props.userProfileID;
+    let userID = this.props.userProfile ? this.props.userProfile._id : undefined;
 
     if (this.props.allTasks.length > 0) {
       let tasksFiltered = [];
@@ -24,7 +24,6 @@ class TasksWidget extends React.Component {
             return task.userID == userID;
           });
         }
-       
         else {
           return (<p><button type="button" className="btn btn-lg btn-outline-inverse" 
         onClick={()=> this.props.onOpenSignUpForm()}>Login to see your tasks</button></p>);

@@ -26,12 +26,12 @@ class RoadmapsWidgetDetails extends React.Component {
     let dateExpire = new Date();
     dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
     let options = { path: '/', expires: dateExpire};
-    cookies.set('lastViewedRoadmapId', this.props.currentRoadmap._id, options);
+    console.dir(this.props.currentRoadmap);
+    cookies.set('lastViewedRoadmap', {id: this.props.currentRoadmap._id, name: this.props.currentRoadmap.name}, options);
   }
 
   componentWillUnmount() {
     this.props.setExactLocation("");
-    this.props.cookies.remove('lastViewedRoadmapId');
   }
 
   handleFindMentor() {
