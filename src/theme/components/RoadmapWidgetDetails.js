@@ -5,13 +5,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 
 import "~/src/css/roadmapWidgetDetails.css"
 
 class RoadmapsWidgetDetails extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      redirectTo: null,
+    }
     console.log("Roadmap details");
   }
 
@@ -23,9 +26,26 @@ class RoadmapsWidgetDetails extends React.Component {
     this.props.setExactLocation("");
   }
 
+  handleFindMentor() {
+    if (!this.props.isAuthorized) {
+      this.props.openSignUpForm();
+    }
+    else {
+      let copy = Object.assign({}, this.state, {redirectTo: <Redirect to="/taskManagement" push />});
+      this.setState(copy);
+    }
+  }
+
+  handleFindFriends() {
+    if (!this.props.isAuthorized) {
+      this.props.openSignUpForm();
+    }
+  }
+
   render() {
     return(
     <div className="container roadmap_details_widget">
+      {this.state.redirectTo}
       <div>
       <div className="col-lg-9">
         <div className="roadmapDetailsDescription">
@@ -56,9 +76,10 @@ class RoadmapsWidgetDetails extends React.Component {
       <div className="col-lg-3">
         <div className="roadmapDetailsControls">
         <div className="detailsButtons">
-          <button type="button" className="btn btn-lg btn-outline-inverse detailsButton" onClick={()=>this.props.openSignUpForm()}>Find a Mentor</button>
-          
-          <button type="button" className="btn btn-lg btn-outline-inverse detailsButton" onClick={()=>this.props.openSignUpForm()}>Find friends</button>
+          <button type="button" className="btn btn-lg btn-outline-inverse detailsButton" 
+          onClick={()=>this.handleFindMentor()}>Find a Mentor</button>
+          <button type="button" className="btn btn-lg btn-outline-inverse detailsButton" 
+          onClick={()=>this.handleFindFriends()}>Find friends</button>
       </div>
       <span className="glyphicon glyphicon-remove detailsClose" onClick={()=> this.props.onViewDefault()}></span>
         </div>
@@ -70,6 +91,7 @@ class RoadmapsWidgetDetails extends React.Component {
 
 RoadmapsWidgetDetails.propTypes = {
   currentRoadmap: PropTypes.object.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
   onViewDefault: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   setExactLocation: PropTypes.func.isRequired,

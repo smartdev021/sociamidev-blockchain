@@ -345,7 +345,7 @@ class App extends Component {
     }
     else
     {
-      ProfileLink = <ActionLink className="btn btn-lg btn-outline-inverse pull-right" 
+      ProfileLink = <ActionLink className="btn btn-lg btn-outline-inverse pull-right loginButton" 
           onClick={()=> this.props.openSignUpForm()}>Connect with...</ActionLink>;
     }
 

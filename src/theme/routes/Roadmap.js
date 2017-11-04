@@ -212,7 +212,9 @@ class Roadmap extends React.Component {
           data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg7.jpg">
             <div className="col-lg-12"><RoadmapWidgetDetails onViewDefault={()=> this.handleViewDefault()} 
               currentRoadmap = {this.state.currentRoadmapSelected}
-              openSignUpForm = {this.props.openSignUpForm} setExactLocation={this.props.setExactLocation}/>
+              isAuthorized = {this.props.isAuthorized}
+              openSignUpForm = {this.props.openSignUpForm} 
+              setExactLocation={this.props.setExactLocation}/>
             </div>
         </article>
       );
