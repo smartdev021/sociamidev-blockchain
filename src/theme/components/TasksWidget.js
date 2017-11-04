@@ -13,23 +13,42 @@ class TasksWidget extends React.Component {
   }
 
   renderTasks() {
-    if (this.props.tasksCategory.type == "my_tasks") {
+    let userID = this.props.userProfileID;
+
+    if (this.props.allTasks.length > 0) {
+      let tasksFiltered = [];
+
+      if (this.props.tasksCategory.type == "my_tasks") {
+        if (userID) {
+          tasksFiltered = this.props.allTasks.filter(function(task) {
+            return task.userID == userID;
+          });
+        }
+       
+        else {
+          return (<p><button type="button" className="btn btn-lg btn-outline-inverse" 
+        onClick={()=> this.props.onOpenSignUpForm()}>Login to see your tasks</button></p>);
+        }
+        
+      }
+      else {
+        tasksFiltered = this.props.allTasks.filter(function(task) {
+          return task.userID != userID;
+        });
+      }
       return (
         <div className="list-group">
-          <li className="list-group-item">Find a mentor<span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span></li>
-          <li className="list-group-item">Another task<span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span></li>
-          <li className="list-group-item">Yet another task<span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span></li>
+          {this.props.allTasks.map(function(task, i) {
+            return(
+              <li className="list-group-item" key={i}>{task.type}
+                <span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span>
+              </li>);
+          })}
         </div>
       );
     }
     else {
-      return (
-        <div className="list-group">
-          <li className="list-group-item">Other user's task<span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span></li>
-          <li className="list-group-item">Yet another other user's task<span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span></li>
-          <li className="list-group-item">Find a mentor: other user<span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span></li>
-        </div>
-      );
+      return (<p>No tasks yet. Go add some in "Results page"</p>);
     }
   }
 
@@ -49,6 +68,7 @@ class TasksWidget extends React.Component {
 
 TasksWidget.propTypes = {
   tasksCategory: PropTypes.object.isRequired,
+  allTasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   onSelectCategory: PropTypes.func.isRequired,
 }
