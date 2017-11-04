@@ -38,7 +38,7 @@ class TaskManagement extends React.Component {
     super(props);
 
     this.state = {
-      tasksCategory: this.props.isAuthorized ? TaskCategoryYour : TaskCategoryOther,
+      tasksCategory: TaskCategoryYour,
       allTasks: [],
       isLoading: false,
     }
@@ -62,25 +62,24 @@ class TaskManagement extends React.Component {
     this.storeAndFetchTasks();
   }
 
-  omponentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate prevProps.userProfile._id: " + prevProps.userProfile._id);
+    console.dir(this.props.userProfile);
     if (!prevProps.userProfile._id && this.props.userProfile._id) {
+      console.log("!prevProps.userProfile._id && this.props.userProfile._id");
       this.selectCategory("my_tasks");
       this.storeAndFetchTasks();
     }
   }
 
   selectCategory(newCategoryType) {
-    let newCategory = "";
+    let newCategory = {};
 
     if (newCategoryType == "my_tasks") {
-      newCategory = {
-        type: newCategoryType,
-        name: "Your tasks"};
+      newCategory = TaskCategoryYour;
     }
     else {
-      newCategory = {
-        type: newCategoryType,
-        name: "Other tasks"};
+      newCategory = TaskCategoryOther;
     }
 
     let copy = Object.assign({}, this.state, {tasksCategory: newCategory});
@@ -133,6 +132,8 @@ class TaskManagement extends React.Component {
   }
   
   render() {
+    console.log("TaskManagement::render");
+    console.dir(this.state);
     if (this.state.isLoading) {
       return (<p>Loading tasks. Please wait...</p>);
     }

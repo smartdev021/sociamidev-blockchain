@@ -50,7 +50,8 @@ class MainMenu extends React.Component {
               <li id="menu-item-grid" className={ICOItemActive}><Link to='/ico'>ICO</Link></li>
               <li id="menu-item-featured" className={ResultsItemActive}><Link to='/searchResults'>Results</Link></li>
               <li id="menu-item-tabs" className={RoadmapItemActive}><Link to='/roadmap'>Roadmap</Link></li>
-              <li id="menu-item-tabs" className={TaskManagementItemActive}><Link to='/taskManagement'>Task Management</Link></li>
+              {this.props.isAuthorized ? 
+              <li id="menu-item-tabs" className={TaskManagementItemActive}><Link to='/taskManagement'>Task Management</Link></li> : null}
             </ul>
           </section>
     );

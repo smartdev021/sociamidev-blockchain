@@ -366,7 +366,7 @@ class App extends Component {
         <div className="col-lg-12">
           {this.renderProfileLink()}
         </div>
-        <MainMenu/>
+        <MainMenu isAuthorized={this.props.isAuthorized}/>
         <section id="main-content" className="clearfix">
           <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
             onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}

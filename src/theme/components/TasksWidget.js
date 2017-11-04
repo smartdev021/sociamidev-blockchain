@@ -33,33 +33,31 @@ class TasksWidget extends React.Component {
             return task.userID == userID;
           });
         }
-        else {
-          return (<p><button type="button" className="btn btn-lg btn-outline-inverse" 
-        onClick={()=> this.props.onOpenSignUpForm()}>Login to see your tasks</button></p>);
-        }
-        
       }
       else {
         tasksFiltered = this.props.allTasks.filter(function(task) {
           return task.userID != userID;
         });
       }
-      return (
-        <div className="list-group">
-          {tasksFiltered.map(function(task, i) {
-            return(
-              <li className="list-group-item" key={i}>
-                <span className="taskTextElement taskName">{that.taskTypeToName(task.type)}</span>
-                <span className="taskTextElement taskUserName">{task.userName}</span>
-                <span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span>
-              </li>);
-          })}
-        </div>
-      );
+
+      if (tasksFiltered.length > 0) {
+        return (
+          <div className="list-group">
+            {tasksFiltered.map(function(task, i) {
+              return(
+                <li className="list-group-item" key={i}>
+                  <span className="taskTextElement taskName">{that.taskTypeToName(task.type)}</span>
+                  <span className="taskTextElement taskUserName">{task.userName}</span>
+                  <span className="taskTextElement taskRoadmapName">{task.roadmapName}</span>
+                  <span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span>
+                </li>);
+            })}
+          </div>
+        );
+      }
     }
-    else {
-      return (<p>No tasks yet. Go add some in "Results page"</p>);
-    }
+
+    return (<p>No tasks yet. Go add some in "Results page"</p>);
   }
 
   render() {
