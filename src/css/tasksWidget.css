@@ -13,3 +13,39 @@
 .taskTextElement {
     margin-right: 30px;
 }
+
+.tasksContainer .taskCategorySwitcher {
+    color: grey;
+    color: rgba(255,255,255,0.8);
+    margin-right: 40px;
+    padding-bottom: 10px;
+    font-family: 'open_sansbold', sans-serif;
+    font-size: 0.8em;
+    line-height: 1;
+    border-bottom: 2px solid rgba(255,255,255,0);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.tasksContainer .taskCategorySwitcher:hover {
+    color: #ffffff;
+    color: rgba(255,255,255,1.0);
+    text-decoration: none;
+    border-bottom: 2px solid rgba(255,255,255,1.0);
+}
+
+.tasksContainer .taskCategorySwitcherActive, .tasksContainer .taskCategorySwitcherActive:hover{
+    color: grey;
+    color: rgba(255,255,255,0.8);
+    margin-right: 40px;
+    padding-bottom: 10px;
+    font-family: 'open_sansbold', sans-serif;
+    font-size: 0.8em;
+    line-height: 1;
+    border-bottom: 2px solid rgba(255,255,255,1.0);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+

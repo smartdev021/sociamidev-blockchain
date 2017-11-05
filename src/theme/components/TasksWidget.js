@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import "~/src/css/tasksWidget.css"
 import PropTypes from 'prop-types';
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
 
 class TasksWidget extends React.Component {
@@ -61,14 +63,33 @@ class TasksWidget extends React.Component {
   }
 
   render() {
+    const taskSwitcherYourTasksClass = this.props.tasksCategory.type == "my_tasks" 
+    ? "taskCategorySwitcherActive" : "taskCategorySwitcher";
+    const taskSwitcherOtherTasksClass = this.props.tasksCategory.type == "other_tasks" 
+    ? "taskCategorySwitcherActive" : "taskCategorySwitcher";
+
     return (
         <div className="container-fluid tasksContainer">
+          <div className="row">
+              <div className="col-lg-12">
             <h2>{this.props.tasksCategory.name}</h2>
-            <button type="button" className="btn btn-lg btn-outline-inverse" 
-               onClick={()=>this.props.onSelectCategory("my_tasks")}>Your Tasks</button>
-             <button type="button" className="btn btn-lg btn-outline-inverse" 
-               onClick={()=>this.props.onSelectCategory("other_tasks")}>Other Tasks</button>
-              {this.renderTasks()}
+            </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+            <ActionLink href="#" className={taskSwitcherYourTasksClass} onClick={()=>this.props.onSelectCategory("my_tasks")}>
+            Your tasks
+            </ActionLink>
+            <ActionLink href="#" className={taskSwitcherOtherTasksClass} onClick={()=>this.props.onSelectCategory("other_tasks")}>
+            Other tasks
+            </ActionLink>
+            </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                {this.renderTasks()}
+              </div>
+            </div>
         </div>
     );
   }
