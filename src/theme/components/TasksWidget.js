@@ -59,7 +59,7 @@ class TasksWidget extends React.Component {
       }
     }
 
-    return (<p>No tasks yet. Go add some in "Results page"</p>);
+    return (<p>No tasks yet. Go add some in "roadmap page"</p>);
   }
 
   render() {
