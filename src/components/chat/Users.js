@@ -55,7 +55,12 @@ class Users extends React.Component {
 				  <span className="messenger-title">Sociami Messenger</span>
 			</div>
         <div className="users-top">
-          <input className="inputStyle" type="text" />
+          <div className="search-field">
+					  <div className="search-img">
+						  <img alt="search"  src="././assets/img/search.png"/>
+					  </div>
+            <input className="inputStyle" type="text" placeholder="Search.." />
+          </div>
           <a className="search"></a>
         </div>
         <div className="users" id='userList'>

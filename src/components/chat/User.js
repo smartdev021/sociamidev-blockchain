@@ -20,7 +20,7 @@ class User extends React.Component {
     var fullname = this.props.firstName + " " + this.props.lastName;
     return (
           <div data-id={`${this.props.tabKey}`} className={classes} onClick={this.onItemClick}  id={`${this.props.username}`} data-user={`${fullname}`}>
-            <img src="https://s13.postimg.org/ih41k9tqr/img1.jpg" alt="" />
+            <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg" alt="" />
             <span className="name">{ fullname }</span>
             <span className="time">2:09 PM</span>
             <span className="preview">I was wondering...</span>
