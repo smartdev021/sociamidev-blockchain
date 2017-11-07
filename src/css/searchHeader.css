@@ -27,3 +27,7 @@
 .searchHeaderTextAndBookmarks h1, searchHeaderTextAndBookmarks h4 {
     display: inline-block;
 }
+
+.fa-huge-icon {
+    font-size: 120px;;
+}
