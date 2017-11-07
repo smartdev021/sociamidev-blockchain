@@ -21,7 +21,7 @@ import {Link} from 'react-router-dom'
 import Main from './Main';
 
 import MainMenu from '~/src/theme/routes/MainMenu';
-
+import ChatApp from './components/chat/ChatApp';
 
 import ConfigMain from '~/configs/main'
 
@@ -64,8 +64,11 @@ class App extends Component {
       country: "sg", 
       query : "",
       isSearchInProgress: false,
+      isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
+      firstName: "",
+      lastName: ""
     };
 
     this.isSearchingJobs = false;
@@ -286,6 +289,8 @@ class App extends Component {
       education: responseProfile.education
     }
 
+    let copy = Object.assign({}, this.state, {firstName: responseProfile.firstName, lastName: responseProfile.lastName, isAuthorized: true});
+    this.setState(copy);
     this.props.fetchUserProfileComplete(newUserProfile);
     this.props.setUserAuthorized(true);
   }
@@ -359,6 +364,19 @@ class App extends Component {
   
   render() {
     let RedirectTo = this.getRedirectLocation();
+
+    let ChatAppLink = '';
+    // Check if user is logged in
+		if(this.state.isAuthorized){
+			// Check if user is logged in via FB
+			if (this.state.faceBookID) {
+				ChatAppLink = <ChatApp username={this.state.faceBookID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+			}
+			// Check if user is logged in via LinkedIn
+			else if(this.state.linkedInID) {
+				ChatAppLink = <ChatApp username={this.state.linkedInID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+			}
+		}
     
     return (
       <div className="outer-container">
@@ -375,6 +393,7 @@ class App extends Component {
             onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
           />
         </section>
+        {ChatAppLink}
       </div>
     );
   }
