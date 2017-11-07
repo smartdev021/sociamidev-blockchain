@@ -14,6 +14,8 @@ import { withRouter } from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import ResultCategory from '~/src/common/ResultCategoryNames'
+
 import {Icon} from 'react-fa'
 
 import {
@@ -28,34 +30,34 @@ class SearchPageNavigation extends React.Component {
 
   render() {
 
-    const jobClassName = this.props.currentCategory == "RESULTS_CATEGORY_JOBS" ? "active" : "";
-    const eventClassName = this.props.currentCategory == "RESULTS_CATEGORY_EVENTS" ? "active" : "";
-    const trainingClassName = this.props.currentCategory == "RESULTS_CATEGORY_COURSES" ? "active" : "";
-    const gigClassName = this.props.currentCategory == "RESULTS_CATEGORY_GIGS" ? "active" : "";
+    const jobClassName = this.props.currentCategory == ResultCategory.JOBS_INDEED ? "active" : "";
+    const eventClassName = this.props.currentCategory == ResultCategory.EVENTS_EVENTBRITE ? "active" : "";
+    const trainingClassName = this.props.currentCategory == ResultCategory.COURSES_UDEMY ? "active" : "";
+    const gigClassName = this.props.currentCategory == ResultCategory.GIGS_FREELANCER ? "active" : "";
       
     return (
         <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className={jobClassName}>
               <ActionLink href="#tabs-tab1" aria-controls="tabs-tab1" role="tab" 
-                data-toggle="tab" id="RESULTS_CATEGORY_JOBS" onClick={(e) => this.handleSelectCategory(e)}>
+                data-toggle="tab" id={ResultCategory.JOBS_INDEED} onClick={(e) => this.handleSelectCategory(e)}>
                    <Icon className="icon" name="diamond"/><span>Job</span>
               </ActionLink>
             </li>
             <li role="presentation" className={eventClassName}>
               <ActionLink href="#tabs-tab2" aria-controls="tabs-tab2" role="tab" 
-                data-toggle="tab" id="RESULTS_CATEGORY_EVENTS" onClick={(e) => this.handleSelectCategory(e)}>
+                data-toggle="tab" id={ResultCategory.EVENTS_EVENTBRITE} onClick={(e) => this.handleSelectCategory(e)}>
                    <Icon className="icon" name="train"/><span>Event</span>
               </ActionLink>
             </li>
             <li role="presentation" className={trainingClassName}>
               <ActionLink href="#tabs-tab3" aria-controls="tabs-tab3" role="tab" 
-                data-toggle="tab" id="RESULTS_CATEGORY_COURSES" onClick={(e) => this.handleSelectCategory(e)}>
+                data-toggle="tab" id={ResultCategory.COURSES_UDEMY} onClick={(e) => this.handleSelectCategory(e)}>
                    <Icon className="icon" name="coffee"/><span>Training</span>
               </ActionLink>
             </li>
             <li role="presentation" className={gigClassName}>
               <ActionLink href="#tabs-tab3" aria-controls="tabs-tab3" role="tab" 
-                data-toggle="tab" id="RESULTS_CATEGORY_GIGS" onClick={(e) => this.handleSelectCategory(e)}>
+                data-toggle="tab" id={ResultCategory.GIGS_FREELANCER} onClick={(e) => this.handleSelectCategory(e)}>
                    <Icon className="icon" name="comment"/><span>Gigs</span>
               </ActionLink>
             </li>
