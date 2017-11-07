@@ -1,18 +1,10 @@
 /*
     author: Alexander Zolotov
 */
+import React from 'react';
 
-import React, { Component } from 'react';
-
-class ICO extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-  
-  render() {
-    return (<p>ICO...</p>);
-  }
+function ICO(props) {
+  return <p>ICO...</p>;
 }
 
 export default ICO;

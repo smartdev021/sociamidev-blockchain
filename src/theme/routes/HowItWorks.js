@@ -1,18 +1,10 @@
 /*
     author: Alexander Zolotov
 */
+import React from 'react';
 
-import React, { Component } from 'react';
-
-class HowItWorks extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-  
-  render() {
-    return (<p>How it works...</p>);
-  }
+function HowItWorks(props) {
+  return <p>How it works...</p>;
 }
 
 export default HowItWorks;
