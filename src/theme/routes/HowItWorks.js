@@ -236,11 +236,7 @@ class HowItWorks extends React.Component {
       {this.renderNavigationTabs()}
       </div>
     </div>
-    <div className="row">
-      <div className="col-lg-12">
-      <ProgressBar now={this.state.progressValue}/>
-      </div>
-   </div>
+    
    <div className="row">
       <div className="col-lg-12">
       {this.renderSectionTitle()}

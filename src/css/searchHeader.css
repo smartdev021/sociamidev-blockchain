@@ -31,3 +31,16 @@
 .fa-huge-icon {
     font-size: 120px;;
 }
+
+.aboutVideo {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+    height: 600px;
+}
+
+.aboutVideo>iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+}

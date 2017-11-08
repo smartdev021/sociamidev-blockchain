@@ -50,6 +50,13 @@ function About(props) {
       <a href="http://soqqle.com/about" className="btn btn-lg btn-outline-inverse pull-right">read more</a>
       </div>
     </div>
+    <div className="row">
+    <div className="col-lg-12">
+      <div className="aboutVideo">
+      <iframe src="https://www.youtube.com/embed/mH78ukEovdU"></iframe>
+      </div>
+    </div>
+  </div>
 </div>);
 }
 
