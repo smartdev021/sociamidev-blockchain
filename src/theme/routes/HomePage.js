@@ -55,7 +55,7 @@ class HomePage extends React.Component {
     console.dir(latestTasks);
 
     return (
-      <div>
+      <div className="row">
         {
           latestTasks.map(function(task, i) {
             if (i < MAX_LATEST_TASKS) {
@@ -85,7 +85,7 @@ class HomePage extends React.Component {
       return (
         <div>
             <div className="">
-            <section className="feature-columns row">          
+            <section className="feature-columns">          
             {LatestTasks}
           </section>
             </div>
@@ -97,37 +97,48 @@ class HomePage extends React.Component {
     }
   }
 
-  render() {
+  renderSearhForm() {
     const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
     
     const TextInput = this.props.isFetchInProgress ? <h6>Searching...</h6> 
-    : (<input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
-    id="form-name" name="query" autoComplete="off"
-      placeholder="Key in a job or a skill you are exploring" onChange={(e) => this.HandleChange(e)} autoFocus/>);
-      const Tasks = this.renderTasks();
+    : (
+        <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
+          id="form-name" name="query" autoComplete="off"
+            placeholder="Key in a job or a skill you are exploring" 
+              onChange={(e) => this.HandleChange(e)} autoFocus/>
+    );
+
     return (
-      <article id="intro" className="section-wrapper clearfix" 
-      data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
-        <div className="clearfix" data-wow-delay="0.3s">
-          <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
-              <section className="feature-text">
-                <h1>What should I learn next</h1>
-                <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
-                <form className="form-inline" action="#" onSubmit={(e) => this.handleStartSearch(e)}>
-                  <div className="form-group">
-                    {TextInput}
-                  </div>
-                </form>
-              </section>
-              <section className="feature-text">
-              {Tasks}
-              </section>
-          </div>
+      <form className="form-inline" action="#" onSubmit={(e) => this.handleStartSearch(e)}>
+        <div className="form-group">
+          {TextInput}
         </div>
-      </article>
+      </form>
     );
   }
 
+  render() {
+    const SearchForm = this.renderSearhForm();
+    const Tasks = this.renderTasks();
+
+    return (
+      <article id="intro" className="section-wrapper clearfix" 
+        data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
+          <div className="clearfix" data-wow-delay="0.3s">
+            <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
+                <section className="feature-text">
+                  <h1>What should I learn next</h1>
+                  <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
+                  {SearchForm}
+                </section>
+                <section className="feature-text">
+                  {Tasks}
+                </section>
+            </div>
+          </div>
+      </article>
+    );
+  }
 }
 
 HomePage.propTypes = {
