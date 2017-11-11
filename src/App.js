@@ -21,7 +21,7 @@ import {Link} from 'react-router-dom'
 import Main from './Main';
 
 import MainMenu from '~/src/theme/routes/MainMenu';
-import ChatApp from './components/chat/ChatApp';
+import ChatApp from '~/src/components/chat/ChatApp';
 
 import ConfigMain from '~/configs/main'
 
@@ -370,11 +370,13 @@ class App extends Component {
 		if(this.state.isAuthorized){
 			// Check if user is logged in via FB
 			if (this.state.faceBookID) {
-				ChatAppLink = <ChatApp username={this.state.faceBookID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+        var tempUserType = "facebook";
+				ChatAppLink = <ChatApp username={this.state.faceBookID} userType={tempUserType} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
 			// Check if user is logged in via LinkedIn
 			else if(this.state.linkedInID) {
-				ChatAppLink = <ChatApp username={this.state.linkedInID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+        var tempUserType = "linkedin";
+				ChatAppLink = <ChatApp username={this.state.linkedInID} userType={tempUserType} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
 		}
     
