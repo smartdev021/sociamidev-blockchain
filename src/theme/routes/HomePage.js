@@ -8,6 +8,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import ActionLink from '~/src/components/common/ActionLink'
+import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
+
 import {
   setSearchQuery,
 } from '~/src/redux/actions/actions'
@@ -19,6 +22,21 @@ class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      isDetailsOpen: false,
+      currentTask: {},
+    }
+  }
+
+  handleCloseModal() {
+    let copy = Object.assign({}, this.state, {isDetailsOpen: false});
+    this.setState(copy);
+  }
+
+  handleOpenModal(task) {
+    let copy = Object.assign({}, this.state, {isDetailsOpen: true, currentTask: task});
+    this.setState(copy);
   }
 
   componentWillMount() {
@@ -32,6 +50,10 @@ class HomePage extends React.Component {
 
   HandleChange(e) {
     this.props.setSearchQuery(e.target.value);
+  }
+
+  onViewTaskAuthor(task) {
+    this.handleOpenModal(task);  
   }
 
   renderTask(task) {
@@ -60,13 +82,12 @@ class HomePage extends React.Component {
           latestTasks.map(function(task, i) {
             if (i < MAX_LATEST_TASKS) {
               return (<article className="jobTile feature-col col-md-4" key={i}>
-              <div className="thumbnail linked">
+              <ActionLink href='#' className="thumbnail linked" onClick={()=> that.onViewTaskAuthor(task)}>
                 <div className="caption">
                 <p>{that.taskTypeToName(task.type)}</p>
-                  <p>{task.userName}</p>
                   <p >{task.roadmapName}</p>
                 </div>
-              </div>
+              </ActionLink>
             </article>);
             }
             else {
@@ -84,11 +105,9 @@ class HomePage extends React.Component {
       const LatestTasks = this.renderLatestTasks();
       return (
         <div>
-            <div className="">
-            <section className="feature-columns">          
+          <section className="feature-columns">          
             {LatestTasks}
           </section>
-            </div>
         </div>
       );
     }
@@ -124,6 +143,8 @@ class HomePage extends React.Component {
     return (
       <article id="intro" className="section-wrapper clearfix" 
         data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
+        <DetailsPopup modalIsOpen={this.state.isDetailsOpen} onCloseModal={()=>this.handleCloseModal()} 
+          task={this.state.currentTask}/>
           <div className="clearfix" data-wow-delay="0.3s">
             <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
                 <section className="feature-text">
