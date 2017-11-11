@@ -33,3 +33,8 @@ export const ROADMAP_REMOVE = "roadmap_remove";
 export const ROADMAP_REMOVE_ALL = "roadmap_remove_all";
 
 export const EXACT_LOCATION_SET = "exact_location_set";
+
+export const TASKS_SET = "tasks_set";
+
+export const FETCH_TASKS_INITIATE = "fetch_tasks_initiate";
+export const FETCH_TASKS_COMPLETE = "fetch_tasks_complete";

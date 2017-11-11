@@ -18,6 +18,9 @@ import TasksWidget from '~/src/theme/components/TasksWidget'
 
 import {
   openSignUpForm,
+  setTasks,
+  fetchTasksInitiate,
+  fetchTasksComplete,
 } from '~/src/redux/actions/actions'
 
 const BackendURL = ConfigMain.getBackendURL();
@@ -39,8 +42,6 @@ class TaskManagement extends React.Component {
 
     this.state = {
       tasksCategory: TaskCategoryYour,
-      allTasks: [],
-      isLoading: false,
     }
   }
 
@@ -86,35 +87,33 @@ class TaskManagement extends React.Component {
     this.setState(copy);
   }
 
-  setLoading(value) {
-    let copy = Object.assign({}, this.state, {isLoading: value});
-    this.setState(copy);
-  }
-
   fetchAllTasks() {
-    this.setLoading(true);
-    const url = `${BackendURL}/tasksGet`;
-
-    Axios.get(url)
-    .then((response) =>this.handleFetchAllTasks(response))
-    .catch((error) =>this.handleFetchAllTasksError(error));
+    if (!this.props.isTasksFetchInProgress) {
+      this.props.fetchTasksInitiate();
+      const url = `${BackendURL}/tasksGet`;
+      
+      Axios.get(url)
+      .then((response) =>this.handleFetchAllTasks(response))
+      .catch((error) =>this.handleFetchAllTasksError(error));
+    }
   }
 
   handleFetchAllTasks(response) {
     let tasks = response.data;
 
-    let copy = Object.assign({}, this.state, {allTasks: tasks});
-    this.setState(copy);
+    console.log("response.data: ");
+    console.dir(response.data);
+    this.props.setTasks(tasks);
 
-    this.setLoading(false);
+    this.props.fetchTasksComplete();
   }
 
   handleFetchAllTasksError(error) {
-    this.setLoading(false);
+    this.props.fetchTasksComplete()
   }
 
   createAndSaveNewTask(roadmap) {
-    this.setLoading(true);
+    this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
     const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}&userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}`;
 
@@ -124,40 +123,52 @@ class TaskManagement extends React.Component {
   }
 
   handleSaveNewTaskSuccess(response) {
+    this.props.fetchTasksComplete();
     this.fetchAllTasks();
   }
 
   handleSaveNewTaskError(error) {
+    this.props.fetchTasksComplete();
     this.fetchAllTasks();
   }
   
   render() {
     console.log("TaskManagement::render");
     console.dir(this.state);
-    if (this.state.isLoading) {
+    if (this.props.isTasksFetchInProgress) {
       return (<p>Loading tasks. Please wait...</p>);
     }
 
     return (<TasksWidget cookies={this.props.cookies}
     tasksCategory={this.state.tasksCategory}
     onSelectCategory={(categoryType)=>this.selectCategory(categoryType)}
-    allTasks={this.state.allTasks}
+    allTasks={this.props.tasks}
     userProfile={this.props.userProfile}
     onOpenSignUpForm={() => this.props.openSignUpForm()}/>);
   }
 }
 
 TaskManagement.propTypes = {
+  tasks: PropTypes.array.isRequired,
+  isTasksFetchInProgress: PropTypes.bool.isRequired,
+
   openSignUpForm: PropTypes.func.isRequired,
+  setTasks: PropTypes.func.isRequired,
+  fetchTasksInitiate: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile,
   isAuthorized: state.isAuthorized,
+  tasks: state.tasks,
+  isTasksFetchInProgress: state.isTasksFetchInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  setTasks: bindActionCreators(setTasks, dispatch),
+  fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
+  fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

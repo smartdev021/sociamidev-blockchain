@@ -12,6 +12,8 @@ import {currentCategory,
   searchQuery,
   userRoadmaps,
   exactLocation,
+  tasks,
+  isTasksFetchInProgress,
 } from "./syncReducers"
 
 export default combineReducers({
@@ -27,4 +29,6 @@ export default combineReducers({
   searchQuery,
   isAuthorized,
   exactLocation,
+  tasks,
+  isTasksFetchInProgress,
 });
