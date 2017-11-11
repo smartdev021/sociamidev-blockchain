@@ -46,19 +46,27 @@ class HomePage extends React.Component {
 
   renderLatestTasks() {
     let that = this;
+    
+    let latestTasks = this.props.tasks.slice(0).sort(function(a, b) {
+      return b.creationDate - a.creationDate;
+    });
+
+    console.log("latestTaskslatestTaskslatestTaskslatestTaskslatestTaskslatestTaskslatestTasks");
+    console.dir(latestTasks);
+
     return (
       <div>
         {
-          this.props.tasks.map(function(task, i) {
+          latestTasks.map(function(task, i) {
             if (i < MAX_LATEST_TASKS) {
               return (<article className="jobTile feature-col col-md-4" key={i}>
-              <p className="thumbnail linked">
+              <div className="thumbnail linked">
                 <div className="caption">
                 <p>{that.taskTypeToName(task.type)}</p>
                   <p>{task.userName}</p>
                   <p >{task.roadmapName}</p>
                 </div>
-              </p>
+              </div>
             </article>);
             }
             else {
