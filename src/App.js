@@ -42,6 +42,9 @@ import {
   openSignUpForm,
   closeSignUpForm,
   setUserAuthorized,
+  fetchTasksInitiate,
+  fetchTasksComplete,
+  setTasks,
 } from './redux/actions/actions'
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
@@ -77,6 +80,32 @@ class App extends Component {
     this.isSearchingForFreelancerItems = false;
 
     console.log(`Config BackendURL: ${BackendURL}`);
+  }
+
+  fetchAllTasks() {
+    console.log("fetchAllTasks: ");
+    if (!this.props.isTasksFetchInProgress) {
+      this.props.fetchTasksInitiate();
+      const url = `${BackendURL}/tasksGet`;
+      
+      Axios.get(url)
+      .then((response) =>this.handleFetchAllTasks(response))
+      .catch((error) =>this.handleFetchAllTasksError(error));
+    }
+  }
+
+  handleFetchAllTasks(response) {
+    let tasks = response.data;
+
+    console.log("response.data: ");
+    console.dir(response.data);
+    this.props.setTasks(tasks);
+
+    this.props.fetchTasksComplete();
+  }
+
+  handleFetchAllTasksError(error) {
+    this.props.fetchTasksComplete()
   }
 
   componentWillMount() {
@@ -391,6 +420,7 @@ class App extends Component {
             onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
             onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
             onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+            onFetchAllTasks={()=>this.fetchAllTasks()}
           />
         </section>
         {ChatAppLink}
@@ -408,6 +438,7 @@ App.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
+  isTasksFetchInProgress: PropTypes.bool.isRequired,
   
   fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
@@ -421,6 +452,7 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   setUserAuthorized: PropTypes.func.isRequired,
+  setTasks: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -436,6 +468,9 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   setUserAuthorized: bindActionCreators(setUserAuthorized, dispatch),
+  fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
+  fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
+  setTasks: bindActionCreators(setTasks, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -446,6 +481,7 @@ const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
   exactLocation: state.exactLocation,
+  isTasksFetchInProgress: state.isTasksFetchInProgress,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

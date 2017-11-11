@@ -7,6 +7,7 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 
@@ -55,7 +56,7 @@ class TaskManagement extends React.Component {
       cookies.remove('lastViewedRoadmap');
     }
     else {
-      this.fetchAllTasks();
+      this.props.onFetchAllTasks();
     }
   }
 
@@ -87,31 +88,6 @@ class TaskManagement extends React.Component {
     this.setState(copy);
   }
 
-  fetchAllTasks() {
-    if (!this.props.isTasksFetchInProgress) {
-      this.props.fetchTasksInitiate();
-      const url = `${BackendURL}/tasksGet`;
-      
-      Axios.get(url)
-      .then((response) =>this.handleFetchAllTasks(response))
-      .catch((error) =>this.handleFetchAllTasksError(error));
-    }
-  }
-
-  handleFetchAllTasks(response) {
-    let tasks = response.data;
-
-    console.log("response.data: ");
-    console.dir(response.data);
-    this.props.setTasks(tasks);
-
-    this.props.fetchTasksComplete();
-  }
-
-  handleFetchAllTasksError(error) {
-    this.props.fetchTasksComplete()
-  }
-
   createAndSaveNewTask(roadmap) {
     this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
@@ -124,12 +100,12 @@ class TaskManagement extends React.Component {
 
   handleSaveNewTaskSuccess(response) {
     this.props.fetchTasksComplete();
-    this.fetchAllTasks();
+    this.props.onFetchAllTasks();
   }
 
   handleSaveNewTaskError(error) {
     this.props.fetchTasksComplete();
-    this.fetchAllTasks();
+    this.props.onFetchAllTasks();
   }
   
   render() {
@@ -155,6 +131,7 @@ TaskManagement.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
+  fetchTasksComplete: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -172,4 +149,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(withCookies(TaskManagement));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(TaskManagement)));
