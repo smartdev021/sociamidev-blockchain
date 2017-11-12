@@ -82,7 +82,7 @@ class SearchPage extends React.Component {
 const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
-  currentCategory: state.currentCategory,
+  resultsSelectedCategory: state.resultsSelectedCategory,
   numBookmarks: state.bookmarks.amount,
 })
 
