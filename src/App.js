@@ -31,21 +31,28 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import {
   openUserProfile,
-  openSearchResults,
   fetchUserProfileComplete,
+  openSignUpForm,
+  closeSignUpForm,
+  setUserAuthorized,
+} from '~/src/redux/actions/authorization'
+
+import {
+  fetchTasksInitiate,
+  fetchTasksComplete,
+  setTasks,
+} from '~/src/redux/actions/tasks'
+
+import {
   fetchJobItemsComplete,
   fetchEventItemsComplete,
   fetchCourseItemsComplete,
   fetchGigItemsComplete,
   fetchResultsInitiate,
   fetchResultsComplete,
-  openSignUpForm,
-  closeSignUpForm,
-  setUserAuthorized,
-  fetchTasksInitiate,
-  fetchTasksComplete,
-  setTasks,
-} from './redux/actions/actions'
+
+  openSearchResults,
+} from '~/src/redux/actions/fetchResults'
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
 let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");

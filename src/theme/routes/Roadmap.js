@@ -16,13 +16,23 @@ import RoadmapsWidget from '~/src/theme/components/RoadmapsWidget';
 import RoadmapWidgetDetails from '~/src/theme/components/RoadmapWidgetDetails'
 
 import {
+  setSearchQuery
+} from '~/src/redux/actions/fetchResults'
+
+import {
+  setExactLocation,
+} from '~/src/redux/actions/actions'
+
+import {
   openSignUpForm,
+} from '~/src/redux/actions/authorization'
+
+
+import {
   roadmapAdd,
   roadmapRemove,
   roadmapsSet,
-  setSearchQuery,
-  setExactLocation,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/roadmaps'
 
 class Roadmap extends React.Component {
   constructor(props) {

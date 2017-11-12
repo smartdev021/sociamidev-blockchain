@@ -21,7 +21,7 @@ import {Icon} from 'react-fa'
 import {
   setSearchQuery,
   selectResultsCategory,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/fetchResults'
 
 class SearchPageNavigation extends React.Component {
     handleSelectCategory(e) {

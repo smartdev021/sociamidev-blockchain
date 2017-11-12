@@ -24,7 +24,8 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import "~/src/css/searchResults.css"
 
-import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '~/src/redux/actions/actions'
+import {openSearchResultsComplete} from '~/src/redux/actions/fetchResults'
+import {bookmarkAdd, bookmarksSet} from '~/src/redux/actions/bookmarks'
 
 class SearchResults extends React.Component {
 

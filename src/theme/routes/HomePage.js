@@ -13,7 +13,7 @@ import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
 
 import {
   setSearchQuery,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/fetchResults'
 
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};

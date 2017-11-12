@@ -18,11 +18,15 @@ import ConfigMain from '~/configs/main'
 import TasksWidget from '~/src/theme/components/TasksWidget'
 
 import {
-  openSignUpForm,
   setTasks,
   fetchTasksInitiate,
   fetchTasksComplete,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/tasks'
+
+import {
+  openSignUpForm,
+} from '~/src/redux/actions/authorization'
+
 
 const BackendURL = ConfigMain.getBackendURL();
 

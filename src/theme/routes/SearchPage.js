@@ -19,7 +19,7 @@ import { withRouter } from 'react-router-dom'
 
 import {
   setSearchQuery,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/fetchResults'
 
 class SearchPage extends React.Component {
   HandleStartSearch() {
