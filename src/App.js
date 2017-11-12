@@ -30,8 +30,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 import { withCookies, Cookies } from 'react-cookie';
 
 import {
+  fetchUserProfile,
   openUserProfile,
-  fetchUserProfileComplete,
   openSignUpForm,
   closeSignUpForm,
   setUserAuthorized,
@@ -74,11 +74,8 @@ class App extends Component {
       country: "sg", 
       query : "",
       isSearchInProgress: false,
-      isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
-      firstName: "",
-      lastName: ""
     };
 
     this.isSearchingJobs = false;
@@ -297,42 +294,8 @@ class App extends Component {
 
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID) {
-      const url = this.state.faceBookID ? `${BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`
-      : `${BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`;
-  
-      Axios.get(url)
-      .then((response) =>this.handleUserProfileFetchFromDB(response))
-      .catch((error) =>this.handleUserProfileFetchFromDBError(error));
+      this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID);
     }
-  }
-
-  handleUserProfileFetchFromDB(response) {
-    console.log("handleUserProfileFetchFromDB: ");
-    
-    const responseProfile = response.data.profile;
-
-    console.log("START response.data: ");
-    console.dir(response.data);
-    console.log("END response.data: ");
-
-    let newUserProfile = {
-      _id: response.data._id,
-      firstName: responseProfile.firstName, 
-      lastName: responseProfile.lastName, 
-      interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions
-      skills: responseProfile.skills, //TODO: receive FaceBook advanced permissions
-      experience: responseProfile.experience,
-      education: responseProfile.education
-    }
-
-    let copy = Object.assign({}, this.state, {firstName: responseProfile.firstName, lastName: responseProfile.lastName, isAuthorized: true});
-    this.setState(copy);
-    this.props.fetchUserProfileComplete(newUserProfile);
-    this.props.setUserAuthorized(true);
-  }
-    
-  handleUserProfileFetchFromDBError(error) {
-    console.log("Error fetching FaceBook profile: " + error);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -356,6 +319,17 @@ class App extends Component {
           this.props.openSearchResults();
         }
       }
+    }
+
+    if (prevProps.userProfile != this.props.userProfile) {
+
+      let copy = Object.assign({}, this.state, 
+        {
+          firstName: this.props.userProfile.firstName, 
+          lastName: this.props.userProfile.lastName,
+      });
+
+      this.setState(copy);
     }
 
     if (prevProps != this.props) {
@@ -403,14 +377,18 @@ class App extends Component {
 
     let ChatAppLink = '';
     // Check if user is logged in
-		if(this.state.isAuthorized){
+		if(this.props.isAuthorized){
 			// Check if user is logged in via FB
 			if (this.state.faceBookID) {
-				ChatAppLink = <ChatApp username={this.state.faceBookID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+				ChatAppLink = <ChatApp username={this.state.faceBookID} 
+        firstName={this.props.userProfile.firstName} 
+        lastName={this.props.userProfile.lastName}/>;
 			}
 			// Check if user is logged in via LinkedIn
 			else if(this.state.linkedInID) {
-				ChatAppLink = <ChatApp username={this.state.linkedInID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+				ChatAppLink = <ChatApp username={this.state.linkedInID} 
+        firstName={this.props.userProfile.firstName} 
+        lastName={this.props.userProfile.lastName}/>;
 			}
 		}
     
@@ -447,7 +425,6 @@ App.propTypes = {
   exactLocation: PropTypes.string.isRequired,
   isTasksFetchInProgress: PropTypes.bool.isRequired,
   
-  fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
   populateJobItems: PropTypes.func.isRequired,
@@ -460,6 +437,7 @@ App.propTypes = {
   closeSignUpForm: PropTypes.func.isRequired,
   setUserAuthorized: PropTypes.func.isRequired,
   setTasks: PropTypes.func.isRequired,
+  fetchUserProfile: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -469,7 +447,6 @@ const mapDispatchToProps = dispatch => ({
   populateEventItems: bindActionCreators(fetchEventItemsComplete, dispatch),
   populateCourseItems: bindActionCreators(fetchCourseItemsComplete, dispatch),
   populateGigItems: bindActionCreators(fetchGigItemsComplete, dispatch),
-  fetchUserProfileComplete: bindActionCreators(fetchUserProfileComplete, dispatch),
   fetchResultsInitiate: bindActionCreators(fetchResultsInitiate, dispatch),
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
@@ -478,6 +455,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   setTasks: bindActionCreators(setTasks, dispatch),
+  fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -487,6 +465,7 @@ const mapStateToProps = state => ({
   isSignUpFormOpen: state.isSignUpFormOpen,
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
+  userProfile: state.userProfile,
   exactLocation: state.exactLocation,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found

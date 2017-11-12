@@ -3,6 +3,7 @@ import Axios from 'axios'
 import {
     OPEN_USER_PROFILE, 
     OPEN_USER_PROFILE_COMPLETE,
+    FETCH_USER_PROFILE_INITIATE,
     FETCH_USER_PROFILE_COMPLETE,
 
     SIGNUP_FORM_OPEN,
@@ -59,14 +60,15 @@ export function setUserAuthorized(value) {
     }
 }
 
-export function fetchUserProfile(userId) {
+export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
 
     return function (dispatch) {
   
         //async action entry point
       dispatch(fetchUserProfileInitiate());
 
-      const url = `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdD}`;
+      const url = userIdFacebook ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
+      : `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdLinkedIn}`;
 
       return (
         Axios.get(url)
