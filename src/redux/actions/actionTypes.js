@@ -4,6 +4,7 @@ export const OPEN_USER_PROFILE_COMPLETE = "action_open_user_profile_complete";
 export const OPEN_SEARCH_RESULTS = "action_open_user_search_results";
 export const OPEN_SEARCH_RESULTS_COMPLETE = "action_open_user_search_results_complete";
 
+export const FETCH_USER_PROFILE_INITIATE = "fetch_user_profile_initiate";
 export const FETCH_USER_PROFILE_COMPLETE = "fetch_user_profile_complete";
 
 export const FETCH_JOB_ITEMS_COMPLETE = "fetch_job_items_complete";

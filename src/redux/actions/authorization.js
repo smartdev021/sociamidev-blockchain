@@ -1,3 +1,5 @@
+import Axios from 'axios'
+
 import {
     OPEN_USER_PROFILE, 
     OPEN_USER_PROFILE_COMPLETE,
@@ -9,6 +11,8 @@ import {
     SET_USER_AUTHORIZED,
 
 } from './actionTypes';
+
+import ConfigMain from '~/configs/main'
 
 export function openSignUpForm() {
     return {
@@ -41,9 +45,51 @@ export function fetchUserProfileComplete(userProfile) {
     }
 }
 
+export function fetchUserProfileInitiate() {
+    return {
+        type: FETCH_USER_PROFILE_INITIATE,
+        profile: {}
+    }
+}
+
 export function setUserAuthorized(value) {
     return {
         type: SET_USER_AUTHORIZED,
         authorized: value
+    }
+}
+
+export function fetchUserProfile(userId) {
+
+    return function (dispatch) {
+  
+        //async action entry point
+      dispatch(fetchUserProfileInitiate());
+
+      const url = `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdD}`;
+
+      return (
+        Axios.get(url)
+        .then(function(response) {
+            const responseProfile = response.data.profile;
+            let newUserProfile = {
+              _id: response.data._id,
+              firstName: responseProfile.firstName, 
+              lastName: responseProfile.lastName, 
+              interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions
+              skills: responseProfile.skills, //TODO: receive FaceBook advanced permissions
+              experience: responseProfile.experience,
+              education: responseProfile.education
+            }
+
+            //async action exit point
+            dispatch(fetchUserProfileComplete(newUserProfile));
+            dispatch(setUserAuthorized(true));
+        })
+        .catch(function(error) {
+            //async action exit point
+            dispatch(fetchUserProfileComplete({}));
+            dispatch(setUserAuthorized(false));
+        }));
     }
 }
