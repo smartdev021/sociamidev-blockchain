@@ -3,8 +3,10 @@
 */
 import React from 'react';
 
+import Sample from '~/src/theme/components/PdfViewer'
+
 function ICO(props) {
-  return <p>ICO...</p>;
+  return <Sample/>;
 }
 
 export default ICO;
