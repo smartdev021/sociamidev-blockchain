@@ -184,6 +184,7 @@ a.search {
   padding: 8px 3% 11px;
   cursor: pointer;
   background-color: #fff;
+  height: 70px;
 }
 
 .personSelected{
@@ -193,6 +194,7 @@ a.search {
   cursor: pointer;
   background-color: #817ccd;
   color: #fff;
+  height: 70px;
 }
 
 .personSelected .name, .personSelected .time, .personSelected .preview{
@@ -239,7 +241,7 @@ a.search {
   font-size: 13px;
   position: absolute;
   top: 15px;
-  right: 10%;
+  right: 5%;
   padding: 0 0 5px 5px;
   color: #999;
   background-color: #fff;
@@ -247,22 +249,48 @@ a.search {
 
 .preview {
   font-size: 13px;
-  display: inline-block;
+  position: absolute;
+  bottom: 15px;
+  left: 23%;
   overflow: hidden !important;
-  width: 70%;
+  width: 45%;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: #999;
 }
 
+.messageCountContainer {
+  position: absolute;
+  bottom: 15px;
+  right: 5%;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
+  border: 2px solid #817ccd;
+  background: #817ccd;
+}
+
+.messageCount{
+  text-align: center;
+  line-height: 11px;
+  display: block;
+  color: #fff;
+}
+
+.messageCountContainerHide{
+  display: none;
+}
+
+.messageCountContainerShow{
+  display: block;
+}
+
 .person:active,.person:hover{
-  margin-top: -1px;
-  margin-left: -1px;
-  padding-top: 13px;
   border: 0;
   background-color: #817ccd;
-  width: calc(100% + 2px);
-  padding-left: calc(10% + 1px);
+  width: 100%;
+  padding: 8px 3% 11px;
 }
 
 .personSelected:after{
@@ -329,8 +357,6 @@ a.search {
 	width:100%;
   border-left: solid 1px #e6e6e6;
   display: block;
-  overflow-y: auto;
-  overflow-x: hidden;
   justify-content: flex-end;
   flex-direction: column;
 }
@@ -352,7 +378,7 @@ a.search {
   position: relative;
   display: inline-block;
   clear: both;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   padding: 11px 12px;
   vertical-align: top;
   border-radius: 5px;
@@ -376,6 +402,22 @@ a.search {
   -moz-animation-name: slideFromLeft;
   -webkit-animation-name: slideFromLeft;
   animation-name: slideFromLeft;
+}
+
+.timeStampMe{
+  clear:both;
+  float: left;
+  color: #999;
+  font-size: 9px;
+  margin-bottom: 8px;
+}
+
+.timeStampYou{
+  clear:both;
+  float: right;
+  color: #999;
+  font-size: 9px;
+  margin-bottom: 8px;
 }
 
 .me:before {
@@ -505,4 +547,27 @@ a.search {
 
 .messageList{
   padding:20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 300px;
+}
+
+.clear{
+  clear:both;
+}
+
+.newMessageIndicator{
+  background-image: url("../../assets/img/warning.png");
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  right: 20px;
+}
+
+.newMessageIndicatorShow{
+  display: block;
+}
+
+.newMessageIndicatorHide{
+  display: none;
 }

@@ -6,9 +6,22 @@ class Users extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {selectedItem: '-1', usersWindowOpen: 0};
-    this.tabChanges = this.tabChanges.bind(this);
-    this.toggleUsersWindow = this.toggleUsersWindow.bind(this);
+    this.state = {selectedItem: '-1', usersWindowOpen: 0, messageIndicatorClass : "newMessageIndicatorHide"};
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.props.lastMessageRec !== nextProps.lastMessageRec){
+      if(this.state.usersWindowOpen == 0){
+        this.state.messageIndicatorClass = "newMessageIndicatorShow";
+      }
+      else{
+        this.state.messageIndicatorClass = "newMessageIndicatorHide";
+      }
+    }
+
+    if(this.state.usersWindowOpen == 1){
+      this.state.messageIndicatorClass = "newMessageIndicatorHide";
+    }
   }
 
   componentDidUpdate() {
@@ -33,9 +46,34 @@ class Users extends React.Component {
     }
   }
 
+  getTimeStamp(date){
+    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var d = new Date(date);
+    var monthText = monthNames[d.getMonth()];
+    var dateText = d.getDate();
+
+    var hourText = d.getHours();
+    var minuteText = d.getMinutes();
+    var ampmText = hourText >= 12 ? 'PM' : 'AM';
+    hourText = hourText % 12;
+    hourText = hourText ? hourText : 12;
+
+    return dateText + " " + monthText + "  " + hourText + ":" + minuteText + " " + ampmText;
+  }
+
   render() {
     // Loop through all the messages in the state and create a Message component
+    var className = "newMessageIndicator " + this.state.messageIndicatorClass;
+    const classes = `${className}`;
     const users = this.props.users.map((user, i) => {
+      const tempLastMessages = this.props.lastMessages;
+      var tempLastMessage = "";
+      var tempLastMessageTimeStamp = "";
+      if(user.username in tempLastMessages){
+        var message = tempLastMessages[user.username];
+        var tempLastMessage = message.message;
+        var tempLastMessageTimeStamp = this.getTimeStamp(message.time);
+      }
       return (
         <User
           key={i}
@@ -43,21 +81,27 @@ class Users extends React.Component {
           username={user.username}
           firstName = {user.firstName}
           lastName = {user.lastName}
+          userType = {user.userType}
+          lastMessage = {tempLastMessage}
+          lastMessageTimeStamp = {tempLastMessageTimeStamp}
+          lastMessageRec = {this.props.lastMessageRec}
+          selectedUser = {this.props.selectedUser}
           selectedTab = {this.state.selectedItem}
-          onTab={this.tabChanges}
+          onTab={(value,value1,value2)=>this.tabChanges(value,value1,value2)}
         />
       );
     });
     
     return (
       <div>
-        <div className="messenger-popup" onClick={this.toggleUsersWindow}>
-				  <span className="messenger-title">Sociami Messenger</span>
+        <div className="messenger-popup" onClick={()=>this.toggleUsersWindow()}>
+				  <span className="messenger-title">Chat</span>
+          <div className={classes}></div>
 			</div>
         <div className="users-top">
           <div className="search-field">
 					  <div className="search-img">
-						  <img alt="search"  src="././assets/img/search.png"/>
+						  <img alt="search"  src="../../assets/img/search.png"/>
 					  </div>
             <input className="inputStyle" type="text" placeholder="Search.." />
           </div>

@@ -4,10 +4,6 @@ class ChatInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { chatInput: '' };
-
-    // React ES6 does not bind 'this' to event handlers by default
-    this.submitHandler = this.submitHandler.bind(this);
-    this.textChangeHandler = this.textChangeHandler.bind(this);
   }
 
   submitHandler(event) {
@@ -15,22 +11,24 @@ class ChatInput extends React.Component {
     event.preventDefault();
 
     // Clear the input box
-    this.setState({ chatInput: '' });
-
+    let copy = Object.assign({}, this.state, {chatInput: ''});
+    this.setState(copy);
+  
     // Call the onSend callback with the chatInput message
     this.props.onSend(this.state.chatInput);
   }
 
   textChangeHandler(event)  {
-    this.setState({ chatInput: event.target.value });
+    let copy = Object.assign({}, this.state, {chatInput: event.target.value});
+    this.setState(copy);
   }
 
   render() {
     return (
-      <form className="write" onSubmit={this.submitHandler}>
+      <form className="write" onSubmit={(event)=>this.submitHandler(event)}>
         <a href="javascript:;" className="write-link attach"></a>
         <input type="text"
-          onChange={this.textChangeHandler}
+          onChange={(event)=>this.textChangeHandler(event)}
           value={this.state.chatInput}
           required />
         <a href="javascript:;" className="write-link smiley"></a>
