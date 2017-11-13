@@ -14,6 +14,8 @@ import EventBriteItemList from '~/src/components/containers/EventBriteItemList';
 import UdemyItemList from '~/src/components/containers/UdemyItemList';
 import FreelancerProjectItemList from '~/src/components/containers/FreelancerProjectItemList';
 
+import ResultCategory from '~/src/common/ResultCategoryNames'
+
 import { withCookies, Cookies } from 'react-cookie';
 
 import ConfigMain from '~/configs/main'
@@ -79,16 +81,16 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const jobsList = (this.props.currentCategory == "RESULTS_CATEGORY_JOBS") 
+    const jobsList = (this.props.currentCategory == ResultCategory.JOBS_INDEED) 
     ? <JobsList items={this.props.searchResults.jobs} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;
     
-    const eventsList = (this.props.currentCategory == "RESULTS_CATEGORY_EVENTS") 
+    const eventsList = (this.props.currentCategory == ResultCategory.EVENTS_EVENTBRITE)
     ? <EventBriteItemList items={this.props.searchResults.events} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;
     
-    const udemyCoursesList = (this.props.currentCategory == "RESULTS_CATEGORY_COURSES") 
+    const udemyCoursesList = (this.props.currentCategory == ResultCategory.COURSES_UDEMY)
     ? <UdemyItemList items={this.props.searchResults.courses} onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
     
-    const freelancerProjectList = (this.props.currentCategory == "RESULTS_CATEGORY_GIGS") 
+    const freelancerProjectList = (this.props.currentCategory == ResultCategory.GIGS_FREELANCER)
     ? <FreelancerProjectItemList items={this.props.searchResults.gigs} 
         onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
 

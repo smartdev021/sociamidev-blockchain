@@ -38,17 +38,7 @@ class SearchHeader extends React.Component {
     const waitingText = (this.props.isFetchInProgress) ? <b>(Wait...)</b> : "";
     const inputPlaceHolder = "Key in a job or a skill you are exploring";
     const buttonText = "Check out the future!";
-
-    const liClassNameJobs = "glyphicon glyphicon-briefcase text-center glyphicon-big li-with-spacing";
-    const liClassNameEvents = "glyphicon glyphicon-calendar text-center glyphicon-big li-with-spacing";
-    const liClassNameTraining = "glyphicon glyphicon-education text-center glyphicon-big li-with-spacing";
-    const liClassNameGigs = "glyphicon glyphicon-list-alt text-center glyphicon-big li-with-spacing";
-
-    const linkJobsClassName = this.props.currentCategory == "RESULTS_CATEGORY_JOBS" ? 'customLinkActive' : "customLink";
-    const linkEventsClassName = this.props.currentCategory == "RESULTS_CATEGORY_EVENTS" ? 'customLinkActive' : "customLink";
-    const linkCoursesClassName = this.props.currentCategory == "RESULTS_CATEGORY_COURSES" ? 'customLinkActive' : "customLink";
-    const linkGigsClassName = this.props.currentCategory == "RESULTS_CATEGORY_GIGS" ? 'customLinkActive' : "customLink";
-
+    
     return (
     <form className="form-inline formSearchPage" action="#" onSubmit={(e) => this.onStartSearch(e)}>
       <div className="form-group">

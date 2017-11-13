@@ -37,6 +37,8 @@ import {
   EXACT_LOCATION_SET,
 } from '~/src/redux/actions/actionTypes';
 
+import ResultCategory from '~/src/common/ResultCategoryNames'
+
 export function isSignUpFormOpen(state = false, action) {
   switch (action.type) {
       case SIGNUP_FORM_OPEN:
@@ -48,7 +50,7 @@ export function isSignUpFormOpen(state = false, action) {
     }
 }
 
-export function currentCategory(state = "RESULTS_CATEGORY_JOBS", action) {
+export function currentCategory(state = ResultCategory.JOBS_INDEED, action) {
     switch (action.type) {
         case SELECT_RESULTS_CATEGORY:
           return action.category;
