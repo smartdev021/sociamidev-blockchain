@@ -30,19 +30,27 @@ import ActionLink from '~/src/components/common/ActionLink'
 import { withCookies, Cookies } from 'react-cookie';
 
 import {
+  fetchUserProfile,
   openUserProfile,
-  openSearchResults,
-  fetchUserProfileComplete,
+  openSignUpForm,
+  closeSignUpForm,
+  setUserAuthorized,
+} from '~/src/redux/actions/authorization'
+
+import {
+  fetchAllTasks
+} from '~/src/redux/actions/tasks'
+
+import {
   fetchJobItemsComplete,
   fetchEventItemsComplete,
   fetchCourseItemsComplete,
   fetchGigItemsComplete,
   fetchResultsInitiate,
   fetchResultsComplete,
-  openSignUpForm,
-  closeSignUpForm,
-  setUserAuthorized,
-} from './redux/actions/actions'
+
+  openSearchResults,
+} from '~/src/redux/actions/fetchResults'
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
 let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");
@@ -64,11 +72,8 @@ class App extends Component {
       country: "sg", 
       query : "",
       isSearchInProgress: false,
-      isAuthorized: false,
       faceBookID: null,
       linkedInID: null,
-      firstName: "",
-      lastName: ""
     };
 
     this.isSearchingJobs = false;
@@ -261,42 +266,8 @@ class App extends Component {
 
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID) {
-      const url = this.state.faceBookID ? `${BackendURL}/fetchUserProfile?faceBookID=${this.state.faceBookID}`
-      : `${BackendURL}/fetchUserProfile?linkedInID=${this.state.linkedInID}`;
-  
-      Axios.get(url)
-      .then((response) =>this.handleUserProfileFetchFromDB(response))
-      .catch((error) =>this.handleUserProfileFetchFromDBError(error));
+      this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID);
     }
-  }
-
-  handleUserProfileFetchFromDB(response) {
-    console.log("handleUserProfileFetchFromDB: ");
-    
-    const responseProfile = response.data.profile;
-
-    console.log("START response.data: ");
-    console.dir(response.data);
-    console.log("END response.data: ");
-
-    let newUserProfile = {
-      _id: response.data._id,
-      firstName: responseProfile.firstName, 
-      lastName: responseProfile.lastName, 
-      interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions
-      skills: responseProfile.skills, //TODO: receive FaceBook advanced permissions
-      experience: responseProfile.experience,
-      education: responseProfile.education
-    }
-
-    let copy = Object.assign({}, this.state, {firstName: responseProfile.firstName, lastName: responseProfile.lastName, isAuthorized: true});
-    this.setState(copy);
-    this.props.fetchUserProfileComplete(newUserProfile);
-    this.props.setUserAuthorized(true);
-  }
-    
-  handleUserProfileFetchFromDBError(error) {
-    console.log("Error fetching FaceBook profile: " + error);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -320,6 +291,17 @@ class App extends Component {
           this.props.openSearchResults();
         }
       }
+    }
+
+    if (prevProps.userProfile != this.props.userProfile) {
+
+      let copy = Object.assign({}, this.state, 
+        {
+          firstName: this.props.userProfile.firstName, 
+          lastName: this.props.userProfile.lastName,
+      });
+
+      this.setState(copy);
     }
 
     if (prevProps != this.props) {
@@ -367,7 +349,7 @@ class App extends Component {
 
     let ChatAppLink = '';
     // Check if user is logged in
-		if(this.state.isAuthorized){
+		if(this.props.isAuthorized){
 			// Check if user is logged in via FB
 			if (this.state.faceBookID) {
         var tempUserType = "facebook";
@@ -393,6 +375,7 @@ class App extends Component {
             onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
             onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
             onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+            onFetchAllTasks={()=>this.props.fetchAllTasks()}
           />
         </section>
         {ChatAppLink}
@@ -410,8 +393,8 @@ App.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
+  isTasksFetchInProgress: PropTypes.bool.isRequired,
   
-  fetchUserProfileComplete: PropTypes.func.isRequired,
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
   populateJobItems: PropTypes.func.isRequired,
@@ -423,6 +406,8 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   setUserAuthorized: PropTypes.func.isRequired,
+  fetchUserProfile: PropTypes.func.isRequired,
+  fetchAllTasks: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -432,12 +417,13 @@ const mapDispatchToProps = dispatch => ({
   populateEventItems: bindActionCreators(fetchEventItemsComplete, dispatch),
   populateCourseItems: bindActionCreators(fetchCourseItemsComplete, dispatch),
   populateGigItems: bindActionCreators(fetchGigItemsComplete, dispatch),
-  fetchUserProfileComplete: bindActionCreators(fetchUserProfileComplete, dispatch),
   fetchResultsInitiate: bindActionCreators(fetchResultsInitiate, dispatch),
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   setUserAuthorized: bindActionCreators(setUserAuthorized, dispatch),
+  fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
+  fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -447,7 +433,9 @@ const mapStateToProps = state => ({
   isSignUpFormOpen: state.isSignUpFormOpen,
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
+  userProfile: state.userProfile,
   exactLocation: state.exactLocation,
+  isTasksFetchInProgress: state.isTasksFetchInProgress,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

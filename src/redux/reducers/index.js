@@ -1,21 +1,14 @@
-import {combineReducers} from "redux"
+import { combineReducers } from "redux"
 
-import {currentCategory, 
-  isOpenProfilePending, 
-  isOpenSearchResultsPending, 
-  searchResults,
-  userProfile,
-  isFetchInProgress,
-  bookmarks,
-  isAuthorized,
-  isSignUpFormOpen,
-  searchQuery,
-  userRoadmaps,
-  exactLocation,
-} from "./syncReducers"
+import { exactLocation } from "./miscReducers"
+import { bookmarks } from "./bookmarks"
+import { isFetchInProgress, searchResults, isOpenSearchResultsPending, searchQuery, resultsSelectedCategory } from "./fetchResults"
+import { userRoadmaps } from "./roadmaps"
+import { tasks, isTasksFetchInProgress} from "./tasks"
+import { isAuthorized, isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authorization"
 
 export default combineReducers({
-  currentCategory,
+  resultsSelectedCategory,
   isOpenProfilePending,
   isOpenSearchResultsPending,
   isFetchInProgress,
@@ -27,4 +20,6 @@ export default combineReducers({
   searchQuery,
   isAuthorized,
   exactLocation,
+  tasks,
+  isTasksFetchInProgress,
 });

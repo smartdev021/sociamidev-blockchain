@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux'
 
 
 import ConfigMain from '~/configs/main'
-import {openUserProfileComplete} from '~/src/redux/actions/actions'
+import { openUserProfileComplete } from '~/src/redux/actions/authorization'
 import "~/src/css/userProfile.css"
 
 class UserProfile extends React.Component {
