@@ -11,7 +11,7 @@ class Sample extends Component {
     super(props);
 
     this.state = {
-      file: "https://www.tutorialspoint.com/reactjs/reactjs_tutorial.pdf",
+      file: "http://sociamibucket.s3.amazonaws.com/pdf/Latest%201110%20FTCHK%20Pitch.pdf",
       numPages: null,
     }
 
@@ -29,7 +29,7 @@ class Sample extends Component {
 
     Axios({
       method:'get',
-      url:'https://www.tutorialspoint.com/reactjs/reactjs_tutorial.pdf',
+      url:'http://sociamibucket.s3.amazonaws.com/pdf/Latest%201110%20FTCHK%20Pitch.pdf',
       config: { headers: {'Content-Type': 'multipart/form-data' }}
     })
     .then((response) =>this.handleFetchPdfDocument(response))
@@ -64,16 +64,8 @@ class Sample extends Component {
     let that = this;
     return (
       <div className="Example">
-        <header>
-          <h1>react-pdf sample page</h1>
-        </header>
         <div className="Example__container">
           <div className="Example__container__load">
-            <label htmlFor="file">Load from file:</label>&nbsp;
-            <input
-              type="file"
-              onChange={that.onFileChange}
-            />
           </div>
           <div className="Example__container__document">
             <Document
