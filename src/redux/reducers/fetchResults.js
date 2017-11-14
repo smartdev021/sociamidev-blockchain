@@ -51,14 +51,22 @@ const searchResultsInitialState = {
   
 export function searchResults(state = searchResultsInitialState, action) {
   switch (action.type) {
+    case FETCH_JOB_ITEMS_INITIATE:
+        return {...state, isFetchingJobs: true};
     case FETCH_JOB_ITEMS_COMPLETE:
-        return {...state, jobs : action.items, numJobs: action.items.length};
+        return {...state, jobs : action.items, numJobs: action.items.length, isFetchingJobs: false};
+    case FETCH_EVENT_ITEMS_INITIATE:
+        return {...state, isFetchingEvents: true};
     case FETCH_EVENT_ITEMS_COMPLETE:
-        return {...state, events : action.items, numEvents: action.items.length};
+        return {...state, events : action.items, numEvents: action.items.length, isFetchingEvents: false};
+    case FETCH_COURSE_ITEMS_INITIATE:
+        return {...state, isFetchingCourses: true};
     case FETCH_COURSE_ITEMS_COMPLETE:
-        return {...state, courses : action.items, numCourses: action.items.length};
+        return {...state, courses : action.items, numCourses: action.items.length, isFetchingCourses: false};
+    case FETCH_GIG_ITEMS_INITIATE:
+        return {...state, isFetchingGigs: true};
     case FETCH_GIG_ITEMS_COMPLETE:
-        return {...state, gigs : action.items, numGigs: action.items.length};
+        return {...state, gigs : action.items, numGigs: action.items.length, isFetchingGigs: false};
     default:
         return state;
     }
