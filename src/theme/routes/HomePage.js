@@ -12,6 +12,8 @@ import {
   setSearchQuery,
 } from '~/src/redux/actions/actions'
 
+import "~/src/css/HomePage.css"
+
 class HomePage extends React.Component {
 
   constructor(props) {
