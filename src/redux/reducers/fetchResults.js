@@ -1,10 +1,14 @@
 
 import {
+    FETCH_JOB_ITEMS_INITIATE,
     FETCH_JOB_ITEMS_COMPLETE,
+    FETCH_EVENT_ITEMS_INITIATE,
     FETCH_EVENT_ITEMS_COMPLETE,
+    FETCH_COURSE_ITEMS_INITIATE,
     FETCH_COURSE_ITEMS_COMPLETE,
+    FETCH_GIG_ITEMS_INITIATE,
     FETCH_GIG_ITEMS_COMPLETE,
-    
+
     FETCH_RESULTS_INITIATE,
     FETCH_RESULTS_COMPLETE,
 
@@ -38,7 +42,12 @@ export function isFetchInProgress(state = false, action) {
     }
 }
   
-const searchResultsInitialState = {jobs: [], events: [], courses: [], gigs: [], numJobs: 0, numCourses: 0, numEvents: 0, numGigs: 0};
+const searchResultsInitialState = {
+    jobs: [], events: [], courses: [], gigs: [], 
+    numJobs: 0, numCourses: 0, numEvents: 0, numGigs: 0,
+    isFetchingJobs: false, isFetchingEvents: false, 
+    isFetchingCourses: false, isFetchingGigs: false
+};
   
 export function searchResults(state = searchResultsInitialState, action) {
   switch (action.type) {

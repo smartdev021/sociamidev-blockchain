@@ -7,6 +7,11 @@ export const OPEN_SEARCH_RESULTS_COMPLETE = "action_open_user_search_results_com
 export const FETCH_USER_PROFILE_INITIATE = "fetch_user_profile_initiate";
 export const FETCH_USER_PROFILE_COMPLETE = "fetch_user_profile_complete";
 
+export const FETCH_JOB_ITEMS_INITIATE = "fetch_job_items_initiate";
+export const FETCH_EVENT_ITEMS_INITIATE = "fetch_event_items_initiate";
+export const FETCH_COURSE_ITEMS_INITIATE = "fetch_course_items_initiate";
+export const FETCH_GIG_ITEMS_INITIATE = "fetch_gig_items_initiate";
+
 export const FETCH_JOB_ITEMS_COMPLETE = "fetch_job_items_complete";
 export const FETCH_EVENT_ITEMS_COMPLETE = "fetch_event_items_complete";
 export const FETCH_COURSE_ITEMS_COMPLETE = "fetch_course_items_complete";

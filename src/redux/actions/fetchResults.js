@@ -1,7 +1,15 @@
+import Axios from 'axios'
+
+import ConfigMain from '~/configs/main'
+
 import {
+    FETCH_JOB_ITEMS_INITIATE,
     FETCH_JOB_ITEMS_COMPLETE,
+    FETCH_EVENT_ITEMS_INITIATE,
     FETCH_EVENT_ITEMS_COMPLETE,
+    FETCH_COURSE_ITEMS_INITIATE,
     FETCH_COURSE_ITEMS_COMPLETE,
+    FETCH_GIG_ITEMS_INITIATE,
     FETCH_GIG_ITEMS_COMPLETE,
     FETCH_RESULTS_INITIATE,
     FETCH_RESULTS_COMPLETE,
@@ -13,10 +21,22 @@ import {
 
 } from './actionTypes';
 
+export function fetchJobItemsInitiate() {
+    return {
+        type: FETCH_JOB_ITEMS_INITIATE,
+    }
+}
+
 export function fetchJobItemsComplete(newItems) {
     return {
         type: FETCH_JOB_ITEMS_COMPLETE,
         items: newItems
+    }
+}
+
+export function fetchEventItemsInitiate() {
+    return {
+        type: FETCH_EVENT_ITEMS_INITIATE,
     }
 }
 
@@ -27,6 +47,11 @@ export function fetchEventItemsComplete(newItems) {
     }
 }
 
+export function fetchCourseItemInitiate() {
+    return {
+        type: FETCH_COURSE_ITEMS_INITIATE,
+    }
+}
 
 export function fetchCourseItemsComplete(newItems) {
     return {
@@ -35,6 +60,11 @@ export function fetchCourseItemsComplete(newItems) {
     }
 }
 
+export function fetchGigItemsInitiate() {
+    return {
+        type: FETCH_GIG_ITEMS_INITIATE,
+    }
+}
 
 export function fetchGigItemsComplete(newItems) {
     return {
