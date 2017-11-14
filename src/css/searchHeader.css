@@ -44,3 +44,7 @@
     height: 100%;
     border: none;
 }
+
+#left-sidebar #main-menu {
+    text-transform: none;
+}
