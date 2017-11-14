@@ -29,7 +29,7 @@ class UserProfile extends React.Component {
 
   renderForm() {
     return (
-      <div className="user_profole_form">
+      <div className="user_profile_form">
     <form className="form-inline" action="#" onSubmit={this.handleFormAction}>
       <div className="form-group">
       <h2 className="form-signin-heading">User profile summary</h2>
