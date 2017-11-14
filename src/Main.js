@@ -13,6 +13,7 @@ import Roadmap from '~/src/theme/routes/Roadmap.js';
 import SearchPage from '~/src/theme/routes/SearchPage.js'
 import UserProfile from '~/src/theme/routes/UserProfile';
 import TaskManagement from '~/src/theme/routes/TaskManagement';
+import ProjectManagement from '~/src/theme/routes/ProjectManager';
 import Authorize from '~/src/authentication/Authorize';
 import SignUpFormPopup from  '~/src/authentication/SignUpForm';
 
@@ -35,6 +36,7 @@ class Main extends React.Component {
         <Route path='/searchResults' render={routeProps => <SearchPage {...routeProps}{...this.props}/>} />
         <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
         <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>} />)}/>
+        <Route path='/projectManagement' render={routeProps => <ProjectManagement {...routeProps}{...this.props}/>} />)}/>
 
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
   )}/>
