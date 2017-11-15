@@ -24,7 +24,8 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import "~/src/css/searchResults.css"
 
-import {openSearchResultsComplete, bookmarkAdd, bookmarksSet} from '~/src/redux/actions/actions'
+import {openSearchResultsComplete} from '~/src/redux/actions/fetchResults'
+import {bookmarkAdd, bookmarksSet} from '~/src/redux/actions/bookmarks'
 
 class SearchResults extends React.Component {
 
@@ -81,16 +82,16 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const jobsList = (this.props.currentCategory == ResultCategory.JOBS_INDEED) 
+    const jobsList = (this.props.resultsSelectedCategory == ResultCategory.JOBS_INDEED) 
     ? <JobsList items={this.props.searchResults.jobs} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;
     
-    const eventsList = (this.props.currentCategory == ResultCategory.EVENTS_EVENTBRITE)
+    const eventsList = (this.props.resultsSelectedCategory == ResultCategory.EVENTS_EVENTBRITE)
     ? <EventBriteItemList items={this.props.searchResults.events} onAddBookmark={(item) => this.handleOpenDetailsPopup(item)}/> : null;
     
-    const udemyCoursesList = (this.props.currentCategory == ResultCategory.COURSES_UDEMY)
+    const udemyCoursesList = (this.props.resultsSelectedCategory == ResultCategory.COURSES_UDEMY)
     ? <UdemyItemList items={this.props.searchResults.courses} onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
     
-    const freelancerProjectList = (this.props.currentCategory == ResultCategory.GIGS_FREELANCER)
+    const freelancerProjectList = (this.props.resultsSelectedCategory == ResultCategory.GIGS_FREELANCER)
     ? <FreelancerProjectItemList items={this.props.searchResults.gigs} 
         onAddBookmark={(item) => this.props.addBookmark(item)}/> : null;
 
@@ -119,7 +120,7 @@ class SearchResults extends React.Component {
 }
 
 SearchResults.propTypes = {
-  currentCategory: PropTypes.string.isRequired,
+  resultsSelectedCategory: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   bookmarks: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -131,7 +132,7 @@ SearchResults.propTypes = {
 }
   
 const mapStateToProps = state => ({
-  currentCategory: state.currentCategory,
+  resultsSelectedCategory: state.resultsSelectedCategory,
   searchResults : state.searchResults,
   isFetchInProgress : state.isFetchInProgress,
   bookmarks : state.bookmarks.bookmarks,

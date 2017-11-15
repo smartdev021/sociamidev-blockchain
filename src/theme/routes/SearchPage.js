@@ -19,7 +19,7 @@ import { withRouter } from 'react-router-dom'
 
 import {
   setSearchQuery,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/fetchResults'
 
 class SearchPage extends React.Component {
   HandleStartSearch() {
@@ -82,7 +82,7 @@ class SearchPage extends React.Component {
 const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
-  currentCategory: state.currentCategory,
+  resultsSelectedCategory: state.resultsSelectedCategory,
   numBookmarks: state.bookmarks.amount,
 })
 

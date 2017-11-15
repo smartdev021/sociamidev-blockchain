@@ -34,6 +34,7 @@ class MainMenu extends React.Component {
     const ResultsItemActive = this.props.history.location.pathname == "/searchResults" ? "menu-item active": "menu-item";
     const RoadmapItemActive = this.props.history.location.pathname == "/roadmap" ? "menu-item active": "menu-item";
     const TaskManagementItemActive = this.props.history.location.pathname == "/taskManagement" ? "menu-item active": "menu-item";
+    const ProjectManagementItemActive = this.props.history.location.pathname == "/projectManagement" ? "menu-item active": "menu-item";
 
     return (
           <section id="left-sidebar">
@@ -51,6 +52,7 @@ class MainMenu extends React.Component {
               <li id="menu-item-featured" className={ResultsItemActive}><Link to='/searchResults'>Results</Link></li>
               <li id="menu-item-tabs" className={RoadmapItemActive}><Link to='/roadmap'>Roadmap</Link></li>
               <li id="menu-item-tabs" className={TaskManagementItemActive}><Link to='/taskManagement'>Task Management</Link></li>
+              <li id="menu-item-tabs" className={ProjectManagementItemActive}><Link to='/projectManagement'>Project Management</Link></li>
             </ul>
           </section>
     );

@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux'
 
 import {
   setSearchQuery,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/fetchResults'
 
 import "~/src/css/howItWorks.css"
 

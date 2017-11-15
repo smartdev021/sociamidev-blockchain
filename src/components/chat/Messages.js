@@ -6,7 +6,7 @@ class Messages extends React.Component {
   componentDidUpdate() {
     // There is a new message in the state, scroll to bottom of list
     const objDiv = document.getElementById('messageList');
-    objDiv.scrollTop = objDiv.scrollHeight;
+    objDiv.scrollTop = objDiv.scrollHeight - 300;
   }
 
   render() {
@@ -17,6 +17,7 @@ class Messages extends React.Component {
             key={i}
             username={message.username}
             message={message.message}
+            time={message.time}
             fromMe={message.fromMe} />
         );
       });
@@ -24,6 +25,7 @@ class Messages extends React.Component {
     return (
       <div id='messageList' className="messageList">
         { messages }
+      <br className="clear" />
       </div>
     );
   }

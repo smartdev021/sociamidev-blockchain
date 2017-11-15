@@ -21,7 +21,7 @@ import {Icon} from 'react-fa'
 import {
   setSearchQuery,
   selectResultsCategory,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/fetchResults'
 
 class SearchPageNavigation extends React.Component {
     handleSelectCategory(e) {
@@ -30,10 +30,10 @@ class SearchPageNavigation extends React.Component {
 
   render() {
 
-    const jobClassName = this.props.currentCategory == ResultCategory.JOBS_INDEED ? "active" : "";
-    const eventClassName = this.props.currentCategory == ResultCategory.EVENTS_EVENTBRITE ? "active" : "";
-    const trainingClassName = this.props.currentCategory == ResultCategory.COURSES_UDEMY ? "active" : "";
-    const gigClassName = this.props.currentCategory == ResultCategory.GIGS_FREELANCER ? "active" : "";
+    const jobClassName = this.props.resultsSelectedCategory == ResultCategory.JOBS_INDEED ? "active" : "";
+    const eventClassName = this.props.resultsSelectedCategory == ResultCategory.EVENTS_EVENTBRITE ? "active" : "";
+    const trainingClassName = this.props.resultsSelectedCategory == ResultCategory.COURSES_UDEMY ? "active" : "";
+    const gigClassName = this.props.resultsSelectedCategory == ResultCategory.GIGS_FREELANCER ? "active" : "";
       
     return (
         <ul className="nav nav-tabs" role="tablist">
@@ -68,7 +68,7 @@ class SearchPageNavigation extends React.Component {
 const mapStateToProps = state => ({
   searchQuery: state.searchQuery,
   isAuthorized: state.isAuthorized,
-  currentCategory: state.currentCategory,
+  resultsSelectedCategory: state.resultsSelectedCategory,
 })
 
 SearchPageNavigation.propTypes = {
@@ -76,7 +76,7 @@ SearchPageNavigation.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   selectResultsCategory: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired,
+  resultsSelectedCategory: PropTypes.string.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

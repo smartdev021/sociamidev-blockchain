@@ -7,6 +7,7 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 
@@ -17,8 +18,15 @@ import ConfigMain from '~/configs/main'
 import TasksWidget from '~/src/theme/components/TasksWidget'
 
 import {
+  setTasks,
+  fetchTasksInitiate,
+  fetchTasksComplete,
+} from '~/src/redux/actions/tasks'
+
+import {
   openSignUpForm,
-} from '~/src/redux/actions/actions'
+} from '~/src/redux/actions/authorization'
+
 
 const BackendURL = ConfigMain.getBackendURL();
 
@@ -39,8 +47,6 @@ class TaskManagement extends React.Component {
 
     this.state = {
       tasksCategory: TaskCategoryYour,
-      allTasks: [],
-      isLoading: false,
     }
   }
 
@@ -54,7 +60,7 @@ class TaskManagement extends React.Component {
       cookies.remove('lastViewedRoadmap');
     }
     else {
-      this.fetchAllTasks();
+      this.props.onFetchAllTasks();
     }
   }
 
@@ -86,35 +92,8 @@ class TaskManagement extends React.Component {
     this.setState(copy);
   }
 
-  setLoading(value) {
-    let copy = Object.assign({}, this.state, {isLoading: value});
-    this.setState(copy);
-  }
-
-  fetchAllTasks() {
-    this.setLoading(true);
-    const url = `${BackendURL}/tasksGet`;
-
-    Axios.get(url)
-    .then((response) =>this.handleFetchAllTasks(response))
-    .catch((error) =>this.handleFetchAllTasksError(error));
-  }
-
-  handleFetchAllTasks(response) {
-    let tasks = response.data;
-
-    let copy = Object.assign({}, this.state, {allTasks: tasks});
-    this.setState(copy);
-
-    this.setLoading(false);
-  }
-
-  handleFetchAllTasksError(error) {
-    this.setLoading(false);
-  }
-
   createAndSaveNewTask(roadmap) {
-    this.setLoading(true);
+    this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
     const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}&userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}`;
 
@@ -124,41 +103,54 @@ class TaskManagement extends React.Component {
   }
 
   handleSaveNewTaskSuccess(response) {
-    this.fetchAllTasks();
+    this.props.fetchTasksComplete();
+    this.props.onFetchAllTasks();
   }
 
   handleSaveNewTaskError(error) {
-    this.fetchAllTasks();
+    this.props.fetchTasksComplete();
+    this.props.onFetchAllTasks();
   }
   
   render() {
     console.log("TaskManagement::render");
     console.dir(this.state);
-    if (this.state.isLoading) {
+    if (this.props.isTasksFetchInProgress) {
       return (<p>Loading tasks. Please wait...</p>);
     }
 
     return (<TasksWidget cookies={this.props.cookies}
     tasksCategory={this.state.tasksCategory}
     onSelectCategory={(categoryType)=>this.selectCategory(categoryType)}
-    allTasks={this.state.allTasks}
+    allTasks={this.props.tasks}
     userProfile={this.props.userProfile}
     onOpenSignUpForm={() => this.props.openSignUpForm()}/>);
   }
 }
 
 TaskManagement.propTypes = {
+  tasks: PropTypes.array.isRequired,
+  isTasksFetchInProgress: PropTypes.bool.isRequired,
+
   openSignUpForm: PropTypes.func.isRequired,
+  setTasks: PropTypes.func.isRequired,
+  fetchTasksInitiate: PropTypes.func.isRequired,
+  fetchTasksComplete: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile,
   isAuthorized: state.isAuthorized,
+  tasks: state.tasks,
+  isTasksFetchInProgress: state.isTasksFetchInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  setTasks: bindActionCreators(setTasks, dispatch),
+  fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
+  fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(withCookies(TaskManagement));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(TaskManagement)));
