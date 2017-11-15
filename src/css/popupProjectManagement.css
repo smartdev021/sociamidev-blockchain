@@ -9,12 +9,6 @@
 .popup-new-project img {
 	max-width: 50%;
 }
-
-.popup-new-project .glyphicon {
-	position: absolute;
-	right: 10px;
-	top: 10px;
-}
   .default-popup-heading,
 	.checkbox {
 	  margin-bottom: 30px;
@@ -44,6 +38,10 @@
 	  border-top-right-radius: 0;
 	}
 
+	.popup-new-project textarea.form-control  {
+	  height: 200px;
+	}
+
 .modal_base {
     background-color: transparent;
     padding-top: 80px;
@@ -59,4 +57,17 @@
 
 .create-project-desc-column {
 	text-align: center;
+}
+
+.popup-new-project .project-section-badge  {
+	margin-right: 20px;
+	padding: 5px 10px;
+}
+
+.popup-new-project .header {
+	text-align: center;
+}
+
+.popup-new-project .milestone-add-button  {
+	font-size: 40px;
 }
