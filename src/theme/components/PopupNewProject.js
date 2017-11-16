@@ -18,12 +18,12 @@ const BackendURL = ConfigMain.getBackendURL();
 class PopupNewProject extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {modalDefaultStyles: {}};
+      this.modalDefaultStyles = {};
     }
 
     componentWillMount() {
-      let copy = Object.assign({}, this.state, {modalDefaultStyles: Modal.defaultStyles});
-      this.setState(copy);
+      console.log("PopupNewProject::componentWillMount");
+      this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
       Modal.defaultStyles.content.background = "white";
@@ -40,8 +40,9 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles.content["width"] = '600px';
     }
 
-    componentWillUnMount() {
-        Modal.defaultStyles = this.state.modalDefaultStyles;
+    componentWillUnmount() {
+      console.log("PopupNewProject::componentWillUnmount");
+      Modal.defaultStyles = this.modalDefaultStyles;
     }
 
     renderModal() {

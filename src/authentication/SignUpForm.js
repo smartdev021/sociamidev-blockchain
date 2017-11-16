@@ -1,69 +1,59 @@
 import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/signUpFormPopup.css"
-import ConfigMain from '~/configs/main';
-
-import { withCookies, Cookies } from 'react-cookie';
-import PropTypes from 'prop-types';
-import { instanceOf } from 'prop-types';
-
-import { connect } from 'react-redux'
-
-import { withRouter } from 'react-router-dom'
-
-const enhanceWithClickOutside = require('react-click-outside');
-
-const BackendURL = ConfigMain.getBackendURL();
 
 class SignupForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {};
+
+      this.modalDefaultStyles = {};
+    }
+
+    componentWillMount() {
+      console.log("SignUpForm::componentWillMount");
+      this.modalDefaultStyles = Modal.defaultStyles;
+
+      Modal.defaultStyles.content.border = "none";
+      Modal.defaultStyles.content.background = "transparent";
+      Modal.defaultStyles.content["color"] = 'white';
+    }
+
+    componentWillUnmount() {
+      console.log("SignUpForm::componentWillUnmount");
+      Modal.defaultStyles = this.modalDefaultStyles;
     }
 
     renderForm() {
-        return (<div>
-          <Modal
-          className={{
-        base: 'modal_base'
-      }}
-            isOpen={this.props.modalIsOpen}
-            onRequestClose={() => this.props.onCloseModal()}
-            contentLabel="Login Form"
-          >
-    
-          <div className="wrapper">
-        <div className="default-popup" >       
-          <h2 className="form-sign-u-heading">Sign Up</h2>
-          <button type="button" className="btn btn-lg btn-primary btn-block" 
-          onClick={()=>this.props.onHandleSignUpFacebook()}>FaceBook</button>
-          <button type="button" className="btn btn-lg btn-warning btn-block" 
-          onClick={()=>this.props.onHandleSignUpLinkedIn()}>LinkedIn</button>
-        </div>
-      </div>
+      console.log("SignUpForm::renderForm");
+        return (
+          <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel="Login Form">
+            <div className="wrapper">
+              <div className="default-popup">       
+                <h2 className="form-sign-u-heading">Sign Up</h2>
+
+                 <button type="button" className="btn btn-lg btn-primary btn-block" 
+                   onClick={()=>this.props.onHandleSignUpFacebook()}>FaceBook</button>
+
+                 <button type="button" className="btn btn-lg btn-warning btn-block" 
+                   onClick={()=>this.props.onHandleSignUpLinkedIn()}>LinkedIn</button>
+
+              </div>
+            </div>
           </Modal>
-        </div>);
+          );
       }
 
-      handleClickOutside() {
-        () => this.props.onCloseModal();
-      }
+    handleClickOutside() {
+      () => this.props.onCloseModal();
+    }
 
     render() {
-        return (
+      return (
         <div>
             {this.renderForm()}
         </div>
-        );
-      }
+      );
+    }
   }
 
-  SignupForm.propTypes = {
-    cookies: instanceOf(Cookies).isRequired,
-  }
-
-  const mapStateToProps = state => ({
-    store: state,
-  })
-
-  export default withRouter(enhanceWithClickOutside(connect(mapStateToProps, null)(withCookies(SignupForm))));
+  export default require('react-click-outside')(SignupForm);

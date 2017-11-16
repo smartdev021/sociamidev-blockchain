@@ -57,7 +57,7 @@ class ProjectManager extends React.Component {
   render() {
     return (
       <div>
-        <PopupNewProject modalIsOpen={this.state.modalIsOpen} onCloseModal={()=>this.closeModal()}/>
+        {this.state.modalIsOpen ? <PopupNewProject modalIsOpen={this.state.modalIsOpen} onCloseModal={()=>this.closeModal()}/> : null}
         {this.renderHeader()}
       </div>);
   }

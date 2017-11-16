@@ -101,19 +101,19 @@ class SearchResults extends React.Component {
     else {
       return (
         <div className="search_results_container">
-          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onCloseModal={()=>this.handleCloseDetailsPopup()} 
-          item={this.state.detailsPopupItem} addBookMark={(item)=>this.props.addBookmark(item)}
-      />
+          {this.state.isDetailsPopupOpen ? <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} 
+            onCloseModal={()=>this.handleCloseDetailsPopup()} 
+              item={this.state.detailsPopupItem} addBookMark={(item)=>this.props.addBookmark(item)}/> : null}
           <div className="row">
-        <div className="col-lg-12">
-            {jobsList}    
-            {eventsList}
-            {udemyCoursesList}
-            {freelancerProjectList}
+            <div className="col-lg-12">
+              {jobsList}    
+              {eventsList}
+              {udemyCoursesList}
+              {freelancerProjectList}
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
-    );
+      );
     }
   }
 

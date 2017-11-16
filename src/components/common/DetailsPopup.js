@@ -1,29 +1,19 @@
 import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/signUpFormPopup.css"
-import ConfigMain from '~/configs/main';
 
-import { withCookies, Cookies } from 'react-cookie';
-import PropTypes from 'prop-types';
-import { instanceOf } from 'prop-types';
-
-import { connect } from 'react-redux'
-
-import { withRouter } from 'react-router-dom'
-
-const enhanceWithClickOutside = require('react-click-outside');
-
-const BackendURL = ConfigMain.getBackendURL();
+import StringUtils from "~/src/utils/StringUtils"
 
 class DetailsPopup extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {modalDefaultStyles: {}};
+      
+      this.modalDefaultStyles = {};
     }
 
     componentWillMount() {
-      let copy = Object.assign({}, this.state, {modalDefaultStyles: Modal.defaultStyles});
-      this.setState(copy);
+      console.log("DetailsPopup::componentWillMount");
+      this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
       Modal.defaultStyles.content.background = "transparent";
@@ -39,24 +29,9 @@ class DetailsPopup extends React.Component {
       Modal.defaultStyles.content["width"] = '800px';
     }
 
-    componentWillUnMount() {
-        Modal.defaultStyles = this.state.modalDefaultStyles;
-    }
-
-    trimmedString(original, limit) {
-      if (original.length < limit) {
-        return original;
-      }
-
-      let trimmed = original.substr(0, limit);
-      trimmed = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
-      
-      if (trimmed.length < original.length) {
-        console.log("original was: " + original);
-        trimmed += "...";
-      }
-
-      return trimmed;
+    componentWillUnmount() {
+      console.log("DetailsPopup::componentWillUnmount");
+      Modal.defaultStyles = this.modalDefaultStyles;
     }
 
     renderJobDetails() {
@@ -99,8 +74,8 @@ class DetailsPopup extends React.Component {
     }
 
     renderEventDetails() {
-      let title = this.props.item.name ? this.trimmedString(this.props.item.name, 40) : '';
-      let description = this.props.item.description ? this.trimmedString(this.props.item.description, 100) : '';
+      let title = this.props.item.name ? StringUtils.trim(this.props.item.name, 40) : '';
+      let description = this.props.item.description ? StringUtils.trim(this.props.item.description, 100) : '';
 
       return (
         <Modal 
@@ -158,12 +133,4 @@ class DetailsPopup extends React.Component {
       }
   }
 
-  DetailsPopup.propTypes = {
-    cookies: instanceOf(Cookies).isRequired,
-  }
-
-  const mapStateToProps = state => ({
-    store: state,
-  })
-
-  export default withRouter(enhanceWithClickOutside(connect(mapStateToProps, null)(withCookies(DetailsPopup))));
+  export default require('react-click-outside')(DetailsPopup);
