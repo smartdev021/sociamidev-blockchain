@@ -146,7 +146,7 @@ class HomePage extends React.Component {
       <article id="intro" className="section-wrapper clearfix" 
         data-custom-background-img="http://sociamibucket.s3.amazonaws.com/twilli_air/assets/images/other_images/bg5.jpg">
         {this.state.isDetailsOpen ? <DetailsPopup modalIsOpen={this.state.isDetailsOpen} 
-          nCloseModal={()=>this.handleCloseModal()} task={this.state.currentTask}/> : null}
+          onCloseModal={()=>this.handleCloseModal()} task={this.state.currentTask}/> : null}
           <div className="clearfix" data-wow-delay="0.3s">
             <div className="col-sm-10 col-md-9 col-lg-10 pull-right">
                 <section className="feature-text">
