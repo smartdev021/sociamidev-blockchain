@@ -27,8 +27,8 @@ class SignupForm extends React.Component {
       console.log("SignUpForm::renderForm");
         return (
           <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel="Login Form">
-            <div className="wrapper">
-              <div className="default-popup">       
+            <div className="signup-form-wrapper">
+              <div className="popup-signup-form">       
                 <h2 className="form-sign-u-heading">Sign Up</h2>
 
                  <button type="button" className="btn btn-lg btn-primary btn-block" 

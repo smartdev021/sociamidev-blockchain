@@ -1,19 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/popupProjectManagement.css"
-import ConfigMain from '~/configs/main';
-
-import { withCookies, Cookies } from 'react-cookie';
-import PropTypes from 'prop-types';
-import { instanceOf } from 'prop-types';
-
-import { connect } from 'react-redux'
-
-import { withRouter } from 'react-router-dom'
-
-const enhanceWithClickOutside = require('react-click-outside');
-
-const BackendURL = ConfigMain.getBackendURL();
 
 class PopupNewProject extends React.Component {
     constructor(props) {
@@ -28,7 +15,7 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles.content.border = "7px solid grey";
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = "initial";
-      Modal.defaultStyles.content.overflow_y = "auto";
+      Modal.defaultStyles.content.overflow = "auto";
       Modal.defaultStyles.content.padding = '0';
       Modal.defaultStyles.content["minWidth"] = '260px';
       Modal.defaultStyles.content["maxWidth"] = '800px';
@@ -45,7 +32,28 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 
+    renderMileStones() {
+      return (
+        <div>
+          <div className="col-lg-12">
+            <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
+            <span className="milestone-title-tag">1 Create 1</span>
+            <span className="milestone-title-tag">1 Token</span>
+            <span className="milestone-title-tag">1 Dec</span>
+            <p>Looking for interested team members. Preferred tech enthusiast.</p>
+         </div>
+         <div className="col-lg-12">
+           <i className="glyphicon glyphicon-hourglass milestone-title-tag"/><span className="milestone-title-tag">2 Market Research</span>
+           <span className="milestone-title-tag">1 Token</span>
+           <span className="milestone-title-tag">20 Dec</span>
+           <p>Looking for research on competitors.</p>
+        </div>
+      </div>
+      );
+    }
+
     renderModal() {
+      const Milestones = this.renderMileStones();
       return (
         <Modal  isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={">Add a new Project"}>
           <div className="container-fluid popup-new-project">
@@ -137,19 +145,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <h5>Milestones</h5>
               </div>
-              <div className="col-lg-12">
-                <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
-                  <span className="milestone-title-tag">1 Create 1</span>
-                    <span className="milestone-title-tag">1 Token</span>
-                      <span className="milestone-title-tag">1 Dec</span>
-                <p>Looking for interested team members. Preferred tech enthusiast.</p>
-              </div>
-              <div className="col-lg-12">
-                <i className="glyphicon glyphicon-hourglass milestone-title-tag"/><span className="milestone-title-tag">2 Market Research</span>
-                  <span className="milestone-title-tag">1 Token</span>
-                    <span className="milestone-title-tag">20 Dec</span>
-                <p>Looking for research on competitors.</p>
-              </div>
+              {Milestones}
               <div className="col-lg-12">
                 <button type="button" className="btn btn-lg btn-outline pull-right" 
                   onClick={()=>this.props.onCloseModal()}>Close</button>
@@ -173,10 +169,4 @@ class PopupNewProject extends React.Component {
     }
   }
 
-  PopupNewProject.propTypes = {
-  }
-
-  const mapStateToProps = state => ({
-  })
-
-  export default withRouter(enhanceWithClickOutside(connect(mapStateToProps, null)(withCookies(PopupNewProject))));
+  export default require('react-click-outside')(PopupNewProject);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import "~/src/css/signUpFormPopup.css"
+import "~/src/css/DetailsPopup.css"
 
 import StringUtils from "~/src/utils/StringUtils"
 
@@ -40,35 +40,36 @@ class DetailsPopup extends React.Component {
       let date = this.props.item.date;
 
       return (
-        <Modal 
-        isOpen={this.props.modalIsOpen}
-        onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title}>
-        <div className="container-fluid default-popup-details">
-        <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
-            <div className="row">
-              <div className="col-lg-12">
-              <a href={this.props.item.url} target="_blank"><h2 className="popup-default-heading">{title}</h2></a>
-            </div>
-            </div>
-            <div className="row">
-            <div className="col-lg-12">
-            <a href={this.props.item.url} target="_blank"><p>{company}</p></a>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title}>
+          <div className="container-fluid default-popup-details">
+            <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+
+              <div className="row">
+                  <div className="col-lg-12">
+                    <a href={this.props.item.url} target="_blank"><h2 className="popup-default-heading">{title}</h2></a>
+                  </div>
               </div>
-            </div>
-            <div className="row">
-            <div className="col-lg-12">
-            <a href={this.props.item.url} target="_blank"><p>{date}</p></a>
+
+              <div className="row">
+                <div className="col-lg-12">
+                  <a href={this.props.item.url} target="_blank"><p>{company}</p></a>
+                </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-              <button type="button" className="btn btn-sm btn-outline-inverse" 
-              onClick={() => this.props.addBookMark(this.props.item)}>Bookmark</button>
+
+              <div className="row">
+                <div className="col-lg-12">
+                  <a href={this.props.item.url} target="_blank"><p>{date}</p></a>
+                </div>
               </div>
-            </div>
+
+              <div className="row">
+                <div className="col-md-12">
+                  <button type="button" className="btn btn-sm btn-outline-inverse" 
+                    onClick={() => this.props.addBookMark(this.props.item)}>Bookmark</button>
+                </div>
+              </div>
             
-              </div>
+          </div>
       </Modal>
       );
     }
@@ -78,59 +79,56 @@ class DetailsPopup extends React.Component {
       let description = this.props.item.description ? StringUtils.trim(this.props.item.description, 100) : '';
 
       return (
-        <Modal 
-        isOpen={this.props.modalIsOpen}
-        onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title}>
-        <div className="container-fluid default-popup-details">
-        <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title}>
+          <div className="container-fluid default-popup-details">
+            <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
             <div className="row">
               <div className="col-lg-12">
-              <a href={this.props.item.url} target="_blank"><h2 className="popup-default-heading">{title}</h2></a>
-            </div>
-            </div>
-            <div className="row">
-            <div className="col-lg-12">
-            <a href={this.props.item.url} target="_blank"><img src={this.props.item.logoUrl} alt={title}/></a>
+                <a href={this.props.item.url} target="_blank"><h2 className="popup-default-heading">{title}</h2></a>
               </div>
             </div>
             <div className="row">
-            <div className="col-lg-12">
-            <a href={this.props.item.url} target="_blank"><p>{description}</p></a>
+              <div className="col-lg-12">
+                <a href={this.props.item.url} target="_blank"><img src={this.props.item.logoUrl} alt={title}/></a>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <a href={this.props.item.url} target="_blank"><p>{description}</p></a>
               </div>
             </div>
             <div className="row">
               <div className="col-md-12">
-              <button type="button" className="btn btn-sm btn-outline-inverse" 
-              onClick={() => this.props.addBookMark(this.props.item)}>Bookmark</button>
+                <button type="button" className="btn btn-sm btn-outline-inverse" 
+                  onClick={() => this.props.addBookMark(this.props.item)}>Bookmark</button>
               </div>
             </div>
             
-              </div>
+          </div>
       </Modal>
       );
     }
 
-    renderForm() {
+    renderDetails() {
       if (this.props.item._type == "indeed_job") {
         return this.renderJobDetails();
       }
       else if (this.props.item._type == "eventbrite_event") {
         return this.renderEventDetails();
       }
-  }
+    }
 
-      handleClickOutside() {
-        () => this.props.onCloseModal();
-      }
+    handleClickOutside() {
+      () => this.props.onCloseModal();
+    }
 
     render() {
         return (
-        <div>
-            {this.renderForm()}
-        </div>
+          <div>
+            {this.renderDetails()}
+          </div>
         );
-      }
+    }
   }
 
   export default require('react-click-outside')(DetailsPopup);
