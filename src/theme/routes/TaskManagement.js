@@ -17,6 +17,8 @@ import ConfigMain from '~/configs/main'
 
 import TasksWidget from '~/src/theme/components/TasksWidget'
 
+import DetailsPopup from '~/src/components/common/DetailsPopup';
+
 import {
   setTasks,
   fetchTasksInitiate,
@@ -38,6 +40,11 @@ const TaskCategoryYour = {
 const TaskCategoryOther = {
   type: "other_tasks",
   name: "Other tasks"
+};
+
+const TaskCategoryAssign = {
+  type: "assign_tasks",
+  name: "Assign tasks"
 };
 
 class TaskManagement extends React.Component {
@@ -84,6 +91,9 @@ class TaskManagement extends React.Component {
     if (newCategoryType == "my_tasks") {
       newCategory = TaskCategoryYour;
     }
+    else if (newCategoryType == "assign_tasks") {
+      newCategory = TaskCategoryAssign;
+    }
     else {
       newCategory = TaskCategoryOther;
     }
@@ -112,6 +122,52 @@ class TaskManagement extends React.Component {
     this.props.onFetchAllTasks();
   }
   
+  handleOpenConfirmTaskDetailsPopup(item){
+    console.log(item);
+    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true,detailsPopupItem: item});
+    this.setState(copy)
+  }
+
+  handleCloseConfirmTaskDetailsPopup(item) {
+    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false});
+    this.setState(copy)
+    this.props.onFetchAllTasks();
+  }
+
+  handleAcceptConfirm(item){
+    let userID = "59fdda7f82fff92dc7527d28";//this.props.userProfile ? this.props.userProfile._id : undefined;
+    var params={
+      _id:this.state.detailsPopupItem._id,
+      taskAsigneeId:userID
+    }
+    Axios.get(`${ConfigMain.getBackendURL()}/taskAssign?_id=${this.state.detailsPopupItem._id}&taskAsigneeId=${userID}`)
+    .then((response) =>this.handleCloseConfirmTaskDetailsPopup(response))
+    .catch((error) =>this.handleCloseConfirmTaskDetailsPopup(error));
+  }
+
+  handleOpenCancelTaskDetailsPopup(item){
+    console.log(item);
+    let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: true,detailsPopupItem: item});
+    this.setState(copy)
+  }
+
+  handleCloseCancelTaskDetailsPopup(item) {
+    let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: false});
+    this.setState(copy)
+    this.props.onFetchAllTasks();
+  }
+
+  handleAcceptCancel(item){
+    let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
+    var params={
+      _id:this.state.detailsPopupItem._id,
+      taskAsigneeId:userID
+    }
+    Axios.get(`${ConfigMain.getBackendURL()}/taskCancel?_id=${this.state.detailsPopupItem._id}&taskAsigneeId=${userID}`)
+    .then((response) =>this.handleCloseCancelTaskDetailsPopup(response))
+    .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
+  }
+
   render() {
     console.log("TaskManagement::render");
     console.dir(this.state);
@@ -119,12 +175,21 @@ class TaskManagement extends React.Component {
       return (<p>Loading tasks. Please wait...</p>);
     }
 
-    return (<TasksWidget cookies={this.props.cookies}
+    return (
+    <div>
+    <TasksWidget cookies={this.props.cookies}
     tasksCategory={this.state.tasksCategory}
     onSelectCategory={(categoryType)=>this.selectCategory(categoryType)}
     allTasks={this.props.tasks}
     userProfile={this.props.userProfile}
-    onOpenSignUpForm={() => this.props.openSignUpForm()}/>);
+    acceptTask={(item)=>this.handleOpenConfirmTaskDetailsPopup(item)}
+    cancelTask={(item)=>this.handleOpenCancelTaskDetailsPopup(item)}
+    onOpenSignUpForm={() => this.props.openSignUpForm()}/>
+
+    <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation" />   
+    <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" />   
+  </div>
+  );
   }
 }
 

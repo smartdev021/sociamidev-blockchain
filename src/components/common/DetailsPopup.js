@@ -109,12 +109,85 @@ class DetailsPopup extends React.Component {
       );
     }
 
+    renderTaskAcceptConfirmtaion() {
+      let title = "Accept Confirmation";
+      let description ="Please Confirm. This will give you 1 Token";
+
+      return (
+        <Modal 
+        isOpen={this.props.modalIsOpen}
+        onRequestClose={() => this.props.onCloseModal()}
+        contentLabel={title}>
+        <div className="container-fluid default-popup-details">
+        <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+        <div className="row">
+              <div className="col-lg-12">
+              <h2 className="popup-default-heading">{title}</h2>
+            </div>
+            </div>
+            
+            <div className="row">
+            <div className="col-lg-12">
+            <a href={this.props.item.url} target="_blank"><p>{description}</p></a>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+              <button type="button" className="btn btn-sm btn-outline-inverse" 
+              onClick={() => this.props.onConfirm(this.props.item)}>Confirm</button>
+              </div>
+            </div>
+            
+              </div>
+      </Modal>
+      );
+    }
+
+    renderTaskCancelConfirmtaion() {
+      let title = "Cancel Confirmation";
+      let description ="Please Confirm.";
+
+      return (
+        <Modal 
+        isOpen={this.props.modalIsOpen}
+        onRequestClose={() => this.props.onCloseModal()}
+        contentLabel={title}>
+        <div className="container-fluid default-popup-details">
+        <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+        <div className="row">
+              <div className="col-lg-12">
+              <h2 className="popup-default-heading">{title}</h2>
+            </div>
+            </div>
+            
+            <div className="row">
+            <div className="col-lg-12">
+            <a href={this.props.item.url} target="_blank"><p>{description}</p></a>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+              <button type="button" className="btn btn-sm btn-outline-inverse" 
+              onClick={() => this.props.onConfirm(this.props.item)}>Confirm</button>
+              </div>
+            </div>
+            
+              </div>
+      </Modal>
+      );
+    }
     renderDetails() {
       if (this.props.item._type == "indeed_job") {
         return this.renderJobDetails();
       }
       else if (this.props.item._type == "eventbrite_event") {
         return this.renderEventDetails();
+      }
+      else if(this.props.item=="accept_confirmation"){
+        return this.renderTaskAcceptConfirmtaion();
+      }
+      else if(this.props.item=="cancel_confirmation"){
+        return this.renderTaskCancelConfirmtaion();
       }
     }
 
