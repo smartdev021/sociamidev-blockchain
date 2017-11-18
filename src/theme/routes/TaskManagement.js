@@ -135,7 +135,7 @@ class TaskManagement extends React.Component {
   }
 
   handleAcceptConfirm(item){
-    let userID = "59fdda7f82fff92dc7527d28";//this.props.userProfile ? this.props.userProfile._id : undefined;
+    let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
     var params={
       _id:this.state.detailsPopupItem._id,
       taskAsigneeId:userID
