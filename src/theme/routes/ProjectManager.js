@@ -30,6 +30,11 @@ class ProjectManager extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log("ProjectManager::componentDidUpdate");
+    console.dir(this.state);
+  }
+
   componentWillMount() {
     if (this.state.tasksAmount == 0) {
       this.openModal();
@@ -38,8 +43,17 @@ class ProjectManager extends React.Component {
 
   closeModal(project) {
     console.dir(project);
-    let copy = Object.assign({}, this.state, {modalIsOpen: false});
-    this.setState(copy);
+    if (project) {
+      let copyProjects = this.state.projects.slice(0);
+      copyProjects.push(project);
+      
+      let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: copyProjects});
+      this.setState(copy);
+    }
+    else {
+      let copy = Object.assign({}, this.state, {modalIsOpen: false});
+      this.setState(copy);
+    }
   }
 
   openModal() {
@@ -102,6 +116,9 @@ class ProjectManager extends React.Component {
     let {projects} = this.state;
     let selectedProject = (this.state.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
     ? this.state.projects[this.state.selectedProjectIndex] : undefined;
+
+    console.log("selectedProject: ");
+    console.dir(selectedProject);
     return (
       <div>
         {this.state.modalIsOpen ? 

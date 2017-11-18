@@ -7,8 +7,7 @@ class PopupNewProject extends React.Component {
       super(props);
       this.modalDefaultStyles = {};
 
-      const initialStateProject = this.props.project ? this.props.project
-      : {
+      const initialStateProject = this.props.project ? this.props.project : {
         name: "",
         description: "",
         nature: "",
@@ -127,7 +126,7 @@ class PopupNewProject extends React.Component {
       console.log("PopupNewProject::componentWillUnmount");
       Modal.defaultStyles = this.modalDefaultStyles;
     }
-
+    
     renderSingleMilestone(milestone, i) {
       return (
         <div className="col-lg-12" key={i}>
@@ -218,13 +217,13 @@ class PopupNewProject extends React.Component {
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="project_name" name="project_name" autoComplete="off" placeholder="Name of Project" autoFocus
-                      onChange={(e)=>this.handleChangeName(e)}/>
+                      onChange={(e)=>this.handleChangeName(e)} value={this.state.project.name}/>
                 </div>
               </div>
               <div className="col-lg-12">
                 <div className="form-group">
                   <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
-                    name="project_desc"onChange={(e)=>this.handleChangeDescription(e)}/>
+                    name="project_desc"onChange={(e)=>this.handleChangeDescription(e)} value={this.state.project.description}/>
                 </div> 
               </div>
               <div className="col-lg-12">
@@ -235,7 +234,7 @@ class PopupNewProject extends React.Component {
                   <span className="input-group-addon"><i className="glyphicon glyphicon-search"></i></span>
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                       id="project_nature" name="project_nature" autoComplete="off" 
-                        placeholder="Blockchain" onChange={(e)=>this.handleChangeNature(e)}/>
+                        placeholder="Blockchain" onChange={(e)=>this.handleChangeNature(e)} value={this.state.project.nature}/>
                 </div>
               </div>
               <div className="col-lg-6">
