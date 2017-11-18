@@ -11,11 +11,13 @@ import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 
+const Hash = require('object-hash');
+
 import PopupNewProject from '~/src/theme/components/PopupNewProject';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-var Hash = require('object-hash');
+import ConfigMain from '~/configs/main'
 
 import "~/src/css/projectManagement.css"
 
@@ -26,10 +28,53 @@ class ProjectManager extends React.Component {
 
     this.state = {
       modalIsOpen: false,
-      tasksAmount: 0,
+      projectsAmount: 0,
       projects: [],
       selectedProjectIndex: 0,
     }
+  }
+
+  tryReadProjectsFromCookies() {
+    const { cookies } = this.props;
+    
+    const savedProjects = cookies.get('projects');
+
+    console.log("tryReadProjectsFromCookies: savedProjects: ");
+    console.dir(savedProjects);
+
+    if (savedProjects) {
+      let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: savedProjects});
+      this.setState(copy);
+      return true;
+    }
+
+    return false;
+  }
+
+  tryReadProjects() {
+    return this.tryReadProjectsFromCookies();
+  }
+
+  saveProjects(projects) {
+    this.saveProjectsToCookies(projects);
+  }
+
+  saveProjectsToCookies(projects) {
+    const { cookies } = this.props;
+
+    let dateExpire = new Date();
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
+    
+    let options = { path: '/', expires: dateExpire};
+
+    console.log("saveProjectsToCookies: projects: ");
+    console.dir(projects);
+    
+    cookies.set('projects', projects, options); //will expire in 'lifetimeMinutes' minutes
+
+    const savedProjects = cookies.get('projects');
+    console.log("saveProjectsToCookies: savedProjects: ");
+    console.dir(savedProjects);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -38,7 +83,7 @@ class ProjectManager extends React.Component {
   }
 
   componentWillMount() {
-    if (this.state.tasksAmount == 0) {
+    if (!this.tryReadProjects()) {
       this.openModal();
     }
   }
@@ -71,6 +116,8 @@ class ProjectManager extends React.Component {
 
       let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: copyProjects});
       this.setState(copy);
+
+      this.saveProjects(copyProjects);
     }
     else {
       let copy = Object.assign({}, this.state, {modalIsOpen: false});
@@ -94,10 +141,13 @@ class ProjectManager extends React.Component {
     );
   }
 
-  renderProjects(projects) {
-    if (!projects) {
+  renderProjects() {
+    if (!this.state.projects || this.state.projects.length == 0) {
       return null;
     }
+
+    console.log("renderProjects this.state.projects: ");
+    console.dir(this.state.projects);
 
     let that = this;
 
@@ -105,7 +155,7 @@ class ProjectManager extends React.Component {
       <section className="feature-columns"> 
         <div className="row">
           {
-            projects.map(function(project, i) {
+            this.state.projects.map(function(project, i) {
               return (
                 <article className="jobTile feature-col col-md-4" key={i}>
                   <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
@@ -135,7 +185,7 @@ class ProjectManager extends React.Component {
   }
 
   render() {
-    let {projects} = this.state;
+    let that = this;
     let selectedProject = (this.state.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
     ? this.state.projects[this.state.selectedProjectIndex] : undefined;
 
@@ -148,7 +198,7 @@ class ProjectManager extends React.Component {
             onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}/> : null
         }
         {this.renderHeader()}
-        {this.renderProjects(projects)}
+        {that.renderProjects()}
       </div>);
   }
 
