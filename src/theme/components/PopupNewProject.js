@@ -8,9 +8,11 @@ class PopupNewProject extends React.Component {
       this.modalDefaultStyles = {};
 
       const initialStateProject = this.props.project ? this.props.project : {
+        id: undefined,
         name: "",
         description: "",
         nature: "",
+        creationTime: undefined,
         milestones: [],
       };
 
@@ -301,6 +303,10 @@ class PopupNewProject extends React.Component {
     }
 
     handleCloseAndSave() {
+      if (!this.state.project.creationDate) {
+        this.state.project.creationTime = Date.now();
+      }
+
       this.props.onCloseModal(this.state.project);
     }
 

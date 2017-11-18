@@ -15,6 +15,8 @@ import PopupNewProject from '~/src/theme/components/PopupNewProject';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+var Hash = require('object-hash');
+
 import "~/src/css/projectManagement.css"
 
 class ProjectManager extends React.Component {
@@ -44,9 +46,29 @@ class ProjectManager extends React.Component {
   closeModal(project) {
     console.dir(project);
     if (project) {
+
       let copyProjects = this.state.projects.slice(0);
-      copyProjects.push(project);
-      
+
+      if (!project.id) {
+        console.log("Adding new project...");
+        project.id = Hash(project);
+
+        copyProjects.push(project);
+      }
+      else {
+        const idToFind = project.id;
+        let findByID = function(curProject) {
+          return curProject.id == idToFind;
+        }
+
+        const foundIndex = this.state.projects.findIndex(findByID);
+
+        if (foundIndex >= 0) {
+          console.log("Altering existing project...");
+          copyProjects[foundIndex] = project;
+        }
+      }
+
       let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: copyProjects});
       this.setState(copy);
     }
