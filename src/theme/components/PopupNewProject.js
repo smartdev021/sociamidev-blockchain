@@ -142,16 +142,13 @@ class PopupNewProject extends React.Component {
     }
 
     renderMileStones() {
-      const mileStones = [
-        {name: "1 Create 1", description: "Looking for interested team members. Preferred tech enthusiast.", price: 1, date: "1 Dec"},
-        {name: "2 Market Research", description: "Looking for research on competitors.", price: 1, date: "20 Dec"},
-        {name: "2 Market Research", description: "Looking for research on competitors.", price: 7, date: "31 Dec"},
-        {name: "1 Create 1", description: "Looking for interested team members. Preferred tech enthusiast.", price: 2, date: "7 Dec"},
-        {name: "2 Market Research", description: "Looking for research on competitors.", price: 7, date: "31 Dec"},
-        {name: "1 Create 1", description: "Looking for interested team members. Preferred tech enthusiast.", price: 2, date: "7 Dec"},
-      ];
+      if (this.state.project.milestones.length == 0) {
+        return null;
+      }
 
       let renderSingleMilestone = this.renderSingleMilestone;
+
+      let milestones = this.state.project.milestones;
 
       return (
         <div>
@@ -160,7 +157,7 @@ class PopupNewProject extends React.Component {
               <h5>Milestones</h5>
             </div>
               {
-                mileStones.map(function(milestone, i) {
+                milestones.map(function(milestone, i) {
                   return renderSingleMilestone(milestone, i);
                 })
               }
@@ -270,7 +267,7 @@ class PopupNewProject extends React.Component {
           </div>
         </div>
       );
-    }renderMileStones
+    }
 
     renderModal() {
       const Milestones = this.renderMileStones();

@@ -135,6 +135,30 @@ class ProjectManager extends React.Component {
     this.setState(copy);
   }
 
+  renderMilestones(milestones) {
+    if (milestones.length == 0) {
+      return null;
+    }
+
+    let renderSingleMilestone = this.renderSingleMilestone;
+
+    return (
+      <div>
+        <h6>Next</h6>
+        <h6>Milestones:</h6>
+        {
+          milestones.map(function(milestone, i) {
+            return (
+              <div key={i}>
+                <p>{milestone.name}</p>
+                <p>{milestone.price}</p>
+              </div>);
+          })
+        }
+    </div>
+    );
+  }
+
   renderProject(task) {
     return (
       <h5>{project.name}</h5>
@@ -161,6 +185,8 @@ class ProjectManager extends React.Component {
                   <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
                     <div className="caption">
                       <p>{project.name}</p>
+                      <p>{project.description}</p>
+                      {that.renderMilestones(project.milestones)}
                     </div>
                   </ActionLink>
                 </article>
