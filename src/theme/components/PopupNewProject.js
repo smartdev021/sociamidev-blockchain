@@ -7,50 +7,100 @@ class PopupNewProject extends React.Component {
       super(props);
       this.modalDefaultStyles = {};
 
+      const initialStateProject = this.props.project ? this.props.project
+      : {
+        name: "",
+        description: "",
+        nature: "",
+        milestones: [],
+      };
+
       this.state = {
-        project: {
-          name: "",
-          description: "",
-          nature: "",
-          milestones: [],
-        },
+        project: initialStateProject,
+        milestoneTemp: {description: undefined, price: undefined, date: undefined},
       }
     }
 
     handleChangeName(e) {
       e.preventDefault();
 
-      let copy = Object.assign({}, this.state, {});
-      this.setState(copy);
+      let projectCopy = Object.assign({}, this.state.project);
+      projectCopy.name = e.target.value;
 
-      console.log("handleChangeName");
+      let copy = Object.assign({}, this.state, {project: projectCopy});
+      this.setState(copy);
     }
 
     handleChangeDescription(e) {
       e.preventDefault();
 
-      let copy = Object.assign({}, this.state, {});
-      this.setState(copy);
+      let projectCopy = Object.assign({}, this.state.project);
+      projectCopy.description = e.target.value;
 
-      console.log("handleChangeDescription");
+      let copy = Object.assign({}, this.state, {project: projectCopy});
+      this.setState(copy);
     }
 
     handleChangeNature(e) {
       e.preventDefault();
 
-      let copy = Object.assign({}, this.state, {});
-      this.setState(copy);
+      let projectCopy = Object.assign({}, this.state.project);
+      projectCopy.nature = e.target.value;
 
-      console.log("handleChangeNature");
+      let copy = Object.assign({}, this.state, {project: projectCopy});
+      this.setState(copy);
     }
 
     handleChangeMilestoneDesctiption(e) {
       e.preventDefault();
-
-      let copy = Object.assign({}, this.state, {});
+      
+      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
+      milestoneCopy.description = e.target.value;
+      
+      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
       this.setState(copy);
+    }
 
-      console.log("handleChangeMilestoneDesctiption");
+    handleChangeMilestonePrice(e) {
+      e.preventDefault();
+      
+      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
+      milestoneCopy.price = e.target.value;
+      
+      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
+      this.setState(copy);
+    }
+
+    handleChangeMilestoneDate(e) {
+      e.preventDefault();
+      
+      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
+      milestoneCopy.date = e.target.value;
+      
+      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
+      this.setState(copy);
+    }
+
+    handleMilestoneAdd(e) {
+      e.preventDefault();
+      
+      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
+      
+      let projectCopy = Object.assign({}, this.state.project);
+
+      if (milestoneCopy != this.state.milestoneTemp) {
+        projectCopy.milestones.push(milestoneCopy);
+      }
+
+      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy, project: projectCopy});
+      this.setState(copy);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+      if (prevState != this.state) {
+        console.log("PopupNewProject::componentDidUpdate(prevProps, prevState)");
+        console.dir(this.state);
+      }
     }
 
     componentWillMount() {
@@ -203,13 +253,14 @@ class PopupNewProject extends React.Component {
                 </div> 
               </div>
               <div className="col-lg-6">
-                <div className="glyphicon glyphicon-plus milestone-add-button"/>
+                <div className="glyphicon glyphicon-plus milestone-add-button" onClick={(e)=>this.handleMilestoneAdd(e)}/>
                 <div>Add</div>
               </div>
               <div className="col-lg-12">
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
-                    id="milestone_value" name="milestone_value" autoComplete="off" placeholder="Min Token"/>
+                    id="milestone_value" name="milestone_value" autoComplete="off" placeholder="Min Token" 
+                      onChange={(e)=>this.handleChangeMilestonePrice(e)}/>
                 </div>
               </div>
               <div className="col-lg-12">
@@ -226,7 +277,7 @@ class PopupNewProject extends React.Component {
       const FormContent = this.renderFormContent();
 
       return (
-        <Modal  isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={">Add a new Project"}>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={">Add a new Project"}>
           <div className="container-fluid popup-new-project">
             {PopupHeader}
             {FormContent}
