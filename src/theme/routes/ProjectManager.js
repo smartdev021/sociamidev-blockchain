@@ -13,6 +13,8 @@ import PropTypes from 'prop-types';
 
 import PopupNewProject from '~/src/theme/components/PopupNewProject';
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 import "~/src/css/projectManagement.css"
 
 class ProjectManager extends React.Component {
@@ -23,6 +25,8 @@ class ProjectManager extends React.Component {
     this.state = {
       modalIsOpen: false,
       tasksAmount: 0,
+      projects: [],
+      selectedProjectIndex: 0,
     }
   }
 
@@ -38,8 +42,47 @@ class ProjectManager extends React.Component {
   }
 
   openModal() {
-    let copy = Object.assign({}, this.state, {modalIsOpen: true});
+    let copy = Object.assign({}, this.state, {modalIsOpen: true, selectedProjectIndex: -1});
     this.setState(copy);
+  }
+
+  openModalWithProject(index) {
+    let copy = Object.assign({}, this.state, {modalIsOpen: true, selectedProjectIndex: index});
+    this.setState(copy);
+  }
+
+  renderProject(task) {
+    return (
+      <h5>{project.name}</h5>
+    );
+  }
+
+  renderProjects(projects) {
+    if (!projects) {
+      return null;
+    }
+
+    let that = this;
+
+    return (
+      <section className="feature-columns"> 
+        <div className="row">
+          {
+            projects.map(function(project, i) {
+              return (
+                <article className="jobTile feature-col col-md-4" key={i}>
+                  <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
+                    <div className="caption">
+                      <p>{project.name}</p>
+                    </div>
+                  </ActionLink>
+                </article>
+              );
+            })
+          }
+        </div>
+      </section>
+    );
   }
 
   renderHeader() {
@@ -55,10 +98,17 @@ class ProjectManager extends React.Component {
   }
 
   render() {
+    let {projects} = this.state;
+    let selectedProject = (this.state.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
+    ? this.state.projects[this.state.selectedProjectIndex] : undefined;
     return (
       <div>
-        {this.state.modalIsOpen ? <PopupNewProject modalIsOpen={this.state.modalIsOpen} onCloseModal={()=>this.closeModal()}/> : null}
+        {this.state.modalIsOpen ? 
+          <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
+            onCloseModal={()=>this.closeModal()} project={selectedProject}/> : null
+        }
         {this.renderHeader()}
+        {this.renderProjects(projects)}
       </div>);
   }
 
