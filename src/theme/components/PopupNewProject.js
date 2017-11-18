@@ -277,7 +277,7 @@ class PopupNewProject extends React.Component {
       const FormContent = this.renderFormContent();
 
       return (
-        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={">Add a new Project"}>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.handleClose()} contentLabel={">Add a new Project"}>
           <div className="container-fluid popup-new-project">
             {PopupHeader}
             {FormContent}
@@ -285,7 +285,7 @@ class PopupNewProject extends React.Component {
             <div className="row">
               <div className="col-lg-12">
                 <button type="button" className="btn btn-lg btn-outline pull-right" 
-                  onClick={()=>this.props.onCloseModal()}>Close</button>
+                  onClick={() => this.handleCloseAndSave()}>Close</button>
               </div>
             </div>
           </div>
@@ -294,7 +294,15 @@ class PopupNewProject extends React.Component {
     }
 
     handleClickOutside() {
-        () => this.props.onCloseModal();
+        () => this.handleClose();
+    }
+
+    handleClose() {
+      this.props.onCloseModal();
+    }
+
+    handleCloseAndSave() {
+      this.props.onCloseModal(this.state.project);
     }
 
     render() {

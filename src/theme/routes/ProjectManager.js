@@ -36,7 +36,8 @@ class ProjectManager extends React.Component {
     }
   }
 
-  closeModal() {
+  closeModal(project) {
+    console.dir(project);
     let copy = Object.assign({}, this.state, {modalIsOpen: false});
     this.setState(copy);
   }
@@ -105,7 +106,7 @@ class ProjectManager extends React.Component {
       <div>
         {this.state.modalIsOpen ? 
           <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
-            onCloseModal={()=>this.closeModal()} project={selectedProject}/> : null
+            onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}/> : null
         }
         {this.renderHeader()}
         {this.renderProjects(projects)}
