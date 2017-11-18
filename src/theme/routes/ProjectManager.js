@@ -150,8 +150,8 @@ class ProjectManager extends React.Component {
           milestones.map(function(milestone, i) {
             return (
               <div key={i}>
-                <p>{milestone.name}</p>
-                <p>{milestone.price}</p>
+                <p>{milestone.description}</p>
+                <p>{milestone.price}{milestone.price > 1 ? " tokens" : " token"}</p>
               </div>);
           })
         }
@@ -184,8 +184,8 @@ class ProjectManager extends React.Component {
                 <article className="jobTile feature-col col-md-4" key={i}>
                   <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
                     <div className="caption">
-                      <p>{project.name}</p>
-                      <p>{project.description}</p>
+                      <h2>{project.name}</h2>
+                      <h3>{project.description}</h3>
                       {that.renderMilestones(project.milestones)}
                     </div>
                   </ActionLink>

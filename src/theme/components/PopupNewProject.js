@@ -18,7 +18,7 @@ class PopupNewProject extends React.Component {
 
       this.state = {
         project: initialStateProject,
-        milestoneTemp: {description: undefined, price: undefined, date: undefined},
+        milestoneTemp: {name: undefined, description: undefined, price: undefined, date: undefined},
       }
     }
 
@@ -97,6 +97,27 @@ class PopupNewProject extends React.Component {
       this.setState(copy);
     }
 
+    handleMilestoneDelete(e) {
+      e.preventDefault();
+      
+      let indexToDelete = Number(e.target.id);
+
+      if (this.state.project.milestones.length > indexToDelete) {
+        let projectCopy = Object.assign({}, this.state.project);
+
+        projectCopy.milestones.splice(indexToDelete, 1);
+
+        let copy = Object.assign({}, this.state, {project: projectCopy});
+        this.setState(copy);
+      }
+    }
+
+    handleMilestoneAddToTaskManager(e) {
+      e.preventDefault();
+      
+      console.log("handleMilestoneAddToTaskManager: " + e.target.id);
+    }
+
     componentDidUpdate(prevProps, prevState) {
       if (prevState != this.state) {
         console.log("PopupNewProject::componentDidUpdate(prevProps, prevState)");
@@ -130,6 +151,9 @@ class PopupNewProject extends React.Component {
     }
     
     renderSingleMilestone(milestone, i) {
+      let that = this;
+      console.log("renderSingleMilestone");
+      console.dir(this);
       return (
         <div className="col-lg-12" key={i}>
           <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
@@ -137,6 +161,10 @@ class PopupNewProject extends React.Component {
           <span className="milestone-title-tag">{milestone.price} {milestone.price > 1 ? "Tokens" : "Token"}</span>
           <span className="milestone-title-tag">{milestone.date}</span>
           <p>{milestone.description}</p>
+          <p> 
+            <i className="glyphicon glyphicon-bullhorn" id={i} onClick={(e)=> this.handleMilestoneAddToTaskManager(e)}>Add to Task Mg</i>
+            <i className="glyphicon glyphicon-minus" id={i} onClick={(e)=> this.handleMilestoneDelete(e)}>Delete</i>
+          </p>
       </div>
       );
     }
@@ -146,7 +174,7 @@ class PopupNewProject extends React.Component {
         return null;
       }
 
-      let renderSingleMilestone = this.renderSingleMilestone;
+      let that = this;
 
       let milestones = this.state.project.milestones;
 
@@ -158,7 +186,7 @@ class PopupNewProject extends React.Component {
             </div>
               {
                 milestones.map(function(milestone, i) {
-                  return renderSingleMilestone(milestone, i);
+                  return that.renderSingleMilestone(milestone, i);
                 })
               }
           </div>
@@ -245,7 +273,9 @@ class PopupNewProject extends React.Component {
                 <h5><span className="badge project-section-badge">3</span>Milestone Creator</h5>
               </div>
               <div className="col-lg-6">
-                <div className="form-group">
+                <div className="form-group"> <div>
+                  You have this roadmap
+                </div>
                   <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
                     name="milestone_desc" onChange={(e)=>this.handleChangeMilestoneDesctiption(e)}/>
                 </div> 
