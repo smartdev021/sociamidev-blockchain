@@ -15,7 +15,13 @@ class SignupForm extends React.Component {
 
       Modal.defaultStyles.content.border = "none";
       Modal.defaultStyles.content.background = "transparent";
+      Modal.defaultStyles.content.overflow = "hidden";
       Modal.defaultStyles.content["color"] = 'white';
+      Modal.defaultStyles.content["marginLeft"] = 'auto';
+      Modal.defaultStyles.content["marginRight"] = 'auto';
+      Modal.defaultStyles.content["minWidth"] = '260px';
+      Modal.defaultStyles.content["maxWidth"] = '380px';
+      Modal.defaultStyles.content["height"] = '300px';
     }
 
     componentWillUnmount() {
@@ -27,21 +33,19 @@ class SignupForm extends React.Component {
       console.log("SignUpForm::renderForm");
         return (
           <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel="Login Form">
-            <div className="signup-form-wrapper">
-              <div className="popup-signup-form">       
-                <h2 className="form-sign-u-heading">Sign Up</h2>
+            <div className="popup-signup-form">       
+              <h2 className="form-sign-u-heading">Sign Up</h2>
 
-                 <button type="button" className="btn btn-lg btn-primary btn-block" 
-                   onClick={()=>this.props.onHandleSignUpFacebook()}>FaceBook</button>
+              <button type="button" className="btn btn-lg btn-primary btn-block" 
+               onClick={()=>this.props.onHandleSignUpFacebook()}>FaceBook</button>
 
-                 <button type="button" className="btn btn-lg btn-warning btn-block" 
-                   onClick={()=>this.props.onHandleSignUpLinkedIn()}>LinkedIn</button>
+              <button type="button" className="btn btn-lg btn-warning btn-block" 
+               onClick={()=>this.props.onHandleSignUpLinkedIn()}>LinkedIn</button>
 
-              </div>
             </div>
           </Modal>
           );
-      }
+    }
 
     handleClickOutside() {
       () => this.props.onCloseModal();

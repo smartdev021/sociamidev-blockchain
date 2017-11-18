@@ -21,6 +21,7 @@ class DetailsPopupLatestTask extends React.Component {
       Modal.defaultStyles.content.padding = '0';
       Modal.defaultStyles.content["minWidth"] = '260px';
       Modal.defaultStyles.content["maxWidth"] = '800px';
+      Modal.defaultStyles.content["height"] = 'initial';
       Modal.defaultStyles.content["minHeight"] = '500px';
       Modal.defaultStyles.content["marginLeft"] = 'auto';
       Modal.defaultStyles.content["marginRight"] = 'auto';

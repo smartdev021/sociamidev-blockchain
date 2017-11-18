@@ -6,6 +6,51 @@ class PopupNewProject extends React.Component {
     constructor(props) {
       super(props);
       this.modalDefaultStyles = {};
+
+      this.state = {
+        project: {
+          name: "",
+          description: "",
+          nature: "",
+          milestones: [],
+        },
+      }
+    }
+
+    handleChangeName(e) {
+      e.preventDefault();
+
+      let copy = Object.assign({}, this.state, {});
+      this.setState(copy);
+
+      console.log("handleChangeName");
+    }
+
+    handleChangeDescription(e) {
+      e.preventDefault();
+
+      let copy = Object.assign({}, this.state, {});
+      this.setState(copy);
+
+      console.log("handleChangeDescription");
+    }
+
+    handleChangeNature(e) {
+      e.preventDefault();
+
+      let copy = Object.assign({}, this.state, {});
+      this.setState(copy);
+
+      console.log("handleChangeNature");
+    }
+
+    handleChangeMilestoneDesctiption(e) {
+      e.preventDefault();
+
+      let copy = Object.assign({}, this.state, {});
+      this.setState(copy);
+
+      console.log("handleChangeMilestoneDesctiption");
     }
 
     componentWillMount() {
@@ -19,6 +64,7 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles.content.padding = '0';
       Modal.defaultStyles.content["minWidth"] = '260px';
       Modal.defaultStyles.content["maxWidth"] = '800px';
+      Modal.defaultStyles.content["height"] = 'initial';
       Modal.defaultStyles.content["minHeight"] = '500px';
       Modal.defaultStyles.content["marginLeft"] = 'auto';
       Modal.defaultStyles.content["marginRight"] = 'auto';
@@ -32,32 +78,50 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 
-    renderMileStones() {
+    renderSingleMilestone(milestone, i) {
       return (
-        <div>
-          <div className="col-lg-12">
-            <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
-            <span className="milestone-title-tag">1 Create 1</span>
-            <span className="milestone-title-tag">1 Token</span>
-            <span className="milestone-title-tag">1 Dec</span>
-            <p>Looking for interested team members. Preferred tech enthusiast.</p>
-         </div>
-         <div className="col-lg-12">
-           <i className="glyphicon glyphicon-hourglass milestone-title-tag"/><span className="milestone-title-tag">2 Market Research</span>
-           <span className="milestone-title-tag">1 Token</span>
-           <span className="milestone-title-tag">20 Dec</span>
-           <p>Looking for research on competitors.</p>
-        </div>
+        <div className="col-lg-12" key={i}>
+          <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
+          <span className="milestone-title-tag">{milestone.name}</span>
+          <span className="milestone-title-tag">{milestone.price} {milestone.price > 1 ? "Tokens" : "Token"}</span>
+          <span className="milestone-title-tag">{milestone.date}</span>
+          <p>{milestone.description}</p>
       </div>
       );
     }
 
-    renderModal() {
-      const Milestones = this.renderMileStones();
+    renderMileStones() {
+      const mileStones = [
+        {name: "1 Create 1", description: "Looking for interested team members. Preferred tech enthusiast.", price: 1, date: "1 Dec"},
+        {name: "2 Market Research", description: "Looking for research on competitors.", price: 1, date: "20 Dec"},
+        {name: "2 Market Research", description: "Looking for research on competitors.", price: 7, date: "31 Dec"},
+        {name: "1 Create 1", description: "Looking for interested team members. Preferred tech enthusiast.", price: 2, date: "7 Dec"},
+        {name: "2 Market Research", description: "Looking for research on competitors.", price: 7, date: "31 Dec"},
+        {name: "1 Create 1", description: "Looking for interested team members. Preferred tech enthusiast.", price: 2, date: "7 Dec"},
+      ];
+
+      let renderSingleMilestone = this.renderSingleMilestone;
+
       return (
-        <Modal  isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={">Add a new Project"}>
-          <div className="container-fluid popup-new-project">
-            <div className="row">
+        <div>
+          <div className="row">
+            <div className="col-lg-12">
+              <h5>Milestones</h5>
+            </div>
+              {
+                mileStones.map(function(milestone, i) {
+                  return renderSingleMilestone(milestone, i);
+                })
+              }
+          </div>
+      </div>
+      );
+    }
+
+    renderHeader() {
+      return (
+        <div>
+          <div className="row">
               <div className="col-lg-12">
                 <div className="header">
                   <h5>Add a new Project</h5>
@@ -88,7 +152,14 @@ class PopupNewProject extends React.Component {
                 <hr></hr>
               </div>
             </div>
-            <div className="row">
+          </div>
+      );
+    }
+
+    renderFormContent() {
+      return (
+        <div>
+          <div className="row">
               <div className="col-lg-12">
                 <h5><span className="badge project-section-badge">1</span>Project Details</h5>
                 <div>Tell us more about your project</div>
@@ -96,13 +167,14 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
-                    id="project-name" name="project-name" autoComplete="off" placeholder="Name of Project" autoFocus/>
+                    id="project_name" name="project_name" autoComplete="off" placeholder="Name of Project" autoFocus
+                      onChange={(e)=>this.handleChangeName(e)}/>
                 </div>
               </div>
               <div className="col-lg-12">
                 <div className="form-group">
-                  <textarea id="project-desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
-                    name="project-desc"></textarea>
+                  <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
+                    name="project_desc"onChange={(e)=>this.handleChangeDescription(e)}/>
                 </div> 
               </div>
               <div className="col-lg-12">
@@ -112,7 +184,8 @@ class PopupNewProject extends React.Component {
                 <div className="form-group input-group">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-search"></i></span>
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
-                      id="project-name" name="project-nature" autoComplete="off" placeholder="Blockchain"/>
+                      id="project_nature" name="project_nature" autoComplete="off" 
+                        placeholder="Blockchain" onChange={(e)=>this.handleChangeNature(e)}/>
                 </div>
               </div>
               <div className="col-lg-6">
@@ -125,8 +198,8 @@ class PopupNewProject extends React.Component {
               </div>
               <div className="col-lg-6">
                 <div className="form-group">
-                  <textarea id="milestone-desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
-                    name="milestone-desc"></textarea>
+                  <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
+                    name="milestone_desc" onChange={(e)=>this.handleChangeMilestoneDesctiption(e)}/>
                 </div> 
               </div>
               <div className="col-lg-6">
@@ -136,16 +209,29 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
-                    id="milestone-value" name="milestone-value" autoComplete="off" placeholder="Min Token"/>
+                    id="milestone_value" name="milestone_value" autoComplete="off" placeholder="Min Token"/>
                 </div>
               </div>
               <div className="col-lg-12">
                 <hr></hr>
               </div>
-              <div className="col-lg-12">
-                <h5>Milestones</h5>
-              </div>
-              {Milestones}
+          </div>
+        </div>
+      );
+    }renderMileStones
+
+    renderModal() {
+      const Milestones = this.renderMileStones();
+      const PopupHeader = this.renderHeader();
+      const FormContent = this.renderFormContent();
+
+      return (
+        <Modal  isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={">Add a new Project"}>
+          <div className="container-fluid popup-new-project">
+            {PopupHeader}
+            {FormContent}
+            {Milestones}
+            <div className="row">
               <div className="col-lg-12">
                 <button type="button" className="btn btn-lg btn-outline pull-right" 
                   onClick={()=>this.props.onCloseModal()}>Close</button>
