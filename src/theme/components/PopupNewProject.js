@@ -64,7 +64,7 @@ class PopupNewProject extends React.Component {
       &description=${milestone.description}
       &date=${milestone.date}
       &price=${milestone.price}`;
-  
+  console.log(url);
       Axios.get(url)
       .then((response) =>this.handleSaveNewTaskSuccess(response))
       .catch((error) =>this.handleSaveNewTaskError(error));
@@ -210,12 +210,6 @@ class PopupNewProject extends React.Component {
       console.log("handleMilestoneDeleteSuccess: indexToDelete: " + indexToDelete);
       console.dir(response.data);
       if (response.data.hasAssignees == false) {
-        let projectCopy = Object.assign({}, this.state.project);
-        
-        projectCopy.milestones.splice(indexToDelete, 1);
-        
-        let copy = Object.assign({}, this.state, {project: projectCopy});
-        this.setState(copy);
         //TODO: Correct handling of task deletion.
         const url = `${BackendURL}/taskDelete?id=${this.state.project.milestones[indexToDelete]._id}`;
         console.log("url: " + url);
@@ -226,6 +220,13 @@ class PopupNewProject extends React.Component {
         .catch(function(error){
           console.log("Error deleting task from database: " + error);
         });
+
+        let projectCopy = Object.assign({}, this.state.project);
+        
+        projectCopy.milestones.splice(indexToDelete, 1);
+        
+        let copy = Object.assign({}, this.state, {project: projectCopy});
+        this.setState(copy);
       }
       else {
         console.log("Could not delete milestone, as it is already assigned!");
@@ -262,7 +263,7 @@ class PopupNewProject extends React.Component {
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
-      Modal.defaultStyles.content.background = "white";
+      Modal.defaultStyles.content.background = "transparent";
       Modal.defaultStyles.content.color = "initial";
       Modal.defaultStyles.content.overflow = "auto";
       Modal.defaultStyles.content.padding = '0';
@@ -314,14 +315,14 @@ class PopupNewProject extends React.Component {
                   </div>
                   <div className="col-lg-6">
                     <div className="create-project-desc-column">
-                      <ActionLink href="#" className="project-popup-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
+                      <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
                         <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Add to Task Mg</div>
                       </ActionLink>
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="create-project-desc-column">
-                      <ActionLink className="project-popup-link-default" href="#" onClick={(e)=> that.handleMilestoneDelete(e)}>
+                      <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneDelete(e)}>
                         <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><div>Delete</div>
                       </ActionLink>
                     </div>
@@ -460,7 +461,7 @@ class PopupNewProject extends React.Component {
               </div>
               <div className="col-lg-6">
                 <div className="milestone-add-button">
-                <ActionLink href="#" className="project-popup-link-default" onClick={(e)=> this.handleMilestoneAdd(e)}>
+                <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> this.handleMilestoneAdd(e)} style={{color:"black"}}>
                   <i className="glyphicon glyphicon-plus"/>
                   <div>Add</div>
                 </ActionLink>
