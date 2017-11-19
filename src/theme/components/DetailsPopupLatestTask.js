@@ -41,7 +41,7 @@ class DetailsPopupLatestTask extends React.Component {
     }
 
     renderDetails() {
-      let title = this.props.task.roadmapName ? this.props.task.roadmapName : "";
+      let title = this.props.task.roadmapName ? this.props.task.roadmapName : this.props.task.name;
       let userName = this.props.task.userName;
       let type = this.taskTypeToName(this.props.task.type);
 

@@ -87,7 +87,7 @@ class HomePage extends React.Component {
               <ActionLink href='#' className="thumbnail linked" onClick={()=> that.onViewTaskAuthor(task)}>
                 <div className="caption">
                 <p>{that.taskTypeToName(task.type)}</p>
-                  <p >{task.roadmapName}</p>
+                  <p >{task.roadmapName ? task.roadmapName : task.name}</p>
                 </div>
               </ActionLink>
             </article>);

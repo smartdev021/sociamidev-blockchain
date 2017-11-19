@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
+import DataList from 'react-datalist'
+
 import "~/src/css/popupProjectManagement.css"
 
 import ActionLink from '~/src/components/common/ActionLink'
@@ -26,11 +28,22 @@ class PopupNewProject extends React.Component {
       
       this.state = {
         project: initialStateProject,
-        milestoneTemp: {name: undefined, description: undefined, price: undefined, date: undefined},
+        milestoneTemp: {name: undefined, description: undefined, price: 1, date: Date.now() + (60 * 60 * 24)},
       }
 
       //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
       this.lastMilestoneIndex = -1;
+    }
+
+     formatDate(time, splitter, mmddyy) {
+        let date = new Date(time);
+        let theyear = date.getFullYear();
+        let themonth = date.getMonth() + 1;
+        let thetoday = date.getDate();
+        if (mmddyy) {
+          return(`${themonth}${splitter}${thetoday}${splitter}${theyear}`);
+        }
+      return(`${theyear}${splitter}${themonth}${splitter}${thetoday}`);
     }
 
     //TODO: Move to somewhere else
@@ -136,9 +149,9 @@ class PopupNewProject extends React.Component {
 
     handleChangeMilestoneDate(e) {
       e.preventDefault();
-      
+      console.log("handleChangeMilestoneDate e.target.value: " + e.target.value)
       let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
-      milestoneCopy.date = e.target.value;
+      milestoneCopy.date = Date.parse(e.target.value);
       
       let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
       this.setState(copy);
@@ -277,7 +290,7 @@ class PopupNewProject extends React.Component {
                     <span>{milestone.price}{milestone.price > 1 ? " Tokens" : " Token"}</span>
                   </div>
                   <div className="col-lg-4">
-                    <span>{milestone.date}</span>
+                    <span>{that.formatDate(milestone.date, '/', true)}</span>
                   </div>
                   <div className="col-lg-12">
                     <p>{milestone.description}</p>
@@ -285,14 +298,14 @@ class PopupNewProject extends React.Component {
                   <div className="col-lg-6">
                     <div className="create-project-desc-column">
                       <ActionLink href="#" className="project-popup-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
-                        <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><p>Add to Task Mg</p>
+                        <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Add to Task Mg</div>
                       </ActionLink>
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="create-project-desc-column">
                       <ActionLink className="project-popup-link-default" href="#" onClick={(e)=> that.handleMilestoneDelete(e)}>
-                        <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><p>Delete</p>
+                        <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><div>Delete</div>
                       </ActionLink>
                     </div>
                   </div>
@@ -344,6 +357,23 @@ class PopupNewProject extends React.Component {
     }
 
     renderFormContent() {
+      let roadmapNames = ['Blockchain','HTML5','Javascript','Etherium','ReactJS']
+      const ProjectNatureDataList = (
+        <span>
+          <input type="text" id="project_nature" name="city" list="roadmaps" 
+            className="text-field form-control validate-field required" onChange={(e)=>this.handleChangeNature(e)}/>
+          <datalist id="roadmaps">
+            <select>
+            {
+              roadmapNames.map(function(roadmapName, i) {
+                return (<option label={roadmapName} value={roadmapName} key={i}></option>);
+              })
+            }
+	          </select>
+          </datalist>
+        </span>
+      );
+
       return (
         <span>
             <div className="row">
@@ -365,7 +395,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <div className="form-group">
                   <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
-                    name="project_desc"onChange={(e)=>this.handleChangeDescription(e)} value={this.state.project.description}/>
+                    name="project_desc" onChange={(e)=>this.handleChangeDescription(e)} value={this.state.project.description}/>
                 </div>
               </div>
             </div>
@@ -378,9 +408,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-6">
                 <div className="form-group input-group">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-search"></i></span>
-                  <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
-                      id="project_nature" name="project_nature" autoComplete="off" 
-                        placeholder="Blockchain" onChange={(e)=>this.handleChangeNature(e)} value={this.state.project.nature}/>
+                   {ProjectNatureDataList}
                 </div>
               </div>
               <div className="col-lg-6">
@@ -406,29 +434,37 @@ class PopupNewProject extends React.Component {
             <div className="row">
               <div className="col-lg-6">
                 <div className="form-group">
-                    You have this roadmap
                       <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
                         name="milestone_desc" onChange={(e)=>this.handleChangeMilestoneDesctiption(e)}/>
                 </div>
               </div>
               <div className="col-lg-6">
-                <div className="glyphicon glyphicon-plus milestone-add-button" onClick={(e)=>this.handleMilestoneAdd(e)}/>
-                <div>Add</div>
+                <div className="milestone-add-button">
+                <ActionLink href="#" className="project-popup-link-default" onClick={(e)=> this.handleMilestoneAdd(e)}>
+                  <i className="glyphicon glyphicon-plus"/>
+                  <div>Add</div>
+                </ActionLink>
+                </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-lg-4">
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="number" 
                     id="milestone_value" name="milestone_value" autoComplete="off" placeholder="Min Token" 
-                      onChange={(e)=>this.handleChangeMilestonePrice(e)}/>
+                      onChange={(e)=>this.handleChangeMilestonePrice(e)} defaultValue={this.state.milestoneTemp.price}/>
                 </div>
               </div>
-              <div className="col-lg-6">
+              <div className="col-lg-8">
                 <div className="form-group">
-                  <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
+                  <input type="date" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="milestone_date" name="milestone_date" autoComplete="off" placeholder="Date" 
-                      onChange={(e)=>this.handleChangeMilestoneDate(e)}/>
+                      onChange={(e)=>this.handleChangeMilestoneDate(e)} defaultValue={this.formatDate(this.state.milestoneTemp.date, '-')}/>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div>
+                  How many tokens will be provided
                 </div>
               </div>
             </div>
@@ -454,8 +490,10 @@ class PopupNewProject extends React.Component {
             <div className="row">{Milestones}</div>
             <div className="row">
               <div className="col-lg-12">
-                <button type="button" className="btn btn-lg btn-outline pull-right" 
-                  onClick={() => this.handleCloseAndSave()}>Close</button>
+                <div className="close-button-container">
+                  <button type="button" className="btn btn-lg btn-outline" 
+                    onClick={() => this.handleCloseAndSave()}>Close</button>
+                </div>
               </div>
             </div>
           </div>

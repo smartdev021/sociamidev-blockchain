@@ -68,8 +68,12 @@
 	text-align: center;
 }
 
-.popup-new-project .milestone-add-button  {
-	font-size: 40px;
+.milestone-add-button {
+	text-align: center;
+}
+
+.popup-new-project .milestone-add-button .glyphicon{
+	font-size: 70px;
 }
 
 .popup-new-project .project-popup-link-default {
@@ -95,4 +99,13 @@
 .popup-new-project .single-milestone {
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+.popup-new-project input[type="date"] {
+	line-height: initial;
+}
+
+.popup-new-project .close-button-container {
+	text-align: center;
+	padding-bottom: 60px;
 }
