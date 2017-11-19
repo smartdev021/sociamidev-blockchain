@@ -188,7 +188,7 @@ class PopupNewProject extends React.Component {
       if (this.state.project.milestones && this.state.project.milestones.length > indexToDelete) {
         
         if (this.state.project.milestones[indexToDelete]._id) {
-          const url = `${BackendURL}/tasksHasAssignees?id=${this.state.project.milestones[indexToDelete]._id}`;
+          const url = `${BackendURL}/taskHasAssignees?id=${this.state.project.milestones[indexToDelete]._id}`;
           console.log("url: " + url);
           Axios.get(url)
           .then((response) =>this.handleMilestoneDeleteSuccess(response, indexToDelete))
@@ -216,6 +216,16 @@ class PopupNewProject extends React.Component {
         
         let copy = Object.assign({}, this.state, {project: projectCopy});
         this.setState(copy);
+        //TODO: Correct handling of task deletion.
+        const url = `${BackendURL}/taskDelete?id=${this.state.project.milestones[indexToDelete]._id}`;
+        console.log("url: " + url);
+        Axios.get(url)
+        .then(function(response) {
+          console.log("Deleting task from database succeeded!");
+        })
+        .catch(function(error){
+          console.log("Error deleting task from database: " + error);
+        });
       }
       else {
         console.log("Could not delete milestone, as it is already assigned!");
