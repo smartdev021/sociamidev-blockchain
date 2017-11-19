@@ -103,6 +103,7 @@ class TaskManagement extends React.Component {
   }
 
   createAndSaveNewTask(roadmap) {
+    console.log("TaskManagement::createAndSaveNewTask");
     this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
     const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}&userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}`;
@@ -113,6 +114,8 @@ class TaskManagement extends React.Component {
   }
 
   handleSaveNewTaskSuccess(response) {
+    console.log("TaskManagement::handleSaveNewTaskSuccess");
+    console.dir(response.data);
     this.props.fetchTasksComplete();
     this.props.onFetchAllTasks();
   }

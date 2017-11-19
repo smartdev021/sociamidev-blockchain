@@ -21,6 +21,15 @@ import ConfigMain from '~/configs/main'
 
 import "~/src/css/projectManagement.css"
 
+import {
+  fetchTasksInitiate,
+  fetchTasksComplete,
+} from '~/src/redux/actions/tasks'
+
+import {
+  openSignUpForm,
+} from '~/src/redux/actions/authorization'
+
 class ProjectManager extends React.Component {
 
   constructor(props) {
@@ -82,9 +91,14 @@ class ProjectManager extends React.Component {
     console.dir(this.state);
   }
 
-  componentWillMount() {
-    if (!this.tryReadProjects()) {
-      this.openModal();
+  componentDidMount() {
+    if (!this.props.isAuthorized) {
+      this.props.openSignUpForm();
+    } 
+    else {
+      if (!this.tryReadProjects()) {
+        this.openModal();
+      }
     }
   }
 
@@ -221,7 +235,12 @@ class ProjectManager extends React.Component {
       <div>
         {this.state.modalIsOpen ? 
           <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
-            onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}/> : null
+            onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}
+            fetchTasksInitiate = {this.props.fetchTasksInitiate}
+            fetchTasksComplete = {this.props.fetchTasksComplete}
+            isAuthorized = {this.props.isAuthorized}
+            userProfile = {this.props.userProfile}
+            /> : null
         }
         {this.renderHeader()}
         {that.renderProjects()}
@@ -231,12 +250,21 @@ class ProjectManager extends React.Component {
 }
 
 ProjectManager.propTypes = {
+  fetchTasksInitiate: PropTypes.func.isRequired,
+  fetchTasksComplete: PropTypes.func.isRequired,
+  openSignUpForm: PropTypes.func.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
+  isAuthorized: state.isAuthorized,
+  userProfile: state.userProfile,
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
+  fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
+  openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));

@@ -1,6 +1,12 @@
 import React from 'react';
 import Modal from 'react-modal';
+import PropTypes from 'prop-types';
+
 import "~/src/css/popupProjectManagement.css"
+
+import ConfigMain from '~/configs/main'
+const BackendURL = ConfigMain.getBackendURL();
+import Axios from 'axios'
 
 class PopupNewProject extends React.Component {
     constructor(props) {
@@ -18,9 +24,52 @@ class PopupNewProject extends React.Component {
 
       this.state = {
         project: initialStateProject,
-        milestoneTemp: {name: undefined, description: undefined, price: undefined, date: undefined},
+        milestoneTemp: {description: undefined, price: undefined, date: undefined},
       }
+
+      //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
+      this.lastMilestoneIndex = -1;
     }
+
+    //TODO: Move to somewhere else
+    createAndSaveNewTask(milestone) {
+      console.log("TaskManagement::createAndSaveNewTask");
+      this.props.fetchTasksInitiate();
+      let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
+      const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}
+      &userName=${userName}&type=${'project_milestone'}
+      &name=${milestone.name}
+      &description=${milestone.description}
+      &date=${milestone.date}
+      &price=${milestone.price}`;
+  
+      Axios.get(url)
+      .then((response) =>this.handleSaveNewTaskSuccess(response))
+      .catch((error) =>this.handleSaveNewTaskError(error));
+    }
+  
+    handleSaveNewTaskSuccess(response) {
+      console.log("TaskManagement::handleSaveNewTaskSuccess");
+      console.dir(response.data);
+
+      if (lastMilestoneIndex >= 0 && lastMilestoneIndex < this.state.project.milestones.length) {
+        this.lastMilestoneIndex = -1;
+        
+        let projectCopy = Object.assign({}, this.state.project);
+        projectCopy.milestones[lastMilestoneIndex] = response.data;
+              
+        let copy = Object.assign({}, this.state, {project: projectCopy});
+        this.setState(copy);
+      }
+
+      this.props.fetchTasksComplete();
+    }
+  
+    handleSaveNewTaskError(error) {
+      this.lastMilestoneIndex = -1;
+      this.props.fetchTasksComplete();
+    }
+    //-------------------------------------
 
     handleChangeName(e) {
       e.preventDefault();
@@ -103,19 +152,46 @@ class PopupNewProject extends React.Component {
       let indexToDelete = Number(e.target.id);
 
       if (this.state.project.milestones.length > indexToDelete) {
+        console.log("handleMilestoneDelete: " + indexToDelete);
+        const url = `${BackendURL}/tasksHasAssignees?id=${this.state.project.milestones[indexToDelete]}`;
+
+        Axios.get(url)
+        .then((response) =>this.handleMilestoneDeleteSuccess(response, indexToDelete))
+        .catch((error) =>this.handleSaveNewTaskError(error));
+      }
+    }
+
+    handleMilestoneDeleteSuccess(response, indexToDelete) {
+      console.log("handleMilestoneDeleteSuccess: indexToDelete: " + indexToDelete);
+      console.dir(response.data);
+      if (response.data.hasAssignees == false) {
         let projectCopy = Object.assign({}, this.state.project);
-
+        
         projectCopy.milestones.splice(indexToDelete, 1);
-
+        
         let copy = Object.assign({}, this.state, {project: projectCopy});
         this.setState(copy);
       }
+      else {
+        console.log("Could not delete milestone, as it is already assigned!");
+      }
+    }
+
+    handleMilestoneDeleteError(error) {
+      console.log("handleMilestoneDeleteError: " + error);
     }
 
     handleMilestoneAddToTaskManager(e) {
       e.preventDefault();
       
-      console.log("handleMilestoneAddToTaskManager: " + e.target.id);
+      let milestoneIndex = Number(e.target.id);
+      
+      if (this.state.project.milestones.length > milestoneIndex) {
+        this.lastMilestoneIndex = milestoneIndex;
+
+        this.createAndSaveNewTask(this.state.project.milestones[milestoneIndex]);
+        console.log("handleMilestoneAddToTaskManager: " + e.target.id);
+      }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -157,7 +233,7 @@ class PopupNewProject extends React.Component {
       return (
         <div className="col-lg-12" key={i}>
           <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
-          <span className="milestone-title-tag">{milestone.name}</span>
+          <span className="milestone-title-tag">{milestone.description}</span>
           <span className="milestone-title-tag">{milestone.price} {milestone.price > 1 ? "Tokens" : "Token"}</span>
           <span className="milestone-title-tag">{milestone.date}</span>
           <p>{milestone.description}</p>
@@ -344,6 +420,13 @@ class PopupNewProject extends React.Component {
         </div>
       );
     }
+  }
+
+  PopupNewProject.propTypes = {
+    fetchTasksInitiate: PropTypes.func.isRequired,
+    fetchTasksComplete: PropTypes.func.isRequired,
+    isAuthorized: PropTypes.bool.isRequired,
+    userProfile: PropTypes.object.isRequired,
   }
 
   export default require('react-click-outside')(PopupNewProject);
