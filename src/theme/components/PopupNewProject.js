@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import "~/src/css/popupProjectManagement.css"
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 import ConfigMain from '~/configs/main'
 const BackendURL = ConfigMain.getBackendURL();
 import Axios from 'axios'
@@ -24,7 +26,7 @@ class PopupNewProject extends React.Component {
 
       this.state = {
         project: initialStateProject,
-        milestoneTemp: {description: undefined, price: undefined, date: undefined},
+        milestoneTemp: {name: undefined, description: undefined, price: undefined, date: undefined},
       }
 
       //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
@@ -98,6 +100,16 @@ class PopupNewProject extends React.Component {
       projectCopy.nature = e.target.value;
 
       let copy = Object.assign({}, this.state, {project: projectCopy});
+      this.setState(copy);
+    }
+
+    handleChangeMilestoneName(e) {
+      e.preventDefault();
+      
+      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
+      milestoneCopy.name = e.target.value;
+      
+      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
       this.setState(copy);
     }
 
@@ -227,52 +239,65 @@ class PopupNewProject extends React.Component {
     }
     
     renderSingleMilestone(milestone, i) {
-      let that = this;
-      console.log("renderSingleMilestone");
-      console.dir(this);
-      return (
-        <div className="col-lg-12" key={i}>
-          <i className="glyphicon glyphicon-hourglass milestone-title-tag"/>
-          <span className="milestone-title-tag">{milestone.description}</span>
-          <span className="milestone-title-tag">{milestone.price} {milestone.price > 1 ? "Tokens" : "Token"}</span>
-          <span className="milestone-title-tag">{milestone.date}</span>
-          <p>{milestone.description}</p>
-          <p> 
-            <i className="glyphicon glyphicon-bullhorn" id={i} onClick={(e)=> this.handleMilestoneAddToTaskManager(e)}>Add to Task Mg</i>
-            <i className="glyphicon glyphicon-minus" id={i} onClick={(e)=> this.handleMilestoneDelete(e)}>Delete</i>
-          </p>
-      </div>
-      );
+    
     }
 
     renderMileStones() {
-      if (this.state.project.milestones.length == 0) {
+      let milestones = this.state.project.milestones;
+
+      if (milestones.length == 0) {
         return null;
       }
 
       let that = this;
 
-      let milestones = this.state.project.milestones;
-
       return (
-        <div>
-          <div className="row">
-            <div className="col-lg-12">
-              <h5>Milestones</h5>
-            </div>
-              {
-                milestones.map(function(milestone, i) {
-                  return that.renderSingleMilestone(milestone, i);
-                })
-              }
-          </div>
-      </div>
+        <span>
+          {milestones.map(function(milestone, i) {
+            return (
+              <div className="row single-milestone" key={i}>
+                <div className="col-lg-1">
+                  <i className="glyphicon glyphicon-hourglass project-popup-milestone-control-icon"/>
+                </div>
+                <div className="col-lg-11">
+                  <div className="col-lg-4">
+                    <b>{milestone.name}</b>
+                  </div>
+                  <div className="col-lg-4">
+                    <span>{milestone.price}{milestone.price > 1 ? " Tokens" : " Token"}</span>
+                  </div>
+                  <div className="col-lg-4">
+                    <span>{milestone.date}</span>
+                  </div>
+                  <div className="col-lg-12">
+                    <p>{milestone.description}</p>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="create-project-desc-column">
+                      <ActionLink href="#" className="project-popup-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
+                        <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><p>Add to Task Mg</p>
+                      </ActionLink>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="create-project-desc-column">
+                      <ActionLink className="project-popup-link-default" href="#" onClick={(e)=> that.handleMilestoneDelete(e)}>
+                        <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><p>Delete</p>
+                      </ActionLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          );
+        })
+        }
+        </span>
       );
     }
 
     renderHeader() {
       return (
-        <div>
+        <span>
           <div className="row">
               <div className="col-lg-12">
                 <div className="header">
@@ -304,18 +329,20 @@ class PopupNewProject extends React.Component {
                 <hr></hr>
               </div>
             </div>
-          </div>
+          </span>
       );
     }
 
     renderFormContent() {
       return (
-        <div>
-          <div className="row">
+        <span>
+            <div className="row">
               <div className="col-lg-12">
                 <h5><span className="badge project-section-badge">1</span>Project Details</h5>
                 <div>Tell us more about your project</div>
               </div>
+            </div>
+            <div className="row">
               <div className="col-lg-12">
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
@@ -323,15 +350,21 @@ class PopupNewProject extends React.Component {
                       onChange={(e)=>this.handleChangeName(e)} value={this.state.project.name}/>
                 </div>
               </div>
+            </div>
+            <div className="row">
               <div className="col-lg-12">
                 <div className="form-group">
                   <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
                     name="project_desc"onChange={(e)=>this.handleChangeDescription(e)} value={this.state.project.description}/>
-                </div> 
+                </div>
               </div>
+            </div>
+            <div className="row">
               <div className="col-lg-12">
                 <h5><span className="badge project-section-badge">2</span>Project Nature</h5>
               </div>
+            </div>
+            <div className="row">
               <div className="col-lg-6">
                 <div className="form-group input-group">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-search"></i></span>
@@ -345,33 +378,56 @@ class PopupNewProject extends React.Component {
                   You have this roadmap
                 </div>
               </div>
+            </div>
+            <div className="row">
               <div className="col-lg-12">
                 <h5><span className="badge project-section-badge">3</span>Milestone Creator</h5>
               </div>
-              <div className="col-lg-6">
-                <div className="form-group"> <div>
-                  You have this roadmap
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="form-group input-group">
+                  <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
+                    id="milestone_name" name="milestone_name" autoComplete="off" 
+                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestoneName(e)}/>
                 </div>
-                  <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
-                    name="milestone_desc" onChange={(e)=>this.handleChangeMilestoneDesctiption(e)}/>
-                </div> 
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-6">
+                <div className="form-group">
+                    You have this roadmap
+                      <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
+                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestoneDesctiption(e)}/>
+                </div>
               </div>
               <div className="col-lg-6">
                 <div className="glyphicon glyphicon-plus milestone-add-button" onClick={(e)=>this.handleMilestoneAdd(e)}/>
                 <div>Add</div>
               </div>
-              <div className="col-lg-12">
+            </div>
+            <div className="row">
+              <div className="col-lg-6">
                 <div className="form-group">
-                  <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
+                  <input type="text" className="text-field form-control validate-field required" data-validation-type="number" 
                     id="milestone_value" name="milestone_value" autoComplete="off" placeholder="Min Token" 
                       onChange={(e)=>this.handleChangeMilestonePrice(e)}/>
                 </div>
               </div>
+              <div className="col-lg-6">
+                <div className="form-group">
+                  <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
+                    id="milestone_date" name="milestone_date" autoComplete="off" placeholder="Date" 
+                      onChange={(e)=>this.handleChangeMilestoneDate(e)}/>
+                </div>
+              </div>
+            </div>
+            <div className="row">
               <div className="col-lg-12">
                 <hr></hr>
               </div>
-          </div>
-        </div>
+            </div>
+        </span>
       );
     }
 
@@ -385,7 +441,7 @@ class PopupNewProject extends React.Component {
           <div className="container-fluid popup-new-project">
             {PopupHeader}
             {FormContent}
-            {Milestones}
+            <div className="row">{Milestones}</div>
             <div className="row">
               <div className="col-lg-12">
                 <button type="button" className="btn btn-lg btn-outline pull-right" 

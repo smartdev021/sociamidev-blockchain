@@ -71,3 +71,28 @@
 .popup-new-project .milestone-add-button  {
 	font-size: 40px;
 }
+
+.popup-new-project .project-popup-link-default {
+	color: black;
+}
+
+.popup-new-project .project-popup-link-default:hover {
+	color: black;
+}
+
+.popup-new-project .project-popup-link-default:focused {
+	color: black;
+}
+
+.popup-new-project .project-popup-link-default:visited {
+	color: black;
+}
+
+.popup-new-project .project-popup-milestone-control-icon {
+	font-size: 30px;
+}
+
+.popup-new-project .single-milestone {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
