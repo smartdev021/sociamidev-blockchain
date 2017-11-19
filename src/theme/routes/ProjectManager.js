@@ -198,8 +198,8 @@ class ProjectManager extends React.Component {
                 <article className="jobTile feature-col col-md-4" key={i}>
                   <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
                     <div className="caption">
-                      <h2>{project.name}</h2>
-                      <h3>{project.description}</h3>
+                      <h4>{project.name}</h4>
+                      <h6>{project.description}</h6>
                       {that.renderMilestones(project.milestones)}
                     </div>
                   </ActionLink>

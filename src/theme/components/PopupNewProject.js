@@ -17,7 +17,7 @@ class PopupNewProject extends React.Component {
       super(props);
       this.modalDefaultStyles = {};
 
-      const initialStateProject = this.props.project ? this.props.project : {
+      this.initialStateProject = this.props.project ? this.props.project : {
         id: undefined,
         name: "",
         description: "",
@@ -25,10 +25,17 @@ class PopupNewProject extends React.Component {
         creationTime: undefined,
         milestones: [],
       };
+
+      this.initialStateMilestone = {
+        name: undefined, 
+        description: undefined, 
+        price: 1, 
+        date: Date.now() + (60 * 60 * 24)
+      };
       
       this.state = {
-        project: initialStateProject,
-        milestoneTemp: {name: undefined, description: undefined, price: 1, date: Date.now() + (60 * 60 * 24)},
+        project: this.initialStateProject,
+        milestoneTemp: this.initialStateMilestone,
       }
 
       //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
@@ -168,7 +175,7 @@ class PopupNewProject extends React.Component {
         projectCopy.milestones.push(milestoneCopy);
       }
 
-      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy, project: projectCopy});
+      let copy = Object.assign({}, this.state, {milestoneTemp: this.initialStateMilestone, project: projectCopy});
       this.setState(copy);
     }
 
@@ -357,11 +364,14 @@ class PopupNewProject extends React.Component {
     }
 
     renderFormContent() {
-      let roadmapNames = ['Blockchain','HTML5','Javascript','Etherium','ReactJS']
+      let roadmapNames = ['Blockchain','HTML5','Javascript','Etherium',
+      'ReactJS', 'Java', 'Bitcoin', 'Crypto-Currency', 'PHP', 'NodeJS', 'AJAX', 'Full-Stack', 'Front-End']
+
       const ProjectNatureDataList = (
         <span>
           <input type="text" id="project_nature" name="city" list="roadmaps" 
-            className="text-field form-control validate-field required" onChange={(e)=>this.handleChangeNature(e)}/>
+            className="text-field form-control validate-field required" 
+              onChange={(e)=>this.handleChangeNature(e)} value={this.state.project.nature}/>
           <datalist id="roadmaps">
             <select>
             {
