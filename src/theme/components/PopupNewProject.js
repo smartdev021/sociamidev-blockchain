@@ -378,6 +378,11 @@ class PopupNewProject extends React.Component {
       let roadmapNames = ['Blockchain','HTML5','Javascript','Etherium',
       'ReactJS', 'Java', 'Bitcoin', 'Crypto-Currency', 'PHP', 'NodeJS', 'AJAX', 'Full-Stack', 'Front-End']
 
+      if (this.props.userProfile && this.props.userProfile.roadmaps && this.props.userProfile.roadmaps.length > 0) {
+        console.log("User Has Following Roadmaps: ");
+        console.dir(this.props.userProfile.roadmaps);
+      }
+
       const ProjectNatureDataList = (
         <span>
           <input type="text" id="project_nature" name="city" list="roadmaps" 

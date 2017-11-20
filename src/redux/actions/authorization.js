@@ -81,7 +81,9 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
               interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions
               skills: responseProfile.skills, //TODO: receive FaceBook advanced permissions
               experience: responseProfile.experience,
-              education: responseProfile.education
+              education: responseProfile.education,
+              roadmaps: response.data.roadmaps,
+
             }
 
             //async action exit point
