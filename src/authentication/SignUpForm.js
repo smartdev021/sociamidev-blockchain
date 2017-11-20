@@ -1,5 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
+import PropTypes from 'prop-types';
+
 import "~/src/css/signUpFormPopup.css"
 
 class SignupForm extends React.Component {
@@ -9,8 +11,16 @@ class SignupForm extends React.Component {
       this.modalDefaultStyles = {};
     }
 
+    //TODO: Elaborate more robust force-signup mechanism. Probably, get rid of popup in favor of /login route
+    isSignupRequired() {
+     return (this.props.pathname == "/projectManagement" && !this.props.isAuthorized);
+    }
+
     componentWillMount() {
-      console.log("SignUpForm::componentWillMount");
+      if (this.props.isAuthorized) {
+        this.props.onCloseModal()
+      }
+
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "none";
@@ -25,14 +35,20 @@ class SignupForm extends React.Component {
     }
 
     componentWillUnmount() {
-      console.log("SignUpForm::componentWillUnmount");
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 
+    componentDidUpdate(prevProps, prevState) {
+      if (prevProps.isAuthorized != this.props.isAuthorized) {
+        if (this.props.isAuthorized) {
+          this.props.onCloseModal()
+        }
+      }
+    }
+
     renderForm() {
-      console.log("SignUpForm::renderForm");
         return (
-          <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel="Login Form">
+          <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.handleRequestClose()} contentLabel="Login Form">
             <div className="popup-signup-form">       
               <h2 className="form-sign-u-heading">Sign Up</h2>
 
@@ -48,7 +64,13 @@ class SignupForm extends React.Component {
     }
 
     handleClickOutside() {
-      () => this.props.onCloseModal();
+      this.handleRequestClose();
+    }
+
+    handleRequestClose() {
+      if (!this.isSignupRequired()) {
+        this.props.onCloseModal();
+      }
     }
 
     render() {
@@ -58,6 +80,11 @@ class SignupForm extends React.Component {
         </div>
       );
     }
+  }
+
+  SignupForm.propTypes = {
+    isAuthorized: PropTypes.bool.isRequired,
+    pathname: PropTypes.string.isRequired,
   }
 
   export default require('react-click-outside')(SignupForm);

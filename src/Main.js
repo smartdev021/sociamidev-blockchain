@@ -22,10 +22,13 @@ class Main extends React.Component {
   render() {
     return (
       <main>
-      {this.props.isSignUpFormOpen ? <SignUpFormPopup modalIsOpen={this.props.isSignUpFormOpen} 
+      {this.props.isSignUpFormOpen ? <SignUpFormPopup 
+          modalIsOpen={this.props.isSignUpFormOpen}
+          isAuthorized={this.props.isAuthorized}
           onCloseModal={() => this.props.onCloseSignUpModal()}
           onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()}
           onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+          pathname={this.props.pathname}
       />: null}
       <Switch>
         <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />

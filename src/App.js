@@ -376,6 +376,8 @@ class App extends Component {
             onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
             onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
             onFetchAllTasks={()=>this.props.fetchAllTasks()}
+            isAuthorized={this.props.isAuthorized}
+            pathname={this.props.history.location.pathname}
           />
         </section>
         {ChatAppLink}
