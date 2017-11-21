@@ -36,10 +36,42 @@ class PopupNewProject extends React.Component {
       this.state = {
         project: this.initialStateProject,
         milestoneTemp: this.initialStateMilestone,
+        userRoadmapsDetailed: [],
+        isFetchingRoadmapDetails: false,
       }
 
       //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
       this.lastMilestoneIndex = -1;
+    }
+
+    fetchUserRoadmapsDetailedInitiate() {
+      let roadmapIds = this.props.userProfile.roadmaps;
+
+      if (roadmapIds && roadmapIds.length > 0) {
+        this.setState({isFetchingRoadmapDetails: true}); //TODO: check if this is a correct way for setting a state
+        
+        let url = `${BackendURL}/getRoadmapsByIds?`;
+        
+        for (let i = 0; i < roadmapIds.length; ++i) {
+            url += `roadmaps=${roadmapIds[i]}&`;
+        }
+        
+        Axios.get(url)
+          .then((response) =>this.handleFetchUserRoadmapsDetailedSuccess(response))
+          .catch((error) =>this.handleFetchUserRoadmapsDetailedError(error));
+      }
+    }
+
+    handleFetchUserRoadmapsDetailedSuccess(response) {
+      this.setState({userRoadmapsDetailed: response.data});
+    }
+
+    handleFetchUserRoadmapsDetailedError(error) {
+
+    }
+
+    fetchUserRoadmapsDetailedComplete() {
+      this.setState({isFetchingRoadmapDetails: false}); //TODO: check if this is a correct way for setting a state
     }
 
      formatDate(time, splitter, mmddyy) {
@@ -260,6 +292,9 @@ class PopupNewProject extends React.Component {
 
     componentWillMount() {
       console.log("PopupNewProject::componentWillMount");
+
+      this.fetchUserRoadmapsDetailedInitiate();
+
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
@@ -375,13 +410,22 @@ class PopupNewProject extends React.Component {
     }
 
     renderFormContent() {
-      let roadmapNames = ['Blockchain','HTML5','Javascript','Etherium',
-      'ReactJS', 'Java', 'Bitcoin', 'Crypto-Currency', 'PHP', 'NodeJS', 'AJAX', 'Full-Stack', 'Front-End']
+      let roadmapNames = [];
 
-      if (this.props.userProfile && this.props.userProfile.roadmaps && this.props.userProfile.roadmaps.length > 0) {
-        console.log("User Has Following Roadmaps: ");
-        /*http://localhost:3001/getRoadmapsByIds?roadmaps=584e7f770357c4bab60641141f6d831267b81271&roadmaps=200ccf836f273e0cfc9c5afa5ed5a4d05c730448&roadmaps=20582f66ddaaacb109c2763c5646b362b074d342*/
-        console.dir(this.props.userProfile.roadmaps);
+      if (this.state.userRoadmapsDetailed && this.state.userRoadmapsDetailed.length > 0) {
+        
+        for (let i = 0; i < this.state.userRoadmapsDetailed.length; ++i) {
+          if (roadmapNames.indexOf(this.state.userRoadmapsDetailed[i].name) == -1) {
+            roadmapNames.push(this.state.userRoadmapsDetailed[i].name);
+          }
+        }
+
+        console.log("RoadmapNames from user profile...");
+      }
+      else {
+        roadmapNames = ['Blockchain','HTML5','Javascript','Etherium',
+        'ReactJS', 'Java', 'Bitcoin', 'Crypto-Currency', 'PHP', 'NodeJS', 'AJAX', 'Full-Stack', 'Front-End'];
+        console.log("RoadmapNames Dummy!!!");
       }
 
       const ProjectNatureDataList = (
@@ -440,7 +484,7 @@ class PopupNewProject extends React.Component {
               </div>
               <div className="col-lg-6">
                 <div>
-                  You have this roadmap
+                  {this.state.userRoadmapsDetailed.length > 0 ? "You have this roadmap" : "You don't have any roadmaps yet"}
                 </div>
               </div>
             </div>
