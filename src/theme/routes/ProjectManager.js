@@ -21,6 +21,9 @@ import ConfigMain from '~/configs/main'
 
 import "~/src/css/projectManagement.css"
 
+const BackendURL = ConfigMain.getBackendURL();
+import Axios from 'axios'
+
 import {
   fetchTasksInitiate,
   fetchTasksComplete,
@@ -58,6 +61,24 @@ class ProjectManager extends React.Component {
     }
 
     return false;
+  }
+
+  saveProject(project) {
+    const url = `${BackendURL}/projectSave`;
+
+    let body = Object.assign({userId: this.props.userProfile._id}, project);
+
+    Axios.post(url, body)
+    .then((response) =>this.handleSaveProjectSuccess(response))
+    .catch((error) =>this.handleSaveProjectError(error));
+  }
+
+  handleSaveProjectSuccess(response) {
+    console.log("handleSaveProjectSuccess");
+  }
+
+  handleSaveProjectError(error) {
+    console.log("handleSaveProjectError: " + error);
   }
 
   tryReadProjects() {
@@ -132,6 +153,8 @@ class ProjectManager extends React.Component {
       this.setState(copy);
 
       this.saveProjects(copyProjects);
+
+      this.saveProject(project);
     }
     else {
       let copy = Object.assign({}, this.state, {modalIsOpen: false});
