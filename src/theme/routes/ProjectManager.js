@@ -49,7 +49,7 @@ class ProjectManager extends React.Component {
   saveProject(project) {
     const url = `${BackendURL}/projectSave`;
 
-    let body = Object.assign({userId: this.props.userProfile._id}, project);
+    let body = Object.assign({}, {userId: this.props.userProfile._id}, project);
 
     Axios.post(url, body)
     .then((response) =>this.handleSaveProjectSuccess(response))
@@ -65,7 +65,7 @@ class ProjectManager extends React.Component {
   }
 
   fetchAllProjects() {
-    const url = `${BackendURL}/projectsGet`;
+    const url = `${BackendURL}/projectsGet?userId=${this.props.userProfile._id}`;
     
     Axios.get(url)
       .then((response) =>this.handleFetchAllProjectsSuccess(response))
