@@ -102,9 +102,18 @@ class ProjectManager extends React.Component {
   }
 
   closeModal(project) {
-    console.dir(project);
+    console.log("closeModal");
     if (project) {
+      this.saveOrUpdateProject(project);
+    }
+    else {
+      this.setState({modalIsOpen: false});
+    }
+  }
 
+  saveOrUpdateProject(project) {
+    if (project) {
+      console.dir(project);
       let copyProjects = this.state.projects.slice(0);
 
       if (!project._id) {
@@ -131,12 +140,8 @@ class ProjectManager extends React.Component {
       this.setState(copy);
       
       this.saveProject(project);
-    }
-    else {
-      let copy = Object.assign({}, this.state, {modalIsOpen: false});
-      this.setState(copy);
-    }
   }
+}
 
   openModal() {
     let copy = Object.assign({}, this.state, {modalIsOpen: true, selectedProjectIndex: -1});

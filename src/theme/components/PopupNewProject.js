@@ -126,72 +126,60 @@ class PopupNewProject extends React.Component {
     }
     //-------------------------------------
 
-    handleChangeName(e) {
+    handleChangeProject(e) {
       e.preventDefault();
 
       let projectCopy = Object.assign({}, this.state.project);
-      projectCopy.name = e.target.value;
+
+      switch(e.target.id) {
+        case 'project_name': {
+          projectCopy.name = e.target.value;
+          break;
+        }
+        case 'project_desc': {
+          projectCopy.description = e.target.value;
+          break;
+        }
+        case 'project_nature': {
+          projectCopy.nature = e.target.value;
+          break;
+        }
+
+        default:
+          return;
+      }
 
       let copy = Object.assign({}, this.state, {project: projectCopy});
       this.setState(copy);
     }
 
-    handleChangeDescription(e) {
-      e.preventDefault();
-
-      let projectCopy = Object.assign({}, this.state.project);
-      projectCopy.description = e.target.value;
-
-      let copy = Object.assign({}, this.state, {project: projectCopy});
-      this.setState(copy);
-    }
-
-    handleChangeNature(e) {
-      e.preventDefault();
-
-      let projectCopy = Object.assign({}, this.state.project);
-      projectCopy.nature = e.target.value;
-
-      let copy = Object.assign({}, this.state, {project: projectCopy});
-      this.setState(copy);
-    }
-
-    handleChangeMilestoneName(e) {
+    handleChangeMilestone(e) {
       e.preventDefault();
       
       let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
-      milestoneCopy.name = e.target.value;
-      
-      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
-      this.setState(copy);
-    }
 
-    handleChangeMilestoneDesctiption(e) {
-      e.preventDefault();
-      
-      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
-      milestoneCopy.description = e.target.value;
-      
-      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
-      this.setState(copy);
-    }
+      switch(e.target.id) {
+        case 'milestone_name': {
+          milestoneCopy.name = e.target.value;
+          break;
+        }
+        case 'milestone_desc': {
+          milestoneCopy.description = e.target.value;
+          break;
+        }
+        case 'milestone_price': {
+          milestoneCopy.price = e.target.value;
+          break;
+        }
+        case 'milestone_date': {
+          milestoneCopy.date = Date.parse(e.target.value);
+          break;
+        }
 
-    handleChangeMilestonePrice(e) {
-      e.preventDefault();
-      
-      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
-      milestoneCopy.price = e.target.value;
-      
-      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
-      this.setState(copy);
-    }
+        default:
+          return;
+      }
 
-    handleChangeMilestoneDate(e) {
-      e.preventDefault();
-      console.log("handleChangeMilestoneDate e.target.value: " + e.target.value)
-      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
-      milestoneCopy.date = Date.parse(e.target.value);
-      
       let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
       this.setState(copy);
     }
@@ -212,7 +200,6 @@ class PopupNewProject extends React.Component {
     }
 
     handleMilestoneDelete(e) {
-      console.log("%cTaskManagement::handleMilestoneDelete", "color: blue; font-size:15px;");
       e.preventDefault();
       
       let indexToDelete = Number(e.target.id);
@@ -227,20 +214,12 @@ class PopupNewProject extends React.Component {
           .catch((error) =>this.handleMilestoneDeleteError(error));
         }
         else {
-          let projectCopy = Object.assign({}, this.state.project);
-          
-          projectCopy.milestones.splice(indexToDelete, 1);
-          
-          let copy = Object.assign({}, this.state, {project: projectCopy});
-          this.setState(copy);
+          this.deleteMilestone(indexToDelete);
         }
       }
     }
 
     handleMilestoneDeleteSuccess(response, indexToDelete) {
-      console.log("%cTaskManagement::handleMilestoneDeleteSuccess", "color: blue; font-size:15px;");
-      console.log("handleMilestoneDeleteSuccess: indexToDelete: " + indexToDelete);
-      console.dir(response.data);
       if (response.data.hasAssignees == false) {
         //TODO: Correct handling of task deletion.
         const url = `${BackendURL}/taskDelete?id=${this.state.project.milestones[indexToDelete]._id}`;
@@ -253,16 +232,20 @@ class PopupNewProject extends React.Component {
           console.log("Error deleting task from database: " + error);
         });
 
-        let projectCopy = Object.assign({}, this.state.project);
-        
-        projectCopy.milestones.splice(indexToDelete, 1);
-        
-        let copy = Object.assign({}, this.state, {project: projectCopy});
-        this.setState(copy);
+        this.deleteMilestone(indexToDelete);
       }
       else {
         console.log("Could not delete milestone, as it is already assigned!");
       }
+    }
+
+    deleteMilestone(indexToDelete) {
+      let projectCopy = Object.assign({}, this.state.project);
+      
+      projectCopy.milestones.splice(indexToDelete, 1);
+      
+      let copy = Object.assign({}, this.state, {project: projectCopy});
+      this.setState(copy);
     }
 
     handleMilestoneDeleteError(error) {
@@ -279,14 +262,6 @@ class PopupNewProject extends React.Component {
         this.lastMilestoneIndex = milestoneIndex;
 
         this.createAndSaveNewTask(this.state.project.milestones[milestoneIndex]);
-      }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-      if (prevState != this.state) {
-        console.log("%cPopupNewProject::componentDidUpdate", "color: blue; font-size:15px;");
-        console.log("PopupNewProject::componentDidUpdate(prevProps, prevState)");
-        console.dir(this.state);
       }
     }
 
@@ -379,7 +354,7 @@ class PopupNewProject extends React.Component {
                 <div className="header">
                   <h5>Add a new Project</h5>
                     <div>Do you have a project you are working on that 
-                      you would like to share or get help with your friends</div>
+                      you would like to share or get help with your friends?</div>
                   </div>
                 </div>
             </div>
@@ -395,7 +370,7 @@ class PopupNewProject extends React.Component {
                 <div className="create-project-desc-column">
                   <div className="glyphicon glyphicon glyphicon-tint"></div>
                   <div><b>Your Friends</b></div>
-                  <p>These projects contain Milestones that create tasks for your friends to help.</p>
+                  <p>These projects contain Milestones that create tasks for your friends to help!</p>
                 </div>
               </div>
             </div>
@@ -432,7 +407,7 @@ class PopupNewProject extends React.Component {
         <span>
           <input type="text" id="project_nature" name="city" list="roadmaps" 
             className="text-field form-control validate-field required" 
-              onChange={(e)=>this.handleChangeNature(e)} value={this.state.project.nature}/>
+              onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.nature}/>
           <datalist id="roadmaps">
             <select>
             {
@@ -458,7 +433,7 @@ class PopupNewProject extends React.Component {
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="project_name" name="project_name" autoComplete="off" placeholder="Name of Project" autoFocus
-                      onChange={(e)=>this.handleChangeName(e)} value={this.state.project.name}/>
+                      onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.name}/>
                 </div>
               </div>
             </div>
@@ -466,7 +441,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <div className="form-group">
                   <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
-                    name="project_desc" onChange={(e)=>this.handleChangeDescription(e)} value={this.state.project.description}/>
+                    name="project_desc" onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.description}/>
                 </div>
               </div>
             </div>
@@ -494,11 +469,11 @@ class PopupNewProject extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-12">
+              <div className="col-lg-6">
                 <div className="form-group input-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="milestone_name" name="milestone_name" autoComplete="off" 
-                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestoneName(e)}/>
+                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestone(e)}/>
                 </div>
               </div>
             </div>
@@ -506,7 +481,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-6">
                 <div className="form-group">
                       <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
-                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestoneDesctiption(e)}/>
+                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestone(e)}/>
                 </div>
               </div>
               <div className="col-lg-6">
@@ -522,15 +497,15 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-4">
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="number" 
-                    id="milestone_value" name="milestone_value" autoComplete="off" placeholder="Min Token" 
-                      onChange={(e)=>this.handleChangeMilestonePrice(e)} defaultValue={this.state.milestoneTemp.price}/>
+                    id="milestone_price" name="milestone_price" autoComplete="off" placeholder="Min Token" 
+                      onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.price}/>
                 </div>
               </div>
               <div className="col-lg-8">
                 <div className="form-group">
                   <input type="date" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="milestone_date" name="milestone_date" autoComplete="off" placeholder="Date" 
-                      onChange={(e)=>this.handleChangeMilestoneDate(e)} defaultValue={this.formatDate(this.state.milestoneTemp.date, '-')}/>
+                      onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.formatDate(this.state.milestoneTemp.date, '-')}/>
                 </div>
               </div>
               <div className="col-lg-12">
@@ -573,7 +548,7 @@ class PopupNewProject extends React.Component {
     }
 
     handleClickOutside() {
-        () => this.handleClose();
+       /* () => this.handleClose();*/
     }
 
     handleClose() {
