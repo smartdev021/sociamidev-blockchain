@@ -46,23 +46,6 @@ class ProjectManager extends React.Component {
     }
   }
 
-  tryReadProjectsFromCookies() {
-    const { cookies } = this.props;
-    
-    const savedProjects = cookies.get('projects');
-
-    console.log("tryReadProjectsFromCookies: savedProjects: ");
-    console.dir(savedProjects);
-
-    if (savedProjects) {
-      let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: savedProjects});
-      this.setState(copy);
-      return true;
-    }
-
-    return false;
-  }
-
   saveProject(project) {
     const url = `${BackendURL}/projectSave`;
 
@@ -81,30 +64,27 @@ class ProjectManager extends React.Component {
     console.log("handleSaveProjectError: " + error);
   }
 
-  tryReadProjects() {
-    return this.tryReadProjectsFromCookies();
+  fetchAllProjects() {
+    const url = `${BackendURL}/projectsGet`;
+    
+    Axios.get(url)
+      .then((response) =>this.handleFetchAllProjectsSuccess(response))
+      .catch((error) =>this.handleFetchAllProjectsError(error));
   }
 
-  saveProjects(projects) {
-    this.saveProjectsToCookies(projects);
+  handleFetchAllProjectsSuccess(response) {
+    console.log("handleFetchAllProjectsSuccess");
+
+    this.setState({projects: response.data});
+
+    if (!response.data || response.data.length == 0) {
+      this.openModal();
+    }
   }
 
-  saveProjectsToCookies(projects) {
-    const { cookies } = this.props;
-
-    let dateExpire = new Date();
-    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
-    
-    let options = { path: '/', expires: dateExpire};
-
-    console.log("saveProjectsToCookies: projects: ");
-    console.dir(projects);
-    
-    cookies.set('projects', projects, options); //will expire in 'lifetimeMinutes' minutes
-
-    const savedProjects = cookies.get('projects');
-    console.log("saveProjectsToCookies: savedProjects: ");
-    console.dir(savedProjects);
+  handleFetchAllProjectsError(error) {
+    console.log("handleFetchAllProjectsError: " + error);
+    this.openModal();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -117,9 +97,7 @@ class ProjectManager extends React.Component {
       this.props.openSignUpForm();
     } 
     else {
-      if (!this.tryReadProjects()) {
-        this.openModal();
-      }
+      this.fetchAllProjects();
     }
   }
 
@@ -129,16 +107,16 @@ class ProjectManager extends React.Component {
 
       let copyProjects = this.state.projects.slice(0);
 
-      if (!project.id) {
+      if (!project._id) {
         console.log("Adding new project...");
-        project.id = Hash(project);
+        project._id = Hash(project);
 
         copyProjects.push(project);
       }
       else {
-        const idToFind = project.id;
+        const idToFind = project._id;
         let findByID = function(curProject) {
-          return curProject.id == idToFind;
+          return curProject._id == idToFind;
         }
 
         const foundIndex = this.state.projects.findIndex(findByID);
@@ -151,9 +129,7 @@ class ProjectManager extends React.Component {
 
       let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: copyProjects});
       this.setState(copy);
-
-      this.saveProjects(copyProjects);
-
+      
       this.saveProject(project);
     }
     else {
