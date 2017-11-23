@@ -42,7 +42,7 @@ class HomePage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.onFetchAllTasks();
+    this.props.onFetchAllTasks(true);
   }
 
   handleStartSearch(e) {

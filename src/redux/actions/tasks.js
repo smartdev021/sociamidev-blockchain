@@ -29,14 +29,14 @@ export function fetchTasksComplete() {
     }
 }
 
-export function fetchAllTasks() {
+export function fetchAllTasks(publishedOnly) {
     
     return function (dispatch) {
       
     //async action entry point
     dispatch(fetchTasksInitiate());
     
-    const url = `${ConfigMain.getBackendURL()}/tasksGet`;
+    const url = `${ConfigMain.getBackendURL()}/tasksGet?publishedOnly=${publishedOnly}`;
           return (
             Axios.get(url)
             .then(function(response) {

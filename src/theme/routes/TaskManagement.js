@@ -67,7 +67,7 @@ class TaskManagement extends React.Component {
       cookies.remove('lastViewedRoadmap');
     }
     else {
-      this.props.onFetchAllTasks();
+      this.props.onFetchAllTasks(true);
     }
   }
 
@@ -106,7 +106,8 @@ class TaskManagement extends React.Component {
     console.log("TaskManagement::createAndSaveNewTask");
     this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
-    const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}&userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}`;
+    const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}
+    &userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}&isHidden=0`;
 
     Axios.get(url)
     .then((response) =>this.handleSaveNewTaskSuccess(response))
@@ -117,12 +118,12 @@ class TaskManagement extends React.Component {
     console.log("TaskManagement::handleSaveNewTaskSuccess");
     console.dir(response.data);
     this.props.fetchTasksComplete();
-    this.props.onFetchAllTasks();
+    this.props.onFetchAllTasks(true);
   }
 
   handleSaveNewTaskError(error) {
     this.props.fetchTasksComplete();
-    this.props.onFetchAllTasks();
+    this.props.onFetchAllTasks(true);
   }
   
   handleOpenConfirmTaskDetailsPopup(item){
@@ -134,7 +135,7 @@ class TaskManagement extends React.Component {
   handleCloseConfirmTaskDetailsPopup(item) {
     let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false});
     this.setState(copy)
-    this.props.onFetchAllTasks();
+    this.props.onFetchAllTasks(true);
   }
 
   handleAcceptConfirm(item){
@@ -157,7 +158,7 @@ class TaskManagement extends React.Component {
   handleCloseCancelTaskDetailsPopup(item) {
     let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: false});
     this.setState(copy)
-    this.props.onFetchAllTasks();
+    this.props.onFetchAllTasks(true);
   }
 
   handleAcceptCancel(item){

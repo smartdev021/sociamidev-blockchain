@@ -95,7 +95,8 @@ class PopupNewProject extends React.Component {
       &name=${milestone.name}
       &description=${milestone.description}
       &date=${milestone.date}
-      &price=${milestone.price}`;
+      &price=${milestone.price}
+      &isHidden=0`;
   console.log(url);
       Axios.get(url)
       .then((response) =>this.handleSaveNewTaskSuccess(response))
