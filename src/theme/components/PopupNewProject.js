@@ -293,6 +293,44 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 
+    renderMilestoneControls(milestone) {
+      let that = this;
+
+      if (milestone._id) {
+        return (
+          <span>
+            <div className="col-lg-12">
+              <div className="create-project-desc-column">
+                  <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilsetonWithdraw(e)}>
+                    <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Withdraw</div>
+                  </ActionLink>
+                 </div>
+                </div>
+          </span>
+          );
+      }
+      else {
+        return (
+          <span>
+            <div className="col-lg-6">
+              <div className="create-project-desc-column">
+                  <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
+                    <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Add to Task Mg</div>
+                  </ActionLink>
+                 </div>
+                </div>
+              <div className="col-lg-6">
+                <div className="create-project-desc-column">
+                   <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneDelete(e)}>
+                    <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><div>Delete</div>
+                  </ActionLink>
+                </div>
+              </div>
+          </span>
+          );
+      }
+    }
+
     renderMileStones() {
       let milestones = this.state.project.milestones;
 
@@ -323,20 +361,7 @@ class PopupNewProject extends React.Component {
                   <div className="col-lg-12">
                     <p>{milestone.description}</p>
                   </div>
-                  <div className="col-lg-6">
-                    <div className="create-project-desc-column">
-                      <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
-                        <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Add to Task Mg</div>
-                      </ActionLink>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="create-project-desc-column">
-                      <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneDelete(e)}>
-                        <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><div>Delete</div>
-                      </ActionLink>
-                    </div>
-                  </div>
+                  {that.renderMilestoneControls(milestone)}
                 </div>
               </div>
           );
