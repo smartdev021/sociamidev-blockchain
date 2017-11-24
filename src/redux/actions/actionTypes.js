@@ -44,3 +44,12 @@ export const TASKS_SET = "tasks_set";
 
 export const FETCH_TASKS_INITIATE = "fetch_tasks_initiate";
 export const FETCH_TASKS_COMPLETE = "fetch_tasks_complete";
+
+
+export const TASK_ADD = "task_add";
+export const TASK_UPDATE = "task_update";
+
+export const TASK_SET_PUBLISHED = "task_set_published";
+
+export const SAVE_TASK_INITIATE = "save_task_initiate";
+export const SAVE_TASK_COMPLETE = "save_task_complete";

@@ -27,6 +27,8 @@ import Axios from 'axios'
 import {
   fetchTasksInitiate,
   fetchTasksComplete,
+  saveTask,
+  setTaskPublished,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -244,6 +246,9 @@ class ProjectManager extends React.Component {
             fetchTasksComplete = {this.props.fetchTasksComplete}
             isAuthorized = {this.props.isAuthorized}
             userProfile = {this.props.userProfile}
+            saveTask = {this.props.saveTask}
+            setTaskPublished = {this.props.setTaskPublished}
+            tasks = {this.props.tasks}
             /> : null
         }
         {this.renderHeader()}
@@ -254,21 +259,26 @@ class ProjectManager extends React.Component {
 }
 
 ProjectManager.propTypes = {
+  tasks: PropTypes.array.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
+  saveTask: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
+  tasks: state.tasks,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  saveTask: bindActionCreators(saveTask, dispatch),
+  setTaskPublished: bindActionCreators(setTaskPublished, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));

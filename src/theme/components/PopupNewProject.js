@@ -88,19 +88,15 @@ class PopupNewProject extends React.Component {
     //TODO: Move to somewhere else
     createAndSaveNewTask(milestone) {
       console.log("%cTaskManagement::createAndSaveNewTask", "color: blue; font-size:15px;");
-      this.props.fetchTasksInitiate();
-      let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
-      const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}
-      &userName=${userName}&type=${'project_milestone'}
-      &name=${milestone.name}
-      &description=${milestone.description}
-      &date=${milestone.date}
-      &price=${milestone.price}
-      &isHidden=0`;
-  console.log(url);
-      Axios.get(url)
-      .then((response) =>this.handleSaveNewTaskSuccess(response))
-      .catch((error) =>this.handleSaveNewTaskError(error));
+
+      let newTask = Object.assign({}, milestone, 
+        {
+          type: "project_milestone",
+          userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+         userID: this.props.userProfile._id,
+         isHidden: 1});
+
+      this.props.saveTask(newTask);
     }
   
     handleSaveNewTaskSuccess(response) {
@@ -187,17 +183,8 @@ class PopupNewProject extends React.Component {
 
     handleMilestoneAdd(e) {
       e.preventDefault();
-      
-      let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
-      
-      let projectCopy = Object.assign({}, this.state.project);
 
-      if (milestoneCopy != this.state.milestoneTemp) {
-        projectCopy.milestones.push(milestoneCopy);
-      }
-
-      let copy = Object.assign({}, this.state, {milestoneTemp: this.initialStateMilestone, project: projectCopy});
-      this.setState(copy);
+      this.createAndSaveNewTask(this.state.milestoneTemp);
     }
 
     handleMilestoneDelete(e) {
@@ -216,6 +203,26 @@ class PopupNewProject extends React.Component {
         }
         else {
           this.deleteMilestone(indexToDelete);
+        }
+      }
+    }
+
+    handleMilsetonWithdraw(e) {
+      e.preventDefault();
+      
+      let indexToDelete = Number(e.target.id);
+
+      if (this.state.project.milestones && this.state.project.milestones.length > indexToDelete) {
+        
+        if (this.state.project.milestones[indexToDelete]._id) {
+          const url = `${BackendURL}/taskHasAssignees?id=${this.state.project.milestones[indexToDelete]._id}`;
+          console.log("url: " + url);
+          Axios.get(url)
+          .then((response) =>this.handleMilestoneDeleteSuccess(response, indexToDelete))
+          .catch((error) =>this.handleMilestoneDeleteError(error));
+        }
+        else {
+          this.props.setTaskPublished(this.state.project.milestones[indexToDelete], false);
         }
       }
     }
@@ -261,8 +268,7 @@ class PopupNewProject extends React.Component {
       
       if (this.state.project.milestones.length > milestoneIndex) {
         this.lastMilestoneIndex = milestoneIndex;
-
-        this.createAndSaveNewTask(this.state.project.milestones[milestoneIndex]);
+        this.props.setTaskPublished(this.state.project.milestones[milestoneIndex]._id, true);
       }
     }
 
@@ -294,10 +300,30 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 
+    componentDidUpdate(prevProps, prevState) {
+      console.log("PopupNewProject::componentDidUpdate");
+      console.dir(this.state);
+      if (prevProps.tasks.length != this.props.tasks.length && this.props.tasks.length > 0) {
+        let tasksCopy = this.props.tasks.slice(0);
+
+       /* let sortPred = function(task1, task2) {
+          return task1.creationDate - task2.creationDate;
+        }
+
+        tasksCopy.sort(sortPred);*/ 
+        let projectCopy = Object.assign({}, this.state.project);
+  
+        projectCopy.milestones.push(tasksCopy[tasksCopy.length - 1]);
+  
+        let copy = Object.assign({}, this.state, {milestoneTemp: this.initialStateMilestone, project: projectCopy});
+        this.setState(copy);
+      }
+    }
+
     renderMilestoneControls(milestone) {
       let that = this;
 
-      if (milestone._id) {
+      if (!milestone.isHidden) {
         return (
           <span>
             <div className="col-lg-12">
@@ -603,6 +629,9 @@ class PopupNewProject extends React.Component {
     fetchTasksComplete: PropTypes.func.isRequired,
     isAuthorized: PropTypes.bool.isRequired,
     userProfile: PropTypes.object.isRequired,
+    tasks: PropTypes.array.isRequired,
+    saveTask: PropTypes.func.isRequired,
+    setTaskPublished: PropTypes.func.isRequired,
   }
-
+ 
   export default require('react-click-outside')(PopupNewProject);
