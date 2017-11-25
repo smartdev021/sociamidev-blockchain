@@ -27,7 +27,7 @@ class TasksWidget extends React.Component {
 
     let publishedTasks = [];
     
-    publishedTasks = this.props.tasks.filter(function(task) {
+    publishedTasks = this.props.allTasks.filter(function(task) {
       return !task.isHidden;
     });
 
