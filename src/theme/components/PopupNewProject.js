@@ -206,7 +206,6 @@ class PopupNewProject extends React.Component {
         console.log("url: " + url);
         Axios.get(url)
         .then(function(response) {
-          console.log("Deleting task from database succeeded!");
         })
         .catch(function(error){
           console.log("Error deleting task from database: " + error);
@@ -215,7 +214,6 @@ class PopupNewProject extends React.Component {
         this.deleteMilestone(indexToDelete);
       }
       else {
-        console.log("Could not delete milestone, as it is already assigned!");
       }
     }
 
@@ -233,7 +231,6 @@ class PopupNewProject extends React.Component {
     }
 
     handleTaskPublishResponse(task) {
-      console.log("handleTaskPublishResponse!!!!!!!!!!!!!!: task");
       console.dir(task);
       
       let findById = function(currentTask) {
@@ -241,11 +238,9 @@ class PopupNewProject extends React.Component {
       }
 
       let milestones = this.state.project.milestones;
-      console.log("handleTaskPublishResponse!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: milestones.length" + milestones.length);
 
       let foundIndex = milestones.findIndex(findById);
 
-      console.log("foundIndex: " + foundIndex);
 
       if (foundIndex != -1) {
         let projectCopy = Object.assign({}, this.state.project);
@@ -256,7 +251,6 @@ class PopupNewProject extends React.Component {
     }
 
     componentWillMount() {
-      console.log("PopupNewProject::componentWillMount");
 
       this.fetchUserRoadmapsDetailedInitiate();
 
@@ -288,11 +282,7 @@ class PopupNewProject extends React.Component {
       console.dir(this.state);
       console.dir(this.props);
       if (prevProps.tasks != this.props.tasks && prevProps.tasks.length == this.props.tasks.length) {
-        console.log("ARRAY DIFFERENCE");
-        console.dir(this.props.tasks);
         let difference = require('array-difference')(this.props.tasks, prevProps.tasks);
-
-        console.dir(difference);
 
         if (difference.length > 0) {
           let findById = function(currentTask) {
@@ -300,11 +290,8 @@ class PopupNewProject extends React.Component {
           }
     
           let milestones = this.state.project.milestones;
-          console.log("handleTaskPublishResponse!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: milestones.length" + milestones.length);
     
           let foundIndex = milestones.findIndex(findById);
-    
-          console.log("foundIndex: " + foundIndex);
     
           if (foundIndex != -1) {
             let projectCopy = Object.assign({}, this.state.project);
@@ -318,11 +305,7 @@ class PopupNewProject extends React.Component {
       if (prevProps.tasks.length != this.props.tasks.length && this.props.tasks.length > 0) {
         let tasksCopy = this.props.tasks.slice(0);
 
-       /* let sortPred = function(task1, task2) {
-          return task1.creationDate - task2.creationDate;
-        }
-
-        tasksCopy.sort(sortPred);*/ 
+       console.log("PUSHING NEW MILESTONE");
         let projectCopy = Object.assign({}, this.state.project);
   
         projectCopy.milestones.push(tasksCopy[tasksCopy.length - 1]);
@@ -334,7 +317,6 @@ class PopupNewProject extends React.Component {
 
     renderMilestoneControls(milestone, i) {
       let that = this;
-console.log("milestone.isHidden: " + milestone.isHidden);
       if (!milestone.isHidden) {
         return (
           <span>

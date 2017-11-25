@@ -91,7 +91,9 @@ class ProjectManager extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log("ProjectManager::componentDidUpdate");
-    console.dir(this.state);
+    if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
+      this.fetchAllProjects();
+    }
   }
 
   componentDidMount() {
