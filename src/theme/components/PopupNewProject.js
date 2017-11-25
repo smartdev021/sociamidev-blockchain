@@ -139,7 +139,7 @@ class PopupNewProject extends React.Component {
 
         console.log(`milestoneId: ${milestoneId} isPublished: ${isPublished}`);
 
-        this.props.setTaskPublished(milestoneId, !isPublished, this.handleTaskPublishResponse);
+        this.props.setTaskPublished(milestoneId, !isPublished);
       }
 
     }
@@ -159,26 +159,6 @@ class PopupNewProject extends React.Component {
         this.deleteMilestone(indexToDelete);
       }
       else {
-      }
-    }
-
-    handleTaskPublishResponse(task) {
-      console.dir(task);
-      
-      let findById = function(currentTask) {
-        return task._id == currentTask._id;
-      }
-
-      let milestones = this.state.project.milestones;
-
-      let foundIndex = milestones.findIndex(findById);
-
-
-      if (foundIndex != -1) {
-        let projectCopy = Object.assign({}, this.state.project);
-        projectCopy.milestones[foundIndex] = task;
-
-        this.setState({project: projectCopy});
       }
     }
 
@@ -212,11 +192,12 @@ class PopupNewProject extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-      console.log("PopupNewProject::componentDidUpdate");
+      console.log("TaskManagement::componentDidUpdate START", 'background: #222; color: #bada55');
+
       console.dir(this.state);
       console.dir(this.props);
       if (prevProps.tasks != this.props.tasks && prevProps.tasks.length == this.props.tasks.length) {
-        let difference = require('array-difference')(this.props.tasks, prevProps.tasks);
+       /* let difference = require('array-difference')(this.props.tasks, prevProps.tasks);
 
         if (difference.length > 0) {
           let findById = function(currentTask) {
@@ -235,6 +216,31 @@ class PopupNewProject extends React.Component {
     
             this.setState({project: projectCopy});
           }
+        }*/
+
+        //Create object from props.task {key: {_id}, value: {task}}
+        const tasks = this.props.tasks;
+        if (tasks.length > 0) {
+          let tasksMap = {};
+
+          for (let i = 0; i < tasks.length; ++i) {
+            tasksMap[tasks[i]._id] = tasks[i];
+          }
+
+          //update this.state.project.milestones array from created map, using milestone._id as a key
+          let projectCopy = Object.assign({}, this.state.project);
+          
+          for (let i = 0; i < projectCopy.milestones.length; ++i) {
+            const taskFromMap = tasksMap[projectCopy.milestones[i]._id];
+            if (taskFromMap) {
+              projectCopy.milestones[i] = taskFromMap;
+            }
+          }
+
+          console.log("Created tasks map: ");
+          console.dir(tasksMap);
+
+          this.setState({project: projectCopy});
         }
       }
 
@@ -249,6 +255,8 @@ class PopupNewProject extends React.Component {
         let copy = Object.assign({}, this.state, {milestoneTemp: this.initialStateMilestone, project: projectCopy});
         this.setState(copy);
       }
+
+      console.log("TaskManagement::componentDidUpdate END", 'background: #222; color: #bada55');
     }
 
     renderMilestoneControls(milestone, i) {

@@ -71,10 +71,8 @@ export function saveTaskComplete() {
     }
 }
 
-export function setTaskPublished(taskId, published, callback) {
+export function setTaskPublished(taskId, published) {
     return function (dispatch) {
-        console.log("taskId: " + taskId + " published: " + published + " callback: " + callback);
-      //async action entry point
       dispatch(saveTaskInitiate());
       
       const url = `${ConfigMain.getBackendURL()}/taskSetPublished?id=${taskId}&isHidden=${published ? 0 : 1}`;
@@ -82,10 +80,6 @@ export function setTaskPublished(taskId, published, callback) {
         Axios.get(url)
         .then(function(response) {
             dispatch(updateTask(response.data._id, response.data));
-            console.log(" callback: " + callback);
-            if (callback) {
-                callback(response.data);
-            }
             dispatch(saveTaskComplete());
         })
         .catch(function(error) {
