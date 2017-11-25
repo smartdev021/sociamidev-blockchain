@@ -141,6 +141,10 @@ class ProjectManager extends React.Component {
   }
 
   renderProjects() {
+    if (this.props.isProjectsFetchInProgress || this.props.isProjectSaveInProgress) {
+      return (<p>Retrieving data. Please, wait...</p>);
+    }
+
     if (!this.props.projects || this.props.projects.length == 0) {
       return null;
     }
@@ -230,6 +234,7 @@ ProjectManager.propTypes = {
   projectsFetch: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   isProjectsFetchInProgress: PropTypes.bool.isRequired,
+  isProjectSaveInProgress: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -239,6 +244,7 @@ const mapStateToProps = state => ({
   tasks: state.tasks,
   roadmapsDetailed: state.roadmapsDetailed,
   isProjectsFetchInProgress: state.isProjectsFetchInProgress,
+  isProjectSaveInProgress: state.isProjectSaveInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({
