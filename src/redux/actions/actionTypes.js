@@ -58,3 +58,12 @@ export const TASK_SET_PUBLISHED = "task_set_published";
 
 export const SAVE_TASK_INITIATE = "save_task_initiate";
 export const SAVE_TASK_COMPLETE = "save_task_complete";
+
+export const PROJECT_SAVE_INITIATE = "project_save_initiate";
+export const PROJECT_SAVE_COMPLETE = "project_save_complete";
+
+export const PROJECTS_FETCH_INITIATE = "projects_fetch_initiate";
+export const PROJECTS_FETCH_COMPLETE = "projects_fetch_complete";
+
+export const PROJECTS_SET = "projects_set";
+export const PROJECT_SET = "project_set";

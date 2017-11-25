@@ -22,9 +22,15 @@ class PopupNewProject extends React.Component {
         name: "",
         description: "",
         nature: "",
-        creationTime: undefined,
+        creationDate: undefined,
         milestones: [],
       };
+
+      console.log("CONSTRUCTING FUCKING POPUP")
+      if (this.props.project) {
+        console.log("this.props.project: ");
+        console.dir(this.props.project);
+      }
 
       this.initialStateMilestone = {
         name: undefined, 
@@ -120,7 +126,8 @@ class PopupNewProject extends React.Component {
         let projectCopy = Object.assign({}, this.state.project);
         projectCopy.milestones.splice(indexToDelete, 1);
 
-        this.setState({project: projectCopy});
+        let copy = Object.assign({}, this.state, {project: projectCopy});
+        this.setState(copy);
       }
     }
 
@@ -174,9 +181,14 @@ class PopupNewProject extends React.Component {
     componentDidUpdate(prevProps, prevState) {
       console.log("TaskManagement::componentDidUpdate START", 'background: #222; color: #bada55');
 
+      if (this.state.project != prevState.project) {
+        console.log("this.state.project: ");
+        console.dir(this.state.project);
+      }
+
       console.dir(this.state);
       console.dir(this.props);
-      if (prevProps.tasks != this.props.tasks) {
+      if (prevProps.tasks != this.props.tasks && prevProps.tasks.length == this.props.tasks.length) {
         //Create object from props.task {key: {_id}, value: {task}}
         const tasks = this.props.tasks;
         if (tasks.length > 0) {
@@ -199,7 +211,8 @@ class PopupNewProject extends React.Component {
           console.log("Created tasks map: ");
           console.dir(tasksMap);
 
-          this.setState({project: projectCopy});
+          let copy = Object.assign({}, this.state, {project: projectCopy});
+          this.setState(copy);
         }
       }
 
@@ -500,8 +513,10 @@ class PopupNewProject extends React.Component {
     }
 
     handleCloseAndSave() {
+      console.log("SAVING THIS FUCKING PROJECT: " + this.state.project.creationDate);
+      console.dir(this.state.project.creationDate);
       if (!this.state.project.creationDate) {
-        this.state.project.creationTime = Date.now();
+        this.state.project.creationDate = Date.now();
       }
 
       this.props.onCloseModal(this.state.project);

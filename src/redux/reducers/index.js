@@ -6,6 +6,7 @@ import { isFetchInProgress, searchResults, isOpenSearchResultsPending, searchQue
 import { userRoadmaps, roadmapsDetailed, isFetchingRoadmaps} from "./roadmaps"
 import { tasks, isTasksFetchInProgress} from "./tasks"
 import { isAuthorized, isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authorization"
+import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./projects"
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -23,5 +24,8 @@ export default combineReducers({
   isAuthorized,
   exactLocation,
   tasks,
+  projects,
+  isProjectSaveInProgress,
+  isProjectsFetchInProgress,
   isTasksFetchInProgress,
 });

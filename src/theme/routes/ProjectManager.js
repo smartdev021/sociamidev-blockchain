@@ -21,8 +21,6 @@ import ConfigMain from '~/configs/main'
 
 import "~/src/css/projectManagement.css"
 
-const BackendURL = ConfigMain.getBackendURL();
-import Axios from 'axios'
 
 import {
   fetchTasksInitiate,
@@ -40,6 +38,11 @@ import {
   fetchRoadmapsDetailsByIds,
 } from '~/src/redux/actions/roadmaps'
 
+import {
+  projectsFetch,
+  projectSave,
+} from '~/src/redux/actions/projects'
+
 class ProjectManager extends React.Component {
 
   constructor(props) {
@@ -48,56 +51,29 @@ class ProjectManager extends React.Component {
     this.state = {
       modalIsOpen: false,
       projectsAmount: 0,
-      projects: [],
       selectedProjectIndex: 0,
     }
   }
 
   saveProject(project) {
-    const url = `${BackendURL}/projectSave`;
-
-    let body = Object.assign({}, {userId: this.props.userProfile._id}, project);
-
-    Axios.post(url, body)
-    .then((response) =>this.handleSaveProjectSuccess(response))
-    .catch((error) =>this.handleSaveProjectError(error));
-  }
-
-  handleSaveProjectSuccess(response) {
-    console.log("handleSaveProjectSuccess");
-  }
-
-  handleSaveProjectError(error) {
-    console.log("handleSaveProjectError: " + error);
+    let projectCopy = Object.assign({}, {userId: this.props.userProfile._id}, project);
+    this.props.projectSave(projectCopy);
   }
 
   fetchAllProjects() {
-    const url = `${BackendURL}/projectsGet?userId=${this.props.userProfile._id}`;
-    
-    Axios.get(url)
-      .then((response) =>this.handleFetchAllProjectsSuccess(response))
-      .catch((error) =>this.handleFetchAllProjectsError(error));
-  }
-
-  handleFetchAllProjectsSuccess(response) {
-    console.log("handleFetchAllProjectsSuccess");
-
-    this.setState({projects: response.data});
-
-    if (!response.data || response.data.length == 0) {
-      this.openModal();
-    }
-  }
-
-  handleFetchAllProjectsError(error) {
-    console.log("handleFetchAllProjectsError: " + error);
-    this.openModal();
+    this.props.projectsFetch(this.props.userProfile._id);
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("ProjectManager::componentDidUpdate");
     if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
       this.fetchAllProjects();
+    }
+
+    if (prevProps.isProjectsFetchInProgress && !this.props.isProjectsFetchInProgress) {
+      if (!this.props.projects || this.props.projects.length == 0) {
+        this.openModal();
+      }
     }
   }
 
@@ -106,51 +82,23 @@ class ProjectManager extends React.Component {
       this.props.openSignUpForm();
     } 
     else {
-      this.fetchAllProjects();
+      if (this.props.isAuthorized) {
+        this.fetchAllProjects();
+      }
     }
   }
 
   closeModal(project) {
     console.log("closeModal");
     if (project) {
-      this.saveOrUpdateProject(project);
+      let copy = Object.assign({}, this.state, {modalIsOpen: false});
+      this.setState(copy);
+      this.saveProject(project);
     }
     else {
       this.setState({modalIsOpen: false});
     }
   }
-
-  saveOrUpdateProject(project) {
-    if (project) {
-      console.dir(project);
-      let copyProjects = this.state.projects.slice(0);
-
-      if (!project._id) {
-        console.log("Adding new project...");
-        project._id = Hash(project);
-
-        copyProjects.push(project);
-      }
-      else {
-        const idToFind = project._id;
-        let findByID = function(curProject) {
-          return curProject._id == idToFind;
-        }
-
-        const foundIndex = this.state.projects.findIndex(findByID);
-
-        if (foundIndex >= 0) {
-          console.log("Altering existing project...");
-          copyProjects[foundIndex] = project;
-        }
-      }
-
-      let copy = Object.assign({}, this.state, {modalIsOpen: false, projects: copyProjects});
-      this.setState(copy);
-      
-      this.saveProject(project);
-  }
-}
 
   openModal() {
     let copy = Object.assign({}, this.state, {modalIsOpen: true, selectedProjectIndex: -1});
@@ -193,12 +141,12 @@ class ProjectManager extends React.Component {
   }
 
   renderProjects() {
-    if (!this.state.projects || this.state.projects.length == 0) {
+    if (!this.props.projects || this.props.projects.length == 0) {
       return null;
     }
 
     console.log("renderProjects this.state.projects: ");
-    console.dir(this.state.projects);
+    console.dir(this.props.projects);
 
     let that = this;
 
@@ -206,7 +154,7 @@ class ProjectManager extends React.Component {
       <section className="feature-columns"> 
         <div className="row">
           {
-            this.state.projects.map(function(project, i) {
+            this.props.projects.map(function(project, i) {
               return (
                 <article className="jobTile feature-col col-md-4" key={i}>
                   <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
@@ -239,8 +187,8 @@ class ProjectManager extends React.Component {
 
   render() {
     let that = this;
-    let selectedProject = (this.state.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
-    ? this.state.projects[this.state.selectedProjectIndex] : undefined;
+    let selectedProject = (this.props.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
+    ? this.props.projects[this.state.selectedProjectIndex] : undefined;
 
     console.log("selectedProject: ");
     console.dir(selectedProject);
@@ -270,6 +218,7 @@ class ProjectManager extends React.Component {
 
 ProjectManager.propTypes = {
   tasks: PropTypes.array.isRequired,
+  projects: PropTypes.array.isRequired,
   roadmapsDetailed: PropTypes.array.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
@@ -277,14 +226,19 @@ ProjectManager.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   saveTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
+  projectSave: PropTypes.func.isRequired,
+  projectsFetch: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  isProjectsFetchInProgress: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
+  projects: state.projects,
   tasks: state.tasks,
   roadmapsDetailed: state.roadmapsDetailed,
+  isProjectsFetchInProgress: state.isProjectsFetchInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -295,6 +249,8 @@ const mapDispatchToProps = dispatch => ({
   deleteTask: bindActionCreators(deleteTask, dispatch),
   setTaskPublished: bindActionCreators(setTaskPublished, dispatch),
   fetchRoadmapsDetailsByIds: bindActionCreators(fetchRoadmapsDetailsByIds, dispatch),
+  projectSave: bindActionCreators(projectSave, dispatch),
+  projectsFetch: bindActionCreators(projectsFetch, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));
