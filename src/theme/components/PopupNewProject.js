@@ -112,9 +112,7 @@ class PopupNewProject extends React.Component {
       e.preventDefault();
       
       const indexToDelete = Number(e.currentTarget.id);
-
-      console.log("Deleting the Milestone... indexToDelete: " + indexToDelete + " this.state.project.milestones.length: " + this.state.project.milestones.length);
-
+      
       if (this.state.project.milestones.length > indexToDelete) {
         
         this.props.deleteTask(this.state.project.milestones[indexToDelete]._id);
@@ -142,24 +140,6 @@ class PopupNewProject extends React.Component {
         this.props.setTaskPublished(milestoneId, !isPublished);
       }
 
-    }
-
-    handleMilestoneDeleteSuccess(response, indexToDelete) {
-      if (response.data.hasAssignees == false) {
-        //TODO: Correct handling of task deletion.
-        const url = `${BackendURL}/taskDelete?id=${this.state.project.milestones[indexToDelete]._id}`;
-        console.log("url: " + url);
-        Axios.get(url)
-        .then(function(response) {
-        })
-        .catch(function(error){
-          console.log("Error deleting task from database: " + error);
-        });
-
-        this.deleteMilestone(indexToDelete);
-      }
-      else {
-      }
     }
 
     componentWillMount() {
@@ -196,28 +176,7 @@ class PopupNewProject extends React.Component {
 
       console.dir(this.state);
       console.dir(this.props);
-      if (prevProps.tasks != this.props.tasks && prevProps.tasks.length == this.props.tasks.length) {
-       /* let difference = require('array-difference')(this.props.tasks, prevProps.tasks);
-
-        if (difference.length > 0) {
-          let findById = function(currentTask) {
-            return difference[0]._id == currentTask._id;
-          }
-
-          console.log("CHANGING MILESTONE STATUS");
-    
-          let milestones = this.state.project.milestones;
-    
-          let foundIndex = milestones.findIndex(findById);
-    
-          if (foundIndex != -1) {
-            let projectCopy = Object.assign({}, this.state.project);
-            projectCopy.milestones[foundIndex] = difference[0];
-    
-            this.setState({project: projectCopy});
-          }
-        }*/
-
+      if (prevProps.tasks != this.props.tasks) {
         //Create object from props.task {key: {_id}, value: {task}}
         const tasks = this.props.tasks;
         if (tasks.length > 0) {
@@ -246,8 +205,6 @@ class PopupNewProject extends React.Component {
 
       if (prevProps.tasks.length != this.props.tasks.length && this.props.tasks.length > 0) {
         let tasksCopy = this.props.tasks.slice(0);
-
-       console.log("PUSHING NEW MILESTONE");
         let projectCopy = Object.assign({}, this.state.project);
   
         projectCopy.milestones.push(tasksCopy[tasksCopy.length - 1]);
@@ -255,8 +212,6 @@ class PopupNewProject extends React.Component {
         let copy = Object.assign({}, this.state, {milestoneTemp: this.initialStateMilestone, project: projectCopy});
         this.setState(copy);
       }
-
-      console.log("TaskManagement::componentDidUpdate END", 'background: #222; color: #bada55');
     }
 
     renderMilestoneControls(milestone, i) {
