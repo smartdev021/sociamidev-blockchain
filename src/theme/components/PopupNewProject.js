@@ -119,14 +119,7 @@ class PopupNewProject extends React.Component {
       const indexToDelete = Number(e.currentTarget.id);
       
       if (this.state.project.milestones.length > indexToDelete) {
-        
-        this.props.deleteTask(this.state.project.milestones[indexToDelete]._id);
-        
-        let projectCopy = Object.assign({}, this.state.project);
-        projectCopy.milestones.splice(indexToDelete, 1);
-
-        let copy = Object.assign({}, this.state, {project: projectCopy});
-        this.setState(copy);
+        this.props.deleteTask(this.state.project.milestones[indexToDelete]._id); 
       }
     }
 
@@ -172,6 +165,24 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles.content["width"] = '700px';
     }
 
+    arrayDifference(arrayFirst, arraySecond, comparator) {
+      let difference = [];
+
+      if (!arraySecond || arraySecond.length == 0) {
+        difference = difference.concat(arrayFirst);
+      }
+      else {
+        for (let i = 0; i < arrayFirst.length; ++i) {
+          const foundIndex = arraySecond.map(function(x) {return x._id; }).indexOf(arrayFirst[i]._id);
+          if (foundIndex < 0) {
+            difference.push(arrayFirst[i]);
+          }
+        }
+      }
+
+      return difference;
+    }
+
     componentWillUnmount() {
       console.log("PopupNewProject::componentWillUnmount");
       Modal.defaultStyles = this.modalDefaultStyles;
@@ -187,41 +198,77 @@ class PopupNewProject extends React.Component {
 
       console.dir(this.state);
       console.dir(this.props);
-      if (prevProps.tasks != this.props.tasks && prevProps.tasks.length == this.props.tasks.length) {
-        //Create object from props.task {key: {_id}, value: {task}}
-        const tasks = this.props.tasks;
-        if (tasks.length > 0) {
-          let tasksMap = {};
 
-          for (let i = 0; i < tasks.length; ++i) {
-            tasksMap[tasks[i]._id] = tasks[i];
-          }
-
-          //update this.state.project.milestones array from created map, using milestone._id as a key
-          let projectCopy = Object.assign({}, this.state.project);
-          
-          for (let i = 0; i < projectCopy.milestones.length; ++i) {
-            const taskFromMap = tasksMap[projectCopy.milestones[i]._id];
-            if (taskFromMap) {
-              projectCopy.milestones[i] = taskFromMap;
+      if (prevProps.tasks.length == this.props.tasks.length) {
+        if (prevProps.tasks != this.props.tasks) {
+          //Create object from props.task {key: {_id}, value: {task}}
+         const tasks = this.props.tasks;
+          if (tasks.length > 0) {
+            let tasksMap = {};
+  
+            for (let i = 0; i < tasks.length; ++i) {
+              tasksMap[tasks[i]._id] = tasks[i];
             }
+  
+            //update this.state.project.milestones array from created map, using milestone._id as a key
+            let projectCopy = Object.assign({}, this.state.project);
+            
+            for (let i = 0; i < projectCopy.milestones.length; ++i) {
+              const taskFromMap = tasksMap[projectCopy.milestones[i]._id];
+              if (taskFromMap) {
+                projectCopy.milestones[i] = taskFromMap;
+              }
+            }
+  
+            console.log("Created tasks map: ");
+            console.dir(tasksMap);
+  
+            let copy = Object.assign({}, this.state, {project: projectCopy});
+            this.setState(copy);
           }
-
-          console.log("Created tasks map: ");
-          console.dir(tasksMap);
-
-          let copy = Object.assign({}, this.state, {project: projectCopy});
-          this.setState(copy);
         }
       }
-
-      if (prevProps.tasks.length != this.props.tasks.length && this.props.tasks.length > 0) {
-        let tasksCopy = this.props.tasks.slice(0);
+      else {
+        console.log("PROPS PROJECTS HAS CHANGED!!!");
         let projectCopy = Object.assign({}, this.state.project);
-  
-        projectCopy.milestones.push(tasksCopy[tasksCopy.length - 1]);
-  
-        let copy = Object.assign({}, this.state, {milestoneTemp: this.initialStateMilestone, project: projectCopy});
+
+        const milestonesToRemove = this.arrayDifference(this.state.project.milestones, this.props.tasks);
+        const milestonesToAdd = this.arrayDifference(this.props.tasks, this.state.project.milestones);
+
+        console.log("milestonesToRemove.length: " + milestonesToRemove.length);
+        console.log("milestonesToAdd.length: " + milestonesToAdd.length);
+
+        if (milestonesToRemove && milestonesToRemove.length > 0) {
+          console.log("REMOVING MILESTONES...")
+
+          for (let i = 0; i < milestonesToRemove.length; ++i) {
+            let foundIndex = projectCopy.milestones.findIndex(function(currentMilestone) {
+                return currentMilestone._id == milestonesToRemove[i]._id;
+              }
+            );
+
+            if (foundIndex >= 0) {
+              projectCopy.milestones.splice(foundIndex, 1);
+            }
+          }
+        }
+
+        if (milestonesToAdd && milestonesToAdd.length > 0) {
+          console.log("ADDING MILESTONES...")
+
+          for (let i = 0; i < milestonesToAdd.length; ++i) {
+            let foundIndex = projectCopy.milestones.findIndex( function(currentMilestone) {
+                return currentMilestone._id == milestonesToAdd[i]._id;
+              }
+            );
+
+            if (foundIndex < 0) {
+              projectCopy.milestones.push(milestonesToAdd[i]);
+            }
+          }
+        }
+
+        let copy = Object.assign({}, this.state, {project: projectCopy});
         this.setState(copy);
       }
     }
@@ -545,8 +592,6 @@ class PopupNewProject extends React.Component {
   }
 
   PopupNewProject.propTypes = {
-    fetchTasksInitiate: PropTypes.func.isRequired,
-    fetchTasksComplete: PropTypes.func.isRequired,
     fetchRoadmapsDetailsByIds: PropTypes.func.isRequired,
     isAuthorized: PropTypes.bool.isRequired,
     userProfile: PropTypes.object.isRequired,

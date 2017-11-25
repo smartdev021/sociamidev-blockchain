@@ -42,7 +42,7 @@ class HomePage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.onFetchAllTasks(true);
+    this.props.onFetchAllTasks(false);
   }
 
   handleStartSearch(e) {
@@ -70,8 +70,14 @@ class HomePage extends React.Component {
 
   renderLatestTasks() {
     let that = this;
+
+    let publishedTasks = [];
     
-    let latestTasks = this.props.tasks.slice(0).sort(function(a, b) {
+    publishedTasks = this.props.tasks.filter(function(task) {
+      return !task.isHidden;
+    });
+    
+    let latestTasks = publishedTasks.slice(0).sort(function(a, b) {
       return b.creationDate - a.creationDate;
     });
 

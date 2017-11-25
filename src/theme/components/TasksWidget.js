@@ -25,13 +25,19 @@ class TasksWidget extends React.Component {
 
     console.log("renderTasks userID: " + userID);
 
+    let publishedTasks = [];
+    
+    publishedTasks = this.props.tasks.filter(function(task) {
+      return !task.isHidden;
+    });
+
     let that = this;
-    if (this.props.allTasks.length > 0) {
+    if (publishedTasks.length > 0) {
       let tasksFiltered = [];
 
       if (this.props.tasksCategory.type == "my_tasks") {
         if (userID) {
-          tasksFiltered = this.props.allTasks.filter(function(task) {
+          tasksFiltered = publishedTasks.filter(function(task) {
             return task.userID == userID;
           });
         }

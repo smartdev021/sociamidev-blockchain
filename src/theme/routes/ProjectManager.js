@@ -23,11 +23,10 @@ import "~/src/css/projectManagement.css"
 
 
 import {
-  fetchTasksInitiate,
-  fetchTasksComplete,
   saveTask,
   deleteTask,
   setTaskPublished,
+  fetchAllTasks,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -79,6 +78,10 @@ class ProjectManager extends React.Component {
         this.openModal();
       }
     }
+  }
+
+  componentWillMount() {
+    this.props.fetchAllTasks();
   }
 
   componentDidMount() {
@@ -205,8 +208,6 @@ class ProjectManager extends React.Component {
         {this.state.modalIsOpen ? 
           <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
             onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}
-            fetchTasksInitiate = {this.props.fetchTasksInitiate}
-            fetchTasksComplete = {this.props.fetchTasksComplete}
             isAuthorized = {this.props.isAuthorized}
             userProfile = {this.props.userProfile}
             saveTask = {this.props.saveTask}
@@ -229,8 +230,6 @@ ProjectManager.propTypes = {
   tasks: PropTypes.array.isRequired,
   projects: PropTypes.array.isRequired,
   roadmapsDetailed: PropTypes.array.isRequired,
-  fetchTasksInitiate: PropTypes.func.isRequired,
-  fetchTasksComplete: PropTypes.func.isRequired,
   fetchRoadmapsDetailsByIds: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   saveTask: PropTypes.func.isRequired,
@@ -255,8 +254,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
-  fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   saveTask: bindActionCreators(saveTask, dispatch),
   deleteTask: bindActionCreators(deleteTask, dispatch),
@@ -264,6 +261,7 @@ const mapDispatchToProps = dispatch => ({
   fetchRoadmapsDetailsByIds: bindActionCreators(fetchRoadmapsDetailsByIds, dispatch),
   projectSave: bindActionCreators(projectSave, dispatch),
   projectsFetch: bindActionCreators(projectsFetch, dispatch),
+  fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));
