@@ -37,9 +37,6 @@ class PopupNewProject extends React.Component {
         project: this.initialStateProject,
         milestoneTemp: this.initialStateMilestone,
       }
-
-      //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
-      this.lastMilestoneIndex = -1;
     }
 
      formatDate(time, splitter, mmddyy) {
@@ -129,27 +126,22 @@ class PopupNewProject extends React.Component {
       }
     }
 
-    handleMilestoneAddToTaskManager(e) {
-      console.log("TaskManagement::handleMilestoneAddToTaskManager", 'background: #222; color: #bada55');
+    toggleMilestoneAddToTaskManager(e) {
       e.preventDefault();
-      
-      let milestoneIndex = Number(e.currentTarget.id);
-      
-      if (this.state.project.milestones.length > milestoneIndex) {
-        this.lastMilestoneIndex = milestoneIndex;
-        this.props.setTaskPublished(this.state.project.milestones[milestoneIndex]._id, true, this.handleTaskPublishResponse);
-      }
-    }
+      console.log("TaskManagement::toggleMilestoneAddToTaskManager", 'background: #222; color: #bada55');
 
-    handleMilestoneWithdraw(e) {
-      e.preventDefault();
-      
       let milestoneIndex = Number(e.currentTarget.id);
       
       if (this.state.project.milestones.length > milestoneIndex) {
-        this.lastMilestoneIndex = milestoneIndex;
-        this.props.setTaskPublished(this.state.project.milestones[milestoneIndex]._id, false, this.handleTaskPublishResponse);
+
+        const milestoneId = this.state.project.milestones[milestoneIndex]._id;
+        const isPublished = !this.state.project.milestones[milestoneIndex].isHidden;
+
+        console.log(`milestoneId: ${milestoneId} isPublished: ${isPublished}`);
+
+        this.props.setTaskPublished(milestoneId, !isPublished, this.handleTaskPublishResponse);
       }
+
     }
 
     handleMilestoneDeleteSuccess(response, indexToDelete) {
@@ -267,7 +259,7 @@ class PopupNewProject extends React.Component {
             <div className="col-lg-12">
               <div className="create-project-desc-column">
                   <ActionLink href="#" id={i} className="popup-new-project-link-default" 
-                   onClick={(e)=> that.handleMilestoneWithdraw(e)}>
+                   onClick={(e)=> that.toggleMilestoneAddToTaskManager(e)}>
                     <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Withdraw</div>
                   </ActionLink>
                  </div>
@@ -281,7 +273,7 @@ class PopupNewProject extends React.Component {
             <div className="col-lg-6">
               <div className="create-project-desc-column">
                   <ActionLink href="#" id={i} className="popup-new-project-link-default" 
-                    onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
+                    onClick={(e)=> that.toggleMilestoneAddToTaskManager(e)}>
                     <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Add to Task Mg</div>
                   </ActionLink>
                  </div>
