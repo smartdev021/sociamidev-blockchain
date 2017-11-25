@@ -217,6 +217,7 @@ class ProjectManager extends React.Component {
             fetchRoadmapsDetailsByIds = {this.props.fetchRoadmapsDetailsByIds}
             roadmapsDetailed = {this.props.roadmapsDetailed}
             isTaskSaveInProgress = {this.props.isTaskSaveInProgress}
+            isTasksUpdateInProgress = {this.props.isTasksUpdateInProgress}
             /> : null
         }
         {this.renderHeader()}
@@ -240,6 +241,7 @@ ProjectManager.propTypes = {
   isProjectsFetchInProgress: PropTypes.bool.isRequired,
   isProjectSaveInProgress: PropTypes.bool.isRequired,
   isTaskSaveInProgress: PropTypes.bool.isRequired,
+  isTasksUpdateInProgress: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -251,6 +253,7 @@ const mapStateToProps = state => ({
   isProjectsFetchInProgress: state.isProjectsFetchInProgress,
   isProjectSaveInProgress: state.isProjectSaveInProgress,
   isTaskSaveInProgress: state.isTaskSaveInProgress,
+  isTasksUpdateInProgress: state.isTasksUpdateInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({

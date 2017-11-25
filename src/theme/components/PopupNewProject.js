@@ -165,7 +165,7 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles.content["width"] = '700px';
     }
 
-    arrayDifference(arrayFirst, arraySecond, comparator) {
+    arrayDifference(arrayFirst, arraySecond) {
       let difference = [];
 
       if (!arraySecond || arraySecond.length == 0) {
@@ -199,77 +199,76 @@ class PopupNewProject extends React.Component {
       console.dir(this.state);
       console.dir(this.props);
 
-      if (prevProps.tasks.length == this.props.tasks.length) {
-        if (prevProps.tasks != this.props.tasks) {
-          //Create object from props.task {key: {_id}, value: {task}}
-         const tasks = this.props.tasks;
-          if (tasks.length > 0) {
-            let tasksMap = {};
-  
-            for (let i = 0; i < tasks.length; ++i) {
-              tasksMap[tasks[i]._id] = tasks[i];
-            }
-  
-            //update this.state.project.milestones array from created map, using milestone._id as a key
-            let projectCopy = Object.assign({}, this.state.project);
-            
-            for (let i = 0; i < projectCopy.milestones.length; ++i) {
-              const taskFromMap = tasksMap[projectCopy.milestones[i]._id];
-              if (taskFromMap) {
-                projectCopy.milestones[i] = taskFromMap;
-              }
-            }
-  
-            console.log("Created tasks map: ");
-            console.dir(tasksMap);
-  
-            let copy = Object.assign({}, this.state, {project: projectCopy});
-            this.setState(copy);
+      if (prevProps.isTasksUpdateInProgress && !this.props.isTasksUpdateInProgress) {
+        const tasks = this.props.tasks;
+        if (tasks.length > 0) {
+          let tasksMap = {};
+
+          for (let i = 0; i < tasks.length; ++i) {
+            tasksMap[tasks[i]._id] = tasks[i];
           }
+
+          //update this.state.project.milestones array from created map, using milestone._id as a key
+          let projectCopy = Object.assign({}, this.state.project);
+          
+          for (let i = 0; i < projectCopy.milestones.length; ++i) {
+            const taskFromMap = tasksMap[projectCopy.milestones[i]._id];
+            if (taskFromMap) {
+              projectCopy.milestones[i] = taskFromMap;
+            }
+          }
+
+          console.log("Created tasks map: ");
+          console.dir(tasksMap);
+
+          let copy = Object.assign({}, this.state, {project: projectCopy});
+          this.setState(copy);
         }
       }
       else {
-        console.log("PROPS PROJECTS HAS CHANGED!!!");
-        let projectCopy = Object.assign({}, this.state.project);
-
-        const milestonesToRemove = this.arrayDifference(this.state.project.milestones, this.props.tasks);
-        const milestonesToAdd = this.arrayDifference(this.props.tasks, this.state.project.milestones);
-
-        console.log("milestonesToRemove.length: " + milestonesToRemove.length);
-        console.log("milestonesToAdd.length: " + milestonesToAdd.length);
-
-        if (milestonesToRemove && milestonesToRemove.length > 0) {
-          console.log("REMOVING MILESTONES...")
-
-          for (let i = 0; i < milestonesToRemove.length; ++i) {
-            let foundIndex = projectCopy.milestones.findIndex(function(currentMilestone) {
-                return currentMilestone._id == milestonesToRemove[i]._id;
+        if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
+          console.log("PROPS PROJECTS HAS CHANGED!!!");
+          let projectCopy = Object.assign({}, this.state.project);
+  
+          const milestonesToRemove = this.arrayDifference(this.state.project.milestones, this.props.tasks);
+          const milestonesToAdd = this.arrayDifference(this.props.tasks, this.state.project.milestones);
+  
+          console.log("milestonesToRemove.length: " + milestonesToRemove.length);
+          console.log("milestonesToAdd.length: " + milestonesToAdd.length);
+  
+          if (milestonesToRemove && milestonesToRemove.length > 0) {
+            console.log("REMOVING MILESTONES...")
+  
+            for (let i = 0; i < milestonesToRemove.length; ++i) {
+              let foundIndex = projectCopy.milestones.findIndex(function(currentMilestone) {
+                  return currentMilestone._id == milestonesToRemove[i]._id;
+                }
+              );
+  
+              if (foundIndex >= 0) {
+                projectCopy.milestones.splice(foundIndex, 1);
               }
-            );
-
-            if (foundIndex >= 0) {
-              projectCopy.milestones.splice(foundIndex, 1);
             }
           }
-        }
-
-        if (milestonesToAdd && milestonesToAdd.length > 0) {
-          console.log("ADDING MILESTONES...")
-
-          for (let i = 0; i < milestonesToAdd.length; ++i) {
-            let foundIndex = projectCopy.milestones.findIndex( function(currentMilestone) {
-                return currentMilestone._id == milestonesToAdd[i]._id;
+  
+          if (milestonesToAdd && milestonesToAdd.length > 0) {
+            console.log("ADDING MILESTONES...")
+  
+            for (let i = 0; i < milestonesToAdd.length; ++i) {
+              let foundIndex = projectCopy.milestones.findIndex( function(currentMilestone) {
+                  return currentMilestone._id == milestonesToAdd[i]._id;
+                }
+              );
+  
+              if (foundIndex < 0) {
+                projectCopy.milestones.push(milestonesToAdd[i]);
               }
-            );
-
-            if (foundIndex < 0) {
-              projectCopy.milestones.push(milestonesToAdd[i]);
             }
           }
+  
+          let copy = Object.assign({}, this.state, {project: projectCopy});
+          this.setState(copy);
         }
-
-        let copy = Object.assign({}, this.state, {project: projectCopy});
-        this.setState(copy);
       }
     }
 
@@ -601,6 +600,7 @@ class PopupNewProject extends React.Component {
     deleteTask: PropTypes.func.isRequired,
     setTaskPublished: PropTypes.func.isRequired,
     isTaskSaveInProgress: PropTypes.bool.isRequired,
+    isTasksUpdateInProgress: PropTypes.bool.isRequired,
   }
  
   export default require('react-click-outside')(PopupNewProject);

@@ -11,6 +11,9 @@ import {
     FETCH_TASKS_INITIATE,
     FETCH_TASKS_COMPLETE,
 
+    UPDATE_TASK_INITIATE,
+    UPDATE_TASK_COMPLETE,
+
     SAVE_TASK_INITIATE,
     SAVE_TASK_COMPLETE,
     TASK_SET_PUBLISHED,
@@ -71,19 +74,31 @@ export function saveTaskComplete() {
     }
 }
 
+export function updateTaskInitiate() {
+    return {
+        type: UPDATE_TASK_INITIATE,
+    }
+}
+
+export function updateTaskComplete() {
+    return {
+        type: UPDATE_TASK_COMPLETE,
+    }
+}
+
 export function setTaskPublished(taskId, published) {
     return function (dispatch) {
-      dispatch(saveTaskInitiate());
+      dispatch(updateTaskInitiate());
       
       const url = `${ConfigMain.getBackendURL()}/taskSetPublished?id=${taskId}&isHidden=${published ? 0 : 1}`;
         return (
         Axios.get(url)
         .then(function(response) {
             dispatch(updateTask(response.data._id, response.data));
-            dispatch(saveTaskComplete());
+            dispatch(updateTaskComplete());
         })
         .catch(function(error) {
-            dispatch(saveTaskComplete({}));
+            dispatch(updateTaskComplete({}));
         }));
     }
 }

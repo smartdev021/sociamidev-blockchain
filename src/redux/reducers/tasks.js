@@ -7,6 +7,8 @@ import {
   TASK_UPDATE, 
   TASK_ADD,
   TASK_REMOVE,
+  UPDATE_TASK_INITIATE,
+  UPDATE_TASK_COMPLETE,
 
 } from '~/src/redux/actions/actionTypes';
 
@@ -67,6 +69,17 @@ export function isTasksFetchInProgress(state = false, action) {
       case FETCH_TASKS_INITIATE:
         return (!state) ? true : state;
       case FETCH_TASKS_COMPLETE:
+        return (state) ? false : state;
+      default:
+        return state;
+    }
+}
+
+export function isTasksUpdateInProgress(state = false, action) {
+  switch (action.type) {
+      case UPDATE_TASK_INITIATE:
+        return (!state) ? true : state;
+      case UPDATE_TASK_COMPLETE:
         return (state) ? false : state;
       default:
         return state;
