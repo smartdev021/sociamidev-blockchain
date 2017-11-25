@@ -37,6 +37,10 @@ export const ROADMAP_ADD = "roadmap_add";
 export const ROADMAPS_SET = "roadmaps_set";
 export const ROADMAP_REMOVE = "roadmap_remove";
 export const ROADMAP_REMOVE_ALL = "roadmap_remove_all";
+export const ROADMAPS_FETCH_INITIATE = "roadmaps_fetch_initiate";
+export const ROADMAPS_FETCH_COMPLETE = "roadmaps_fetch_complete";
+export const ROADMAPS_DETAILED_SET = "roadmaps_detailed_set";
+export const ROADMAPS_DETAILED_REMOVE_ALL = "roadmaps_detailed_remove_all";
 
 export const EXACT_LOCATION_SET = "exact_location_set";
 

@@ -35,6 +35,10 @@ import {
   openSignUpForm,
 } from '~/src/redux/actions/authorization'
 
+import {
+  fetchRoadmapsDetailsByIds,
+} from '~/src/redux/actions/roadmaps'
+
 class ProjectManager extends React.Component {
 
   constructor(props) {
@@ -251,6 +255,8 @@ class ProjectManager extends React.Component {
             saveTask = {this.props.saveTask}
             setTaskPublished = {this.props.setTaskPublished}
             tasks = {this.props.tasks}
+            fetchRoadmapsDetailsByIds = {this.props.fetchRoadmapsDetailsByIds}
+            roadmapsDetailed = {this.props.roadmapsDetailed}
             /> : null
         }
         {this.renderHeader()}
@@ -262,8 +268,10 @@ class ProjectManager extends React.Component {
 
 ProjectManager.propTypes = {
   tasks: PropTypes.array.isRequired,
+  roadmapsDetailed: PropTypes.array.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
+  fetchRoadmapsDetailsByIds: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   saveTask: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
@@ -273,6 +281,7 @@ const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
   tasks: state.tasks,
+  roadmapsDetailed: state.roadmapsDetailed,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -281,6 +290,7 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   saveTask: bindActionCreators(saveTask, dispatch),
   setTaskPublished: bindActionCreators(setTaskPublished, dispatch),
+  fetchRoadmapsDetailsByIds: bindActionCreators(fetchRoadmapsDetailsByIds, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));

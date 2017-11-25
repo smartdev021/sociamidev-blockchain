@@ -1,6 +1,15 @@
 
 
-import { ROADMAP_ADD, ROADMAP_REMOVE, ROADMAP_REMOVE_ALL, ROADMAPS_SET } from '~/src/redux/actions/actionTypes';
+import { 
+  ROADMAP_ADD, 
+  ROADMAP_REMOVE, 
+  ROADMAP_REMOVE_ALL, 
+  ROADMAPS_SET ,
+  ROADMAPS_FETCH_INITIATE,
+  ROADMAPS_FETCH_COMPLETE,
+  ROADMAPS_DETAILED_SET,
+  ROADMAPS_DETAILED_REMOVE_ALL,
+} from '~/src/redux/actions/actionTypes';
 
 const userRoadmapsInitialState = {roadmaps: [], amount: 0};
 
@@ -37,4 +46,26 @@ export function userRoadmaps(state = userRoadmapsInitialState, action) {
       default:
         return state;
     }
+}
+
+export function roadmapsDetailed(state = [], action) {
+  switch (action.type) {
+    case ROADMAPS_DETAILED_SET:
+      return action.roadmaps;
+    case ROADMAPS_DETAILED_REMOVE_ALL:
+      return [];
+    default:
+      return state;
+  }
+}
+
+export function isFetchingRoadmaps(state = false, action) {
+  switch(action.type) {
+    case ROADMAPS_FETCH_INITIATE:
+      return true;
+    case ROADMAPS_FETCH_COMPLETE:
+      return false;
+    default:
+      return state;
+  }
 }

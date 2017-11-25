@@ -36,42 +36,10 @@ class PopupNewProject extends React.Component {
       this.state = {
         project: this.initialStateProject,
         milestoneTemp: this.initialStateMilestone,
-        userRoadmapsDetailed: [],
-        isFetchingRoadmapDetails: false,
       }
 
       //TODO: It's a temporary solution for updating milestone data once it's saved as a task in backend
       this.lastMilestoneIndex = -1;
-    }
-
-    fetchUserRoadmapsDetailedInitiate() {
-      let roadmapIds = this.props.userProfile.roadmaps;
-
-      if (roadmapIds && roadmapIds.length > 0) {
-        this.setState({isFetchingRoadmapDetails: true}); //TODO: check if this is a correct way for setting a state
-        
-        let url = `${BackendURL}/getRoadmapsByIds?`;
-        
-        for (let i = 0; i < roadmapIds.length; ++i) {
-            url += `roadmaps=${roadmapIds[i]}&`;
-        }
-        
-        Axios.get(url)
-          .then((response) =>this.handleFetchUserRoadmapsDetailedSuccess(response))
-          .catch((error) =>this.handleFetchUserRoadmapsDetailedError(error));
-      }
-    }
-
-    handleFetchUserRoadmapsDetailedSuccess(response) {
-      this.setState({userRoadmapsDetailed: response.data});
-    }
-
-    handleFetchUserRoadmapsDetailedError(error) {
-
-    }
-
-    fetchUserRoadmapsDetailedComplete() {
-      this.setState({isFetchingRoadmapDetails: false}); //TODO: check if this is a correct way for setting a state
     }
 
      formatDate(time, splitter, mmddyy) {
@@ -252,8 +220,10 @@ class PopupNewProject extends React.Component {
 
     componentWillMount() {
 
-      this.fetchUserRoadmapsDetailedInitiate();
-
+      if (this.props.userProfile) {
+        this.props.fetchRoadmapsDetailsByIds(this.props.userProfile.roadmaps);
+      }
+      
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
@@ -288,6 +258,8 @@ class PopupNewProject extends React.Component {
           let findById = function(currentTask) {
             return difference[0]._id == currentTask._id;
           }
+
+          console.log("CHANGING MILESTONE STATUS");
     
           let milestones = this.state.project.milestones;
     
@@ -435,11 +407,11 @@ class PopupNewProject extends React.Component {
     renderFormContent() {
       let roadmapNames = [];
 
-      if (this.state.userRoadmapsDetailed && this.state.userRoadmapsDetailed.length > 0) {
+      if (this.props.roadmapsDetailed.length > 0) {
         
-        for (let i = 0; i < this.state.userRoadmapsDetailed.length; ++i) {
-          if (roadmapNames.indexOf(this.state.userRoadmapsDetailed[i].name) == -1) {
-            roadmapNames.push(this.state.userRoadmapsDetailed[i].name);
+        for (let i = 0; i < this.props.roadmapsDetailed.length; ++i) {
+          if (roadmapNames.indexOf(this.props.roadmapsDetailed[i].name) == -1) {
+            roadmapNames.push(this.props.roadmapsDetailed[i].name);
           }
         }
       }
@@ -504,7 +476,7 @@ class PopupNewProject extends React.Component {
               </div>
               <div className="col-lg-6">
                 <div>
-                  {this.state.userRoadmapsDetailed.length > 0 ? "You have this roadmap" : "You don't have any roadmaps yet"}
+                  {this.props.roadmapsDetailed.length > 0 ? "You have this roadmap" : "You don't have any roadmaps yet"}
                 </div>
               </div>
             </div>
@@ -620,9 +592,11 @@ class PopupNewProject extends React.Component {
   PopupNewProject.propTypes = {
     fetchTasksInitiate: PropTypes.func.isRequired,
     fetchTasksComplete: PropTypes.func.isRequired,
+    fetchRoadmapsDetailsByIds: PropTypes.func.isRequired,
     isAuthorized: PropTypes.bool.isRequired,
     userProfile: PropTypes.object.isRequired,
     tasks: PropTypes.array.isRequired,
+    roadmapsDetailed: PropTypes.array.isRequired,
     saveTask: PropTypes.func.isRequired,
     setTaskPublished: PropTypes.func.isRequired,
   }
