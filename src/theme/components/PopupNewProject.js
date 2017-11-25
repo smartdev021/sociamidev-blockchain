@@ -30,8 +30,8 @@ class PopupNewProject extends React.Component {
       }
 
       this.initialStateMilestone = {
-        name: undefined, 
-        description: undefined, 
+        name: "", 
+        description: "", 
         price: 1, 
         date: Date.now() + (60 * 60 * 24)
       };
@@ -108,7 +108,9 @@ class PopupNewProject extends React.Component {
         }
       );
 
-      this.props.saveTask(milestone);
+      if (milestone.userName != "" && milestone.name != "" && milestone.description != "") {
+        this.props.saveTask(milestone);
+      }
     }
 
     handleMilestoneDelete(e) {
@@ -365,7 +367,8 @@ class PopupNewProject extends React.Component {
         <span>
           <input type="text" id="project_nature" name="city" list="roadmaps" 
             className="text-field form-control validate-field required" 
-              onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.nature}/>
+              onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.nature} 
+                defaultValue={this.state.project.name}/>
           <datalist id="roadmaps">
             <select>
             {
@@ -391,7 +394,7 @@ class PopupNewProject extends React.Component {
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="project_name" name="project_name" autoComplete="off" placeholder="Name of Project" autoFocus
-                      onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.name}/>
+                      onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.name} defaultValue={this.state.project.name}/>
                 </div>
               </div>
             </div>
@@ -399,7 +402,8 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <div className="form-group">
                   <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
-                    name="project_desc" onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.description}/>
+                    name="project_desc" onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.description} 
+                      defaultValue={this.state.project.description}/>
                 </div>
               </div>
             </div>
@@ -431,7 +435,8 @@ class PopupNewProject extends React.Component {
                 <div className="form-group input-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="milestone_name" name="milestone_name" autoComplete="off" 
-                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestone(e)}/>
+                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.name}
+                       value={this.state.milestoneTemp.name}/>
                 </div>
               </div>
             </div>
@@ -439,7 +444,8 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-6">
                 <div className="form-group">
                       <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
-                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestone(e)}/>
+                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.description}
+                        value={this.state.milestoneTemp.description}/>
                 </div>
               </div>
               <div className="col-lg-6">
@@ -456,7 +462,8 @@ class PopupNewProject extends React.Component {
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="number" 
                     id="milestone_price" name="milestone_price" autoComplete="off" placeholder="Min Token" 
-                      onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.price}/>
+                      onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.price} 
+                      value={this.state.milestoneTemp.price}/>
                 </div>
               </div>
               <div className="col-lg-8">

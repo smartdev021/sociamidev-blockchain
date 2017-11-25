@@ -57,7 +57,11 @@ class ProjectManager extends React.Component {
 
   saveProject(project) {
     let projectCopy = Object.assign({}, {userId: this.props.userProfile._id}, project);
-    this.props.projectSave(projectCopy);
+
+    if (projectCopy.name && projectCopy.description && projectCopy.nature
+        && projectCopy.name != "" && projectCopy.description != "", projectCopy.nature != "") {
+          this.props.projectSave(projectCopy);
+    }
   }
 
   fetchAllProjects() {
