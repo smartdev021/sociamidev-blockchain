@@ -85,44 +85,6 @@ class PopupNewProject extends React.Component {
       return(`${theyear}${splitter}${themonth}${splitter}${thetoday}`);
     }
 
-    //TODO: Move to somewhere else
-    createAndSaveNewTask(milestone) {
-      console.log("%cTaskManagement::createAndSaveNewTask", "color: blue; font-size:15px;");
-
-      let newTask = Object.assign({}, milestone, 
-        {
-          type: "project_milestone",
-          userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
-         userID: this.props.userProfile._id,
-         isHidden: 1});
-
-      this.props.saveTask(newTask);
-    }
-  
-    handleSaveNewTaskSuccess(response) {
-      console.log("%cTaskManagement::handleSaveNewTaskSuccess", "color: blue; font-size:15px;");
-      console.dir(response.data);
-
-      if (this.lastMilestoneIndex >= 0 && this.lastMilestoneIndex < this.state.project.milestones.length) {
-        let projectCopy = Object.assign({}, this.state.project);
-        projectCopy.milestones[this.lastMilestoneIndex] = response.data;
-              
-        let copy = Object.assign({}, this.state, {project: projectCopy});
-        this.setState(copy);
-      }
-
-      this.lastMilestoneIndex = -1;
-
-      this.props.fetchTasksComplete();
-    }
-  
-    handleSaveNewTaskError(error) {
-      console.log("%cTaskManagement::handleSaveNewTaskError", "color: blue; font-size:15px;");
-      this.lastMilestoneIndex = -1;
-      this.props.fetchTasksComplete();
-    }
-    //-------------------------------------
-
     handleChangeProject(e) {
       e.preventDefault();
 
@@ -184,7 +146,14 @@ class PopupNewProject extends React.Component {
     handleMilestoneAdd(e) {
       e.preventDefault();
 
-      this.createAndSaveNewTask(this.state.milestoneTemp);
+      let newTask = Object.assign({}, this.state.milestoneTemp, 
+        {
+          type: "project_milestone",
+          userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+         userID: this.props.userProfile._id,
+         isHidden: 1});
+
+      this.props.saveTask(newTask);
     }
 
     handleMilestoneDelete(e) {
@@ -207,23 +176,26 @@ class PopupNewProject extends React.Component {
       }
     }
 
-    handleMilsetonWithdraw(e) {
+    handleMilestoneAddToTaskManager(e) {
+      console.log("TaskManagement::handleMilestoneAddToTaskManager", 'background: #222; color: #bada55');
       e.preventDefault();
       
-      let indexToDelete = Number(e.target.id);
+      let milestoneIndex = Number(e.currentTarget.id);
+      
+      if (this.state.project.milestones.length > milestoneIndex) {
+        this.lastMilestoneIndex = milestoneIndex;
+        this.props.setTaskPublished(this.state.project.milestones[milestoneIndex]._id, true, this.handleTaskPublishResponse);
+      }
+    }
 
-      if (this.state.project.milestones && this.state.project.milestones.length > indexToDelete) {
-        
-        if (this.state.project.milestones[indexToDelete]._id) {
-          const url = `${BackendURL}/taskHasAssignees?id=${this.state.project.milestones[indexToDelete]._id}`;
-          console.log("url: " + url);
-          Axios.get(url)
-          .then((response) =>this.handleMilestoneDeleteSuccess(response, indexToDelete))
-          .catch((error) =>this.handleMilestoneDeleteError(error));
-        }
-        else {
-          this.props.setTaskPublished(this.state.project.milestones[indexToDelete], false);
-        }
+    handleMilestoneWithdraw(e) {
+      e.preventDefault();
+      
+      let milestoneIndex = Number(e.currentTarget.id);
+      
+      if (this.state.project.milestones.length > milestoneIndex) {
+        this.lastMilestoneIndex = milestoneIndex;
+        this.props.setTaskPublished(this.state.project.milestones[milestoneIndex]._id, false, this.handleTaskPublishResponse);
       }
     }
 
@@ -260,15 +232,26 @@ class PopupNewProject extends React.Component {
       console.log("handleMilestoneDeleteError: " + error);
     }
 
-    handleMilestoneAddToTaskManager(e) {
-      console.log("TaskManagement::handleMilestoneAddToTaskManager", 'background: #222; color: #bada55');
-      e.preventDefault();
+    handleTaskPublishResponse(task) {
+      console.log("handleTaskPublishResponse!!!!!!!!!!!!!!: task");
+      console.dir(task);
       
-      let milestoneIndex = Number(e.target.id);
-      
-      if (this.state.project.milestones.length > milestoneIndex) {
-        this.lastMilestoneIndex = milestoneIndex;
-        this.props.setTaskPublished(this.state.project.milestones[milestoneIndex]._id, true);
+      let findById = function(currentTask) {
+        return task._id == currentTask._id;
+      }
+
+      let milestones = this.state.project.milestones;
+      console.log("handleTaskPublishResponse!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: milestones.length" + milestones.length);
+
+      let foundIndex = milestones.findIndex(findById);
+
+      console.log("foundIndex: " + foundIndex);
+
+      if (foundIndex != -1) {
+        let projectCopy = Object.assign({}, this.state.project);
+        projectCopy.milestones[foundIndex] = task;
+
+        this.setState({project: projectCopy});
       }
     }
 
@@ -303,6 +286,35 @@ class PopupNewProject extends React.Component {
     componentDidUpdate(prevProps, prevState) {
       console.log("PopupNewProject::componentDidUpdate");
       console.dir(this.state);
+      console.dir(this.props);
+      if (prevProps.tasks != this.props.tasks && prevProps.tasks.length == this.props.tasks.length) {
+        console.log("ARRAY DIFFERENCE");
+        console.dir(this.props.tasks);
+        let difference = require('array-difference')(this.props.tasks, prevProps.tasks);
+
+        console.dir(difference);
+
+        if (difference.length > 0) {
+          let findById = function(currentTask) {
+            return difference[0]._id == currentTask._id;
+          }
+    
+          let milestones = this.state.project.milestones;
+          console.log("handleTaskPublishResponse!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: milestones.length" + milestones.length);
+    
+          let foundIndex = milestones.findIndex(findById);
+    
+          console.log("foundIndex: " + foundIndex);
+    
+          if (foundIndex != -1) {
+            let projectCopy = Object.assign({}, this.state.project);
+            projectCopy.milestones[foundIndex] = difference[0];
+    
+            this.setState({project: projectCopy});
+          }
+        }
+      }
+
       if (prevProps.tasks.length != this.props.tasks.length && this.props.tasks.length > 0) {
         let tasksCopy = this.props.tasks.slice(0);
 
@@ -320,15 +332,16 @@ class PopupNewProject extends React.Component {
       }
     }
 
-    renderMilestoneControls(milestone) {
+    renderMilestoneControls(milestone, i) {
       let that = this;
-
+console.log("milestone.isHidden: " + milestone.isHidden);
       if (!milestone.isHidden) {
         return (
           <span>
             <div className="col-lg-12">
               <div className="create-project-desc-column">
-                  <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilsetonWithdraw(e)}>
+                  <ActionLink href="#" id={i} className="popup-new-project-link-default" 
+                   onClick={(e)=> that.handleMilestoneWithdraw(e)}>
                     <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Withdraw</div>
                   </ActionLink>
                  </div>
@@ -341,14 +354,15 @@ class PopupNewProject extends React.Component {
           <span>
             <div className="col-lg-6">
               <div className="create-project-desc-column">
-                  <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
+                  <ActionLink href="#" id={i} className="popup-new-project-link-default" 
+                    onClick={(e)=> that.handleMilestoneAddToTaskManager(e)}>
                     <i className="glyphicon glyphicon-bullhorn project-popup-milestone-control-icon"/><div>Add to Task Mg</div>
                   </ActionLink>
                  </div>
                 </div>
               <div className="col-lg-6">
                 <div className="create-project-desc-column">
-                   <ActionLink href="#" className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneDelete(e)}>
+                   <ActionLink href="#" id={i} className="popup-new-project-link-default" onClick={(e)=> that.handleMilestoneDelete(e)}>
                     <i className="glyphicon glyphicon-minus project-popup-milestone-control-icon"/><div>Delete</div>
                   </ActionLink>
                 </div>
@@ -388,7 +402,7 @@ class PopupNewProject extends React.Component {
                   <div className="col-lg-12">
                     <p>{milestone.description}</p>
                   </div>
-                  {that.renderMilestoneControls(milestone)}
+                  {that.renderMilestoneControls(milestone, i)}
                 </div>
               </div>
           );
@@ -446,13 +460,10 @@ class PopupNewProject extends React.Component {
             roadmapNames.push(this.state.userRoadmapsDetailed[i].name);
           }
         }
-
-        console.log("RoadmapNames from user profile...");
       }
       else {
         roadmapNames = ['Blockchain','HTML5','Javascript','Etherium',
         'ReactJS', 'Java', 'Bitcoin', 'Crypto-Currency', 'PHP', 'NodeJS', 'AJAX', 'Full-Stack', 'Front-End'];
-        console.log("RoadmapNames Dummy!!!");
       }
 
       const ProjectNatureDataList = (

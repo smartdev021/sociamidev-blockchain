@@ -75,9 +75,6 @@ class HomePage extends React.Component {
       return b.creationDate - a.creationDate;
     });
 
-    console.log("latestTaskslatestTaskslatestTaskslatestTaskslatestTaskslatestTaskslatestTasks");
-    console.dir(latestTasks);
-
     return (
       <div className="row">
         {

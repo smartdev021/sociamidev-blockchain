@@ -375,7 +375,7 @@ class App extends Component {
             onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
             onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
             onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-            onFetchAllTasks={()=>this.props.fetchAllTasks()}
+            onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
             isAuthorized={this.props.isAuthorized}
             pathname={this.props.history.location.pathname}
           />

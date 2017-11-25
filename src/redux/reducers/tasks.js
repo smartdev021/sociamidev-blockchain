@@ -15,6 +15,8 @@ export function tasks(state = tasksInitialState, action) {
     case TASKS_SET:
       return action.tasks;
     case TASK_UPDATE: {
+      console.log("case TASK_UPDATE:: ");
+      console.dir(action);
       let findByID = function(task) {
         return task._id == action.id;
       }
@@ -24,7 +26,7 @@ export function tasks(state = tasksInitialState, action) {
       if (foundIndex != -1) {
         let copyTasks = state.slice(0);
 
-        copyTasks[i] = action.task;
+        copyTasks[foundIndex] = action.task;
 
         return copyTasks;
       }

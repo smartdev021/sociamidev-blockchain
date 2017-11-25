@@ -4,7 +4,7 @@ import ConfigMain from '~/configs/main'
 
 import {
     TASKS_SET,
-    TASKS_UPDATE,
+    TASK_UPDATE,
     TASK_ADD,
 
     FETCH_TASKS_INITIATE,
@@ -31,6 +31,7 @@ export function addTask(newTask) {
 }
 
 export function updateTask(taskId, newTask) {
+    console.log(`updateTask taskId: ${taskId} task: ${newTask}`);
     return {
         type: TASK_UPDATE,
         id: taskId,
@@ -62,17 +63,21 @@ export function saveTaskComplete() {
     }
 }
 
-export function setTaskPublished(taskId, published) {
+export function setTaskPublished(taskId, published, callback) {
     return function (dispatch) {
-        
+        console.log("taskId: " + taskId + " published: " + published + " callback: " + callback);
       //async action entry point
       dispatch(saveTaskInitiate());
       
-      const url = `${ConfigMain.getBackendURL()}/taskSetPublished?id=${taskId}&isHidden=${published}`;
+      const url = `${ConfigMain.getBackendURL()}/taskSetPublished?id=${taskId}&isHidden=${published ? 0 : 1}`;
         return (
         Axios.get(url)
         .then(function(response) {
             dispatch(updateTask(response.data._id, response.data));
+            console.log(" callback: " + callback);
+            if (callback) {
+                callback(response.data);
+            }
             dispatch(saveTaskComplete());
         })
         .catch(function(error) {
@@ -101,13 +106,13 @@ export function saveTask(task) {
 }
 
 export function fetchAllTasks(publishedOnly) {
-    
+console.log("publishedOnly: " + publishedOnly);
     return function (dispatch) {
       
     //async action entry point
     dispatch(fetchTasksInitiate());
     
-    const url = `${ConfigMain.getBackendURL()}/tasksGet?publishedOnly=${publishedOnly}`;
+    const url = `${ConfigMain.getBackendURL()}/tasksGet?publishedOnly=${publishedOnly ? 1 : 0}`;
           return (
             Axios.get(url)
             .then(function(response) {
