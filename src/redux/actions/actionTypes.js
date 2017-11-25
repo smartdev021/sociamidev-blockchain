@@ -51,6 +51,7 @@ export const FETCH_TASKS_COMPLETE = "fetch_tasks_complete";
 
 
 export const TASK_ADD = "task_add";
+export const TASK_REMOVE = "task_remove";
 export const TASK_UPDATE = "task_update";
 
 export const TASK_SET_PUBLISHED = "task_set_published";

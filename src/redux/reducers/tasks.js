@@ -5,7 +5,9 @@ import {
   SAVE_TASK_INITIATE, 
   SAVE_TASK_COMPLETE,
   TASK_UPDATE, 
-  TASK_ADD
+  TASK_ADD,
+  TASK_REMOVE,
+
 } from '~/src/redux/actions/actionTypes';
 
 const tasksInitialState = [];
@@ -15,8 +17,6 @@ export function tasks(state = tasksInitialState, action) {
     case TASKS_SET:
       return action.tasks;
     case TASK_UPDATE: {
-      console.log("case TASK_UPDATE:: ");
-      console.dir(action);
       let findByID = function(task) {
         return task._id == action.id;
       }
@@ -39,6 +39,23 @@ export function tasks(state = tasksInitialState, action) {
       copyTasks.push(action.task);
 
       return copyTasks;
+    }
+    case TASK_REMOVE: {
+      let findByID = function(task) {
+        return task._id == action.id;
+      }
+
+      const foundIndex = state.findIndex(findByID);
+
+      if (foundIndex != -1) {
+        let copyTasks = state.slice(0);
+
+        copyTasks.splice(foundIndex, 1);
+
+        return copyTasks;
+      }
+
+      return state;
     }
     default:
       return state;

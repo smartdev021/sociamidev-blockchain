@@ -28,6 +28,7 @@ import {
   fetchTasksInitiate,
   fetchTasksComplete,
   saveTask,
+  deleteTask,
   setTaskPublished,
 } from '~/src/redux/actions/tasks'
 
@@ -253,6 +254,7 @@ class ProjectManager extends React.Component {
             isAuthorized = {this.props.isAuthorized}
             userProfile = {this.props.userProfile}
             saveTask = {this.props.saveTask}
+            deleteTask = {this.props.deleteTask}
             setTaskPublished = {this.props.setTaskPublished}
             tasks = {this.props.tasks}
             fetchRoadmapsDetailsByIds = {this.props.fetchRoadmapsDetailsByIds}
@@ -274,6 +276,7 @@ ProjectManager.propTypes = {
   fetchRoadmapsDetailsByIds: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   saveTask: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 }
 
@@ -289,6 +292,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   saveTask: bindActionCreators(saveTask, dispatch),
+  deleteTask: bindActionCreators(deleteTask, dispatch),
   setTaskPublished: bindActionCreators(setTaskPublished, dispatch),
   fetchRoadmapsDetailsByIds: bindActionCreators(fetchRoadmapsDetailsByIds, dispatch),
 });

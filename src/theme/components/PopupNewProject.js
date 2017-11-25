@@ -86,61 +86,46 @@ class PopupNewProject extends React.Component {
       let milestoneCopy = Object.assign({}, this.state.milestoneTemp);
 
       switch(e.target.id) {
-        case 'milestone_name': {
-          milestoneCopy.name = e.target.value;
-          break;
-        }
-        case 'milestone_desc': {
-          milestoneCopy.description = e.target.value;
-          break;
-        }
-        case 'milestone_price': {
-          milestoneCopy.price = e.target.value;
-          break;
-        }
-        case 'milestone_date': {
-          milestoneCopy.date = Date.parse(e.target.value);
-          break;
-        }
-
-        default:
-          return;
+        case 'milestone_name': { milestoneCopy.name = e.target.value; break; }
+        case 'milestone_desc': { milestoneCopy.description = e.target.value; break; }
+        case 'milestone_price': { milestoneCopy.price = e.target.value; break; }
+        case 'milestone_date': { milestoneCopy.date = Date.parse(e.target.value); break; }
+        default: return;
       }
 
-      let copy = Object.assign({}, this.state, {milestoneTemp: milestoneCopy});
-      this.setState(copy);
+      this.setState({milestoneTemp: milestoneCopy});
     }
 
     handleMilestoneAdd(e) {
       e.preventDefault();
 
-      let newTask = Object.assign({}, this.state.milestoneTemp, 
-        {
+      const milestone = Object.assign({}, 
+        this.state.milestoneTemp, {
           type: "project_milestone",
           userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
-         userID: this.props.userProfile._id,
-         isHidden: 1});
+          userID: this.props.userProfile._id,
+          isHidden: 1,
+        }
+      );
 
-      this.props.saveTask(newTask);
+      this.props.saveTask(milestone);
     }
 
     handleMilestoneDelete(e) {
       e.preventDefault();
       
-      let indexToDelete = Number(e.target.id);
+      const indexToDelete = Number(e.currentTarget.id);
 
-      if (this.state.project.milestones && this.state.project.milestones.length > indexToDelete) {
+      console.log("Deleting the Milestone... indexToDelete: " + indexToDelete + " this.state.project.milestones.length: " + this.state.project.milestones.length);
+
+      if (this.state.project.milestones.length > indexToDelete) {
         
-        if (this.state.project.milestones[indexToDelete]._id) {
-          const url = `${BackendURL}/taskHasAssignees?id=${this.state.project.milestones[indexToDelete]._id}`;
-          console.log("url: " + url);
-          Axios.get(url)
-          .then((response) =>this.handleMilestoneDeleteSuccess(response, indexToDelete))
-          .catch((error) =>this.handleMilestoneDeleteError(error));
-        }
-        else {
-          this.deleteMilestone(indexToDelete);
-        }
+        this.props.deleteTask(this.state.project.milestones[indexToDelete]._id);
+        
+        let projectCopy = Object.assign({}, this.state.project);
+        projectCopy.milestones.splice(indexToDelete, 1);
+
+        this.setState({project: projectCopy});
       }
     }
 
@@ -183,19 +168,6 @@ class PopupNewProject extends React.Component {
       }
       else {
       }
-    }
-
-    deleteMilestone(indexToDelete) {
-      let projectCopy = Object.assign({}, this.state.project);
-      
-      projectCopy.milestones.splice(indexToDelete, 1);
-      
-      let copy = Object.assign({}, this.state, {project: projectCopy});
-      this.setState(copy);
-    }
-
-    handleMilestoneDeleteError(error) {
-      console.log("handleMilestoneDeleteError: " + error);
     }
 
     handleTaskPublishResponse(task) {
@@ -598,6 +570,7 @@ class PopupNewProject extends React.Component {
     tasks: PropTypes.array.isRequired,
     roadmapsDetailed: PropTypes.array.isRequired,
     saveTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired,
     setTaskPublished: PropTypes.func.isRequired,
   }
  

@@ -6,6 +6,7 @@ import {
     TASKS_SET,
     TASK_UPDATE,
     TASK_ADD,
+    TASK_REMOVE,
 
     FETCH_TASKS_INITIATE,
     FETCH_TASKS_COMPLETE,
@@ -27,6 +28,13 @@ export function addTask(newTask) {
     return {
         type: TASK_ADD,
         task: newTask
+    }
+}
+
+export function removeTask(taskId) {
+    return {
+        type: TASK_REMOVE,
+        id: taskId
     }
 }
 
@@ -100,7 +108,26 @@ export function saveTask(task) {
             dispatch(saveTaskComplete());
         })
         .catch(function(error) {
-            dispatch(saveTaskComplete({}));
+            dispatch(saveTaskComplete());
+        }));
+    }
+}
+
+export function deleteTask(taskId) {
+    return function (dispatch) {
+        
+      //async action entry point
+      dispatch(saveTaskInitiate());
+      
+      const url = `${ConfigMain.getBackendURL()}/taskDelete?id=${taskId}`;
+        return (
+        Axios.get(url)
+        .then(function(response) {
+            dispatch(removeTask(response.data._id));
+            dispatch(saveTaskComplete());
+        })
+        .catch(function(error) {
+            dispatch(saveTaskComplete());
         }));
     }
 }
