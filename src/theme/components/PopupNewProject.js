@@ -9,6 +9,12 @@ import "~/src/css/popupProjectManagement.css"
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import Axios from 'axios'
+
+import ConfigMain from '~/configs/main'
+
+import PopupConfirmWithdraw from '~/src/theme/components/PopupConfirmation';
+
 class PopupNewProject extends React.Component {
     constructor(props) {
       super(props);
@@ -39,6 +45,10 @@ class PopupNewProject extends React.Component {
       this.state = {
         project: this.initialStateProject,
         milestoneTemp: this.initialStateMilestone,
+        //confirmation popup
+        confirmWithdrawPopupOpen: false,
+        assigneeName: "",
+        milestoneIdToRemove: undefined,
       }
     }
 
@@ -136,9 +146,51 @@ class PopupNewProject extends React.Component {
 
         console.log(`milestoneId: ${milestoneId} isPublished: ${isPublished}`);
 
-        this.props.setTaskPublished(milestoneId, !isPublished);
+        if (isPublished) {
+          this.taskUnpublishWithConfirmation(milestoneId);
+        }
+        else {
+          this.props.setTaskPublished(milestoneId, !isPublished);
+        }
       }
+    }
 
+    taskUnpublishWithConfirmation(milestoneId) {
+      const url = `${ConfigMain.getBackendURL()}/taskGetById?id=${milestoneId}`;
+      let that = this;
+      Axios.get(url)
+      .then(function(response) {
+          if (response && response.data.taskAsigneeId && response.data.taskAsigneeId.length > 0) {
+            const userID = response.data.taskAsigneeId[0].userID;
+
+            const url = `${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${userID}`;
+            let thatThat = that;
+            Axios.get(url)
+            .then(function(response) {
+                if (response.data) {
+                  console.log("Task has been assigned and can not be withdrawn");
+                  console.dir(response.data);
+
+                  const profileFirstName = response.data.profile.firstName;
+                  const profileLastName = response.data.profile.lastName;
+
+                  let copy = Object.assign({}, thatThat.state, {assigneeNameToConfirm: `${profileFirstName} ${profileLastName}`, 
+                  milestoneIdToRemove: milestoneId, confirmWithdrawPopupOpen: true});
+                    thatThat.setState(copy);
+                }
+            })
+            .catch(function(error) {
+              console.log("Error: " + error);
+            });
+          }
+          else {
+            console.log("Task has no assignees");
+            that.props.setTaskPublished(milestoneId, false);
+          }
+      })
+      .catch(function(error) {
+        console.log("Error: " + error);
+      });
     }
 
     componentWillMount() {
@@ -269,6 +321,26 @@ class PopupNewProject extends React.Component {
           let copy = Object.assign({}, this.state, {project: projectCopy});
           this.setState(copy);
         }
+      }
+    }
+
+    renderConfirmWithdrawPopup() {
+      return (
+        <PopupConfirmWithdraw modalIsOpen={this.state.confirmWithdrawPopupOpen}
+        assigneeName={this.state.assigneeNameToConfirm}
+        onConfirmationPopupClose={(confirm)=>this.handleConfirmationWithdrawPopupClose(confirm)}
+          />
+        );
+    }
+
+    handleConfirmationWithdrawPopupClose(confirm) {
+      const milestoneIdToRemove = this.state.milestoneIdToRemove;
+
+      let copy = Object.assign({}, this.state, {assigneeNameToConfirm: "", milestoneIdToRemove: undefined, confirmWithdrawPopupOpen: false});
+      this.setState(copy);
+
+      if (confirm) {
+        this.props.setTaskPublished(milestoneIdToRemove, false);
       }
     }
 
@@ -413,8 +485,7 @@ class PopupNewProject extends React.Component {
         <span>
           <input type="text" id="project_nature" name="city" list="roadmaps" 
             className="text-field form-control validate-field required" 
-              onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.nature} 
-                defaultValue={this.state.project.name}/>
+              onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.nature} />
           <datalist id="roadmaps">
             <select>
             {
@@ -440,7 +511,7 @@ class PopupNewProject extends React.Component {
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="project_name" name="project_name" autoComplete="off" placeholder="Name of Project" autoFocus
-                      onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.name} defaultValue={this.state.project.name}/>
+                      onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.name}/>
                 </div>
               </div>
             </div>
@@ -448,8 +519,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-12">
                 <div className="form-group">
                   <textarea id="project_desc" placeholder="Please Describe Your Project" className="form-control validate-field required" 
-                    name="project_desc" onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.description} 
-                      defaultValue={this.state.project.description}/>
+                    name="project_desc" onChange={(e)=>this.handleChangeProject(e)} value={this.state.project.description} />
                 </div>
               </div>
             </div>
@@ -481,7 +551,7 @@ class PopupNewProject extends React.Component {
                 <div className="form-group input-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="string" 
                     id="milestone_name" name="milestone_name" autoComplete="off" 
-                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.name}
+                      placeholder="Milestone name" onChange={(e)=>this.handleChangeMilestone(e)}
                        value={this.state.milestoneTemp.name}/>
                 </div>
               </div>
@@ -490,7 +560,7 @@ class PopupNewProject extends React.Component {
               <div className="col-lg-6">
                 <div className="form-group">
                       <textarea id="milestone_desc" placeholder="Please describe the Milestone" className="form-control validate-field required" 
-                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.description}
+                        name="milestone_desc" onChange={(e)=>this.handleChangeMilestone(e)}
                         value={this.state.milestoneTemp.description}/>
                 </div>
               </div>
@@ -508,7 +578,7 @@ class PopupNewProject extends React.Component {
                 <div className="form-group">
                   <input type="text" className="text-field form-control validate-field required" data-validation-type="number" 
                     id="milestone_price" name="milestone_price" autoComplete="off" placeholder="Min Token" 
-                      onChange={(e)=>this.handleChangeMilestone(e)} defaultValue={this.state.milestoneTemp.price} 
+                      onChange={(e)=>this.handleChangeMilestone(e)}
                       value={this.state.milestoneTemp.price}/>
                 </div>
               </div>
@@ -540,6 +610,7 @@ class PopupNewProject extends React.Component {
       const FormContent = this.renderFormContent();
 
       return (
+        <span>
         <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.handleClose()} contentLabel={">Add a new Project"}>
           <div className="container-fluid popup-new-project">
             {PopupHeader}
@@ -560,6 +631,7 @@ class PopupNewProject extends React.Component {
             </div>
           </div>
         </Modal>
+        </span>
       );
     }
 
@@ -582,9 +654,10 @@ class PopupNewProject extends React.Component {
     }
 
     render() {
+      const content = this.state.confirmWithdrawPopupOpen ? this.renderConfirmWithdrawPopup() : this.renderModal();
       return (
         <div>
-          {this.renderModal()}
+          {content}
         </div>
       );
     }
