@@ -1,16 +1,13 @@
 import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import {Icon} from 'react-fa'
 
 import DataList from 'react-datalist'
 
 import "~/src/css/popupProjectManagement.css"
 
 import ActionLink from '~/src/components/common/ActionLink'
-
-import ConfigMain from '~/configs/main'
-const BackendURL = ConfigMain.getBackendURL();
-import Axios from 'axios'
 
 class PopupNewProject extends React.Component {
     constructor(props) {
@@ -170,7 +167,7 @@ class PopupNewProject extends React.Component {
       Modal.defaultStyles.content["marginRight"] = 'auto';
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
-      Modal.defaultStyles.content["width"] = '600px';
+      Modal.defaultStyles.content["width"] = '700px';
     }
 
     componentWillUnmount() {
@@ -267,6 +264,10 @@ class PopupNewProject extends React.Component {
     }
 
     renderMileStones() {
+      if (this.props.isTaskSaveInProgress) {
+        return (<p>Retrieving data. Please, wait... <Icon spin name="spinner" /></p>);
+      }
+
       let milestones = this.state.project.milestones;
 
       if (milestones.length == 0) {
@@ -276,7 +277,7 @@ class PopupNewProject extends React.Component {
       let that = this;
 
       return (
-        <span>
+        <span className="milestones-container">
           {milestones.map(function(milestone, i) {
             return (
               <div className="row single-milestone" key={i}>
@@ -490,11 +491,16 @@ class PopupNewProject extends React.Component {
           <div className="container-fluid popup-new-project">
             {PopupHeader}
             {FormContent}
-            <div className="row">{Milestones}</div>
+            {Milestones}
+            <div className="row">
+              <div className="col-lg-12">
+                <hr></hr>
+              </div>
+            </div>
             <div className="row">
               <div className="col-lg-12">
                 <div className="close-button-container">
-                  <button type="button" className="btn btn-lg btn-outline" 
+                  <button type="button" className="btn btn-lg btn-outline button-close" 
                     onClick={() => this.handleCloseAndSave()}>Close</button>
                 </div>
               </div>
@@ -542,6 +548,7 @@ class PopupNewProject extends React.Component {
     saveTask: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
     setTaskPublished: PropTypes.func.isRequired,
+    isTaskSaveInProgress: PropTypes.bool.isRequired,
   }
  
   export default require('react-click-outside')(PopupNewProject);

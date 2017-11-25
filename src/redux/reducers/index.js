@@ -4,7 +4,7 @@ import { exactLocation } from "./miscReducers"
 import { bookmarks } from "./bookmarks"
 import { isFetchInProgress, searchResults, isOpenSearchResultsPending, searchQuery, resultsSelectedCategory } from "./fetchResults"
 import { userRoadmaps, roadmapsDetailed, isFetchingRoadmaps} from "./roadmaps"
-import { tasks, isTasksFetchInProgress} from "./tasks"
+import { tasks, isTasksFetchInProgress, isTaskSaveInProgress} from "./tasks"
 import { isAuthorized, isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authorization"
 import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./projects"
 
@@ -28,4 +28,5 @@ export default combineReducers({
   isProjectSaveInProgress,
   isProjectsFetchInProgress,
   isTasksFetchInProgress,
+  isTaskSaveInProgress,
 });

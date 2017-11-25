@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
+import {Icon} from 'react-fa'
+
 import PropTypes from 'prop-types';
 
 const Hash = require('object-hash');
@@ -16,8 +18,6 @@ const Hash = require('object-hash');
 import PopupNewProject from '~/src/theme/components/PopupNewProject';
 
 import ActionLink from '~/src/components/common/ActionLink'
-
-import ConfigMain from '~/configs/main'
 
 import "~/src/css/projectManagement.css"
 
@@ -142,7 +142,7 @@ class ProjectManager extends React.Component {
 
   renderProjects() {
     if (this.props.isProjectsFetchInProgress || this.props.isProjectSaveInProgress) {
-      return (<p>Retrieving data. Please, wait...</p>);
+      return (<h3>Retrieving data. Please, wait... <Icon spin name="spinner" /></h3>);
     }
 
     if (!this.props.projects || this.props.projects.length == 0) {
@@ -211,6 +211,7 @@ class ProjectManager extends React.Component {
             tasks = {this.props.tasks}
             fetchRoadmapsDetailsByIds = {this.props.fetchRoadmapsDetailsByIds}
             roadmapsDetailed = {this.props.roadmapsDetailed}
+            isTaskSaveInProgress = {this.props.isTaskSaveInProgress}
             /> : null
         }
         {this.renderHeader()}
@@ -235,6 +236,7 @@ ProjectManager.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isProjectsFetchInProgress: PropTypes.bool.isRequired,
   isProjectSaveInProgress: PropTypes.bool.isRequired,
+  isTaskSaveInProgress: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -245,6 +247,7 @@ const mapStateToProps = state => ({
   roadmapsDetailed: state.roadmapsDetailed,
   isProjectsFetchInProgress: state.isProjectsFetchInProgress,
   isProjectSaveInProgress: state.isProjectSaveInProgress,
+  isTaskSaveInProgress: state.isTaskSaveInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({

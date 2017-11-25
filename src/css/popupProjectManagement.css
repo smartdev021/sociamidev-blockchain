@@ -2,9 +2,8 @@
 .popup-new-project {
   padding: 40px;
   margin: 0 auto;
-	background-color: transparent;
-	color: black;
-	height: 100%;
+	background-color: grey;
+	color: white;
 }
 .popup-new-project img {
 	max-width: 50%;
@@ -26,20 +25,37 @@
       z-index: 2;
 	}
 
-	input[type="text"] {
+	.popup-new-project input[type="text"] {
 	  margin-bottom: -1px;
 	  border-bottom-left-radius: 0;
 	  border-bottom-right-radius: 0;
 	}
 
-	input[type="password"] {
+	.popup-new-project input[type="password"] {
 	  margin-bottom: 20px;
 	  border-top-left-radius: 0;
 	  border-top-right-radius: 0;
 	}
 
+	.popup-new-project input, .popup-new-project textarea {
+		background-color: grey;
+		color: white;
+	}
+
+	.popup-new-project datalist option{
+		background-color: grey;
+		color: white;
+	}
+
 	.popup-new-project textarea.form-control  {
 	  height: 200px;
+	}
+
+	.popup-new-project .button-close {
+		padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
 	}
 
 .modal_base {
@@ -99,6 +115,8 @@
 .popup-new-project .single-milestone {
 	padding-top: 10px;
 	padding-bottom: 10px;
+	margin-bottom: 5px;
+	border: 1px solid #00000028;
 }
 
 .popup-new-project input[type="date"] {
@@ -107,5 +125,8 @@
 
 .popup-new-project .close-button-container {
 	text-align: center;
-	padding-bottom: 60px;
+}
+
+.popup-new-project .milestones-container {
+	min-height: 200px;
 }
