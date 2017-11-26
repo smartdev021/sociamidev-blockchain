@@ -55,5 +55,4 @@
 }
 .list-group-item:hover .taskAccept{
     opacity: 1;
-    padding-left: 30%;
 }

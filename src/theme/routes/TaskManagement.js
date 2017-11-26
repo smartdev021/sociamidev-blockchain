@@ -11,6 +11,8 @@ import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 
+import {Icon} from 'react-fa'
+
 import Axios from 'axios'
 
 import ConfigMain from '~/configs/main'
@@ -176,7 +178,7 @@ class TaskManagement extends React.Component {
     console.log("TaskManagement::render");
     console.dir(this.state);
     if (this.props.isTasksFetchInProgress) {
-      return (<p>Loading tasks. Please wait...</p>);
+      return (<h3>Loading tasks. Please wait... <Icon spin name="spinner" /></h3>);
     }
 
     return (

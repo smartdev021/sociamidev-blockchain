@@ -93,13 +93,21 @@ class TasksWidget extends React.Component {
             {tasksFiltered.map(function(task, i) {
 
               return(
-                <li className="list-group-item" key={i}>
-                  <span className="taskTextElement taskName">{that.taskTypeToName(task.type)}</span>
-                  <span className="taskTextElement taskUserName">{task.userName}</span>
-                  <span className="taskTextElement taskRoadmapName">{task.roadmapName ? task.roadmapName : task.name}</span>
-                  <span className={acceptDiv} onClick={()=>that.props.acceptTask(task)}>Accept</span>
-                  <span className={cancelDiv} onClick={()=>that.props.cancelTask(task)}>Cancel</span>
-                  <span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span>
+                <li className="row list-group-item" key={i}>
+                  <span className="col-lg-3">
+                    <span className="taskTextElement taskName">{that.taskTypeToName(task.type)}</span>
+                  </span>
+                  <span className="col-lg-3">
+                    <span className="taskTextElement taskUserName">{task.userName}</span>
+                  </span>
+                  <span className="col-lg-3">
+                    <span className="taskTextElement taskRoadmapName">{task.roadmapName ? task.roadmapName : task.name}</span>
+                  </span>
+                  <span className="col-lg-3">
+                    <span className={acceptDiv} onClick={()=>that.props.acceptTask(task)}>Accept</span>
+                    <span className={cancelDiv} onClick={()=>that.props.cancelTask(task)}>Cancel</span>
+                    <span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span>
+                  </span>
                 </li>);
             })}
           </div>
@@ -138,11 +146,7 @@ class TasksWidget extends React.Component {
             </ActionLink>
             </div>
             </div>
-            <div className="row">
-              <div className="col-lg-12">
-                {this.renderTasks()}
-              </div>
-            </div>
+            {this.renderTasks()}
         </div>
     );
   }
