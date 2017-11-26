@@ -243,13 +243,32 @@ class PopupNewProject extends React.Component {
     componentDidUpdate(prevProps, prevState) {
       console.log("TaskManagement::componentDidUpdate START", 'background: #222; color: #bada55');
 
-      if (this.state.project != prevState.project) {
-        console.log("this.state.project: ");
-        console.dir(this.state.project);
-      }
-
       console.dir(this.state);
       console.dir(this.props);
+
+      if (prevProps.lastSavedTask._id != this.props.lastSavedTask._id && this.props.lastSavedTask._id != undefined) {
+        console.log("prevProps.lastSavedTask");
+        console.dir(prevProps.lastSavedTask);
+
+        console.log("this.props.lastSavedTask");
+        console.dir(this.props.lastSavedTask);
+
+
+        let projectCopy = Object.assign({}, this.state.project);
+
+        let lastSavedTask = this.props.lastSavedTask;
+        
+        let foundIndex = projectCopy.milestones.findIndex( function(currentMilestone) {
+          return currentMilestone._id == lastSavedTask._id;
+        });
+        
+        if (foundIndex < 0) {
+          projectCopy.milestones.push(lastSavedTask);
+        }
+
+        let copy = Object.assign({}, this.state, {project: projectCopy});
+        this.setState(copy);
+      }
 
       if (prevProps.isTasksUpdateInProgress && !this.props.isTasksUpdateInProgress) {
         const tasks = this.props.tasks;
@@ -283,10 +302,10 @@ class PopupNewProject extends React.Component {
           let projectCopy = Object.assign({}, this.state.project);
   
           const milestonesToRemove = this.arrayDifference(this.state.project.milestones, this.props.tasks);
-          const milestonesToAdd = this.arrayDifference(this.props.tasks, this.state.project.milestones);
+          //const milestonesToAdd = this.arrayDifference(this.props.tasks, this.state.project.milestones);
   
           console.log("milestonesToRemove.length: " + milestonesToRemove.length);
-          console.log("milestonesToAdd.length: " + milestonesToAdd.length);
+          //console.log("milestonesToAdd.length: " + milestonesToAdd.length);
   
           if (milestonesToRemove && milestonesToRemove.length > 0) {
             console.log("REMOVING MILESTONES...")
@@ -303,7 +322,7 @@ class PopupNewProject extends React.Component {
             }
           }
   
-          if (milestonesToAdd && milestonesToAdd.length > 0) {
+          /*if (milestonesToAdd && milestonesToAdd.length > 0) {
             console.log("ADDING MILESTONES...")
   
             for (let i = 0; i < milestonesToAdd.length; ++i) {
@@ -316,7 +335,7 @@ class PopupNewProject extends React.Component {
                 projectCopy.milestones.push(milestonesToAdd[i]);
               }
             }
-          }
+          }*/
   
           let copy = Object.assign({}, this.state, {project: projectCopy});
           this.setState(copy);
@@ -668,8 +687,10 @@ class PopupNewProject extends React.Component {
     isAuthorized: PropTypes.bool.isRequired,
     userProfile: PropTypes.object.isRequired,
     tasks: PropTypes.array.isRequired,
+    lastSavedTask: PropTypes.object.isRequired,
     roadmapsDetailed: PropTypes.array.isRequired,
     saveTask: PropTypes.func.isRequired,
+    setLastSavedTask: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
     setTaskPublished: PropTypes.func.isRequired,
     isTaskSaveInProgress: PropTypes.bool.isRequired,

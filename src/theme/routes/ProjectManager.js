@@ -24,6 +24,7 @@ import "~/src/css/projectManagement.css"
 
 import {
   saveTask,
+  setLastSavedTask,
   deleteTask,
   setTaskPublished,
   fetchAllTasks,
@@ -218,6 +219,8 @@ class ProjectManager extends React.Component {
             roadmapsDetailed = {this.props.roadmapsDetailed}
             isTaskSaveInProgress = {this.props.isTaskSaveInProgress}
             isTasksUpdateInProgress = {this.props.isTasksUpdateInProgress}
+            lastSavedTask = {this.props.lastSavedTask}
+            setLastSavedTask = {this.props.setLastSavedTask}
             /> : null
         }
         {this.renderHeader()}
@@ -231,9 +234,11 @@ ProjectManager.propTypes = {
   tasks: PropTypes.array.isRequired,
   projects: PropTypes.array.isRequired,
   roadmapsDetailed: PropTypes.array.isRequired,
+  lastSavedTask: PropTypes.object.isRequired,
   fetchRoadmapsDetailsByIds: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   saveTask: PropTypes.func.isRequired,
+  setLastSavedTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   projectSave: PropTypes.func.isRequired,
   projectsFetch: PropTypes.func.isRequired,
@@ -249,6 +254,7 @@ const mapStateToProps = state => ({
   userProfile: state.userProfile,
   projects: state.projects,
   tasks: state.tasks,
+  lastSavedTask: state.lastSavedTask,
   roadmapsDetailed: state.roadmapsDetailed,
   isProjectsFetchInProgress: state.isProjectsFetchInProgress,
   isProjectSaveInProgress: state.isProjectSaveInProgress,
@@ -259,6 +265,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   saveTask: bindActionCreators(saveTask, dispatch),
+  setLastSavedTask: bindActionCreators(setLastSavedTask, dispatch),
   deleteTask: bindActionCreators(deleteTask, dispatch),
   setTaskPublished: bindActionCreators(setTaskPublished, dispatch),
   fetchRoadmapsDetailsByIds: bindActionCreators(fetchRoadmapsDetailsByIds, dispatch),
