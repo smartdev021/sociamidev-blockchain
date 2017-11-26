@@ -49,6 +49,7 @@ class PopupNewProject extends React.Component {
         confirmWithdrawPopupOpen: false,
         assigneeName: "",
         milestoneIdToRemove: undefined,
+        isOperationInProgress: false,
       }
     }
 
@@ -158,6 +159,10 @@ class PopupNewProject extends React.Component {
     taskUnpublishWithConfirmation(milestoneId) {
       const url = `${ConfigMain.getBackendURL()}/taskGetById?id=${milestoneId}`;
       let that = this;
+
+      let copy = Object.assign({}, this.state, {isWithdrawConfirmationInProgress: true});
+      this.setState(copy);
+
       Axios.get(url)
       .then(function(response) {
           if (response && response.data.taskAsigneeId && response.data.taskAsigneeId.length > 0) {
@@ -180,15 +185,21 @@ class PopupNewProject extends React.Component {
                 }
             })
             .catch(function(error) {
+              let copy = Object.assign({}, thatThat.state, {isWithdrawConfirmationInProgress: false});
+              thatThat.setState(copy);
               console.log("Error: " + error);
             });
           }
           else {
+            let copy = Object.assign({}, that.state, {isWithdrawConfirmationInProgress: false});
+            that.setState(copy);
             console.log("Task has no assignees");
             that.props.setTaskPublished(milestoneId, false);
           }
       })
       .catch(function(error) {
+        let copy = Object.assign({}, that.state, {isWithdrawConfirmationInProgress: false});
+        that.setState(copy);
         console.log("Error: " + error);
       });
     }
@@ -355,12 +366,15 @@ class PopupNewProject extends React.Component {
     handleConfirmationWithdrawPopupClose(confirm) {
       const milestoneIdToRemove = this.state.milestoneIdToRemove;
 
-      let copy = Object.assign({}, this.state, {assigneeNameToConfirm: "", milestoneIdToRemove: undefined, confirmWithdrawPopupOpen: false});
-      this.setState(copy);
-
       if (confirm) {
         this.props.setTaskPublished(milestoneIdToRemove, false);
       }
+
+      let copy = Object.assign({}, this.state, {assigneeNameToConfirm: "", 
+      milestoneIdToRemove: undefined, 
+      confirmWithdrawPopupOpen: false,
+      isWithdrawConfirmationInProgress: false});
+      this.setState(copy);
     }
 
     renderMilestoneControls(milestone, i) {
@@ -403,7 +417,7 @@ class PopupNewProject extends React.Component {
     }
 
     renderMileStones() {
-      if (this.props.isTaskSaveInProgress) {
+      if (this.props.isTaskSaveInProgress || this.props.isTasksUpdateInProgress || this.state.isWithdrawConfirmationInProgress) {
         return (<p>Retrieving data. Please, wait... <Icon spin name="spinner" /></p>);
       }
 
