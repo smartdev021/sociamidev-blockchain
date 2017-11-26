@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
+const TaskTypesToNameMap = {find_mentor: "Find Mentor", project_milestone: "Project Milestone"};
 
 class TasksWidget extends React.Component {
   constructor(props) {
@@ -17,6 +17,9 @@ class TasksWidget extends React.Component {
   }
 
   taskTypeToName(taskType) {
+    if (!TaskTypesToNameMap.hasOwnProperty(taskType)) {
+      return taskType;
+    }
     return TaskTypesToNameMap[taskType];
   }
 
@@ -93,7 +96,7 @@ class TasksWidget extends React.Component {
                 <li className="list-group-item" key={i}>
                   <span className="taskTextElement taskName">{that.taskTypeToName(task.type)}</span>
                   <span className="taskTextElement taskUserName">{task.userName}</span>
-                  <span className="taskTextElement taskRoadmapName">{task.roadmapName}</span>
+                  <span className="taskTextElement taskRoadmapName">{task.roadmapName ? task.roadmapName : task.name}</span>
                   <span className={acceptDiv} onClick={()=>that.props.acceptTask(task)}>Accept</span>
                   <span className={cancelDiv} onClick={()=>that.props.cancelTask(task)}>Cancel</span>
                   <span className="glyphicon glyphicon-bitcoin taskIcon pull-right"></span>
