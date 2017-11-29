@@ -42,12 +42,9 @@ import {
 } from '~/src/redux/actions/tasks'
 
 import {
-  fetchJobItemsComplete,
-  fetchEventItemsComplete,
-  fetchCourseItemsComplete,
-  fetchGigItemsComplete,
   fetchResultsInitiate,
   fetchResultsComplete,
+  fetchResults,
 
   openSearchResults,
 } from '~/src/redux/actions/fetchResults'
@@ -71,15 +68,9 @@ class App extends Component {
     this.state = {
       country: "sg", 
       query : "",
-      isSearchInProgress: false,
       faceBookID: null,
       linkedInID: null,
     };
-
-    this.isSearchingJobs = false;
-    this.isSearchingEvents = false;
-    this.isSearchingForUdemyItems = false;
-    this.isSearchingForFreelancerItems = false;
 
     console.log(`Config BackendURL: ${BackendURL}`);
   }
@@ -144,13 +135,6 @@ class App extends Component {
     this.startNewSearch(this.props.searchQuery);
   }
 
-  refreshBusyState() {
-    let copy = Object.assign({}, this.state, { isSearchInProgress: (
-      this.isSearchingJobs || this.isSearchingEvents || this.isSearchingForUdemyItems || this.isSearchingForFreelancerItems)});
-      
-      this.setState(copy);
-  }
-
   startNewSearch(searchQuery) {
     if (!this.props.isFetchInProgress && searchQuery != "") {
       let dateExpire = new Date();
@@ -158,104 +142,14 @@ class App extends Component {
       let options = { path: '/', expires: dateExpire};
        
       this.props.cookies.set('searchQuery', searchQuery, options);
-
-      this.isSearchingJobs = true;
-      this.isSearchingEvents = true;
-      this.isSearchingForUdemyItems = true;
-      this.isSearchingForFreelancerItems = true;
-
-      this.refreshBusyState();
-  
-      this.props.populateJobItems([]);
-      this.props.populateEventItems([]);
-      this.props.populateCourseItems([]);
-      this.props.populateGigItems([]);
       
       let copy = Object.assign({}, this.state, {jobItems: [], eventBriteItems: [], udemyItems: [], query: searchQuery});
       this.setState(copy);
-  
-      this.props.fetchResultsInitiate();
 
-      this.refreshData("jobs", searchQuery);
-      this.refreshData("events", searchQuery);
-      this.refreshData("courses", searchQuery);
-      this.refreshData("gigs", searchQuery);
-    }
-  }
-
-  dataUpdatedIndeed(items) {
-    if (typeof items !== "undefined") {
-      this.isSearchingJobs = false;
-      
-      this.props.populateJobItems(items);
-
-      this.refreshBusyState();
-    }
-  }
-
-  dataUpdatedEventBrite(items) {
-    if (typeof items !== "undefined") {
-
-      this.isSearchingEvents = false;
-
-      this.props.populateEventItems(items);
-
-      this.refreshBusyState();
-    }
-  }
-
-  dataUpdatedUdemy(items) {
-    if (typeof items !== "undefined") {
-
-      this.isSearchingForUdemyItems = false;
-
-      this.props.populateCourseItems(items);
-
-      this.refreshBusyState();
-    }
-  }
-
-  dataUpdatedFreelancer(items) {
-    if (typeof items !== "undefined") {
-
-      this.isSearchingForFreelancerItems = false;
-
-      this.props.populateGigItems(items);
-      
-      this.refreshBusyState();
-    }
-  }
-
-  refreshData(type, query) {
-    switch(type) {
-      case "jobs":
-      {
-        const PUBLISHER_ID = "4201738803816157";
-        let url = `${BackendURL}/indeed/jobs?query=${query}&country=${this.state.country}`;
-    
-        DataProviderIndeed.requestApiData(url, (items) => this.dataUpdatedIndeed(items) , true);
-        break;
-      }
-      case "events":
-      {
-        let url = `${BackendURL}/eventbrite/events?query=${query}&location=${this.state.country}`;
-        DataProviderEventBrite.requestApiData(url, (items) => this.dataUpdatedEventBrite(items));
-        break;
-      }
-      case "courses":
-      {
-        let url = `${BackendURL}/udemy/courses/?query=${query}`;
-        DataProviderUdemy.requestApiData(url, (items) => this.dataUpdatedUdemy(items));
-        break;
-      }
-      case "gigs":
-      {
-        let url = `${BackendURL}/freelancer/gigs/?query= ${query}`;
-        DataProviderFreelancer.requestApiData(url, (items) => this.dataUpdatedFreelancer(items));
-        break;
-      }
-      default:
-       break;
+      this.props.fetchResults("jobs_indeed", searchQuery);
+      this.props.fetchResults("events_eventbrite", searchQuery);
+      this.props.fetchResults("courses_udemy", searchQuery);
+      this.props.fetchResults("gigs_freelancer", searchQuery);
     }
   }
   
@@ -271,17 +165,30 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.searchResults != this.props.searchResults) {
+
+      const wasFetchingResults = prevProps.searchResults.isFetchingJobs || prevProps.searchResults.isFetchingEvents 
+      || prevProps.searchResults.isFetchingCourses || prevProps.isFetchingGigs;
+
+      const isFetchingResults = this.props.searchResults.isFetchingJobs || this.props.searchResults.isFetchingEvents 
+      || this.props.searchResults.isFetchingCourses || this.props.isFetchingGigs;
+
+      if (!isFetchingResults && wasFetchingResults) {
+        this.props.fetchResultsComplete();
+      }
+      else {
+        if (!wasFetchingResults && isFetchingResults) {
+          this.props.fetchResultsInitiate();
+        }
+      }
+    }
+
     if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
       if(!this.state.linkedInID && !this.state.faceBookID) {
         this.props.setUserAuthorized(false);
       }
       else if(this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
-      }
-    }
-    if (prevState.isSearchInProgress != this.state.isSearchInProgress) {
-      if (!this.state.isSearchInProgress) {
-        this.props.fetchResultsComplete();
       }
     }
 
@@ -396,13 +303,10 @@ App.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
   isTasksFetchInProgress: PropTypes.bool.isRequired,
+  searchResults: PropTypes.object.isRequired,
   
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
-  populateJobItems: PropTypes.func.isRequired,
-  populateEventItems: PropTypes.func.isRequired,
-  populateCourseItems: PropTypes.func.isRequired,
-  populateGigItems: PropTypes.func.isRequired,
   fetchResultsInitiate: PropTypes.func.isRequired,
   fetchResultsComplete: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
@@ -415,10 +319,6 @@ App.propTypes = {
 const mapDispatchToProps = dispatch => ({
   openUserProfile: bindActionCreators(openUserProfile, dispatch),
   openSearchResults: bindActionCreators(openSearchResults, dispatch),
-  populateJobItems: bindActionCreators(fetchJobItemsComplete, dispatch),
-  populateEventItems: bindActionCreators(fetchEventItemsComplete, dispatch),
-  populateCourseItems: bindActionCreators(fetchCourseItemsComplete, dispatch),
-  populateGigItems: bindActionCreators(fetchGigItemsComplete, dispatch),
   fetchResultsInitiate: bindActionCreators(fetchResultsInitiate, dispatch),
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
@@ -426,6 +326,7 @@ const mapDispatchToProps = dispatch => ({
   setUserAuthorized: bindActionCreators(setUserAuthorized, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
+  fetchResults: bindActionCreators(fetchResults, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -438,6 +339,7 @@ const mapStateToProps = state => ({
   userProfile: state.userProfile,
   exactLocation: state.exactLocation,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
+  searchResults: state.searchResults,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

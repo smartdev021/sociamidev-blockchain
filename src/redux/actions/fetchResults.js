@@ -138,7 +138,7 @@ function fetchResultsSuccess(type, items, dispatch) {
     }
   }
 
-export function fetchResults(type, searchQuery) {
+export function fetchResults(type, searchQuery, country="sg") {
     if ((searchQuery && searchQuery != "") && (type && type != "")) {
         const BackendURL = ConfigMain.getBackendURL();
 
@@ -148,7 +148,7 @@ export function fetchResults(type, searchQuery) {
                   dispatch(fetchJobItemsInitiate());
 
                   const PUBLISHER_ID = "4201738803816157"; //TODO: move to back-end
-                  let url = `${BackendURL}/indeed/jobs?query=${query}&country=${this.state.country}`;
+                  let url = `${BackendURL}/indeed/jobs?query=${searchQuery}&country=${country}`;
                   DataProviderIndeed.requestApiData(url, (items) => fetchResultsSuccess(type, items, dispatch) , true);
               }
             }
@@ -156,7 +156,7 @@ export function fetchResults(type, searchQuery) {
                 return function (dispatch) {
                   dispatch(fetchEventItemsInitiate());
 
-                  let url = `${BackendURL}/eventbrite/events?query=${query}&location=${this.state.country}`;
+                  let url = `${BackendURL}/eventbrite/events?query=${searchQuery}&location=${country}`;
                   DataProviderEventBrite.requestApiData(url, (items) => fetchResultsSuccess(type, items, dispatch));
                 }
             }
@@ -164,7 +164,7 @@ export function fetchResults(type, searchQuery) {
                 return function (dispatch) {
                   dispatch(fetchCourseItemsInitiate());
 
-                  let url = `${BackendURL}/udemy/courses/?query=${query}`;
+                  let url = `${BackendURL}/udemy/courses/?query=${searchQuery}`;
                   DataProviderUdemy.requestApiData(url, (items) => fetchResultsSuccess(type, items, dispatch));
                 }
             }
@@ -172,7 +172,7 @@ export function fetchResults(type, searchQuery) {
                 return function (dispatch) {
                   dispatch(fetchGigItemsInitiate());
 
-                  let url = `${BackendURL}/freelancer/gigs/?query= ${query}`;
+                  let url = `${BackendURL}/freelancer/gigs/?query= ${searchQuery}`;
                   DataProviderFreelancer.requestApiData(url, (items) => fetchResultsSuccess(type, items, dispatch));
                 }
             }
