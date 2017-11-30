@@ -7,7 +7,6 @@
 */
 
 import React, { Component } from 'react';
-import Axios from 'axios'
 import WebFont from 'webfontloader';
 import { withRouter } from 'react-router-dom'
 import { Redirect} from 'react-router-dom'
@@ -15,19 +14,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
-
+import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
 
 import Main from './Main';
-
 import MainMenu from '~/src/theme/routes/MainMenu';
 import ChatApp from '~/src/components/chat/ChatApp';
-
 import ConfigMain from '~/configs/main'
-
 import ActionLink from '~/src/components/common/ActionLink'
-
-import { withCookies, Cookies } from 'react-cookie';
 
 import {
   fetchUserProfile,
@@ -59,15 +53,7 @@ const BackendURL = ConfigMain.getBackendURL();
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.countries = {Singapore:"sg", USA:"us", China:"cn", Germany:"de", Ukraine: "ua"};
-
-    this.initialCountry = this.countries.Singapore;
-    this.initialQuery = "";
-
     this.state = {
-      country: "sg", 
-      query : "",
       faceBookID: null,
       linkedInID: null,
     };
@@ -131,7 +117,6 @@ class App extends Component {
   }
 
   handleStartSearch() {
-    console.log("handleStartSearch!!!!!!!!!!!!!!!!!!!!!!!!!!! this.props.searchQuery: " + this.props.searchQuery);
     this.startNewSearch(this.props.searchQuery);
   }
 
@@ -142,9 +127,6 @@ class App extends Component {
       let options = { path: '/', expires: dateExpire};
        
       this.props.cookies.set('searchQuery', searchQuery, options);
-      
-      let copy = Object.assign({}, this.state, {jobItems: [], eventBriteItems: [], udemyItems: [], query: searchQuery});
-      this.setState(copy);
 
       this.props.fetchResults("jobs_indeed", searchQuery);
       this.props.fetchResults("events_eventbrite", searchQuery);
@@ -302,7 +284,6 @@ App.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
-  isTasksFetchInProgress: PropTypes.bool.isRequired,
   searchResults: PropTypes.object.isRequired,
   
   openUserProfile: PropTypes.func.isRequired,
@@ -338,7 +319,6 @@ const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
   exactLocation: state.exactLocation,
-  isTasksFetchInProgress: state.isTasksFetchInProgress,
   searchResults: state.searchResults,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,

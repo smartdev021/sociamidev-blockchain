@@ -105,6 +105,7 @@ class TaskManagement extends React.Component {
   }
 
   createAndSaveNewTask(roadmap) {
+    //TODO: Move this to Redux
     console.log("TaskManagement::createAndSaveNewTask");
     this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;

@@ -151,6 +151,7 @@ class Roadmap extends React.Component {
   }
 
   saveUserRoadmapsToDatabase() {
+    //TODO: Move this to Redux
     let url = `${ConfigMain.getBackendURL()}/saveUserRoadmaps?userId=${this.props.userProfile._id}`;
 
     let parsedRoadmaps = this.parseRoadmapsForURL();
