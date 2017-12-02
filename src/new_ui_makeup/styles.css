@@ -44,21 +44,24 @@ main {
     height: 90%;
 }
 
-#main-navbar {
-    overflow: hidden;
-    height: 63px;
-    position: fixed;
-    background-color:rgb(218, 162, 42);
-    z-index: 1;
-}
-
 #main-content {
     background-color:rgb(47, 167, 214);
     height: 100%;
-    padding-top:10px;
+    padding-top:100px;
     padding-right: 10px;
     padding-left: 10px;
     overflow-y: scroll;
+}
+
+#main-content-top {
+    background-color: rgb( 235, 235, 235 );
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    position: fixed;
+    height: 80px;
+    z-index: 1;
 }
 /*-----------*/
 
