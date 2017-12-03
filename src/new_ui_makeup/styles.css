@@ -9,7 +9,6 @@ body {
 
 #wrapper {
     max-width: 100%;
-    margin: 0 auto;
   }
 
   #wrapper-content {
@@ -23,7 +22,40 @@ body {
   }
 
   #friends-list {
-    background-color: rgb(131, 131, 131);
+    border-radius: 3px;
+    background-color: rgb( 246, 246, 246 );
+    color: #2e2b2b;
+  }
+
+  #friends-list hr {
+    height: 5px;
+  }
+
+  #friends-list-status {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 95%;
+  }
+
+  #friends-list-status-text {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  #status-text {
+    text-align: center;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid grey;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .friend-widget {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 95%;
+    padding: 5px;
   }
 
   main {
