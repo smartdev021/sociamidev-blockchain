@@ -22,13 +22,13 @@
       z-index: 2;
 	}
 
-	friends-list-current-user="text"] {
+	user-status-widget="text"] {
 	  margin-bottom: -1px;
 	  border-bottom-left-radius: 0;
 	  border-bottom-right-radius: 0;
 	}
 
-	friends-list-current-user="password"] {
+	user-status-widget="password"] {
 	  margin-bottom: 20px;
 	  border-top-left-radius: 0;
 	  border-top-right-radius: 0;

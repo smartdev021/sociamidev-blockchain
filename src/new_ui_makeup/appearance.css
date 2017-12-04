@@ -24,107 +24,107 @@ RESPONSIVE LAYOUT CSS
 }
 
 body {
-    background-color: rgb( 235, 235, 235 );
-    font-family: Comfortaa;
-  }
+  background-color: rgb( 235, 235, 235 );
+  font-family: Comfortaa;
+}
 
-  #progile_link a {
-    color: white;
-    font-size: 15px;
-    font-family: "Comfortaa";
-    line-height: 3;
-  }
+header {
+  background-color: rgba( 122, 204, 200, 0.8);
+}
 
-  header {
-    background-color: rgba( 122, 204, 200, 0.8);
-  }
+header #profile_link a {
+  color: white;
+  font-size: 15px;
+  font-family: "Comfortaa";
+  line-height: 3;
+}
 
-  #friends-list {
-    border-radius: 3px;
-    background-color: rgb( 246, 246, 246 );
-    color: #2e2b2b;
-  }
+#sidebar-left {
+  border-radius: 3px;
+  background-color: rgb( 246, 246, 246 );
+  color: #2e2b2b;
+}
 
-  .friend-widget img, #friends-list-current-user img {
-    border-radius: 50%;
-  }
+.friend-widget img, #user-status-widget img {
+  border-radius: 50%;
+}
 
-  #friends-list-current-user .friends-widget-text {
-    margin-bottom: 20px;
-    font-size: 11px;
-    font-family: "Comfortaa";
-    color: rgb( 161, 158, 158 );
-    line-height: 1.364;
-  }
+#user-status-widget .friends-widget-text {
+  margin-bottom: 20px;
+  font-size: 11px;
+  font-family: "Comfortaa";
+  color: rgb( 161, 158, 158 );
+  line-height: 1.364;
+}
 
-  .friends-list-friend-name, .friend-test-line_1, .friend-test-line_2{
-    font-size: 15px;
-    font-family: "Comfortaa";
-    color: rgb( 106, 104, 104 );
-    line-height: 1;
-  }
-  
+.sidebar-left-friend-name, .friend-test-line_1, .friend-test-line_2{
+  font-size: 15px;
+  font-family: "Comfortaa";
+  color: rgb( 106, 104, 104 );
+  line-height: 1;
+}
 
-  #status-text {
-    border-radius: 3px;
-    border: 1px solid grey;
-  }
 
-  main {
-    color: white;
-  }
+#status-input {
+  border-radius: 3px;
+  border: 1px solid grey;
+}
 
-  #main-content-status-text {
-    border-width: 1px;
-    background-color: rgb( 255, 255, 255 );
-    border-style: solid;
-    border-radius: 3px;
-    border-color: rgb( 255, 255, 255 );
-    font-size: 11px;
-    font-family: "Comfortaa";
-    color: rgb( 188, 188, 188 );
-    line-height: 47px;
-  }
+main {
+  color: white;
+}
 
-  #main-content {
-   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
-    background: rgb(74,191,234); /* Old browsers */
-    background-image: -moz-linear-gradient( -15deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
-    background-image: -webkit-linear-gradient( -15deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
-    background: linear-gradient(-15deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-    border-radius: 3px;
-  }
+#main-content-status {
+  border-width: 1px;
+  background-color: rgb( 255, 255, 255 );
+  border-style: solid;
+  border-radius: 3px;
+  border-color: rgb( 255, 255, 255 );
+  font-size: 11px;
+  font-family: "Comfortaa";
+  color: rgb( 188, 188, 188 );
+  line-height: 47px;
+}
 
-  hr {
-    clear: both;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-  }
+#main-content {
+ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
+  background: rgb(74,191,234); /* Old browsers */
+  background-image: -moz-linear-gradient( -15deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
+  background-image: -webkit-linear-gradient( -15deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
+  background: linear-gradient(-15deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  border-radius: 3px;
+}
 
-  #nav-top .navbar {
-    background-color: transparent;
-    border-color: transparent;
-  }
+hr {
+  clear: both;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
 
-  #nav-top .nav>li>a {
-    padding: 0;
-    line-height: 35px;
-    padding-right: 20px;
-  }
+#nav-top .navbar {
+  background-color: transparent;
+  border-color: transparent;
+}
 
-  #nav-top .navbar .top-nav-btn {
-    font-size: 13px;
-    font-family: "Comfortaa";
-    color: rgb( 246, 246, 246 );
-    line-height: 1.538;
-    border-radius: 3px;
-    border-color: rgb( 128, 163, 235 );
-    background-color: rgb( 128, 163, 235 );
-    width: 137px;
-    height: 35px;
-  }
+#nav-top .nav>li>a {
+  padding: 0;
+  line-height: 35px;
+  padding-right: 20px;
+}
 
-  #nav-top .navbar .top-nav-btn:hover {
-    background-color: rgb( 182, 199, 234 );
-  }
+#nav-top .navbar .top-nav-btn {
+  font-size: 13px;
+  font-family: "Comfortaa";
+  color: rgb( 246, 246, 246 );
+  line-height: 1.538;
+  border-radius: 3px;
+  border-color: rgb( 128, 163, 235 );
+  background-color: rgb( 128, 163, 235 );
+  width: 137px;
+  height: 35px;
+}
+
+#nav-top .navbar .top-nav-btn:hover {
+  background-color: rgb( 182, 199, 234 );
+}
