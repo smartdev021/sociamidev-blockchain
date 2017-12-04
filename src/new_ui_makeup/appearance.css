@@ -1,0 +1,50 @@
+/**************************************
+RESPONSIVE LAYOUT CSS
+**************************************/
+
+body {
+    background-color: rgb( 235, 235, 235 );
+  }
+
+  #progile_link a {
+    color: white;
+  }
+
+  header {
+    background-color: rgba( 122, 204, 200, 0.8);
+  }
+
+  #friends-list {
+    border-radius: 3px;
+    background-color: rgb( 246, 246, 246 );
+    color: #2e2b2b;
+  }
+
+  .friend-widget img, #friends-list-status img {
+    border-radius: 50%;
+  }
+
+  #status-text {
+    border-radius: 3px;
+    border: 1px solid grey;
+  }
+
+  main {
+    color: white;
+  }
+
+  #main-content-status-text {
+    border-radius: 3px;
+    background-color: white;
+    color: grey;
+  }
+
+  #main-content {
+   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
+    background: rgb(74,191,234); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(74,191,234,1) 0%, rgba(33,167,229,1) 67%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(74,191,234,1) 0%,rgba(33,167,229,1) 67%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(74,191,234,1) 0%,rgba(33,167,229,1) 67%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    border-radius: 3px;
+  }

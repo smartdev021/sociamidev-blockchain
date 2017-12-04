@@ -3,7 +3,6 @@ RESPONSIVE LAYOUT CSS
 **************************************/
 
 body {
-    background-color: rgb( 235, 235, 235 );
     margin: 0;
   }
 
@@ -17,10 +16,6 @@ body {
     margin-right: 40px;
   }
 
-  #progile_link a {
-    color: white;
-  }
-
 #wrapper {
     max-width: 100%;
   }
@@ -32,15 +27,12 @@ body {
 
   header {
     height: 63px;
-    background-color: rgba( 122, 204, 200, 0.8);
   }
 
   #friends-list {
-    border-radius: 3px;
-    background-color: rgb( 246, 246, 246 );
-    color: #2e2b2b;
     padding-top: 20px;
   }
+
   #friends-list-friends {
     height: 400px;
     overflow-y: scroll;
@@ -66,8 +58,6 @@ body {
   #status-text {
     text-align: center;
     width: 100%;
-    border-radius: 3px;
-    border: 1px solid grey;
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -81,7 +71,6 @@ body {
 
   .friend-widget img, #friends-list-status img {
     float: left;
-    border-radius: 50%;
     width: 55px;
     height: 55px;
   }
@@ -102,10 +91,6 @@ body {
   }
   /*-------------*/
 
-  main {
-    color: white;
-  }
-
   #content-top {
     z-index: 1;
   }
@@ -122,9 +107,6 @@ body {
 
   #main-content-status-text {
     min-height: 50px;
-    border-radius: 3px;
-    background-color: white;
-    color: grey;
     margin-bottom: 20px;
     text-align: center;
     line-height: 50px;
@@ -133,13 +115,6 @@ body {
   #main-content {
     height: 433px;
     overflow-y: scroll;
-   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
-    background: rgb(74,191,234); /* Old browsers */
-    background: -moz-linear-gradient(-45deg, rgba(74,191,234,1) 0%, rgba(33,167,229,1) 67%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, rgba(74,191,234,1) 0%,rgba(33,167,229,1) 67%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, rgba(74,191,234,1) 0%,rgba(33,167,229,1) 67%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-    border-radius: 3px;
     padding-left: 5px;
     padding-right: 5px;
   }
@@ -162,7 +137,6 @@ body {
     main {
       width: 84%;
     }
-    blackmorok@gmail.com
     .friends-widget-text {
       float: left;
       margin-left: 20px;
