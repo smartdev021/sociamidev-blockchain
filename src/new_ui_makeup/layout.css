@@ -16,6 +16,10 @@ body {
     margin-right: 40px;
   }
 
+  #progile_link img{
+    margin-right: 10px;
+  }
+
 #wrapper {
     max-width: 100%;
   }
@@ -38,11 +42,7 @@ body {
     overflow-y: scroll;
   }
 
-  #friends-list hr {
-    height: 5px;
-  }
-
-  #friends-list-status {
+  #friends-list-current-user {
     margin: 0 auto;
     text-align: center;
     max-width: 95%;
@@ -50,7 +50,11 @@ body {
     z-index: 1;
   }
 
-  #friends-list-status-text {
+  #friends-list-current-user .friends-widget-text {
+      margin-bottom: 20px;
+  }
+
+  #friends-list-current-user-status {
     margin: 0 auto;
     width: 90%;
   }
@@ -69,7 +73,7 @@ body {
     padding: 5px;
   }
 
-  .friend-widget img, #friends-list-status img {
+  .friend-widget img, #friends-list-current-user img {
     float: left;
     width: 55px;
     height: 55px;
@@ -78,7 +82,7 @@ body {
   .friends-widget-text {
     float: left;
   }
-
+  
   /*center links in navbar*/
   #nav-top .navbar .navbar-nav {
     display: inline-block;
@@ -103,6 +107,11 @@ body {
 
   #nav-top li {
     margin-right: 10px;
+  }
+
+  #nav-top li.nav-user-profile-control {
+    margin-right: 0;
+    margin-left: 0;
   }
 
   #main-content-status-text {

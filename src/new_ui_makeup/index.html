@@ -14,21 +14,18 @@
     <div id="wrapper">
       <header>
         <div id="soqqle_logo" class="pull-left"><a href="#"/><img src='./images/soqqle.png'/></a></div>
-        <div id="progile_link" class="pull-right"><a href="#"/><h3>logout</h3></a></div>
+        <div id="progile_link" class="pull-right"><a href="#"/><span><img src="./images/profilesetting.png"/>logout</span></a></div>
       </header>
       <div id="wrapper-content">
           <aside>
             <div id="friends-list">
-              <div id="friends-list-status">
-                  <div class="friend-widget">
-                      <img src='./images/dummy_friend_image.png'/>
-                      <div class="friends-widget-text">
-                        <div><p>Good Morning Dan,</p><p>update your status here</p></div>
-                      </div>
-                      <hr></hr>
-                  </div>
-                <hr></hr>
-                <div id="friends-list-status-text">
+              <div id="friends-list-current-user">
+                <img src='./images/dummy_friend_image.png'/>
+                <div class="friends-widget-text">
+                  <div><p>Good Morning Dan,</br>update your status here</p></div>
+                </div>
+                <div><p></p><hr></hr></p></div>
+                <div id="friends-list-current-user-status">
                   <input type="text" autoComplete="off" id="status-text" placeholder="Testing"/>
                 </div>
               </div>
@@ -111,8 +108,8 @@
         <main class>
           <div class="container-fluid content-top">
               <div class="row">
-                    <div id="nav-top">
-                        <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <div id="nav-top">
                             <nav class="navbar navbar-default">
                                 <div class="container-fluid">
                                   <div class="navbar-header">
@@ -126,25 +123,35 @@
                                     <ul class="nav navbar-nav">
                                         <li>
                                             <p class="navbar-btn">
-                                                <a href="#" class="btn btn-primary btn-lg">Trends Scanner</a>
+                                                <a href="#" class="btn btn-primary btn-md top-nav-btn">Trends Scanner</a>
                                             </p>
                                         </li>
                                         <li>
                                             <p class="navbar-btn">
-                                                <a href="#" class="btn btn-primary btn-lg">Progression Trees</a>
+                                                <a href="#" class="btn btn-primary btn-md top-nav-btn">Progression Trees</a>
                                             </p>
                                         </li>
                                         <li>
                                             <p class="navbar-btn">
-                                                <a href="#" class="btn btn-primary btn-lg">Projects Manager</a>
+                                                <a href="#" class="btn btn-primary btn-md top-nav-btn">Projects Manager</a>
                                             </p>
                                         </li>
                                         <li>
                                             <p class="navbar-btn">
-                                                <a href="#" class="btn btn-primary btn-lg">Tasks Manager</a>
+                                                <a href="#" class="btn btn-primary btn-md top-nav-btn">Tasks Manager</a>
                                             </p>
+                                        </li>
+                                        <li class="nav-user-profile-control">
+                                            <a href="#"><img src="./images/close-envelope.png"/></a>
+                                        </li>
+                                        <li class="nav-user-profile-control">
+                                            <a href="#"><img src="./images/notification.png"/></a>
+                                        </li>
+                                        <li class="nav-user-profile-control">
+                                            <a href="#"><img src="./images/add-friend.png"/></a>
                                         </li>
                                     </ul>
+                                   
                                   </div>
                                 </div>
                               </nav>

@@ -20,7 +20,7 @@ body {
     color: #2e2b2b;
   }
 
-  .friend-widget img, #friends-list-status img {
+  .friend-widget img, #friends-list-current-user img {
     border-radius: 50%;
   }
 
@@ -47,4 +47,25 @@ body {
     background: linear-gradient(135deg, rgba(74,191,234,1) 0%,rgba(33,167,229,1) 67%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     border-radius: 3px;
+  }
+
+  hr {
+    clear: both;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  }
+
+  #nav-top .navbar-default {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  #nav-top .navbar-default .top-nav-btn {
+    border-radius: 3px;
+    border-color: rgb( 128, 163, 235 );
+    background-color: rgb( 128, 163, 235 );
+  }
+
+  #nav-top .navbar-default .top-nav-btn:hover {
+    background-color: rgb( 182, 199, 234 );
   }
