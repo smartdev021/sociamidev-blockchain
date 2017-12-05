@@ -26,18 +26,15 @@ header #profile_link img{
 }
 /*******************************/
 
-#wrapper-content {
-  max-width: 97%;
-  margin: 0 auto;
-}
-
 #sidebar-left {
   padding-top: 20px;
+  overflow-x: hidden;
 }
 
 #sidebar-left #list-friends {
   height: 400px;
   overflow-y: scroll;
+  overflow-x: hidden;
   margin: 0 auto;
   max-width: 87%;
 }
@@ -160,6 +157,22 @@ header {
   #nav-top .navbar {
     margin-right: 60px;
   }
+}
+
+#wrapper .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#wrapper-content {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+/*Alter col- padding */
+#wrapper-content [class*="col-"] {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 header,

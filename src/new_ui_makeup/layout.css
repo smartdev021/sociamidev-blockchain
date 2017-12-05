@@ -27,7 +27,7 @@ header #profile_link img{
 /*******************************/
 
 #wrapper-content {
-  max-width: 97%;
+  padding-left: 15px;
   margin: 0 auto;
 }
 
@@ -150,10 +150,6 @@ header #profile_link img{
   margin-left: 20px;
 }
 
-#nav-top .navbar {
-  margin-right: 60px;
-}
-
 header {
   width: 100%;
 }
@@ -172,11 +168,21 @@ header {
   main {
     width: calc(100% - 270px)
   }
+
+  #nav-top .navbar {
+    margin-right: 60px;
+  }
 }
 
 header,
 aside,
 main {
   margin-bottom: 10px;
+}
+
+/*Alter col- padding */
+#wrapper-content [class*="col-"] {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
