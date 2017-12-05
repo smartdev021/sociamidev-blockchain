@@ -42,7 +42,6 @@ header #profile_link img{
 
 #sidebar-left #user-status-widget {
   margin: 0 auto;
-  text-align: center;
   max-width: 95%;
   padding-bottom: 10px;
   z-index: 1;
@@ -118,6 +117,7 @@ header #profile_link img{
 
 #nav-top .navbar-btn {
   margin-top: 0;
+  margin-right: 10px;
 }
 
 #main-content-status {
@@ -134,30 +134,32 @@ header #profile_link img{
   padding-right: 5px;
 }
 
-@media screen and (min-width: 800px) {
-  header {
-    width: 100%;
-  }
-  
+.friends-widget-text {
+  float: left;
+  margin-left: 20px;
+}
+
+#nav-top .navbar {
+  margin-right: 60px;
+}
+
+header {
+  width: 100%;
+}
+
+/*Later on - we need to have left-sidebar enter/exit the screen, and be topmost when active on mobile*/
+/*Try playing with media queries to achieve that*/
+@media screen and (min-width: 1000px) {
   aside, main {
     float: left;
   }
 
   aside {
-    width: 15%;
-    margin-right: 1%;
+    width: 270px;
   }
 
   main {
-    width: 84%;
-  }
-  .friends-widget-text {
-    float: left;
-    margin-left: 20px;
-  }
-
-  #nav-top .navbar {
-    margin-right: 60px;
+    width: calc(100% - 270px)
   }
 }
 
