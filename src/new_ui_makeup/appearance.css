@@ -45,10 +45,6 @@ header #profile_link a {
   color: #2e2b2b;
 }
 
-.friend-widget img, #user-status-widget img {
-  border-radius: 50%;
-}
-
 #user-status-widget .friends-widget-text {
   margin-bottom: 20px;
   font-size: 11px;
@@ -127,4 +123,42 @@ hr {
 
 #nav-top .navbar .top-nav-btn:hover {
   background-color: rgb( 182, 199, 234 );
+}
+
+/*User widget*/
+.user-widget #user-text {
+  font-size: 11px;
+  font-family: "Comfortaa";
+  color: rgb(161, 158, 158);
+  line-height: 1.364;
+}
+
+.user-widget img {
+  border-radius: 50%;
+}
+
+.user-widget #user-text .user-text-name{
+  font-size: 15px;
+  font-family: "Comfortaa";
+  color: rgb(161, 158, 158);
+  line-height: 1.364;
+}
+
+/*Friend widget*/
+.friend-widget #user-text {
+  font-size: 11px;
+  font-family: "Comfortaa";
+  color: rgb(161, 158, 158);
+  line-height: 1.364;
+}
+
+.friend-widget img {
+  border-radius: 50%;
+}
+
+.friend-widget #user-text .user-text-name{
+  font-size: 15px;
+  font-family: "Comfortaa";
+  color: rgb(161, 158, 158);
+  line-height: 1.364;
 }
