@@ -38,6 +38,8 @@ header #profile_link img{
 #sidebar-left #list-friends {
   height: 400px;
   overflow-y: scroll;
+  margin: 0 auto;
+  max-width: 87%;
 }
 
 #sidebar-left #user-status-widget {
@@ -47,24 +49,46 @@ header #profile_link img{
   z-index: 1;
 }
 
-#sidebar-left #user-status-widget .friends-widget-text {
-  margin-bottom: 20px;
-}
-
 #sidebar-left #user-status-widget #status-input-container {
   margin: 0 auto;
   width: 90%;
 }
 
-#sidebar-left #user-status-widget #status-input-container #status-input {
-  text-align: center;
-  width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.user-widget {
+  margin-bottom: 20px;
 }
 
-.friends-widget-text {
+#sidebar-left .user-widget {
+  margin: 0 auto;
+  max-width: 87%;
+}
+
+.user-widget img {
   float: left;
+  margin-right: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.user-widget #user-text{
+  padding-top: 5px;
+  width:200px;
+}
+
+.friend-widget {
+  margin-bottom: 20px;
+}
+
+.friend-widget img {
+  float: left;
+  margin-right: 10px;
+  width: 55px;
+  height: 55px;
+}
+
+.friend-widget #user-text{
+  padding-top: 5px;
+  width:180px;
 }
 
 /*center links in navbar*/
@@ -154,37 +178,5 @@ header,
 aside,
 main {
   margin-bottom: 10px;
-}
-
-.user-widget {
-  margin-bottom: 20px;
-}
-
-.user-widget img {
-  float: left;
-  margin-right: 20px;
-  width: 50px;
-  height: 50px;
-}
-
-.user-widget #user-text{
-  padding-top: 5px;
-  width:200px;
-}
-
-.friend-widget {
-  margin-bottom: 20px;
-}
-
-.friend-widget img {
-  float: left;
-  margin-right: 10px;
-  width: 55px;
-  height: 55px;
-}
-
-.friend-widget #user-text{
-  padding-top: 5px;
-  width:180px;
 }
 
