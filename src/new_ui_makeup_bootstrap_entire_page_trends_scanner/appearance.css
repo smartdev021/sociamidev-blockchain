@@ -162,26 +162,25 @@ hr {
 }
 
 /*Trend Scanner*/
+#trend-scanner {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+#trend-scanner .navbar-nav {
+  float:none;
+  padding-left: 0;
+}
+
 #navbar-trend-scanner {
-  width: 100%;
-}
-
-#navbar-trend-scanner .navbar-nav {
-  float:none;
-  margin:0 auto;
-  display: block;
-  text-align: center;
-}
-
-#navbar-trend-scanner .navbar-nav > li {
-  display: inline-block;
-  float:none;
-}
+  margin-bottom: 15px;
+}  
 
 #navbar-trend-scanner ul li>a {
   font-size: 18px;
   font-family: "Comfortaa";
   color: rgb( 255, 255, 255 );
+  padding-left: 0;
 }
 #navbar-trend-scanner .nav>li>a:hover, #navbar-trend-scanner .nav>li>a:focus {
   background-color: transparent;
@@ -195,4 +194,32 @@ hr {
 #trend-scanner-results ul {
   list-style: none;
   padding: 0;
+}
+
+#trend-scanner-results ul li{
+  padding-bottom: 50px;
+}
+
+#trend-scanner-results .list-item #text {
+  font-size: 18px;
+  font-family: "Comfortaa";
+  color: rgb( 255, 255, 255 );
+  padding-left: 0;
+  transition-duration: 0.5s;
+}
+#trend-scanner-results .list-item #text:hover {
+  background-color: transparent;
+  text-decoration: none;
+  background-color: rgba(240, 227, 227, 0.267);
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+#trend-scanner-results .list-item #icons {
+  font-size: 22px;
+  font-family: "Comfortaa";
+}
+
+#trend-scanner-results .list-item #icons a {
+  color: rgb( 255, 255, 255 );
 }
