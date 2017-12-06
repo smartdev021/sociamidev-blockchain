@@ -20,6 +20,7 @@ import SignUpFormPopup from  '~/src/authentication/SignUpForm';
 //THEME NEW
 import HomePageThemeNew from '~/src/theme_new/HomePage.js';
 
+//<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
 class Main extends React.Component {
   render() {
@@ -36,7 +37,7 @@ class Main extends React.Component {
       <Switch>
         <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
         <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
-        <Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
+        
         <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
         <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
         <Route path='/searchResults' render={routeProps => <SearchPage {...routeProps}{...this.props}/>} />

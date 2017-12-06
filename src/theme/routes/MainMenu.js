@@ -10,6 +10,8 @@ import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
+//<li id="menu-item-carousel" className={HowItWorksItemActive}><Link to='/howItWorks'>How it Works</Link></li>
+
 class MainMenu extends React.Component {
 
   constructor(props) {
@@ -47,7 +49,6 @@ class MainMenu extends React.Component {
 
             <ul id="main-menu">
               <li id="menu-item-text" className={AboutItemActive}><Link to='/about'>About</Link></li>
-              <li id="menu-item-carousel" className={HowItWorksItemActive}><Link to='/howItWorks'>How it Works</Link></li>
               <li id="menu-item-grid" className={ICOItemActive}><Link to='/ico'>ICO</Link></li>
               <li id="menu-item-featured" className={ResultsItemActive}><Link to='/searchResults'>Results</Link></li>
               <li id="menu-item-tabs" className={RoadmapItemActive}><Link to='/roadmap'>Roadmap</Link></li>
