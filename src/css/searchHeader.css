@@ -20,7 +20,7 @@
     padding-bottom: 20px;
 }
 
-.formSearchPage user-status-widget="text"] {
+.formSearchPage input[type="text"] {
     font-size: 22px;
 } 
 
