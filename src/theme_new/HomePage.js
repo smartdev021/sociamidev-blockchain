@@ -13,6 +13,7 @@ import ActionLink from '~/src/components/common/ActionLink'
 import SidebarLeft from '~/src/theme_new/SidebarLeft.js';
 import NavTop from '~/src/theme_new/NavTop.js';
 import TrendScanner from '~/src/theme_new/TrendScanner.js';
+import ThemeHeader from '~/src/theme_new/ThemeHeader.js';
 
 import "~/src/theme_new/appearance.css"
 import "~/src/theme_new/layout.css"
@@ -26,10 +27,7 @@ class HomePageThemeNew extends React.Component {
   render() {
     return (
       <div id="wrapper">
-        <header>
-          <div id="soqqle_logo" className="pull-left"><a href="#"><img src='./images/soqqle.png'/></a></div>
-          <div id="profile_link" className="pull-right"><a href="#"><span><img src="./images/profilesetting.png"/>logout</span></a></div>
-        </header>
+        <ThemeHeader/>
         <div className="container-fluid">
           <div className="row">
             <div id="wrapper-content">
