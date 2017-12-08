@@ -249,7 +249,17 @@ class App extends Component {
         var tempUserType = "linkedin";
 				ChatAppLink = <ChatApp username={this.state.linkedInID} userType={tempUserType} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
-		}
+    }
+    
+    /*<Main_New_Theme onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+            onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+            onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+            onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+            onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+            onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
+            isAuthorized={this.props.isAuthorized}
+            pathname={this.props.history.location.pathname}
+            isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}/>*/
     
     return (
       <div className="outer-container">

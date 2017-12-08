@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import HomePage from '~/src/theme/routes/HomePage.js';
 import About from '~/src/theme/routes/About.js';
@@ -39,7 +40,7 @@ class Main extends React.Component {
         <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
         
         <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
-        <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
+        <Route path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
         <Route path='/searchResults' render={routeProps => <SearchPage {...routeProps}{...this.props}/>} />
         <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
         <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>} />)}/>
@@ -58,4 +59,4 @@ class Main extends React.Component {
 
 }
 
-export default Main;
+export default withRouter(Main);

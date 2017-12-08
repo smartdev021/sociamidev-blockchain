@@ -41,7 +41,7 @@ class NavTop extends React.Component {
                   </li>
                   <li>
                     <p className="navbar-btn">
-                      <a href="/roadmap" className="btn btn-primary btn-lg top-nav-btn">Progression Trees</a>
+                    <Link to='/roadmap' className="btn btn-primary btn-lg top-nav-btn">Progression Trees</Link>
                     </p>
                   </li>
                   <li>

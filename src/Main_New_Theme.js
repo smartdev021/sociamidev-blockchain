@@ -4,6 +4,8 @@
 
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 //THEME NEW
 import SignUpFormPopup from  '~/src/authentication/SignUpForm';
 
@@ -23,9 +25,31 @@ import ICO from '~/src/theme/routes/ICO.js';
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
 class Main extends React.Component {
+
+  getRedirectLocation() {
+    let RedirectTo = null;
+    if (this.props.isOpenSearchResultsPending) {
+      if (this.props.location.pathname != '/searchResults') {
+        RedirectTo = <Redirect to="/searchResults" push />;
+      }
+    }
+    else if (this.props.isOpenProfilePending) {
+      if (this.props.location.pathname != '/userProfile') {
+        RedirectTo = <Redirect to="/userProfile" push />;
+      }
+    }
+
+    console.log("RedirectTo: " + RedirectTo);
+
+    return RedirectTo;
+  }
+
   render() {
+    const RedirectTo = this.getRedirectLocation();
+
     return (
       <div id="wrapper">
+      {RedirectTo}
       {this.props.isSignUpFormOpen ? <SignUpFormPopup 
           modalIsOpen={this.props.isSignUpFormOpen}
           isAuthorized={this.props.isAuthorized}
@@ -84,4 +108,4 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+export default withRouter(Main);
