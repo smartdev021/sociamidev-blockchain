@@ -32,7 +32,7 @@ header #profile_link img{
 }
 
 #sidebar-left #list-friends {
-  height: 400px;
+  height: 600px;
   overflow-y: scroll;
   overflow-x: hidden;
   margin: 0 auto;
@@ -129,14 +129,14 @@ header #profile_link img{
 }
 
 #main-content_1-status {
-  min-height: 47px;;
+  min-height: 47px;
   margin-bottom: 20px;
   text-align: center;
   line-height: 50px;
 }
 
 #main-content_1 {
-  height: 433px;
+  height: 633px;
   overflow-y: scroll;
   padding-left: 5px;
   padding-right: 5px;

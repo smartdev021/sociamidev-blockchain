@@ -9,8 +9,10 @@ import SignUpFormPopup from  '~/src/authentication/SignUpForm';
 
 import SidebarLeft from '~/src/theme_new/SidebarLeft.js';
 import NavTop from '~/src/theme_new/NavTop.js';
-import TrendScanner from '~/src/theme_new/TrendScanner.js';
 import ThemeHeader from '~/src/theme_new/ThemeHeader.js';
+
+import HomePage from '~/src/theme/routes/HomePage.js';
+import TrendScanner from '~/src/theme_new/TrendScanner.js';
 
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
@@ -54,8 +56,8 @@ class Main extends React.Component {
                       <div className="col-lg-12">
                         <div id="main-content_1">
                           <Switch>
-                            <Route exact path='/' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
-                            <Route path='/themeNew' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
+                            <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
+                            <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
                           </Switch>
                         </div>
                       </div>
