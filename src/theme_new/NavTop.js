@@ -21,6 +21,8 @@ class NavTop extends React.Component {
   }
 
   render() {
+    const ButtonClassName = "top-nav-btn";
+
     return (
       <div id="nav-top">
         <nav className="navbar navbar-default navbar-right">
@@ -36,32 +38,38 @@ class NavTop extends React.Component {
                 <ul className="nav navbar-nav">
                   <li>
                     <p className="navbar-btn">
-                      <Link to='/searchResults' className="btn btn-primary btn-lg top-nav-btn">Trends Scanner</Link>
+                      <Link to='/searchResults' className={this.props.location.pathname == "/searchResults" 
+                      ? ButtonClassName + " active" : ButtonClassName}>Trends Scanner</Link>
                     </p>
                   </li>
                   <li>
                     <p className="navbar-btn">
-                    <Link to='/roadmap' className="btn btn-primary btn-lg top-nav-btn">Progression Trees</Link>
+                    <Link to='/roadmap' className={this.props.location.pathname == "/roadmap" 
+                      ? ButtonClassName + " active" : ButtonClassName}>Progression Trees</Link>
                     </p>
                   </li>
                   <li>
                     <p className="navbar-btn">
-                      <Link to='/projectManagement' className="btn btn-primary btn-lg top-nav-btn">Project Management</Link>
+                      <Link to='/projectManagement' className={this.props.location.pathname == "/projectManagement" 
+                      ? ButtonClassName + " active" : ButtonClassName}>Project Management</Link>
                     </p>
                   </li>
                   <li>
                     <p className="navbar-btn">
-                      <Link to='/taskManagement' className="btn btn-primary btn-lg top-nav-btn">Tasks Manager</Link>
+                      <Link to='/taskManagement' className={this.props.location.pathname == "/taskManagement" 
+                      ? ButtonClassName + " active" : ButtonClassName}>Tasks Manager</Link>
                     </p>
                   </li>
                   <li>
                     <p className="navbar-btn">
-                      <Link to='/ico' className="btn btn-primary btn-lg top-nav-btn">ICO</Link>
+                      <Link to='/ico' className={this.props.location.pathname == "/ico" 
+                      ? ButtonClassName + " active" : ButtonClassName}>ICO</Link>
                     </p>
                   </li>
                   <li>
                     <p className="navbar-btn">
-                      <Link to='/about' className="btn btn-primary btn-lg top-nav-btn">About</Link>
+                      <Link to='/about' className={this.props.location.pathname == "/about" 
+                      ? ButtonClassName + " active" : ButtonClassName}>About</Link>
                     </p>
                   </li>
                   <li className="nav-user-profile-control">
@@ -80,6 +88,10 @@ class NavTop extends React.Component {
       </div>
     );
   }
+}
+
+NavTop.PropTypes = {
+  location: PropTypes.object.isRequired,
 }
 
 

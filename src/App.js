@@ -167,6 +167,7 @@ class App extends Component {
     }
 
     if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
+      console.log("componentDidUpdate this.state.linkedInID: " + this.state.linkedInID + " this.state.faceBookID: " + this.state.faceBookID);
       if(!this.state.linkedInID && !this.state.faceBookID) {
         this.props.setUserAuthorized(false);
       }

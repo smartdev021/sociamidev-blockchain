@@ -148,8 +148,17 @@ hr {
   color: rgb( 246, 246, 246 );
   line-height: 1.538;
   border-radius: 3px;
-  border-color: rgb( 128, 163, 235 );
   background-color: rgb( 182, 199, 234 );
+  padding: 10px 16px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
 }
 
 #nav-top .navbar .top-nav-btn:hover {

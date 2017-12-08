@@ -14,6 +14,8 @@ import NavTop from '~/src/theme_new/NavTop.js';
 import ThemeHeader from '~/src/theme_new/ThemeHeader.js';
 
 //routes
+import Authorize from '~/src/authentication/Authorize';
+
 import HomePage from '~/src/theme_new//HomePage.js';
 import TrendScanner from '~/src/theme_new/TrendScanner.js';
 import Roadmap from '~/src/theme/routes/Roadmap.js'; //Progression trees
@@ -70,7 +72,7 @@ class Main extends React.Component {
                   <div className="container-fluid content-top">
                     <div className="row">
                       <div className="col-lg-12">
-                        <NavTop/>
+                        <NavTop location = {this.props.location}/>
                       </div>
                     </div>
                     <div className="row">
@@ -93,6 +95,8 @@ class Main extends React.Component {
                             <Route path='/projectManagement' render={routeProps => <ProjectManagement {...routeProps}{...this.props}/>}/>
                             <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
                             <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
+
+                            <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
                           </Switch>
                         </div>
                       </div>
