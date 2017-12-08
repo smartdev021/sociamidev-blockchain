@@ -14,7 +14,7 @@ import NavTop from '~/src/theme_new/NavTop.js';
 import ThemeHeader from '~/src/theme_new/ThemeHeader.js';
 
 //routes
-import HomePage from '~/src/theme/routes/HomePage.js';
+import HomePage from '~/src/theme_new//HomePage.js';
 import TrendScanner from '~/src/theme_new/TrendScanner.js';
 import Roadmap from '~/src/theme/routes/Roadmap.js'; //Progression trees
 import TaskManagement from '~/src/theme/routes/TaskManagement';

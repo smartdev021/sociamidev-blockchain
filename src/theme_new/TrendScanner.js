@@ -17,12 +17,18 @@ import {
   selectResultsCategory,
 } from '~/src/redux/actions/fetchResults'
 
+import {openSearchResultsComplete} from '~/src/redux/actions/fetchResults'
+
 import ResultCategory from '~/src/common/ResultCategoryNames'
 
 class TrendScanner extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    this.props.openSearchResultsComplete();
   }
 
   handleSelectCategory(e) {
@@ -206,6 +212,7 @@ TrendScanner.propTypes = {
   resultsSelectedCategory: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
+  openSearchResultsComplete: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -216,6 +223,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch),
+  openSearchResultsComplete: bindActionCreators(openSearchResultsComplete, dispatch),
 })
 
 

@@ -190,3 +190,6 @@ main {
   display: block;
 }
 
+.search-form {
+  padding-bottom: 15px;
+}

@@ -222,3 +222,35 @@ hr {
 #trend-scanner-results .list-item #icons a {
   color: rgb( 255, 255, 255 );
 }
+
+.latest-task-tile {
+  max-height: 300px;
+  min-height: 300px;
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.latest-task-tile:hover {
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.search-form input[type="text"] {
+  font-size: 11px;
+  font-family: "Comfortaa";
+  color: rgb( 188, 188, 188 );
+
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 3px;
+}

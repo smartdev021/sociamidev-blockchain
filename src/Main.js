@@ -18,9 +18,6 @@ import ProjectManagement from '~/src/theme/routes/ProjectManager';
 import Authorize from '~/src/authentication/Authorize';
 import SignUpFormPopup from  '~/src/authentication/SignUpForm';
 
-//THEME NEW
-import HomePageThemeNew from '~/src/theme_new/HomePage.js';
-
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
 class Main extends React.Component {
@@ -47,9 +44,6 @@ class Main extends React.Component {
         <Route path='/projectManagement' render={routeProps => <ProjectManagement {...routeProps}{...this.props}/>} />)}/>
 
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
-
-
-        <Route path='/themeNew' render={routeProps => <HomePageThemeNew {...routeProps}{...this.props}/>} />)}/>
   )}/>
 
       </Switch>
