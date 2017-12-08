@@ -18,6 +18,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
 
 import Main from './Main';
+import Main_New_Theme from './Main_New_Theme';
 import MainMenu from '~/src/theme/routes/MainMenu';
 import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
@@ -251,17 +252,7 @@ class App extends Component {
 			}
     }
     
-    /*<Main_New_Theme onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-            onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-            onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-            onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-            onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-            onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
-            isAuthorized={this.props.isAuthorized}
-            pathname={this.props.history.location.pathname}
-            isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}/>*/
-    
-    return (
+    /*return (
       <div className="outer-container">
         {RedirectTo}
         <div className="col-lg-12">
@@ -279,6 +270,21 @@ class App extends Component {
             pathname={this.props.history.location.pathname}
           />
         </section>
+        {ChatAppLink}
+      </div>
+    );*/
+    
+    return (
+      <div className="outer-container">
+        <Main_New_Theme onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+        onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+        onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+        onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+        onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+        onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
+        isAuthorized={this.props.isAuthorized}
+        pathname={this.props.history.location.pathname}
+        isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}/>
         {ChatAppLink}
       </div>
     );
