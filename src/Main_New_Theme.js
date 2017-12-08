@@ -58,7 +58,7 @@ class Main extends React.Component {
           onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
           pathname={this.props.pathname}
       />: null}
-        <ThemeHeader/>
+        <ThemeHeader openSignUpForm={this.props.openSignUpForm} isAuthorized={this.props.isAuthorized}/>
         <div className="container-fluid">
           <div className="row">
             <div id="wrapper-content">

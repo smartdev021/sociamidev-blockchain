@@ -284,7 +284,8 @@ class App extends Component {
         onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
         isAuthorized={this.props.isAuthorized}
         pathname={this.props.history.location.pathname}
-        isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}/>
+        isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
+        openSignUpForm={this.props.openSignUpForm}/>
         {ChatAppLink}
       </div>
     );
