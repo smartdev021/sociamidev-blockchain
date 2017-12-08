@@ -41,7 +41,7 @@ class NavTop extends React.Component {
                   </li>
                   <li>
                     <p className="navbar-btn">
-                      <a href="/" className="btn btn-primary btn-lg top-nav-btn">Progression Trees</a>
+                      <a href="/roadmap" className="btn btn-primary btn-lg top-nav-btn">Progression Trees</a>
                     </p>
                   </li>
                   <li>
@@ -52,6 +52,16 @@ class NavTop extends React.Component {
                   <li>
                     <p className="navbar-btn">
                       <Link to='/taskManagement' className="btn btn-primary btn-lg top-nav-btn">Tasks Manager</Link>
+                    </p>
+                  </li>
+                  <li>
+                    <p className="navbar-btn">
+                      <Link to='/ico' className="btn btn-primary btn-lg top-nav-btn">ICO</Link>
+                    </p>
+                  </li>
+                  <li>
+                    <p className="navbar-btn">
+                      <Link to='/about' className="btn btn-primary btn-lg top-nav-btn">About</Link>
                     </p>
                   </li>
                   <li className="nav-user-profile-control">

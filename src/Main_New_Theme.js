@@ -11,8 +11,14 @@ import SidebarLeft from '~/src/theme_new/SidebarLeft.js';
 import NavTop from '~/src/theme_new/NavTop.js';
 import ThemeHeader from '~/src/theme_new/ThemeHeader.js';
 
+//routes
 import HomePage from '~/src/theme/routes/HomePage.js';
 import TrendScanner from '~/src/theme_new/TrendScanner.js';
+import Roadmap from '~/src/theme/routes/Roadmap.js'; //Progression trees
+import TaskManagement from '~/src/theme/routes/TaskManagement';
+import ProjectManagement from '~/src/theme/routes/ProjectManager';
+import About from '~/src/theme/routes/About.js';
+import ICO from '~/src/theme/routes/ICO.js';
 
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
@@ -58,6 +64,11 @@ class Main extends React.Component {
                           <Switch>
                             <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
                             <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
+                            <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
+                            <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
+                            <Route path='/projectManagement' render={routeProps => <ProjectManagement {...routeProps}{...this.props}/>}/>
+                            <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
+                            <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
                           </Switch>
                         </div>
                       </div>

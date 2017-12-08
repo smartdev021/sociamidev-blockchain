@@ -50,7 +50,7 @@ class TrendScanner extends React.Component {
                 <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
                 <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
               </div>
-              <a href="#" id="text">
+              <a href={job.url} target="_blank" id="text">
                 <div>{title}</div>
                 <div>{company}</div>
                 <div>Hong Kong</div>
@@ -74,7 +74,7 @@ class TrendScanner extends React.Component {
                 <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
                 <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
               </div>
-              <a href="#" id="text">
+              <a href={course.url} target="_blank" id="text">
                 <div>{course.title}</div>
                 <div>LAToken Blockchain Reception: Hong Kong</div>
                 <div>Hong Kong</div>
@@ -88,13 +88,14 @@ class TrendScanner extends React.Component {
   }
 
   renderEvents() {
+    let that = this;
     return (
       <ul>
         {
           this.props.searchResults.events.map(function(event, i) {
 
-            let title = this.trimmedString(event.name, 24);
-            let description = this.trimmedString(event.description, 60);
+            let title = that.trimmedString(event.name, 24);
+            let description = that.trimmedString(event.description, 60);
 
             return (<li key={i}>
             <div className="list-item">
@@ -102,7 +103,7 @@ class TrendScanner extends React.Component {
                 <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
                 <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
               </div>
-              <a href="#" id="text">
+              <a href={event.url} target="_blank" id="text">
                 <div>{title}</div>
                 <div>{description}</div>
                 <div>Hong Kong</div>
@@ -126,7 +127,7 @@ class TrendScanner extends React.Component {
                 <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
                 <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
               </div>
-              <a href="#" id="text">
+              <a href={gig.url} target="_blank" id="text">
                 <div>{gig.title}</div>
                 <div>{gig.description}</div>
                 <div>Hong Kong</div>
@@ -140,7 +141,8 @@ class TrendScanner extends React.Component {
   }
 
   renderResults() {
-    switch (this.props.selectResultsCategory) {
+    console.log("Render Results: " + this.props.resultsSelectedCategory);
+    switch (this.props.resultsSelectedCategory) {
       case ResultCategory.GIGS_FREELANCER: {
         return this.renderGigs();
       }
