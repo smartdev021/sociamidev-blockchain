@@ -20,12 +20,13 @@ class SidebarLeft extends React.Component {
   }
 
   render() {
+    const DummyFriendImage = "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png";
     return (
       <aside>
         <div id="sidebar-left">
         <div id="user-status-widget">
           <div className="user-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               Good Morning Dan, update your status here
             </div>
@@ -37,42 +38,42 @@ class SidebarLeft extends React.Component {
         </div>
         <div id="list-friends">
           <div className="friend-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               <div className="user-text-name">Annalisa</div>
               Mobile app testing 50 mutual friends
             </div>
           </div>
           <div className="friend-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               <div className="user-text-name">Annalisa</div>
               Mobile app testing 50 mutual friends
             </div>
           </div>
           <div className="friend-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               <div className="user-text-name">Annalisa</div>
               Mobile app testing 50 mutual friends
             </div>
           </div>
           <div className="friend-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               <div className="user-text-name">Annalisa</div>
               Mobile app testing 50 mutual friends
             </div>
           </div>
           <div className="friend-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               <div className="user-text-name">Annalisa</div>
               Mobile app testing 50 mutual friends
             </div>
           </div>
           <div className="friend-widget">
-            <img src='./images/dummy_friend_image.png'/>
+            <img src={DummyFriendImage}/>
             <div id="user-text">
               <div className="user-text-name">Annalisa</div>
               Mobile app testing 50 mutual friends

@@ -22,8 +22,8 @@ class ThemeHeader extends React.Component {
   render() {
     return (
     <header>
-      <div id="soqqle_logo" className="pull-left"><a href="#"><img src='./images/soqqle.png'/></a></div>
-      <div id="profile_link" className="pull-right"><a href="#"><span><img src="./images/profilesetting.png"/>logout</span></a></div>
+      <div id="soqqle_logo" className="pull-left"><a href="#"><img src='http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/soqqle.png'/></a></div>
+      <div id="profile_link" className="pull-right"><a href="#"><span><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/profilesetting.png"/>logout</span></a></div>
     </header>);
   }
 }

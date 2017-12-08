@@ -65,13 +65,13 @@ class NavTop extends React.Component {
                     </p>
                   </li>
                   <li className="nav-user-profile-control">
-                    <a href="#"><img src="./images/close-envelope.png"/></a>
+                    <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/close-envelope.png"/></a>
                   </li>
                   <li className="nav-user-profile-control">
-                    <a href="#"><img src="./images/notification.png"/></a>
+                    <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/></a>
                   </li>
                   <li className="nav-user-profile-control">
-                    <a href="#"><img src="./images/add-friend.png"/></a>
+                    <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/add-friend.png"/></a>
                   </li>
                 </ul> 
              </div>
