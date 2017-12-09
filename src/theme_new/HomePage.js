@@ -137,7 +137,7 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const SearchForm = this.renderSearhForm();
+    //const SearchForm = this.renderSearhForm();
     const Tasks = this.renderTasks();
 
     return (
@@ -150,13 +150,6 @@ class HomePage extends React.Component {
                 <div>
                   <h1>What should I learn next</h1>
                   <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="search-form">
-                  {SearchForm}
                 </div>
               </div>
             </div>

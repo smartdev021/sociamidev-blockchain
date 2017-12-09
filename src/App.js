@@ -290,7 +290,8 @@ class App extends Component {
         isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
         openSignUpForm={this.props.openSignUpForm}
         searchQuery={this.props.searchQuery}
-        onHandleQueryChange={this.props.setSearchQuery}/>
+        onHandleQueryChange={this.props.setSearchQuery}
+        isFetchInProgress={this.props.isFetchInProgress}/>
         {ChatAppLink}
       </div>
     );

@@ -165,33 +165,36 @@ class TrendScanner extends React.Component {
 
   render() {
     const ScannerResults = this.renderResults();
-
-    const jobClassName = this.props.resultsSelectedCategory == ResultCategory.JOBS_INDEED ? "active" : "";
-    const eventClassName = this.props.resultsSelectedCategory == ResultCategory.EVENTS_EVENTBRITE ? "active" : "";
-    const trainingClassName = this.props.resultsSelectedCategory == ResultCategory.COURSES_UDEMY ? "active" : "";
-    const gigClassName = this.props.resultsSelectedCategory == ResultCategory.GIGS_FREELANCER ? "active" : "";
-
+    
     return (
       <div id="trend-scanner">
         <div id="navbar-trend-scanner">
           <ul className="nav navbar-nav">
-            <li className="active">
-              <ActionLink href="#" id={ResultCategory.GIGS_FREELANCER} className={gigClassName} onClick={(e) => this.handleSelectCategory(e)}>
+            <li>
+              <ActionLink href="#" id={ResultCategory.GIGS_FREELANCER} 
+                  className={this.props.resultsSelectedCategory == ResultCategory.GIGS_FREELANCER ? "active" : ""} 
+                    onClick={(e) => this.handleSelectCategory(e)}>
                 Gigs
               </ActionLink>
             </li>
-            <li className="active">
-              <ActionLink href="#" id={ResultCategory.COURSES_UDEMY} className={trainingClassName} onClick={(e) => this.handleSelectCategory(e)}>
+            <li>
+              <ActionLink href="#" id={ResultCategory.COURSES_UDEMY} 
+                className={this.props.resultsSelectedCategory == ResultCategory.COURSES_UDEMY ? "active" : ""} 
+                  onClick={(e) => this.handleSelectCategory(e)}>
                 Trainings
               </ActionLink>
             </li>
-            <li className="active">
-              <ActionLink href="#" id={ResultCategory.EVENTS_EVENTBRITE} className={eventClassName} onClick={(e) => this.handleSelectCategory(e)}>
+            <li>
+              <ActionLink href="#" id={ResultCategory.EVENTS_EVENTBRITE} 
+                className={this.props.resultsSelectedCategory == ResultCategory.EVENTS_EVENTBRITE ? "active" : ""} 
+                  onClick={(e) => this.handleSelectCategory(e)}>
                 Events
               </ActionLink>
             </li>
-            <li className="active">
-              <ActionLink href="#" id={ResultCategory.JOBS_INDEED} className={jobClassName} onClick={(e) => this.handleSelectCategory(e)}>
+            <li>
+              <ActionLink href="#" id={ResultCategory.JOBS_INDEED} 
+                className={this.props.resultsSelectedCategory == ResultCategory.JOBS_INDEED ? "active" : ""} 
+                  onClick={(e) => this.handleSelectCategory(e)}>
                 Jobs
               </ActionLink>
             </li>

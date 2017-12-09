@@ -47,6 +47,13 @@ class Main extends React.Component {
     return RedirectTo;
   }
 
+  onStartSearch(e) {
+    e.preventDefault();
+    if (!this.props.isFetchInProgress) {
+      this.props.onHandleStartSearch();
+    }
+  }
+
   render() {
     const RedirectTo = this.getRedirectLocation();
 
