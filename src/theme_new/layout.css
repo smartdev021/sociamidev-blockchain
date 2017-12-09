@@ -208,3 +208,14 @@ main {
   width: 642px;
   height: 450px;
 }
+
+/*Trend Scanner*/
+#trend-scanner {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+#progression-trees {
+  max-width: 90%;
+  margin: 0 auto;
+}

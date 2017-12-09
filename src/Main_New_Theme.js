@@ -22,6 +22,7 @@ import Roadmap from '~/src/theme/routes/Roadmap.js'; //Progression trees
 import TaskManagement from '~/src/theme/routes/TaskManagement';
 import ProjectManagement from '~/src/theme/routes/ProjectManager';
 import ProjectManager from '~/src/theme_new/ProjectManagement';
+import ProgressionTrees from '~/src/theme_new/ProgressionTrees';
 import About from '~/src/theme/routes/About.js';
 import ICO from '~/src/theme/routes/ICO.js';
 
@@ -106,6 +107,7 @@ class Main extends React.Component {
                             <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
                             <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
                             <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
+                            <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
                             <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
                             <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
                             <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
