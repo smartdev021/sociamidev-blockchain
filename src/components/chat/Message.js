@@ -1,4 +1,5 @@
 import React from 'react';
+import TimeAgo from 'react-timeago';
 
 class Message extends React.Component {
 
@@ -28,7 +29,7 @@ class Message extends React.Component {
         { this.props.message}
       </div>
       <div className={`${timeStampClass}`}>
-        {timeStamp}
+      <TimeAgo date={this.props.time} />
       </div>
       </div>
     );

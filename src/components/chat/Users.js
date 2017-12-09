@@ -72,7 +72,7 @@ class Users extends React.Component {
       if(user.username in tempLastMessages){
         var message = tempLastMessages[user.username];
         var tempLastMessage = message.message;
-        var tempLastMessageTimeStamp = this.getTimeStamp(message.time);
+        var tempLastMessageTimeStamp = message.time;
       }
       return (
         <User
