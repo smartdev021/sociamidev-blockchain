@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {Icon} from 'react-fa'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -147,25 +148,29 @@ class TrendScanner extends React.Component {
   }
 
   renderResults() {
-    console.log("Render Results: " + this.props.resultsSelectedCategory);
-    switch (this.props.resultsSelectedCategory) {
-      case ResultCategory.GIGS_FREELANCER: {
-        return this.renderGigs();
+    if (this.props.isFetchInProgress) {
+      return <h3>Searching... <Icon spin name="spinner"/></h3>;
+    }
+    else {
+      switch (this.props.resultsSelectedCategory) {
+        case ResultCategory.GIGS_FREELANCER: {
+          return this.renderGigs();
+        }
+        case ResultCategory.COURSES_UDEMY: {
+          return this.renderTrainings();
+        }
+        case ResultCategory.EVENTS_EVENTBRITE: {
+          return this.renderEvents();
+        }
+        default:
+          return this.renderJobs();
       }
-      case ResultCategory.COURSES_UDEMY: {
-        return this.renderTrainings();
-      }
-      case ResultCategory.EVENTS_EVENTBRITE: {
-        return this.renderEvents();
-      }
-      default:
-        return this.renderJobs();
     }
   }
 
   render() {
     const ScannerResults = this.renderResults();
-    
+
     return (
       <div id="trend-scanner">
         <div id="navbar-trend-scanner">

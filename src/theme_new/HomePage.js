@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {Icon} from 'react-fa'
 
 import ActionLink from '~/src/components/common/ActionLink'
 import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
@@ -148,7 +149,7 @@ class HomePage extends React.Component {
             <div className="row">
               <div className="col-lg-12">
                 <div>
-                  <h1>What should I learn next</h1>
+                  {this.props.isFetchInProgress ? <h1>Searching... <Icon spin name="spinner"/></h1> : <h1>What should I learn next</h1>}
                   <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
                 </div>
               </div>
