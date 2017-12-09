@@ -159,11 +159,6 @@ header {
   }
 }
 
-#wrapper .container-fluid {
-  padding-left: 0;
-  padding-right: 0;
-}
-
 #wrapper-content {
   padding-left: 22px;
   padding-right: 22px;
@@ -216,6 +211,9 @@ main {
 }
 
 #progression-trees {
-  max-width: 90%;
   margin: 0 auto;
 }
+
+ #progression-trees-scanner, #progression-trees-trees {
+   height: 633px;
+ }

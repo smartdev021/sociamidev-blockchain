@@ -24,7 +24,8 @@ class ProgressionTrees extends React.Component {
         <div id="progression-trees">
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-10">
+              <div className="col-lg-8">
+              <div id="progression-trees-trees">
                 <div className="container-fluid">
                   <div className="row">
                      <div className="col-lg-12">
@@ -67,8 +68,9 @@ class ProgressionTrees extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-2">
-                <div className="progression-trees-scanner">
+              </div>
+              <div className="col-lg-4">
+                <div id="progression-trees-scanner">
                   <div className="container-fluid">
                     <div className="row">
                        <div className="col-lg-12">
