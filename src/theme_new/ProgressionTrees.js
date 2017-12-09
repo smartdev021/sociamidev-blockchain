@@ -21,50 +21,66 @@ class ProgressionTrees extends React.Component {
       const progressValueNow = 25;
       const progressValueNow1 = 41;
     return (
-      <div id="main-content_1">
         <div id="progression-trees">
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-12">
-                <h3>My Progress</h3>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="progress">
-                  <span id="progress-bar-text">
-                    <h4 id="progress-bar-roadmap-name">Blockchain for beginners</h4>
-                    <span className="progress-bar-skill-name">Basic CS concepts</span>
-                    <span className="progress-bar-skill-name">Solidity</span>
-                    <span className="progress-bar-skill-name">Network</span>
-                    <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
-                  </span>
-                  <div className="progress-bar" role="progressbar" style={{'width': progressValueNow + '%'}} 
-                    aria-valuenow={progressValueNow} aria-valuemin="0" aria-valuemax="100">
+              <div className="col-lg-10">
+                <div className="container-fluid">
+                  <div className="row">
+                     <div className="col-lg-12">
+                       <h3>My Progress</h3>
+                     </div>
                   </div>
-                  <sup id="progress-percents-sup">{progressValueNow}%</sup>
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div className="progress">
+                        <span id="progress-bar-text">
+                          <h4 id="progress-bar-roadmap-name">Blockchain for beginners</h4>
+                          <span className="progress-bar-skill-name">Basic CS concepts</span>
+                          <span className="progress-bar-skill-name">Solidity</span>
+                          <span className="progress-bar-skill-name">Network</span>
+                          <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
+                        </span>
+                        <div className="progress-bar" role="progressbar" style={{'width': progressValueNow + '%'}} 
+                          aria-valuenow={progressValueNow} aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                        <sup id="progress-percents-sup">{progressValueNow}%</sup>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div className="progress">
+                        <span id="progress-bar-text">
+                          <h4 id="progress-bar-roadmap-name">Java for intermediates</h4>
+                          <span className="progress-bar-skill-name">Basic</span>
+                          <span className="progress-bar-skill-name">Building Optimization</span>
+                          <span className="progress-bar-skill-name">Testing</span>
+                          <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
+                        </span>
+                        <div className="progress-bar" role="progressbar" style={{'width': progressValueNow1 + '%'}} 
+                          aria-valuenow={progressValueNow1} aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                        <sup id="progress-percents-sup">{progressValueNow1}%</sup>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="progress">
-                  <span id="progress-bar-text">
-                    <h4 id="progress-bar-roadmap-name">Java for intermediates</h4>
-                    <span className="progress-bar-skill-name">Basic</span>
-                    <span className="progress-bar-skill-name">Building Optimization</span>
-                    <span className="progress-bar-skill-name">Testing</span>
-                  </span>
-                  <div className="progress-bar" role="progressbar" style={{'width': progressValueNow1 + '%'}} 
-                    aria-valuenow={progressValueNow1} aria-valuemin="0" aria-valuemax="100">
+              <div className="col-lg-2">
+                <div className="progression-trees-scanner">
+                  <div className="container-fluid">
+                    <div className="row">
+                       <div className="col-lg-12">
+                         <h3>Tree scanner</h3>
+                       </div>
+                    </div>
                   </div>
-                  <sup id="progress-percents-sup">{progressValueNow1}%</sup>
-                </div><span className="glyphicon glyphicon-info-sign"></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     );
   }
 }
