@@ -18,13 +18,12 @@ import Authorize from '~/src/authentication/Authorize';
 
 import HomePage from '~/src/theme_new//HomePage.js';
 import TrendScanner from '~/src/theme_new/TrendScanner.js';
-import Roadmap from '~/src/theme/routes/Roadmap.js'; //Progression trees
-import TaskManagement from '~/src/theme/routes/TaskManagement';
-import ProjectManagement from '~/src/theme/routes/ProjectManager';
+import Roadmap from '~/src/theme_new/Roadmap.js'; //Progression trees
+import TaskManagement from '~/src/theme_new/TaskManagement';
 import ProjectManager from '~/src/theme_new/ProjectManagement';
 import ProgressionTrees from '~/src/theme_new/ProgressionTrees';
-import About from '~/src/theme/routes/About.js';
-import ICO from '~/src/theme/routes/ICO.js';
+import About from '~/src/theme_new/About.js';
+import ICO from '~/src/theme_new/ICO.js';
 
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
@@ -102,20 +101,18 @@ class Main extends React.Component {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-lg-12">
-                        <div id="main-content_1">
-                          <Switch>
-                            <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
-                            <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
-                            <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
-                            <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
-                            <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
-                            <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
-                            <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
-                            <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
+                        <Switch>
+                          <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
+                          <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
+                          <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
+                          <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
+                          <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
+                          <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
+                          <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
+                          <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
 
-                            <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
-                          </Switch>
-                        </div>
+                          <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
+                        </Switch>
                       </div>
                     </div>
                   </div>

@@ -205,7 +205,7 @@ class ProjectManager extends React.Component {
     console.log("selectedProject: ");
     console.dir(selectedProject);
     return (
-      <div>
+      <div id="main-content_1">
         {this.state.modalIsOpen ? 
           <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
             onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}

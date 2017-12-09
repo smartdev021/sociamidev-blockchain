@@ -172,7 +172,8 @@ class TrendScanner extends React.Component {
     const ScannerResults = this.renderResults();
 
     return (
-      <div id="trend-scanner">
+      <div id="main-content_1">
+        <div id="trend-scanner">
         <div id="navbar-trend-scanner">
           <ul className="nav navbar-nav">
             <li>
@@ -211,6 +212,7 @@ class TrendScanner extends React.Component {
           {ScannerResults}
         </div>
       </div>
+    </div>
     );
   }
 }

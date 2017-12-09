@@ -21,6 +21,7 @@ class ProgressionTrees extends React.Component {
       const progressValueNow = 25;
       const progressValueNow1 = 41;
     return (
+      <div id="main-content_1">
         <div id="progression-trees">
           <div className="container-fluid">
             <div className="row">
@@ -63,6 +64,7 @@ class ProgressionTrees extends React.Component {
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }
