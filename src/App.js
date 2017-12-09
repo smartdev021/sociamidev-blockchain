@@ -40,9 +40,11 @@ import {
   fetchResultsInitiate,
   fetchResultsComplete,
   fetchResults,
+  setSearchQuery,
 
   openSearchResults,
 } from '~/src/redux/actions/fetchResults'
+
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
 let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");
@@ -286,7 +288,9 @@ class App extends Component {
         isAuthorized={this.props.isAuthorized}
         pathname={this.props.history.location.pathname}
         isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
-        openSignUpForm={this.props.openSignUpForm}/>
+        openSignUpForm={this.props.openSignUpForm}
+        searchQuery={this.props.searchQuery}
+        onHandleQueryChange={this.props.setSearchQuery}/>
         {ChatAppLink}
       </div>
     );
@@ -313,6 +317,7 @@ App.propTypes = {
   setUserAuthorized: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -326,6 +331,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),
+  setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
 })
 
 const mapStateToProps = state => ({

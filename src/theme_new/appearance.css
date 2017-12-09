@@ -103,18 +103,6 @@ main {
   color: white;
 }
 
-#main-content_1-status {
-  border-width: 1px;
-  background-color: rgb( 255, 255, 255 );
-  border-style: solid;
-  border-radius: 3px;
-  border-color: rgb( 255, 255, 255 );
-  font-size: 11px;
-  font-family: "Comfortaa";
-  color: rgb( 188, 188, 188 );
-  line-height: 47px;
-}
-
 #main-content_1 {
  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
   background: rgb(74,191,234); /* Old browsers */
@@ -262,4 +250,20 @@ hr {
   padding: 5px;
   border: 1px solid;
   border-radius: 3px;
+}
+
+#search-query-input {
+  border-width: 1px;
+  background-color: rgb( 255, 255, 255 );
+  border-style: solid;
+  border-radius: 3px;
+  border-color: rgb( 255, 255, 255 );
+  font-size: 11px;
+  font-family: "Comfortaa";
+  color: rgb( 188, 188, 188 );
+  line-height: 47px;
+}
+
+.formSearchPage .form-group {
+  width: 100%;
 }

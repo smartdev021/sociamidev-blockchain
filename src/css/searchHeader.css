@@ -16,10 +16,6 @@
     min-width: 100px;
 }
 
-.formSearchPage{
-    padding-bottom: 20px;
-}
-
 .formSearchPage input[type="text"] {
     font-size: 22px;
 } 
@@ -40,7 +36,7 @@
 }
 
 .aboutVideo>iframe{
-    width: 100%;
+    width: 47px;
     height: 100%;
     border: none;
 }

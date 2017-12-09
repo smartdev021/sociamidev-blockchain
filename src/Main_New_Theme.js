@@ -21,6 +21,7 @@ import TrendScanner from '~/src/theme_new/TrendScanner.js';
 import Roadmap from '~/src/theme/routes/Roadmap.js'; //Progression trees
 import TaskManagement from '~/src/theme/routes/TaskManagement';
 import ProjectManagement from '~/src/theme/routes/ProjectManager';
+import ProjectManager from '~/src/theme_new/ProjectManagement';
 import About from '~/src/theme/routes/About.js';
 import ICO from '~/src/theme/routes/ICO.js';
 
@@ -48,6 +49,8 @@ class Main extends React.Component {
 
   render() {
     const RedirectTo = this.getRedirectLocation();
+
+    const SearchInputPlaceholder = "Key in a job or a skill you are exploring";
 
     return (
       <div id="wrapper">
@@ -77,9 +80,14 @@ class Main extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-lg-12">
-                        <div id="main-content_1-status">
-                          project manager / stock trading / investment banking / risk analysis
-                        </div>
+                        <form className="form-inline formSearchPage" action="#" onSubmit={(e) => this.onStartSearch(e)}>
+                          <div className="form-group">
+                            <input type="text" autoComplete="off" id="search-query-input" 
+                              placeholder={SearchInputPlaceholder} 
+                                onChange={(e) => this.props.onHandleQueryChange(e.target.value)} 
+                                  defaultValue={this.props.searchQuery} autoFocus/>
+                          </div>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -92,7 +100,7 @@ class Main extends React.Component {
                             <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
                             <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
                             <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
-                            <Route path='/projectManagement' render={routeProps => <ProjectManagement {...routeProps}{...this.props}/>}/>
+                            <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
                             <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
                             <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
 
