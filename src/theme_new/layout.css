@@ -217,3 +217,50 @@ main {
  #progression-trees-scanner, #progression-trees-trees {
    height: 633px;
  }
+
+ #scanner-input-container input[type="text"] {
+  text-align: center;
+  width: 90%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid white;
+  color: white;
+  border-radius: 3px;
+  background-color: transparent;
+  margin: 0 auto;
+ }
+
+ #scanner-input-container input[type="text"]:focus {
+  outline: none;
+}
+
+#trees-scanner-list-trees {
+  list-style: none;
+  margin-top: 20px;
+}
+
+#trees-scanner-list-trees li {
+  display: block;
+  margin-bottom: 60px;
+}
+
+#trees-scanner-list-trees li:before {
+  /*Using a Bootstrap glyphicon as the bullet point*/
+  content: "\e257";
+  font-family: 'Glyphicons Halflings';
+  float: left;
+  font-size: 24px;
+  margin-left: -25px;
+  margin-top: -3px;
+  color: white;
+}
+
+#trees-scanner-list-trees li a {
+  font-size: 18px;
+  color: white;
+}
+
+#trees-scanner-list-trees img {
+  width: 15px;
+  height: 15px;
+}

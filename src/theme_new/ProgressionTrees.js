@@ -17,6 +17,39 @@ class ProgressionTrees extends React.Component {
     super(props);
   }
 
+  renderTreesScannerTrees() {
+    const DummyFriendImage = "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png";
+
+    const dummyTrees = [
+      {name: "AI for Beginners", secondaryInfo: {image_1: DummyFriendImage, image_2: DummyFriendImage, text: "and 1282 others"}}, 
+      {name: "AI for Intermediates", secondaryInfo: {image_1: null, image_2: null, text: "256 learners"}}, 
+      {name: "AI for advanced learners", secondaryInfo: {image_1: null, image_2: null, text: "32 learners"}}, 
+      {name: "AI for corporations", secondaryInfo: {image_1: DummyFriendImage, image_2: null, text: "and 10 others"}}, 
+    ];
+
+    return (
+      <ul id="trees-scanner-list-trees">
+        {
+          dummyTrees.map(function(tree, i) {
+            return (<li key={i}>
+            <div className="tree-list-item">
+              <a href="#">{tree.name}</a>
+              {tree.secondaryInfo ? 
+              <div className="pull-right">
+                <span>
+                  <span>{tree.secondaryInfo.image_1 ? <img src={tree.secondaryInfo.image_1}/> : null}</span>
+                  <span>{tree.secondaryInfo.image_2 ? <img src={tree.secondaryInfo.image_2}/> : null}</span>
+                </span>
+                {tree.secondaryInfo.text ? <div id="tree-list-item-secondary-text">{tree.secondaryInfo.text}</div> : null}
+              </div> : null}
+            </div>
+          </li>);
+          })
+        }
+      </ul>
+    );
+  }
+
   render() {
       const progressValueNow = 25;
       const progressValueNow1 = 41;
@@ -76,6 +109,18 @@ class ProgressionTrees extends React.Component {
                        <div className="col-lg-12">
                          <h3>Tree scanner</h3>
                        </div>
+                    </div>
+                    <div className="row">
+                       <div className="col-lg-12">
+                         <div id="scanner-input-container">
+                           <input type="text" autoComplete="off" id="scanner_trees" placeholder=""/>
+                         </div>
+                       </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-12">
+                        {this.renderTreesScannerTrees()}
+                      </div>
                     </div>
                   </div>
                 </div>
