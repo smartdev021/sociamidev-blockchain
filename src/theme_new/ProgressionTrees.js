@@ -8,8 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import "~/src/theme_new/appearance.css"
-import "~/src/theme_new/layout.css"
+import "~/src/theme_new/css/progressionTrees.css"
 
 class ProgressionTrees extends React.Component {
 

@@ -1,0 +1,113 @@
+#progression-trees {
+    margin: 0 auto;
+  }
+  
+   #progression-trees-scanner, #progression-trees-trees {
+     height: 633px;
+   }
+  
+   #scanner-input-container input[type="text"] {
+    text-align: center;
+    width: 90%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 3px;
+    background-color: transparent;
+    margin: 0 auto;
+   }
+  
+   #scanner-input-container input[type="text"]:focus {
+    outline: none;
+  }
+  
+  #trees-scanner-list-trees {
+    list-style: none;
+    margin-top: 20px;
+  }
+  
+  #trees-scanner-list-trees li {
+    display: block;
+    margin-bottom: 60px;
+  }
+  
+  #trees-scanner-list-trees li:before {
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e257";
+    font-family: 'Glyphicons Halflings';
+    float: left;
+    font-size: 24px;
+    margin-left: -25px;
+    margin-top: -3px;
+    color: white;
+  }
+  
+  #trees-scanner-list-trees li a {
+    font-size: 18px;
+    color: white;
+  }
+  
+  #trees-scanner-list-trees img {
+    width: 15px;
+    height: 15px;
+  }
+
+#progression-trees-scanner {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
+    background: rgb(74,191,234); /* Old browsers */
+    background-image: -moz-linear-gradient(45deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
+    background-image: -webkit-linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
+    background: linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    border-radius: 3px;
+}
+  
+   #progression-trees-trees{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
+     background: rgb(74,191,234); /* Old browsers */
+     background-image: -moz-linear-gradient(45deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
+     background-image: -webkit-linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
+     background: linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+     border-radius: 3px;
+   }
+  
+  #progression-trees {
+    font-family: "Comfortaa";
+  }
+  
+  #progression-trees .progress {
+    border: none;
+    height: 50px;
+    background-color: transparent;
+    overflow: visible; /*So percentage sup is visible*/
+    box-shadow: none;
+  }
+  
+  #progression-trees .progress .progress-bar {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  #progression-trees .progress #progress-bar-text {
+    position: absolute;
+    left: 20px;
+    top: 0;
+  }
+  
+  #progression-trees .progress #progress-bar-text #progress-bar-roadmap-name,
+  #progression-trees .progress #progress-bar-text .progress-bar-skill-name {
+    line-height: 50px;
+    display: inline;
+    margin-right: 15px;
+  }
+  
+  #progression-trees .progress #progress-bar-text .progress-bar-skill-name {
+    font-size: 14px;
+  }
+  
+  #progression-trees .progress #progress-percents-sup {
+    font-size: 14px;
+    top: -1.8em;
+  }
