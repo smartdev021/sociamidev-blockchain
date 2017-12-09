@@ -197,7 +197,7 @@ class ProjectManager extends React.Component {
      </div>);
   }
 
-  render() {
+  /*render() {
     let that = this;
     let selectedProject = (this.props.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
     ? this.props.projects[this.state.selectedProjectIndex] : undefined;
@@ -225,7 +225,95 @@ class ProjectManager extends React.Component {
         }
         <div></div>
       </div>);
+  }*/
+
+  renderProjects() {
+    const dummyProjects = [
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"}
+    ];
+
+    let that = this;
+    return (
+      <ul>
+        {
+          dummyProjects.map(function(project, i) {
+
+            let title = project.name;
+            let description = project.description;
+
+            return (<li key={i}>
+            <div className="list-item">
+              <div id="icons">
+                <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
+                <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
+              </div>
+              <div>{title}</div>
+              <div>{description}</div>
+            </div>
+          </li>);
+          })
+        }
+      </ul>
+    );
   }
+
+  render() {
+  return (
+      <div id="project-manager">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-8">
+              <div id="project-manager-my-projects">
+                <div id="project-manager-projects-container">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <h3>My Projects</h3>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12">
+                        <div id="project-manager-projects-bg">
+                          {this.renderProjects()}
+                          <ActionLink href='#'>
+                            <span className="glyphicon glyphicon-plus-sign" id="project-manager-add-project-btn"></span>
+                          </ActionLink>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div id="project-manager-project-scanner">
+              <div className="container-fluid">
+                    <div className="row">
+                       <div className="col-lg-12">
+                         <h3>Project Scanner</h3>
+                       </div>
+                    </div>
+                    <div className="row">
+                       <div className="col-lg-12">
+                         <p>You are not involved in other campaigns. Check out and get involved with other soqqle projects.</p>
+                       </div>
+                    </div>
+                    <div className="row">
+                       <div className="col-lg-12">
+                         <div id="scanner-input-container">
+                           <input type="text" autoComplete="off" id="scanner_trees" placeholder=""/>
+                         </div>
+                       </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  );
+}
 
 }
 
