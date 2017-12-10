@@ -46,3 +46,61 @@
     width: 100%;
     overflow-x: scroll;
 }
+
+#my-tasks-container ul li {
+    overflow: hidden;
+}
+
+#tasks-loading-spinner {
+    text-align: center;
+    font-size: 60px;
+}
+
+#tasks-scanner-list-tasks {
+    list-style: none;
+    margin-top: 20px;
+  }
+    
+#tasks-scanner-list-tasks li {
+    display: block;
+    margin-bottom: 60px;
+}
+    
+#tasks-scanner-list-tasks li:before {
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e257";
+    font-family: 'Glyphicons Halflings';
+    float: left;
+    font-size: 24px;
+    margin-left: -25px;
+    margin-top: -3px;
+    color: white;
+}
+
+#tasks-scanner-list-tasks li a {
+    font-size: 18px;
+    color: white;
+  }
+
+.subtask {
+    width: 95%;
+    margin: 0 auto;
+    min-height: 50px;
+    background-color: white;
+    margin-bottom: 10px;
+    color: rgb(161, 158, 158);
+}
+
+#subtasks {
+    margin-top: 50px;
+}
+
+#tasks-scanner-container {
+    width: 90%;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+  
+#tasks-scanner-container .content-2-columns-right-title {
+    margin-left: 15px;
+}

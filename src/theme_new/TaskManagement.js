@@ -59,7 +59,13 @@ class TaskManagement extends React.Component {
 
     this.state = {
       tasksCategory: TaskCategoryYour,
+      scannerQuery: "",
     }
+  }
+
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({scannerQuery: e.target.value});
   }
 
   storeAndFetchTasks() {
@@ -179,48 +185,79 @@ class TaskManagement extends React.Component {
   }
   
   renderTasks() {
-    const DummyImages = [
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
-    ];
+    let filteredTasks = [];
 
-    const dummyTasks = [
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-    ];
+    filteredTasks = this.props.tasks.filter(function(task) {
+      return task.name && task.name != "";
+    });
 
-    return (
-      <ul>
-        {
-          dummyTasks.map(function(task, i) {
-            return (
-            <li>
-              <div className="tasks-management-my-task">
-                <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
-                <span>{task.name}</span>
-              </div>
-            </li>
-            );
-          })
-        }
-      </ul>
-    );
+    if (filteredTasks.length > 0) {
+      const DummyImages = [
+        "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
+        "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
+      ];
+
+      return (
+        <ul>
+          {
+            filteredTasks.map(function(task, i) {
+              return (
+              <li>
+                <div className="tasks-management-my-task">
+                  <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
+                  <span>{task.name}</span>
+                  <div id="subtasks">
+                    <div className="subtask">
+                      Find potential investors
+                    </div>
+                    <div className="subtask">
+                      Speak to David about patent
+                    </div>
+                    <div className="subtask">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              );
+            })
+          }
+        </ul>
+      );
+    }
+    else {
+      return (<ul></ul>);
+    }
+  }
+
+  renderNetworkTasks() {
+    if (this.state.scannerQuery != "") {
+      let foundTasks = [];
+      
+      const scannerQuery = this.state.scannerQuery.toLowerCase();
+
+      foundTasks = this.props.tasks.filter(function(task) {
+        return task.name && task.name.toLowerCase().startsWith(scannerQuery);
+      });
+
+      if (foundTasks.length > 0) {
+        return (
+          <ul id="tasks-scanner-list-tasks">
+            {
+              foundTasks.map(function(task, i) {
+                return (<li key={i}>
+                <div>
+                  <a href="#">{task.name}</a>
+                </div>
+              </li>);
+              })
+            }
+          </ul>
+        );
+      }
+      else {
+        return (<span>Nothing found</span>);
+      }
+    }
   }
 
   render() {
@@ -249,12 +286,43 @@ class TaskManagement extends React.Component {
                 </div>
               </div>
               <div className="col-lg-3">
-                <div className="content-2-columns-right">
+              <div className="content-2-columns-right">
+                <div id="tasks-scanner-container">
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col-lg-12">
+                       <div className="content-2-columns-right-title">Network tasks scanner</div>
+                    </div>
+                  </div>
+                  <div id="tasks-scanner-container-bg">
+                  <div className="row">
+                     <div className="col-lg-12">
+                       <div id="scanner-input-container">
+                         <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
+                       </div>
+                     </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div>
+                        <p>Complete network quests to earn tokens</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12">
+                      {this.renderNetworkTasks()}
+                    </div>
+                  </div>
+                  </div>
+                  
+                  </div>
+                </div>
                 </div>
               </div>
             </div>
+            </div>
           </div>
-        </div>
     );
   }
 }
