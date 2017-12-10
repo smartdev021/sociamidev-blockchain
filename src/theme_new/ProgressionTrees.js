@@ -21,10 +21,17 @@ class ProgressionTrees extends React.Component {
     const DummyFriendImage = "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png";
 
     const dummyTrees = [
-      {name: "AI for Beginners", secondaryInfo: {image_1: DummyFriendImage, image_2: DummyFriendImage, text: "and 1282 others"}}, 
+      {name: "AI for Beginners", secondaryInfo: {
+        image_1: "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/matthewicon.png", 
+        image_2: "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/Mathildaicon.png"
+        , text: "and 1282 others"}
+      }, 
       {name: "AI for Intermediates", secondaryInfo: {image_1: null, image_2: null, text: "256 learners"}}, 
       {name: "AI for advanced learners", secondaryInfo: {image_1: null, image_2: null, text: "32 learners"}}, 
-      {name: "AI for corporations", secondaryInfo: {image_1: DummyFriendImage, image_2: null, text: "and 10 others"}}, 
+      {name: "AI for corporations", secondaryInfo: {
+        image_1: "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/johnicon.png", 
+        image_2: null, text: "and 10 others"}
+      }, 
     ];
 
     return (
