@@ -8,6 +8,15 @@
   #nav-top .navbar {
     background-color: transparent;
     border-color: transparent;
+    margin-bottom: 0;
+  }
+
+  /*Later on - we need to have left-sidebar enter/exit the screen, and be topmost when active on mobile*/
+  /*Try playing with media queries to achieve that*/
+  @media screen and (min-width: 1000px) {
+    #nav-top .navbar {
+      margin-right: 60px;
+    }
   }
   
   #nav-top .nav>li>a {
@@ -55,10 +64,6 @@
   }
   /*-------------*/
   
-  #nav-top .navbar {
-    margin-bottom: 0;
-  }
-  
   #nav-top li {
     margin-right: 10px;
   }
@@ -71,12 +76,4 @@
   #nav-top .navbar-btn {
     margin-top: 0;
     margin-right: 10px;
-  }
-  
-  /*Later on - we need to have left-sidebar enter/exit the screen, and be topmost when active on mobile*/
-  /*Try playing with media queries to achieve that*/
-  @media screen and (min-width: 1000px) {
-    #nav-top .navbar {
-      margin-right: 60px;
-    }
   }
