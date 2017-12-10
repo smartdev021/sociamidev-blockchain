@@ -21,6 +21,9 @@ import TasksWidget from '~/src/theme/components/TasksWidget'
 
 import DetailsPopup from '~/src/components/common/DetailsPopup';
 
+import "~/src/theme_new/css/common.css"
+import "~/src/theme_new/css/tasksManagement.css"
+
 import {
   setTasks,
   fetchTasksInitiate,
@@ -174,29 +177,85 @@ class TaskManagement extends React.Component {
     .then((response) =>this.handleCloseCancelTaskDetailsPopup(response))
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
+  
+  renderTasks() {
+    const DummyImages = [
+      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
+      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
+    ];
 
-  render() {
-    console.log("TaskManagement::render");
-    console.dir(this.state);
-    if (this.props.isTasksFetchInProgress) {
-      return (<div id="main-content_1"><h3>Loading tasks. Please wait... <Icon spin name="spinner" /></h3></div>);
-    }
+    const dummyTasks = [
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+    ];
 
     return (
-    <div id="main-content_1">
-    <TasksWidget cookies={this.props.cookies}
-    tasksCategory={this.state.tasksCategory}
-    onSelectCategory={(categoryType)=>this.selectCategory(categoryType)}
-    allTasks={this.props.tasks}
-    userProfile={this.props.userProfile}
-    acceptTask={(item)=>this.handleOpenConfirmTaskDetailsPopup(item)}
-    cancelTask={(item)=>this.handleOpenCancelTaskDetailsPopup(item)}
-    onOpenSignUpForm={() => this.props.openSignUpForm()}/>
+      <ul>
+        {
+          dummyTasks.map(function(task, i) {
+            return (
+            <li>
+              <div className="tasks-management-my-task">
+                <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
+                <span>{task.name}</span>
+              </div>
+            </li>
+            );
+          })
+        }
+      </ul>
+    );
+  }
 
-    <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation" />   
-    <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" />   
-  </div>
-  );
+  render() {
+    return (
+        <div className="content-2-columns-wrapper">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-9">
+                <div className="content-2-columns-left">
+                  <div id="tasks-management-my-tasks">
+                    <div className="container-fluid">
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div className="content-2-columns-left-title">My Tasks</div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div id="my-tasks-container">
+                            {this.renderTasks()}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <div className="content-2-columns-right">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    );
   }
 }
 
