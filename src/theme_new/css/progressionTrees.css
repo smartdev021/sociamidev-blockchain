@@ -2,10 +2,6 @@
     margin: 0 auto;
   }
   
-   #progression-trees-scanner, #progression-trees-trees {
-     height: 633px;
-   }
-  
    #scanner-input-container input[type="text"] {
     text-align: center;
     width: 90%;
@@ -52,26 +48,6 @@
     width: 15px;
     height: 15px;
   }
-
-#progression-trees-scanner {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
-    background: rgb(74,191,234); /* Old browsers */
-    background-image: -moz-linear-gradient(45deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
-    background-image: -webkit-linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
-    background: linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-    border-radius: 3px;
-}
-  
-   #progression-trees-trees{
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4abfea+0,21a7e5+67 */
-     background: rgb(74,191,234); /* Old browsers */
-     background-image: -moz-linear-gradient(45deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
-     background-image: -webkit-linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
-     background: linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-     border-radius: 3px;
-   }
   
   #progression-trees {
     font-family: "Comfortaa";

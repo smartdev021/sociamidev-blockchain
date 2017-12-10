@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import "~/src/theme_new/css/common.css"
 import "~/src/theme_new/css/progressionTrees.css"
 
 class ProgressionTrees extends React.Component {
@@ -53,11 +54,11 @@ class ProgressionTrees extends React.Component {
       const progressValueNow = 25;
       const progressValueNow1 = 41;
     return (
-        <div id="progression-trees">
+        <div className="content-2-columns-wrapper" id="progression-trees">
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-8">
-              <div id="progression-trees-trees">
+              <div className="content-2-columns-left" id="progression-trees-trees">
                 <div className="container-fluid">
                   <div className="row">
                      <div className="col-lg-12">
@@ -102,7 +103,7 @@ class ProgressionTrees extends React.Component {
               </div>
               </div>
               <div className="col-lg-4">
-                <div id="progression-trees-scanner">
+                <div className="content-2-columns-left" id="progression-trees-scanner">
                   <div className="container-fluid">
                     <div className="row">
                        <div className="col-lg-12">

@@ -19,6 +19,7 @@ import PopupNewProject from '~/src/theme/components/PopupNewProject';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import "~/src/theme_new/css/common.css"
 import "~/src/theme_new/css/projectManager.css"
 
 
@@ -260,11 +261,11 @@ class ProjectManager extends React.Component {
 
   render() {
   return (
-      <div id="project-manager">
+      <div className="content-2-columns-wrapper" id="project-manager">
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-8">
-              <div id="project-manager-my-projects">
+              <div className="content-2-columns-left" id="project-manager-my-projects">
                 <div id="project-manager-projects-container">
                 <div className="container-fluid">
                   <div className="row">
@@ -287,7 +288,7 @@ class ProjectManager extends React.Component {
               </div>
             </div>
             <div className="col-lg-4">
-              <div id="project-manager-project-scanner">
+              <div className="content-2-columns-right" id="project-manager-project-scanner">
               <div className="container-fluid">
                     <div className="row">
                        <div className="col-lg-12">
