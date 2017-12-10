@@ -80,7 +80,7 @@ class Main extends React.Component {
               </div>
               <div className="col-lg-10">
                 <main className>
-                  <div className="container-fluid content-top">
+                  <div className="container-fluid">
                     <div className="row">
                       <div className="col-lg-12">
                         <NavTop location = {this.props.location}/>
@@ -98,8 +98,6 @@ class Main extends React.Component {
                         </form>
                       </div>
                     </div>
-                  </div>
-                  <div className="container-fluid">
                     <div className="row">
                       <div className="col-lg-12">
                         <Switch>
