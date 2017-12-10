@@ -65,17 +65,18 @@ class ProgressionTrees extends React.Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-9">
-              <div className="content-2-columns-left" id="progression-trees-trees">
+              <div className="content-2-columns-left">
+                <div id="progression-trees-trees">
                 <div className="container-fluid">
                   <div className="row">
                      <div className="col-lg-12">
-                       <h3>My Progress</h3>
+                       <div className="content-2-columns-left-title">My Progress</div>
                      </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-12">
                       <div className="progress">
-                        <span id="progress-bar-text">
+                        <span className="col-lg-12" id="progress-bar-text">
                           <h4 id="progress-bar-roadmap-name">Blockchain for beginners</h4>
                           <span className="progress-bar-skill-name">Basic CS concepts</span>
                           <span className="progress-bar-skill-name">Solidity</span>
@@ -106,6 +107,7 @@ class ProgressionTrees extends React.Component {
                       </div>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
               </div>

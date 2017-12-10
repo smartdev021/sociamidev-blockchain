@@ -287,7 +287,7 @@ class ProjectManager extends React.Component {
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-lg-12">
-                      <h3>My Projects</h3>
+                      <div className="content-2-columns-left-title">My Projects</div>
                     </div>
                   </div>
                   <div className="row">
