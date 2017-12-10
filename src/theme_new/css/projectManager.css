@@ -23,11 +23,6 @@
   list-style: none;
 }
 
-#project-manager-projects-bg .list-item #icons {
-  float: left;
-  margin-right: 20px;
-}
-
 #project-manager-projects-bg #project-manager-add-project-btn {
   position: absolute;
   right: 10px;
@@ -47,4 +42,24 @@
 #project-manager-project-scanner-container {
   width: 80%;
   margin: 0 auto;
+}
+
+.projects-list-item {
+  margin-bottom: 40px;
+}
+
+.projects-list-item img {
+  float: left;
+  margin-right: 30px;
+}
+
+.projects-list-item #project-text #title {
+  font-size: 18px;
+  font-family: "Comfortaa";
+  color: rgb( 129, 165, 233 );
+}
+
+#projects-list-container {
+  height: 100%;
+  overflow-y: scroll;
 }

@@ -149,43 +149,6 @@ class ProjectManager extends React.Component {
     );
   }
 
-  renderProjects() {
-    if (this.props.isProjectsFetchInProgress || this.props.isProjectSaveInProgress) {
-      return (<h3>Retrieving data. Please, wait... <Icon spin name="spinner" /></h3>);
-    }
-
-    if (!this.props.projects || this.props.projects.length == 0) {
-      return null;
-    }
-
-    console.log("renderProjects this.state.projects: ");
-    console.dir(this.props.projects);
-
-    let that = this;
-
-    return (
-      <section className="feature-columns"> 
-        <div className="row">
-          {
-            this.props.projects.map(function(project, i) {
-              return (
-                <article className="jobTile feature-col col-md-4" key={i}>
-                  <ActionLink href='#' className="thumbnail linked" onClick={()=> that.openModalWithProject(i)}>
-                    <div className="caption">
-                      <h4>{project.name}</h4>
-                      <h6>{project.description}</h6>
-                      {that.renderMilestones(project.milestones)}
-                    </div>
-                  </ActionLink>
-                </article>
-              );
-            })
-          }
-        </div>
-      </section>
-    );
-  }
-
   renderHeader() {
     return (
       <div className="container-fluid projectManagementPage">
@@ -229,29 +192,59 @@ class ProjectManager extends React.Component {
   }*/
 
   renderProjects() {
-    const dummyProjects = [
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"}
+    if (this.props.isProjectsFetchInProgress || this.props.isProjectSaveInProgress) {
+      return (<ul><li><h3>Retrieving data. Please, wait... <Icon spin name="spinner" /></h3></li></ul>);
+    }
+
+    if (!this.props.projects || this.props.projects.length == 0) {
+      return null;
+    }
+
+    console.log("renderProjects this.state.projects: ");
+    console.dir(this.props.projects);
+
+    const DummyImages = [
+      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
+      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
     ];
+
+    /*const dummyProjects = [
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
+      {name: "Incubasis", description: "an online incubator for developing countries"},
+    ];*/
 
     let that = this;
     return (
       <ul>
         {
-          dummyProjects.map(function(project, i) {
-
-            let title = project.name;
-            let description = project.description;
+          this.props.projects.map(function(project, i) {
 
             return (<li key={i}>
-            <div className="list-item">
-              <div id="icons">
-                <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
-                <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
+            <ActionLink href='#' onClick={()=> that.openModalWithProject(i)}>
+            <div className="projects-list-item">
+              <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
+              <div id="project-text">
+                <div id="title">{project.name}</div>
+                <div id="desctiption>">{project.description}</div>
               </div>
-              <div>{title}</div>
-              <div>{description}</div>
             </div>
+            </ActionLink>
           </li>);
           })
         }
@@ -260,8 +253,32 @@ class ProjectManager extends React.Component {
   }
 
   render() {
+    let that = this;
+    let selectedProject = (this.props.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
+    ? this.props.projects[this.state.selectedProjectIndex] : undefined;
+
+    console.log("selectedProject: ");
+    console.dir(selectedProject);
+
   return (
       <div className="content-2-columns-wrapper" id="project-manager">
+      {this.state.modalIsOpen ? 
+          <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
+            onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}
+            isAuthorized = {this.props.isAuthorized}
+            userProfile = {this.props.userProfile}
+            saveTask = {this.props.saveTask}
+            deleteTask = {this.props.deleteTask}
+            setTaskPublished = {this.props.setTaskPublished}
+            tasks = {this.props.tasks}
+            fetchRoadmapsDetailsByIds = {this.props.fetchRoadmapsDetailsByIds}
+            roadmapsDetailed = {this.props.roadmapsDetailed}
+            isTaskSaveInProgress = {this.props.isTaskSaveInProgress}
+            isTasksUpdateInProgress = {this.props.isTasksUpdateInProgress}
+            lastSavedTask = {this.props.lastSavedTask}
+            setLastSavedTask = {this.props.setLastSavedTask}
+            /> : null
+        }
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-9">
@@ -276,10 +293,12 @@ class ProjectManager extends React.Component {
                   <div className="row">
                     <div className="col-lg-12">
                         <div id="project-manager-projects-bg">
-                          {this.renderProjects()}
-                          <ActionLink href='#'>
-                            <span className="glyphicon glyphicon-plus-sign" id="project-manager-add-project-btn"></span>
-                          </ActionLink>
+                          <div id="projects-list-container">
+                            {this.renderProjects()}
+                            <ActionLink href='#' onClick={()=>this.openModal()}>
+                              <span className="glyphicon glyphicon-plus-sign" id="project-manager-add-project-btn"></span>
+                            </ActionLink>
+                          </div>
                         </div>
                     </div>
                   </div>
