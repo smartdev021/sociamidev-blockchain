@@ -19,7 +19,7 @@ import {
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
 
-import "~/src/css/HomePage.css"
+import "~/src/theme_new/css/homePage.css"
 
 class HomePage extends React.Component {
 

@@ -1,0 +1,15 @@
+#search-query-input {
+    border-width: 1px;
+    background-color: rgb( 255, 255, 255 );
+    border-style: solid;
+    border-radius: 3px;
+    border-color: rgb( 255, 255, 255 );
+    font-size: 11px;
+    font-family: "Comfortaa";
+    color: rgb( 188, 188, 188 );
+    line-height: 47px;
+  }
+
+  .formSearchPage .form-group {
+    width: 100%;
+  }

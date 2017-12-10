@@ -181,15 +181,6 @@ main {
   margin-bottom: 10px;
 }
 
-#trend-scanner-results .list-item #icons {
-  float: left;
-}
-
-#trend-scanner-results .list-item #text {
-  margin-left: 30px;
-  display: block;
-}
-
 #search-query-input {
   min-height: 47px;
   margin-bottom: 20px;

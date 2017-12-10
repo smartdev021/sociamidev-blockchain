@@ -25,6 +25,8 @@ import ProgressionTrees from '~/src/theme_new/ProgressionTrees';
 import About from '~/src/theme_new/About.js';
 import ICO from '~/src/theme_new/ICO.js';
 
+import "~/src/theme_new/css/main.css"
+
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
 class Main extends React.Component {

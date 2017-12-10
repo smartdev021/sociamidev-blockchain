@@ -41,15 +41,6 @@ main {
   margin-bottom: 10px;
 }
 
-#trend-scanner-results .list-item #icons {
-  float: left;
-}
-
-#trend-scanner-results .list-item #text {
-  margin-left: 30px;
-  display: block;
-}
-
 .search-form {
   padding-bottom: 15px;
 }
@@ -60,17 +51,4 @@ main {
   line-height: 50px;
   margin-bottom: 20px;
   width: 100%;
-}
-
-#projectManager {
-  border-radius: 3px;
-  background-color: rgba( 255, 255, 255, 0.902);
-  width: 642px;
-  height: 450px;
-}
-
-/*Trend Scanner*/
-#trend-scanner {
-  max-width: 90%;
-  margin: 0 auto;
 }

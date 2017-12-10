@@ -13,6 +13,7 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import "~/src/theme_new/appearance.css"
 import "~/src/theme_new/layout.css"
+import "~/src/theme_new/css/trendScanner.css"
 
 import {
   selectResultsCategory,
@@ -205,7 +206,7 @@ class TrendScanner extends React.Component {
               </ActionLink>
             </li>
             <li><a href="#">Soqqle Campaigns</a></li>
-            <li><a href="#">Bookmarks <span id="bookmark-chevron" className="glyphicon glyphicon-menu-down"></span></a></li>
+            <li><a href="#">Bookmarks <span id="bookmark-arrow-icon" className="glyphicon glyphicon-menu-down"></span></a></li>
           </ul>
         </div>
         <div id="trend-scanner-results">

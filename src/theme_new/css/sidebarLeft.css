@@ -125,4 +125,9 @@
     color: rgb(161, 158, 158);
     line-height: 1.364;
   }
-  
+
+  #sidebar-left #user-status-widget hr {
+    clear: both;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(54, 50, 50, 0), rgba(177, 177, 177, 0.75), rgba(168, 161, 161, 0));
+  }
