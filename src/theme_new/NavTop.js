@@ -43,7 +43,7 @@ class NavTop extends React.Component {
                   </li>
                   <li>
                     <p className="navbar-btn">
-                    <Link to='/roadmap' className={this.props.location.pathname == "/roadmap" 
+                    <Link to='/progressionTrees' className={this.props.location.pathname == "/progressionTrees" 
                       ? ButtonClassName + " active" : ButtonClassName}>Progression Trees</Link>
                     </p>
                   </li>

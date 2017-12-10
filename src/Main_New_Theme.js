@@ -18,7 +18,6 @@ import Authorize from '~/src/authentication/Authorize';
 
 import HomePage from '~/src/theme_new//HomePage.js';
 import TrendScanner from '~/src/theme_new/TrendScanner.js';
-import Roadmap from '~/src/theme_new/Roadmap.js'; //Progression trees
 import TaskManagement from '~/src/theme_new/TaskManagement';
 import ProjectManager from '~/src/theme_new/ProjectManagement';
 import ProgressionTrees from '~/src/theme_new/ProgressionTrees';
@@ -106,7 +105,6 @@ class Main extends React.Component {
                         <Switch>
                           <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
                           <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
-                          <Route exact path='/roadmap' render={routeProps => <Roadmap {...routeProps}{...this.props}/>} />
                           <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
                           <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
                           <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
