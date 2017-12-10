@@ -35,3 +35,16 @@
   font-size: 60px;
   top: initial;
 }
+
+#project-scanner-text {
+  font-size: 14px;
+  font-family: "Comfortaa";
+  color: rgb( 255, 255, 255 );
+  line-height: 2.143;
+  text-align: center;
+}
+
+#project-manager-project-scanner-container {
+  width: 80%;
+  margin: 0 auto;
+}

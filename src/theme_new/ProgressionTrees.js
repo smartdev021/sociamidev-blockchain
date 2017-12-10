@@ -64,7 +64,7 @@ class ProgressionTrees extends React.Component {
         <div className="content-2-columns-wrapper" id="progression-trees">
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-8">
+              <div className="col-lg-9">
               <div className="content-2-columns-left" id="progression-trees-trees">
                 <div className="container-fluid">
                   <div className="row">
@@ -109,12 +109,13 @@ class ProgressionTrees extends React.Component {
                 </div>
               </div>
               </div>
-              <div className="col-lg-4">
+              <div className="col-lg-3">
                 <div className="content-2-columns-left" id="progression-trees-scanner">
+                <div id="progression-trees-scanner-container">
                   <div className="container-fluid">
                     <div className="row">
                        <div className="col-lg-12">
-                         <h3>Tree scanner</h3>
+                         <div className="content-2-columns-right-title">Tree scanner</div>
                        </div>
                     </div>
                     <div className="row">
@@ -129,6 +130,7 @@ class ProgressionTrees extends React.Component {
                         {this.renderTreesScannerTrees()}
                       </div>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>

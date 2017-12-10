@@ -1,10 +1,19 @@
 #progression-trees {
   margin: 0 auto;
 }
+
+#progression-trees-scanner-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#progression-trees-scanner-container .content-2-columns-right-title {
+  margin-left: 15px;
+}
   
 #scanner-input-container input[type="text"] {
   text-align: center;
-  width: 90%;
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   border: 1px solid white;

@@ -264,7 +264,7 @@ class ProjectManager extends React.Component {
       <div className="content-2-columns-wrapper" id="project-manager">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-9">
               <div className="content-2-columns-left" id="project-manager-my-projects">
                 <div id="project-manager-projects-container">
                 <div className="container-fluid">
@@ -287,17 +287,20 @@ class ProjectManager extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-3">
               <div className="content-2-columns-right" id="project-manager-project-scanner">
+              <div id="project-manager-project-scanner-container">
               <div className="container-fluid">
                     <div className="row">
                        <div className="col-lg-12">
-                         <h3>Project Scanner</h3>
+                         <div className="content-2-columns-right-title">Project Scanner</div>
                        </div>
                     </div>
                     <div className="row">
                        <div className="col-lg-12">
-                         <p>You are not involved in other campaigns. Check out and get involved with other soqqle projects.</p>
+                         <p id="project-scanner-text">
+                           You are not involved in other campaigns. Check out and get involved with other soqqle projects.
+                         </p>
                        </div>
                     </div>
                     <div className="row">
@@ -308,6 +311,7 @@ class ProjectManager extends React.Component {
                        </div>
                     </div>
                   </div>
+              </div>
               </div>
             </div>
           </div>
