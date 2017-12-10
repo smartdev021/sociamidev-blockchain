@@ -87,6 +87,6 @@
     "socket.io-client": "^1.4.8",
     "url-loader": "^0.5.9",
     "webfontloader": "^1.6.28",
-    "react-timeago":"^3.4.3"
+    "react-timeago": "^3.4.3"
   }
 }

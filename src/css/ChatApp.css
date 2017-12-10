@@ -160,7 +160,7 @@ a.search {
   margin-left: 10px;
   border: 1px solid #e6e6e6;
   background-color: #fff;
-  background-image: url("../../assets/img/edit.png");
+  background-image: url("http://sociamibucket.s3.amazonaws.com/assets/chat/edit.png");
   background-repeat: no-repeat;
   background-position: top 6px left 7px;
   border-radius: 10%;
@@ -557,7 +557,7 @@ a.search {
 }
 
 .newMessageIndicator{
-  background-image: url("../../assets/img/warning.png");
+  background-image: url("http://sociamibucket.s3.amazonaws.com/assets/chat/warning.png");
   height: 24px;
   width: 24px;
   position: absolute;
