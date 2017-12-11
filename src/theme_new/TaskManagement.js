@@ -36,6 +36,9 @@ import {
   openSignUpForm,
 } from '~/src/redux/actions/authorization'
 
+import {
+  projectsFetch,
+} from '~/src/redux/actions/projects'
 
 const BackendURL = ConfigMain.getBackendURL();
 
@@ -92,6 +95,62 @@ class TaskManagement extends React.Component {
     return myTasks;
   }
 
+  getProjectsCreatedByMeWithTasks() {
+    let projects = [];
+    
+    if (this.props.projects.length > 0) {
+      const currentUserId = this.props.userProfile._id;
+
+      projects = this.props.projects.filter(function(project) {
+        return project.userID == currentUserId && project.milestones && project.milestones.length > 0;
+      });
+    }
+
+    console.log("getProjectsCreatedByMeWithTasks projects: " + projects.length);
+    
+    return projects;
+  }
+
+  /*Return projects with only those milestones, assigned to current user*/
+  getProjectsWithTasksAssignedToMe() {
+    const tasksAssignedToMe = this.getTasksAssignedToMe();
+
+    let projects = [];
+    
+    if (this.props.projects.length > 0 && tasksAssignedToMe.length > 0) {
+      const currentUserId = this.props.userProfile._id;
+
+      //1. Get all projects that contain at least one milestone
+      const projectsWithMilestones = this.props.projects.filter(function(project) {
+        return project.userID != currentUserId && project.milestones && project.milestones.length > 0;
+      });
+
+      //2. For each project Check if any milestone is contained in tasksAssignedToMe
+      for (let i = 0; i < projectsWithMilestones.length; ++i) {
+        const currentProject = projectsWithMilestones[i];
+
+        let projectToAdd = Object.assign({}, currentProject);
+        projectToAdd.milestones = [];
+
+        for (let j = 0; j < currentProject.milestones.length; ++j) {
+          let findMilestoneById = function(milestone) {
+            return milestone._id == currentProject.milestones[j]._id;
+          }
+
+          if (tasksAssignedToMe.findIndex(findMilestoneById) != -1) {
+            projectToAdd.milestones.push(currentProject.milestones[j]);            
+          }
+        }
+
+        if (projectToAdd.milestones.length > 0) {
+          projects.push(projectToAdd);
+        }
+      }
+    }
+    
+    return projects;
+  }
+
   getMyTasksAll() {
     const tasksAssignedToMe = this.getTasksAssignedToMe();
     const tasksCreatedByMe = this.getTasksCreatedByMe();
@@ -121,6 +180,7 @@ class TaskManagement extends React.Component {
   }
 
   componentWillMount() {
+    this.props.projectsFetch();
     this.storeAndFetchTasks();
   }
 
@@ -218,9 +278,31 @@ class TaskManagement extends React.Component {
     .then((response) =>this.handleCloseCancelTaskDetailsPopup(response))
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
+
+  renderSubtasks(task) {
+    if (task.milestones && task.milestones.length > 0) {
+      return (
+        <div id="subtasks">
+        {task.milestones.map(function(milestone, i) {
+              return (
+                <div key={i} className="subtask">
+                  <span>{milestone.name}</span>
+                </div>
+              );
+            })}
+      </div>
+      );
+    }
+    else {
+      return (<div id="subtasks">
+    </div>);
+    }
+  }
   
   renderTasks(tasks) {
     let filteredTasks = [];
+
+    let that = this;
 
     filteredTasks = tasks.filter(function(task) {
       return task.name && task.name != "";
@@ -239,18 +321,9 @@ class TaskManagement extends React.Component {
               return (
               <li key={i}>
                 <div className="tasks-management-my-task">
-                  <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
+                  {!task.milestones && <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>}
                   <span>{task.name}</span>
-                  <div id="subtasks">
-                    <div className="subtask">
-                      Find potential investors
-                    </div>
-                    <div className="subtask">
-                      Speak to David about patent
-                    </div>
-                    <div className="subtask">
-                    </div>
-                  </div>
+                  {that.renderSubtasks(task)}
                 </div>
               </li>
               );
@@ -301,8 +374,8 @@ class TaskManagement extends React.Component {
   }
 
   renderLeftSide() {
-    const tasksAssignedToMe = this.getTasksAssignedToMe();
-    const tasksCreatedByMe = this.getTasksCreatedByMe();
+    const tasksAssignedToMe = this.getTasksAssignedToMe().concat(this.getProjectsWithTasksAssignedToMe());
+    const tasksCreatedByMe = this.getTasksCreatedByMe().concat(this.getProjectsCreatedByMeWithTasks());
 
     if (tasksAssignedToMe.length == 0 && tasksCreatedByMe.length == 0) {
       return <span></span>;
@@ -396,24 +469,28 @@ class TaskManagement extends React.Component {
 
 TaskManagement.propTypes = {
   tasks: PropTypes.array.isRequired,
+  projects: PropTypes.array.isRequired,
   isTasksFetchInProgress: PropTypes.bool.isRequired,
 
   openSignUpForm: PropTypes.func.isRequired,
   setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
+  projectsFetch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile,
   isAuthorized: state.isAuthorized,
   tasks: state.tasks,
+  projects: state.projects,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   setTasks: bindActionCreators(setTasks, dispatch),
+  projectsFetch: bindActionCreators(projectsFetch, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
 })
