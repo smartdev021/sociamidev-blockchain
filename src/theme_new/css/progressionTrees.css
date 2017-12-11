@@ -35,6 +35,7 @@
 #trees-scanner-list-trees {
   list-style: none;
   margin-top: 20px;
+  width: 90%;
 }
   
 #trees-scanner-list-trees li {
@@ -100,4 +101,9 @@
 #progression-trees .progress #progress-percents-sup {
   font-size: 14px;
   top: -1.8em;
+}
+
+#trees-scanner-container {
+  height: 450px;
+  overflow-y: scroll;
 }
