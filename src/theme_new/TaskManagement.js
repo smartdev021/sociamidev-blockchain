@@ -17,8 +17,6 @@ import Axios from 'axios'
 
 import ConfigMain from '~/configs/main'
 
-import TasksWidget from '~/src/theme/components/TasksWidget'
-
 import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import ActionLink from '~/src/components/common/ActionLink'

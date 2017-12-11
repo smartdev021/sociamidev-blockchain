@@ -3,7 +3,7 @@
 */
 import React from 'react';
 
-//import PdfViewer from '~/src/theme/components/PdfViewer'
+//import PdfViewer from '~/src/theme_new/components/PdfViewer'
 
 function ICO(props) {
   //return <PdfViewer/>;

@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 import {Icon} from 'react-fa'
 
 import ActionLink from '~/src/components/common/ActionLink'
-import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
+import DetailsPopup from '~/src/theme_new/components/DetailsPopupLatestTask';
 
 import {
   setSearchQuery,

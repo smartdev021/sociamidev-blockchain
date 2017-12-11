@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 
 const Hash = require('object-hash');
 
-import PopupNewProject from '~/src/theme/components/PopupNewProject';
+import PopupNewProject from '~/src/theme_new/components/PopupNewProject';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
