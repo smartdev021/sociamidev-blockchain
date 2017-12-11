@@ -63,6 +63,24 @@ class TaskManagement extends React.Component {
     }
   }
 
+  getMyTasks() {
+    let myTasks = [];
+
+    if (this.props.isAuthorized) {
+      const currentUserId = this.props.userProfile._id;
+
+      let findByUserId = function(assignee) {
+        return assignee.userID == currentUserId;
+      }
+      
+      myTasks = this.props.tasks.filter(function(task) {
+        return task.taskAsigneeId && task.taskAsigneeId.length > 0 && task.taskAsigneeId.findIndex(findByUserId) != -1;
+      });
+    }
+
+    return myTasks;
+  }
+
   handleChange(e) {
     e.preventDefault();
     this.setState({scannerQuery: e.target.value});
@@ -184,10 +202,10 @@ class TaskManagement extends React.Component {
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
   
-  renderTasks() {
+  renderTasks(tasks) {
     let filteredTasks = [];
 
-    filteredTasks = this.props.tasks.filter(function(task) {
+    filteredTasks = tasks.filter(function(task) {
       return task.name && task.name != "";
     });
 
@@ -202,7 +220,7 @@ class TaskManagement extends React.Component {
           {
             filteredTasks.map(function(task, i) {
               return (
-              <li>
+              <li key={i}>
                 <div className="tasks-management-my-task">
                   <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
                   <span>{task.name}</span>
@@ -260,69 +278,83 @@ class TaskManagement extends React.Component {
     }
   }
 
+  renderLeftSide() {
+    const myTasks = this.getMyTasks();
+    if (myTasks.length == 0) {
+      return <span></span>;
+    }
+    
+    return (
+      <div className="col-lg-9">
+      <div className="content-2-columns-left">
+        <div id="tasks-management-my-tasks">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="content-2-columns-left-title">My Tasks</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <div id="my-tasks-container">
+                  {this.renderTasks(myTasks)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    );
+  }
+
+  renderRightSide() {
+    return (
+      <div className={this.getMyTasks().length > 0 ? "col-lg-3" : "col-lg-12"}>
+        <div className="content-2-columns-right">
+          <div id="tasks-scanner-container">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="content-2-columns-right-title">Network tasks scanner</div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div id="scanner-input-container">
+                    <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div>
+                    <p>Complete network quests to earn tokens</p>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-12">
+                  {this.renderNetworkTasks()}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
         <div className="content-2-columns-wrapper">
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-9">
-                <div className="content-2-columns-left">
-                  <div id="tasks-management-my-tasks">
-                    <div className="container-fluid">
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div className="content-2-columns-left-title">My Tasks</div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div id="my-tasks-container">
-                            {this.renderTasks()}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3">
-              <div className="content-2-columns-right">
-                <div id="tasks-scanner-container">
-                  <div className="container-fluid">
-                    <div className="row">
-                      <div className="col-lg-12">
-                       <div className="content-2-columns-right-title">Network tasks scanner</div>
-                    </div>
-                  </div>
-                  <div id="tasks-scanner-container-bg">
-                  <div className="row">
-                     <div className="col-lg-12">
-                       <div id="scanner-input-container">
-                         <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
-                       </div>
-                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div>
-                        <p>Complete network quests to earn tokens</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      {this.renderNetworkTasks()}
-                    </div>
-                  </div>
-                  </div>
-                  
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
+              {this.renderLeftSide()}
+              {this.renderRightSide()}
             </div>
           </div>
+        </div>
     );
   }
 }
