@@ -233,7 +233,7 @@ class TaskManagement extends React.Component {
   handleOpenConfirmTaskDetailsPopup(item) {
     console.log(item);
     
-    if (this.props.isAuthorized) {
+    if (this.props.isAuthorized && item.userID != this.props.userProfile._id) {
       let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true,detailsPopupItem: item});
       this.setState(copy)
     }
@@ -258,8 +258,11 @@ class TaskManagement extends React.Component {
 
   handleOpenCancelTaskDetailsPopup(item){
     console.log(item);
-    let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: true,detailsPopupItem: item});
-    this.setState(copy)
+
+    if (this.props.isAuthorized && item.userID != this.props.userProfile._id) {
+      let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: true,detailsPopupItem: item});
+      this.setState(copy)
+    }
   }
 
   handleCloseCancelTaskDetailsPopup(item) {
@@ -279,17 +282,19 @@ class TaskManagement extends React.Component {
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
 
-  renderSubtasks(task) {
-    if (task.milestones && task.milestones.length > 0) {
+  renderSubtasks(project) {
+    let that = this;
+    if (project.milestones && project.milestones.length > 0) {
       return (
         <div id="subtasks">
-        {task.milestones.map(function(milestone, i) {
+        {project.milestones.map(function(milestone, i) {
               return (
-                <div key={i} className="subtask">
-                  <span>{milestone.name}</span>
-                </div>
+                <ActionLink key={i} href="#" onClick={()=>that.handleOpenCancelTaskDetailsPopup(milestone)}>
+                  <div className="subtask"><span>{milestone.name}</span></div>
+                </ActionLink>
               );
-            })}
+            })
+        }
       </div>
       );
     }
@@ -320,11 +325,17 @@ class TaskManagement extends React.Component {
             filteredTasks.map(function(task, i) {
               return (
               <li key={i}>
+              {task.milestones ? 
                 <div className="tasks-management-my-task">
-                  {!task.milestones && <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>}
+                  <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
                   <span>{task.name}</span>
                   {that.renderSubtasks(task)}
                 </div>
+              :
+                <ActionLink href="#" onClick={()=>that.handleOpenCancelTaskDetailsPopup(task)} className="tasks-management-my-task">
+                  <span>{task.name}</span>
+                </ActionLink>
+              }  
               </li>
               );
             })
