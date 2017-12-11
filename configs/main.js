@@ -8,7 +8,8 @@ var ConfigMain = {
             return BACKEND_URL_LOCAL;
         }
         else {
-            return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
+            //return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
+            return BACKEND_URL_REMOTE_STAGING;
         }
     },
     getCookiesExpirationPeriod : function() {
