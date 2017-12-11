@@ -170,10 +170,13 @@ class TaskManagement extends React.Component {
     this.props.onFetchAllTasks(true);
   }
   
-  handleOpenConfirmTaskDetailsPopup(item){
+  handleOpenConfirmTaskDetailsPopup(item) {
     console.log(item);
-    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true,detailsPopupItem: item});
-    this.setState(copy)
+    
+    if (this.props.isAuthorized) {
+      let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true,detailsPopupItem: item});
+      this.setState(copy)
+    }
   }
 
   handleCloseConfirmTaskDetailsPopup(item) {
@@ -275,6 +278,8 @@ class TaskManagement extends React.Component {
       foundTasks = this.props.tasks;
     }
 
+    let that = this;
+
     if (foundTasks.length > 0) {
       return (
         <ul id="tasks-scanner-list-tasks">
@@ -282,7 +287,7 @@ class TaskManagement extends React.Component {
             foundTasks.map(function(task, i) {
               return (<li key={i}>
               <div>
-                <a href="#">{task.name}</a>
+                <ActionLink href="#" onClick={()=>that.handleOpenConfirmTaskDetailsPopup(task)}>{task.name}</ActionLink>
               </div>
             </li>);
             })
@@ -315,7 +320,9 @@ class TaskManagement extends React.Component {
                 <div className="content-2-columns-left-title">My Tasks</div>
               </div>
               <div className="col-lg-2">
-                <div className="content-2-columns-left-title"><ActionLink href="#" onClick={()=>this.toggleMyTasksCategory()}>{this.state.tasksCategory.name}</ActionLink></div>
+                <div className="content-2-columns-left-title">
+                  <ActionLink href="#" onClick={()=>this.toggleMyTasksCategory()}>{this.state.tasksCategory.name}</ActionLink>
+                </div>
               </div>
             </div>
             <div className="row">
@@ -372,6 +379,10 @@ class TaskManagement extends React.Component {
   render() {
     return (
         <div className="content-2-columns-wrapper">
+        <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
+          onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation" />   
+        <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} 
+          onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" />   
           <div className="container-fluid">
             <div className="row">
               {this.renderLeftSide()}
