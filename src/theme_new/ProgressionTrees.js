@@ -34,6 +34,60 @@ class ProgressionTrees extends React.Component {
     this.props.fetchRoadmaps();
   }
 
+  renderUserProgressionTrees() {
+    const progressValueNow = 25;
+    const progressValueNow1 = 41;
+
+    let userRoadmaps = [];
+
+    /*if (this.props.isAuthorized) {
+      userRoadmaps = this.props.roadmaps.data.filter(function(roadmap) {
+        return roadmap.us
+      });
+    }
+    else {
+      
+    }*/
+
+    userRoadmaps = this.props.roadmaps.data;
+
+    return (
+      <div id="progression-trees-trees">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="content-2-columns-left-title">My Progress</div>
+            </div>
+          </div>
+          <div id="my-progress-list">
+          {
+            userRoadmaps.map(function(roadmap, i) {
+            return (
+            <div key={i} className="row">
+              <div className="col-lg-12">
+                <div className="progress">
+                  <span className="col-lg-12" id="progress-bar-text">
+                    <h4 id="progress-bar-roadmap-name">{roadmap.name}</h4>
+                    <span className="progress-bar-skill-name">Basic CS concepts</span>
+                    <span className="progress-bar-skill-name">Solidity</span>
+                    <span className="progress-bar-skill-name">Network</span>
+                    <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
+                  </span>
+                  <div className="progress-bar" role="progressbar" style={{'width': progressValueNow + '%'}} 
+                    aria-valuenow={progressValueNow} aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                  <sup id="progress-percents-sup">{progressValueNow}%</sup>
+                </div>
+              </div>
+            </div>
+            );
+          })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderTreesScannerTrees() {
     const DummyTrees = [
       {name: "AI for Beginners", secondaryInfo: {
@@ -87,57 +141,13 @@ class ProgressionTrees extends React.Component {
   }
 
   render() {
-      const progressValueNow = 25;
-      const progressValueNow1 = 41;
     return (
         <div className="content-2-columns-wrapper" id="progression-trees">
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-9">
               <div className="content-2-columns-left">
-                <div id="progression-trees-trees">
-                <div className="container-fluid">
-                  <div className="row">
-                     <div className="col-lg-12">
-                       <div className="content-2-columns-left-title">My Progress</div>
-                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="progress">
-                        <span className="col-lg-12" id="progress-bar-text">
-                          <h4 id="progress-bar-roadmap-name">Blockchain for beginners</h4>
-                          <span className="progress-bar-skill-name">Basic CS concepts</span>
-                          <span className="progress-bar-skill-name">Solidity</span>
-                          <span className="progress-bar-skill-name">Network</span>
-                          <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
-                        </span>
-                        <div className="progress-bar" role="progressbar" style={{'width': progressValueNow + '%'}} 
-                          aria-valuenow={progressValueNow} aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                        <sup id="progress-percents-sup">{progressValueNow}%</sup>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="progress">
-                        <span id="progress-bar-text">
-                          <h4 id="progress-bar-roadmap-name">Java for intermediates</h4>
-                          <span className="progress-bar-skill-name">Basic</span>
-                          <span className="progress-bar-skill-name">Building Optimization</span>
-                          <span className="progress-bar-skill-name">Testing</span>
-                          <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
-                        </span>
-                        <div className="progress-bar" role="progressbar" style={{'width': progressValueNow1 + '%'}} 
-                          aria-valuenow={progressValueNow1} aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                        <sup id="progress-percents-sup">{progressValueNow1}%</sup>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
+                {this.renderUserProgressionTrees()}
               </div>
               </div>
               <div className="col-lg-3">
