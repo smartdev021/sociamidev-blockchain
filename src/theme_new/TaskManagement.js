@@ -78,6 +78,29 @@ class TaskManagement extends React.Component {
     return myTasks;
   }
 
+  getTasksCreatedByMe() {
+    let myTasks = [];
+
+    if (this.props.isAuthorized) {
+      const currentUserId = this.props.userProfile._id;
+
+      myTasks = this.props.tasks.filter(function(task) {
+        return task.userID && task.userID == currentUserId;
+      });
+    }
+
+    return myTasks;
+  }
+
+  getMyTasksAll() {
+    const tasksAssignedToMe = this.getTasksAssignedToMe();
+    const tasksCreatedByMe = this.getTasksCreatedByMe();
+
+    console.log("TasksAssignedToMe.length: " + tasksAssignedToMe.length + "TasksCreatedByMe.length: " + tasksCreatedByMe.length);
+
+    return tasksAssignedToMe.concat(tasksCreatedByMe);
+  }
+
   handleChange(e) {
     e.preventDefault();
     this.setState({scannerQuery: e.target.value});
@@ -273,10 +296,14 @@ class TaskManagement extends React.Component {
   }
 
   renderLeftSide() {
-    const myTasks = this.getTasksAssignedToMe();
-    if (myTasks.length == 0) {
+    const tasksAssignedToMe = this.getTasksAssignedToMe();
+    const tasksCreatedByMe = this.getTasksCreatedByMe();
+
+    if (tasksAssignedToMe.length == 0 && tasksCreatedByMe.length == 0) {
       return <span></span>;
     }
+
+    const myTasks = this.state.tasksCategory.type == TaskCategoryAssigned.type ? tasksAssignedToMe : tasksCreatedByMe;
     
     return (
       <div className="col-lg-9">
@@ -307,7 +334,7 @@ class TaskManagement extends React.Component {
 
   renderRightSide() {
     return (
-      <div className={this.getTasksAssignedToMe().length > 0 ? "col-lg-3" : "col-lg-12"}>
+      <div className={this.getMyTasksAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
           <div id="tasks-scanner-container">
             <div className="container-fluid">
