@@ -248,33 +248,36 @@ class TaskManagement extends React.Component {
   }
 
   renderNetworkTasks() {
-    if (this.state.scannerQuery != "") {
-      let foundTasks = [];
-      
-      const scannerQuery = this.state.scannerQuery.toLowerCase();
+    let foundTasks = [];
+    
+    const scannerQuery = this.state.scannerQuery.toLowerCase();
 
+    if (scannerQuery != "") {
       foundTasks = this.props.tasks.filter(function(task) {
         return task.name && task.name.toLowerCase().startsWith(scannerQuery);
       });
+    }
+    else {
+      foundTasks = this.props.tasks;
+    }
 
-      if (foundTasks.length > 0) {
-        return (
-          <ul id="tasks-scanner-list-tasks">
-            {
-              foundTasks.map(function(task, i) {
-                return (<li key={i}>
-                <div>
-                  <a href="#">{task.name}</a>
-                </div>
-              </li>);
-              })
-            }
-          </ul>
-        );
-      }
-      else {
-        return (<span>Nothing found</span>);
-      }
+    if (foundTasks.length > 0) {
+      return (
+        <ul id="tasks-scanner-list-tasks">
+          {
+            foundTasks.map(function(task, i) {
+              return (<li key={i}>
+              <div>
+                <a href="#">{task.name}</a>
+              </div>
+            </li>);
+            })
+          }
+        </ul>
+      );
+    }
+    else {
+      return (<span>Nothing found</span>);
     }
   }
 
