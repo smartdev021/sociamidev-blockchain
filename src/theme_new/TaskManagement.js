@@ -21,6 +21,8 @@ import TasksWidget from '~/src/theme/components/TasksWidget'
 
 import DetailsPopup from '~/src/components/common/DetailsPopup';
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 import "~/src/theme_new/css/common.css"
 import "~/src/theme_new/css/tasksManagement.css"
 
@@ -39,17 +41,12 @@ const BackendURL = ConfigMain.getBackendURL();
 
 const TaskCategoryYour = {
   type: "my_tasks",
-  name: "Your tasks"
+  name: "Created tasks"
 };
 
-const TaskCategoryOther = {
-  type: "other_tasks",
-  name: "Other tasks"
-};
-
-const TaskCategoryAssign = {
+const TaskCategoryAssigned = {
   type: "assign_tasks",
-  name: "Assign tasks"
+  name: "Assigned tasks"
 };
 
 class TaskManagement extends React.Component {
@@ -58,12 +55,12 @@ class TaskManagement extends React.Component {
     super(props);
 
     this.state = {
-      tasksCategory: TaskCategoryYour,
+      tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
     }
   }
 
-  getMyTasks() {
+  getTasksAssignedToMe() {
     let myTasks = [];
 
     if (this.props.isAuthorized) {
@@ -105,26 +102,20 @@ class TaskManagement extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate prevProps.userProfile._id: " + prevProps.userProfile._id);
-    console.dir(this.props.userProfile);
     if (!prevProps.userProfile._id && this.props.userProfile._id) {
       console.log("!prevProps.userProfile._id && this.props.userProfile._id");
-      this.selectCategory("my_tasks");
       this.storeAndFetchTasks();
     }
   }
 
-  selectCategory(newCategoryType) {
+  toggleMyTasksCategory() {
     let newCategory = {};
 
-    if (newCategoryType == "my_tasks") {
-      newCategory = TaskCategoryYour;
-    }
-    else if (newCategoryType == "assign_tasks") {
-      newCategory = TaskCategoryAssign;
+    if (this.state.tasksCategory.type == TaskCategoryYour.type) {
+      newCategory = TaskCategoryAssigned;
     }
     else {
-      newCategory = TaskCategoryOther;
+      newCategory = TaskCategoryYour;
     }
 
     let copy = Object.assign({}, this.state, {tasksCategory: newCategory});
@@ -282,7 +273,7 @@ class TaskManagement extends React.Component {
   }
 
   renderLeftSide() {
-    const myTasks = this.getMyTasks();
+    const myTasks = this.getTasksAssignedToMe();
     if (myTasks.length == 0) {
       return <span></span>;
     }
@@ -293,8 +284,11 @@ class TaskManagement extends React.Component {
         <div id="tasks-management-my-tasks">
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-12">
+              <div className="col-lg-10">
                 <div className="content-2-columns-left-title">My Tasks</div>
+              </div>
+              <div className="col-lg-2">
+                <div className="content-2-columns-left-title"><ActionLink href="#" onClick={()=>this.toggleMyTasksCategory()}>{this.state.tasksCategory.name}</ActionLink></div>
               </div>
             </div>
             <div className="row">
@@ -313,7 +307,7 @@ class TaskManagement extends React.Component {
 
   renderRightSide() {
     return (
-      <div className={this.getMyTasks().length > 0 ? "col-lg-3" : "col-lg-12"}>
+      <div className={this.getTasksAssignedToMe().length > 0 ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
           <div id="tasks-scanner-container">
             <div className="container-fluid">
