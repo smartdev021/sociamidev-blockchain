@@ -23,7 +23,7 @@ import ProjectManager from '~/src/theme/ProjectManagement';
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';
-
+import ConnectionsView from '~/src/theme/ConnectionsView.js';
 import "~/src/theme/css/main.css"
 
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
@@ -108,7 +108,7 @@ class Main extends React.Component {
                           <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
                           <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
                           <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
-
+                          <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
                           <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
                         </Switch>
                       </div>
