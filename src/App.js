@@ -17,9 +17,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
 
-import Main from './Main';
 import Main_New_Theme from './Main_New_Theme';
-import MainMenu from '~/src/theme/routes/MainMenu';
 import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
