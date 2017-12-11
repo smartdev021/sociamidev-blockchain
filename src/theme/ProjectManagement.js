@@ -19,8 +19,8 @@ import PopupNewProject from '~/src/theme/components/PopupNewProject';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import "~/src/theme_new/css/common.css"
-import "~/src/theme_new/css/projectManager.css"
+import "~/src/theme/css/common.css"
+import "~/src/theme/css/projectManager.css"
 
 
 import {

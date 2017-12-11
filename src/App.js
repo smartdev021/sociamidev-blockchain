@@ -18,8 +18,6 @@ import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
 
 import Main from './Main';
-import Main_New_Theme from './Main_New_Theme';
-import MainMenu from '~/src/theme/routes/MainMenu';
 import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
@@ -279,7 +277,7 @@ class App extends Component {
     
     return (
       <div className="outer-container">
-        <Main_New_Theme onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+        <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
         onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
         onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
         onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}

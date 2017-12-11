@@ -4,7 +4,8 @@ import {
   ROADMAP_ADD, 
   ROADMAP_REMOVE, 
   ROADMAP_REMOVE_ALL, 
-  ROADMAPS_SET ,
+  ROADMAPS_SET,
+  ROADMAPS_FETCH,
   ROADMAPS_FETCH_INITIATE,
   ROADMAPS_FETCH_COMPLETE,
   ROADMAPS_DETAILED_SET,
@@ -13,7 +14,7 @@ import {
 
 const userRoadmapsInitialState = {roadmaps: [], amount: 0};
 
-export function userRoadmaps(state = userRoadmapsInitialState, action) {
+/*export function userRoadmaps(state = userRoadmapsInitialState, action) {
   switch (action.type) {
       case ROADMAP_ADD:
       {
@@ -46,6 +47,17 @@ export function userRoadmaps(state = userRoadmapsInitialState, action) {
       default:
         return state;
     }
+}*/
+const roadmapsInitialState = {isFetching: false, data: []};
+export function roadmaps(state = roadmapsInitialState, action) {
+  switch (action.type) {
+    case ROADMAPS_FETCH_INITIATE:
+      return {...state, isFetching: true}
+    case ROADMAPS_FETCH_COMPLETE:
+      return {...state, isFetching: false, data: action.roadmaps};
+    default:
+      return state;
+  }
 }
 
 export function roadmapsDetailed(state = [], action) {
@@ -54,17 +66,6 @@ export function roadmapsDetailed(state = [], action) {
       return action.roadmaps;
     case ROADMAPS_DETAILED_REMOVE_ALL:
       return [];
-    default:
-      return state;
-  }
-}
-
-export function isFetchingRoadmaps(state = false, action) {
-  switch(action.type) {
-    case ROADMAPS_FETCH_INITIATE:
-      return true;
-    case ROADMAPS_FETCH_COMPLETE:
-      return false;
     default:
       return state;
   }

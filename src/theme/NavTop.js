@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import "~/src/theme_new/css/navbarTop.css"
+import "~/src/theme/css/navbarTop.css"
 
 class NavTop extends React.Component {
 

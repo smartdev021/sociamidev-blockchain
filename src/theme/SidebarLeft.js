@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import "~/src/theme_new/css/sidebarLeft.css"
+import "~/src/theme/css/sidebarLeft.css"
 
 class SidebarLeft extends React.Component {
 

@@ -17,14 +17,12 @@ import Axios from 'axios'
 
 import ConfigMain from '~/configs/main'
 
-import TasksWidget from '~/src/theme/components/TasksWidget'
-
 import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import "~/src/theme_new/css/common.css"
-import "~/src/theme_new/css/tasksManagement.css"
+import "~/src/theme/css/common.css"
+import "~/src/theme/css/tasksManagement.css"
 
 import {
   setTasks,

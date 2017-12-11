@@ -1,6 +1,7 @@
 /*Trend Scanner*/
 #trend-scanner {
   max-width: 90%;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -33,6 +34,10 @@
 /*-------------------------*/
 
 /*trend scanner results list*/
+#trend-scanner-results {
+  height: 85%;
+  overflow-y: scroll;
+}
 #trend-scanner-results .list-item #icons {
   float: left;
 }

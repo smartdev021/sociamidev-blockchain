@@ -7,6 +7,7 @@ import {
     ROADMAPS_SET,
     ROADMAP_REMOVE,
     ROADMAP_REMOVE_ALL,
+    ROADMAPS_FETCH,
     ROADMAPS_FETCH_INITIATE,
     ROADMAPS_FETCH_COMPLETE,
     ROADMAPS_DETAILED_SET,
@@ -39,15 +40,33 @@ export function roadmapRemoveAll(idToRemove) {
     }
 }
 
+export function fetchRoadmaps(query="") {
+    return function (dispatch) {
+      dispatch(fetchRoadmapsInitiate());
+      
+      const url = `${ConfigMain.getBackendURL()}/findRoadmaps?query=${query}`;
+      
+      return (
+          Axios.get(url)
+          .then(function(response) {
+            dispatch(fetchRoadmapsComplete(response.data.results));
+        })
+        .catch(function(error) {
+            dispatch(fetchRoadmapsComplete([]));
+        }));
+  }
+}
+
 export function fetchRoadmapsInitiate() {
     return {
         type: ROADMAPS_FETCH_INITIATE,
     }
 }
 
-export function fetchRoadmapsComplete() {
+export function fetchRoadmapsComplete(data) {
     return {
         type: ROADMAPS_FETCH_COMPLETE,
+        roadmaps: data,
     }
 }
 
