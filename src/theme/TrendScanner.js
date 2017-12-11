@@ -61,7 +61,7 @@ class TrendScanner extends React.Component {
               <a href={job.url} target="_blank" id="text">
                 <div>{title}</div>
                 <div>{company}</div>
-                <div>Hong Kong</div>
+                <div>{job.country}</div>
               </a>
             </div>
           </li>);
@@ -84,8 +84,7 @@ class TrendScanner extends React.Component {
               </div>
               <a href={course.url} target="_blank" id="text">
                 <div>{course.title}</div>
-                <div>LAToken Blockchain Reception: Hong Kong</div>
-                <div>Hong Kong</div>
+                <div>{course.price}</div>
               </a>
             </div>
           </li>);
@@ -102,8 +101,8 @@ class TrendScanner extends React.Component {
         {
           this.props.searchResults.events.map(function(event, i) {
 
-            let title = that.trimmedString(event.name, 24);
-            let description = that.trimmedString(event.description, 60);
+            let title = that.trimmedString(event.name, 60);
+            let description = that.trimmedString(event.description, 120);
 
             return (<li key={i}>
             <div className="list-item">
@@ -114,7 +113,6 @@ class TrendScanner extends React.Component {
               <a href={event.url} target="_blank" id="text">
                 <div>{title}</div>
                 <div>{description}</div>
-                <div>Hong Kong</div>
               </a>
             </div>
           </li>);
