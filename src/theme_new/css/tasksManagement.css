@@ -98,6 +98,9 @@
 #tasks-scanner-container {
     width: 90%;
     margin: 0 auto;
+}
+
+#tasks-scanner-container-bg {
     background-color: rgba(255, 255, 255, 0.4);
 }
   

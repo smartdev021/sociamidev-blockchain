@@ -241,7 +241,7 @@ class ProjectManager extends React.Component {
               <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
               <div id="project-text">
                 <div id="title">{project.name}</div>
-                <div id="desctiption>">{project.description}</div>
+                <div id="desctiption>">{project.description}<i id="icon-share" className="fa fa-share-alt" aria-hidden="true"></i></div>
               </div>
             </div>
             </ActionLink>

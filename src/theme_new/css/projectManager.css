@@ -59,6 +59,11 @@
   color: rgb( 129, 165, 233 );
 }
 
+.projects-list-item #icon-share {
+  font-size: 40px;
+  margin-left: 10px;
+}
+
 #projects-list-container {
   height: 100%;
   overflow-y: scroll;
