@@ -34,9 +34,10 @@
 }
 
 
-ul {
+#allFriendList ul {
     list-style-type: none;
-
+    padding-top: 17px;
+    padding-left: 2px;
 }
 
 
