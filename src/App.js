@@ -289,6 +289,7 @@ class App extends Component {
         openSignUpForm={this.props.openSignUpForm}
         searchQuery={this.props.searchQuery}
         onHandleQueryChange={this.props.setSearchQuery}
+        currentUserId={this.props.userProfile._id}
         isFetchInProgress={this.props.isFetchInProgress}/>
         {ChatAppLink}
       </div>
