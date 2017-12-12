@@ -4,23 +4,18 @@
 import React from 'react';
 import {Icon} from 'react-fa'
 
+import "~/src/theme/css/about.css"
+
 function About(props) {
   return (
     <div id="main-content_1">
+    <div id="about-page">
 <div className="container-fluid">
     <div className="row">
       <div className="col-lg-12">
       <h1 className="pull-right">About Us</h1>
       </div>
     </div>
-
-    <div className="row">
-      <div className="col-lg-12">
-      <p>Powered by Artificial intelligence and Blockchain, Soqqle is a Social Network built 
-    as an economy to let users monetize an underutilized asset - Knowledge and Experience.</p>
-      </div>
-    </div>
-
     <div className="row">
       <div className="col-lg-10">
       <p>Powered by Artificial intelligence and Blockchain, Soqqle is a Social Network built 
@@ -54,12 +49,13 @@ function About(props) {
     </div>
     <div className="row">
     <div className="col-lg-12">
-      <div className="aboutVideo">
-      <iframe src="https://www.youtube.com/embed/mH78ukEovdU"></iframe>
+      <div id="aboutVideo">
+        <iframe src="https://www.youtube.com/embed/mH78ukEovdU"></iframe>
       </div>
     </div>
   </div>
 </div>
+    </div>
     </div>
   );
 }
