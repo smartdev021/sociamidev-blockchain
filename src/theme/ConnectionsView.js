@@ -38,31 +38,39 @@ class ConnectionsView extends React.Component {
     getAllFriends(){
         const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
         var self = this;
-        Axios.get(allFrndUrl)
-            .then(function (response) {
-                self.state.allFriendList = response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        Axios.get(allFrndUrl, {
+            params: {
+                currentUser: self.props.currentUserId
+            }
+          })
+        .then(function (response) {
+            self.state.allFriendList = response.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     getAllConnections(){
         const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
         var self = this;
-        Axios.get(connectionsUrl)
-            .then(function (response) {
-                self.state.friendList = response.data;
-                self.state.receivedList = self.state.friendList.filter(function (fList) {
-                    return fList.connectionStatus === "Received";
-                });
-                self.state.sentList = self.state.friendList.filter(function (fList) {
-                    return fList.connectionStatus === "Sent";
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
+        Axios.get(connectionsUrl, {
+            params: {
+                currentUser: self.props.currentUserId
+            }
+          })
+        .then(function (response) {
+            self.state.friendList = response.data;
+            self.state.receivedList = self.state.friendList.filter(function (fList) {
+                return fList.connectionStatus === "Received";
             });
+            self.state.sentList = self.state.friendList.filter(function (fList) {
+                return fList.connectionStatus === "Sent";
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     /**
@@ -73,38 +81,38 @@ class ConnectionsView extends React.Component {
 
         const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
         Axios.post(url, {
-            currentUser: '5a2b5b827974e720efe0f923',
+            currentUser: self.props.currentUserId,
             otherUser: userid,
             connectAction: action
         })
-            .then(function (response) {
-                if (response.data === 'success') {
-                    self.getAllConnections();
-                }
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        .then(function (response) {
+            if (response.data === 'success') {
+                self.getAllConnections();
+            }
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     handleAddSoqqler(userid) {
         var self = this;
         const url = `${ConfigMain.getBackendURL()}/addSoqqler`;
         Axios.post(url, {
-            currentUser: '5a2b5b827974e720efe0f923',
+            currentUser: self.props.currentUserId,
             otherUser: userid
         })
-            .then(function (response) {
-                if (response.data === 'success') {
-                    self.getAllFriends();
-                    self.getAllConnections();
-                }
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        .then(function (response) {
+            if (response.data === 'success') {
+                self.getAllFriends();
+                self.getAllConnections();
+            }
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     render() {
