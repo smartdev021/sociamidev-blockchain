@@ -74,6 +74,7 @@
   background-color: transparent;
   overflow: visible; /*So percentage sup is visible*/
   box-shadow: none;
+  margin-bottom: 30px;
 }
   
 #progression-trees .progress .progress-bar {
@@ -110,6 +111,8 @@
 
 #my-progress-list {
   height: 500px;
+  padding-right: 30px;
+  padding-top: 30px;
   overflow-y: scroll;
   overflow-x: hidden;
 }

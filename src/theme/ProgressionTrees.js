@@ -38,6 +38,8 @@ class ProgressionTrees extends React.Component {
     const progressValueNow = 25;
     const progressValueNow1 = 41;
 
+    const DummyProgressValues = [25, 41, 79, 85, 15, 98, 100, 29, 35, 50, 67, 75];
+
     let userRoadmaps = [];
 
     /*if (this.props.isAuthorized) {
@@ -62,21 +64,24 @@ class ProgressionTrees extends React.Component {
           <div id="my-progress-list">
           {
             userRoadmaps.map(function(roadmap, i) {
+              const RandomProgressValueNow = DummyProgressValues[Math.floor(Math.random() * (DummyProgressValues.length - 0)) + 0];
             return (
             <div key={i} className="row">
               <div className="col-lg-12">
                 <div className="progress">
                   <span className="col-lg-12" id="progress-bar-text">
                     <h4 id="progress-bar-roadmap-name">{roadmap.name}</h4>
-                    <span className="progress-bar-skill-name">Basic CS concepts</span>
-                    <span className="progress-bar-skill-name">Solidity</span>
-                    <span className="progress-bar-skill-name">Network</span>
+                    {
+                      roadmap.skills.map(function(skill, i) {
+                        return (<span key={i} className="progress-bar-skill-name">{skill}</span>);
+                      })
+                    }
                     <span className="progress-bar-skill-name"><span className="glyphicon glyphicon-info-sign"></span></span>
                   </span>
-                  <div className="progress-bar" role="progressbar" style={{'width': progressValueNow + '%'}} 
-                    aria-valuenow={progressValueNow} aria-valuemin="0" aria-valuemax="100">
+                  <div className="progress-bar" role="progressbar" style={{'width': RandomProgressValueNow + '%'}} 
+                    aria-valuenow={RandomProgressValueNow} aria-valuemin="0" aria-valuemax="100">
                   </div>
-                  <sup id="progress-percents-sup">{progressValueNow}%</sup>
+                  <sup id="progress-percents-sup">{RandomProgressValueNow}%</sup>
                 </div>
               </div>
             </div>
