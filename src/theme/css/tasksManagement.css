@@ -54,7 +54,7 @@
     
 #tasks-scanner-list-tasks li {
     display: block;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
     
 #tasks-scanner-list-tasks li:before {
@@ -91,10 +91,32 @@
     margin: 0 auto;
 }
 
-#tasks-scanner-container-bg {
-    background-color: rgba(255, 255, 255, 0.4);
+#tasks-scanner-container #tasks-scanner-description {
+    font-size: 14px;
+    font-family: "Comfortaa";
+    color: rgb( 255, 255, 255 );
+    line-height: 2.143;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+}
+
+.col-lg-3 #tasks-scanner-container-bg {
+    border-radius: 3px;
+    background-color: rgba( 255, 255, 255, 0.2);
+    min-height: 500px;
 }
   
 #tasks-scanner-container .content-2-columns-right-title {
     margin-left: 15px;
+}
+
+#tasks-scanner-container #scanner-input-container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+#tasks-scanner-container #scanner-input-container input[type="text"] {
+    font-size: 18px;
 }

@@ -380,9 +380,6 @@ class TaskManagement extends React.Component {
         </ul>
       );
     }
-    else {
-      return (<span>Nothing found</span>);
-    }
   }
 
   renderLeftSide() {
@@ -431,6 +428,14 @@ class TaskManagement extends React.Component {
                   <div className="content-2-columns-right-title">Network tasks scanner</div>
                 </div>
               </div>
+              <div id="tasks-scanner-container-bg">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div id="tasks-scanner-description">
+                    <p>Complete network quests to earn tokens</p>
+                  </div>
+                </div>
+              </div>
               <div className="row">
                 <div className="col-lg-12">
                   <div id="scanner-input-container">
@@ -440,15 +445,9 @@ class TaskManagement extends React.Component {
               </div>
               <div className="row">
                 <div className="col-lg-12">
-                  <div>
-                    <p>Complete network quests to earn tokens</p>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-12">
                   {this.renderNetworkTasks()}
                 </div>
+              </div>
               </div>
             </div>
           </div>
