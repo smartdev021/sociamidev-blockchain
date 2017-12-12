@@ -196,7 +196,7 @@ class ProjectManager extends React.Component {
       return (<ul><li><h3>Retrieving data. Please, wait... <Icon spin name="spinner" /></h3></li></ul>);
     }
 
-    if (!this.props.projects || this.props.projects.length == 0) {
+    if (!this.props.isAuthorized || !this.props.projects || this.props.projects.length == 0) {
       return null;
     }
 
@@ -207,27 +207,6 @@ class ProjectManager extends React.Component {
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
     ];
-
-    /*const dummyProjects = [
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-      {name: "Apoto",     description: "Delivery, anytime, anywhere"},
-      {name: "Incubasis", description: "an online incubator for developing countries"},
-    ];*/
 
     let that = this;
     return (

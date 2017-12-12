@@ -318,11 +318,11 @@ class TaskManagement extends React.Component {
       ];
 
       return (
-        <ul>
+        <div className="row">
           {
             filteredTasks.map(function(task, i) {
               return (
-              <li key={i}>
+              <div className="col-md-12 col-lg-4" key={i}>
               {task.milestones ? 
                 <div className="tasks-management-my-task">
                   <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
@@ -334,11 +334,11 @@ class TaskManagement extends React.Component {
                   <span>{task.name}</span>
                 </ActionLink>
               }  
-              </li>
+              </div>
               );
             })
           }
-        </ul>
+        </div>
       );
     }
     else {
@@ -351,9 +351,12 @@ class TaskManagement extends React.Component {
     
     const scannerQuery = this.state.scannerQuery.toLowerCase();
 
+    const currentUserID = (this.props.isAuthorized) ? this.props.userProfile._id : undefined;
+
     if (scannerQuery != "") {
       foundTasks = this.props.tasks.filter(function(task) {
-        return task.name && task.name.toLowerCase().startsWith(scannerQuery);
+        return (currentUserID == undefined || task.userID != currentUserID) 
+          && task.name && task.name.toLowerCase().startsWith(scannerQuery);
       });
     }
     else {
@@ -407,12 +410,8 @@ class TaskManagement extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div id="my-tasks-container">
-                  {this.renderTasks(myTasks)}
-                </div>
-              </div>
+            <div id="my-tasks-container">
+              {this.renderTasks(myTasks)}
             </div>
           </div>
         </div>

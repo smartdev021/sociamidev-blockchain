@@ -3,19 +3,8 @@
     margin: 0 auto;
 }
 
-#tasks-management-my-tasks ul {
-    list-style-type: none;
-    white-space: nowrap;
-    padding: 0;
-}
-
-#tasks-management-my-tasks ul li {
-    display: inline-block;
-    margin-right: 30px;
-}
-
-#tasks-management-my-tasks ul .tasks-management-my-task {
-    width: 300px;
+#tasks-management-my-tasks .tasks-management-my-task {
+    width: 100%;
     height: 500px;
     display: inline-block;
     padding: 4px;
@@ -28,9 +17,10 @@
     text-align: center;
     font-size: 18px;
     font-family: "Comfortaa";
+    margin-bottom: 20px;
 }
 
-#tasks-management-my-tasks ul .tasks-management-my-task:hover {
+#tasks-management-my-tasks .tasks-management-my-task:hover {
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
@@ -38,13 +28,14 @@
     cursor: pointer;
 }
 
-#tasks-management-my-tasks ul .tasks-management-my-task img {
+#tasks-management-my-tasks .tasks-management-my-task img {
     float: left;
 }
 
 #my-tasks-container {
-    width: 100%;
-    overflow-x: scroll;
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #my-tasks-container ul li {
