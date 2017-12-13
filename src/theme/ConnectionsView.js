@@ -100,8 +100,9 @@ class ConnectionsView extends React.Component {
         var self = this;
         const url = `${ConfigMain.getBackendURL()}/addSoqqler`;
         Axios.post(url, {
-            currentUser: self.props.currentUserId,
-            otherUser: userid
+            uid1: self.props.currentUserId,
+            uid2: userid,
+            reqStatus: 1
         })
         .then(function (response) {
             if (response.data === 'success') {
