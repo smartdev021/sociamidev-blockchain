@@ -102,7 +102,7 @@ class ConnectionsView extends React.Component {
         Axios.post(url, {
             uid1: self.props.currentUserId,
             uid2: userid,
-            reqStatus: 1
+            reqStatus: 2
         })
         .then(function (response) {
             if (response.data === 'success') {
