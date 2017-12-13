@@ -21,8 +21,10 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import MyTasksContainer from '~/src/theme/components/tasks/MyTasksContainer.js'
-import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks.js'
+import MyTasksContainer from '~/src/theme/components/tasks/MyTasksContainer'
+import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks'
+
+import TasksScannerContainer from '~/src/theme/components/tasks/TasksScannerContainer'
 
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/tasksManagement.css"
@@ -311,41 +313,11 @@ class TaskManagement extends React.Component {
     return (
       <div className={this.getMyTasksAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
-          <div id="tasks-scanner-container">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="content-2-columns-right-title">Network tasks scanner</div>
-                </div>
-              </div>
-              <div id="tasks-scanner-container-bg">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div id="tasks-scanner-description">
-                    <p>Complete network quests to earn tokens</p>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-12">
-                  <div id="scanner-input-container">
-                    <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-12">
-                  <NetworkTasks 
-                    tasks={this.props.tasks}
-                    scannerQuery={this.state.scannerQuery}
-                    currentUserID={this.props.userProfile._id}
-                    handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}
-                  />
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
+          <TasksScannerContainer tasks={this.props.tasks} scannerQuery={this.state.scannerQuery} 
+            currentUserID={this.props.userProfile._id}
+            handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}
+            handleChange={(e)=>this.handleChange(e)}
+          />
         </div>
       </div>
     );
