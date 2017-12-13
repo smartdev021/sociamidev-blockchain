@@ -12,7 +12,8 @@ import "~/src/theme/css/common.css"
 import "~/src/theme/css/progressionTrees.css"
 
 import {
-  fetchRoadmaps
+  fetchRoadmaps,
+  fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
 class ProgressionTrees extends React.Component {
@@ -32,6 +33,8 @@ class ProgressionTrees extends React.Component {
 
   componentWillMount() {
     this.props.fetchRoadmaps();
+
+    this.props.fetchRoadmapsFromAdmin();
   }
 
   renderUserProgressionTrees() {
@@ -113,12 +116,12 @@ class ProgressionTrees extends React.Component {
     const scannerQuery = this.state.scannerQuery.toLowerCase();
     
     if (scannerQuery != "") {
-      foundRoadmaps = this.props.roadmaps.data.filter(function(roadmap) {
+      foundRoadmaps = this.props.roadmapsAdmin.data.filter(function(roadmap) {
         return roadmap.name && roadmap.name.toLowerCase().startsWith(scannerQuery);
       });
     }
     else {
-      foundRoadmaps = this.props.roadmaps.data;
+      foundRoadmaps = this.props.roadmapsAdmin.data;
     }
 
     return (
@@ -191,15 +194,19 @@ class ProgressionTrees extends React.Component {
 
 ProgressionTrees.propTypes = {
   fetchRoadmaps: PropTypes.func.isRequired,
+  fetchRoadmapsFromAdmin: PropTypes.func.isRequired,
   roadmaps: PropTypes.object.isRequired,
+  roadmapsAdmin: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
   roadmaps: state.roadmaps,
+  roadmapsAdmin: state.roadmapsAdmin,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
+  fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgressionTrees);
