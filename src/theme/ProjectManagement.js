@@ -16,8 +16,11 @@ import PropTypes from 'prop-types';
 const Hash = require('object-hash');
 
 import PopupNewProject from '~/src/theme/components/PopupNewProject';
+import MyProjectsContainer from '~/src/theme/components/projects/MyProjectsContainer';
 
 import ActionLink from '~/src/components/common/ActionLink'
+
+import ProjectsScanner from "~/src/theme/components/projects/ProjectsScanner"
 
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/projectManager.css"
@@ -143,12 +146,6 @@ class ProjectManager extends React.Component {
     );
   }
 
-  renderProject(task) {
-    return (
-      <h5>{project.name}</h5>
-    );
-  }
-
   renderHeader() {
     return (
       <div className="container-fluid projectManagementPage">
@@ -160,77 +157,7 @@ class ProjectManager extends React.Component {
         </div>
      </div>);
   }
-
-  /*render() {
-    let that = this;
-    let selectedProject = (this.props.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
-    ? this.props.projects[this.state.selectedProjectIndex] : undefined;
-
-    console.log("selectedProject: ");
-    console.dir(selectedProject);
-    return (
-      <div id="main-content_1">
-        {this.state.modalIsOpen ? 
-          <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
-            onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}
-            isAuthorized = {this.props.isAuthorized}
-            userProfile = {this.props.userProfile}
-            saveTask = {this.props.saveTask}
-            deleteTask = {this.props.deleteTask}
-            setTaskPublished = {this.props.setTaskPublished}
-            tasks = {this.props.tasks}
-            fetchRoadmapsDetailsByIds = {this.props.fetchRoadmapsDetailsByIds}
-            roadmapsDetailed = {this.props.roadmapsDetailed}
-            isTaskSaveInProgress = {this.props.isTaskSaveInProgress}
-            isTasksUpdateInProgress = {this.props.isTasksUpdateInProgress}
-            lastSavedTask = {this.props.lastSavedTask}
-            setLastSavedTask = {this.props.setLastSavedTask}
-            /> : null
-        }
-        <div></div>
-      </div>);
-  }*/
-
-  renderProjects() {
-    if (this.props.isProjectsFetchInProgress || this.props.isProjectSaveInProgress) {
-      return (<ul><li><h3>Retrieving data. Please, wait... <Icon spin name="spinner" /></h3></li></ul>);
-    }
-
-    if (!this.props.isAuthorized || !this.props.projects || this.props.projects.length == 0) {
-      return null;
-    }
-
-    console.log("renderProjects this.state.projects: ");
-    console.dir(this.props.projects);
-
-    const DummyImages = [
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
-    ];
-
-    let that = this;
-    return (
-      <ul>
-        {
-          this.props.projects.map(function(project, i) {
-
-            return (<li key={i}>
-            <ActionLink href='#' onClick={()=> that.openModalWithProject(i)}>
-            <div className="projects-list-item">
-              <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
-              <div id="project-text">
-                <div id="title">{project.name}</div>
-                <div id="desctiption>">{project.description}<i id="icon-share" className="fa fa-share-alt" aria-hidden="true"></i></div>
-              </div>
-            </div>
-            </ActionLink>
-          </li>);
-          })
-        }
-      </ul>
-    );
-  }
-
+  
   render() {
     let that = this;
     let selectedProject = (this.props.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
@@ -261,55 +188,21 @@ class ProjectManager extends React.Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-9">
-              <div className="content-2-columns-left" id="project-manager-my-projects">
-                <div id="project-manager-projects-container">
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="content-2-columns-left-title">My Projects</div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                        <div id="project-manager-projects-bg">
-                          <div id="projects-list-container">
-                            {this.renderProjects()}
-                            <ActionLink href='#' onClick={()=>this.openModal()}>
-                              <span className="glyphicon glyphicon-plus-sign" id="project-manager-add-project-btn"></span>
-                            </ActionLink>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
+              <div className="content-2-columns-left">
+                <MyProjectsContainer
+                  openModal={()=>this.openModal()}
+                  openModalWithProject={(index)=>this.openModalWithProject(index)}
+                  isAuthorized={this.props.isAuthorized} 
+                  isProjectsFetchInProgress={this.props.isProjectsFetchInProgress}
+                  isProjectSaveInProgress={this.props.isProjectSaveInProgress}
+                  isAuthorized={this.props.isAuthorized}
+                  projects={this.props.projects}
+                />
               </div>
             </div>
             <div className="col-lg-3">
-              <div className="content-2-columns-right" id="project-manager-project-scanner">
-              <div id="project-manager-project-scanner-container">
-              <div className="container-fluid">
-                    <div className="row">
-                       <div className="col-lg-12">
-                         <div className="content-2-columns-right-title">Project Scanner</div>
-                       </div>
-                    </div>
-                    <div className="row">
-                       <div className="col-lg-12">
-                         <p id="project-scanner-text">
-                           You are not involved in other campaigns. Check out and get involved with other soqqle projects.
-                         </p>
-                       </div>
-                    </div>
-                    <div className="row">
-                       <div className="col-lg-12">
-                         <div id="scanner-input-container">
-                           <input type="text" autoComplete="off" id="scanner_trees" placeholder=""/>
-                         </div>
-                       </div>
-                    </div>
-                  </div>
-              </div>
+              <div className="content-2-columns-right">
+                <ProjectsScanner/>
               </div>
             </div>
           </div>
