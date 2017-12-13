@@ -22,6 +22,7 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 import ActionLink from '~/src/components/common/ActionLink'
 
 import MyTasks from '~/src/theme/components/tasks/MyTasks.js'
+import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks.js'
 
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/tasksManagement.css"
@@ -282,42 +283,6 @@ class TaskManagement extends React.Component {
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
 
-  renderNetworkTasks() {
-    let foundTasks = [];
-    
-    const scannerQuery = this.state.scannerQuery.toLowerCase();
-
-    const currentUserID = (this.props.isAuthorized) ? this.props.userProfile._id : undefined;
-
-    if (scannerQuery != "") {
-      foundTasks = this.props.tasks.filter(function(task) {
-        return (currentUserID == undefined || task.userID != currentUserID) 
-          && task.name && task.name.toLowerCase().startsWith(scannerQuery);
-      });
-    }
-    else {
-      foundTasks = this.props.tasks;
-    }
-
-    let that = this;
-
-    if (foundTasks.length > 0) {
-      return (
-        <ul id="tasks-scanner-list-tasks">
-          {
-            foundTasks.map(function(task, i) {
-              return (<li key={i}>
-              <div>
-                <ActionLink href="#" onClick={()=>that.handleOpenConfirmTaskDetailsPopup(task)}>{task.name}</ActionLink>
-              </div>
-            </li>);
-            })
-          }
-        </ul>
-      );
-    }
-  }
-
   renderLeftSide() {
     const tasksAssignedToMe = this.getTasksAssignedToMe().concat(this.getProjectsWithTasksAssignedToMe());
     const tasksCreatedByMe = this.getTasksCreatedByMe().concat(this.getProjectsCreatedByMeWithTasks());
@@ -381,7 +346,12 @@ class TaskManagement extends React.Component {
               </div>
               <div className="row">
                 <div className="col-lg-12">
-                  {this.renderNetworkTasks()}
+                  <NetworkTasks 
+                    tasks={this.props.tasks}
+                    scannerQuery={this.state.scannerQuery}
+                    currentUserID={this.props.userProfile._id}
+                    handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}
+                  />
                 </div>
               </div>
               </div>
