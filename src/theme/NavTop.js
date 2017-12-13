@@ -19,6 +19,17 @@ class NavTop extends React.Component {
     super(props);
   }
 
+  renderConnectionsView() {
+    let ConnectionsViewLink = '';
+    if (this.props.isAuthorized) {
+      ConnectionsViewLink = <Link to='/connectionsView'><a href="#">
+                    <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/add-friend.png"/>
+                    </a></Link>;
+    }
+    return ConnectionsViewLink;
+  }
+
+
   render() {
     const ButtonClassName = "top-nav-btn";
 
@@ -78,7 +89,7 @@ class NavTop extends React.Component {
                     <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/></a>
                   </li>
                   <li className="nav-user-profile-control">
-                    <Link to='/connectionsView'><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/add-friend.png"/></a></Link>
+                  {this.renderConnectionsView()}
                   </li>
                 </ul> 
              </div>
