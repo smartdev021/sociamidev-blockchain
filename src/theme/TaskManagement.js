@@ -21,6 +21,8 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import MyTasks from '~/src/theme/components/tasks/MyTasks.js'
+
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/tasksManagement.css"
 
@@ -280,72 +282,6 @@ class TaskManagement extends React.Component {
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
 
-  renderSubtasks(project) {
-    let that = this;
-    if (project.milestones && project.milestones.length > 0) {
-      return (
-        <div id="subtasks">
-        {project.milestones.map(function(milestone, i) {
-              return (
-                <ActionLink key={i} href="#" onClick={()=>that.handleOpenCancelTaskDetailsPopup(milestone)}>
-                  <div className="subtask"><span>{milestone.name}</span></div>
-                </ActionLink>
-              );
-            })
-        }
-      </div>
-      );
-    }
-    else {
-      return (<div id="subtasks">
-    </div>);
-    }
-  }
-  
-  renderTasks(tasks) {
-    let filteredTasks = [];
-
-    let that = this;
-
-    filteredTasks = tasks.filter(function(task) {
-      return task.name && task.name != "";
-    });
-
-    if (filteredTasks.length > 0) {
-      const DummyImages = [
-        "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",
-        "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/howcast.png",
-      ];
-
-      return (
-        <div className="row">
-          {
-            filteredTasks.map(function(task, i) {
-              return (
-              <div className="col-md-12 col-lg-4" key={i}>
-              {task.milestones ? 
-                <div className="tasks-management-my-task">
-                  <img src={DummyImages[Math.floor(Math.random() * (DummyImages.length - 0)) + 0]}></img>
-                  <span>{task.name}</span>
-                  {that.renderSubtasks(task)}
-                </div>
-              :
-                <ActionLink href="#" onClick={()=>that.handleOpenCancelTaskDetailsPopup(task)} className="tasks-management-my-task">
-                  <span>{task.name}</span>
-                </ActionLink>
-              }  
-              </div>
-              );
-            })
-          }
-        </div>
-      );
-    }
-    else {
-      return (<ul></ul>);
-    }
-  }
-
   renderNetworkTasks() {
     let foundTasks = [];
     
@@ -408,7 +344,7 @@ class TaskManagement extends React.Component {
               </div>
             </div>
             <div id="my-tasks-container">
-              {this.renderTasks(myTasks)}
+              <MyTasks tasks={myTasks} handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}/>
             </div>
           </div>
         </div>
