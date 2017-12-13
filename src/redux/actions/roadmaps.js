@@ -11,6 +11,10 @@ import {
     ROADMAPS_FETCH_INITIATE,
     ROADMAPS_FETCH_COMPLETE,
     ROADMAPS_DETAILED_SET,
+
+    //roadmaps from admin
+    ROADMAPS_ADMIN_FETCH_INITIATE,
+    ROADMAPS_ADMIN_FETCH_COMPLETE,
 } from './actionTypes';
 
 export function roadmapAdd(newRoadmapId) {
@@ -57,6 +61,24 @@ export function fetchRoadmaps(query="") {
   }
 }
 
+export function fetchRoadmapsFromAdmin() {
+    return function (dispatch) {
+      dispatch(fetchRoadmapsFromAdminInitiate());
+      
+      const url = `${ConfigMain.getBackendURL()}/roadmapsGet`;
+      
+      return (
+          Axios.get(url)
+          .then(function(response) {
+            dispatch(fetchRoadmapsFromAdminComplete(response.data.results));
+        })
+        .catch(function(error) {
+            dispatch(fetchRoadmapsFromAdminComplete([]));
+        }));
+  }
+}
+
+
 export function fetchRoadmapsInitiate() {
     return {
         type: ROADMAPS_FETCH_INITIATE,
@@ -66,6 +88,20 @@ export function fetchRoadmapsInitiate() {
 export function fetchRoadmapsComplete(data) {
     return {
         type: ROADMAPS_FETCH_COMPLETE,
+        roadmaps: data,
+    }
+}
+
+//roadmaps from admin
+export function fetchRoadmapsFromAdminInitiate() {
+    return {
+        type: ROADMAPS_ADMIN_FETCH_INITIATE,
+    }
+}
+
+export function fetchRoadmapsFromAdminComplete(data) {
+    return {
+        type: ROADMAPS_ADMIN_FETCH_COMPLETE,
         roadmaps: data,
     }
 }

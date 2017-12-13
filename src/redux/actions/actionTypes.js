@@ -43,6 +43,10 @@ export const ROADMAPS_FETCH_COMPLETE = "roadmaps_fetch_complete";
 export const ROADMAPS_DETAILED_SET = "roadmaps_detailed_set";
 export const ROADMAPS_DETAILED_REMOVE_ALL = "roadmaps_detailed_remove_all";
 
+//roadmaps from admin
+export const ROADMAPS_ADMIN_FETCH_INITIATE = "roadmaps_admin_fetch_initiate";
+export const ROADMAPS_ADMIN_FETCH_COMPLETE = "roadmaps_admin_fetch_complete";
+
 export const EXACT_LOCATION_SET = "exact_location_set";
 
 export const TASKS_SET = "tasks_set";
