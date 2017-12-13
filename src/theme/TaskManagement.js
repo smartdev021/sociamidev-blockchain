@@ -21,7 +21,7 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import MyTasks from '~/src/theme/components/tasks/MyTasks.js'
+import MyTasksContainer from '~/src/theme/components/tasks/MyTasksContainer.js'
 import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks.js'
 
 import "~/src/theme/css/common.css"
@@ -296,23 +296,12 @@ class TaskManagement extends React.Component {
     return (
       <div className="col-lg-9">
       <div className="content-2-columns-left">
-        <div id="tasks-management-my-tasks">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-lg-10">
-                <div className="content-2-columns-left-title">My Tasks</div>
-              </div>
-              <div className="col-lg-2">
-                <div className="content-2-columns-left-title">
-                  <ActionLink href="#" onClick={()=>this.toggleMyTasksCategory()}>{this.state.tasksCategory.name}</ActionLink>
-                </div>
-              </div>
-            </div>
-            <div id="my-tasks-container">
-              <MyTasks tasks={myTasks} handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}/>
-            </div>
-          </div>
-        </div>
+        <MyTasksContainer 
+          tasks={myTasks}
+          tasksCategoryName={this.state.tasksCategory.name}
+          toggleMyTasksCategory={()=>this.toggleMyTasksCategory()}
+          handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
+        />
       </div>
     </div>
     );
