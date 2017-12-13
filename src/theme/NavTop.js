@@ -59,12 +59,12 @@ class NavTop extends React.Component {
                       ? ButtonClassName + " active" : ButtonClassName}>Tasks Manager</Link>
                     </p>
                   </li>
-                  <li>
+                  {/*<li>
                     <p className="navbar-btn">
                       <Link to='/ico' className={this.props.location.pathname == "/ico" 
                       ? ButtonClassName + " active" : ButtonClassName}>ICO</Link>
                     </p>
-                  </li>
+                  </li>*/}
                   <li>
                     <p className="navbar-btn">
                       <Link to='/about' className={this.props.location.pathname == "/about" 

@@ -107,7 +107,7 @@ class Main extends React.Component {
                           <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
                           <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
                           <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
-                          <Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />
+                          {/*<Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />*/}
                           <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
                           <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
                         </Switch>
