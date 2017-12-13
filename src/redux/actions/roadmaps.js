@@ -70,7 +70,7 @@ export function fetchRoadmapsFromAdmin() {
       return (
           Axios.get(url)
           .then(function(response) {
-            dispatch(fetchRoadmapsFromAdminComplete(response.data.results));
+            dispatch(fetchRoadmapsFromAdminComplete(response.data));
         })
         .catch(function(error) {
             dispatch(fetchRoadmapsFromAdminComplete([]));
