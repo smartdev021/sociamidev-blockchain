@@ -46,7 +46,7 @@ class ProgressionTrees extends React.Component {
     let userRoadmaps = [];
 
     /*if (this.props.isAuthorized) {
-      userRoadmaps = this.props.roadmaps.data.filter(function(roadmap) {
+      userRoadmaps = this.props.roadmapsAdmin.data.filter(function(roadmap) {
         return roadmap.us
       });
     }
@@ -54,7 +54,7 @@ class ProgressionTrees extends React.Component {
       
     }*/
 
-    userRoadmaps = this.props.roadmaps.data;
+    userRoadmaps = this.props.roadmapsAdmin.data;
 
     return (
       <div id="progression-trees-trees">
@@ -74,8 +74,21 @@ class ProgressionTrees extends React.Component {
                 <div className="progress">
                   <span className="col-lg-12" id="progress-bar-text">
                     <h4 id="progress-bar-roadmap-name">{roadmap.name}</h4>
+                    <span className="progress-bar-skills-weightage">Core</span>
                     {
-                      roadmap.skills.map(function(skill, i) {
+                      roadmap.weightage1.map(function(skill, i) {
+                        return (<span key={i} className="progress-bar-skill-name">{skill}</span>);
+                      })
+                    }
+                    <span className="progress-bar-skills-weightage">Bonus</span>
+                    {
+                      roadmap.weightage2.map(function(skill, i) {
+                        return (<span key={i} className="progress-bar-skill-name">{skill}</span>);
+                      })
+                    }
+                    <span className="progress-bar-skills-weightage">Good to Have</span>
+                    {
+                      roadmap.weightage3.map(function(skill, i) {
                         return (<span key={i} className="progress-bar-skill-name">{skill}</span>);
                       })
                     }
