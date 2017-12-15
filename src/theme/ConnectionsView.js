@@ -67,7 +67,7 @@ class ConnectionsView extends React.Component {
                     })
                 });
                 self.setState({
-                    receivedList: self.state.friendList.filter(function (fList) {
+                    sentList: self.state.friendList.filter(function (fList) {
                         return fList.connectionStatus === "Sent";
                     })
                 });
