@@ -7,6 +7,7 @@ import { roadmaps, roadmapsDetailed, roadmapsAdmin } from "./roadmaps"
 import { tasks, lastSavedTask, isTasksFetchInProgress, isTaskSaveInProgress, isTasksUpdateInProgress} from "./tasks"
 import { isAuthorized, isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authorization"
 import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./projects"
+import { userFriends } from "./social"
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -15,6 +16,7 @@ export default combineReducers({
   isFetchInProgress,
   searchResults,
   userProfile,
+  userFriends,
   bookmarks,
   roadmaps,
   roadmapsDetailed,
