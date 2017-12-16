@@ -25,8 +25,7 @@ class SidebarLeft extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.isAuthorized != this.props.isAuthorized) {
       if (this.props.isAuthorized) {
-        //TODO: Deal with the issue of incorrect state update during mount/unmount
-        //this.props.fetchUserFriends(this.props.userProfile._id);
+        this.props.fetchUserFriends(this.props.userProfile._id);
         console.log("SidebarLeft AUTHORIZED this.props.userProfile._id: " + this.props.userProfile._id);
       }
     }
