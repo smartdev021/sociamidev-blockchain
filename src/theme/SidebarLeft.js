@@ -32,9 +32,7 @@ class SidebarLeft extends React.Component {
     }
   }
 
-  render() {
-    const DanImage = "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
-
+  getListOfFriends() {
     const DummyFriendImages = [
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png",
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/johnicon.png",
@@ -44,6 +42,89 @@ class SidebarLeft extends React.Component {
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/matthewicon.png", 
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Thomasicon.png",
     ];
+
+    const DummyFriendsList = [
+      {
+        firstName: "Annalisa", lastName: "",
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "",
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+      {
+        firstName: "Annalisa", lastName: "", 
+        userText: "Mobile app testing 50 mutual friends", 
+        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
+      },
+    ];
+
+    const ListOfFriends = (this.props.userFriends && this.props.userFriends.length > 0) ? this.props.userFriends: DummyFriendsList;
+
+    return ListOfFriends;
+  }
+
+  renderFriends() {
+    const ListOfFriends = this.getListOfFriends();
+
+    return (
+      <div id="list-friends">
+        {
+          ListOfFriends.map(function(friend, i) {
+            return (
+              <div key={i} className="friend-widget">
+                <img src={friend.profileImage}/>
+                <div id="user-text">
+                  <div className="user-text-name">{friend.firstName + " " + friend.lastName}</div>
+                  {friend.userText}
+                </div>
+              </div>
+            )
+          })
+        }
+    </div>
+    );
+  }
+
+  render() {
+    const DanImage = "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
 
     return (
       <aside>
@@ -60,85 +141,7 @@ class SidebarLeft extends React.Component {
             <input type="text" autoComplete="off" id="status-input" placeholder="Testing"/>
           </div>
         </div>
-        <div id="list-friends">
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-          <div className="friend-widget">
-            <img src={DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]}/>
-            <div id="user-text">
-              <div className="user-text-name">Annalisa</div>
-              Mobile app testing 50 mutual friends
-            </div>
-          </div>
-        </div>
+        {this.renderFriends()}
       </div>
      </aside>
     );
@@ -148,6 +151,7 @@ class SidebarLeft extends React.Component {
 SidebarLeft.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
+  userFriends: PropTypes.object.isRequired,
   fetchUserFriends: PropTypes.func.isRequired,
 }
 
@@ -158,6 +162,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
+  userFriends: state.userFriends,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarLeft);
