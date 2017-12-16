@@ -79,18 +79,18 @@ class ProjectManager extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("ProjectManager::componentDidUpdate");
+    console.log("ProjectManager::componentDidUpdate!!! this.props.isProjectSaveInProgress: " + this.props.isProjectSaveInProgress);
     if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
       this.fetchAllProjects();
     }
 
+    //Push new_project activity
     if (prevProps.isProjectSaveInProgress != this.props.isProjectSaveInProgress) {
       if (!this.props.isProjectSaveInProgress) {
-
         let activityBody = {
           type: "friend_new_project", 
           metadata: {
-              projectID: this.state.lastSavedProject._id, //TODO: This is currently undefined
+              projectID: this.state.lastSavedProject._id,
               projectName: this.state.lastSavedProject.name,
             }
         }
@@ -253,6 +253,7 @@ ProjectManager.propTypes = {
   deleteTask: PropTypes.func.isRequired,
   projectSave: PropTypes.func.isRequired,
   projectsFetch: PropTypes.func.isRequired,
+  pushNewActivity: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   isProjectsFetchInProgress: PropTypes.bool.isRequired,
   isProjectSaveInProgress: PropTypes.bool.isRequired,
@@ -283,6 +284,7 @@ const mapDispatchToProps = dispatch => ({
   projectSave: bindActionCreators(projectSave, dispatch),
   projectsFetch: bindActionCreators(projectsFetch, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
+  pushNewActivity: bindActionCreators(pushNewActivity, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));
