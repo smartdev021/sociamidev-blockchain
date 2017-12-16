@@ -95,7 +95,11 @@ class SidebarLeft extends React.Component {
       },
     ];
 
-    const ListOfFriends = (this.props.userFriends && this.props.userFriends.length > 0) ? this.props.userFriends: DummyFriendsList;
+    const ListOfFriends = (this.props.userFriends.friends && this.props.userFriends.friends.length > 0) 
+    ? this.props.userFriends.friends: DummyFriendsList;
+
+    console.log("this.props.userFriends: " + this.props.userFriends);
+    console.dir(this.props.userFriends);
 
     return ListOfFriends;
   }
@@ -111,7 +115,7 @@ class SidebarLeft extends React.Component {
               <div key={i} className="friend-widget">
                 <img src={friend.profileImage}/>
                 <div id="user-text">
-                  <div className="user-text-name">{friend.firstName + " " + friend.lastName}</div>
+                  <div className="user-text-name">{friend.firstName}</div>
                   {friend.userText}
                 </div>
               </div>
