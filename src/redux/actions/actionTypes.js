@@ -77,3 +77,5 @@ export const PROJECTS_FETCH_COMPLETE = "projects_fetch_complete";
 
 export const PROJECTS_SET = "projects_set";
 export const PROJECT_SET = "project_set";
+
+export const PUSH_NEW_ACTIVITY = "push_new_activity";

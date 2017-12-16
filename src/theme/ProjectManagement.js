@@ -47,6 +47,10 @@ import {
   projectSave,
 } from '~/src/redux/actions/projects'
 
+import {
+  pushNewActivity,
+} from '~/src/redux/actions/activities'
+
 class ProjectManager extends React.Component {
 
   constructor(props) {
@@ -56,6 +60,7 @@ class ProjectManager extends React.Component {
       modalIsOpen: false,
       projectsAmount: 0,
       selectedProjectIndex: 0,
+      lastSavedProject: undefined,
     }
   }
 
@@ -64,6 +69,7 @@ class ProjectManager extends React.Component {
 
     if (projectCopy.name && projectCopy.description && projectCopy.nature
         && projectCopy.name != "" && projectCopy.description != "", projectCopy.nature != "") {
+          this.setState({lastSavedProject: projectCopy});
           this.props.projectSave(projectCopy);
     }
   }
@@ -76,6 +82,28 @@ class ProjectManager extends React.Component {
     console.log("ProjectManager::componentDidUpdate");
     if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
       this.fetchAllProjects();
+    }
+
+    if (prevProps.isProjectSaveInProgress != this.props.isProjectSaveInProgress) {
+      if (!this.props.isProjectSaveInProgress) {
+
+        let activityBody = {
+          type: "friend_new_project", 
+          metadata: {
+              projectID: this.state.lastSavedProject._id, //TODO: This is currently undefined
+              projectName: this.state.lastSavedProject.name,
+            }
+        }
+
+        activityBody._id = Hash(activityBody);
+
+        const activityNewProject = {
+          userID: this.props.userProfile._id,
+          activity: activityBody,
+        };
+
+        this.props.pushNewActivity(activityNewProject);
+      }
     }
 
     if (prevProps.isProjectsFetchInProgress && !this.props.isProjectsFetchInProgress) {
