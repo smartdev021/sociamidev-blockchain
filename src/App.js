@@ -253,28 +253,6 @@ class App extends Component {
 			}
     }
     
-    /*return (
-      <div className="outer-container">
-        {RedirectTo}
-        <div className="col-lg-12">
-          {this.renderProfileLink()}
-        </div>
-        <MainMenu isAuthorized={this.props.isAuthorized}/>
-        <section id="main-content" className="clearfix">
-          <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-            onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-            onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-            onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-            onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-            onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
-            isAuthorized={this.props.isAuthorized}
-            pathname={this.props.history.location.pathname}
-          />
-        </section>
-        {ChatAppLink}
-      </div>
-    );*/
-    
     return (
       <div className="outer-container">
         <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}

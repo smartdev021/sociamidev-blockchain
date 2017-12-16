@@ -12,10 +12,24 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import "~/src/theme/css/sidebarLeft.css"
 
+import {
+  fetchUserFriends
+} from '~/src/redux/actions/social'
+
 class SidebarLeft extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isAuthorized != this.props.isAuthorized) {
+      if (this.props.isAuthorized) {
+        //TODO: Deal with the issue of incorrect state update during mount/unmount
+        //this.props.fetchUserFriends(this.props.userProfile._id);
+        console.log("SidebarLeft AUTHORIZED this.props.userProfile._id: " + this.props.userProfile._id);
+      }
+    }
   }
 
   render() {
@@ -131,12 +145,19 @@ class SidebarLeft extends React.Component {
   }
 }
 
+SidebarLeft.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  userProfile: PropTypes.object.isRequired,
+  fetchUserFriends: PropTypes.func.isRequired,
+}
 
 const mapDispatchToProps = dispatch => ({
-});
+  fetchUserFriends: bindActionCreators(fetchUserFriends, dispatch)
+})
 
 const mapStateToProps = state => ({
-});
+  isAuthorized: state.isAuthorized,
+  userProfile: state.userProfile,
+})
 
-//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarLeft);

@@ -7,6 +7,7 @@ import {
 const userFriendsInitialState = {friends: [], isFetching: false};
 
 export function userFriends(state = userFriendsInitialState, action) {
+    console.log("REDUCER userFriends")
     switch (action.type) {
       case FETCH_USER_FRIENDS_INITIATE:
           return {...state, isFetching: true};

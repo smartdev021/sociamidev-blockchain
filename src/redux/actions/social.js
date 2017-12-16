@@ -25,6 +25,7 @@ export function fetchUserFriendsComplete(fetchResults) {
 }
 
 export function fetchUserFriends(userId) {
+    console.log("fetchUserFriends userId: " + userId);
     return function (dispatch) {
         dispatch(fetchUserFriendsInitiate());
         
