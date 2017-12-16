@@ -35,42 +35,46 @@ class ConnectionsView extends React.Component {
         this.getAllConnections();
     }
 
-    getAllFriends(){
+    getAllFriends() {
         const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
         var self = this;
         Axios.get(allFrndUrl, {
             params: {
                 currentUser: self.props.currentUserId
             }
-          })
-        .then(function (response) {
-            self.state.allFriendList = response.data;
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                self.setState({allFriendList : response.data})
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
-    getAllConnections(){
+    getAllConnections() {
         const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
         var self = this;
         Axios.get(connectionsUrl, {
             params: {
                 currentUser: self.props.currentUserId
             }
-          })
-        .then(function (response) {
-            self.state.friendList = response.data;
-            self.state.receivedList = self.state.friendList.filter(function (fList) {
-                return fList.connectionStatus === "Received";
-            });
-            self.state.sentList = self.state.friendList.filter(function (fList) {
-                return fList.connectionStatus === "Sent";
-            });
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                self.setState({friendList: response.data});
+                self.setState({
+                    receivedList: self.state.friendList.filter(function (fList) {
+                        return fList.connectionStatus === "Received";
+                    })
+                });
+                self.setState({
+                    sentList: self.state.friendList.filter(function (fList) {
+                        return fList.connectionStatus === "Sent";
+                    })
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     /**
@@ -85,15 +89,15 @@ class ConnectionsView extends React.Component {
             otherUser: userid,
             connectAction: action
         })
-        .then(function (response) {
-            if (response.data === 'success') {
-                self.getAllConnections();
-            }
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                if (response.data === 'success') {
+                    self.getAllConnections();
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     handleAddSoqqler(userid) {
@@ -104,16 +108,16 @@ class ConnectionsView extends React.Component {
             uid2: userid,
             reqStatus: 2
         })
-        .then(function (response) {
-            if (response.data === 'success') {
-                self.getAllFriends();
-                self.getAllConnections();
-            }
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                if (response.data === 'success') {
+                    self.getAllFriends();
+                    self.getAllConnections();
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render() {
