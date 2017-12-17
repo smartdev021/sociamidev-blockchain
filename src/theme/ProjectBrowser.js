@@ -17,7 +17,7 @@ import ConfigMain from '~/configs/main'
 
 
 import "~/src/theme/css/common.css"
-import "~/src/theme/css/projectManager.css"
+import "~/src/theme/css/projectBrowser.css"
 
 class ProjectBrowser extends React.Component {
 
@@ -67,13 +67,19 @@ class ProjectBrowser extends React.Component {
 
   renderProject() {
     return  ((this.state.project && this.state.project.name) ?
-      <div>
+    <div className="row">
+      <div className="col-lg-12">
         <h1>{this.state.project.name}</h1>
+      </div>
+      <div className="col-lg-12">
         <h2>{this.state.project.description}</h2>
+      </div>
+      <div className="col-lg-12">
         <h4>{this.state.project.nature}</h4>
       </div>
+    </div>
       :
-      <div>
+      <div className="row">
       </div>
     );
   }
@@ -82,9 +88,9 @@ class ProjectBrowser extends React.Component {
     return (
       <div id="main-content_1">
         <div id="project-browser">
-          {
-           this.renderProject()
-          }
+          <div className="container-fluid">
+            {this.renderProject()}
+          </div>
         </div>
       </div>
     );

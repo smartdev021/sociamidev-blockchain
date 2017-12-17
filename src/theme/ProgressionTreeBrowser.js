@@ -17,6 +17,8 @@ import ConfigMain from '~/configs/main'
 
 import "~/src/theme/css/common.css"
 
+import "~/src/theme/css/progressionTreeBrowser.css"
+
 class ProgressionTreeBrowser extends React.Component {
 
   constructor(props) {
@@ -65,13 +67,19 @@ class ProgressionTreeBrowser extends React.Component {
 
   renderprogressionTree() {
     return  ((this.state.progressionTree && this.state.progressionTree.name) ?
-      <div>
+    <div className="row">
+      <div className="col-lg-12">
         <h1>{this.state.progressionTree.name}</h1>
+      </div>
+      <div className="col-lg-12">
         <h2>{this.state.progressionTree.description}</h2>
+      </div>
+      <div className="col-lg-12">
         <h4>{this.state.progressionTree.nature}</h4>
       </div>
+    </div>
       :
-      <div>
+      <div className="row">
       </div>
     );
   }
@@ -79,10 +87,10 @@ class ProgressionTreeBrowser extends React.Component {
   render() {
     return (
       <div id="main-content_1">
-        <div id="progressionTree-browser">
-          {
-           this.renderprogressionTree()
-          }
+        <div className="container-fluid">
+          <div id="progressionTree-browser">
+            {this.renderprogressionTree()}
+          </div>
         </div>
       </div>
     );
