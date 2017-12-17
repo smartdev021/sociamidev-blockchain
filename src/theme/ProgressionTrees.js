@@ -11,6 +11,10 @@ import { bindActionCreators } from 'redux'
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/progressionTrees.css"
 
+import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgressionTree"
+
+import ActionLink from '~/src/components/common/ActionLink'
+
 import {
   fetchRoadmaps,
   fetchRoadmapsFromAdmin,
@@ -23,6 +27,8 @@ class ProgressionTrees extends React.Component {
 
     this.state = {
       scannerQuery: "",
+      isAcceptProgressionTreePopupOpen: false,
+      scannerSelectedTreeId: undefined,
     }
   }
 
@@ -109,6 +115,15 @@ class ProgressionTrees extends React.Component {
     );
   }
 
+  openTreeAcceptConfirmationPopup(treeId) {
+    this.setState({scannerSelectedTreeId: treeId, isAcceptProgressionTreePopupOpen: true});
+  }
+
+  onTreeAcceptConfirmationPopupClose(option, treeId) {
+    this.setState({scannerSelectedTreeId: undefined, isAcceptProgressionTreePopupOpen: false});
+    console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
+  }
+
   renderTreesScannerTrees() {
     const DummyTrees = [
       {name: "AI for Beginners", secondaryInfo: {
@@ -137,6 +152,8 @@ class ProgressionTrees extends React.Component {
       foundRoadmaps = this.props.roadmapsAdmin.data;
     }
 
+    const openTreeAcceptConfirmationPopup = (treeId)=>this.openTreeAcceptConfirmationPopup(treeId);
+
     return (
       <ul id="trees-scanner-list-trees">
         {
@@ -144,7 +161,7 @@ class ProgressionTrees extends React.Component {
             let tree = DummyTrees[Math.floor(Math.random() * (DummyTrees.length - 0)) + 0];
             return (<li key={i}>
             <div className="tree-list-item">
-              <a href="#">{roadmap.name}</a>
+              <ActionLink href="#" onClick={()=>openTreeAcceptConfirmationPopup(roadmap._id)}>{roadmap.name}</ActionLink>
               {tree.secondaryInfo ? 
               <div className="pull-right">
                 <span>
@@ -164,6 +181,11 @@ class ProgressionTrees extends React.Component {
   render() {
     return (
         <div className="content-2-columns-wrapper" id="progression-trees">
+          {this.state.isAcceptProgressionTreePopupOpen 
+              && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId} isModalOpen={this.state.isAcceptProgressionTreePopupOpen}
+                onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
+              />
+          }
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-9">
