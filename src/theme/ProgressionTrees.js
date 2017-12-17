@@ -15,10 +15,18 @@ import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgre
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import ActivityTypes from "~/src/common/ActivityTypes"
+
+const Hash = require('object-hash');
+
 import {
   fetchRoadmaps,
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
+
+import {
+  pushNewActivity,
+} from '~/src/redux/actions/activities'
 
 import Axios from 'axios'
 
@@ -162,11 +170,34 @@ class ProgressionTrees extends React.Component {
   }
 
   progressionTreeStartSuccess(response) {
-    console.log("Project fetch success: ");
+    console.log("progressionTreeStartSuccess response: ");
+    console.log(response.data);
+    if (response.data.name) {
+      this.pushActivityProgressionTreeStarted(response.data);
+    }
   }
 
   progressionTreeStartFailed(error) {
-    console.log("Project fetch error: " + error);
+    console.log("Progression trees push activity error: " + error);
+  }
+
+  pushActivityProgressionTreeStarted(progressionTree) {
+    let activityBody = {
+      type: ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED, 
+      metadata: {
+          treeId: progressionTree._id,
+          treeName: progressionTree.name,
+        }
+    }
+
+    activityBody._id = Hash(activityBody);
+
+    const activityProgressiontreeStarted = {
+      userID: this.props.userProfile._id,
+      activity: activityBody,
+    };
+
+    this.props.pushNewActivity(activityProgressiontreeStarted);
   }
 
   renderTreesScannerTrees() {
@@ -279,6 +310,7 @@ ProgressionTrees.propTypes = {
   roadmapsAdmin: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
+  pushNewActivity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -291,6 +323,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
+  pushNewActivity: bindActionCreators(pushNewActivity, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgressionTrees);
