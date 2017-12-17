@@ -16,6 +16,10 @@ import {
   fetchUserFriends
 } from '~/src/redux/actions/social'
 
+import {
+  activitiesFetch
+} from '~/src/redux/actions/activities'
+
 class SidebarLeft extends React.Component {
 
   constructor(props) {
@@ -27,6 +31,15 @@ class SidebarLeft extends React.Component {
       if (this.props.isAuthorized) {
         this.props.fetchUserFriends(this.props.userProfile._id);
         console.log("SidebarLeft AUTHORIZED this.props.userProfile._id: " + this.props.userProfile._id);
+      }
+    }
+
+    if (prevProps.userFriends.friends.length != this.props.userFriends.friends.length) {
+      if (this.props.userFriends.friends.length > 0) {
+        const UserFriendIDs = this.props.userFriends.friends.map(function(friend, i){
+          return friend._id;
+        });
+        this.props.activitiesFetch(UserFriendIDs);
       }
     }
   }
@@ -155,17 +168,21 @@ SidebarLeft.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
   userFriends: PropTypes.object.isRequired,
+  userFriendsActivities: PropTypes.object.isRequired,
+  activitiesFetch: PropTypes.func.isRequired,
   fetchUserFriends: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchUserFriends: bindActionCreators(fetchUserFriends, dispatch)
+  fetchUserFriends: bindActionCreators(fetchUserFriends, dispatch),
+  activitiesFetch: bindActionCreators(activitiesFetch, dispatch)
 })
 
 const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
   userFriends: state.userFriends,
+  userFriendsActivities: state.userFriendsActivities,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarLeft);

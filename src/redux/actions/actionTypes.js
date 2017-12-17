@@ -79,6 +79,8 @@ export const PROJECTS_SET = "projects_set";
 export const PROJECT_SET = "project_set";
 
 export const PUSH_NEW_ACTIVITY = "push_new_activity";
+export const ACTIVITIES_FETCH_INITIATE = "activities_fetch_initiate";
+export const ACTIVITIES_FETCH_COMPLETE = "activities_fetch_complete";
 
 //social
 export const FETCH_USER_FRIENDS_INITIATE = "fetch_user_friends_initiate";

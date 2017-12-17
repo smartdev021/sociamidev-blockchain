@@ -8,6 +8,7 @@ import { tasks, lastSavedTask, isTasksFetchInProgress, isTaskSaveInProgress, isT
 import { isAuthorized, isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authorization"
 import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./projects"
 import { userFriends } from "./social"
+import { userFriendsActivities } from "./activities"
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -17,6 +18,7 @@ export default combineReducers({
   searchResults,
   userProfile,
   userFriends,
+  userFriendsActivities,
   bookmarks,
   roadmaps,
   roadmapsDetailed,
