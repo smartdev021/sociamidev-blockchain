@@ -37,11 +37,22 @@ class ProjectBrowser extends React.Component {
   componentDidMount() {
     const urlParams = new URLSearchParams(this.props.location.search);
 
-    const currentProjectId = urlParams.get("projectId");
+    const currentProjectId = urlParams.get("id");
 
     this.setState({projectId: currentProjectId});
 
     console.log("currentProjectId: " + currentProjectId);
+  }
+
+  projectFetchSuccess(response) {
+    console.log("Project fetch success: ");
+    console.dir(response.data);
+    this.setState({project: response.data});
+  }
+
+  projectFetchFailed(error) {
+    console.log("Project fetch error: " + error);
+    this.setState({project: {}});
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -53,22 +64,17 @@ class ProjectBrowser extends React.Component {
       
       const url = `${ConfigMain.getBackendURL()}/projectGet?id=${this.state.projectId}`;
       Axios.get(url)
-      .then(function(response) {
-        that.setState({project: response.data})
-      })
-      .catch(function(error) {
-        console.log(error);
-        that.setState({project: {}})
-      });
+      .then((response)=>this.projectFetchSuccess(response))
+      .catch((error)=>this.projectFetchFailed(error));
     }
   }
 
   renderProject() {
     return  ((this.state.project && this.state.project.name) ?
       <div>
-        <div>{this.state.project.name}</div>
-        <div>{this.state.project.description}</div>
-        <div>{this.state.project.nature}</div>
+        <h1>{this.state.project.name}</h1>
+        <h2>{this.state.project.description}</h2>
+        <h4>{this.state.project.nature}</h4>
       </div>
       :
       <div>
