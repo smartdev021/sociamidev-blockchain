@@ -21,6 +21,7 @@ import TrendScanner from '~/src/theme/TrendScanner.js';
 import TaskManagement from '~/src/theme/TaskManagement';
 import ProjectManager from '~/src/theme/ProjectManagement';
 import ProjectBrowser from '~/src/theme/ProjectBrowser';
+import ProgressionTreeBrowser from '~/src/theme/ProgressionTreeBrowser';
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';
@@ -105,6 +106,7 @@ class Main extends React.Component {
                           <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
                           <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
                           <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
+                          <Route path='/progressionTreeBrowser' render={routeProps => <ProgressionTreeBrowser {...routeProps}{...this.props}/>}/>
                           <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
                           <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
                           <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>

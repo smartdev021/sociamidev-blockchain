@@ -19,10 +19,6 @@ import ConfigMain from '~/configs/main'
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/projectManager.css"
 
-import {
-  projectsFetch,
-} from '~/src/redux/actions/projects'
-
 class ProjectBrowser extends React.Component {
 
   constructor(props) {
@@ -97,7 +93,6 @@ class ProjectBrowser extends React.Component {
 
 ProjectBrowser.propTypes = {
   projects: PropTypes.array.isRequired,
-  projectsFetch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -105,7 +100,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  projectsFetch: bindActionCreators(projectsFetch, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectBrowser)));
