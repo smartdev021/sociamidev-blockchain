@@ -154,7 +154,8 @@ class SidebarLeft extends React.Component {
       case "friend_new_project":
       case "new_project": {
         if (activity.metadata.projectName || activity.metadata.project_name) {
-          result = <span className="friend-news-feed-text">Has created project: <Link to='/projectManagement'>{activity.metadata.projectName 
+          result = <span className="friend-news-feed-text">Has created project: 
+          <Link to={`/projectBrowser?projectId=${activity.metadata.projectID}`}>{activity.metadata.projectName 
             ? activity.metadata.projectName : activity.metadata.project_name}</Link></span>;
         }
         else {
