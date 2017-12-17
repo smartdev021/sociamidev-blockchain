@@ -20,6 +20,10 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
+import Axios from 'axios'
+
+import ConfigMain from '~/configs/main'
+
 class ProgressionTrees extends React.Component {
 
   constructor(props) {
@@ -116,12 +120,53 @@ class ProgressionTrees extends React.Component {
   }
 
   openTreeAcceptConfirmationPopup(treeId) {
-    this.setState({scannerSelectedTreeId: treeId, isAcceptProgressionTreePopupOpen: true});
+    if (this.props.isAuthorized) {
+      this.setState({scannerSelectedTreeId: treeId, isAcceptProgressionTreePopupOpen: true});
+    }
   }
 
   onTreeAcceptConfirmationPopupClose(option, treeId) {
     this.setState({scannerSelectedTreeId: undefined, isAcceptProgressionTreePopupOpen: false});
     console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
+
+    if (option === true && treeId) {
+      const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStart`;
+
+      let foundRoadmaps = [];
+      
+      const scannerQuery = this.state.scannerQuery.toLowerCase();
+          
+      if (scannerQuery != "") {
+        foundRoadmaps = this.props.roadmapsAdmin.data.filter(function(roadmap) {
+          return roadmap.name && roadmap.name.toLowerCase().startsWith(scannerQuery);
+        });
+      }
+      else {
+        foundRoadmaps = this.props.roadmapsAdmin.data;
+      }
+
+      const findById = (currentRoadmap) => {
+        return currentRoadmap._id == treeId;
+      }
+
+      const foundRoadmap = foundRoadmaps.find(findById);
+
+      if (foundRoadmap) {
+        const data = {userId: this.props.userProfile._id, progTree: {_id: foundRoadmap._id, name: foundRoadmap.name}};
+        
+        Axios.post(url, data)
+          .then((response)=>this.progressionTreeStartSuccess(response))
+          .catch((error)=>this.progressionTreeStartFailed(error)); 
+      }
+    }
+  }
+
+  progressionTreeStartSuccess(response) {
+    console.log("Project fetch success: ");
+  }
+
+  progressionTreeStartFailed(error) {
+    console.log("Project fetch error: " + error);
   }
 
   renderTreesScannerTrees() {
@@ -232,11 +277,15 @@ ProgressionTrees.propTypes = {
   fetchRoadmapsFromAdmin: PropTypes.func.isRequired,
   roadmaps: PropTypes.object.isRequired,
   roadmapsAdmin: PropTypes.object.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  userProfile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
   roadmaps: state.roadmaps,
   roadmapsAdmin: state.roadmapsAdmin,
+  isAuthorized: state.isAuthorized,
+  userProfile: state.userProfile,
 })
 
 const mapDispatchToProps = dispatch => ({
