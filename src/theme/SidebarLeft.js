@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {Link} from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -117,8 +118,61 @@ class SidebarLeft extends React.Component {
     return ListOfFriends;
   }
 
+  attachActivitiesToFriends(listOfFriends = []) {
+    const UserFriendsActivities = this.props.userFriendsActivities.activities;
+    if ((Object.keys(UserFriendsActivities).length === 0 && UserFriendsActivities.constructor === Object) 
+      || listOfFriends.length == 0
+        || !listOfFriends[0]._id) {
+      return listOfFriends;
+    }
+
+    let newListOfFriends = [];
+
+    for (let i = 0; i < listOfFriends.length; ++i) {
+      const currentFriend = listOfFriends[i];
+
+      newListOfFriends.push(currentFriend);
+
+      if (UserFriendsActivities[currentFriend._id]) {
+        newListOfFriends[newListOfFriends.length - 1].activities = UserFriendsActivities[currentFriend._id].activities; 
+      }
+    }
+
+    console.log("AFTER ATTACHING ACTIVITIES, LIST OF FRIENDS LOOKS LIKE THIS: ");
+    console.dir(newListOfFriends);
+
+    return newListOfFriends;
+  }
+
+  renderActivity(activity) {
+    let result = <span className="friend-news-feed-text">Unhandled feed</span>;
+
+    console.log("RENDER ACTIVITY: activity");
+    console.dir(activity);
+
+    switch(activity.type) {
+      case "friend_new_project":
+      case "new_project": {
+        if (activity.metadata.projectName || activity.metadata.project_name) {
+          result = <span className="friend-news-feed-text">Has created project: <Link to='/projectManagement'>{activity.metadata.projectName 
+            ? activity.metadata.projectName : activity.metadata.project_name}</Link></span>;
+        }
+        else {
+          result = <span className="friend-news-feed-text">Has created project</span>;
+        }
+        break;
+      }
+      default:
+        break;
+    }
+
+    return result;
+  }
+
   renderFriends() {
-    const ListOfFriends = this.getListOfFriends();
+    const ListOfFriends = this.attachActivitiesToFriends(this.getListOfFriends());
+
+    const that = this;
 
     return (
       <div id="list-friends">
@@ -129,7 +183,10 @@ class SidebarLeft extends React.Component {
                 <img src={friend.profileImage}/>
                 <div id="user-text">
                   <div className="user-text-name">{friend.firstName}</div>
-                  {friend.userText}
+                    {(friend.activities && friend.activities.length > 0) 
+                      ? that.renderActivity(friend.activities[0])
+                      : friend.userText
+                    }
                 </div>
               </div>
             )

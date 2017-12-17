@@ -127,3 +127,7 @@
   height: 1px;
   background-image: linear-gradient(to right, rgba(54, 50, 50, 0), rgba(177, 177, 177, 0.75), rgba(168, 161, 161, 0));
 }
+
+.friend-news-feed-text {
+  color: rgb( 128, 163, 235 );
+}
