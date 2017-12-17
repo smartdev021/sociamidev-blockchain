@@ -11,6 +11,8 @@ import {Link} from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import ActivityTypes from "~/src/common/ActivityTypes"
+
 import "~/src/theme/css/sidebarLeft.css"
 
 import {
@@ -151,8 +153,8 @@ class SidebarLeft extends React.Component {
     console.dir(activity);
 
     switch(activity.type) {
-      case "friend_new_project":
-      case "new_project": {
+      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
+      {
         if (activity.metadata.projectName || activity.metadata.project_name) {
           result = <span className="friend-news-feed-text">Has created project: 
           <Link to={`/projectBrowser?id=${activity.metadata.projectID}`}>{activity.metadata.projectName 

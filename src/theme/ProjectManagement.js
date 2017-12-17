@@ -22,6 +22,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import ProjectsScanner from "~/src/theme/components/projects/ProjectsScanner"
 
+import ActivityTypes from "~/src/common/ActivityTypes"
+
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/projectManager.css"
 
@@ -78,31 +80,41 @@ class ProjectManager extends React.Component {
     this.props.projectsFetch(this.props.userProfile._id);
   }
 
+  pushActivityNewProject(project) {
+    let activityBody = {
+      type: ActivityTypes.FRIEND_NEW_PROJECT_CREATED, 
+      metadata: {
+          projectID: project._id,
+          projectName: project.name,
+        }
+    }
+
+    activityBody._id = Hash(activityBody);
+
+    const activityNewProject = {
+      userID: this.props.userProfile._id,
+      activity: activityBody,
+    };
+
+    console.log("pushActivityNewProject() lastSavedProject: ");
+    console.dir(this.state.lastSavedProject);
+
+    console.log("pushActivityNewProject() activityNewProject: ");
+    console.dir(activityNewProject);
+
+    this.props.pushNewActivity(activityNewProject);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     console.log("ProjectManager::componentDidUpdate!!! this.props.isProjectSaveInProgress: " + this.props.isProjectSaveInProgress);
     if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
       this.fetchAllProjects();
     }
 
-    //Push new_project activity
-    if (prevProps.isProjectSaveInProgress != this.props.isProjectSaveInProgress) {
-      if (!this.props.isProjectSaveInProgress) {
-        let activityBody = {
-          type: "friend_new_project", 
-          metadata: {
-              projectID: this.state.lastSavedProject._id,
-              projectName: this.state.lastSavedProject.name,
-            }
-        }
-
-        activityBody._id = Hash(activityBody);
-
-        const activityNewProject = {
-          userID: this.props.userProfile._id,
-          activity: activityBody,
-        };
-
-        this.props.pushNewActivity(activityNewProject);
+    //In case new project has been added - push a notification
+    if (prevProps.projects.length != this.props.projects.length) {
+      if (prevProps.projects.length != 0 && this.props.projects.length > prevProps.projects.length) {
+        this.pushActivityNewProject(this.props.projects[this.props.projects.length - 1]);
       }
     }
 
