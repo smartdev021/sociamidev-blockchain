@@ -27,7 +27,7 @@ export function fetchUserFriends(userId) {
     //async action entry point
     dispatch(fetchUserFriendsInitiate());
     
-    const url = `${ConfigMain.getBackendURL()}/getUserFriends?id=${userId}`;
+    const url = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers?currentUser=${userId}`;
     return (
         Axios.get(url).then(function(response) {
             dispatch(fetchUserFriendsComplete(response.data));

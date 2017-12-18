@@ -40,7 +40,7 @@ class SidebarLeft extends React.Component {
     if (prevProps.userFriends.friends.length != this.props.userFriends.friends.length) {
       if (this.props.userFriends.friends.length > 0) {
         const UserFriendIDs = this.props.userFriends.friends.map(function(friend, i){
-          return friend._id;
+          return friend.id;
         });
         this.props.activitiesFetch(UserFriendIDs);
       }
@@ -111,11 +111,22 @@ class SidebarLeft extends React.Component {
       },
     ];
 
-    const ListOfFriends = (this.props.userFriends.friends && this.props.userFriends.friends.length > 0) 
+    let ListOfFriends = (this.props.userFriends.friends && this.props.userFriends.friends.length > 0) 
     ? this.props.userFriends.friends: DummyFriendsList;
 
     console.log("this.props.userFriends: " + this.props.userFriends);
     console.dir(this.props.userFriends);
+
+    //TODO: Remove once profile image is fetched from back-end
+    for (let i = 0; i < ListOfFriends.length; ++i) {
+      if (!ListOfFriends[i].profileImage) {
+        ListOfFriends[i].profileImage = DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0];
+      }
+
+      if (!ListOfFriends[i].userText) {
+        ListOfFriends[i].userText = "Mobile app testing 50 mutual friends";
+      }
+    }
 
     return ListOfFriends;
   }
