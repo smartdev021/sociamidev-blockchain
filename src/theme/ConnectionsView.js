@@ -123,7 +123,7 @@ class ConnectionsView extends React.Component {
     render() {
         let divStyle = {overflow: 'auto'};
         return (
-            <div id="main-content_1" style={divStyle}>
+            <div style={divStyle} className="allFriendList">
                 <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="allFriendList">
                     <Tab eventKey={1} title="All">
                         <ul> {
@@ -132,12 +132,38 @@ class ConnectionsView extends React.Component {
                                                      onClick={()=>this.handleAddSoqqler(friend.id)}>
                                     Add Soqqler</button>;
                                 return (
-                                    <li key={friend.id} className="borderStyle">
-                                        <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png"
+                                    <li key={friend.id} className="borderStyle"> 
+                                        <div className="imageContainer">                                  
+                                            <img
+                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
                                             className="img-circle tmp"/>
-                                        <h3>{friend.firstName} {friend.lastName}</h3>
-                                        <span className="actionBtn">  {addBtn} </span></li>);
+                                        </div>
+                                        <div className="friendInfoContainer">
+                                            <div className="friendInfo">
+                                                <span className="friendName">{friend.firstName} {friend.lastName}</span>
+                                                <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
+                                            </div>
+                                        </div>
+                                        <div className="followersContainer">
+                                            <span className="followersCount">1121</span>
+                                            <span className="followersText">Friends</span>
+                                        </div>
+                                        <div className="followingContainer">
+                                            <span className="followingCount">2230</span>
+                                            <span className="followingText">Progression Trees</span>
+                                        </div>
+                                        <div className="photosContainer">
+                                            <span className="photosCount">456</span>
+                                            <span className="photosText">Projects</span>
+                                        </div>
+                                        <div className="videosContainer">
+                                            <span className="videosCount">198</span>
+                                            <span className="videosText">Tasks</span>
+                                        </div>
+                                        <div className="buttonContainer">
+                                            <span className="actionBtn">  {addBtn} </span>
+                                        </div>
+                                    </li>);                                        
                             }, this)}
                         </ul>
                     </Tab>
@@ -169,11 +195,37 @@ class ConnectionsView extends React.Component {
                                 }
                                 return (
                                     <li key={friend.id} className="borderStyle">
-                                        <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png"
+                                        <div className="imageContainer">                                  
+                                            <img
+                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
                                             className="img-circle tmp"/>
-                                        <h3>{friend.firstName} {friend.lastName}</h3>
-                                        <span className="actionBtn">  {button} </span></li>);
+                                        </div>
+                                        <div className="friendInfoContainer">
+                                            <div className="friendInfo">
+                                                <span className="friendName">{friend.firstName} {friend.lastName}</span>
+                                                <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
+                                            </div>
+                                        </div>
+                                        <div className="followersContainer">
+                                            <span className="followersCount">1121</span>
+                                            <span className="followersText">Friends</span>
+                                        </div>
+                                        <div className="followingContainer">
+                                            <span className="followingCount">2230</span>
+                                            <span className="followingText">Progression Trees</span>
+                                        </div>
+                                        <div className="photosContainer">
+                                            <span className="photosCount">456</span>
+                                            <span className="photosText">Projects</span>
+                                        </div>
+                                        <div className="videosContainer">
+                                            <span className="videosCount">198</span>
+                                            <span className="videosText">Tasks</span>
+                                        </div>
+                                        <div className="buttonContainer">
+                                            <span className="actionBtn">  {button} </span>
+                                        </div>
+                                    </li>);
                             }, this)}
                         </ul>
                     </Tab>
@@ -187,11 +239,37 @@ class ConnectionsView extends React.Component {
                                             onClick={()=>this.handleFriendRequest(friend.id, 'Reject')}>Reject</button> </span>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
-                                        <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png"
+                                        <div className="imageContainer">                                  
+                                            <img
+                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
                                             className="img-circle tmp"/>
-                                        <h3>{friend.firstName} {friend.lastName}</h3>
-                                        <span className="actionBtn">  {actionBtn} </span></li>);
+                                        </div>
+                                        <div className="friendInfoContainer">
+                                            <div className="friendInfo">
+                                                <span className="friendName">{friend.firstName} {friend.lastName}</span>
+                                                <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
+                                            </div>
+                                        </div>
+                                        <div className="followersContainer">
+                                            <span className="followersCount">1121</span>
+                                            <span className="followersText">Friends</span>
+                                        </div>
+                                        <div className="followingContainer">
+                                            <span className="followingCount">2230</span>
+                                            <span className="followingText">Progression Trees</span>
+                                        </div>
+                                        <div className="photosContainer">
+                                            <span className="photosCount">456</span>
+                                            <span className="photosText">Projects</span>
+                                        </div>
+                                        <div className="videosContainer">
+                                            <span className="videosCount">198</span>
+                                            <span className="videosText">Tasks</span>
+                                        </div>
+                                        <div className="buttonContainer">
+                                            <span className="actionBtn">  {actionBtn} </span>
+                                        </div>
+                                    </li>);
                             }, this)}
                         </ul>
                     </Tab>
@@ -204,11 +282,37 @@ class ConnectionsView extends React.Component {
                                     Withdraw</button>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
-                                        <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/dummy_friend_image.png"
+                                        <div className="imageContainer">                                  
+                                            <img
+                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
                                             className="img-circle tmp"/>
-                                        <h3>{friend.firstName} {friend.lastName}</h3>
-                                        <span className="actionBtn">  {withdrawBtn} </span></li>);
+                                        </div>
+                                        <div className="friendInfoContainer">
+                                            <div className="friendInfo">
+                                                <span className="friendName">{friend.firstName} {friend.lastName}</span>
+                                                <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
+                                            </div>
+                                        </div>
+                                        <div className="followersContainer">
+                                            <span className="followersCount">1121</span>
+                                            <span className="followersText">Friends</span>
+                                        </div>
+                                        <div className="followingContainer">
+                                            <span className="followingCount">2230</span>
+                                            <span className="followingText">Progression Trees</span>
+                                        </div>
+                                        <div className="photosContainer">
+                                            <span className="photosCount">456</span>
+                                            <span className="photosText">Projects</span>
+                                        </div>
+                                        <div className="videosContainer">
+                                            <span className="videosCount">198</span>
+                                            <span className="videosText">Tasks</span>
+                                        </div>
+                                        <div className="buttonContainer">
+                                            <span className="actionBtn">  {withdrawBtn} </span>
+                                        </div>
+                                    </li>);
                             }, this)}
                         </ul>
                     </Tab>

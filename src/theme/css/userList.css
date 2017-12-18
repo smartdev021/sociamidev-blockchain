@@ -2,6 +2,42 @@
     /*padding : 10px ;*/
 
 /*}*/
+.nav-tabs>li{
+    margin-bottom: 0px !important;
+}
+
+.nav-tabs{
+    background-color: #F7F7F7 !important;
+}
+
+.nav>li>a:focus, .nav>li>a:hover{
+    background-color: #F7F7F7 !important;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    background-color: #F7F7F7 !important;
+    border-bottom: solid 2px #286090 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: #286090 !important;
+}
+
+.nav-tabs>li>a:hover{
+    border: 0px !important;
+}
+
+.nav-tabs>li>a{
+    color: #c7c7c7 !important;
+}
+
+.allFriendList{
+    background-color: #EBEBEB !important;
+}
+
+.tab-content{
+    padding-top: 17px !important;
+}
 
 #exTab1 .tab-content {
     color : white;
@@ -36,29 +72,216 @@
 
 #allFriendList ul {
     list-style-type: none;
-    padding-top: 17px;
     padding-left: 2px;
 }
 
+.imageContainer{
+    float: left;
+    height: 100%;
+    width: 10%;
+}
+
+.imageContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
+}
 
 .tmp {
-    float: left;
-    margin: 12px 15px 7px 19px;
+    margin: 15px 15px 7px 19px;
+    height: 60px;
+    width: 60px;
 }
 /*li {*/
     /*padding: 10px;*/
     /*overflow: auto;*/
 /*}*/
 .actionBtn {
-    float: right;
-    position: relative;
-    right: 10px;
-    bottom: 40px;
+    margin-top: 28px;
+    display: inline-block;
 }
 .borderStyle {
+    position: relative;
     overflow: auto;
-    border: 1px;
-    border-style: solid;
-    border-radius: 14px;
+    height: 90px;
+    border-radius: 4px;
     margin-bottom: 12px;
+    background-color: #F7F7F7;
+}
+
+.friendName{
+    color: #5f5b5b;
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    top: 18px;
+}
+
+.friendInfo{    
+    position: relative;
+    height: 100%;
+}
+
+.friendInfoContainer{
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+
+.friendInfo::after{
+    clear: both;
+    content: “”;
+    position: absolute;
+    top: 15px;
+    right: 0;
+    display: block;
+    height: 65%;
+    width: 1px;
+    content: '';
+    background-color: #e6e6e6;
+}
+
+.friendDetails{
+    position: absolute;
+    top: 40px;
+    font-size: 12px;
+    color: #c7c7c7;
+}
+
+.friendInfoContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
+}
+
+.followersContainer{
+    float: left;
+    height: 100%;
+    width: 10%;
+    position: relative;
+    text-align: center;
+}
+
+.followersContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
+}
+
+.followersCount{
+    font-size: 20px;
+    color: #286090;
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.followersText{
+    position: absolute;
+    display: inline-block;
+    color: #c7c7c7;
+    top: 49px;
+    left: 32%;
+    font-size: 12px;
+}
+
+.followingContainer{
+    float: left;
+    height: 100%;
+    width: 10%;
+    position: relative;
+    text-align: center;
+}
+
+.followingContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
+}
+
+.followingCount{
+    font-size: 20px;
+    color: #286090;
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.followingText{
+    position: absolute;
+    display: inline-block;
+    color: #c7c7c7;
+    top: 49px;
+    left: 5%;
+    font-size: 12px;
+}
+
+.photosContainer{
+    float: left;
+    height: 100%;
+    width: 10%;
+    position: relative;
+    text-align: center;
+}
+
+.photosContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
+}
+
+.photosCount{
+    font-size: 20px;
+    color: #286090;
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.photosText{
+    position: absolute;
+    display: inline-block;
+    color: #c7c7c7;
+    top: 49px;
+    left: 30%;
+    font-size: 12px;
+}
+
+.videosContainer{
+    float: left;
+    height: 100%;
+    width: 10%;
+    position: relative;
+    text-align: center;
+}
+
+.videosContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
+}
+
+.videosCount{
+    font-size: 20px;
+    color: #286090;
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.videosText{
+    position: absolute;
+    display: inline-block;
+    color: #c7c7c7;
+    top: 49px;
+    left: 36%;
+    font-size: 12px;
+}
+.buttonContainer{
+    float: left;
+    height: 100%;
+    width: 20%;
+    text-align: center;
+}
+
+.buttonContainer::after{
+    clear: both;
+    content: “”;
+    display: block;
 }
