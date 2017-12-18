@@ -13,8 +13,6 @@ import {Icon} from 'react-fa'
 
 import PropTypes from 'prop-types';
 
-const Hash = require('object-hash');
-
 import PopupNewProject from '~/src/theme/components/PopupNewProject';
 import MyProjectsContainer from '~/src/theme/components/projects/MyProjectsContainer';
 
@@ -23,6 +21,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 import ProjectsScanner from "~/src/theme/components/projects/ProjectsScanner"
 
 import ActivityTypes from "~/src/common/ActivityTypes"
+
+import ActivityFactory from "~/src/helpers/ActivityFactory"
 
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/projectManager.css"
@@ -80,29 +80,10 @@ class ProjectManager extends React.Component {
     this.props.projectsFetch(this.props.userProfile._id);
   }
 
-  pushActivityNewProject(project) {
-    let activityBody = {
-      type: ActivityTypes.FRIEND_NEW_PROJECT_CREATED, 
-      metadata: {
-          projectID: project._id,
-          projectName: project.name,
-        }
-    }
-
-    activityBody._id = Hash(activityBody);
-
-    const activityNewProject = {
-      userID: this.props.userProfile._id,
-      activity: activityBody,
-    };
-
-    console.log("pushActivityNewProject() lastSavedProject: ");
-    console.dir(this.state.lastSavedProject);
-
-    console.log("pushActivityNewProject() activityNewProject: ");
-    console.dir(activityNewProject);
-
-    this.props.pushNewActivity(activityNewProject);
+  pushActivityNewProject(newProject) {
+    const ActivityNewProject = ActivityFactory.createActivity(ActivityTypes.FRIEND_NEW_PROJECT_CREATED, 
+      {project: newProject, userID: this.props.userProfile._id});
+    this.props.pushNewActivity(ActivityNewProject);
   }
 
   componentDidUpdate(prevProps, prevState) {

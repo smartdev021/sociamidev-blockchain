@@ -19,8 +19,7 @@ import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/
 import ActionLink from '~/src/components/common/ActionLink'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
-
-const Hash = require('object-hash');
+import ActivityFactory from "~/src/helpers/ActivityFactory"
 
 import {
   fetchRoadmaps,
@@ -127,23 +126,11 @@ class ProgressionTrees extends React.Component {
     console.log("Progression trees push activity error: " + error);
   }
 
-  pushActivityProgressionTreeStarted(progressionTree) {
-    let activityBody = {
-      type: ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED, 
-      metadata: {
-          treeId: progressionTree._id,
-          treeName: progressionTree.name,
-        }
-    }
+  pushActivityProgressionTreeStarted(newProgressionTree) {
+    const ActivityProgressiontreeStarted = ActivityFactory.createActivity(ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED, 
+      {progressionTree: newProgressionTree, userID: this.props.userProfile._id});
 
-    activityBody._id = Hash(activityBody);
-
-    const activityProgressiontreeStarted = {
-      userID: this.props.userProfile._id,
-      activity: activityBody,
-    };
-
-    this.props.pushNewActivity(activityProgressiontreeStarted);
+    this.props.pushNewActivity(ActivityProgressiontreeStarted);
   }
 
   render() {
