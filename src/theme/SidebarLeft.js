@@ -135,7 +135,7 @@ class SidebarLeft extends React.Component {
     const UserFriendsActivities = this.props.userFriendsActivities.activities;
     if ((Object.keys(UserFriendsActivities).length === 0 && UserFriendsActivities.constructor === Object) 
       || listOfFriends.length == 0
-        || !listOfFriends[0]._id) {
+        || !listOfFriends[0].id) {
       return listOfFriends;
     }
 
@@ -146,8 +146,8 @@ class SidebarLeft extends React.Component {
 
       newListOfFriends.push(currentFriend);
 
-      if (UserFriendsActivities[currentFriend._id]) {
-        newListOfFriends[newListOfFriends.length - 1].activities = UserFriendsActivities[currentFriend._id].activities; 
+      if (UserFriendsActivities[currentFriend.id]) {
+        newListOfFriends[newListOfFriends.length - 1].activities = UserFriendsActivities[currentFriend.id].activities; 
       }
     }
 
