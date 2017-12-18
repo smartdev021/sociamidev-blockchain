@@ -77,3 +77,32 @@
     margin-top: 0;
     margin-right: 10px;
   }
+  .rgt-setting {
+    float: right;
+    margin-left: 15px;
+}
+.rgt-setting span{
+  color: white;
+}
+.setting-block {
+  list-style: none;
+  padding: 0px;
+  margin: 0 auto;
+  position: absolute;
+  background: rgba( 122, 204, 200, 0.8);
+  z-index: 1;
+  display: none;
+}
+.rgt-setting:hover .setting-block {
+  display: block;
+}
+.setting-block li {
+  line-height: normal;
+  height: auto;
+  padding: 8px 15px;
+  border-bottom: 1px solid #fff;
+}
+.setting-block li a {
+  height: auto;
+  line-height: normal !important;
+}
