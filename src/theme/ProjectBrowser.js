@@ -3,10 +3,7 @@
 */
 
 import React, { Component } from 'react';
-import { withCookies, Cookies } from 'react-cookie';
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
@@ -25,7 +22,6 @@ class ProjectBrowser extends React.Component {
     super(props);
 
     this.state = {
-      projectId: undefined,
       project: {},
     }
   }
@@ -35,14 +31,14 @@ class ProjectBrowser extends React.Component {
 
     const currentProjectId = urlParams.get("id");
 
-    this.setState({projectId: currentProjectId});
-
-    console.log("currentProjectId: " + currentProjectId);
+    if (currentProjectId) {
+      Axios.get(`${ConfigMain.getBackendURL()}/projectGet?id=${currentProjectId}`)
+      .then((response)=>this.projectFetchSuccess(response))
+      .catch((error)=>this.projectFetchFailed(error));
+    }
   }
 
   projectFetchSuccess(response) {
-    console.log("Project fetch success: ");
-    console.dir(response.data);
     this.setState({project: response.data});
   }
 
@@ -50,21 +46,7 @@ class ProjectBrowser extends React.Component {
     console.log("Project fetch error: " + error);
     this.setState({project: {}});
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log("prevstate.projectId: " + prevState.projectId + " this.state.projectId: " + this.state.projectId);
-    if (prevState.projectId != this.state.projectId) {
-      console.log("Fetching project id: " + this.state.projectId);
-      
-      const that = this;
-      
-      const url = `${ConfigMain.getBackendURL()}/projectGet?id=${this.state.projectId}`;
-      Axios.get(url)
-      .then((response)=>this.projectFetchSuccess(response))
-      .catch((error)=>this.projectFetchFailed(error));
-    }
-  }
-
+  
   renderProject() {
     return  ((this.state.project && this.state.project.name) ?
     <div className="row">
@@ -97,15 +79,4 @@ class ProjectBrowser extends React.Component {
   }
 }
 
-ProjectBrowser.propTypes = {
-  projects: PropTypes.array.isRequired,
-}
-
-const mapStateToProps = state => ({
-  projects: state.projects,
-});
-
-const mapDispatchToProps = dispatch => ({
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectBrowser)));
+export default withRouter(ProjectBrowser);
