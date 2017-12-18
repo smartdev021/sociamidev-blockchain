@@ -21,11 +21,11 @@ class NavTop extends React.Component {
 
   renderConnectionsView() {
     let ConnectionsViewLink = '';
-    if (this.props.isAuthorized) {
+    //if (this.props.isAuthorized) {
       ConnectionsViewLink = <Link to='/connectionsView'><a href="#">
                     <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/add-friend.png"/>
                     </a></Link>;
-    }
+    //}
     return ConnectionsViewLink;
   }
 
