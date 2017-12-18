@@ -27,9 +27,9 @@ class ProjectBrowser extends React.Component {
   }
 
   componentDidMount() {
-    const urlParams = new URLSearchParams(this.props.location.search);
+    const URLParams = new URLSearchParams(this.props.location.search);
 
-    const currentProjectId = urlParams.get("id");
+    const currentProjectId = URLParams.get("id");
 
     if (currentProjectId) {
       Axios.get(`${ConfigMain.getBackendURL()}/projectGet?id=${currentProjectId}`)
