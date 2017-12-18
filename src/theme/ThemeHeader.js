@@ -26,20 +26,9 @@ class ThemeHeader extends React.Component {
   renderProfileLink() {
     let ProfileLink = '';
     if (this.props.isAuthorized) {
-      ProfileLink = 
-      <div>
-      <ActionLink onClick={() => this.onSignOut()}>
-        <span><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/profilesetting.png" />logout</span>
-      </ActionLink>
-      <div className="rgt-setting">
-        <span><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/profilesetting.png" />Setting</span>
-        <ul className="setting-block">
-          <li><Link to='/userProfile'>Profile</Link></li>
-          <li><Link to='/' >Setting</Link></li>
-          <li><Link to='/' >Help</Link></li>
-        </ul>
-      </div>
-    </div>;
+      ProfileLink = <ActionLink onClick={()=> this.onSignOut()}>
+          <span><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/profilesetting.png"/>logout</span>
+        </ActionLink>;
     }
     else
     {

@@ -83,7 +83,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
               experience: responseProfile.experience,
               education: responseProfile.education,
               roadmaps: response.data.roadmaps,
-              balance:response.data.balance
+
             }
 
             //async action exit point
