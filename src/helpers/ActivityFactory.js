@@ -40,6 +40,24 @@ const createActivityProgressionTreeStarted = (progressionTree, userId)=> {
     return activityProgressiontreeStarted;
   }
 
+const createActivityFriendHasAddedNewFriend = (friendAdded, userId)=> {
+    let activityBody = {
+      type: ActivityTypes.FRIEND_NEW_FRIEND_ADDED, 
+      metadata: {
+          friend: friendAdded,
+        }
+    }
+
+    activityBody._id = Hash(activityBody);
+
+    const activityNewFriendAdded = {
+      userID: this.props.userProfile._id,
+      activity: activityBody,
+    };
+
+    return activityNewFriendAdded;
+}
+
 const ActivityFactory = {
     createActivity: function(activityType, data) {
         switch (activityType) {
@@ -48,6 +66,9 @@ const ActivityFactory = {
             }
             case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED: {
                 return createActivityProgressionTreeStarted(data.progressionTree, data.userID);
+            }
+            case ActivityTypes.FRIEND_NEW_FRIEND_ADDED: {
+                return createActivityFriendHasAddedNewFriend(data.progressionTree, data.userID);
             }
             default:
               break;
