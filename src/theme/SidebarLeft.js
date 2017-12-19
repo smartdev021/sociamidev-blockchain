@@ -27,6 +27,11 @@ class SidebarLeft extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      toggleFriendsUpdate: false,
+      intervalId: undefined,
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -46,6 +51,21 @@ class SidebarLeft extends React.Component {
       }
     }
   }
+
+  //Temporary solution to update user activities once per... time
+  componentDidMount() {
+    var intervalId = setInterval(()=>this.timer(), 5000);
+    this.setState({intervalId: intervalId});
+  }
+ 
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+ 
+  timer() {
+    this.setState({ toggleFriendsUpdate: !this.state.toggleFriendsUpdate});
+  }
+  //---------------------------------------------------------------------
 
   getListOfFriends() {
     const DummyFriendImages = [
@@ -207,7 +227,7 @@ class SidebarLeft extends React.Component {
                 <div id="user-text">
                   <div className="user-text-name">{friend.firstName}</div>
                     {(friend.activities && friend.activities.length > 0) 
-                      ? that.renderActivity(friend.activities[0].activity)
+                      ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0].activity)
                       : friend.userText
                     }
                 </div>
