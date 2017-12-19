@@ -36,6 +36,7 @@ class ProgressionTrees extends React.Component {
       scannerQuery: "",
       isAcceptProgressionTreePopupOpen: false,
       scannerSelectedTreeId: undefined,
+      scannerSelectedTreeName: "",
     }
   }
 
@@ -65,14 +66,15 @@ class ProgressionTrees extends React.Component {
     );
   }
 
-  openTreeAcceptConfirmationPopup(treeId) {
+  openTreeAcceptConfirmationPopup(treeId, treeName) {
+    console.log(`treeId: ${treeId}, treeName: ${treeName}`);
     if (this.props.isAuthorized) {
-      this.setState({scannerSelectedTreeId: treeId, isAcceptProgressionTreePopupOpen: true});
+      this.setState({scannerSelectedTreeId: treeId, scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
     }
   }
 
   onTreeAcceptConfirmationPopupClose(option, treeId) {
-    this.setState({scannerSelectedTreeId: undefined, isAcceptProgressionTreePopupOpen: false});
+    this.setState({scannerSelectedTreeId: undefined, scannerSelectedTreeName: "", isAcceptProgressionTreePopupOpen: false});
     console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
 
     if (option === true && treeId) {
@@ -120,7 +122,9 @@ class ProgressionTrees extends React.Component {
     return (
         <div className="content-2-columns-wrapper" id="progression-trees">
           {this.state.isAcceptProgressionTreePopupOpen 
-              && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId} isModalOpen={this.state.isAcceptProgressionTreePopupOpen}
+              && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
+              treeName={this.state.scannerSelectedTreeName}
+              modalIsOpen={this.state.isAcceptProgressionTreePopupOpen}
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
               />
           }
@@ -151,7 +155,7 @@ class ProgressionTrees extends React.Component {
                       <div className="col-lg-12">
                         <div id="trees-scanner-container">
                           <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} roadmapsAdmin={this.props.roadmapsAdmin} 
-                            openTreeAcceptConfirmationPopup={(treeId)=>this.openTreeAcceptConfirmationPopup(treeId)}/>
+                            openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
                         </div>
                       </div>
                     </div>

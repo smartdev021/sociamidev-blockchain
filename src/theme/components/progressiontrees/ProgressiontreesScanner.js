@@ -33,7 +33,7 @@ const ProgressiontreesScanner = (props) => {
     foundRoadmaps = props.roadmapsAdmin.data;
   }
 
-  const openTreeAcceptConfirmationPopup = (treeId)=>props.openTreeAcceptConfirmationPopup(treeId);
+  const openTreeAcceptConfirmationPopup = (treeId, treeName)=>props.openTreeAcceptConfirmationPopup(treeId, treeName);
 
   return (
     <ul id="trees-scanner-list-trees">
@@ -42,7 +42,7 @@ const ProgressiontreesScanner = (props) => {
           let tree = DummyTrees[Math.floor(Math.random() * (DummyTrees.length - 0)) + 0];
           return (<li key={i}>
           <div className="tree-list-item">
-            <ActionLink href="#" onClick={()=>openTreeAcceptConfirmationPopup(roadmap._id)}>{roadmap.name}</ActionLink>
+            <ActionLink href="#" onClick={()=>openTreeAcceptConfirmationPopup(roadmap._id, roadmap.name)}>{roadmap.name}</ActionLink>
             {tree.secondaryInfo ? 
             <div className="pull-right">
               <span>
