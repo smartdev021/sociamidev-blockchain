@@ -80,13 +80,13 @@ class ConnectionsView extends React.Component {
     /**
      * Handle friend request. action can be "Accept", "Reject" or "Withdraw"
      */
-    handleFriendRequest(userid, action) {
+    handleFriendRequest(user, action) {
         var self = this;
 
         const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
         Axios.post(url, {
-            currentUser: self.props.currentUserId,
-            otherUser: userid,
+            currentUserId: self.props.currentUserId,
+            otherUser: user,
             connectAction: action
         })
             .then(function (response) {
@@ -175,11 +175,11 @@ class ConnectionsView extends React.Component {
                                 let button = null;
                                 let mainbtn = <span>
                                     <button type="button" className="btn btn-success"
-                                            onClick={()=>this.handleFriendRequest(friend.id, 'Accept')}> Accept
+                                            onClick={()=>this.handleFriendRequest(friend, 'Accept')}> Accept
                                     </button>
                                     &nbsp;&nbsp;
                                     <button type="button" className="btn btn-warning"
-                                            onClick={()=>this.handleFriendRequest(friend.id, 'Reject')}>Reject
+                                            onClick={()=>this.handleFriendRequest(friend, 'Reject')}>Reject
                                     </button>
                                 </span>;
 
@@ -187,11 +187,11 @@ class ConnectionsView extends React.Component {
                                     button = mainbtn;
                                 } else if (reqState == "Sent") {
                                     button = <button type="button" className="btn btn-primary"
-                                                     onClick={()=>this.handleFriendRequest(friend.id, 'Withdraw')}>
+                                                     onClick={()=>this.handleFriendRequest(friend, 'Withdraw')}>
                                         Withdraw</button>;
                                 } else {
                                     button = <button type="button" className="btn btn-primary"
-                                                     onClick={()=>this.handleFriendRequest(friend.id, reqState)}>{reqState}</button>;
+                                                     onClick={()=>this.handleFriendRequest(friend, reqState)}>{reqState}</button>;
                                 }
                                 return (
                                     <li key={friend.id} className="borderStyle">
@@ -233,10 +233,10 @@ class ConnectionsView extends React.Component {
                         <ul> {
                             this.state.receivedList.map(function (friend) {
                                 let actionBtn = <span ><button type="button" className="btn btn-success"
-                                                               onClick={()=>this.handleFriendRequest(friend.id, 'Accept')}> Accept</button>
+                                                               onClick={()=>this.handleFriendRequest(friend, 'Accept')}> Accept</button>
                                     &nbsp;&nbsp;
                                     <button type="button" className="btn btn-warning"
-                                            onClick={()=>this.handleFriendRequest(friend.id, 'Reject')}>Reject</button> </span>;
+                                            onClick={()=>this.handleFriendRequest(friend, 'Reject')}>Reject</button> </span>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
                                         <div className="imageContainer">                                  
@@ -278,7 +278,7 @@ class ConnectionsView extends React.Component {
                             this.state.sentList.map(function (friend) {
                                 let button = null;
                                 let withdrawBtn = <button type="button" className="btn btn-primary"
-                                                          onClick={()=>this.handleFriendRequest(friend.id, 'Withdraw')}>
+                                                          onClick={()=>this.handleFriendRequest(friend, 'Withdraw')}>
                                     Withdraw</button>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
