@@ -161,7 +161,7 @@ class ConnectionsView extends React.Component {
                                             <span className="videosText">Tasks</span>
                                         </div>
                                         <div className="buttonContainer">
-                                            <span className="actionBtn">  {addBtn} </span>
+                                            <span className="actionBtn">{addBtn}</span>
                                         </div>
                                     </li>);                                        
                             }, this)}
@@ -173,7 +173,7 @@ class ConnectionsView extends React.Component {
                             this.state.friendList.map(function (friend) {
                                 const reqState = friend.connectionStatus;
                                 let button = null;
-                                let mainbtn = <div>
+                                let mainbtn = <span>
                                     <button type="button" className="btn btn-success"
                                             onClick={()=>this.handleFriendRequest(friend.id, 'Accept')}> Accept
                                     </button>
@@ -181,7 +181,7 @@ class ConnectionsView extends React.Component {
                                     <button type="button" className="btn btn-warning"
                                             onClick={()=>this.handleFriendRequest(friend.id, 'Reject')}>Reject
                                     </button>
-                                </div>;
+                                </span>;
 
                                 if (reqState == "Received") {
                                     button = mainbtn;
@@ -223,7 +223,7 @@ class ConnectionsView extends React.Component {
                                             <span className="videosText">Tasks</span>
                                         </div>
                                         <div className="buttonContainer">
-                                            <span className="actionBtn">  {button} </span>
+                                            <span className="actionBtn">{button}</span>
                                         </div>
                                     </li>);
                             }, this)}
@@ -267,7 +267,7 @@ class ConnectionsView extends React.Component {
                                             <span className="videosText">Tasks</span>
                                         </div>
                                         <div className="buttonContainer">
-                                            <span className="actionBtn">  {actionBtn} </span>
+                                            <span className="actionBtn">{actionBtn}</span>
                                         </div>
                                     </li>);
                             }, this)}
@@ -310,7 +310,7 @@ class ConnectionsView extends React.Component {
                                             <span className="videosText">Tasks</span>
                                         </div>
                                         <div className="buttonContainer">
-                                            <span className="actionBtn">  {withdrawBtn} </span>
+                                            <span className="actionBtn">{withdrawBtn}</span>
                                         </div>
                                     </li>);
                             }, this)}
