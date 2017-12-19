@@ -83,6 +83,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
               experience: responseProfile.experience,
               education: responseProfile.education,
               roadmaps: response.data.roadmaps,
+              progressionTrees: response.data.progressionTrees,
               balance:responseProfile.balance
             }
 
