@@ -178,13 +178,13 @@ class SidebarLeft extends React.Component {
 
         break;
       }
-      /*case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
+      case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
       {
         result = <span className="friend-news-feed-text">Has added: 
-        <Link to={`/userProfileBrowser?id=${activity.metadata.friend.id}`}>{activity.metadata.friend.firstname}</Link></span>;
+        <Link to={`/userProfile?id=${activity.metadata.friend.id}`}>{activity.metadata.friend.firstName}</Link></span>;
 
         break;
-      }*/
+      }
       default:
         break;
     }

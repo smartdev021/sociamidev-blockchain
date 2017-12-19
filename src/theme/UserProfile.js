@@ -53,6 +53,39 @@ class UserProfile extends React.Component {
     this.props.openUserProfileComplete();
   }
 
+  //For viewing added friends profile fron news feed
+  componentDidMount() {
+    const URLParams = new URLSearchParams(this.props.location.search);
+
+    const userProfileId = URLParams.get("id");
+
+    if (userProfileId) {
+      Axios.get(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${userProfileId}`)
+      .then((response)=>this.userProfileFetchSuccess(response))
+      .catch((error)=>this.userProfileFetchFailed(error));
+    }
+  }
+
+  userProfileFetchSuccess(response) {
+    const profile = response.data.profile;
+
+    let valueCopy = Object.assign({}, this.state.value);
+
+    valueCopy.firstName = profile.firstName;
+    valueCopy.lastName = profile.lastName;
+    valueCopy.education = profile.education;
+    valueCopy.experience = profile.experience;
+    valueCopy.interests = profile.interests;
+    valueCopy.skills = profile.skills;
+
+    this.setState({ value: valueCopy });
+  }
+
+  userProfileFetchFailed(error) {
+    
+  }
+  //------------------------------------------------
+
   renderForm() {
     const { value } = this.state;
     return (
