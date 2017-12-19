@@ -91,6 +91,7 @@ class ConnectionsView extends React.Component {
         })
             .then(function (response) {
                 if (response.data === 'success') {
+                    self.getAllFriends();
                     self.getAllConnections();
                 }
                 console.log(response);
