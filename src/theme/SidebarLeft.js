@@ -164,18 +164,27 @@ class SidebarLeft extends React.Component {
     console.dir(activity);
 
     switch(activity.type) {
-      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
+      case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
       {
-        if (activity.metadata.projectName || activity.metadata.project_name) {
-          result = <span className="friend-news-feed-text">Has created project: 
-          <Link to={`/projectBrowser?id=${activity.metadata.projectID}`}>{activity.metadata.projectName 
-            ? activity.metadata.projectName : activity.metadata.project_name}</Link></span>;
-        }
-        else {
-          result = <span className="friend-news-feed-text">Has created project</span>;
-        }
+        result = <span className="friend-news-feed-text">Has started: 
+        <Link to={`/progressionTreeBrowser?id=${activity.metadata.treeId}`}>{activity.metadata.treeName}</Link></span>;
+        
         break;
       }
+      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
+      {
+        result = <span className="friend-news-feed-text">Has created: 
+        <Link to={`/projectBrowser?id=${activity.metadata.projectID}`}>{activity.metadata.projectName}</Link></span>;
+
+        break;
+      }
+      /*case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
+      {
+        result = <span className="friend-news-feed-text">Has added: 
+        <Link to={`/userProfileBrowser?id=${activity.metadata.friend.id}`}>{activity.metadata.friend.firstname}</Link></span>;
+
+        break;
+      }*/
       default:
         break;
     }
@@ -198,7 +207,7 @@ class SidebarLeft extends React.Component {
                 <div id="user-text">
                   <div className="user-text-name">{friend.firstName}</div>
                     {(friend.activities && friend.activities.length > 0) 
-                      ? that.renderActivity(friend.activities[0])
+                      ? that.renderActivity(friend.activities[0].activity)
                       : friend.userText
                     }
                 </div>
