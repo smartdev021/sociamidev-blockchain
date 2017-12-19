@@ -268,6 +268,7 @@ class App extends Component {
         searchQuery={this.props.searchQuery}
         onHandleQueryChange={this.props.setSearchQuery}
         currentUserId={this.props.userProfile._id}
+        userProfile={this.props.userProfile}
         isFetchInProgress={this.props.isFetchInProgress}/>
         {ChatAppLink}
       </div>

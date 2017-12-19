@@ -3,6 +3,7 @@ import Axios from "axios";
 import ConfigMain from "~/configs/main";
 import "../theme/css/userList.css";
 import {Tab, Tabs} from "../../node_modules/react-bootstrap";
+import PropTypes from 'prop-types';
 
 
 class ConnectionsView extends React.Component {
@@ -85,7 +86,7 @@ class ConnectionsView extends React.Component {
 
         const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
         Axios.post(url, {
-            currentUserId: self.props.currentUserId,
+            currentUser: self.props.userProfile,
             otherUser: user,
             connectAction: action
         })
@@ -323,6 +324,10 @@ class ConnectionsView extends React.Component {
         );
     }
 
+}
+
+ConnectionsView.propTypes = {
+    userProfile: PropTypes.object.isRequired,
 }
 
 export default ConnectionsView;
