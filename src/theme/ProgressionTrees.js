@@ -18,17 +18,10 @@ import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import ActivityTypes from "~/src/common/ActivityTypes"
-import ActivityFactory from "~/src/helpers/ActivityFactory"
-
 import {
   fetchRoadmaps,
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
-
-import {
-  pushNewActivity,
-} from '~/src/redux/actions/activities'
 
 import Axios from 'axios'
 
@@ -116,21 +109,11 @@ class ProgressionTrees extends React.Component {
 
   progressionTreeStartSuccess(response) {
     console.log("progressionTreeStartSuccess response: ");
-    console.log(response.data);
-    if (response.data.name) {
-      this.pushActivityProgressionTreeStarted(response.data);
-    }
+    console.dir(response.data);
   }
 
   progressionTreeStartFailed(error) {
-    console.log("Progression trees push activity error: " + error);
-  }
-
-  pushActivityProgressionTreeStarted(newProgressionTree) {
-    const ActivityProgressiontreeStarted = ActivityFactory.createActivity(ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED, 
-      {progressionTree: newProgressionTree, userID: this.props.userProfile._id});
-
-    this.props.pushNewActivity(ActivityProgressiontreeStarted);
+    console.log("progressionTreeStartFailed error: " + error);
   }
 
   render() {
@@ -190,7 +173,6 @@ ProgressionTrees.propTypes = {
   roadmapsAdmin: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
-  pushNewActivity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -203,7 +185,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
-  pushNewActivity: bindActionCreators(pushNewActivity, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgressionTrees);

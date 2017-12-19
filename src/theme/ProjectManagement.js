@@ -20,10 +20,6 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import ProjectsScanner from "~/src/theme/components/projects/ProjectsScanner"
 
-import ActivityTypes from "~/src/common/ActivityTypes"
-
-import ActivityFactory from "~/src/helpers/ActivityFactory"
-
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/projectManager.css"
 
@@ -48,10 +44,6 @@ import {
   projectsFetch,
   projectSave,
 } from '~/src/redux/actions/projects'
-
-import {
-  pushNewActivity,
-} from '~/src/redux/actions/activities'
 
 class ProjectManager extends React.Component {
 
@@ -80,23 +72,10 @@ class ProjectManager extends React.Component {
     this.props.projectsFetch(this.props.userProfile._id);
   }
 
-  pushActivityNewProject(newProject) {
-    const ActivityNewProject = ActivityFactory.createActivity(ActivityTypes.FRIEND_NEW_PROJECT_CREATED, 
-      {project: newProject, userID: this.props.userProfile._id});
-    this.props.pushNewActivity(ActivityNewProject);
-  }
-
   componentDidUpdate(prevProps, prevState) {
     console.log("ProjectManager::componentDidUpdate!!! this.props.isProjectSaveInProgress: " + this.props.isProjectSaveInProgress);
     if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
       this.fetchAllProjects();
-    }
-
-    //In case new project has been added - push a notification
-    if (prevProps.projects.length != this.props.projects.length) {
-      if (prevProps.projects.length != 0 && this.props.projects.length > prevProps.projects.length) {
-        this.pushActivityNewProject(this.props.projects[this.props.projects.length - 1]);
-      }
     }
 
     if (prevProps.isProjectsFetchInProgress && !this.props.isProjectsFetchInProgress) {
@@ -246,7 +225,6 @@ ProjectManager.propTypes = {
   deleteTask: PropTypes.func.isRequired,
   projectSave: PropTypes.func.isRequired,
   projectsFetch: PropTypes.func.isRequired,
-  pushNewActivity: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   isProjectsFetchInProgress: PropTypes.bool.isRequired,
   isProjectSaveInProgress: PropTypes.bool.isRequired,
@@ -277,7 +255,6 @@ const mapDispatchToProps = dispatch => ({
   projectSave: bindActionCreators(projectSave, dispatch),
   projectsFetch: bindActionCreators(projectsFetch, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
-  pushNewActivity: bindActionCreators(pushNewActivity, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(ProjectManager)));
