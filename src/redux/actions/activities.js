@@ -62,3 +62,16 @@ export function pushNewActivity(activity) {
         }));
     }
 }
+
+export function markActivitySeen(_activityId, _otherUserId, _witnessId) {
+    return function (dispatch) {
+      const url = `${ConfigMain.getBackendURL()}/userActivityMarkSeenByUser`;
+      const body = {userID: _otherUserId, activityID: _activityId, witnessID: _witnessId};
+        return (
+        Axios.post(url, body)
+        .then(function(response) {
+        })
+        .catch(function(error) {
+        }));
+    }
+}

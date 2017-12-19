@@ -20,7 +20,8 @@ import {
 } from '~/src/redux/actions/social'
 
 import {
-  activitiesFetch
+  activitiesFetch,
+  markActivitySeen,
 } from '~/src/redux/actions/activities'
 
 class SidebarLeft extends React.Component {
@@ -183,25 +184,35 @@ class SidebarLeft extends React.Component {
     console.log("RENDER ACTIVITY: activity");
     console.dir(activity);
 
-    switch(activity.type) {
+    switch(activity.activity.type) {
       case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
       {
         result = <span className="friend-news-feed-text">Has started: 
-        <Link to={`/progressionTreeBrowser?id=${activity.metadata.treeId}`}>{activity.metadata.treeName}</Link></span>;
+        <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          {activity.activity.metadata.treeName}
+        </Link></span>;
         
         break;
       }
       case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
       {
         result = <span className="friend-news-feed-text">Has created: 
-        <Link to={`/projectBrowser?id=${activity.metadata.projectID}`}>{activity.metadata.projectName}</Link></span>;
+        <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          {activity.activity.metadata.projectName}
+        </Link></span>;
 
         break;
       }
       case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
       {
         result = <span className="friend-news-feed-text">Has added: 
-        <Link to={`/userProfile?id=${activity.metadata.friend.id}`}>{activity.metadata.friend.firstName}</Link></span>;
+        <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
+        : activity.activity.metadata.friend._id}`}
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          {activity.activity.metadata.friend.firstName}
+        </Link></span>;
 
         break;
       }
@@ -227,7 +238,7 @@ class SidebarLeft extends React.Component {
                 <div id="user-text">
                   <div className="user-text-name">{friend.firstName}</div>
                     {(friend.activities && friend.activities.length > 0) 
-                      ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0].activity)
+                      ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
                       : friend.userText
                     }
                 </div>
@@ -271,11 +282,13 @@ SidebarLeft.propTypes = {
   userFriendsActivities: PropTypes.object.isRequired,
   activitiesFetch: PropTypes.func.isRequired,
   fetchUserFriends: PropTypes.func.isRequired,
+  markActivitySeen: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
   fetchUserFriends: bindActionCreators(fetchUserFriends, dispatch),
-  activitiesFetch: bindActionCreators(activitiesFetch, dispatch)
+  activitiesFetch: bindActionCreators(activitiesFetch, dispatch),
+  markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
 })
 
 const mapStateToProps = state => ({
