@@ -5,6 +5,8 @@ import {
     SET_USER_AUTHORIZED,
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
+    FETCH_USER_PROFILE_TASKS_INITIATE,
+    FETCH_USER_PROFILE_TASKS_COMPLETE,
 } from '~/src/redux/actions/actionTypes';
 
 export function isOpenProfilePending(state = false, action) {
@@ -24,13 +26,26 @@ const userProfileInitialState = {
   interests: 'programming, study',
   skills: 'javascript, c++', 
   experience: 'Google',
-  education: 'Harvard'
+  education: 'Harvard',
+  tasks: {
+    assigned: [],
+    created: [],
+    isLoading: false,
+  }
 };
   
 export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
     case FETCH_USER_PROFILE_COMPLETE:
-      return action.profile;
+      const TasksCopy = Object.assign({}, state.tasks); //TODO: temporary solution
+      const result = Object.assign({}, state, action.profile, {tasks: TasksCopy});
+      return result;
+    case FETCH_USER_PROFILE_TASKS_INITIATE: {
+      return {...state, ...tasks , isLoading: false};
+    }
+    case FETCH_USER_PROFILE_TASKS_COMPLETE: {
+      return {...state, ...tasks, assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false};
+    }
     default:
       return state;
     }

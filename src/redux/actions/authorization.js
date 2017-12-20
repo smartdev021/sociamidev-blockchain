@@ -5,6 +5,8 @@ import {
     OPEN_USER_PROFILE_COMPLETE,
     FETCH_USER_PROFILE_INITIATE,
     FETCH_USER_PROFILE_COMPLETE,
+    FETCH_USER_PROFILE_TASKS_INITIATE,
+    FETCH_USER_PROFILE_TASKS_COMPLETE,
 
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
@@ -50,6 +52,48 @@ export function fetchUserProfileInitiate() {
     return {
         type: FETCH_USER_PROFILE_INITIATE,
         profile: {}
+    }
+}
+
+export function fetchUserProfileTasksInitiate() {
+    return {
+        type: FETCH_USER_PROFILE_TASKS_INITIATE,
+    }
+}
+
+export function fetchUserProfileTasksComplete(assignedTasks, createdTasks) {
+    return {
+        type: FETCH_USER_PROFILE_TASKS_COMPLETE,
+        tasksAssigned: assignedTasks,
+        tasksCreated: createdTasks,
+    }
+}
+
+export function fetchUserTasks(userId) {
+    
+    return function (dispatch) {
+
+        dispatch(fetchUserProfileTasksInitiate());
+    
+        const url = `${ConfigMain.getBackendURL()}/tasksGet?userId=${userId}&assigneeId=${userId}`;
+    
+        return (
+          Axios.get(url)
+            .then(function(response) {
+
+                const tasksAssigned = response.data.filter(function(task) {
+                    return task.assignee.userID == userId;
+                });
+
+                const tasksCreated = response.data.filter(function(task) {
+                    return task.userID == userId;
+                });
+
+                dispatch(fetchUserProfileTasksComplete(tasksAssigned, tasksCreated));
+            })
+            .catch(function(error) {
+                dispatch(fetchUserProfileTasksComplete([], []));
+            }));
     }
 }
 

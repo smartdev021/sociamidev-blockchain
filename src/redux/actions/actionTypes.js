@@ -7,6 +7,9 @@ export const OPEN_SEARCH_RESULTS_COMPLETE = "action_open_user_search_results_com
 export const FETCH_USER_PROFILE_INITIATE = "fetch_user_profile_initiate";
 export const FETCH_USER_PROFILE_COMPLETE = "fetch_user_profile_complete";
 
+export const FETCH_USER_PROFILE_TASKS_INITIATE = "fetch_user_profile_tasks_initiate";
+export const FETCH_USER_PROFILE_TASKS_COMPLETE = "fetch_user_profile_tasks_complete";
+
 export const FETCH_JOB_ITEMS_INITIATE = "fetch_job_items_initiate";
 export const FETCH_EVENT_ITEMS_INITIATE = "fetch_event_items_initiate";
 export const FETCH_COURSE_ITEMS_INITIATE = "fetch_course_items_initiate";
