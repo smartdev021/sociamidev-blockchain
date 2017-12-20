@@ -25,17 +25,20 @@ const NetworkTasks = (props) => {
 
   if (foundTasks.length > 0) {
     return (
-      <ul id="tasks-scanner-list-tasks">
+      <div id="tasks-scanner-list-container">
+        <ul id="tasks-scanner-list-tasks">
         {
           foundTasks.map(function(task, i) {
-            return (<li key={i}>
-            <div>
-              <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>{task.name}</ActionLink>
-            </div>
-          </li>);
-          })
-        }
-      </ul>
+            return (
+              <li key={i}>
+                <div>
+                  <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>{task.name}</ActionLink>
+                </div>
+              </li>);
+            })
+          }
+        </ul>
+      </div>
     );
   }
   else {

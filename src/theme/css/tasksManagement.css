@@ -47,6 +47,11 @@
     font-size: 60px;
 }
 
+#tasks-scanner-list-container {
+    height: 350px;
+    overflow-y: scroll;
+}
+
 #tasks-scanner-list-tasks {
     list-style: none;
     margin-top: 20px;

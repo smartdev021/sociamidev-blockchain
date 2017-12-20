@@ -129,7 +129,7 @@ class TaskManagement extends React.Component {
       cookies.remove('lastViewedRoadmap');
     }
     else {
-      this.props.onFetchAllTasks(true);
+      this.props.onFetchAllTasks(false);
     }
   }
 
@@ -187,12 +187,12 @@ class TaskManagement extends React.Component {
     console.log("TaskManagement::handleSaveNewTaskSuccess");
     console.dir(response.data);
     this.props.fetchTasksComplete();
-    this.props.onFetchAllTasks(true);
+    this.props.onFetchAllTasks(false);
   }
 
   handleSaveNewTaskError(error) {
     this.props.fetchTasksComplete();
-    this.props.onFetchAllTasks(true);
+    this.props.onFetchAllTasks(false);
   }
   
   handleOpenConfirmTaskDetailsPopup(item) {
@@ -207,7 +207,7 @@ class TaskManagement extends React.Component {
   handleCloseConfirmTaskDetailsPopup(item) {
     let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false});
     this.setState(copy)
-    this.props.onFetchAllTasks(true);
+    this.props.onFetchAllTasks(false);
     this.fetchUserTasks();
   }
 
@@ -244,7 +244,7 @@ class TaskManagement extends React.Component {
   handleCloseCancelTaskDetailsPopup(item) {
     let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: false});
     this.setState(copy)
-    this.props.onFetchAllTasks(true);
+    this.props.onFetchAllTasks(false);
     this.fetchUserTasks();
   }
 
