@@ -70,68 +70,44 @@ class TaskManagement extends React.Component {
     }
   }
 
+  groupTasksByProjects(tasks) {
+    console.log("groupTasksByProjects !!!!!!!!!!!!!!!!!!!!!!!!!!");
+    let results = [];
+
+    let projects = {};
+
+    for (let i = 0; i < tasks.length; ++i) {
+      if (tasks[i].type == "project_milestone") {
+        if (!projects.hasOwnProperty(tasks[i].metaData.projectId)) {
+          projects[tasks[i].metaData.projectId] = {_id: tasks[i].metaData.projectId, name: tasks[i].metaData.projectName, milestones: []};
+        }
+
+        projects[tasks[i].metaData.projectId].milestones.push(tasks[i]);
+      }
+      else {
+        results.push(tasks[i]);
+      }
+    }
+
+    for (let tasksGrouped in projects) {
+      results.push(projects[tasksGrouped]);
+    }
+
+    console.dir(tasks);
+    console.dir(projects);
+    console.dir(results);
+
+    return results;
+  }
+
   getTasksAssignedToMe() {
-    return this.props.userProfile.tasks.assigned;
+    const tasksGroupedByProjects = this.groupTasksByProjects(this.props.userProfile.tasks.assigned);
+    return tasksGroupedByProjects;
   }
 
   getTasksCreatedByMe() {
-    return this.props.userProfile.tasks.created;
-  }
-
-  getProjectsCreatedByMeWithTasks() {
-    let projects = [];
-    
-    if (this.props.projects.length > 0) {
-      const currentUserId = this.props.userProfile._id;
-
-      projects = this.props.projects.filter(function(project) {
-        return project.userID == currentUserId && project.milestones && project.milestones.length > 0;
-      });
-    }
-
-    console.log("getProjectsCreatedByMeWithTasks projects: " + projects.length);
-    
-    return projects;
-  }
-
-  /*Return projects with only those milestones, assigned to current user*/
-  getProjectsWithTasksAssignedToMe() {
-    const tasksAssignedToMe = this.getTasksAssignedToMe();
-
-    let projects = [];
-    
-    if (this.props.projects.length > 0 && tasksAssignedToMe.length > 0) {
-      const currentUserId = this.props.userProfile._id;
-
-      //1. Get all projects that contain at least one milestone
-      const projectsWithMilestones = this.props.projects.filter(function(project) {
-        return project.userID != currentUserId && project.milestones && project.milestones.length > 0;
-      });
-
-      //2. For each project Check if any milestone is contained in tasksAssignedToMe
-      for (let i = 0; i < projectsWithMilestones.length; ++i) {
-        const currentProject = projectsWithMilestones[i];
-
-        let projectToAdd = Object.assign({}, currentProject);
-        projectToAdd.milestones = [];
-
-        for (let j = 0; j < currentProject.milestones.length; ++j) {
-          let findMilestoneById = function(milestone) {
-            return milestone._id == currentProject.milestones[j]._id;
-          }
-
-          if (tasksAssignedToMe.findIndex(findMilestoneById) != -1) {
-            projectToAdd.milestones.push(currentProject.milestones[j]);            
-          }
-        }
-
-        if (projectToAdd.milestones.length > 0) {
-          projects.push(projectToAdd);
-        }
-      }
-    }
-    
-    return projects;
+    const tasksGroupedByProjects = this.groupTasksByProjects(this.props.userProfile.tasks.created);
+    return tasksGroupedByProjects;
   }
 
   getMyTasksAll() {
@@ -293,8 +269,8 @@ class TaskManagement extends React.Component {
   }
 
   renderLeftSide() {
-    const tasksAssignedToMe = this.getTasksAssignedToMe().concat(this.getProjectsWithTasksAssignedToMe());
-    const tasksCreatedByMe = this.getTasksCreatedByMe().concat(this.getProjectsCreatedByMeWithTasks());
+    const tasksAssignedToMe = this.getTasksAssignedToMe();
+    const tasksCreatedByMe = this.getTasksCreatedByMe();
 
     if (tasksAssignedToMe.length == 0 && tasksCreatedByMe.length == 0) {
       return <span></span>;
