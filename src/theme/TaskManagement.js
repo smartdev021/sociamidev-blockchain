@@ -71,7 +71,6 @@ class TaskManagement extends React.Component {
   }
 
   groupTasksByProjects(tasks) {
-    console.log("groupTasksByProjects !!!!!!!!!!!!!!!!!!!!!!!!!!");
     let results = [];
 
     let projects = {};
@@ -92,10 +91,6 @@ class TaskManagement extends React.Component {
     for (let tasksGrouped in projects) {
       results.push(projects[tasksGrouped]);
     }
-
-    console.dir(tasks);
-    console.dir(projects);
-    console.dir(results);
 
     return results;
   }
