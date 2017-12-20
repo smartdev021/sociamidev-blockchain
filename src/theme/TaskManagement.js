@@ -72,12 +72,8 @@ class TaskManagement extends React.Component {
     if (this.props.isAuthorized) {
       const currentUserId = this.props.userProfile._id;
 
-      let findByUserId = function(assignee) {
-        return assignee.userID == currentUserId;
-      }
-      
       myTasks = this.props.tasks.filter(function(task) {
-        return task.taskAsigneeId && task.taskAsigneeId.length > 0 && task.taskAsigneeId.findIndex(findByUserId) != -1;
+        return task.assignee && task.assignee._id == currentUserId;
       });
     }
 
@@ -254,7 +250,17 @@ class TaskManagement extends React.Component {
       _id:this.state.detailsPopupItem._id,
       taskAsigneeId:userID
     }
-    Axios.get(`${ConfigMain.getBackendURL()}/taskAssign?_id=${this.state.detailsPopupItem._id}&taskAsigneeId=${userID}`)
+
+    const body = {
+      _id: this.state.detailsPopupItem._id, 
+      assignee: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      }
+    };
+
+    Axios.post(`${ConfigMain.getBackendURL()}/taskAssign`, body)
     .then((response) =>this.handleCloseConfirmTaskDetailsPopup(response))
     .catch((error) =>this.handleCloseConfirmTaskDetailsPopup(error));
   }
@@ -280,7 +286,11 @@ class TaskManagement extends React.Component {
       _id:this.state.detailsPopupItem._id,
       taskAsigneeId:userID
     }
-    Axios.get(`${ConfigMain.getBackendURL()}/taskCancel?_id=${this.state.detailsPopupItem._id}&taskAsigneeId=${userID}`)
+    const body = {
+      _id: this.state.detailsPopupItem._id
+    };
+
+    Axios.post(`${ConfigMain.getBackendURL()}/taskCancel`, body)
     .then((response) =>this.handleCloseCancelTaskDetailsPopup(response))
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
