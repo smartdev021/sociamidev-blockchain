@@ -135,9 +135,6 @@ class SidebarLeft extends React.Component {
     let ListOfFriends = (this.props.userFriends.friends && this.props.userFriends.friends.length > 0) 
     ? this.props.userFriends.friends: DummyFriendsList;
 
-    console.log("this.props.userFriends: " + this.props.userFriends);
-    console.dir(this.props.userFriends);
-
     //TODO: Remove once profile image is fetched from back-end
     for (let i = 0; i < ListOfFriends.length; ++i) {
       if (!ListOfFriends[i].profileImage) {
@@ -172,17 +169,11 @@ class SidebarLeft extends React.Component {
       }
     }
 
-    console.log("AFTER ATTACHING ACTIVITIES, LIST OF FRIENDS LOOKS LIKE THIS: ");
-    console.dir(newListOfFriends);
-
     return newListOfFriends;
   }
 
   renderActivity(activity) {
     let result = <span className="friend-news-feed-text">Unhandled feed</span>;
-
-    console.log("RENDER ACTIVITY: activity");
-    console.dir(activity);
 
     switch(activity.activity.type) {
       case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
