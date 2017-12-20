@@ -263,49 +263,26 @@ class PopupNewProject extends React.Component {
     }
 
     taskUnpublishWithConfirmation(milestoneId) {
-      const url = `${ConfigMain.getBackendURL()}/taskGetById?id=${milestoneId}`;
-      let that = this;
+      this.setState({isWithdrawConfirmationInProgress: true});
 
-      let copy = Object.assign({}, this.state, {isWithdrawConfirmationInProgress: true});
-      this.setState(copy);
+      const url = `${ConfigMain.getBackendURL()}/taskGetById?id=${milestoneId}`;
+      const that = this;
 
       Axios.get(url)
       .then(function(response) {
-          if (response && response.data.taskAsigneeId && response.data.taskAsigneeId.length > 0) {
-            const userID = response.data.taskAsigneeId[0].userID;
+          if (response.data.assignee && response.data.assignee._id) {
+            const Assignee = `${response.data.assignee.firstName} ${response.data.assignee.lastName}`;
 
-            const url = `${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${userID}`;
-            let thatThat = that;
-            Axios.get(url)
-            .then(function(response) {
-                if (response.data) {
-                  console.log("Task has been assigned and can not be withdrawn");
-                  console.dir(response.data);
-
-                  const profileFirstName = response.data.profile.firstName;
-                  const profileLastName = response.data.profile.lastName;
-
-                  let copy = Object.assign({}, thatThat.state, {assigneeNameToConfirm: `${profileFirstName} ${profileLastName}`, 
-                  milestoneIdToRemove: milestoneId, confirmWithdrawPopupOpen: true});
-                    thatThat.setState(copy);
-                }
-            })
-            .catch(function(error) {
-              let copy = Object.assign({}, thatThat.state, {isWithdrawConfirmationInProgress: false});
-              thatThat.setState(copy);
-              console.log("Error: " + error);
-            });
+            that.setState({assigneeNameToConfirm: Assignee, 
+                milestoneIdToRemove: milestoneId, confirmWithdrawPopupOpen: true});
           }
           else {
-            let copy = Object.assign({}, that.state, {isWithdrawConfirmationInProgress: false});
-            that.setState(copy);
-            console.log("Task has no assignees");
             that.props.setTaskPublished(milestoneId, false);
           }
+          that.setState({isWithdrawConfirmationInProgress: false});
       })
       .catch(function(error) {
-        let copy = Object.assign({}, that.state, {isWithdrawConfirmationInProgress: false});
-        that.setState(copy);
+        that.setState({isWithdrawConfirmationInProgress: false});
         console.log("Error: " + error);
       });
     }
@@ -324,6 +301,14 @@ class PopupNewProject extends React.Component {
 
       if (confirm) {
         this.props.setTaskPublished(milestoneIdToRemove, false);
+
+        const body = {
+          _id: milestoneIdToRemove
+        };    
+
+        Axios.post(`${ConfigMain.getBackendURL()}/taskCancel`, body)
+        .then((response)=> {})
+        .catch((error) =>{ console.log("Tasc cancel error")});
       }
 
       let copy = Object.assign({}, this.state, {assigneeNameToConfirm: "", 
