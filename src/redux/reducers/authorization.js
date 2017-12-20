@@ -41,10 +41,14 @@ export function userProfile(state = userProfileInitialState, action) {
       const result = Object.assign({}, state, action.profile, {tasks: TasksCopy});
       return result;
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
-      return {...state, ...tasks , isLoading: false};
+      return {...state, tasks: {assigned: [], created: [], isLoading: true}};
     }
     case FETCH_USER_PROFILE_TASKS_COMPLETE: {
-      return {...state, ...tasks, assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false};
+      console.log("USER PROFILE TASKS FETCH COMPLETE");
+      console.dir(action.tasksAssigned);
+      console.dir(action.tasksCreated);
+      
+      return {...state, tasks: {assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false}};
     }
     default:
       return state;

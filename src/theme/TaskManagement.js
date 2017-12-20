@@ -43,6 +43,10 @@ import {
   projectsFetch,
 } from '~/src/redux/actions/projects'
 
+import {
+  fetchUserTasks,
+} from '~/src/redux/actions/authorization'
+
 const BackendURL = ConfigMain.getBackendURL();
 
 const TaskCategoryYour = {
@@ -187,6 +191,10 @@ class TaskManagement extends React.Component {
     if (!prevProps.userProfile._id && this.props.userProfile._id) {
       console.log("!prevProps.userProfile._id && this.props.userProfile._id");
       this.storeAndFetchTasks();
+    }
+
+    if (!prevProps.isAuthorized && this.props.isAuthorized) {
+      this.props.fetchUserTasks(this.props.userProfile._id);
     }
   }
 
@@ -353,6 +361,11 @@ class TaskManagement extends React.Component {
 
 TaskManagement.propTypes = {
   tasks: PropTypes.array.isRequired,
+
+  tasksCreatedCurrentUser: PropTypes.array.isRequired,
+  tasksAssignedToCurrentUser: PropTypes.array.isRequired,
+  isUserTasksLoading: PropTypes.bool.isRequired,
+
   projects: PropTypes.array.isRequired,
   isTasksFetchInProgress: PropTypes.bool.isRequired,
 
@@ -361,12 +374,18 @@ TaskManagement.propTypes = {
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
   projectsFetch: PropTypes.func.isRequired,
+  fetchUserTasks: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile,
   isAuthorized: state.isAuthorized,
   tasks: state.tasks,
+
+  tasksCreatedCurrentUser: state.userProfile.tasks.created,
+  tasksAssignedToCurrentUser: state.userProfile.tasks.assigned,
+  isUserTasksLoading: state.userProfile.tasks.isLoading,
+
   projects: state.projects,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
 });
@@ -377,6 +396,7 @@ const mapDispatchToProps = dispatch => ({
   projectsFetch: bindActionCreators(projectsFetch, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
+  fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

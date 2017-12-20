@@ -74,20 +74,24 @@ export function fetchUserTasks(userId) {
     return function (dispatch) {
 
         dispatch(fetchUserProfileTasksInitiate());
-    
-        const url = `${ConfigMain.getBackendURL()}/tasksGet?userId=${userId}&assigneeId=${userId}`;
+
+        const url = `${ConfigMain.getBackendURL()}/tasksGetForUser?userId=${userId}&assigneeId=${userId}`;
     
         return (
           Axios.get(url)
             .then(function(response) {
 
-                const tasksAssigned = response.data.filter(function(task) {
-                    return task.assignee.userID == userId;
-                });
+                let tasksAssigned = [];
+                let tasksCreated = [];
 
-                const tasksCreated = response.data.filter(function(task) {
-                    return task.userID == userId;
-                });
+                for (let i = 0; i < response.data.length; ++i) {
+                    if (response.data[i].userID == userId) {
+                        tasksCreated.push(response.data[i]);
+                    }
+                    else if (response.data[i].assignee && response.data[i].assignee._id == userId) {
+                        tasksAssigned.push(response.data[i]);
+                    }
+                }
 
                 dispatch(fetchUserProfileTasksComplete(tasksAssigned, tasksCreated));
             })
