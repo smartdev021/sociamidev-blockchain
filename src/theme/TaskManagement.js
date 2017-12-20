@@ -71,31 +71,11 @@ class TaskManagement extends React.Component {
   }
 
   getTasksAssignedToMe() {
-    let myTasks = [];
-
-    if (this.props.isAuthorized) {
-      const currentUserId = this.props.userProfile._id;
-
-      myTasks = this.props.tasks.filter(function(task) {
-        return task.assignee && task.assignee._id == currentUserId;
-      });
-    }
-
-    return myTasks;
+    return this.props.userProfile.tasks.assigned;
   }
 
   getTasksCreatedByMe() {
-    let myTasks = [];
-
-    if (this.props.isAuthorized) {
-      const currentUserId = this.props.userProfile._id;
-
-      myTasks = this.props.tasks.filter(function(task) {
-        return task.userID && task.userID == currentUserId;
-      });
-    }
-
-    return myTasks;
+    return this.props.userProfile.tasks.created;
   }
 
   getProjectsCreatedByMeWithTasks() {
@@ -182,9 +162,16 @@ class TaskManagement extends React.Component {
     }
   }
 
+  fetchUserTasks() {
+    if (this.props.isAuthorized && !this.props.isUserTasksLoading) {
+      this.props.fetchUserTasks(this.props.userProfile._id);
+    }
+  }
+
   componentWillMount() {
     this.props.projectsFetch();
     this.storeAndFetchTasks();
+    this.fetchUserTasks();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -194,7 +181,7 @@ class TaskManagement extends React.Component {
     }
 
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
-      this.props.fetchUserTasks(this.props.userProfile._id);
+      this.fetchUserTasks();
     }
   }
 
@@ -250,6 +237,7 @@ class TaskManagement extends React.Component {
     let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false});
     this.setState(copy)
     this.props.onFetchAllTasks(true);
+    this.fetchUserTasks();
   }
 
   handleAcceptConfirm(item){
@@ -286,6 +274,7 @@ class TaskManagement extends React.Component {
     let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: false});
     this.setState(copy)
     this.props.onFetchAllTasks(true);
+    this.fetchUserTasks();
   }
 
   handleAcceptCancel(item){

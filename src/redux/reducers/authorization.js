@@ -44,10 +44,6 @@ export function userProfile(state = userProfileInitialState, action) {
       return {...state, tasks: {assigned: [], created: [], isLoading: true}};
     }
     case FETCH_USER_PROFILE_TASKS_COMPLETE: {
-      console.log("USER PROFILE TASKS FETCH COMPLETE");
-      console.dir(action.tasksAssigned);
-      console.dir(action.tasksCreated);
-      
       return {...state, tasks: {assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false}};
     }
     default:
