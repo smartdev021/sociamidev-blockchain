@@ -288,10 +288,23 @@ class TaskManagement extends React.Component {
   }
 
   renderRightSide() {
+    let tasksFiltered = [];
+
+    const currentUserId = this.props.userProfile._id;
+
+    if (this.props.isAuthorized) {
+      tasksFiltered = this.props.tasks.filter(function(task) {
+        return task.userID != currentUserId && (!task.assignee || task.assignee._id != currentUserId);
+      });
+    }
+    else {
+      tasksFiltered = this.props.tasks;
+    }
+
     return (
       <div className={this.getMyTasksAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
-          <TasksScannerContainer tasks={this.props.tasks} scannerQuery={this.state.scannerQuery} 
+          <TasksScannerContainer tasks={tasksFiltered} scannerQuery={this.state.scannerQuery} 
             currentUserID={this.props.userProfile._id}
             handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}
             handleChange={(e)=>this.handleChange(e)}
