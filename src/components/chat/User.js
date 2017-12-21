@@ -46,7 +46,7 @@ class User extends React.Component {
           <div data-id={`${this.props.tabKey}`} className={classes} onClick={(event)=>this.onItemClick(event)}  id={`${this.props.username}`} data-user={`${fullname}`}>
             <img src={imgSrc} alt="" />
             <span className="name">{ fullname }</span>
-            <span className="time"><TimeAgo date={this.props.lastMessageTimeStamp} /></span>
+            <span className="time"><TimeAgo date={this.props.lastMessageTimeStamp} minPeriod={60}/></span>
             <span className="preview">{this.props.lastMessage}</span>
             <div className={messageCountContainerClasses}><span className="messageCount">{this.state.unreadCount}</span></div>
           </div>

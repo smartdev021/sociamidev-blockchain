@@ -46,21 +46,6 @@ class Users extends React.Component {
     }
   }
 
-  getTimeStamp(date){
-    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    var d = new Date(date);
-    var monthText = monthNames[d.getMonth()];
-    var dateText = d.getDate();
-
-    var hourText = d.getHours();
-    var minuteText = d.getMinutes();
-    var ampmText = hourText >= 12 ? 'PM' : 'AM';
-    hourText = hourText % 12;
-    hourText = hourText ? hourText : 12;
-
-    return dateText + " " + monthText + "  " + hourText + ":" + minuteText + " " + ampmText;
-  }
-
   render() {
     // Loop through all the messages in the state and create a Message component
     var className = "newMessageIndicator " + this.state.messageIndicatorClass;
