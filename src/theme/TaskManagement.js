@@ -350,7 +350,7 @@ TaskManagement.propTypes = {
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile,
-  isAuthorized: state.isAuthorized,
+  isAuthorized: state.userProfile.isAuthorized,
   tasks: state.tasks,
 
   tasksCreatedCurrentUser: state.userProfile.tasks.created,

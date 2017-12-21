@@ -319,7 +319,7 @@ const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
   isSignUpFormOpen: state.isSignUpFormOpen,
   searchQuery: state.searchQuery,
-  isAuthorized: state.isAuthorized,
+  isAuthorized: state.userProfile.isAuthorized,
   userProfile: state.userProfile,
   exactLocation: state.exactLocation,
   searchResults: state.searchResults,

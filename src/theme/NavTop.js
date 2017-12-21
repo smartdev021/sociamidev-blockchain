@@ -109,7 +109,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  isAuthorized: state.isAuthorized
+  isAuthorized: state.userProfile.isAuthorized
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

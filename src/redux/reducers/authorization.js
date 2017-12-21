@@ -1,7 +1,8 @@
 import { 
     OPEN_USER_PROFILE, 
     OPEN_USER_PROFILE_COMPLETE, 
-    FETCH_USER_PROFILE_COMPLETE, 
+    FETCH_USER_PROFILE_COMPLETE,
+    FETCH_USER_PROFILE_INITIATE,
     SET_USER_AUTHORIZED,
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
@@ -31,14 +32,18 @@ const userProfileInitialState = {
     assigned: [],
     created: [],
     isLoading: false,
-  }
+  },
+  isAuthorized: false,
+  isLoading: false,
 };
   
 export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
+    case FETCH_USER_PROFILE_INITIATE:
+      return {...state, isAuthorized: false, isLoading: true};
     case FETCH_USER_PROFILE_COMPLETE:
       const TasksCopy = Object.assign({}, state.tasks); //TODO: temporary solution
-      const result = Object.assign({}, state, action.profile, {tasks: TasksCopy});
+      const result = Object.assign({}, state, action.profile, {tasks: TasksCopy}, {isAuthorized: true}, {isLoading: false});
       return result;
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
       return {...state, tasks: {assigned: [], created: [], isLoading: true}};

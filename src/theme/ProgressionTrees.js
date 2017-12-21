@@ -184,7 +184,7 @@ ProgressionTrees.propTypes = {
 const mapStateToProps = state => ({
   roadmaps: state.roadmaps,
   roadmapsAdmin: state.roadmapsAdmin,
-  isAuthorized: state.isAuthorized,
+  isAuthorized: state.userProfile.isAuthorized,
   userProfile: state.userProfile,
 })
 

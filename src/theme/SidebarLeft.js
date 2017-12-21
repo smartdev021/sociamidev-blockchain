@@ -283,7 +283,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  isAuthorized: state.isAuthorized,
+  isAuthorized: state.userProfile.isAuthorized,
   userProfile: state.userProfile,
   userFriends: state.userFriends,
   userFriendsActivities: state.userFriendsActivities,
