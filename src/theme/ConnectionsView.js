@@ -15,7 +15,8 @@ class ConnectionsView extends React.Component {
             friendList: [],
             receivedList: [],
             sentList: [],
-            key: 1
+            key: 1,
+            loader: 0
         };
         this.handleSelect = this.handleSelect.bind(this);
 
@@ -82,6 +83,8 @@ class ConnectionsView extends React.Component {
      * Handle friend request. action can be "Accept", "Reject" or "Withdraw"
      */
     handleFriendRequest(user, action) {
+        let copy = Object.assign({}, this.state, {loader: 1});
+        this.setState(copy);
         var self = this;
 
         const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
@@ -95,14 +98,20 @@ class ConnectionsView extends React.Component {
                     self.getAllFriends();
                     self.getAllConnections();
                 }
+                copy = Object.assign({}, self.state, {loader: 0});
+                self.setState(copy);
                 console.log(response);
             })
             .catch(function (error) {
+                copy = Object.assign({}, self.state, {loader: 0});
+                self.setState(copy);
                 console.log(error);
             });
     }
 
     handleAddSoqqler(userid) {
+        let copy = Object.assign({}, this.state, {loader: 1});
+        this.setState(copy);
         var self = this;
         const url = `${ConfigMain.getBackendURL()}/addSoqqler`;
         Axios.post(url, {
@@ -115,16 +124,23 @@ class ConnectionsView extends React.Component {
                     self.getAllFriends();
                     self.getAllConnections();
                 }
+                copy = Object.assign({}, self.state, {loader: 0});
+                self.setState(copy);
                 console.log(response);
             })
             .catch(function (error) {
+                copy = Object.assign({}, self.state, {loader: 0});
+                self.setState(copy);
                 console.log(error);
             });
     }
 
     render() {
         let divStyle = {overflow: 'auto'};
+        const loaderMainClass = this.state.loader == 0 ? "loader-class-1" : "loader-class-2";
+        const loaderMainClasses = `loading ${loaderMainClass}` ;
         return (
+            <div className={loaderMainClasses}></div>
             <div style={divStyle} className="allFriendList">
                 <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="allFriendList">
                     <Tab eventKey={1} title="All">
