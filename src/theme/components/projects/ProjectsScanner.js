@@ -20,42 +20,6 @@ class ProjectsScanner extends React.Component {
       this.state = {
         selectedCategoryIndex: 0,
         searchQuery: "",
-        projectsAll: [],
-        projectsFriends: [],
-      }
-    }
-
-    getAllProjects() {
-      const currentUserId = this.props.currentUserId;
-
-      const filterFunction = (project)=> {
-        return project.userID != currentUserId;
-      }
-
-      return this.props.projects.filter(filterFunction);
-    }
-
-    refreshProjects() {
-      if (this.props.isAuthorized) {
-        const allProjects = this.getAllProjects();
-        
-        const userFriends = this.props.userFriends;
-        
-        const filterFriendsProjects = (project) => {
-          console.log("filterFriendsProjects");
-          console.dir(project);
-          return userFriends.friends.findIndex(function(friend) {return friend.id == project.userID}) != -1;
-        }
-
-        console.log("Refresh projects");
-        console.dir(userFriends);
-        
-        const friendsProjects = allProjects.filter(filterFriendsProjects);
-              
-        this.setState({projectsAll: allProjects, projectsFriends: friendsProjects});
-      }
-      else {
-        this.setState({projectsAll: this.props.projects, projectsFriends: []});
       }
     }
 
@@ -69,32 +33,29 @@ class ProjectsScanner extends React.Component {
       this.setState({searchQuery: e.target.value})
     }
 
-    componentWillMount() {
-      this.refreshProjects();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-      if (prevProps.isAuthorized != this.props.isAuthorized || this.props.projects != prevProps.projects) {
-        this.refreshProjects();
+    getProjectsFiltered() {
+      const UserFriends = this.props.userFriends;
+      const SelectedCategory = Categories[this.state.selectedCategoryIndex];
+      const IsCategoryMatch = (project)=> {
+        return (SelectedCategory == CategoryAll 
+          || UserFriends.friends.findIndex(function(friend) {return friend.id == project.userID}) != -1);
       }
 
-      if (prevState.selectedCategoryIndex != this.state.selectedCategoryIndex) {
-        this.refreshProjects();
+      const SearchQuery = this.state.searchQuery.toLowerCase();
+      const IsSearchQueryMatch = (project) => {
+        return ( ( (!SearchQuery || SearchQuery == "") || (project.name.toLowerCase().startsWith(SearchQuery) ) ) );
       }
+      
+      const CurrentUserId = this.props.currentUserId;
+      const FilterProjects = (project) => {
+        return project.userID != CurrentUserId && (IsCategoryMatch(project) && IsSearchQueryMatch(project));
+      }
+
+      return this.props.projects.filter(FilterProjects);
     }
 
     renderProjects(props) {
-      let ProjectsFiltered = Categories[this.state.selectedCategoryIndex] == CategoryFriends ? this.state.projectsFriends : this.state.projectsAll;
-
-      const SerchQuery = this.state.searchQuery;
-
-      if (SerchQuery != "") {
-        const filterBySearchQuery = (project) => {
-          return project.name.toLowerCase().startsWith(SerchQuery.toLowerCase());
-        }
-
-        ProjectsFiltered = ProjectsFiltered.filter(filterBySearchQuery);
-      }
+      const ProjectsFiltered = this.getProjectsFiltered();
 
       return (
         <ul id="project-scanner-list-projects">

@@ -70,7 +70,7 @@
 }
 
 #project-scanner-list-projects-container {
-  height: 350px;
+  height: 300px;
   overflow-y: scroll;
 }
 
@@ -102,7 +102,8 @@
 }
 
 #project-scanner-category-switch {
-  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 5px;
 }
 
 #project-scanner-category-switch a {
