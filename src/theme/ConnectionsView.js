@@ -140,8 +140,8 @@ class ConnectionsView extends React.Component {
         const loaderMainClass = this.state.loader == 0 ? "loader-class-1" : "loader-class-2";
         const loaderMainClasses = `loading ${loaderMainClass}` ;
         return (
-            <div className={loaderMainClasses}></div>
             <div style={divStyle} className="allFriendList">
+              <div className={loaderMainClasses}></div>
                 <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="allFriendList">
                     <Tab eventKey={1} title="All">
                         <ul> {
