@@ -100,3 +100,18 @@
   font-size: 18px;
   color: white;
 }
+
+#project-scanner-category-switch {
+  text-align: center;
+}
+
+#project-scanner-category-switch a {
+  color: white;
+  font-size: 18px;
+  font-family: "Comfortaa";
+  text-decoration: none;
+}
+
+#project-scanner-category-switch a:hover {
+  text-decoration: underline;
+}
