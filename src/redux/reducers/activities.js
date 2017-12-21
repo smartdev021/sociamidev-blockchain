@@ -7,7 +7,6 @@ import {
 const userFriendsActivitiesInitialState = {activities: {}, isFetching: false};
 
 export function userFriendsActivities(state = userFriendsActivitiesInitialState, action) {
-    console.log("REDUCER userFriends")
     switch (action.type) {
       case ACTIVITIES_FETCH_INITIATE:
           return {...state, isFetching: true};
