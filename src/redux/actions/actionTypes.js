@@ -34,8 +34,6 @@ export const SIGNUP_FORM_CLOSE = "signup_form_close";
 
 export const SEARCH_QUERY_SET = "search_query_set";
 
-export const SET_USER_AUTHORIZED = "set_user_authorized";
-
 export const ROADMAP_ADD = "roadmap_add";
 export const ROADMAPS_SET = "roadmaps_set";
 export const ROADMAP_REMOVE = "roadmap_remove";

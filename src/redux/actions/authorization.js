@@ -11,8 +11,6 @@ import {
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
 
-    SET_USER_AUTHORIZED,
-
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main'
@@ -101,13 +99,6 @@ export function fetchUserTasks(userId) {
     }
 }
 
-export function setUserAuthorized(value) {
-    return {
-        type: SET_USER_AUTHORIZED,
-        authorized: value
-    }
-}
-
 export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
 
     return function (dispatch) {
@@ -137,12 +128,10 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
 
             //async action exit point
             dispatch(fetchUserProfileComplete(newUserProfile));
-            dispatch(setUserAuthorized(true));
         })
         .catch(function(error) {
             //async action exit point
             dispatch(fetchUserProfileComplete({}));
-            dispatch(setUserAuthorized(false));
         }));
     }
 }

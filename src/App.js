@@ -27,7 +27,6 @@ import {
   openUserProfile,
   openSignUpForm,
   closeSignUpForm,
-  setUserAuthorized,
 } from '~/src/redux/actions/authorization'
 
 import {
@@ -168,10 +167,7 @@ class App extends Component {
 
     if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
       console.log("componentDidUpdate this.state.linkedInID: " + this.state.linkedInID + " this.state.faceBookID: " + this.state.faceBookID);
-      if(!this.state.linkedInID && !this.state.faceBookID) {
-        this.props.setUserAuthorized(false);
-      }
-      else if(this.state.linkedInID || this.state.faceBookID) {
+      if(this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
       }
     }
@@ -293,7 +289,6 @@ App.propTypes = {
   fetchResultsComplete: PropTypes.func.isRequired,
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
-  setUserAuthorized: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
@@ -306,7 +301,6 @@ const mapDispatchToProps = dispatch => ({
   fetchResultsComplete: bindActionCreators(fetchResultsComplete, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
-  setUserAuthorized: bindActionCreators(setUserAuthorized, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),

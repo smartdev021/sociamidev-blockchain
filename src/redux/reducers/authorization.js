@@ -3,7 +3,6 @@ import {
     OPEN_USER_PROFILE_COMPLETE, 
     FETCH_USER_PROFILE_COMPLETE,
     FETCH_USER_PROFILE_INITIATE,
-    SET_USER_AUTHORIZED,
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
     FETCH_USER_PROFILE_TASKS_INITIATE,
@@ -54,15 +53,6 @@ export function userProfile(state = userProfileInitialState, action) {
     default:
       return state;
     }
-}
-  
-export function isAuthorized(state = false, action) {
-  switch (action.type) {
-    case SET_USER_AUTHORIZED:
-      return action.authorized;
-  default:
-      return state;
-  }
 }
 
 export function isSignUpFormOpen(state = false, action) {
