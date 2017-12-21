@@ -3,6 +3,24 @@
 */
 import React from 'react';
 
+import {Link} from 'react-router-dom'
+
+const renderProjects = (props) => {
+  return (
+    <ul id="project-scanner-list-projects">
+      {
+        props.projects.map(function(project, i) {
+          return (<li key={i}>
+          <div className="project-scanner-list-item">
+            <Link to={`/projectBrowser?id=${project._id}`}>{project.name}</Link>
+          </div>
+        </li>);
+        })
+      }
+    </ul>
+  );
+}
+
 const ProjectsScanner = (props) => {
   return (
     <div id="project-manager-project-scanner-container">
@@ -23,6 +41,13 @@ const ProjectsScanner = (props) => {
           <div className="col-lg-12">
             <div id="scanner-input-container">
               <input type="text" autoComplete="off" id="scanner_trees" placeholder=""/>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <div id="project-scanner-list-projects-container">
+              {renderProjects(props)}
             </div>
           </div>
         </div>

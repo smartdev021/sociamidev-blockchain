@@ -69,7 +69,16 @@ class ProjectManager extends React.Component {
   }
 
   fetchAllProjects() {
-    this.props.projectsFetch(this.props.userProfile._id);
+    this.props.projectsFetch();
+  }
+
+  getMyProjects() {
+    const userID = this.props.userProfile._id;
+    const filterMyProjects = (project) => {
+      return project.userID == userID;
+    }
+
+    return this.props.projects.filter(filterMyProjects);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -79,7 +88,7 @@ class ProjectManager extends React.Component {
     }
 
     if (prevProps.isProjectsFetchInProgress && !this.props.isProjectsFetchInProgress) {
-      if (!this.props.projects || this.props.projects.length == 0) {
+      if (this.getMyProjects().length == 0) {
         this.openModal();
       }
     }
@@ -159,9 +168,10 @@ class ProjectManager extends React.Component {
   }
   
   render() {
+    const MyProjects = this.getMyProjects();
     let that = this;
-    let selectedProject = (this.props.projects.length > 0 && this.state.selectedProjectIndex >= 0) 
-    ? this.props.projects[this.state.selectedProjectIndex] : undefined;
+    let selectedProject = (MyProjects.length > 0 && this.state.selectedProjectIndex >= 0) 
+    ? MyProjects[this.state.selectedProjectIndex] : undefined;
 
     console.log("selectedProject: ");
     console.dir(selectedProject);
@@ -196,13 +206,13 @@ class ProjectManager extends React.Component {
                   isProjectsFetchInProgress={this.props.isProjectsFetchInProgress}
                   isProjectSaveInProgress={this.props.isProjectSaveInProgress}
                   isAuthorized={this.props.isAuthorized}
-                  projects={this.props.projects}
+                  projects={MyProjects}
                 />
               </div>
             </div>
             <div className="col-lg-3">
               <div className="content-2-columns-right">
-                <ProjectsScanner/>
+                <ProjectsScanner projects={this.props.projects} isAuthorized={this.props.isAuthorized}/>
               </div>
             </div>
           </div>
@@ -214,6 +224,8 @@ class ProjectManager extends React.Component {
 }
 
 ProjectManager.propTypes = {
+  userProfile: PropTypes.object.isRequired,
+  userFriends: PropTypes.object.isRequired,
   tasks: PropTypes.array.isRequired,
   projects: PropTypes.array.isRequired,
   roadmapsDetailed: PropTypes.array.isRequired,
@@ -235,6 +247,7 @@ ProjectManager.propTypes = {
 const mapStateToProps = state => ({
   isAuthorized: state.isAuthorized,
   userProfile: state.userProfile,
+  userFriends: state.userFriends,
   projects: state.projects,
   tasks: state.tasks,
   lastSavedTask: state.lastSavedTask,

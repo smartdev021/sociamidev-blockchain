@@ -69,11 +69,11 @@ export function projectSave(project) {
     }
 }
 
-export function projectsFetch(userId) {
+export function projectsFetch() {
     return function (dispatch) {
         dispatch(projectsFetchInitiate());
         
-        const url = userId ? `${ConfigMain.getBackendURL()}/projectsGet?userId=${userId}` : `${ConfigMain.getBackendURL()}/projectsGet`;
+        const url = `${ConfigMain.getBackendURL()}/projectsGet`;
           return (
           Axios.get(url)
           .then(function(response) {

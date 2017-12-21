@@ -140,7 +140,6 @@ class TaskManagement extends React.Component {
   }
 
   componentWillMount() {
-    this.props.projectsFetch();
     this.storeAndFetchTasks();
     this.fetchUserTasks();
   }
@@ -346,7 +345,6 @@ TaskManagement.propTypes = {
   setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
-  projectsFetch: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
 }
 
@@ -366,7 +364,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   setTasks: bindActionCreators(setTasks, dispatch),
-  projectsFetch: bindActionCreators(projectsFetch, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),

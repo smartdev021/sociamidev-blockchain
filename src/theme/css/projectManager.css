@@ -68,3 +68,35 @@
   height: 100%;
   overflow-y: scroll;
 }
+
+#project-scanner-list-projects-container {
+  height: 350px;
+  overflow-y: scroll;
+}
+
+#project-scanner-list-projects {
+  list-style: none;
+  margin-top: 20px;
+  width: 90%;
+}
+  
+#project-scanner-list-projects li {
+  display: block;
+  margin-bottom: 20px;
+}
+  
+#project-scanner-list-projects li:before {
+  /*Using a Bootstrap glyphicon as the bullet point*/
+  content: "\e257";
+  font-family: 'Glyphicons Halflings';
+  float: left;
+  font-size: 24px;
+  margin-left: -25px;
+  margin-top: -3px;
+  color: white;
+}
+  
+#project-scanner-list-projects li a {
+  font-size: 18px;
+  color: white;
+}
