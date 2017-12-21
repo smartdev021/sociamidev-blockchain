@@ -185,7 +185,7 @@ const mapStateToProps = state => ({
   roadmaps: state.roadmaps,
   roadmapsAdmin: state.roadmapsAdmin,
   isAuthorized: state.userProfile.isAuthorized,
-  userProfile: state.userProfile,
+  userProfile: state.userProfile.profile,
 })
 
 const mapDispatchToProps = dispatch => ({

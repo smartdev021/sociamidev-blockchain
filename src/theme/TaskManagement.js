@@ -96,12 +96,12 @@ class TaskManagement extends React.Component {
   }
 
   getTasksAssignedToMe() {
-    const tasksGroupedByProjects = this.groupTasksByProjects(this.props.userProfile.tasks.assigned);
+    const tasksGroupedByProjects = this.groupTasksByProjects(this.props.tasksAssignedToCurrentUser);
     return tasksGroupedByProjects;
   }
 
   getTasksCreatedByMe() {
-    const tasksGroupedByProjects = this.groupTasksByProjects(this.props.userProfile.tasks.created);
+    const tasksGroupedByProjects = this.groupTasksByProjects(this.props.tasksCreatedCurrentUser);
     return tasksGroupedByProjects;
   }
 
@@ -349,9 +349,11 @@ TaskManagement.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  userProfile: state.userProfile,
+  userProfile: state.userProfile.profile,
   isAuthorized: state.userProfile.isAuthorized,
   tasks: state.tasks,
+
+  userTasks: state.userProfile.tasks,
 
   tasksCreatedCurrentUser: state.userProfile.tasks.created,
   tasksAssignedToCurrentUser: state.userProfile.tasks.assigned,

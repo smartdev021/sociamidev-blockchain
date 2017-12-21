@@ -247,7 +247,7 @@ ProjectManager.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
-  userProfile: state.userProfile,
+  userProfile: state.userProfile.profile,
   userFriends: state.userFriends,
   projects: state.projects,
   tasks: state.tasks,

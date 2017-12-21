@@ -21,12 +21,14 @@ export function isOpenProfilePending(state = false, action) {
 }
   
 const userProfileInitialState = {
-  firstName: 'John', 
-  lastName: 'Doe', 
-  interests: 'programming, study',
-  skills: 'javascript, c++', 
-  experience: 'Google',
-  education: 'Harvard',
+  profile: {
+    firstName: 'John', 
+    lastName: 'Doe', 
+    interests: 'programming, study',
+    skills: 'javascript, c++', 
+    experience: 'Google',
+    education: 'Harvard',
+  },
   tasks: {
     assigned: [],
     created: [],
@@ -39,11 +41,9 @@ const userProfileInitialState = {
 export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
     case FETCH_USER_PROFILE_INITIATE:
-      return {...state, isAuthorized: false, isLoading: true};
+      return {...state, profile: action.profile, isAuthorized: false, isLoading: true};
     case FETCH_USER_PROFILE_COMPLETE:
-      const TasksCopy = Object.assign({}, state.tasks); //TODO: temporary solution
-      const result = Object.assign({}, state, action.profile, {tasks: TasksCopy}, {isAuthorized: true}, {isLoading: false});
-      return result;
+      return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
       return {...state, tasks: {assigned: [], created: [], isLoading: true}};
     }

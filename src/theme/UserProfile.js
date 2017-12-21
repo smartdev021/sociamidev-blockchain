@@ -157,7 +157,7 @@ UserProfile.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  userProfile: state.userProfile
+  userProfile: state.userProfile.profile,
 })
 
 const mapDispatchToProps = dispatch => ({

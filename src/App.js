@@ -314,7 +314,7 @@ const mapStateToProps = state => ({
   isSignUpFormOpen: state.isSignUpFormOpen,
   searchQuery: state.searchQuery,
   isAuthorized: state.userProfile.isAuthorized,
-  userProfile: state.userProfile,
+  userProfile: state.userProfile.profile,
   exactLocation: state.exactLocation,
   searchResults: state.searchResults,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found

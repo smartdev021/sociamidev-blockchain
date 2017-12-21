@@ -284,7 +284,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
-  userProfile: state.userProfile,
+  userProfile: state.userProfile.profile,
   userFriends: state.userFriends,
   userFriendsActivities: state.userFriendsActivities,
 })

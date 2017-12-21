@@ -39,10 +39,11 @@ export function openUserProfileComplete() {
     }
 }
 
-export function fetchUserProfileComplete(userProfile) {
+export function fetchUserProfileComplete(userProfile, authorized) {
     return {
         type: FETCH_USER_PROFILE_COMPLETE,
-        profile: userProfile
+        profile: userProfile,
+        isAuthorized: authorized,
     }
 }
 
@@ -127,11 +128,11 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
             }
 
             //async action exit point
-            dispatch(fetchUserProfileComplete(newUserProfile));
+            dispatch(fetchUserProfileComplete(newUserProfile, true));
         })
         .catch(function(error) {
             //async action exit point
-            dispatch(fetchUserProfileComplete({}));
+            dispatch(fetchUserProfileComplete({}, false));
         }));
     }
 }
