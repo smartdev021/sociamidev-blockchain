@@ -212,7 +212,8 @@ class ProjectManager extends React.Component {
             </div>
             <div className="col-lg-3">
               <div className="content-2-columns-right">
-                <ProjectsScanner projects={this.props.projects} isAuthorized={this.props.isAuthorized}/>
+                <ProjectsScanner projects={this.props.projects} 
+                  isAuthorized={this.props.isAuthorized} currentUserId={this.props.userProfile._id} userFriends={this.props.userFriends}/>
               </div>
             </div>
           </div>

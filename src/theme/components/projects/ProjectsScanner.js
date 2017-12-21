@@ -6,10 +6,18 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 
 const renderProjects = (props) => {
+  const currentUserId = props.currentUserId;
+  
+  const filterProjectsAll = (project) => {
+    return project.userID != currentUserId;
+  }
+        
+  const projectsFiltered = props.projects.filter(filterProjectsAll);
+
   return (
     <ul id="project-scanner-list-projects">
       {
-        props.projects.map(function(project, i) {
+        projectsFiltered.map(function(project, i) {
           return (<li key={i}>
           <div className="project-scanner-list-item">
             <Link to={`/projectBrowser?id=${project._id}`}>{project.name}</Link>
