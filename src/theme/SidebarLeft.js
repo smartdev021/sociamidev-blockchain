@@ -37,11 +37,16 @@ class SidebarLeft extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.isAuthorized && !this.props.userFriends.isFetching) {
+      this.props.fetchUserFriends(this.props.userProfile._id);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.isAuthorized != this.props.isAuthorized) {
       if (this.props.isAuthorized) {
         this.props.fetchUserFriends(this.props.userProfile._id);
-        console.log("SidebarLeft AUTHORIZED this.props.userProfile._id: " + this.props.userProfile._id);
       }
     }
 
@@ -216,7 +221,7 @@ class SidebarLeft extends React.Component {
           <div className="user-widget">
             <img src={DanImage}/>
             <div id="user-text">
-              Good Morning Dan, update your status here
+              Good Morning {this.props.userProfile.firstName ? this.props.userProfile.firstName : "Dan"}, update your status here
             </div>
           </div>
           <hr></hr>

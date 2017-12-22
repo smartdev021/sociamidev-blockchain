@@ -111,10 +111,14 @@ class Main extends React.Component {
         <div className="container-fluid">
           <div className="row">
             <div id="wrapper-content">
-              <div className="col-lg-2">
-                <SidebarLeft/>
-              </div>
-              <div className="col-lg-10">
+              {//Only display friends if authorized
+                this.props.isAuthorized && 
+                <div className="col-lg-2">
+                  <SidebarLeft/>
+                </div>
+              }
+              {/*If not authorized - make col-lg-12 so it takes the entire screen*/}
+              <div className={this.props.isAuthorized ? "col-lg-10": "col-lg-12"}>
                 <main>
                   <div className="container-fluid">
                     <div className="row">
