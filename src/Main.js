@@ -58,22 +58,55 @@ class Main extends React.Component {
     }
   }
 
+  renderRoutes() {
+    return (
+      <Switch>
+        <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
+        <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
+        <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
+        <Route path='/progressionTreeBrowser' render={routeProps => <ProgressionTreeBrowser {...routeProps}{...this.props}/>}/>
+        <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
+        <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
+        <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
+        <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
+        {/*<Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />*/}
+        <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
+        <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
+        <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
+      </Switch>)
+  }
+
+  renderSearchInput() {
+    const SearchInputPlaceholder = "Key in a job or a skill you are exploring";
+    
+    return (
+      <form className="form-inline formSearchPage" action="#" onSubmit={(e) => this.onStartSearch(e)}>
+        <div className="form-group">
+          <input type="text" autoComplete="off" id="search-query-input" 
+            placeholder={SearchInputPlaceholder} 
+              onChange={(e) => this.props.onHandleQueryChange(e.target.value)} 
+                defaultValue={this.props.searchQuery} autoFocus/>
+        </div>
+      </form>
+    );
+  }
+
+  renderSignUpForm() {
+    return (this.props.isSignUpFormOpen ? 
+      <SignUpFormPopup modalIsOpen={this.props.isSignUpFormOpen} isAuthorized={this.props.isAuthorized} onCloseModal={() => this.props.onCloseSignUpModal()}
+        onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+          pathname={this.props.pathname}/>
+            : null
+    );
+  }
+
   render() {
     const RedirectTo = this.getRedirectLocation();
-
-    const SearchInputPlaceholder = "Key in a job or a skill you are exploring";
 
     return (
       <div id="wrapper">
       {RedirectTo}
-      {this.props.isSignUpFormOpen ? <SignUpFormPopup 
-          modalIsOpen={this.props.isSignUpFormOpen}
-          isAuthorized={this.props.isAuthorized}
-          onCloseModal={() => this.props.onCloseSignUpModal()}
-          onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()}
-          onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
-          pathname={this.props.pathname}
-      />: null}
+       {this.renderSignUpForm()}
         <ThemeHeader openSignUpForm={this.props.openSignUpForm} isAuthorized={this.props.isAuthorized}/>
         <div className="container-fluid">
           <div className="row">
@@ -82,7 +115,7 @@ class Main extends React.Component {
                 <SidebarLeft/>
               </div>
               <div className="col-lg-10">
-                <main className>
+                <main>
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-lg-12">
@@ -91,32 +124,12 @@ class Main extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-lg-12">
-                        <form className="form-inline formSearchPage" action="#" onSubmit={(e) => this.onStartSearch(e)}>
-                          <div className="form-group">
-                            <input type="text" autoComplete="off" id="search-query-input" 
-                              placeholder={SearchInputPlaceholder} 
-                                onChange={(e) => this.props.onHandleQueryChange(e.target.value)} 
-                                  defaultValue={this.props.searchQuery} autoFocus/>
-                          </div>
-                        </form>
+                        {this.renderSearchInput()}
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-lg-12">
-                        <Switch>
-                          <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
-                          <Route path='/searchResults' render={routeProps => <TrendScanner {...routeProps}{...this.props}/>} />
-                          <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
-                          <Route path='/progressionTreeBrowser' render={routeProps => <ProgressionTreeBrowser {...routeProps}{...this.props}/>}/>
-                          <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
-                          <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
-                          <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
-                          <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
-                          {/*<Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />*/}
-                          <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
-                          <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
-                          <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
-                        </Switch>
+                        {this.renderRoutes()}
                       </div>
                     </div>
                   </div>
