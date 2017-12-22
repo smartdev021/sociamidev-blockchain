@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 
+import {Icon} from 'react-fa'
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
@@ -79,61 +81,7 @@ class SidebarLeft extends React.Component {
       "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Thomasicon.png",
     ];
 
-    const DummyFriendsList = [
-      {
-        firstName: "Annalisa", lastName: "",
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "",
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-      {
-        firstName: "Annalisa", lastName: "", 
-        userText: "Mobile app testing 50 mutual friends", 
-        profileImage: DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0]
-      },
-    ];
-
-    let ListOfFriends = (this.props.userFriends.friends && this.props.userFriends.friends.length > 0) 
-    ? this.props.userFriends.friends: DummyFriendsList;
+    let ListOfFriends = this.props.userFriends.friends;
 
     //TODO: Remove once profile image is fetched from back-end
     for (let i = 0; i < ListOfFriends.length; ++i) {
@@ -216,29 +164,46 @@ class SidebarLeft extends React.Component {
 
   renderFriends() {
     const ListOfFriends = this.attachActivitiesToFriends(this.getListOfFriends());
-
+    
     const that = this;
 
-    return (
-      <div id="list-friends">
-        {
-          ListOfFriends.map(function(friend, i) {
-            return (
-              <div key={i} className="friend-widget">
-                <img src={friend.profileImage}/>
-                <div id="user-text">
-                  <div className="user-text-name">{friend.firstName}</div>
-                    {(friend.activities && friend.activities.length > 0) 
-                      ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
-                      : friend.userText
-                    }
-                </div>
-              </div>
-            )
-          })
-        }
-    </div>
-    );
+    if (this.props.userFriends.isFetching) {
+      return (
+        <div id="list-friends">
+          <p>Fetching friends... <Icon spin name="spinner"/></p>
+        </div>
+      );
+    } 
+    else {
+      if (ListOfFriends.length == 0) {
+        return (
+          <div id="list-friends">
+            <p>You haven't added friends yet</p>
+          </div>);
+      }
+      else {
+        return (
+          <div id="list-friends">
+            {
+              ListOfFriends.map(function(friend, i) {
+                return (
+                  <div key={i} className="friend-widget">
+                    <img src={friend.profileImage}/>
+                    <div id="user-text">
+                      <div className="user-text-name">{friend.firstName}</div>
+                        {(friend.activities && friend.activities.length > 0) 
+                          ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
+                          : friend.userText
+                        }
+                    </div>
+                  </div>
+                )
+              })
+            }
+        </div>
+        );
+      }
+    }
   }
 
   render() {
