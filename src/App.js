@@ -167,7 +167,7 @@ class App extends Component {
 
     if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
       console.log("componentDidUpdate this.state.linkedInID: " + this.state.linkedInID + " this.state.faceBookID: " + this.state.faceBookID);
-      if(this.state.linkedInID || this.state.faceBookID) {
+    if(this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
       }
     }
@@ -184,6 +184,7 @@ class App extends Component {
 
       let copy = Object.assign({}, this.state, 
         {
+          userID: this.props.userProfile._id,
           firstName: this.props.userProfile.firstName, 
           lastName: this.props.userProfile.lastName,
       });
@@ -237,15 +238,17 @@ class App extends Component {
     let ChatAppLink = '';
     // Check if user is logged in
 		if(this.props.isAuthorized){
-			// Check if user is logged in via FB
+      // Check if user is logged in via FB
+      console.log("jkjkjk - " + this.state.userID);
+      console.log("jkjkjk - " + this.state.faceBookID);
 			if (this.state.faceBookID) {
         var tempUserType = "facebook";
-				ChatAppLink = <ChatApp username={this.state.faceBookID} userType={tempUserType} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+				ChatAppLink = <ChatApp username={this.state.faceBookID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
 			// Check if user is logged in via LinkedIn
 			else if(this.state.linkedInID) {
         var tempUserType = "linkedin";
-				ChatAppLink = <ChatApp username={this.state.linkedInID} userType={tempUserType} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+				ChatAppLink = <ChatApp username={this.state.linkedInID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
     }
     

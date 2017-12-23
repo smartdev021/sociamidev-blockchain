@@ -27,14 +27,56 @@ class ChatApp extends React.Component {
                    lastMessageStack: []
                 };
 
-    this.socket = io(BackendURL, { query: `username=${props.username}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+                var isFirefox = typeof InstallTrigger !== 'undefined';
+                var isChrome = !!window.chrome && !!window.chrome.webstore;
+                var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
+                var username = "";
+                var userID = "";
+                var firstName = "";
+                var lastName = "";
+                var userType = "";
+
+                if(isFirefox){
+                  username = "198916860685116";
+                  userID = "5a24f0bf85371d22ecdddd14";
+                  firstName = "Jay";
+                  lastName = "Shaw";
+                  userType = "facebook";
+                }
+
+                if(isChrome){
+                  username = "10155671566088672";
+                  userID = "5a38af456cccd9316aafd827";
+                  firstName = "Jigar";
+                  lastName = "Shah";
+                  userType = "facebook";
+                }
+
+                if(isSafari){
+                  username = "19891686056851416";
+                  userID = "5a3a14e154783b1be4a6c530";
+                  firstName = "Ji";
+                  lastName = "Sa";
+                  userType = "linkedin";
+                }
+                //this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+                this.socket = io(BackendURL, { query: `username=${username}&userID=${userID}&firstName=${firstName}&lastName=${lastName}&userType=${userType}` }).connect();
 
     this.socket.on('server:user', tempUsers => {
       this.state.users = [];
-      
-      tempUsers = tempUsers.filter(function(user) {
-        return user.username !== props.username;
-      });
+
+      let copy = Object.assign({}, this.state, {users: tempUsers});
+      this.setState(copy);
+    });
+
+    this.socket.on('newUser', user => {
+      var tempUsers = this.state.users;
+      for(var i=0; i<tempUsers.length; i++){
+        if(tempUsers[i].userID == user.userID){
+          tempUsers[i].loggedinStatus = user.loggedinStatus;
+        }
+      }
 
       let copy = Object.assign({}, this.state, {users: tempUsers});
       this.setState(copy);

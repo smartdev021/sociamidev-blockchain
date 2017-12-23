@@ -36,6 +36,7 @@ class User extends React.Component {
     const classes = `${tabClass}` ;
     var fullname = this.props.firstName + " " + this.props.lastName;
     var imgSrc = "";
+    const statusImgSrc = this.props.loggedinStatus == true ? "http://s3.amazonaws.com/gs.apps.icons/B_Bpusg8EeKT7hIxPR901Q_%2Fgreen+dot.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Location_dot_grey.svg/2000px-Location_dot_grey.svg.png";
     if(this.props.userType == "facebook"){
       imgSrc = "http://graph.facebook.com/" + this.props.username + "/picture?type=square";
     }
@@ -44,8 +45,8 @@ class User extends React.Component {
     }
     return (
           <div data-id={`${this.props.tabKey}`} className={classes} onClick={(event)=>this.onItemClick(event)}  id={`${this.props.username}`} data-user={`${fullname}`}>
-            <img src={imgSrc} alt="" />
-            <span className="name">{ fullname }</span>
+            <img src={imgSrc} alt="" className="profilePic"/>
+            <span className="name">{ fullname } <img src={statusImgSrc} className="statusDot"/></span>
             <span className="time"><TimeAgo date={this.props.lastMessageTimeStamp} minPeriod={60}/></span>
             <span className="preview">{this.props.lastMessage}</span>
             <div className={messageCountContainerClasses}><span className="messageCount">{this.state.unreadCount}</span></div>

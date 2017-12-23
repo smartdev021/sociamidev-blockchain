@@ -67,6 +67,7 @@ class Users extends React.Component {
           firstName = {user.firstName}
           lastName = {user.lastName}
           userType = {user.userType}
+          loggedinStatus = {user.loggedinStatus}
           lastMessage = {tempLastMessage}
           lastMessageTimeStamp = {tempLastMessageTimeStamp}
           lastMessageRec = {this.props.lastMessageRec}
