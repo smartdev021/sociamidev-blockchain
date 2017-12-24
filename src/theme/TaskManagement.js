@@ -140,7 +140,7 @@ class TaskManagement extends React.Component {
   }
 
   componentWillMount() {
-    this.storeAndFetchTasks();
+    // this.storeAndFetchTasks();
     this.fetchUserTasks();
   }
 
