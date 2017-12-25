@@ -159,12 +159,12 @@ class HomePage extends React.Component {
                   </div>
               </div>
               <div className="row">
-                {/*<div className="col-lg-6">
+                <div className="col-lg-6">
                   <ProgressionTreesLanding />
-                </div>*/}
-                <div className='col-lg-6'>
-                  <TaskManagement />
                 </div>
+                {/*<div className='col-lg-6'>
+                  <TaskManagement />
+                </div>*/}
               </div>
             </div>
           </div>
