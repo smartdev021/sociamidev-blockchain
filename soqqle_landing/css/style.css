@@ -86,10 +86,29 @@ input {font-family: 'Open Sans', sans-serif; outline: none;}
 .content .line2 { width: 605px; margin: 0 auto; background: url(line02.png); background-repeat: no-repeat; background-position: center; height: 20px;}
 
 .form {width: 455px; margin:  0 auto; margin-top: 25px; padding: 10px; -webkit-animation: FadeIn 1.5s ease-out 2s 1 alternate; -moz-animation: FadeIn 1.5s ease 2s 1 alternate; -o-animation: FadeIn 1.5s ease-out 2s 1 alternate; animation: FadeIn 1.5s ease-out 2s 1 alternate;}
-.form .mail{ padding: 3px 3px 3px 38px; float: left; height: 42px; border: 1px solid #bbb; color: #555; width: 300px; background: url('../img/icon_mail.png') #fff no-repeat left center; background-position:5px 13px; font-size: 15px; font-weight: 300; -webkit-border-radius: 5px; border-radius: 5px; }
+.form .mail { 
+    padding: 3px 3px 3px 38px;
+    margin-bottom: 40px;
+    height: 42px; 
+    border: 1px solid #bbb; 
+    color: #555; 
+    width: 100%; 
+    background: url('../img/icon_mail.png') #fff no-repeat left center; background-position:5px 13px; font-size: 15px; font-weight: 300; -webkit-border-radius: 5px; border-radius: 5px; }
 .form .mail:hover {border-color: #3596b9;}
 .form .mail:placeholder {color:#999;}
-.form .joinusButton { background: #555; padding: 1px 1px 1px 1px; cursor: pointer; margin: auto; height: auto; text-align: center; font-weight: 700; color: #fff; font-size: 16px; line-height: 40px; text-shadow: 1px 1px 0px #146482; filter: dropshadow(color=#146482, offx=1, offy=1);}
+
+.form .name { 
+    padding: 3px 3px 3px 38px;
+    margin-bottom: 40px;
+    height: 42px; 
+    border: 1px solid #bbb; 
+    color: #555; 
+    width: 100%; 
+    background: url('../img/icon_mail.png') #fff no-repeat left center; background-position:5px 13px; font-size: 15px; font-weight: 300; -webkit-border-radius: 5px; border-radius: 5px; }
+.form .name:hover {border-color: #3596b9;}
+.form .name:placeholder {color:#999;}
+
+.form .joinusButton { background: #555; padding: 1px 1px 1px 1px; cursor: pointer; margin: auto; height: auto; width: 100%; text-align: center; font-weight: 700; color: #fff; font-size: 16px; line-height: 40px; text-shadow: 1px 1px 0px #146482; filter: dropshadow(color=#146482, offx=1, offy=1);}
 .form .joinusButton:hover {background: #5555547E;}
 
 .social { width: 350px; margin: 0 auto; margin-top: 70px; -webkit-animation: FadeIn 1.5s ease-out 2s 1 alternate; -moz-animation: FadeIn 1.5s ease-out 2s 1 alternate; -o-animation: FadeIn 1.5s ease-out 2s 1 alternate; animation: FadeIn 1.5s ease-out 2s 1 alternate;}
@@ -97,10 +116,38 @@ input {font-family: 'Open Sans', sans-serif; outline: none;}
 .social ul li { float: left; padding: 5px; opacity: 0.6}
 .social ul li:hover { opacity: 1; -webkit-animation: SocialButtons 1.5s ease-out 0s 1; -moz-animation: SocialButtons 1.5s ease-out 0s 1; -o-animation: SocialButtons 1.5s ease-out 0s 1; animation: SocialButtons 1.5s ease-out 0s 1; }
 
-.formvalidate {background: #ae3030; position: absolute; display: none; -webkit-border-radius: 5px; margin-top: -37px; border-radius: 5px; padding: 10px; text-align: center; font-size: 14px; font-weight: 300; color: #fff;}
-.formvalidate .arrow {position: absolute; margin-top: 8px; margin-left: -3px; }
+.formvalidate {
+    background: #ae3030;
+    display: none; 
+    -webkit-border-radius: 5px;
+     margin-top: -37px; 
+     border-radius: 5px; 
+     padding: 10px; 
+     text-align: center; 
+     font-size: 14px; 
+     font-weight: 300; 
+     color: #fff;
+    }
 
-.formsent {background: #86ae30; display: none; position: absolute; width: 550px; margin-left: -60px; -webkit-border-radius: 5px; margin-top: -20px; border-radius: 5px; padding: 20px 10px 20px 10px; text-align: center; font-size: 14px; line-height: 20px; font-weight: 300; color: #fff;}
+    .formvalidate .arrow {position: absolute; margin-top: 8px; margin-left: -3px; }
+
+.formsent {
+    background: #86ae30; 
+    display: none; 
+    position: absolute; 
+    width: 550px; 
+    margin-left: -60px; 
+    -webkit-border-radius: 5px; 
+    margin-top: -20px; 
+    border-radius: 5px; 
+    padding: 20px 10px 20px 10px; 
+    text-align: center; 
+    font-size: 14px; 
+    line-height: 20px; 
+    font-weight: 300; 
+    color: #fff;
+}
+
 .formsent span {font-weight: normal; display: block;}
 .formsent .arrow {position: absolute; margin-top: 14px; margin-left: 253px;}
 
