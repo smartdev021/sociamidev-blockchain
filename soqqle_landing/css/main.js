@@ -29,16 +29,27 @@ function subscribe() {
   }
 
     if (!isNameValid || !isEmailValid) {
-      return
-    } else {
+      return;
+    } 
+    else {
+      var body = {groupId: 8797324, name: $("#name").val(), email: $("#email").val()};
+
       $['ajax']({
-        url: 'mail.php?email=' + $('.mail') ['val'](),
-        success: function (data) {
-          console.log("data");
-          console.dir(data);
-          if (data == 'OK') {
+        url: 'http://13.59.19.153:8080/addSubscriberToGroup',
+        type : "POST",
+        dataType : 'json',
+        data : body,
+        success: function (result, textStatus, xhr) {
+          console.log("result");
+          console.dir(result);
+          if (xhr.status == 200) {
             $('.formsent') ['fadeIn']();
+            $("#email")['fadeOut']();
+            $("#name")['fadeOut']();
           };
+        },
+        error: function (err) {
+          console.log(err);
         }
       });
       $('.formvalidate') ['fadeOut']();
