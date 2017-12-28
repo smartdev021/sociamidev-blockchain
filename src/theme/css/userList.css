@@ -117,6 +117,11 @@
     top: 18px;
 }
 
+.friendName .friendFacebookRecommendation{
+    font-size: 10px;
+    color: #ff0000;
+}
+
 .friendInfo{    
     position: relative;
     height: 100%;

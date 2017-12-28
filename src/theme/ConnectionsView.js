@@ -135,17 +135,64 @@ class ConnectionsView extends React.Component {
             });
     }
 
+    getListOfFriendsSorted() {
+        //TODO: Check why 2 equal strings are not equal
+        //Sort by Facebook friends
+        console.log('%c Sorting connections...', 'background: black; color: white');
+        let areInFacebookFriends = function (facebookFriends, user) {
+            return facebookFriends.findIndex(function(currentFriend) {
+                console.log("currentFriend: " + currentFriend.id);
+                console.log("user: " + user.facebookID);
+                console.log("currentFriend.id == user.facebookID: " + Number(currentFriend.id) === Number(user.facebookID));
+                currentFriend.id === user.facebookID;
+            }) != -1;
+        }
+
+        const facebookFriends = this.props.isAuthorized ? this.props.userProfile.facebook.friends : [];
+
+        let allFriendsList = this.state.allFriendList;
+
+        if (facebookFriends.length > 0) {
+            console.log("facebookFriends: ");
+            console.dir(facebookFriends);
+
+            allFriendsList.sort(function(friend1, friend2) {
+                const isFacebookFriend1 = areInFacebookFriends(facebookFriends, friend1);
+                const isFacebookFriend2 = areInFacebookFriends(facebookFriends, friend2);
+
+                friend1.isFacebookFriend = isFacebookFriend1;
+                friend2.isFacebookFriend = isFacebookFriend2;
+    
+                if (isFacebookFriend1 == isFacebookFriend2) {
+                    return 0;
+                }
+    
+                if (isFacebookFriend1) {
+                    return -1;
+                }
+                else {
+                    return 1;
+                }
+            });
+        }
+
+        return allFriendsList;
+    }
+
     render() {
         let divStyle = {overflow: 'auto'};
         const loaderMainClass = this.state.loader == 0 ? "loader-class-1" : "loader-class-2";
         const loaderMainClasses = `loading ${loaderMainClass}` ;
+
+        const allFriendsList = this.getListOfFriendsSorted();
+
         return (
             <div style={divStyle} className="allFriendList">
               <div className={loaderMainClasses}></div>
                 <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="allFriendList">
                     <Tab eventKey={1} title="All">
                         <ul> {
-                            this.state.allFriendList.map(function (friend) {
+                            allFriendsList.map(function (friend) {
                                 let addBtn = <button type="button" className="btn btn-primary"
                                                      onClick={()=>this.handleAddSoqqler(friend.id)}>
                                     Add Soqqler</button>;
@@ -158,7 +205,12 @@ class ConnectionsView extends React.Component {
                                         </div>
                                         <div className="friendInfoContainer">
                                             <div className="friendInfo">
-                                                <span className="friendName">{friend.firstName} {friend.lastName}</span>
+                                                <span className="friendName">
+                                                  {friend.firstName} {friend.lastName}
+                                                  {friend.isFacebookFriend &&
+                                                    <span className="friendFacebookRecommendation"> (You are friends on Facebook)</span>
+                                                  }
+                                                </span>
                                                 <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
                                             </div>
                                         </div>
@@ -344,6 +396,7 @@ class ConnectionsView extends React.Component {
 
 ConnectionsView.propTypes = {
     userProfile: PropTypes.object.isRequired,
+    isAuthorized: PropTypes.bool.isRequired,
 }
 
 export default ConnectionsView;
