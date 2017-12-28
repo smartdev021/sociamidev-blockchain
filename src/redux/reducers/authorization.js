@@ -28,6 +28,8 @@ const userProfileInitialState = {
     skills: 'javascript, c++', 
     experience: 'Google',
     education: 'Harvard',
+    facebook: null,
+    linkedin: null,
   },
   tasks: {
     assigned: [],

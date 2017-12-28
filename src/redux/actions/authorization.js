@@ -124,7 +124,8 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
               education: responseProfile.education,
               roadmaps: response.data.roadmaps,
               progressionTrees: response.data.progressionTrees,
-              balance:responseProfile.balance
+              balance:responseProfile.balance,
+              facebook: response.data.facebook,
             }
 
             //async action exit point
