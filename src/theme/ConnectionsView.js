@@ -15,6 +15,7 @@ class ConnectionsView extends React.Component {
             friendList: [],
             receivedList: [],
             sentList: [],
+            facebookFriends: [],
             key: 1,
             loader: 0
         };
@@ -35,6 +36,39 @@ class ConnectionsView extends React.Component {
     componentWillMount() {
         this.getAllFriends();
         this.getAllConnections();
+        this.fetchFacebookFriendsForCurrentUser();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.isAuthorized != this.props.isAuthorized) {
+            if (this.props.isAuthorized) {
+                this.fetchFacebookFriendsForCurrentUser();
+            }
+        }
+    }
+
+    fetchFacebookFriendsForCurrentUser() {
+        if (this.props.isAuthorized) {
+            const self = this;
+
+            const currentUserID = self.props.currentUserId;
+            const facebookID = (self.props.userProfile.facebook && self.props.userProfile.facebook._id)
+            ? self.props.userProfile.facebook._id : self.props.userProfile.facebookID;
+
+            const url = `${ConfigMain.getBackendURL()}/facebookFriendsForUserID`;
+            Axios.get(url, {
+                params: {
+                    currentUserID: currentUserID,
+                    facebookID: facebookID,
+                }
+             }
+            ).then(function (response) {
+                self.setState({facebookFriends : response.data.data})
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 
     getAllFriends() {
@@ -136,7 +170,7 @@ class ConnectionsView extends React.Component {
     }
 
     getListOfFriendsSorted() {
-        const facebookFriends = this.props.isAuthorized ? this.props.userProfile.facebook.friends : [];
+        const facebookFriends = this.state.facebookFriends;
 
         const areInFacebookFriends = function (user) {
             return facebookFriends.findIndex(function(currentFriend) {
