@@ -136,38 +136,27 @@ class ConnectionsView extends React.Component {
     }
 
     getListOfFriendsSorted() {
-        //TODO: Check why 2 equal strings are not equal
-        //Sort by Facebook friends
-        console.log('%c Sorting connections...', 'background: black; color: white');
-        let areInFacebookFriends = function (facebookFriends, user) {
+        const facebookFriends = this.props.isAuthorized ? this.props.userProfile.facebook.friends : [];
+
+        const areInFacebookFriends = function (user) {
             return facebookFriends.findIndex(function(currentFriend) {
-                console.log("currentFriend: " + currentFriend.id);
-                console.log("user: " + user.facebookID);
-                console.log("currentFriend.id == user.facebookID: " + Number(currentFriend.id) === Number(user.facebookID));
-                currentFriend.id === user.facebookID;
+                return currentFriend.id == user.facebookID;
             }) != -1;
         }
 
-        const facebookFriends = this.props.isAuthorized ? this.props.userProfile.facebook.friends : [];
-
-        let allFriendsList = this.state.allFriendList;
+        let allFriendsList = [].concat(this.state.allFriendList);
 
         if (facebookFriends.length > 0) {
-            console.log("facebookFriends: ");
-            console.dir(facebookFriends);
+            allFriendsList = allFriendsList.map(function(friend) {
+                return Object.assign({}, friend, { isFacebookFriend: areInFacebookFriends(friend) });
+            });
 
             allFriendsList.sort(function(friend1, friend2) {
-                const isFacebookFriend1 = areInFacebookFriends(facebookFriends, friend1);
-                const isFacebookFriend2 = areInFacebookFriends(facebookFriends, friend2);
-
-                friend1.isFacebookFriend = isFacebookFriend1;
-                friend2.isFacebookFriend = isFacebookFriend2;
-    
-                if (isFacebookFriend1 == isFacebookFriend2) {
+                if (friend1.isFacebookFriend === friend2.isFacebookFriend) {
                     return 0;
                 }
     
-                if (isFacebookFriend1) {
+                if (friend1.isFacebookFriend) {
                     return -1;
                 }
                 else {
