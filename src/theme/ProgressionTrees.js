@@ -82,7 +82,7 @@ class ProgressionTrees extends React.Component {
                 <div className="content-2-columns-left-title">My Progress</div>
               </div>
             </div>
-            <ProgressiontreesMyProgress roadmapsAdmin={this.props.roadmapsAdmin} 
+            <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} 
               isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}/>
           </div>
       }
