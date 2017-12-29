@@ -22,6 +22,23 @@ const ProgressiontreesMyProgress = (props) => {
   userRoadmaps = props.roadmapsAdmin.data;
       
   return (
+    <div className="row" id="my-progress-list">
+          {
+            userRoadmaps.map(function(roadmap, i) {
+              const RandomProgressValueNow = DummyProgressValues[Math.floor(Math.random() * (DummyProgressValues.length - 0)) + 0];
+            return (
+              <div key={i} className="col-lg-12">
+                <ActionLink onClick={()=> props.openSingleTree(roadmap._id)}>
+                  <h4>{roadmap.name}</h4>
+                </ActionLink>
+              </div>
+            );
+          })}
+    </div>
+  );
+
+  /*
+  return (
     <div id="my-progress-list">
           {
             userRoadmaps.map(function(roadmap, i) {
@@ -63,6 +80,7 @@ const ProgressiontreesMyProgress = (props) => {
           })}
     </div>
   );
+  */
 }
 
 export default ProgressiontreesMyProgress;

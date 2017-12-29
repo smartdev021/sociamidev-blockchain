@@ -45,6 +45,9 @@ class ProgressionTrees extends React.Component {
     this.setState({scannerQuery: e.target.value});
   }
 
+  handleOpenSingleTree(id) {
+  }
+
   componentWillMount() {
     this.props.fetchRoadmaps();
 
@@ -60,7 +63,8 @@ class ProgressionTrees extends React.Component {
               <div className="content-2-columns-left-title">My Progress</div>
             </div>
           </div>
-          <ProgressiontreesMyProgress roadmapsAdmin={this.props.roadmapsAdmin} isAuthorized={this.props.isAuthorized}/>
+          <ProgressiontreesMyProgress roadmapsAdmin={this.props.roadmapsAdmin} 
+            isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}/>
         </div>
       </div>
     );
