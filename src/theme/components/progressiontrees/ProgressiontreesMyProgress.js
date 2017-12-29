@@ -25,7 +25,6 @@ const ProgressiontreesMyProgress = (props) => {
     <div className="row" id="my-progress-list">
           {
             userRoadmaps.map(function(roadmap, i) {
-              const RandomProgressValueNow = DummyProgressValues[Math.floor(Math.random() * (DummyProgressValues.length - 0)) + 0];
             return (
               <div key={i} className="col-lg-12">
                 <ActionLink onClick={()=> props.openSingleTree(roadmap._id)}>

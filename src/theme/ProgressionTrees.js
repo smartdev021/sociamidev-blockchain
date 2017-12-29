@@ -15,6 +15,7 @@ import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgre
 
 import ProgressiontreesScanner from "~/src/theme/components/progressiontrees/ProgressiontreesScanner"
 import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/ProgressiontreesMyProgress"
+import ProgressiontreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowser"
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -37,6 +38,8 @@ class ProgressionTrees extends React.Component {
       isAcceptProgressionTreePopupOpen: false,
       scannerSelectedTreeId: undefined,
       scannerSelectedTreeName: "",
+
+      selectedTreeFromMyProgressIndex: -1,
     }
   }
 
@@ -46,6 +49,17 @@ class ProgressionTrees extends React.Component {
   }
 
   handleOpenSingleTree(id) {
+    const foundTreeIndex = this.props.roadmapsAdmin.data.findIndex(function(tree) {
+      return tree._id == id;
+    })
+
+    if (foundTreeIndex != -1) {
+      this.setState({ selectedTreeFromMyProgressIndex: foundTreeIndex });
+    }
+  }
+
+  handleCloseSingleTree(id) {
+    this.setState({ selectedTreeFromMyProgressIndex: -1 });
   }
 
   componentWillMount() {
@@ -57,15 +71,22 @@ class ProgressionTrees extends React.Component {
   renderUserProgressionTrees() {
     return (
       <div id="progression-trees-trees">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="content-2-columns-left-title">My Progress</div>
+      {
+        this.state.selectedTreeFromMyProgressIndex != -1 ?
+          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
+            onCloseSingleTree={()=>this.handleCloseSingleTree()}/>
+          :
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="content-2-columns-left-title">My Progress</div>
+              </div>
             </div>
+            <ProgressiontreesMyProgress roadmapsAdmin={this.props.roadmapsAdmin} 
+              isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}/>
           </div>
-          <ProgressiontreesMyProgress roadmapsAdmin={this.props.roadmapsAdmin} 
-            isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}/>
-        </div>
+      }
+        
       </div>
     );
   }

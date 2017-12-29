@@ -1,0 +1,13 @@
+#tree-skills {
+    margin-top: 20px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#tree-skills a {
+    color: white;
+}
+
+.weightage-section {
+    margin-bottom: 10px;
+}
