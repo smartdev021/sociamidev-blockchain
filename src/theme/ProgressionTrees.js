@@ -24,7 +24,9 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
-import Axios from 'axios'
+import {
+  startProgressionTree,
+} from '~/src/redux/actions/authorization'
 
 import ConfigMain from '~/configs/main'
 
@@ -127,22 +129,9 @@ class ProgressionTrees extends React.Component {
       const foundRoadmap = foundRoadmaps.find(findById);
 
       if (foundRoadmap) {
-        const data = {userId: this.props.userProfile._id, progTree: {_id: foundRoadmap._id, name: foundRoadmap.name}};
-        
-        Axios.post(url, data)
-          .then((response)=>this.progressionTreeStartSuccess(response))
-          .catch((error)=>this.progressionTreeStartFailed(error)); 
+       this.props.startProgressionTree(this.props.userProfile._id, {_id: foundRoadmap._id, name: foundRoadmap.name});
       }
     }
-  }
-
-  progressionTreeStartSuccess(response) {
-    console.log("progressionTreeStartSuccess response: ");
-    console.dir(response.data);
-  }
-
-  progressionTreeStartFailed(error) {
-    console.log("progressionTreeStartFailed error: " + error);
   }
 
   render() {
@@ -200,6 +189,7 @@ class ProgressionTrees extends React.Component {
 ProgressionTrees.propTypes = {
   fetchRoadmaps: PropTypes.func.isRequired,
   fetchRoadmapsFromAdmin: PropTypes.func.isRequired,
+  startProgressionTree: PropTypes.func.isRequired,
   roadmaps: PropTypes.object.isRequired,
   roadmapsAdmin: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
@@ -215,6 +205,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
+  startProgressionTree: bindActionCreators(startProgressionTree, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 

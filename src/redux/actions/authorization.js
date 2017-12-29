@@ -8,6 +8,9 @@ import {
     FETCH_USER_PROFILE_TASKS_INITIATE,
     FETCH_USER_PROFILE_TASKS_COMPLETE,
 
+    PROGRESSION_TREE_START_INITIATE,
+    PROGRESSION_TREE_START_COMPLETE,
+
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
 
@@ -67,6 +70,41 @@ export function fetchUserProfileTasksComplete(assignedTasks, createdTasks) {
         tasksCreated: createdTasks,
     }
 }
+
+export function startProgressionTreeInitiate() {
+    return {
+        type: PROGRESSION_TREE_START_INITIATE,
+    }
+}
+
+export function startProgressionTreeComplete(tree) {
+    return {
+        type: PROGRESSION_TREE_START_COMPLETE,
+        tree: tree,
+    }
+}
+
+export function startProgressionTree(userId, progressionTree) {
+    
+    return function (dispatch) {
+
+        dispatch(startProgressionTreeInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStart`;
+
+        const body = {userId: userId, progTree: progressionTree};
+    
+        return (
+          Axios.post(url, body)
+            .then(function(response) {
+                dispatch(startProgressionTreeComplete(response.data));
+            })
+            .catch(function(error) {
+                dispatch(startProgressionTreeComplete([]));
+            }));
+    }
+}
+
 
 export function fetchUserTasks(userId) {
     

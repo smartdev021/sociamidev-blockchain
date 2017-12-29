@@ -14,7 +14,10 @@ const ProgressiontreeBrowser = (props) => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="content-2-columns-left-title">Progression Tree<ActionLink onClick={()=> props.onCloseSingleTree()}>Close</ActionLink></div>
+        <div className="content-2-columns-left-title">
+          <span>Progression Tree</span>
+          <ActionLink className="pull-right" onClick={()=> props.onCloseSingleTree()}>Close</ActionLink>
+        </div>
       </div>
       <div className="row">
         <div className="col-lg-2">
