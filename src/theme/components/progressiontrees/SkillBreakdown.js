@@ -110,8 +110,7 @@ class SkillBreakdown extends React.Component {
               {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
               {
                 const skillNameTrimmed = skill.trim();
-                return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink>
-                <span>&nbsp;</span></li>
+                return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink></li>
               })}
             </ul>
           </div>
