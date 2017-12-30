@@ -96,9 +96,7 @@ class ProgressionTrees extends React.Component {
   openTreeAcceptConfirmationPopup(treeId, treeName) {
     console.log(`treeId: ${treeId}, treeName: ${treeName}`);
     if (this.props.isAuthorized) {
-      if (this.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == treeId;}) == -1) {
         this.setState({scannerSelectedTreeId: treeId, scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
-      }
     }
   }
 
@@ -135,6 +133,11 @@ class ProgressionTrees extends React.Component {
   }
 
   render() {
+    const that = this;
+    const treesScanner = this.props.roadmapsAdmin.data.filter(function(roadmap) {
+      return that.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == roadmap._id;}) == -1;
+    });
+
     return (
         <div className="content-2-columns-wrapper" id="progression-trees">
           {this.state.isAcceptProgressionTreePopupOpen 
@@ -170,7 +173,7 @@ class ProgressionTrees extends React.Component {
                     <div className="row">
                       <div className="col-lg-12">
                         <div id="trees-scanner-container">
-                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={this.props.roadmapsAdmin.data} 
+                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
                             openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
                         </div>
                       </div>
