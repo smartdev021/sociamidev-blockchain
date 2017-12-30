@@ -49,6 +49,7 @@ class SkillBreakdown extends React.Component {
         console.log(response.data);
     })
     .catch(function(error) {
+      that.setState( {skillInfo: undefined} );
       console.log(error);
     });
   }
@@ -105,11 +106,14 @@ class SkillBreakdown extends React.Component {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <p>{this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
-            {
-              const skillNameTrimmed = skill.trim();;
-              return <span key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink><span>&nbsp;</span></span>
-            })}</p>
+            <ul id="related-topics">
+              {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
+              {
+                const skillNameTrimmed = skill.trim();
+                return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink>
+                <span>&nbsp;</span></li>
+              })}
+            </ul>
           </div>
         </div>
         <div className="row">

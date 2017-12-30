@@ -32,3 +32,8 @@
     max-width: 100%;
     overflow-x: visible;
 }
+
+#skill-break-down #related-topics {
+    height: 100px;
+    overflow-y: scroll;
+}
