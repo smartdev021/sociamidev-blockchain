@@ -23,6 +23,8 @@ import {openSearchResultsComplete} from '~/src/redux/actions/fetchResults'
 
 import ResultCategory from '~/src/common/ResultCategoryNames'
 
+import TrendScannerNavigation from '~/src/theme/components/trends/TrendScannerNavigation'
+
 class TrendScanner extends React.Component {
 
   constructor(props) {
@@ -173,40 +175,8 @@ class TrendScanner extends React.Component {
     return (
       <div id="main-content_1">
         <div id="trend-scanner">
-        <div id="navbar-trend-scanner">
-          <ul className="nav navbar-nav">
-            <li>
-              <ActionLink href="#" id={ResultCategory.GIGS_FREELANCER} 
-                  className={this.props.resultsSelectedCategory == ResultCategory.GIGS_FREELANCER ? "active" : ""} 
-                    onClick={(e) => this.handleSelectCategory(e)}>
-                Gigs
-              </ActionLink>
-            </li>
-            <li>
-              <ActionLink href="#" id={ResultCategory.COURSES_UDEMY} 
-                className={this.props.resultsSelectedCategory == ResultCategory.COURSES_UDEMY ? "active" : ""} 
-                  onClick={(e) => this.handleSelectCategory(e)}>
-                Trainings
-              </ActionLink>
-            </li>
-            <li>
-              <ActionLink href="#" id={ResultCategory.EVENTS_EVENTBRITE} 
-                className={this.props.resultsSelectedCategory == ResultCategory.EVENTS_EVENTBRITE ? "active" : ""} 
-                  onClick={(e) => this.handleSelectCategory(e)}>
-                Events
-              </ActionLink>
-            </li>
-            <li>
-              <ActionLink href="#" id={ResultCategory.JOBS_INDEED} 
-                className={this.props.resultsSelectedCategory == ResultCategory.JOBS_INDEED ? "active" : ""} 
-                  onClick={(e) => this.handleSelectCategory(e)}>
-                Jobs
-              </ActionLink>
-            </li>
-            <li><a href="#">Soqqle Campaigns</a></li>
-            <li><a href="#">Bookmarks <span id="bookmark-arrow-icon" className="glyphicon glyphicon-menu-down"></span></a></li>
-          </ul>
-        </div>
+          <TrendScannerNavigation onHandleSelectCategory={(e) => this.handleSelectCategory(e)} 
+            resultsSelectedCategory={this.props.resultsSelectedCategory}/>
         <div id="trend-scanner-results">
           {ScannerResults}
         </div>
