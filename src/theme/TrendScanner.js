@@ -22,7 +22,7 @@ import {openSearchResultsComplete} from '~/src/redux/actions/fetchResults'
 
 import ResultCategory from '~/src/common/ResultCategoryNames'
 
-import TrendScannerComponent from './components/trends/TrendScannerComponent';
+import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
 
 class TrendScanner extends React.Component {
 

@@ -174,7 +174,8 @@ class App extends Component {
 
     if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
       if (!this.props.isFetchInProgress) {
-        if (this.props.history.location.pathname != "/searchResults") {
+        //TODO: Fix this
+        if (this.props.history.location.pathname != "/searchResults" && this.props.history.location.pathname != "/progressionTrees") {
           this.props.openSearchResults();
         }
       }

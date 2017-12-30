@@ -3,12 +3,28 @@
 */
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 import Axios from 'axios'
 import ConfigMain from '~/configs/main'
 
 import "~/src/theme/css/treebrowser.css"
+
+import {
+  selectResultsCategory,
+} from '~/src/redux/actions/fetchResults'
+
+import {
+  fetchResults,
+  setSearchQuery,
+} from '~/src/redux/actions/fetchResults'
+
+import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
 
 class SkillBreakdown extends React.Component {
 
@@ -32,6 +48,23 @@ class SkillBreakdown extends React.Component {
       console.log(error);
       that.setState( {skillInfo: undefined} );
     });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.skillInfo != this.state.skillInfo) {
+      if (this.state.skillInfo) {
+        this.props.setSearchQuery(this.state.skillInfo.skill);
+
+        this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
+        this.props.fetchResults("events_eventbrite", searchQuery.skill);
+        this.props.fetchResults("courses_udemy", searchQuery.skill);
+        this.props.fetchResults("gigs_freelancer", searchQuery.skill);
+      }
+    }
+  }
+
+  handleSelectCategory(e) {
+    this.props.selectResultsCategory(e.currentTarget.id);
   }
 
   render() {
@@ -71,7 +104,12 @@ class SkillBreakdown extends React.Component {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <p>Gigs, Jobs, Training, Events</p>
+            <div id="skill-breakdown-trend-scanner">
+              <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
+                resultsSelectedCategory={this.props.resultsSelectedCategory}
+                  isFetchInProgress={this.props.isFetchInProgress}
+                    searchResults={this.props.searchResults}/>
+            </div>
           </div>
         </div>
       </div>
@@ -79,4 +117,25 @@ class SkillBreakdown extends React.Component {
   }
 }
 
-export default SkillBreakdown;
+SkillBreakdown.propTypes = {
+  selectResultsCategory: PropTypes.func.isRequired,
+  fetchResults: PropTypes.func.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
+  resultsSelectedCategory: PropTypes.string.isRequired,
+  searchResults: PropTypes.object.isRequired,
+  isFetchInProgress: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  resultsSelectedCategory: state.resultsSelectedCategory,
+  searchResults : state.searchResults,
+  isFetchInProgress : state.isFetchInProgress,
+});
+
+const mapDispatchToProps = dispatch => ({
+  selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch),
+  fetchResults: bindActionCreators(fetchResults, dispatch),
+  setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SkillBreakdown);
