@@ -27,7 +27,7 @@ class ProgressiontreeBrowser extends React.Component {
       return this.renderTree();
     }
     else {
-      return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} skill={this.state.selectedSkill}/>);
+      return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} skillName={this.state.selectedSkill}/>);
     }
   }
 
@@ -61,7 +61,7 @@ class ProgressiontreeBrowser extends React.Component {
                 <ul>
                   {
                     this.props.tree.weightage1[0].split(',').map(function(skill, i) {
-                      return (<ActionLink key={i} onClick={(skill)=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
+                      return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
                     })
                   }
                 </ul>
@@ -71,7 +71,7 @@ class ProgressiontreeBrowser extends React.Component {
                 <ul>
                   {
                     this.props.tree.weightage2[0].split(',').map(function(skill, i) {
-                      return (<ActionLink key={i} onClick={(skill)=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
+                      return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
                     })
                   }
                 </ul>
@@ -81,7 +81,7 @@ class ProgressiontreeBrowser extends React.Component {
                 <ul>
                   {
                     this.props.tree.weightage3[0].split(',').map(function(skill, i) {
-                      return (<ActionLink key={i} onClick={(skill)=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
+                      return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
                     })
                   }
                 </ul>
