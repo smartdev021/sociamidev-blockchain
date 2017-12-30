@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Icon} from 'react-fa'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -23,7 +22,7 @@ import {openSearchResultsComplete} from '~/src/redux/actions/fetchResults'
 
 import ResultCategory from '~/src/common/ResultCategoryNames'
 
-import TrendScannerNavigation from '~/src/theme/components/trends/TrendScannerNavigation'
+import TrendScannerComponent from './components/trends/TrendScannerComponent';
 
 class TrendScanner extends React.Component {
 
@@ -45,143 +44,14 @@ class TrendScanner extends React.Component {
     return trimmed;
   }
 
-  renderJobs() {
-    return (
-      <ul>
-        {
-          this.props.searchResults.jobs.map(function(job, i) {
-
-            let title = job.jobtitle;
-            let company = job.company ? job.company: "N/A";
-
-            return (<li key={i}>
-            <div className="list-item">
-              <div id="icons">
-                <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
-                <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
-              </div>
-              <a href={job.url} target="_blank" id="text">
-                <div>{title}</div>
-                <div>{company}</div>
-                <div>{job.country}</div>
-              </a>
-            </div>
-          </li>);
-          })
-        }
-      </ul>
-    );
-  }
-
-  renderTrainings() {
-    return (
-      <ul>
-        {
-          this.props.searchResults.courses.map(function(course, i) {
-            return (<li key={i}>
-            <div className="list-item">
-              <div id="icons">
-                <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
-                <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
-              </div>
-              <a href={course.url} target="_blank" id="text">
-                <div>{course.title}</div>
-                <div>{course.price}</div>
-              </a>
-            </div>
-          </li>);
-          })
-        }
-      </ul>
-    );
-  }
-
-  renderEvents() {
-    let that = this;
-    return (
-      <ul>
-        {
-          this.props.searchResults.events.map(function(event, i) {
-
-            let title = that.trimmedString(event.name, 60);
-            let description = that.trimmedString(event.description, 120);
-
-            return (<li key={i}>
-            <div className="list-item">
-              <div id="icons">
-                <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
-                <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
-              </div>
-              <a href={event.url} target="_blank" id="text">
-                <div>{title}</div>
-                <div>{description}</div>
-              </a>
-            </div>
-          </li>);
-          })
-        }
-      </ul>
-    );
-  }
-
-  renderGigs() {
-    return (
-      <ul>
-        {
-          this.props.searchResults.gigs.map(function(gig, i) {
-            return (<li key={i}>
-            <div className="list-item">
-              <div id="icons">
-                <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
-                <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
-              </div>
-              <a href={gig.url} target="_blank" id="text">
-                <div>{gig.title}</div>
-                <div>{gig.description}</div>
-                <div>Hong Kong</div>
-              </a>
-            </div>
-          </li>);
-          })
-        }
-      </ul>
-    );
-  }
-
-  renderResults() {
-    if (this.props.isFetchInProgress) {
-      return <h3>Searching... <Icon spin name="spinner"/></h3>;
-    }
-    else {
-      switch (this.props.resultsSelectedCategory) {
-        case ResultCategory.GIGS_FREELANCER: {
-          return this.renderGigs();
-        }
-        case ResultCategory.COURSES_UDEMY: {
-          return this.renderTrainings();
-        }
-        case ResultCategory.EVENTS_EVENTBRITE: {
-          return this.renderEvents();
-        }
-        default:
-          return this.renderJobs();
-      }
-    }
-  }
-
   render() {
-    const ScannerResults = this.renderResults();
-
     return (
       <div id="main-content_1">
-        <div id="trend-scanner">
-          <TrendScannerNavigation onHandleSelectCategory={(e) => this.handleSelectCategory(e)} 
-            resultsSelectedCategory={this.props.resultsSelectedCategory}/>
-        <div id="trend-scanner-results">
-          {ScannerResults}
-        </div>
+        <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
+          resultsSelectedCategory={this.props.resultsSelectedCategory}
+            isFetchInProgress={this.props.isFetchInProgress}
+              searchResults={this.props.searchResults}/>
       </div>
-    </div>
     );
   }
 }
