@@ -39,14 +39,34 @@ class ProgressiontreeBrowser extends React.Component {
     this.setState( { selectedSkill: skill });
   }
 
-  renderTree() {
+  renderSkills(skills) {
+    console.log("%c renderSkills: ", "color: green; background: red");
+    console.dir(skills);
     const that = this;
+    //TODO: Fix incorrect database structure
+    let skillParsed = skills.length > 1 ? skills : skills[0].split(',');
+    for (let i = 0; i < skillParsed.length; ++i) {
+      skillParsed[i] = skillParsed[i].trim();
+    }
+    return (
+    <ul>
+      {
+        skillParsed.map(function(skill, i) {
+          return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
+        })
+      }
+    </ul>);
+  }
+
+  renderTree() {
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="content-2-columns-left-title">
             <span>Progression Tree</span>
-            <ActionLink className="pull-right" onClick={()=> this.props.onCloseSingleTree()}>Close</ActionLink>
+            <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.onCloseSingleTree()}>
+              <span className="glyphicon glyphicon-arrow-left"/>
+            </ActionLink>
           </div>
         </div>
         <div className="row">
@@ -58,33 +78,15 @@ class ProgressiontreeBrowser extends React.Component {
             <div id="tree-skills">
               <div className="weightage-section">
                 <b>Weightage 1</b>
-                <ul>
-                  {
-                    this.props.tree.weightage1[0].split(',').map(function(skill, i) {
-                      return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
-                    })
-                  }
-                </ul>
+                {this.renderSkills(this.props.tree.weightage1)}
               </div>
               <div className="weightage-section">
                 <b>Weightage 2</b>
-                <ul>
-                  {
-                    this.props.tree.weightage2[0].split(',').map(function(skill, i) {
-                      return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
-                    })
-                  }
-                </ul>
+                {this.renderSkills(this.props.tree.weightage2)}
               </div>
               <div className="weightage-section">
                 <b>Weightage 3</b>
-                <ul>
-                  {
-                    this.props.tree.weightage3[0].split(',').map(function(skill, i) {
-                      return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
-                    })
-                  }
-                </ul>
+                {this.renderSkills(this.props.tree.weightage3)}
               </div>
             </div>
           </div>

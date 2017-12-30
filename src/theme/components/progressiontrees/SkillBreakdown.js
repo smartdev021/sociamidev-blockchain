@@ -40,10 +40,20 @@ class SkillBreakdown extends React.Component {
         <div className="row">
           <div className="content-2-columns-left-title">
             <span>Skill Breakdown</span>
-            <ActionLink className="pull-right" onClick={()=> {} }>Hangout</ActionLink>
-            <ActionLink className="pull-right" onClick={()=> this.props.onCloseSkillBreakdown()}>Close</ActionLink>
+            <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.onCloseSkillBreakdown()}>
+              <span className="glyphicon glyphicon-arrow-left"></span>
+            </ActionLink>
+            <button type="button" className="btn btn-md btn-outline-inverse skill-breakdown-control pull-right" 
+                    onClick={()=> {} }>Hangout</button>
           </div>
         </div>
+        {!this.state.skillInfo &&
+          <div className="row">
+            <div className="col-lg-12">
+              <h3>Skill not Found!!!</h3>
+            </div>
+          </div>
+        }
         <div className="row">
           <div className="col-lg-12">
             <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
