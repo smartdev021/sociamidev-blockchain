@@ -37,7 +37,11 @@ class SkillBreakdown extends React.Component {
   }
 
   componentWillMount() {
-    const url = `${ConfigMain.getBackendURL()}/skillGet?name=${this.props.skillName}`;
+    this.updateSkill(this.props.skillName);
+  }
+
+  updateSkill(name) {
+    const url = `${ConfigMain.getBackendURL()}/skillGet?name=${name}`;
     const that = this;
     Axios.get(url)
       .then(function(response) {
@@ -46,19 +50,20 @@ class SkillBreakdown extends React.Component {
     })
     .catch(function(error) {
       console.log(error);
-      that.setState( {skillInfo: undefined} );
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
+        console.log("this.state.skillInfo: ");
+        console.dir(this.state.skillInfo);
         this.props.setSearchQuery(this.state.skillInfo.skill);
 
         this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
-        this.props.fetchResults("events_eventbrite", searchQuery.skill);
-        this.props.fetchResults("courses_udemy", searchQuery.skill);
-        this.props.fetchResults("gigs_freelancer", searchQuery.skill);
+        this.props.fetchResults("events_eventbrite", this.state.skillInfo.skill);
+        this.props.fetchResults("courses_udemy", this.state.skillInfo.skill);
+        this.props.fetchResults("gigs_freelancer", this.state.skillInfo.skill);
       }
     }
   }
@@ -68,8 +73,9 @@ class SkillBreakdown extends React.Component {
   }
 
   render() {
+    const that = this;
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" id="skill-break-down">
         <div className="row">
           <div className="content-2-columns-left-title">
             <span>Skill Breakdown</span>
@@ -94,12 +100,16 @@ class SkillBreakdown extends React.Component {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <p>Related Sub-Skills</p>
+            <h4>Related Sub-Skills</h4>
           </div>
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <p>{this.state.skillInfo && this.state.skillInfo.relatedTopics}</p>
+            <p>{this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
+            {
+              const skillNameTrimmed = skill.trim();;
+              return <span key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink><span>&nbsp;</span></span>
+            })}</p>
           </div>
         </div>
         <div className="row">

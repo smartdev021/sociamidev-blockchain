@@ -4,7 +4,11 @@
     overflow-y: scroll;
 }
 
-#tree-skills a {
+#tree-skills a, #skill-break-down a {
+    color: white;
+}
+
+#progression-trees-trees a {
     color: white;
 }
 
@@ -21,5 +25,10 @@
 }
 
 #skill-breakdown-trend-scanner {
-    height: 300px;
+    height: 260px;
+}
+
+#skill-breakdown-trend-scanner #trend-scanner {
+    max-width: 100%;
+    overflow-x: visible;
 }
