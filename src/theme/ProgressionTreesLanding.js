@@ -156,7 +156,7 @@ class ProgressionTrees extends React.Component {
                     <div className="row">
                       <div className="col-lg-12">
                         <div id="trees-scanner-container">
-                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} roadmapsAdmin={this.props.roadmapsAdmin} 
+                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={this.props.roadmapsAdmin.data} 
                             openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
                         </div>
                       </div>

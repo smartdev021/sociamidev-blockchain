@@ -25,12 +25,12 @@ const ProgressiontreesScanner = (props) => {
   const scannerQuery = props.scannerQuery.toLowerCase();
   
   if (scannerQuery != "") {
-    foundRoadmaps = props.roadmapsAdmin.data.filter(function(roadmap) {
+    foundRoadmaps = props.trees.filter(function(roadmap) {
       return roadmap.name && roadmap.name.toLowerCase().startsWith(scannerQuery);
     });
   }
   else {
-    foundRoadmaps = props.roadmapsAdmin.data;
+    foundRoadmaps = props.trees;
   }
 
   const openTreeAcceptConfirmationPopup = (treeId, treeName)=>props.openTreeAcceptConfirmationPopup(treeId, treeName);
