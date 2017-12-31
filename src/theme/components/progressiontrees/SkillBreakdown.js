@@ -27,6 +27,8 @@ import {
 import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
 import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 class SkillBreakdown extends React.Component {
 
   constructor(props) {
@@ -81,6 +83,25 @@ class SkillBreakdown extends React.Component {
 
   handleStartHangout(e) {
     e.preventDefault();
+
+    const hangout = Object.assign({}, 
+      {}, {
+        name: `Hangout for roadmap ${this.props.tree.name}`,
+        description: "Hangout with John, and answer questions together",
+        type: TaskTypes.HANGOUT,
+        userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+        userID: this.props.userProfile._id,
+        isHidden: 0,
+        metadataData : {
+          tree: this.props.tree
+        },
+      }
+    );
+
+    if (hangout.userName != "" && hangout.name != "" && hangout.description != "") {
+      this.props.saveTask(hangout);
+    }
+    
     this.setState( { isHangoutFormVisible: false } );
   }
 
@@ -145,6 +166,7 @@ class SkillBreakdown extends React.Component {
 
 SkillBreakdown.propTypes = {
   selectResultsCategory: PropTypes.func.isRequired,
+  saveTask: PropTypes.func.isRequired,
   fetchResults: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   resultsSelectedCategory: PropTypes.string.isRequired,

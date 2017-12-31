@@ -27,7 +27,8 @@ class ProgressiontreeBrowser extends React.Component {
       return this.renderTree();
     }
     else {
-      return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} skillName={this.state.selectedSkill}/>);
+      return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} 
+                skillName={this.state.selectedSkill} userProfile={this.props.userProfile} tree={this.props.tree} saveTask={this.props.saveTask}/>);
     }
   }
 

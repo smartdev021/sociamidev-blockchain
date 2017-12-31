@@ -28,6 +28,10 @@ import {
   startProgressionTree,
 } from '~/src/redux/actions/authorization'
 
+import {
+  saveTask,
+} from '~/src/redux/actions/tasks'
+
 import ConfigMain from '~/configs/main'
 
 class ProgressionTrees extends React.Component {
@@ -76,7 +80,7 @@ class ProgressionTrees extends React.Component {
       {
         this.state.selectedTreeFromMyProgressIndex != -1 ?
           <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
-            onCloseSingleTree={()=>this.handleCloseSingleTree()}/>
+            onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask}/>
           :
           <div className="container-fluid">
             <div className="row">
@@ -191,6 +195,7 @@ class ProgressionTrees extends React.Component {
 
 ProgressionTrees.propTypes = {
   fetchRoadmaps: PropTypes.func.isRequired,
+  saveTask: PropTypes.func.isRequired,
   fetchRoadmapsFromAdmin: PropTypes.func.isRequired,
   startProgressionTree: PropTypes.func.isRequired,
   roadmaps: PropTypes.object.isRequired,
@@ -208,6 +213,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
+  saveTask: bindActionCreators(saveTask, dispatch),
   startProgressionTree: bindActionCreators(startProgressionTree, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
