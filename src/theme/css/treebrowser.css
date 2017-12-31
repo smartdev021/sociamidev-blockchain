@@ -37,3 +37,17 @@
     height: 100px;
     overflow-y: scroll;
 }
+
+#hangout-submit-form {
+    border: 1px solid cyan;
+    border-radius: 3px;
+    min-height: 100px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#hangout-submit-form form input{
+    background: rgb(119, 112, 112);
+    border: 1ps solid rgb(119, 112, 112);
+    border-radius: 3px;
+}

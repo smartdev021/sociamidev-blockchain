@@ -25,6 +25,7 @@ import {
 } from '~/src/redux/actions/fetchResults'
 
 import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
+import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
 
 class SkillBreakdown extends React.Component {
 
@@ -32,7 +33,8 @@ class SkillBreakdown extends React.Component {
     super(props);
 
     this.state = {
-     skillInfo: undefined, 
+     skillInfo: undefined,
+     isHangoutFormVisible: false,
     }
   }
 
@@ -69,8 +71,17 @@ class SkillBreakdown extends React.Component {
     }
   }
 
+  toggleHangoutForm(skillInfo) {
+    this.setState( { isHangoutFormVisible: !this.state.isHangoutFormVisible } );
+  }
+
   handleSelectCategory(e) {
     this.props.selectResultsCategory(e.currentTarget.id);
+  }
+
+  handleStartHangout(e) {
+    e.preventDefault();
+    this.setState( { isHangoutFormVisible: false } );
   }
 
   render() {
@@ -84,7 +95,7 @@ class SkillBreakdown extends React.Component {
               <span className="glyphicon glyphicon-arrow-left"></span>
             </ActionLink>
             <button type="button" className="btn btn-md btn-outline-inverse skill-breakdown-control pull-right" 
-                    onClick={()=> {} }>Hangout</button>
+              onClick={()=> this.toggleHangoutForm() }>Hangout</button>
           </div>
         </div>
         {!this.state.skillInfo &&
@@ -94,6 +105,8 @@ class SkillBreakdown extends React.Component {
             </div>
           </div>
         }
+        {this.state.isHangoutFormVisible && 
+        <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(e) => this.handleStartHangout(e)}/>}
         <div className="row">
           <div className="col-lg-12">
             <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
@@ -115,7 +128,7 @@ class SkillBreakdown extends React.Component {
             </ul>
           </div>
         </div>
-        <div className="row">
+        {!this.state.isHangoutFormVisible && <div className="row">
           <div className="col-lg-12">
             <div id="skill-breakdown-trend-scanner">
               <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
@@ -124,7 +137,7 @@ class SkillBreakdown extends React.Component {
                     searchResults={this.props.searchResults}/>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
     );
   }
