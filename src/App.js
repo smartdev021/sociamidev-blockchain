@@ -237,19 +237,20 @@ class App extends Component {
 
     let ChatAppLink = '';
     // Check if user is logged in
-		if(this.props.isAuthorized){
+		if(this.props.isAuthorized && this.state.userID){
       // Check if user is logged in via FB
-      console.log("jkjkjk - " + this.state.userID);
-      console.log("jkjkjk - " + this.state.faceBookID);
 			if (this.state.faceBookID) {
         var tempUserType = "facebook";
-				ChatAppLink = <ChatApp username={this.state.faceBookID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+				ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.faceBookID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
 			// Check if user is logged in via LinkedIn
 			else if(this.state.linkedInID) {
         var tempUserType = "linkedin";
-				ChatAppLink = <ChatApp username={this.state.linkedInID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
+				ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.linkedInID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
 			}
+    }
+    else if(!this.props.isAuthorized){
+      ChatAppLink = <ChatApp loggedin={this.props.isAuthorized}/>;
     }
     
     return (

@@ -5,6 +5,7 @@ import ReactDom from 'react-dom'
 import io from 'socket.io-client';
 //import config from '../config';
 import { withRouter } from 'react-router-dom'
+import { ApiAiClient } from 'api-ai-javascript';
 
 import Messages from './Messages';
 import Users from './Users';
@@ -12,10 +13,28 @@ import ChatInput from './ChatInput';
 
 import ConfigMain from '../../../configs/main';
 
+const client = new ApiAiClient({accessToken: '0e686d9660cb4a92a1812b11e89a33a8'});
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
 
 class ChatApp extends React.Component {
+  componentDidMount() {
+    const botUser = {
+      username: "chatbot",
+      userID: "chatbot",
+      firstName: "Chat",
+      lastName: "Bot",
+      userType: "chatbot",
+      socketIds: []
+    }
+
+    var tUsers = [];
+    tUsers.push(botUser);
+
+    let copy = Object.assign({}, this.state, {users: tUsers});
+    this.setState(copy);
+  }
+  
   constructor(props) {
     super(props);
     this.state = { messageStack: [],
@@ -25,46 +44,18 @@ class ChatApp extends React.Component {
                    activeUserName: "", 
                    activeUserFullName: "",
                    lastMessageStack: []
-                };
+                };    
 
-                var isFirefox = typeof InstallTrigger !== 'undefined';
-                var isChrome = !!window.chrome && !!window.chrome.webstore;
-                var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+    if(this.props.loggedin){
+    this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+                
+    this.socket.on('server:user', newUsers => {
+      var tempUsers = this.state.users;
 
-                var username = "";
-                var userID = "";
-                var firstName = "";
-                var lastName = "";
-                var userType = "";
-
-                if(isFirefox){
-                  username = "198916860685116";
-                  userID = "5a24f0bf85371d22ecdddd14";
-                  firstName = "Jay";
-                  lastName = "Shaw";
-                  userType = "facebook";
-                }
-
-                if(isChrome){
-                  username = "10155671566088672";
-                  userID = "5a38af456cccd9316aafd827";
-                  firstName = "Jigar";
-                  lastName = "Shah";
-                  userType = "facebook";
-                }
-
-                if(isSafari){
-                  username = "19891686056851416";
-                  userID = "5a3a14e154783b1be4a6c530";
-                  firstName = "Ji";
-                  lastName = "Sa";
-                  userType = "linkedin";
-                }
-                //this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
-                this.socket = io(BackendURL, { query: `username=${username}&userID=${userID}&firstName=${firstName}&lastName=${lastName}&userType=${userType}` }).connect();
-
-    this.socket.on('server:user', tempUsers => {
-      this.state.users = [];
+      for(var i=0; i<newUsers.length; i++){
+        var newUser = newUsers[i];
+        tempUsers.push(newUser);
+      }
 
       let copy = Object.assign({}, this.state, {users: tempUsers});
       this.setState(copy);
@@ -89,6 +80,7 @@ class ChatApp extends React.Component {
       this.addLastMessage(message);
     });
   }
+  }
 
   tabChanges(activeUsername,activeUserFullname){
     let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserName: activeUsername, activeUserFullName:activeUserFullname});
@@ -103,7 +95,27 @@ class ChatApp extends React.Component {
       time: new Date()
     };
     // Emit the message to the server
-    this.socket.emit('client:message', messageObject);
+    if(this.state.activeUserName == "chatbot"){
+      client.textRequest(message)
+      .then((response) => {
+          console.log(response.result.fulfillment.speech);
+          var msgResponse = response.result.fulfillment.speech;
+          const messageObject = {
+            sender: this.state.activeUserName,
+            message: msgResponse,
+            receiver: this.props.username,
+            time: new Date()
+          };
+      
+          messageObject.fromMe = false;
+          this.addMessage(messageObject);
+          this.addLastMessage(messageObject);
+      })
+      .catch((error) => {console.log(error);})
+    }
+    else{
+      this.socket.emit('client:message', messageObject);      
+    }
 
     messageObject.fromMe = true;
     this.addMessage(messageObject);

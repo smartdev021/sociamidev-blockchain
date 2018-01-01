@@ -36,12 +36,15 @@ class User extends React.Component {
     const classes = `${tabClass}` ;
     var fullname = this.props.firstName + " " + this.props.lastName;
     var imgSrc = "";
-    const statusImgSrc = this.props.loggedinStatus == true ? "http://s3.amazonaws.com/gs.apps.icons/B_Bpusg8EeKT7hIxPR901Q_%2Fgreen+dot.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Location_dot_grey.svg/2000px-Location_dot_grey.svg.png";
+    const statusImgSrc = this.props.loggedinStatus == true || this.props.userType == "chatbot" ? "http://s3.amazonaws.com/gs.apps.icons/B_Bpusg8EeKT7hIxPR901Q_%2Fgreen+dot.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Location_dot_grey.svg/2000px-Location_dot_grey.svg.png";
     if(this.props.userType == "facebook"){
       imgSrc = "http://graph.facebook.com/" + this.props.username + "/picture?type=square";
     }
-    else{
+    else if(this.props.userType == "linkedin"){
       imgSrc = "https://s3.amazonaws.com/FringeBucket/default-user.png";
+    }
+    else if(this.props.userType == "chatbot"){
+      imgSrc = "http://blog.newrelic.com/wp-content/uploads/chatbot-300x300.jpg";
     }
     return (
           <div data-id={`${this.props.tabKey}`} className={classes} onClick={(event)=>this.onItemClick(event)}  id={`${this.props.username}`} data-user={`${fullname}`}>
