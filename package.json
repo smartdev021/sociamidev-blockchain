@@ -37,6 +37,7 @@
   },
   "homepage": "",
   "devDependencies": {
+    "api-ai-javascript": "^2.0.0-beta.21",
     "babel-core": "^6.0.20",
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.2",
@@ -55,12 +56,14 @@
     "react-router-dom": "^4.2.2",
     "rimraf": "^2.6.2",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^1.1.5",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0",
     "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {
+    "api-ai-javascript": "^2.0.0-beta.21",
     "axios": "^0.16.2",
     "bluebird": "^3.5.1",
     "file-loader": "^0.11.2",
@@ -81,12 +84,13 @@
     "react-pdf": "^2.2.0",
     "react-redux": "^5.0.6",
     "react-responsive-carousel": "^3.1.28",
+    "react-timeago": "^3.4.3",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^1.4.8",
+    "uglifyjs-webpack-plugin": "^1.1.5",
     "url-loader": "^0.5.9",
-    "webfontloader": "^1.6.28",
-    "react-timeago": "^3.4.3"
+    "webfontloader": "^1.6.28"
   }
 }

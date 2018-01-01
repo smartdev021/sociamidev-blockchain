@@ -213,7 +213,7 @@ a.search {
   background-color: #e6e6e6;
 }
 
-.person img{
+.person .profilePic{
   float: left;
   width: 50px;
   height: 50px;
@@ -221,7 +221,7 @@ a.search {
   border-radius: 50%;
 }
 
-.personSelected img{
+.personSelected .profilePic{
   float: left;
   width: 50px;
   height: 50px;
@@ -570,4 +570,9 @@ a.search {
 
 .newMessageIndicatorHide{
   display: none;
+}
+
+.statusDot{
+  height: 8px !important;
+  width: 8px !important;
 }
