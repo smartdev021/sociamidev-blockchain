@@ -5,6 +5,7 @@ import ReactDom from 'react-dom'
 import io from 'socket.io-client';
 //import config from '../config';
 import { withRouter } from 'react-router-dom'
+import { ApiAiClient } from 'api-ai-javascript';
 
 import Messages from './Messages';
 import Users from './Users';
@@ -12,10 +13,28 @@ import ChatInput from './ChatInput';
 
 import ConfigMain from '../../../configs/main';
 
+const client = new ApiAiClient({accessToken: '0e686d9660cb4a92a1812b11e89a33a8'});
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
 
 class ChatApp extends React.Component {
+  componentDidMount() {
+    const botUser = {
+      username: "chatbot",
+      userID: "chatbot",
+      firstName: "Chat",
+      lastName: "Bot",
+      userType: "chatbot",
+      socketIds: []
+    }
+
+    var tUsers = [];
+    tUsers.push(botUser);
+
+    let copy = Object.assign({}, this.state, {users: tUsers});
+    this.setState(copy);
+  }
+  
   constructor(props) {
     super(props);
     this.state = { messageStack: [],
@@ -25,16 +44,30 @@ class ChatApp extends React.Component {
                    activeUserName: "", 
                    activeUserFullName: "",
                    lastMessageStack: []
-                };
+                };    
 
-    this.socket = io(BackendURL, { query: `username=${props.username}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+    if(this.props.loggedin){
+    this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+                
+    this.socket.on('server:user', newUsers => {
+      var tempUsers = this.state.users;
 
-    this.socket.on('server:user', tempUsers => {
-      this.state.users = [];
-      
-      tempUsers = tempUsers.filter(function(user) {
-        return user.username !== props.username;
-      });
+      for(var i=0; i<newUsers.length; i++){
+        var newUser = newUsers[i];
+        tempUsers.push(newUser);
+      }
+
+      let copy = Object.assign({}, this.state, {users: tempUsers});
+      this.setState(copy);
+    });
+
+    this.socket.on('newUser', user => {
+      var tempUsers = this.state.users;
+      for(var i=0; i<tempUsers.length; i++){
+        if(tempUsers[i].userID == user.userID){
+          tempUsers[i].loggedinStatus = user.loggedinStatus;
+        }
+      }
 
       let copy = Object.assign({}, this.state, {users: tempUsers});
       this.setState(copy);
@@ -46,6 +79,7 @@ class ChatApp extends React.Component {
       this.addMessage(message);
       this.addLastMessage(message);
     });
+  }
   }
 
   tabChanges(activeUsername,activeUserFullname){
@@ -61,7 +95,27 @@ class ChatApp extends React.Component {
       time: new Date()
     };
     // Emit the message to the server
-    this.socket.emit('client:message', messageObject);
+    if(this.state.activeUserName == "chatbot"){
+      client.textRequest(message)
+      .then((response) => {
+          console.log(response.result.fulfillment.speech);
+          var msgResponse = response.result.fulfillment.speech;
+          const messageObject = {
+            sender: this.state.activeUserName,
+            message: msgResponse,
+            receiver: this.props.username,
+            time: new Date()
+          };
+      
+          messageObject.fromMe = false;
+          this.addMessage(messageObject);
+          this.addLastMessage(messageObject);
+      })
+      .catch((error) => {console.log(error);})
+    }
+    else{
+      this.socket.emit('client:message', messageObject);      
+    }
 
     messageObject.fromMe = true;
     this.addMessage(messageObject);
