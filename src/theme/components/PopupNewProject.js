@@ -13,6 +13,8 @@ import ConfigMain from '~/configs/main'
 import PopupConfirmWithdraw from '~/src/theme/components/PopupConfirmation';
 import NewProjectForm from '~/src/theme/components/PopupNewProjectForm';
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 const arrayDifference = function(arrayFirst, arraySecond) {
   let difference = [];
 
@@ -219,11 +221,16 @@ class PopupNewProject extends React.Component {
 
       const milestone = Object.assign({}, 
         this.state.milestoneTemp, {
-          type: "project_milestone",
+          type: TaskTypes.PROJECT_MILESTONE,
           userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
           userID: this.props.userProfile._id,
           isHidden: 1,
-        }
+          creator: {
+            _id: this.props.userProfile._id,
+            firstName: this.props.userProfile.firstName,
+            lastName: this.props.userProfile.lastName,
+          },
+        },
       );
 
       if (milestone.userName != "" && milestone.name != "" && milestone.description != "") {

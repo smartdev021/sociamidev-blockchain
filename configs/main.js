@@ -20,4 +20,5 @@ var ConfigMain = {
     S3BucketURL: 'https://sociamibucket.s3.amazonaws.com'
 }
 
+
 module.exports = ConfigMain;

@@ -117,6 +117,10 @@
   overflow-x: hidden;
 }
 
+#my-progress-list a {
+  color: white;
+}
+
 .progress-bar-skills-weightage {
   font-size: 18px;
   font-weight: bold;

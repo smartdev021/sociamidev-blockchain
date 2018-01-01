@@ -15,7 +15,6 @@ import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgre
 
 import ProgressiontreesScanner from "~/src/theme/components/progressiontrees/ProgressiontreesScanner"
 import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/ProgressiontreesMyProgress"
-import ProgressiontreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowser"
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -24,13 +23,7 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
-import {
-  startProgressionTree,
-} from '~/src/redux/actions/authorization'
-
-import {
-  saveTask,
-} from '~/src/redux/actions/tasks'
+import Axios from 'axios'
 
 import ConfigMain from '~/configs/main'
 
@@ -44,28 +37,12 @@ class ProgressionTrees extends React.Component {
       isAcceptProgressionTreePopupOpen: false,
       scannerSelectedTreeId: undefined,
       scannerSelectedTreeName: "",
-
-      selectedTreeFromMyProgressIndex: -1,
     }
   }
 
   handleChange(e) {
     e.preventDefault();
     this.setState({scannerQuery: e.target.value});
-  }
-
-  handleOpenSingleTree(id) {
-    const foundTreeIndex = this.props.roadmapsAdmin.data.findIndex(function(tree) {
-      return tree._id == id;
-    })
-
-    if (foundTreeIndex != -1) {
-      this.setState({ selectedTreeFromMyProgressIndex: foundTreeIndex });
-    }
-  }
-
-  handleCloseSingleTree(id) {
-    this.setState({ selectedTreeFromMyProgressIndex: -1 });
   }
 
   componentWillMount() {
@@ -77,22 +54,14 @@ class ProgressionTrees extends React.Component {
   renderUserProgressionTrees() {
     return (
       <div id="progression-trees-trees">
-      {
-        this.state.selectedTreeFromMyProgressIndex != -1 ?
-          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
-            onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask}/>
-          :
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="content-2-columns-left-title">My Progress</div>
-              </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="content-2-columns-left-title">My Progress</div>
             </div>
-            <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} 
-              isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}/>
           </div>
-      }
-        
+          <ProgressiontreesMyProgress roadmapsAdmin={this.props.roadmapsAdmin} isAuthorized={this.props.isAuthorized}/>
+        </div>
       </div>
     );
   }
@@ -100,7 +69,9 @@ class ProgressionTrees extends React.Component {
   openTreeAcceptConfirmationPopup(treeId, treeName) {
     console.log(`treeId: ${treeId}, treeName: ${treeName}`);
     if (this.props.isAuthorized) {
+      if (this.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == treeId;}) == -1) {
         this.setState({scannerSelectedTreeId: treeId, scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
+      }
     }
   }
 
@@ -131,17 +102,25 @@ class ProgressionTrees extends React.Component {
       const foundRoadmap = foundRoadmaps.find(findById);
 
       if (foundRoadmap) {
-       this.props.startProgressionTree(this.props.userProfile._id, {_id: foundRoadmap._id, name: foundRoadmap.name});
+        const data = {userId: this.props.userProfile._id, progTree: {_id: foundRoadmap._id, name: foundRoadmap.name}};
+        
+        Axios.post(url, data)
+          .then((response)=>this.progressionTreeStartSuccess(response))
+          .catch((error)=>this.progressionTreeStartFailed(error)); 
       }
     }
   }
 
-  render() {
-    const that = this;
-    const treesScanner = this.props.roadmapsAdmin.data.filter(function(roadmap) {
-      return that.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == roadmap._id;}) == -1;
-    });
+  progressionTreeStartSuccess(response) {
+    console.log("progressionTreeStartSuccess response: ");
+    console.dir(response.data);
+  }
 
+  progressionTreeStartFailed(error) {
+    console.log("progressionTreeStartFailed error: " + error);
+  }
+
+  render() {
     return (
         <div className="content-2-columns-wrapper" id="progression-trees">
           {this.state.isAcceptProgressionTreePopupOpen 
@@ -153,18 +132,18 @@ class ProgressionTrees extends React.Component {
           }
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-9">
+              {/*<div className="col-lg-9">
               <div className="content-2-columns-left">
                 {this.renderUserProgressionTrees()}
               </div>
-              </div>
-              <div className="col-lg-3">
+              </div>*/}
+              <div className="col-lg-12">
                 <div className="content-2-columns-left" id="progression-trees-scanner">
                 <div id="progression-trees-scanner-container">
                   <div className="container-fluid">
                     <div className="row">
                        <div className="col-lg-12">
-                         <div className="content-2-columns-right-title">Tree scanner</div>
+                         <div className="content-2-columns-right-title content-2-columns-right-title-landing">Tree scanner</div>
                        </div>
                     </div>
                     <div className="row">
@@ -177,7 +156,7 @@ class ProgressionTrees extends React.Component {
                     <div className="row">
                       <div className="col-lg-12">
                         <div id="trees-scanner-container">
-                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
+                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={this.props.roadmapsAdmin.data} 
                             openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
                         </div>
                       </div>
@@ -195,9 +174,7 @@ class ProgressionTrees extends React.Component {
 
 ProgressionTrees.propTypes = {
   fetchRoadmaps: PropTypes.func.isRequired,
-  saveTask: PropTypes.func.isRequired,
   fetchRoadmapsFromAdmin: PropTypes.func.isRequired,
-  startProgressionTree: PropTypes.func.isRequired,
   roadmaps: PropTypes.object.isRequired,
   roadmapsAdmin: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
@@ -213,8 +190,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
-  saveTask: bindActionCreators(saveTask, dispatch),
-  startProgressionTree: bindActionCreators(startProgressionTree, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 

@@ -7,6 +7,10 @@ import {
     SIGNUP_FORM_CLOSE,
     FETCH_USER_PROFILE_TASKS_INITIATE,
     FETCH_USER_PROFILE_TASKS_COMPLETE,
+
+    PROGRESSION_TREE_START_INITIATE,
+    PROGRESSION_TREE_START_COMPLETE,
+    
 } from '~/src/redux/actions/actionTypes';
 
 export function isOpenProfilePending(state = false, action) {
@@ -28,6 +32,9 @@ const userProfileInitialState = {
     skills: 'javascript, c++', 
     experience: 'Google',
     education: 'Harvard',
+    facebook: null,
+    linkedin: null,
+    progressionTrees: [],
   },
   tasks: {
     assigned: [],
@@ -41,7 +48,7 @@ const userProfileInitialState = {
 export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
     case FETCH_USER_PROFILE_INITIATE:
-      return {...state, profile: action.profile, isAuthorized: false, isLoading: true};
+      return {...state, isAuthorized: false, isLoading: true};
     case FETCH_USER_PROFILE_COMPLETE:
       return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
@@ -50,6 +57,10 @@ export function userProfile(state = userProfileInitialState, action) {
     case FETCH_USER_PROFILE_TASKS_COMPLETE: {
       return {...state, tasks: {assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false}};
     }
+    case PROGRESSION_TREE_START_INITIATE:
+      return state;
+    case PROGRESSION_TREE_START_COMPLETE:
+      return {...state, profile: Object.assign({}, state.profile, {progressionTrees: state.profile.progressionTrees.concat(action.tree)})};
     default:
       return state;
     }

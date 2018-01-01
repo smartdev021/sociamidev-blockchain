@@ -14,7 +14,7 @@ body {
 }
 
 #main-content_1 {
-  height: 633px;
+  min-height: 633px; /*Michael for landing*/
   padding-left: 5px;
   padding-right: 5px;
 }

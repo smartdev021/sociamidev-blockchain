@@ -12,6 +12,9 @@ import {Icon} from 'react-fa'
 import ActionLink from '~/src/components/common/ActionLink'
 import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
 
+import ProgressionTreesLanding from '~/src/theme/ProgressionTreesLanding';
+import TaskManagement from '~/src/theme/TaskManagement';
+
 import {
   setSearchQuery,
 } from '~/src/redux/actions/fetchResults'
@@ -144,6 +147,7 @@ class HomePage extends React.Component {
     return (
       <div id="main-content_1">
         <div id="wrapper-home-page">
+        
           {this.state.isDetailsOpen ? <DetailsPopup modalIsOpen={this.state.isDetailsOpen} 
             onCloseModal={()=>this.handleCloseModal()} task={this.state.currentTask}/> : null}
             <div className="container">
@@ -154,8 +158,15 @@ class HomePage extends React.Component {
                     <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
                   </div>
               </div>
+              <div className="row">
+                <div className="col-lg-6">
+                  <ProgressionTreesLanding />
+                </div>
+                {/*<div className='col-lg-6'>
+                  <TaskManagement />
+                </div>*/}
+              </div>
             </div>
-            {Tasks}
           </div>
         </div>
       </div>

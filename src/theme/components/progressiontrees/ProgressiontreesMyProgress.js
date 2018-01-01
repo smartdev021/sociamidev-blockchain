@@ -6,21 +6,22 @@ import React from 'react';
 import ActionLink from '~/src/components/common/ActionLink'
 
 const ProgressiontreesMyProgress = (props) => {
-  const DummyProgressValues = [25, 41, 79, 85, 15, 98, 100, 29, 35, 50, 67, 75];
-  
-  let userRoadmaps = [];
-  
-  /*if (props.isAuthorized) {
-    userRoadmaps = props.roadmapsAdmin.data.filter(function(roadmap) {
-      return roadmap.us
-  });
-  }
-  else {
-        
-  }*/
-  
-  userRoadmaps = props.roadmapsAdmin.data;
-      
+  return (
+    <div className="row" id="my-progress-list">
+          {
+            props.trees.map(function(roadmap, i) {
+            return (
+              <div key={i} className="col-lg-12">
+                <ActionLink onClick={()=> props.openSingleTree(roadmap._id)}>
+                  <h4>{roadmap.name}</h4>
+                </ActionLink>
+              </div>
+            );
+          })}
+    </div>
+  );
+
+  /*
   return (
     <div id="my-progress-list">
           {
@@ -63,6 +64,7 @@ const ProgressiontreesMyProgress = (props) => {
           })}
     </div>
   );
+  */
 }
 
 export default ProgressiontreesMyProgress;

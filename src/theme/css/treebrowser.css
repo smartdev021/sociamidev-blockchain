@@ -1,0 +1,53 @@
+#tree-skills {
+    margin-top: 20px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#tree-skills a, #skill-break-down a {
+    color: white;
+}
+
+#progression-trees-trees a {
+    color: white;
+}
+
+.weightage-section {
+    margin-bottom: 10px;
+}
+
+.skill-breakdown-control {
+    margin-left: 50px;
+}
+
+#button-arrow-back {
+    font-size: 30px;
+}
+
+#skill-breakdown-trend-scanner {
+    height: 260px;
+}
+
+#skill-breakdown-trend-scanner #trend-scanner {
+    max-width: 100%;
+    overflow-x: visible;
+}
+
+#skill-break-down #related-topics {
+    height: 100px;
+    overflow-y: scroll;
+}
+
+#hangout-submit-form {
+    border: 1px solid cyan;
+    border-radius: 3px;
+    min-height: 100px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#hangout-submit-form form input{
+    background: rgb(119, 112, 112);
+    border: 1ps solid rgb(119, 112, 112);
+    border-radius: 3px;
+}

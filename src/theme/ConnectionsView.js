@@ -15,6 +15,7 @@ class ConnectionsView extends React.Component {
             friendList: [],
             receivedList: [],
             sentList: [],
+            facebookFriends: [],
             key: 1,
             loader: 0
         };
@@ -35,6 +36,39 @@ class ConnectionsView extends React.Component {
     componentWillMount() {
         this.getAllFriends();
         this.getAllConnections();
+        this.fetchFacebookFriendsForCurrentUser();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.isAuthorized != this.props.isAuthorized) {
+            if (this.props.isAuthorized) {
+                this.fetchFacebookFriendsForCurrentUser();
+            }
+        }
+    }
+
+    fetchFacebookFriendsForCurrentUser() {
+        if (this.props.isAuthorized) {
+            const self = this;
+
+            const currentUserID = self.props.currentUserId;
+            const facebookID = (self.props.userProfile.facebook && self.props.userProfile.facebook._id)
+            ? self.props.userProfile.facebook._id : self.props.userProfile.facebookID;
+
+            const url = `${ConfigMain.getBackendURL()}/facebookFriendsForUserID`;
+            Axios.get(url, {
+                params: {
+                    currentUserID: currentUserID,
+                    facebookID: facebookID,
+                }
+             }
+            ).then(function (response) {
+                self.setState({facebookFriends : response.data.data})
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 
     getAllFriends() {
@@ -135,17 +169,53 @@ class ConnectionsView extends React.Component {
             });
     }
 
+    getListOfFriendsSorted() {
+        const facebookFriends = this.state.facebookFriends;
+
+        const areInFacebookFriends = function (user) {
+            return facebookFriends.findIndex(function(currentFriend) {
+                return currentFriend.id == user.facebookID;
+            }) != -1;
+        }
+
+        let allFriendsList = [].concat(this.state.allFriendList);
+
+        if (facebookFriends.length > 0) {
+            allFriendsList = allFriendsList.map(function(friend) {
+                return Object.assign({}, friend, { isFacebookFriend: areInFacebookFriends(friend) });
+            });
+
+            allFriendsList.sort(function(friend1, friend2) {
+                if (friend1.isFacebookFriend === friend2.isFacebookFriend) {
+                    return 0;
+                }
+    
+                if (friend1.isFacebookFriend) {
+                    return -1;
+                }
+                else {
+                    return 1;
+                }
+            });
+        }
+
+        return allFriendsList;
+    }
+
     render() {
         let divStyle = {overflow: 'auto'};
         const loaderMainClass = this.state.loader == 0 ? "loader-class-1" : "loader-class-2";
         const loaderMainClasses = `loading ${loaderMainClass}` ;
+
+        const allFriendsList = this.getListOfFriendsSorted();
+
         return (
             <div style={divStyle} className="allFriendList">
               <div className={loaderMainClasses}></div>
                 <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="allFriendList">
                     <Tab eventKey={1} title="All">
                         <ul> {
-                            this.state.allFriendList.map(function (friend) {
+                            allFriendsList.map(function (friend) {
                                 let addBtn = <button type="button" className="btn btn-primary"
                                                      onClick={()=>this.handleAddSoqqler(friend.id)}>
                                     Add Soqqler</button>;
@@ -158,7 +228,12 @@ class ConnectionsView extends React.Component {
                                         </div>
                                         <div className="friendInfoContainer">
                                             <div className="friendInfo">
-                                                <span className="friendName">{friend.firstName} {friend.lastName}</span>
+                                                <span className="friendName">
+                                                  {friend.firstName} {friend.lastName}
+                                                  {friend.isFacebookFriend &&
+                                                    <span className="friendFacebookRecommendation"> (You are friends on Facebook)</span>
+                                                  }
+                                                </span>
                                                 <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
                                             </div>
                                         </div>
@@ -344,6 +419,7 @@ class ConnectionsView extends React.Component {
 
 ConnectionsView.propTypes = {
     userProfile: PropTypes.object.isRequired,
+    isAuthorized: PropTypes.bool.isRequired,
 }
 
 export default ConnectionsView;
