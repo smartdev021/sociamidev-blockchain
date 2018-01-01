@@ -84,19 +84,33 @@ class SkillBreakdown extends React.Component {
   handleStartHangout(e) {
     e.preventDefault();
 
-    const hangout = Object.assign({}, 
-      {}, {
-        name: `Hangout for roadmap ${this.props.tree.name}`,
-        description: "Hangout with John, and answer questions together",
-        type: TaskTypes.HANGOUT,
-        userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
-        userID: this.props.userProfile._id,
-        isHidden: 0,
-        metadataData : {
-          tree: this.props.tree
+    const hangout = {
+      name: `Hangout for roadmap "${this.props.tree.name}"`,
+      description: "Hangout with John, and answer questions together",
+      type: TaskTypes.HANGOUT,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+      userID: this.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      },
+      metaData : {
+        subject: {
+          roadmap: {
+            _id: this.props.tree._id,
+            name: this.props.tree.name,
+          },
+          skill: {
+            _id: this.state.skillInfo._id,
+            name: this.state.skillInfo.skill,
+          },
         },
-      }
-    );
+        participants: [], //userId, name, proposedTime(optional), status: sent/accepted/rejected
+        time: Date.now(),
+      },
+    };
 
     if (hangout.userName != "" && hangout.name != "" && hangout.description != "") {
       this.props.saveTask(hangout);

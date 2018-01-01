@@ -26,6 +26,8 @@ import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks'
 
 import TasksScannerContainer from '~/src/theme/components/tasks/TasksScannerContainer'
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/tasksManagement.css"
 
@@ -76,7 +78,7 @@ class TaskManagement extends React.Component {
     let projects = {};
 
     for (let i = 0; i < tasks.length; ++i) {
-      if (tasks[i].type == "project_milestone") {
+      if (tasks[i].type == TaskTypes.PROJECT_MILESTONE) {
         if (!projects.hasOwnProperty(tasks[i].metaData.projectId)) {
           projects[tasks[i].metaData.projectId] = {_id: tasks[i].metaData.projectId, name: tasks[i].metaData.projectName, milestones: []};
         }
