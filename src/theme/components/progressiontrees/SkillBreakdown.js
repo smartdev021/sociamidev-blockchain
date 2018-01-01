@@ -81,9 +81,7 @@ class SkillBreakdown extends React.Component {
     this.props.selectResultsCategory(e.currentTarget.id);
   }
 
-  handleStartHangout(e) {
-    e.preventDefault();
-
+  handleStartHangout(date) {
     const hangout = {
       name: `Hangout for roadmap "${this.props.tree.name}"`,
       description: "Hangout with John, and answer questions together",
@@ -108,7 +106,7 @@ class SkillBreakdown extends React.Component {
           },
         },
         participants: [], //userId, name, proposedTime(optional), status: sent/accepted/rejected
-        time: Date.now(),
+        time: date.getMilliseconds(),
       },
     };
 
@@ -117,6 +115,11 @@ class SkillBreakdown extends React.Component {
     }
     
     this.setState( { isHangoutFormVisible: false } );
+  }
+
+  handleTimeChange(e) {
+    e.preventDefault();
+    console.log(e.currentTarget.value);
   }
 
   render() {
@@ -141,7 +144,8 @@ class SkillBreakdown extends React.Component {
           </div>
         }
         {this.state.isHangoutFormVisible && 
-        <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(e) => this.handleStartHangout(e)}/>}
+        <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
+        onTimeChange={(e)=>handleTimeChange(e)}/>}
         <div className="row">
           <div className="col-lg-12">
             <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
