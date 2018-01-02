@@ -7,17 +7,41 @@ import MySubtasks from './MySubtasks'
 import ActionLink from '~/src/components/common/ActionLink'
 
 const MyHangouts = (props) => {
-    
-    let filteredTasks = [];
-
-    filteredTasks = props.tasks.filter(function(task) {
-      return task.name && task.name != "";
-    });
 
     console.log("MyHangouts!!!!!!!!!!!");
-    console.dir(filteredTasks);
-
-    if (filteredTasks.length > 0) {
+    console.dir(props.hangouts);
+   
+    if (props.hangouts.length > 0) {
+      return (
+        <div className="row">
+          <div className="col-lg-12">
+            <div id="my-hangouts">
+              <h3>My Hangouts</h3>
+            </div>
+          </div>
+          <div className="col-lg-12">
+            <div id="my-hangouts-list">
+              <ul>
+                {
+                  props.hangouts.map(function(hangout, i){
+                    return (
+                    <li key={i}>
+                      {hangout.requester.firstName} (level 5) wants to join your {hangout.metaData.hangout.name}
+                        <span>
+                          <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout)}>Accept</ActionLink>
+                          <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout)}>Reject</ActionLink>
+                        </span>
+                    </li>
+                    );
+                  })
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    else {
       return (
         <div className="row">
           <div className="col-lg-12">
@@ -27,9 +51,6 @@ const MyHangouts = (props) => {
           </div>
         </div>
       );
-    }
-    else {
-      return (<ul></ul>);
     }
 }
 
