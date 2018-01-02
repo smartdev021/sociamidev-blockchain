@@ -106,7 +106,7 @@ class SkillBreakdown extends React.Component {
           },
         },
         participants: [], //userId, name, proposedTime(optional), status: sent/accepted/rejected
-        time: date.getMilliseconds(),
+        time: date.getTime(),
       },
     };
 

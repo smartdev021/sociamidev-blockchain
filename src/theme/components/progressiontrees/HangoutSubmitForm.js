@@ -87,7 +87,7 @@ class HangoutSubmitForm extends React.Component {
 
     let date = new Date(this.state.dateInputValue + ' ' + this.state.timeInputValue);
 
-    console.log(`handleStartHangout date: ${date.getMilliseconds()}`);
+    console.log(`handleStartHangout date: ${date.getTime()}`);
     console.log(date.toDateString());
 
     this.props.onHandleStartHangout(date);
