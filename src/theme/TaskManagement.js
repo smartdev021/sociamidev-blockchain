@@ -324,13 +324,23 @@ class TaskManagement extends React.Component {
   }
 
   hangoutRequestAccept(hangout) {
-    console.log("hangoutRequestAccept");
-    console.dir(hangout);
+    const body = {user: hangout.requester, hangoutID: hangout.metaData.hangout._id};
+    Axios.post(`${BackendURL}/hangoutJoinAccept`, body)
+      .then((response) => {
+
+      }).catch(function(error) {
+        console.log(error);
+      });
   }
 
   hangoutRequestReject(hangout) {
-    console.log("hangoutRequestReject");
-    console.dir(hangout);
+   /* const body = {user: hangout.requester._id, hangoutID: hangout.metaData.hangout._id};
+    Axios.post(`${BackendURL}/join_reject`, body)
+      .then((response) => {
+
+      }).catch(function(error) {
+        console.log(error);
+      });*/
   }
 
   renderLeftSide() {
