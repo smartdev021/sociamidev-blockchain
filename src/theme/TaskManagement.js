@@ -35,6 +35,7 @@ import {
   setTasks,
   fetchTasksInitiate,
   fetchTasksComplete,
+  hangoutJoin,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -200,7 +201,7 @@ class TaskManagement extends React.Component {
     console.log(item);
     
     if (this.props.isAuthorized && item.userID != this.props.userProfile._id) {
-      let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true,detailsPopupItem: item});
+      let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true, detailsPopupItem: item});
       this.setState(copy)
     }
   }
@@ -213,7 +214,11 @@ class TaskManagement extends React.Component {
   }
 
   handleAcceptConfirm(item){
-    let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
+    console.log("%c Accepting a task: ", "color: white; background: black");
+    console.dir(this.state.detailsPopupItem);
+
+    if (this.state.detailsPopupItem.type != TaskTypes.HANGOUT) {
+      let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
     var params={
       _id:this.state.detailsPopupItem._id,
       taskAsigneeId:userID
@@ -231,6 +236,16 @@ class TaskManagement extends React.Component {
     Axios.post(`${ConfigMain.getBackendURL()}/taskAssign`, body)
     .then((response) =>this.handleCloseConfirmTaskDetailsPopup(response))
     .catch((error) =>this.handleCloseConfirmTaskDetailsPopup(error));
+    }
+    else {
+      this.props.hangoutJoin(this.state.detailsPopupItem._id, {
+        _id: this.props.userProfile._id, 
+        firstName: this.props.userProfile.firstName, 
+        lastName: this.props.userProfile.lastName
+      });
+
+      this.handleCloseConfirmTaskDetailsPopup({});
+    }
   }
 
   handleOpenCancelTaskDetailsPopup(item){
@@ -319,9 +334,11 @@ class TaskManagement extends React.Component {
     return (
         <div className="content-2-columns-wrapper">
         <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
-          onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation" />   
+          onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation"
+          task={this.state.detailsPopupItem} />   
         <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} 
-          onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" />   
+          onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" 
+          task={this.state.detailsPopupItem}/>   
           <div className="container-fluid">
             <div className="row">
               {this.renderLeftSide()}
@@ -344,6 +361,7 @@ TaskManagement.propTypes = {
   isTasksFetchInProgress: PropTypes.bool.isRequired,
 
   openSignUpForm: PropTypes.func.isRequired,
+  hangoutJoin: PropTypes.func.isRequired,
   setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
@@ -367,6 +385,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  hangoutJoin: bindActionCreators(hangoutJoin, dispatch),
   setTasks: bindActionCreators(setTasks, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),

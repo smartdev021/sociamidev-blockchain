@@ -78,6 +78,11 @@
     color: white;
   }
 
+  .hangout-text {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
 .subtask {
     width: 95%;
     margin: 0 auto;

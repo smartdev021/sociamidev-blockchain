@@ -48,8 +48,9 @@ const RenderSingleTask = (task, i, props)=> {
     return (
       <li key={i}>
         <div>
+        <span className="hangout-text">{task.creator.firstName} is looking to Hangout for roadmap: {task.metaData.subject.roadmap.name} at {time}</span>
           <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
-            {task.creator.firstName} is looking to Hangout for <br/>roadmap: {task.metaData.subject.roadmap.name} at {time}
+            Accept
           </ActionLink>
         </div>
       </li>

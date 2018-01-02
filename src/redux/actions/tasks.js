@@ -172,3 +172,30 @@ console.log("publishedOnly: " + publishedOnly);
             }));
         }
     }
+
+    export function hangoutJoin(hangoutId, user) {
+        return function (dispatch) {
+          //dispatch(updateTaskInitiate());
+          
+          const url = `${ConfigMain.getBackendURL()}/hangoutJoin`;
+
+          const body = {
+            hangoutID : hangoutId,
+            
+            user : {
+                  _id : user._id,
+                  firstName : user.firstName,
+                  lastName : user.lastName,
+              },
+            };
+            return (
+            Axios.post(url, body)
+            .then(function(response) {
+                //dispatch(updateTask(response.data._id, response.data));
+                //dispatch(updateTaskComplete());
+            })
+            .catch(function(error) {
+                //dispatch(updateTaskComplete({}));
+            }));
+        }
+    }
