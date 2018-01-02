@@ -6,6 +6,28 @@ import React from 'react';
 import MySubtasks from './MySubtasks'
 import ActionLink from '~/src/components/common/ActionLink'
 
+const RenderSingleHangout = (hangout, i, props) => {
+  if (props.selectedCategory.type == "requested_hangouts") {
+    return(
+      <li key={i}>
+        {hangout.requester.firstName} (level 5) wants to join your {hangout.metaData.hangout.name}
+        <span>
+          <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout)}>Accept</ActionLink>
+          <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout)}>Reject</ActionLink>
+        </span>
+      </li>
+    );
+  }
+  else {
+    return(
+      <li key={i}>
+        You've requested to join a Hangout {hangout.metaData.hangout.name}
+      </li>
+    );
+  }
+  
+};
+
 const MyHangouts = (props) => {
 
     console.log("MyHangouts!!!!!!!!!!!");
@@ -24,15 +46,7 @@ const MyHangouts = (props) => {
               <ul>
                 {
                   props.hangouts.map(function(hangout, i){
-                    return (
-                    <li key={i}>
-                      {hangout.requester.firstName} (level 5) wants to join your {hangout.metaData.hangout.name}
-                        <span>
-                          <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout)}>Accept</ActionLink>
-                          <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout)}>Reject</ActionLink>
-                        </span>
-                    </li>
-                    );
+                    return (RenderSingleHangout(hangout, i, props));
                   })
                 }
               </ul>

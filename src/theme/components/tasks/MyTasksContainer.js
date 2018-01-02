@@ -37,7 +37,8 @@ const MyTasksContainer = (props) => {
           {(props.selectedCategory.type == "requested_hangouts" || props.selectedCategory.type == "requests_sent_hangouts") ?
              <MyHangouts hangouts={props.hangouts} 
                onHangoutRequestAccept={(hangout)=>props.onHangoutRequestAccept(hangout)}
-               onHangoutRequestReject={(hangout)=>props.onHangoutRequestReject(hangout)}/>
+               onHangoutRequestReject={(hangout)=>props.onHangoutRequestReject(hangout)}
+               selectedCategory={props.selectedCategory}/>
              :
              <MyTasks tasks={props.tasks} handleOpenCancelTaskDetailsPopup={(task)=>props.handleOpenCancelTaskDetailsPopup(task)}/>
           }
