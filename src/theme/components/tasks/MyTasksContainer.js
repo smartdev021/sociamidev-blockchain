@@ -12,12 +12,23 @@ const MyTasksContainer = (props) => {
     <div id="tasks-management-my-tasks">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-lg-10">
+          <div className="col-lg-4">
             <div className="content-2-columns-left-title">My Tasks</div>
           </div>
-          <div className="col-lg-2">
+          <div className="col-lg-8">
             <div className="content-2-columns-left-title">
-              <ActionLink href="#" onClick={()=>props.toggleMyTasksCategory()}>{props.tasksCategoryName}</ActionLink>
+              <form>
+                {
+                  props.categories.map(function(category, i) {
+                    return (
+                      <label className="radio-inline" key={i}>
+                        <input type="radio" name="optradio" checked={props.selectedCategory.type == category.type} 
+                          value={category.type} onChange={(e)=>props.onHandleCategoryChange(e)}/>{category.name}
+                      </label>
+                    )
+                  })
+                }
+              </form>
             </div>
           </div>
         </div>

@@ -54,13 +54,25 @@ const BackendURL = ConfigMain.getBackendURL();
 
 const TaskCategoryYour = {
   type: "my_tasks",
-  name: "Created tasks"
+  name: "Created"
 };
 
 const TaskCategoryAssigned = {
   type: "assign_tasks",
-  name: "Assigned tasks"
+  name: "Assigned"
 };
+
+const TaskCategoryMyRequests = {
+  type: "requested_hangouts",
+  name: "My Requests"
+};
+
+const TaskCategoryMyOffers = {
+  type: "requests_sent",
+  name: "Sent"
+};
+
+const Categories = [TaskCategoryYour, TaskCategoryAssigned, TaskCategoryMyRequests, TaskCategoryMyOffers];
 
 class TaskManagement extends React.Component {
 
@@ -158,15 +170,16 @@ class TaskManagement extends React.Component {
     }
   }
 
-  toggleMyTasksCategory() {
-    let newCategory = {};
+  handleCategoryChange(e) {
+    console.log("handleCategoryChange: ");
+    console.dir(e.target);
 
-    if (this.state.tasksCategory.type == TaskCategoryYour.type) {
-      newCategory = TaskCategoryAssigned;
-    }
-    else {
-      newCategory = TaskCategoryYour;
-    }
+    const newCategory = Categories.find(function(category){
+      return category.type == e.target.value;
+    });
+
+    console.log("newCategory: ");
+    console.dir(newCategory);
 
     let copy = Object.assign({}, this.state, {tasksCategory: newCategory});
     this.setState(copy);
@@ -295,8 +308,10 @@ class TaskManagement extends React.Component {
         <MyTasksContainer 
           tasks={myTasks}
           tasksCategoryName={this.state.tasksCategory.name}
-          toggleMyTasksCategory={()=>this.toggleMyTasksCategory()}
+          onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
           handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
+          selectedCategory={this.state.tasksCategory}
+          categories={Categories}
         />
       </div>
     </div>
