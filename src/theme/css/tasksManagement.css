@@ -130,3 +130,8 @@
 #tasks-scanner-container #scanner-input-container input[type="text"] {
     font-size: 18px; /*Michael for landing*/
 }
+
+#my-hangouts {
+    padding-left: 5px;
+    padding-right: 5px;
+}

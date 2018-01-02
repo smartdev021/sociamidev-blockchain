@@ -68,7 +68,7 @@ const TaskCategoryMyRequests = {
 };
 
 const TaskCategoryMyOffers = {
-  type: "requests_sent",
+  type: "requests_sent_hangouts",
   name: "Sent"
 };
 
