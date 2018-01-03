@@ -82,35 +82,6 @@ class TaskManagement extends React.Component {
     this.state = {
       tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
-
-      hangoutRequestsReceived: [],
-      hangoutRequestsSent: [],
-    }
-  }
-
-  fetchHangoutRequests() {
-    if (this.props.isAuthorized) {
-      const that = this;
-      Axios.get(`${BackendURL}/socialrequestsGet`)
-      .then((response) => {
-        const received = response.data.filter(function(request) {
-          return (request.recepient._id == that.props.userProfile._id);
-        });
-
-        const sent = response.data.filter(function(request) {
-          return (request.requester._id == that.props.userProfile._id);
-        });
-
-        console.log("%cfetchHangoutRequests", "background:green; color: red;");
-        console.dir(response.data);
-        console.dir(received);
-        console.dir(sent);
-
-        that.setState({hangoutRequestsReceived: received, hangoutRequestsSent: sent});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     }
   }
 
@@ -186,7 +157,6 @@ class TaskManagement extends React.Component {
   componentWillMount() {
     // this.storeAndFetchTasks();
     this.fetchUserTasks();
-    this.fetchHangoutRequests();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -197,7 +167,6 @@ class TaskManagement extends React.Component {
 
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
       this.fetchUserTasks();
-      this.fetchHangoutRequests();
     }
   }
 
@@ -352,20 +321,25 @@ class TaskManagement extends React.Component {
     }
 
     const myTasks = this.state.tasksCategory.type == TaskCategoryAssigned.type ? tasksAssignedToMe : tasksCreatedByMe;
+
+    const hangoutsAll = this.props.tasks.filter(function(task) {
+      return task.type == "hangout";
+    });
+
+    const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type || this.state.tasksCategory.type == TaskCategoryMyOffers.type 
+    ? [].concat(hangoutsAll) : [];
     
     return (
       <div className="col-lg-9">
       <div className="content-2-columns-left">
         <MyTasksContainer 
           tasks={myTasks}
-          hangouts={this.state.tasksCategory.type == TaskCategoryMyRequests.type ? this.state.hangoutRequestsReceived : this.state.hangoutRequestsSent}
+          hangouts={hangouts}
           tasksCategoryName={this.state.tasksCategory.name}
           onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
           handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
           selectedCategory={this.state.tasksCategory}
           categories={Categories}
-          hangoutRequestsSent={this.state.hangoutRequestsSent}
-          hangoutRequestsReceived={this.state.hangoutRequestsReceived}
 
           onHangoutRequestAccept={(hangout)=>this.hangoutRequestAccept(hangout)}
           onHangoutRequestReject={(hangout)=>this.hangoutRequestReject(hangout)}

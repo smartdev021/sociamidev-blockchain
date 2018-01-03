@@ -10,7 +10,7 @@ const RenderSingleHangout = (hangout, i, props) => {
   if (props.selectedCategory.type == "requested_hangouts") {
     return(
       <li key={i}>
-        {hangout.requester.firstName} (level 5) wants to join your {hangout.metaData.hangout.name}
+        {hangout.metaData.participants[0].user.firstName} (level 5) wants to join your on roadmap {hangout.metaData.subject.roadmap.name}
         <span>
           <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout)}>Accept</ActionLink>
           <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout)}>Reject</ActionLink>
@@ -21,7 +21,7 @@ const RenderSingleHangout = (hangout, i, props) => {
   else {
     return(
       <li key={i}>
-        You've requested to join a Hangout {hangout.metaData.hangout.name}
+        You've requested to join a Hangout on roadmap {hangout.metaData.subject.roadmap.name}
       </li>
     );
   }
