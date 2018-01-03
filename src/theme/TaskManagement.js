@@ -326,8 +326,26 @@ class TaskManagement extends React.Component {
       return task.type == "hangout";
     });
 
-    const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type || this.state.tasksCategory.type == TaskCategoryMyOffers.type 
-    ? [].concat(hangoutsAll) : [];
+    let hangoutsCreatedByMe = [];
+    let hangoutsIWantToJoin = [];
+
+    const CurrentUserID = this.props.userProfile._id;
+
+    for (let i = 0; i < hangoutsAll.length; ++i) {
+      if (hangoutsAll[i].creator._id == this.props.userProfile._id) {
+        hangoutsCreatedByMe.push(hangoutsAll[i]);
+      }
+      else {
+        if (hangoutsAll[i].metaData.participants.findIndex(function(participant) {
+            return participant.user._id == CurrentUserID && participant.status == "pending"; 
+          }) != -1
+        ) {
+          hangoutsIWantToJoin.push(hangoutsAll[i]);
+        }
+      }
+    }
+
+    const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type ? hangoutsCreatedByMe : hangoutsIWantToJoin;
     
     return (
       <div className="col-lg-9">
