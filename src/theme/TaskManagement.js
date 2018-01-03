@@ -292,24 +292,26 @@ class TaskManagement extends React.Component {
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
 
-  hangoutRequestAccept(hangout) {
-    const body = {user: hangout.requester, hangoutID: hangout.metaData.hangout._id};
-    Axios.post(`${BackendURL}/hangoutJoinAccept`, body)
-      .then((response) => {
+  handleRequestStatusChange(hangout, user, status) {
+    const that = this;
 
+    const body = { userId: user._id, hangoutID: hangout._id, status: status };
+
+    Axios.post(`${BackendURL}/hangoutJoinStatusChange`, body)
+      .then((response) => {
+        that.props.onFetchAllTasks(false);
+        that.fetchUserTasks();
       }).catch(function(error) {
         console.log(error);
       });
   }
 
-  hangoutRequestReject(hangout) {
-   /* const body = {user: hangout.requester._id, hangoutID: hangout.metaData.hangout._id};
-    Axios.post(`${BackendURL}/join_reject`, body)
-      .then((response) => {
+  hangoutRequestAccept(hangout, user) {
+    this.handleRequestStatusChange(hangout, user, "accepted");
+  }
 
-      }).catch(function(error) {
-        console.log(error);
-      });*/
+  hangoutRequestReject(hangout, user) {
+    this.handleRequestStatusChange(hangout, user, "rejected");
   }
 
   renderLeftSide() {
@@ -325,6 +327,9 @@ class TaskManagement extends React.Component {
     const hangoutsAll = this.props.tasks.filter(function(task) {
       return task.type == "hangout";
     });
+
+    console.log("%cParsing Hangouts", "color: black; background: grey;");
+   
 
     let hangoutsCreatedByMe = [];
     let hangoutsIWantToJoin = [];
@@ -346,6 +351,14 @@ class TaskManagement extends React.Component {
     }
 
     const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type ? hangoutsCreatedByMe : hangoutsIWantToJoin;
+
+    console.dir(hangoutsAll);
+    console.dir(myTasks);
+
+    console.dir(hangoutsCreatedByMe);
+    console.dir(hangoutsIWantToJoin);
+
+    console.dir(hangouts);
     
     return (
       <div className="col-lg-9">
@@ -359,8 +372,8 @@ class TaskManagement extends React.Component {
           selectedCategory={this.state.tasksCategory}
           categories={Categories}
 
-          onHangoutRequestAccept={(hangout)=>this.hangoutRequestAccept(hangout)}
-          onHangoutRequestReject={(hangout)=>this.hangoutRequestReject(hangout)}
+          onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
+          onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
         />
       </div>
     </div>

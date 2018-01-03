@@ -8,15 +8,47 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 const RenderSingleHangout = (hangout, i, props) => {
   if (props.selectedCategory.type == "requested_hangouts") {
-    return(
-      <li key={i}>
-        {hangout.metaData.participants[0].user.firstName} (level 5) wants to join your Hangout on a roadmap {hangout.metaData.subject.roadmap.name}
-        <span>
-          <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout)}>Accept</ActionLink>
-          <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout)}>Reject</ActionLink>
-        </span>
-      </li>
-    );
+    const FirstPendingParticipant = hangout.metaData.participants.find(function(participant){
+      return participant.status == "pending";
+    });
+
+    if (FirstPendingParticipant) {
+      return(
+        <li key={i}>
+          {
+            <span>
+              {FirstPendingParticipant.user.firstName} (level 5) wants to join your Hangout on a roadmap {hangout.metaData.subject.roadmap.name}
+            </span>
+          }
+          <span>
+            <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Accept</ActionLink>
+            <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout, FirstPendingParticipant.user)}>Reject</ActionLink>
+          </span>
+        </li>
+      );
+    }
+    else if (hangout.metaData.participants.length > 1) {
+      return(
+        <li key={i}>
+          {
+            <span>
+              Your hangout for roadmap {hangout.metaData.subject.roadmap.name} has no new requests.
+            </span>
+          }
+        </li>
+      );
+    }
+    else {
+      return(
+        <li key={i}>
+          {
+            <span>
+              Your hangout for roadmap {hangout.metaData.subject.roadmap.name} hasn't received any requests yet.
+            </span>
+          }
+        </li>
+      );
+    }
   }
   else {
     return(
