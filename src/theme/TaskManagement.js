@@ -382,7 +382,10 @@ class TaskManagement extends React.Component {
 
     if (this.props.isAuthorized) {
       tasksFiltered = this.props.tasks.filter(function(task) {
-        return task.userID != currentUserId && (!task.assignee || task.assignee._id != currentUserId);
+        return (task.userID != currentUserId && (!task.assignee || task.assignee._id != currentUserId) &&
+          (task.type != "hangout" || task.metaData.participants.findIndex(function(participant) {
+            return participant.user._id == currentUserId;
+          }) == -1));
       });
     }
     else {
