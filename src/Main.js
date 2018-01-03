@@ -28,7 +28,7 @@ import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
 import "~/src/theme/css/main.css";
 import UserProfile from '~/src/theme/UserProfile.js';
-
+import Privacy from '~/src/theme/Privacy.js';
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
 class Main extends React.Component {
@@ -73,6 +73,7 @@ class Main extends React.Component {
         <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
         <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
+        <Route path='/Privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>} />)}/>
       </Switch>)
   }
 
