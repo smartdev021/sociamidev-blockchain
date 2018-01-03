@@ -5,7 +5,7 @@ import ReactDom from 'react-dom'
 import io from 'socket.io-client';
 //import config from '../config';
 import { withRouter } from 'react-router-dom'
-import { ApiAiClient } from 'api-ai-javascript';
+//import { ApiAiClient } from 'api-ai-javascript';
 
 import Messages from './Messages';
 import Users from './Users';
@@ -13,7 +13,7 @@ import ChatInput from './ChatInput';
 
 import ConfigMain from '../../../configs/main';
 
-const client = new ApiAiClient({accessToken: '0e686d9660cb4a92a1812b11e89a33a8'});
+//const client = new ApiAiClient({accessToken: '0e686d9660cb4a92a1812b11e89a33a8'});
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
 
@@ -96,7 +96,7 @@ class ChatApp extends React.Component {
     };
     // Emit the message to the server
     if(this.state.activeUserName == "chatbot"){
-      client.textRequest(message)
+      /*client.textRequest(message)
       .then((response) => {
           console.log(response.result.fulfillment.speech);
           var msgResponse = response.result.fulfillment.speech;
@@ -111,7 +111,7 @@ class ChatApp extends React.Component {
           this.addMessage(messageObject);
           this.addLastMessage(messageObject);
       })
-      .catch((error) => {console.log(error);})
+      .catch((error) => {console.log(error);})*/
     }
     else{
       this.socket.emit('client:message', messageObject);      

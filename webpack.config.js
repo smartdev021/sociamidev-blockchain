@@ -1,7 +1,6 @@
 let Path = require('path');
 let Webpack = require('webpack');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJs = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -15,19 +14,11 @@ module.exports = {
   },
   plugins: [
     new Webpack.HotModuleReplacementPlugin(),
-    /*new Webpack.optimize.UglifyJsPlugin({
+    new Webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }
       , sourceMap: true
-    })
-    ,*/
-    new UglifyJs({
-      test: /\.js($|\?)/i,  
-      sourceMap: true,
-    uglifyOptions: {
-        compress: true
-    }
     })
     ,
     new HtmlWebpackPlugin({
