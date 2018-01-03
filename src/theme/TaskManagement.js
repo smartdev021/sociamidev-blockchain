@@ -129,6 +129,14 @@ class TaskManagement extends React.Component {
     return tasksAssignedToMe.concat(tasksCreatedByMe);
   }
 
+  getHangoutsAll() {
+    const hangoutsAll = this.props.tasks.filter(function(task) {
+      return task.type == "hangout";
+    });
+
+    return hangoutsAll;
+  }
+
   handleChange(e) {
     e.preventDefault();
     this.setState({scannerQuery: e.target.value});
@@ -318,18 +326,13 @@ class TaskManagement extends React.Component {
     const tasksAssignedToMe = this.getTasksAssignedToMe();
     const tasksCreatedByMe = this.getTasksCreatedByMe();
 
-    if (tasksAssignedToMe.length == 0 && tasksCreatedByMe.length == 0) {
+    const hangoutsAll = this.getHangoutsAll();
+
+    if (tasksAssignedToMe.length == 0 && tasksCreatedByMe.length == 0 && hangoutsAll.length == 0) {
       return <span></span>;
     }
 
     const myTasks = this.state.tasksCategory.type == TaskCategoryAssigned.type ? tasksAssignedToMe : tasksCreatedByMe;
-
-    const hangoutsAll = this.props.tasks.filter(function(task) {
-      return task.type == "hangout";
-    });
-
-    console.log("%cParsing Hangouts", "color: black; background: grey;");
-   
 
     let hangoutsCreatedByMe = [];
     let hangoutsIWantToJoin = [];
@@ -351,14 +354,6 @@ class TaskManagement extends React.Component {
     }
 
     const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type ? hangoutsCreatedByMe : hangoutsIWantToJoin;
-
-    console.dir(hangoutsAll);
-    console.dir(myTasks);
-
-    console.dir(hangoutsCreatedByMe);
-    console.dir(hangoutsIWantToJoin);
-
-    console.dir(hangouts);
     
     return (
       <div className="col-lg-9">
@@ -395,7 +390,7 @@ class TaskManagement extends React.Component {
     }
 
     return (
-      <div className={this.getMyTasksAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
+      <div className={this.getMyTasksAll().length > 0 || this.getHangoutsAll().length ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
           <TasksScannerContainer tasks={tasksFiltered} scannerQuery={this.state.scannerQuery} 
             currentUserID={this.props.userProfile._id}
