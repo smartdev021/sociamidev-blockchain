@@ -105,7 +105,17 @@ class SkillBreakdown extends React.Component {
             name: this.state.skillInfo.skill,
           },
         },
-        participants: [], //userId, name, proposedTime(optional), status: sent/accepted/rejected
+        participants: [
+          {
+            user: {
+              _id: this.props.userProfile._id, 
+              firstName: this.props.userProfile.firstName,
+              lastName: this.props.userProfile.lastName,
+            },
+            status: "accepted",
+            isCreator: true,
+          }
+        ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
         time: date.getTime(),
       },
     };
