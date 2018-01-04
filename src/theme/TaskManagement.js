@@ -322,42 +322,41 @@ class TaskManagement extends React.Component {
     this.handleRequestStatusChange(hangout, user, "rejected");
   }
 
-  renderLeftSide() {
-    const tasksAssignedToMe = this.getTasksAssignedToMe();
-    const tasksCreatedByMe = this.getTasksCreatedByMe();
-
-    const hangoutsAll = this.getHangoutsAll();
-
-    if (tasksAssignedToMe.length == 0 && tasksCreatedByMe.length == 0 && hangoutsAll.length == 0) {
-      return <span></span>;
-    }
-
-    let myTasks = this.state.tasksCategory.type == TaskCategoryAssigned.type ? tasksAssignedToMe : tasksCreatedByMe;
-
-    let hangoutsCreatedByMe = [];
-    let hangoutsIWantToJoin = [];
+  getMyTasksAndHangouts() {
+    let tasks = [];
 
     const CurrentUserID = this.props.userProfile._id;
 
-    for (let i = 0; i < hangoutsAll.length; ++i) {
-      if (hangoutsAll[i].creator._id == this.props.userProfile._id) {
-        hangoutsCreatedByMe.push(hangoutsAll[i]);
+    switch (this.state.tasksCategory.type) {
+      case TaskCategoryAssigned.type: {
+        tasks = this.getTasksAssignedToMe();
+        break;
       }
-      else {
-        if (hangoutsAll[i].metaData.participants.findIndex(function(participant) {
+      case TaskCategoryYour.type: {
+        tasks = this.getTasksCreatedByMe();
+        break;
+      }
+      case TaskCategoryMyRequests.type: {
+        tasks = this.props.tasks.filter(function(task) {
+          return task.type == "hangout" && task.creator._id == CurrentUserID;
+        });
+        break;
+      }
+      case TaskCategoryMyOffers.type: {
+        tasks = this.props.tasks.filter(function(task) {
+          return task.type == "hangout" && task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == CurrentUserID && participant.status == "pending"; 
-          }) != -1
-        ) {
-          hangoutsIWantToJoin.push(hangoutsAll[i]);
-        }
+          }) != -1;
+        });
+        break;
       }
     }
 
-    const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type ? hangoutsCreatedByMe : hangoutsIWantToJoin;
+    return tasks;
+  }
 
-    if (this.state.tasksCategory.type == TaskCategoryMyRequests.type || this.state.tasksCategory.type == TaskCategoryMyOffers.type) {
-      myTasks = hangouts;
-    }
+  renderLeftSide() {
+    const myTasks = this.getMyTasksAndHangouts();
     
     return (
       <div className="col-lg-9">
