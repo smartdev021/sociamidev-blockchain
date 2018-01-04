@@ -176,6 +176,12 @@ class TaskManagement extends React.Component {
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
       this.fetchUserTasks();
     }
+
+    if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
+      console.log("%cisTaskSaveInProgress", "background:red; color:green;");
+      this.fetchUserTasks();
+      this.props.onFetchAllTasks(false);
+    }
   }
 
   handleCategoryChange(e) {
@@ -264,8 +270,8 @@ class TaskManagement extends React.Component {
         firstName: this.props.userProfile.firstName, 
         lastName: this.props.userProfile.lastName
       });
-
-      this.handleCloseConfirmTaskDetailsPopup({});
+      
+      this.setState({isDetailsPopupOpen: false});
     }
   }
 
@@ -436,6 +442,7 @@ TaskManagement.propTypes = {
 
   projects: PropTypes.array.isRequired,
   isTasksFetchInProgress: PropTypes.bool.isRequired,
+  isTaskSaveInProgress: PropTypes.bool.isRequired,
 
   openSignUpForm: PropTypes.func.isRequired,
   hangoutJoin: PropTypes.func.isRequired,
@@ -458,6 +465,7 @@ const mapStateToProps = state => ({
 
   projects: state.projects,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
+  isTaskSaveInProgress: state.isTaskSaveInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({

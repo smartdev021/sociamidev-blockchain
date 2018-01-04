@@ -175,7 +175,7 @@ console.log("publishedOnly: " + publishedOnly);
 
     export function hangoutJoin(hangoutId, user) {
         return function (dispatch) {
-          //dispatch(updateTaskInitiate());
+          dispatch(saveTaskInitiate());
           
           const url = `${ConfigMain.getBackendURL()}/hangoutJoin`;
 
@@ -191,11 +191,10 @@ console.log("publishedOnly: " + publishedOnly);
             return (
             Axios.post(url, body)
             .then(function(response) {
-                //dispatch(updateTask(response.data._id, response.data));
-                //dispatch(updateTaskComplete());
+                dispatch(saveTaskComplete());
             })
             .catch(function(error) {
-                //dispatch(updateTaskComplete({}));
+                dispatch(saveTaskComplete());
             }));
         }
     }
