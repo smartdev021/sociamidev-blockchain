@@ -24,12 +24,11 @@ RESPONSIVE LAYOUT CSS
 }
 
 body {
-  background-color: rgb( 235, 235, 235 ) !important;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  background-color: rgb( 235, 235, 235 );
 }
 
 main {
-  color: white !important;
+  color: white;
 }
 
 #main-content_1 {
