@@ -298,7 +298,12 @@ class TaskManagement extends React.Component {
       taskAsigneeId:userID
     }
     const body = {
-      _id: this.state.detailsPopupItem._id
+      _id: this.state.detailsPopupItem._id, 
+      assignee: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      }
     };
 
     Axios.post(`${ConfigMain.getBackendURL()}/taskCancel`, body)
@@ -390,7 +395,9 @@ class TaskManagement extends React.Component {
 
     if (this.props.isAuthorized) {
       tasksFiltered = this.props.tasks.filter(function(task) {
-        return (task.userID != currentUserId && (!task.assignee || task.assignee._id != currentUserId) &&
+        return (task.userID != currentUserId && (!task.assignees || !task.assignees.find(function(assignee) {
+          return assignee._id == currentUserId;
+        })) &&
           (task.type != "hangout" || task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == currentUserId;
           }) == -1));
