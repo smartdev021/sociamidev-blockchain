@@ -408,7 +408,7 @@ class TaskManagement extends React.Component {
     }
 
     return (
-      <div className={this.getMyTasksAll().length > 0 || this.getHangoutsAll().length ? "col-lg-3" : "col-lg-12"}>
+      <div className={this.getMyTasksAll().length > 0 || this.getHangoutsAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
           <TasksScannerContainer tasks={tasksFiltered} scannerQuery={this.state.scannerQuery} 
             currentUserID={this.props.userProfile._id}
@@ -431,7 +431,7 @@ class TaskManagement extends React.Component {
           task={this.state.detailsPopupItem}/>   
           <div className="container-fluid">
             <div className="row">
-              {this.renderLeftSide()}
+              {(this.getMyTasksAll().length > 0 || this.getHangoutsAll().length > 0) && this.renderLeftSide()}
               {this.renderRightSide()}
             </div>
           </div>
