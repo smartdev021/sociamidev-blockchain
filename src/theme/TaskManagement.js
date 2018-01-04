@@ -332,7 +332,7 @@ class TaskManagement extends React.Component {
       return <span></span>;
     }
 
-    const myTasks = this.state.tasksCategory.type == TaskCategoryAssigned.type ? tasksAssignedToMe : tasksCreatedByMe;
+    let myTasks = this.state.tasksCategory.type == TaskCategoryAssigned.type ? tasksAssignedToMe : tasksCreatedByMe;
 
     let hangoutsCreatedByMe = [];
     let hangoutsIWantToJoin = [];
@@ -354,13 +354,16 @@ class TaskManagement extends React.Component {
     }
 
     const hangouts = this.state.tasksCategory.type == TaskCategoryMyRequests.type ? hangoutsCreatedByMe : hangoutsIWantToJoin;
+
+    if (this.state.tasksCategory.type == TaskCategoryMyRequests.type || this.state.tasksCategory.type == TaskCategoryMyOffers.type) {
+      myTasks = hangouts;
+    }
     
     return (
       <div className="col-lg-9">
       <div className="content-2-columns-left">
         <MyTasksContainer 
           tasks={myTasks}
-          hangouts={hangouts}
           tasksCategoryName={this.state.tasksCategory.name}
           onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
           handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}

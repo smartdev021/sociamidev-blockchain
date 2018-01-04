@@ -4,7 +4,6 @@
 import React from 'react';
 
 import MyTasks from './MyTasks'
-import MyHangouts from './MyHangouts'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -34,13 +33,11 @@ const MyTasksContainer = (props) => {
           </div>
         </div>
         <div id="my-tasks-container">
-          {(props.selectedCategory.type == "requested_hangouts" || props.selectedCategory.type == "requests_sent_hangouts") ?
-             <MyHangouts hangouts={props.hangouts} 
+          {<MyTasks tasks={props.tasks} 
                onHangoutRequestAccept={(hangout, user)=>props.onHangoutRequestAccept(hangout, user)}
                onHangoutRequestReject={(hangout, user)=>props.onHangoutRequestReject(hangout, user)}
-               selectedCategory={props.selectedCategory}/>
-             :
-             <MyTasks tasks={props.tasks} handleOpenCancelTaskDetailsPopup={(task)=>props.handleOpenCancelTaskDetailsPopup(task)}/>
+               selectedCategory={props.selectedCategory}
+               handleOpenCancelTaskDetailsPopup={(task)=>props.handleOpenCancelTaskDetailsPopup(task)}/>
           }
         </div>
       </div>
