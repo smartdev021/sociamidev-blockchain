@@ -1,0 +1,19 @@
+#organizer-list {
+    border: 1px solid white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#organizer-list ul {
+    padding: 0;
+}
+
+.organizer-action-link {
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#organizer-list, #organizer-status-box {
+    margin-bottom: 10px;
+}

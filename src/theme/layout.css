@@ -24,12 +24,6 @@ body {
   padding-right: 22px;
 }
 
-/*Alter col- padding */
-#wrapper-content [class*="col-"] {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 header,
 aside,
 main {

@@ -5,6 +5,8 @@ import React from 'react';
 
 import MyTasks from './MyTasks'
 
+import Organizer from '~/src/theme/components/tasks/Organizer'
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 const MyTasksContainer = (props) => {
@@ -33,6 +35,7 @@ const MyTasksContainer = (props) => {
           </div>
         </div>
         <div id="my-tasks-container">
+          <Organizer/>
           {<MyTasks tasks={props.tasks} 
                onHangoutRequestAccept={(hangout, user)=>props.onHangoutRequestAccept(hangout, user)}
                onHangoutRequestReject={(hangout, user)=>props.onHangoutRequestReject(hangout, user)}
