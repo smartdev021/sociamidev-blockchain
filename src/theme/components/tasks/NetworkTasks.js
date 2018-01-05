@@ -34,15 +34,18 @@ const RenderSingleTask = (task, i, props)=> {
     const Hours = String(Hours12(date)) + AmPm;
     let time = "";
 
-    if (dateNow.getDay() == date.getDay() && dateNow.getMonth() == date.getMonth() && dateNow.getFullYear() == date.getFullYear()) {
+    if (dateNow.getDate() == date.getDate() && dateNow.getMonth() == date.getMonth() && dateNow.getFullYear() == date.getFullYear()) {
       time = `${Hours} today`;
     }
-    else if (dateTomorrow.getDay() == date.getDay() && dateTomorrow.getMonth() == date.getMonth() && dateTomorrow.getFullYear() == date.getFullYear()) {
+    else if (dateTomorrow.getDate() == date.getDate() && dateTomorrow.getMonth() == date.getMonth() && dateTomorrow.getFullYear() == date.getFullYear()) {
       time = `${Hours} tomorrow`;
     }
     else {
-      time = `${Hours} on ${DayFromNumber(date.getUTCDay())} (${date.getDay() + 1} ${MonthFromNumber(date.getMonth())})`; 
+      time = `${Hours} on ${DayFromNumber(date.getDay())} (${date.getDate()} ${MonthFromNumber(date.getMonth())})`; 
     }
+
+    console.log("%cRenderSingleTask: ", "background: blue; color: white;");
+    console.log(`${date.toLocaleDateString()} ${date.toLocaleTimeString()} ${date.getDay()}`);
 
     
     return (

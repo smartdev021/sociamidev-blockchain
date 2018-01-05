@@ -17,7 +17,7 @@ class HangoutSubmitForm extends React.Component {
      dayPeriod: "today",
      date: dateNow,
 
-     dateInputValue: "2020-01-01",
+     dateInputValue: timeNow,
      timeInputValue: "00:00",
     }
   }
@@ -25,7 +25,7 @@ class HangoutSubmitForm extends React.Component {
   handleDateInputChange(e) {
     e.preventDefault();
 
-    this.setState({dateInputValue: e.target.value});
+    this.setState({dateInputValue: e.target.valueAsNumber});
 
     console.log(e.target.value);
   }
@@ -38,46 +38,6 @@ class HangoutSubmitForm extends React.Component {
     console.log(e.target.value);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.dateInputValue != prevState.dateInputValue) {
-      console.log(this.state.dateInputValue);
-    }
-
-    if (this.state.timeInputValue != prevState.timeInputValue) {
-      console.log(this.state.timeInputValue);
-    }
-
-    if (prevState.dayPeriod != this.state.dayPeriod) {
-      if (this.state.dayPeriod != "other") {
-        switch (this.state.dayPeriod) {
-          case "today": {
-            const timeNow = Date.now();
-            const dateNow = new Date(timeNow);
-            this.setState({date: dateNow});
-            break;
-          }
-          case "tomorrow": {
-            let timeNow = Date.now() + (60 * 60 * 24);
-            const dateNow = new Date(timeNow);
-            this.setState({date: dateNow});
-            break;
-          }
-          case "day_after": {
-            let timeNow = Date.now() + ((60 * 60 * 24) * 2);
-            const dateNow = new Date(timeNow);
-            this.setState({date: dateNow});
-            break;
-          }
-          default:
-            break;
-        }
-      }
-      else {
-
-      }
-    }
-  }
-
   handleOptionChange(e) {
     this.setState({dayPeriod: e.target.value});
   }
@@ -85,10 +45,33 @@ class HangoutSubmitForm extends React.Component {
   handleStartHangout(e) {
     e.preventDefault();
 
-    let date = new Date(this.state.dateInputValue + ' ' + this.state.timeInputValue);
+    let dateTime = Date.now();
 
-    console.log(`handleStartHangout date: ${date.getTime()}`);
-    console.log(date.toDateString());
+    const day = (60 * 60 * 24) * 1000;
+
+    switch (this.state.dayPeriod) {
+      case "tomorrow": {
+        dateTime += day;
+        break;
+      }
+      case "day_after": {
+        dateTime += (day * 2);
+        break;
+      }
+      case "other": {
+        dateTime = this.state.dateInputValue;
+        break;
+      }
+      default:
+        break;
+    }
+
+    let date = new Date(dateTime);
+
+    const TimeInputSplitted = this.state.timeInputValue.split(':');
+
+    date.setHours(TimeInputSplitted[0]);
+    date.setMinutes(TimeInputSplitted[1]);
 
     this.props.onHandleStartHangout(date);
   }
@@ -113,7 +96,7 @@ class HangoutSubmitForm extends React.Component {
         </label>
         {this.state.dayPeriod == "other" && 
           <input type="date" className="validate-field required" data-validation-type="string" 
-            id="date" name="date" autoComplete="off" placeholder="Date" defaultValue={this.state.dateInputValue}
+            id="date" name="date" autoComplete="off" placeholder="Date" defaultValue="2020-01-01"
               onChange={(e)=>this.handleDateInputChange(e)}/>}
         <div>
           <label className="radio-inline">
