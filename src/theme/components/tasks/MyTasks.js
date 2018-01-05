@@ -22,7 +22,8 @@ const RenderSingleTask = (task, i, props) => {
       </div>
     :
       <ActionLink href="#" onClick={()=>props.handleOpenCancelTaskDetailsPopup(task)} className="tasks-management-my-task">
-        <span>{task.name}</span>
+        <span>{task.type == "hangout" ? `Hangout for skill "${task.metaData.subject.skill.name}." Creator: ${task.creator.firstName}` 
+        : task.name}</span>
       </ActionLink>
     }  
     </div>
@@ -52,7 +53,7 @@ const RenderSingleHangout = (hangout, i, props) => {
         <li key={i}>
           {
             <span>
-              {FirstPendingParticipant.user.firstName} (level 5) wants to join your Hangout on a roadmap {hangout.metaData.subject.roadmap.name}
+              {FirstPendingParticipant.user.firstName} (level 5) wants to join your {hangout.metaData.subject.roadmap.name} Hangout
             </span>
           }
           <span>
@@ -67,7 +68,7 @@ const RenderSingleHangout = (hangout, i, props) => {
         <li key={i}>
           {
             <span>
-              Your hangout for roadmap {hangout.metaData.subject.roadmap.name} has no new requests.
+               Your hangout ({hangout.metaData.subject.roadmap.name}) has no new meets.
             </span>
           }
         </li>
@@ -78,7 +79,7 @@ const RenderSingleHangout = (hangout, i, props) => {
         <li key={i}>
           {
             <span>
-              Your hangout for roadmap {hangout.metaData.subject.roadmap.name} hasn't received any requests yet.
+               Your hangout ({hangout.metaData.subject.roadmap.name}) has not received any meets yet.
             </span>
           }
         </li>
