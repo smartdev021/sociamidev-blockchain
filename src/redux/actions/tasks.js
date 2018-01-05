@@ -198,3 +198,25 @@ console.log("publishedOnly: " + publishedOnly);
             }));
         }
     }
+
+    export function taskStatusChange(taskId, status) {
+        return function (dispatch) {
+          dispatch(saveTaskInitiate());
+          
+          const url = `${ConfigMain.getBackendURL()}/taskStatusChange`;
+
+          const body = {
+              id : taskId,
+              status: status,
+            };
+
+            return (
+            Axios.post(url, body)
+            .then(function(response) {
+                dispatch(saveTaskComplete());
+            })
+            .catch(function(error) {
+                dispatch(saveTaskComplete());
+            }));
+        }
+    }

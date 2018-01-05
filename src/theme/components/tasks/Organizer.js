@@ -22,12 +22,12 @@ const RenderList = (props) => {
               <li key={i}>
                 <span className="organizer-list-item-text">Your Hangout for skill {hangout.metaData.subject.skill.name}</span>
                 {hangout.creator._id == props.currentUserID && <span className="organizer-list-item-actions pull-right">
-                  <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>
-                  <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>
-                  <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>
+                {hangout.status != "started" && <ActionLink href="#" className="organizer-action-link" 
+                    onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
+                  {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                    onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
+                  {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                    onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>}
                 </span>}
               </li>
             );

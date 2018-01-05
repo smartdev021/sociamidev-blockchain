@@ -36,6 +36,7 @@ import {
   fetchTasksInitiate,
   fetchTasksComplete,
   hangoutJoin,
+  taskStatusChange,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -143,7 +144,22 @@ class TaskManagement extends React.Component {
   }
 
   hangoutActionPerform(action, hangout) {
-    console.log(`${hangout._id} ${action}`);
+    switch (action) {
+      case "start": {
+        this.props.taskStatusChange(hangout._id, "started");
+        break;
+      }
+      case "cancel": {
+        this.props.taskStatusChange(hangout._id, "canceled");
+        break;
+      }
+      case "reschedule": {
+        this.props.taskStatusChange(hangout._id, "rescheduled");
+        break;
+      }
+      default:
+        break;
+    }
   }
 
   storeAndFetchTasks() {
@@ -460,6 +476,7 @@ TaskManagement.propTypes = {
 
   openSignUpForm: PropTypes.func.isRequired,
   hangoutJoin: PropTypes.func.isRequired,
+  taskStatusChange: PropTypes.func.isRequired,
   setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
@@ -485,6 +502,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   hangoutJoin: bindActionCreators(hangoutJoin, dispatch),
+  taskStatusChange: bindActionCreators(taskStatusChange, dispatch),
   setTasks: bindActionCreators(setTasks, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
