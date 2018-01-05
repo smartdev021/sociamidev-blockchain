@@ -35,7 +35,9 @@ const MyTasksContainer = (props) => {
           </div>
         </div>
         <div id="my-tasks-container">
-          <Organizer/>
+          <Organizer onHangoutActionPerform={(action, hangout) => props.onHangoutActionPerform(action, hangout)} 
+            tasks={props.assignedTasks}
+              currentUserID={props.currentUserID}/>
           {<MyTasks tasks={props.tasks} 
                onHangoutRequestAccept={(hangout, user)=>props.onHangoutRequestAccept(hangout, user)}
                onHangoutRequestReject={(hangout, user)=>props.onHangoutRequestReject(hangout, user)}

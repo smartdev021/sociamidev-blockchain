@@ -142,6 +142,10 @@ class TaskManagement extends React.Component {
     this.setState({scannerQuery: e.target.value});
   }
 
+  hangoutActionPerform(action, hangout) {
+    console.log(`${hangout._id} ${action}`);
+  }
+
   storeAndFetchTasks() {
     const { cookies } = this.props;
     const lastViewedRoadmap = cookies.get('lastViewedRoadmap');
@@ -379,6 +383,9 @@ class TaskManagement extends React.Component {
           handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
           selectedCategory={this.state.tasksCategory}
           categories={Categories}
+          onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
+          assignedTasks={this.props.tasksAssignedToCurrentUser}
+          currentUserID={this.props.userProfile._id}
 
           onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
           onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
