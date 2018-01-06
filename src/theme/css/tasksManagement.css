@@ -78,6 +78,11 @@
     color: white;
   }
 
+  .hangout-text {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
 .subtask {
     width: 95%;
     margin: 0 auto;
@@ -104,7 +109,7 @@
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
-    // padding-top: 20px; /*Michael for landing*/
+     padding-top: 20px; /*Michael for landing*/
 }
 
 .col-lg-3 #tasks-scanner-container-bg {
@@ -123,5 +128,10 @@
 }
 
 #tasks-scanner-container #scanner-input-container input[type="text"] {
-    // font-size: 18px; /*Michael for landing*/
+    font-size: 18px; /*Michael for landing*/
+}
+
+#my-hangouts {
+    padding-left: 5px;
+    padding-right: 5px;
 }

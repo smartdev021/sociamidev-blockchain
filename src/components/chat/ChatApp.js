@@ -3,7 +3,6 @@ require('~/src/css/ChatApp.css');
 import React from 'react';
 import ReactDom from 'react-dom'
 import io from 'socket.io-client';
-//import config from '../config';
 import { withRouter } from 'react-router-dom'
 
 import Messages from './Messages';
@@ -242,6 +241,3 @@ ChatApp.defaultProps = {
 };
 
 export default withRouter(ChatApp);
-
-
-/* */

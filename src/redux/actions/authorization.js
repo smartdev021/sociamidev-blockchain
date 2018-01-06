@@ -122,11 +122,13 @@ export function fetchUserTasks(userId) {
                 let tasksCreated = [];
 
                 for (let i = 0; i < response.data.length; ++i) {
-                    if (response.data[i].userID == userId) {
-                        tasksCreated.push(response.data[i]);
-                    }
-                    else if (response.data[i].assignee && response.data[i].assignee._id == userId) {
+                    if (response.data[i].assignees && response.data[i].assignees.find(function(assignee) {
+                        return assignee._id == userId;
+                    })) {
                         tasksAssigned.push(response.data[i]);
+                    }
+                    else if (response.data[i].userID == userId) {
+                        tasksCreated.push(response.data[i]);
                     }
                 }
 

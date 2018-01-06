@@ -277,8 +277,8 @@ class PopupNewProject extends React.Component {
 
       Axios.get(url)
       .then(function(response) {
-          if (response.data.assignee && response.data.assignee._id) {
-            const Assignee = `${response.data.assignee.firstName} ${response.data.assignee.lastName}`;
+          if (response.data.assignees && response.data.assignees[0] && response.data.assignees[0]._id) {
+            const Assignee = `${response.data.assignees[0].firstName} ${response.data.assignees[0].lastName}`;
 
             that.setState({assigneeNameToConfirm: Assignee, 
                 milestoneIdToRemove: milestoneId, confirmWithdrawPopupOpen: true});

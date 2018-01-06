@@ -51,3 +51,16 @@
     border: 1ps solid rgb(119, 112, 112);
     border-radius: 3px;
 }
+
+#hangout-submit-form form input::placeholder {
+    color: white;
+}
+
+#hangout-submit-form form input[type="text"], #hangout-submit-form form input[type="time"]
+, #hangout-submit-form form input[type="date"]{
+    margin-left: 10px;
+}
+
+.input-time {
+    width: 105px;
+}

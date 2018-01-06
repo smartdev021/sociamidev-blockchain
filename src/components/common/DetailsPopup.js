@@ -4,6 +4,8 @@ import "~/src/css/DetailsPopup.css"
 
 import StringUtils from "~/src/utils/StringUtils"
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 class DetailsPopup extends React.Component {
     constructor(props) {
       super(props);
@@ -143,6 +145,40 @@ class DetailsPopup extends React.Component {
       );
     }
 
+    renderHangoutJoinConfirmation() {
+      let title = "Join Hangout";
+      let description ="Do you really want to join the Hangout?";
+
+      return (
+        <Modal 
+        isOpen={this.props.modalIsOpen}
+        onRequestClose={() => this.props.onCloseModal()}
+        contentLabel={title}>
+        <div className="container-fluid default-popup-details">
+        <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+        <div className="row">
+              <div className="col-lg-12">
+              <h2 className="popup-default-heading">{title}</h2>
+            </div>
+            </div>
+            
+            <div className="row">
+            <div className="col-lg-12">
+            <a href={this.props.item.url} target="_blank"><p>{description}</p></a>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+              <button type="button" className="btn btn-sm btn-outline-inverse" 
+              onClick={() => this.props.onConfirm(this.props.item)}>Confirm</button>
+              </div>
+            </div>
+            
+              </div>
+      </Modal>
+      );
+    }
+
     renderTaskCancelConfirmtaion() {
       let title = "Cancel Confirmation";
       let description ="Please Confirm.";
@@ -177,6 +213,10 @@ class DetailsPopup extends React.Component {
       );
     }
     renderDetails() {
+      if(this.props.task && this.props.task.type == TaskTypes.HANGOUT) {
+        return this.renderHangoutJoinConfirmation();
+      }
+      
       if (this.props.item._type == "indeed_job") {
         return this.renderJobDetails();
       }

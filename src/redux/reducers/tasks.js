@@ -90,9 +90,9 @@ export function isTasksUpdateInProgress(state = false, action) {
 export function isTaskSaveInProgress(state = false, action) {
   switch (action.type) {
       case SAVE_TASK_INITIATE:
-        return (!state) ? true : state;
+        return true;
       case SAVE_TASK_COMPLETE:
-        return (state) ? false : state;
+        return false;
       default:
         return state;
     }
