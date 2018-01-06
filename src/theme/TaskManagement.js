@@ -83,7 +83,10 @@ class TaskManagement extends React.Component {
     this.state = {
       tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
+      timeNow: Date.now(),
     }
+
+    this.timeNowUpdateInterval = undefined;
   }
 
   groupTasksByProjects(tasks) {
@@ -146,7 +149,9 @@ class TaskManagement extends React.Component {
   hangoutActionPerform(action, hangout) {
     switch (action) {
       case "start": {
-        this.props.taskStatusChange(hangout._id, "started");
+        if (this.state.timeNow >= hangout.metaData.time) {
+          this.props.taskStatusChange(hangout._id, "started");
+        }
         break;
       }
       case "cancel": {
@@ -185,6 +190,18 @@ class TaskManagement extends React.Component {
   componentWillMount() {
     // this.storeAndFetchTasks();
     this.fetchUserTasks();
+  }
+
+  componentDidMount() {
+    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeNowUpdateInterval);
+  }
+
+  updateTimeNow() {
+    this.setState({timeNow: Date.now()});
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -402,6 +419,7 @@ class TaskManagement extends React.Component {
           onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
           assignedTasks={this.props.tasksAssignedToCurrentUser}
           currentUserID={this.props.userProfile._id}
+          timeNow={this.state.timeNow}
 
           onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
           onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}

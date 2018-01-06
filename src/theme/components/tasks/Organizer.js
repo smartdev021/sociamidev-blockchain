@@ -18,11 +18,12 @@ const RenderList = (props) => {
       <ul>
         {
           Hangouts.map(function(hangout, i) {
+            const StartActionClass = props.timeNow >= hangout.metaData.time ? "organizer-action-link" : "organizer-action-link-disabled";
             return (
               <li key={i}>
                 <span className="organizer-list-item-text">Your Hangout for skill {hangout.metaData.subject.skill.name}</span>
                 {hangout.creator._id == props.currentUserID && <span className="organizer-list-item-actions pull-right">
-                {hangout.status != "started" && <ActionLink href="#" className="organizer-action-link" 
+                {hangout.status != "started" && <ActionLink href="#" className={StartActionClass}
                     onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
                   {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
                     onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
@@ -76,11 +77,6 @@ const Organizer = (props) => {
       let partner = activeTask.metaData.participants.find(function(participant) {
         return participant.user._id != props.currentUserID;
       });
-
-      console.log("%cOrganizer", "color: black; background: purple;");
-      console.dir(activeTask);
-      console.dir(activeTask.metaData.participants);
-      console.dir(partner);
 
       if (partner) {
         activeTask.partnerName = partner.user.firstName;
