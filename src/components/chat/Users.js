@@ -54,8 +54,8 @@ class Users extends React.Component {
       const tempLastMessages = this.props.lastMessages;
       var tempLastMessage = "";
       var tempLastMessageTimeStamp = "";
-      if(user.username in tempLastMessages){
-        var message = tempLastMessages[user.username];
+      if(user.userID in tempLastMessages){
+        var message = tempLastMessages[user.userID];
         var tempLastMessage = message.message;
         var tempLastMessageTimeStamp = message.time;
       }
@@ -63,6 +63,7 @@ class Users extends React.Component {
         <User
           key={i}
           tabKey={i}
+          userID = {user.userID}
           username={user.username}
           firstName = {user.firstName}
           lastName = {user.lastName}

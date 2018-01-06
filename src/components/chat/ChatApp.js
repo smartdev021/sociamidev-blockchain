@@ -3,9 +3,7 @@ require('~/src/css/ChatApp.css');
 import React from 'react';
 import ReactDom from 'react-dom'
 import io from 'socket.io-client';
-//import config from '../config';
 import { withRouter } from 'react-router-dom'
-//import { ApiAiClient } from 'api-ai-javascript';
 
 import Messages from './Messages';
 import Users from './Users';
@@ -13,7 +11,6 @@ import ChatInput from './ChatInput';
 
 import ConfigMain from '../../../configs/main';
 
-//const client = new ApiAiClient({accessToken: '0e686d9660cb4a92a1812b11e89a33a8'});
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
 
@@ -22,8 +19,8 @@ class ChatApp extends React.Component {
     const botUser = {
       username: "chatbot",
       userID: "chatbot",
-      firstName: "Chat",
-      lastName: "Bot",
+      firstName: "Chatbot",
+      lastName: "",
       userType: "chatbot",
       socketIds: []
     }
@@ -41,83 +38,105 @@ class ChatApp extends React.Component {
                    users: [], 
                    chatWindowOpen: 2, 
                    tabClose: -2, 
-                   activeUserName: "", 
+                   activeUserID: "", 
                    activeUserFullName: "",
-                   lastMessageStack: []
+                   lastMessageStack: [],
+                   anonymousUserId: ""
                 };    
 
     if(this.props.loggedin){
-    this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
-                
-    this.socket.on('server:user', newUsers => {
-      var tempUsers = this.state.users;
+      this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+                  
+      this.socket.on('server:user', newUsers => {
+        var tempUsers = this.state.users;
 
-      for(var i=0; i<newUsers.length; i++){
-        var newUser = newUsers[i];
-        tempUsers.push(newUser);
-      }
-
-      let copy = Object.assign({}, this.state, {users: tempUsers});
-      this.setState(copy);
-    });
-
-    this.socket.on('newUser', user => {
-      var tempUsers = this.state.users;
-      for(var i=0; i<tempUsers.length; i++){
-        if(tempUsers[i].userID == user.userID){
-          tempUsers[i].loggedinStatus = user.loggedinStatus;
+        for(var i=0; i<newUsers.length; i++){
+          var newUser = newUsers[i];
+          tempUsers.push(newUser);
         }
-      }
 
-      let copy = Object.assign({}, this.state, {users: tempUsers});
-      this.setState(copy);
-    });
+        let copy = Object.assign({}, this.state, {users: tempUsers});
+        this.setState(copy);
+      });
 
-    // Listen for messages from the server
-    this.socket.on('server:message', message => {
-      lastMessageRec = message;
-      this.addMessage(message);
-      this.addLastMessage(message);
-    });
+      this.socket.on('newUser', user => {
+        var tempUsers = this.state.users;
+        for(var i=0; i<tempUsers.length; i++){
+          if(tempUsers[i].userID == user.userID){
+            tempUsers[i].loggedinStatus = user.loggedinStatus;
+          }
+        }
+
+        let copy = Object.assign({}, this.state, {users: tempUsers});
+        this.setState(copy);
+      });
+
+      // Listen for messages from the server
+      this.socket.on('server:message', message => {
+        lastMessageRec = message;
+        this.addMessage(message);
+        this.addLastMessage(message);
+      });
+
+      this.socket.on('chatbotServer:message', message => {
+        lastMessageRec = message;
+        this.addMessage(message);
+        this.addLastMessage(message);
+      });
+    }
+
+    else{
+      var uuid = this.uuidv1();
+      this.state.anonymousUserId = uuid;
+      this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
+
+      this.socket.on('chatbotServer:message', message => {
+        lastMessageRec = message;
+        this.addMessage(message);
+        this.addLastMessage(message);
+      });
+    }
   }
-  }
 
-  tabChanges(activeUsername,activeUserFullname){
-    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserName: activeUsername, activeUserFullName:activeUserFullname});
+  tabChanges(activeUserID,activeUserFullname){
+    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname});
     this.setState(copy);
   }
 
+  uuidv1() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+  }
+
   sendHandler(message) {
-    const messageObject = {
-      sender: this.props.username,
-      message,
-      receiver: this.state.activeUserName,
-      time: new Date()
-    };
+    var messageObject = [];
+    if(this.props.loggedin){
+      messageObject = {
+        sender: this.props.userID,
+        message,
+        receiver: this.state.activeUserID,
+        time: new Date()
+      };
+    }
+    else{
+      messageObject = {
+        sender: this.state.anonymousUserId,
+        message,
+        receiver: this.state.activeUserID,
+        time: new Date()
+      };
+    }
     // Emit the message to the server
-    if(this.state.activeUserName == "chatbot"){
-      /*client.textRequest(message)
-      .then((response) => {
-          console.log(response.result.fulfillment.speech);
-          var msgResponse = response.result.fulfillment.speech;
-          const messageObject = {
-            sender: this.state.activeUserName,
-            message: msgResponse,
-            receiver: this.props.username,
-            time: new Date()
-          };
-      
-          messageObject.fromMe = false;
-          this.addMessage(messageObject);
-          this.addLastMessage(messageObject);
-      })
-      .catch((error) => {console.log(error);})*/
+    if(this.state.activeUserID == "chatbot"){
+      this.socket.emit('chatbotClient:message', messageObject);
     }
     else{
       this.socket.emit('client:message', messageObject);      
     }
 
     messageObject.fromMe = true;
+    console.log(messageObject);
     this.addMessage(messageObject);
     this.addLastMessage(messageObject);
   }
@@ -126,7 +145,7 @@ class ChatApp extends React.Component {
     // Append the message to the component state
     var tempReceiver = "";
     var tempMessageStack = [];
-    if(message.sender == this.props.username){
+    if(message.sender == this.props.userID || message.sender == this.state.anonymousUserId){
       tempReceiver = message.receiver;
     }
     else{
@@ -153,7 +172,7 @@ class ChatApp extends React.Component {
   addLastMessage(message){
       var tempLastMessageStack = "";
       var tempReceiver = "";
-      if(message.sender == this.props.username){
+      if(message.sender == this.props.userID){
         tempReceiver = message.receiver;
       }
       else{
@@ -188,9 +207,9 @@ class ChatApp extends React.Component {
     const divMainClasses = `chatapp-main-container ${chatMainClass}` ;
     var componentMessages = "";
     var active = "";
-    if(this.state.activeUserName != ""){
-       if(this.state.messageStack[this.state.activeUserName]){
-          componentMessages = <Messages messages={this.state.messageStack[this.state.activeUserName]} />;
+    if(this.state.activeUserID != ""){
+       if(this.state.messageStack[this.state.activeUserID]){
+          componentMessages = <Messages messages={this.state.messageStack[this.state.activeUserID]} />;
        }
        active = this.state.activeUserFullName;
     }
@@ -198,7 +217,7 @@ class ChatApp extends React.Component {
       <div className={divMainClasses}>
         <div className="chatapp-container">
           <div className="chatapp-userContainer" id="userContainer">
-            <Users users={this.state.users} selectedUser={this.state.activeUserName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} onTab={(activeUsername,activeUserFullname)=>this.tabChanges(activeUsername,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} />
+            <Users users={this.state.users} selectedUser={this.state.activeUserID} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} />
           </div>
           <div className={divChatClasses} id="chatContainer">
             <div className="topName">
@@ -222,6 +241,3 @@ ChatApp.defaultProps = {
 };
 
 export default withRouter(ChatApp);
-
-
-/* */
