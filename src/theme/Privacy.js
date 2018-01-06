@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import "~/src/theme/css/privacy.css"
+import "~/src/theme/css/Privacy.css"
 
 class Privacy extends Component {
   constructor(props){
@@ -35,7 +35,7 @@ class Privacy extends Component {
   toggleAutoAccept(){
     this.state.autoAcceptToggle == "none" ? this.setState({autoAcceptToggle:"block"}) : this.setState({autoAcceptToggle:"none"});
   }
-  
+
    handleVisibilityChange(e){
      this.setState({visibility:e.target.value});
    }
