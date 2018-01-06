@@ -7,6 +7,41 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import "~/src/theme/css/organizer.css"
 
+const DayFromNumber = (dayNum)=> {
+  const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  return DayNames[dayNum];
+}
+
+const MonthFromNumber = (monthNum)=> {
+  const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
+
+  return MonthNames[monthNum];
+}
+
+const GenerateHangoutText = (hangout, props)=> {
+  const Partner = hangout.metaData.participants.find(function(participant) {
+      return participant.user._id != props.currentUserID;
+  });
+  const HangoutDate = new Date(hangout.metaData.time);
+
+  const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
+
+  const Noon = new Date(HangoutDate.getFullYear(), HangoutDate.getMonth(),HangoutDate.getDate(), 12, 0, 0);
+  const AmPm = (HangoutDate.getTime() < Noon.getTime()) ? 'am' : 'pm';
+
+  const Hours = String(Hours12(HangoutDate)) + AmPm;
+
+  const DateString = props.timeNow >= hangout.metaData.time ? ` at ${Hours}` 
+  : `${HangoutDate.getDate()} ${MonthFromNumber(HangoutDate.getMonth())} at ${Hours}`;
+
+  const HangoutText = hangout.status != "started" 
+    ? `You have an upcoming Hangout on skill ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} ${DateString}`
+    : `Your Hangout on skill ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} has been started`;
+
+  return HangoutText;
+}
+
 const RenderList = (props) => {
   const Hangouts = props.tasks.filter(function(task) {
     return task.type == "hangout";
@@ -14,14 +49,15 @@ const RenderList = (props) => {
 
   return (
     <div id="organizer-list">
-      <h2>Your Organizer</h2>
       <ul>
         {
           Hangouts.map(function(hangout, i) {
+
             const StartActionClass = props.timeNow >= hangout.metaData.time ? "organizer-action-link" : "organizer-action-link-disabled";
+
             return (
               <li key={i}>
-                <span className="organizer-list-item-text">Your Hangout for skill {hangout.metaData.subject.skill.name}</span>
+                <span className="organizer-list-item-text">{GenerateHangoutText(hangout, props)}</span>
                 {hangout.creator._id == props.currentUserID && <span className="organizer-list-item-actions pull-right">
                 {hangout.status != "started" && <ActionLink href="#" className={StartActionClass}
                     onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
@@ -42,7 +78,7 @@ const RenderList = (props) => {
 const RenderStatusBox = (activeTask, props) => {
   return (
     <div id="organizer-status-box" className={activeTask ? "" : "invisible"}>
-      <h2>You are now meeting {activeTask && activeTask.partnerName}</h2>
+      <h3>You are now meeting {activeTask && activeTask.partnerName}</h3>
       <div id="actions">
         <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", activeTask)} 
           className="organizer-action-link">Cancel</ActionLink>
@@ -87,7 +123,10 @@ const Organizer = (props) => {
     return (
       <div className="row">
         <div className="col-lg-8">
-          {RenderList(props)}
+          <div>
+            <h3>Your Organizer</h3>
+            {RenderList(props)}
+          </div>
         </div>
         <div className="col-lg-4">
           {RenderStatusBox(activeTask, props)}
