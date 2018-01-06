@@ -11,7 +11,7 @@ class User extends React.Component {
   componentWillReceiveProps(nextProps){
     if(this.props.lastMessageRec !== nextProps.lastMessageRec){
       var tempLastMessageRec = nextProps.lastMessageRec;
-      if(nextProps.username == tempLastMessageRec.sender){
+      if(nextProps.userID == tempLastMessageRec.sender){
         var tempUnreadCount = this.state.unreadCount;
         tempUnreadCount = tempUnreadCount + 1;
         this.state.unreadCount = tempUnreadCount;
@@ -47,7 +47,7 @@ class User extends React.Component {
       imgSrc = "http://blog.newrelic.com/wp-content/uploads/chatbot-300x300.jpg";
     }
     return (
-          <div data-id={`${this.props.tabKey}`} className={classes} onClick={(event)=>this.onItemClick(event)}  id={`${this.props.username}`} data-user={`${fullname}`}>
+          <div data-id={`${this.props.tabKey}`} className={classes} onClick={(event)=>this.onItemClick(event)}  id={`${this.props.userID}`} data-user={`${fullname}`}>
             <img src={imgSrc} alt="" className="profilePic"/>
             <span className="name">{ fullname } <img src={statusImgSrc} className="statusDot"/></span>
             <span className="time"><TimeAgo date={this.props.lastMessageTimeStamp} minPeriod={60}/></span>
