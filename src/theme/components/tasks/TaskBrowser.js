@@ -8,6 +8,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import Axios from 'axios'
+
+import ConfigMain from '~/configs/main'
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 import "~/src/theme/appearance.css"
@@ -18,6 +22,31 @@ class TaskBrowser extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      currentTask: undefined,
+    }
+  }
+
+  componentDidMount() {
+    const URLParams = new URLSearchParams(this.props.location.search);
+
+    const taskId = URLParams.get("id");
+
+    const that = this;
+
+    if (taskId) {
+      Axios.get(`${ConfigMain.getBackendURL()}/taskGetById?id=${taskId}`)
+      .then((response)=>{that.setState({currentTask: response.data})})
+      .catch((error)=>{console.log(error)});
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currentTask != this.props.currentTask) {
+      console.log("Current Task is: ");
+      console.dir(this.state.currentTask);
+    }
   }
 
   renderQuestions() {
@@ -100,12 +129,16 @@ class TaskBrowser extends React.Component {
   }
 
   render() {
+
+    const PartnerName = (this.state.currentTask && this.state.currentTask.type == "hangout") ? this.state.currentTask.metaData.participants[1].user.firstName 
+    : "John";
+
     return (
       <div id="main-content_1">
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12 content-2-columns-left-title">
-              <span>Your meeting with John</span>
+              <span>Your meeting with {PartnerName}</span>
               <div id="actions" className="pull-right">
                 <ActionLink href="#" onClick={()=>{}}
                   className="organizer-action-link">Cancel</ActionLink>
