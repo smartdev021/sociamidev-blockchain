@@ -35,7 +35,7 @@ class ThemeHeader extends React.Component {
         <span><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/profilesetting.png" />Setting</span>
         <ul className="setting-block">
           <li><Link to='/userProfile'>Profile</Link></li>
-          <li><Link to='/' >Setting</Link></li>
+          <li><Link to='/privacy' >Setting</Link></li>
           <li><Link to='/' >Help</Link></li>
         </ul>
       </div>
