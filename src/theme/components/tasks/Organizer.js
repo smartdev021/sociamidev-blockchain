@@ -4,6 +4,7 @@
 import React from 'react';
 
 import ActionLink from '~/src/components/common/ActionLink'
+import {Link} from 'react-router-dom'
 
 import "~/src/theme/css/organizer.css"
 
@@ -84,8 +85,7 @@ const RenderStatusBox = (activeTask, props) => {
           className="organizer-action-link">Cancel</ActionLink>
         <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("reschedule", activeTask)} 
           className="organizer-action-link">Reschedule</ActionLink>
-        <div><ActionLink href="#" onClick={()=>props.onHangoutActionPerform("answer_questions", activeTask)} 
-          className="organizer-action-link">Answer Questions</ActionLink></div>
+        <div><Link className="organizer-action-link" to="taskBrowser">Answer Questions</Link></div>
       </div>
     </div>
   );

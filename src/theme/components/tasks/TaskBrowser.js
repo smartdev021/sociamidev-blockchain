@@ -104,8 +104,17 @@ class TaskBrowser extends React.Component {
       <div id="main-content_1">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-12">
-              <h1>Your meeting with John</h1>
+            <div className="col-lg-12 content-2-columns-left-title">
+              <span>Your meeting with John</span>
+              <div id="actions" className="pull-right">
+                <ActionLink href="#" onClick={()=>{}}
+                  className="organizer-action-link">Cancel</ActionLink>
+                <ActionLink href="#" onClick={()=>{}} 
+                  className="organizer-action-link">Reschedule</ActionLink>
+              </div>
+              <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={this.props.history.goBack}>
+                <span className="glyphicon glyphicon-arrow-left"></span>
+              </ActionLink>
             </div>
           </div>
           <div className="row">
