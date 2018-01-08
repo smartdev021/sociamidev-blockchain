@@ -87,12 +87,12 @@ class NavTop extends React.Component {
             <div className="collapse navbar-collapse" id="navbar-content-top">
                 {this.state.notificationsOpen &&<Notifications onClose={()=>this.handleNotificationsClose()}/>}
                 <ul className="nav navbar-nav">
-                  <li>
+                  {/* <li>
                     <p className="navbar-btn">
                       <Link to='/searchResults' className={this.props.location.pathname == "/searchResults" 
                       ? ButtonClassName + " active" : ButtonClassName}>Trends Scanner</Link>
                     </p>
-                  </li>
+                  </li> */}
                   <li>
                     <p className="navbar-btn">
                     <Link to='/progressionTrees' className={this.props.location.pathname == "/progressionTrees" 
