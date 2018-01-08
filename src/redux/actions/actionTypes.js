@@ -10,6 +10,9 @@ export const FETCH_USER_PROFILE_COMPLETE = "fetch_user_profile_complete";
 export const FETCH_USER_PROFILE_TASKS_INITIATE = "fetch_user_profile_tasks_initiate";
 export const FETCH_USER_PROFILE_TASKS_COMPLETE = "fetch_user_profile_tasks_complete";
 
+export const FETCH_USER_PROFILE_ACTIVITIES_INITIATE = "fetch_user_activities_initiate";
+export const FETCH_USER_PROFILE_ACTIVITIES_COMPLETE = "fetch_user_activities_complete";
+
 export const PROGRESSION_TREE_START_INITIATE = "progression_tree_start_initiate";
 export const PROGRESSION_TREE_START_COMPLETE = "progression_tree_start_complete";
 
