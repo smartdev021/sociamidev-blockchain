@@ -4,7 +4,7 @@
     min-width: 500px;
     height: 600px;
     overflow-y: auto;
-    background: white;
+    background: rgba( 122, 204, 200, 0.8);
     border: 1px solid black;
 }
 

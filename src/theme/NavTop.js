@@ -15,6 +15,10 @@ import Notifications from '~/src/theme/components/Notifications'
 
 import "~/src/theme/css/navbarTop.css"
 
+import {
+  fetchUserActivities,
+} from '~/src/redux/actions/authorization'
+
 class NavTop extends React.Component {
 
   constructor(props) {
@@ -22,6 +26,20 @@ class NavTop extends React.Component {
 
     this.state = {
       notificationsOpen: false,
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.isAuthorized) {
+      this.props.fetchUserActivities(this.props.currentUserID);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isAuthorized != this.props.isAuthorized) {
+      if (this.props.isAuthorized) {
+        this.props.fetchUserActivities(this.props.currentUserID);
+      }
     }
   }
 
@@ -35,7 +53,9 @@ class NavTop extends React.Component {
   }
 
   handleNotificationsOpen() {
-    this.setState({notificationsOpen: true});
+    if (this.props.userActivities.length > 0) {
+      this.setState({notificationsOpen: true});
+    }
   }
 
   handleNotificationsClose() {
@@ -44,6 +64,8 @@ class NavTop extends React.Component {
 
   render() {
     const ButtonClassName = "top-nav-btn";
+
+    const NumNotifications = (this.props.userActivities && this.props.userActivities.length > 0) ? `(${this.props.userActivities.length})` : "";
 
     return (
       <div id="nav-top">
@@ -100,7 +122,7 @@ class NavTop extends React.Component {
                   </li>
                   <li className="nav-user-profile-control">
                     {this.props.isAuthorized &&<ActionLink href="#" onClick={ ()=>this.handleNotificationsOpen()}>
-                      (5)<img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/>
+                      {NumNotifications}<img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/>
                     </ActionLink>}
                   </li>
                   <li className="nav-user-profile-control">
@@ -117,14 +139,19 @@ class NavTop extends React.Component {
 
 NavTop.PropTypes = {
   location: PropTypes.object.isRequired,
+  fetchUserActivities: PropTypes.func.isRequired,
+  userActivities: PropTypes.array.isRequired,
 }
 
 
 const mapDispatchToProps = dispatch => ({
+  fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
 });
 
 const mapStateToProps = state => ({
-  isAuthorized: state.userProfile.isAuthorized
+  isAuthorized: state.userProfile.isAuthorized,
+  currentUserID: state.userProfile.profile._id,
+  userActivities: state.userProfile.activities.data,
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
