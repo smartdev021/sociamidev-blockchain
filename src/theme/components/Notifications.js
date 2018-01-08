@@ -10,6 +10,10 @@ import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 
+import {
+  markActivitySeen,
+} from '~/src/redux/actions/activities'
+
 import ActivityTypes from "~/src/common/ActivityTypes"
 
 import ActionLink from '~/src/components/common/ActionLink'
@@ -27,11 +31,12 @@ class Notifications extends React.Component {
   }
 
   handleNotificationClick(notification) {
-    console.log("Notification clicked");
+    this.props.markActivitySeen(notification._id, this.props.currentUserID, this.props.currentUserID);
     this.props.onClose();
   }
 
   renderNotifications() {
+    const that = this;
     const TaskStartedActivities = this.props.userActivities ? this.props.userActivities.filter(function(activity) {
       return activity.type == ActivityTypes.TASK_STARTED;
     }) : [];
@@ -41,12 +46,12 @@ class Notifications extends React.Component {
     TaskStartedActivities.map(function(activity, i) {
       return {
         title: `${activity.metadata.task.creator.firstName} has started a Hangout on skill "${activity.metadata.task.metaData.subject.skill.name}"`,
-        isSeen: false,
+        isSeen: activity.witnessIDs && activity.witnessIDs.find(function(witnessID) { return witnessID == that.props.currentUserID; }),
+        _id: activity._id,
       };
     })
     : [];
-
-    const that = this;
+    
     return (
       <div className="container-fluid">
         {
@@ -78,10 +83,12 @@ class Notifications extends React.Component {
 Notifications.PropTypes = {
     isAuthorized: PropTypes.bool.isRequired,
     userActivities: PropTypes.array.isRequired,
+    markActivitySeen: PropTypes.func.isRequired,
 }
 
 
 const mapDispatchToProps = dispatch => ({
+  markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
 });
 
 const mapStateToProps = state => ({
