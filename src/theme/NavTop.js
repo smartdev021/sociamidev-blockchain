@@ -65,7 +65,13 @@ class NavTop extends React.Component {
   render() {
     const ButtonClassName = "top-nav-btn";
 
-    const NumNotifications = (this.props.userActivities && this.props.userActivities.length > 0) ? `(${this.props.userActivities.length})` : "";
+    const CurrentUserID = this.props.currentUserID;
+
+    const NumNotifications = this.props.userActivities ? this.props.userActivities.filter(function(activity) {
+      return !activity.witnessIDs || !activity.witnessIDs.find(function(witnessID) { return witnessID == CurrentUserID; })
+    }).length : 0;
+
+    const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
 
     return (
       <div id="nav-top">
@@ -122,7 +128,7 @@ class NavTop extends React.Component {
                   </li>
                   <li className="nav-user-profile-control">
                     {this.props.isAuthorized &&<ActionLink href="#" onClick={ ()=>this.handleNotificationsOpen()}>
-                      {NumNotifications}<img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/>
+                      {NumNotificationsString}<img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/>
                     </ActionLink>}
                   </li>
                   <li className="nav-user-profile-control">
