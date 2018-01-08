@@ -11,12 +11,18 @@ import {Link} from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import Notifications from '~/src/theme/components/Notifications'
+
 import "~/src/theme/css/navbarTop.css"
 
 class NavTop extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      notificationsOpen: false,
+    }
   }
 
   renderConnectionsView() {
@@ -26,6 +32,10 @@ class NavTop extends React.Component {
                     <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/add-friend.png"/></Link>;
     }
     return ConnectionsViewLink;
+  }
+
+  toggleNotificationsOpen() {
+    this.setState({notificationsOpen: !this.state.notificationsOpen});
   }
 
 
@@ -44,6 +54,7 @@ class NavTop extends React.Component {
               </button>
             </div>
             <div className="collapse navbar-collapse" id="navbar-content-top">
+                {this.state.notificationsOpen &&<Notifications onClose={()=>this.toggleNotificationsOpen()}/>}
                 <ul className="nav navbar-nav">
                   <li>
                     <p className="navbar-btn">
@@ -85,7 +96,9 @@ class NavTop extends React.Component {
                     <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/close-envelope.png"/></a>
                   </li>
                   <li className="nav-user-profile-control">
-                    <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/></a>
+                    <ActionLink href="#" onClick={()=>this.toggleNotificationsOpen()}>
+                      (5)<img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/>
+                    </ActionLink>
                   </li>
                   <li className="nav-user-profile-control">
                   {this.renderConnectionsView()}
