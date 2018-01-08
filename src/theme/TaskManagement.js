@@ -5,6 +5,8 @@
 import React, { Component } from 'react';
 import { withCookies, Cookies } from 'react-cookie';
 
+import { Redirect} from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
@@ -85,6 +87,8 @@ class TaskManagement extends React.Component {
       scannerQuery: "",
       timeNow: Date.now(),
     }
+
+    this.redirectLocation = undefined;    
 
     this.timeNowUpdateInterval = undefined;
   }
@@ -216,6 +220,10 @@ class TaskManagement extends React.Component {
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
       console.log("%cisTaskSaveInProgress", "background:red; color:green;");
+      if (this.props.lastStartedTask._id) {
+        this.redirectLocation = `/taskBrowser?id=${this.props.lastStartedTask._id}`
+      }
+
       this.fetchUserTasks();
       this.props.onFetchAllTasks(false);
     }
@@ -462,8 +470,11 @@ class TaskManagement extends React.Component {
   }
 
   render() {
+    const RedirectTo = this.redirectLocation ? <Redirect to={this.redirectLocation} push/> : null;
+
     return (
         <div className="content-2-columns-wrapper">
+        {RedirectTo}
         <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
           onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation"
           task={this.state.detailsPopupItem} />   
@@ -515,6 +526,8 @@ const mapStateToProps = state => ({
   projects: state.projects,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
   isTaskSaveInProgress: state.isTaskSaveInProgress,
+
+  lastStartedTask: state.lastStartedTask,
 });
 
 const mapDispatchToProps = dispatch => ({

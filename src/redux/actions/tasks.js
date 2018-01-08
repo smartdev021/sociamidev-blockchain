@@ -9,6 +9,7 @@ import {
     TASK_REMOVE,
 
     TASK_LASTSAVED_SET,
+    TASK_LASTSTARTED_SET,
 
     FETCH_TASKS_INITIATE,
     FETCH_TASKS_COMPLETE,
@@ -54,6 +55,13 @@ export function updateTask(taskId, newTask) {
 export function setLastSavedTask(newTask) {
     return {
         type: TASK_LASTSAVED_SET,
+        task: newTask,
+    }
+}
+
+export function setLastStartedTask(newTask) {
+    return {
+        type: TASK_LASTSTARTED_SET,
         task: newTask,
     }
 }
@@ -213,6 +221,9 @@ console.log("publishedOnly: " + publishedOnly);
             return (
             Axios.post(url, body)
             .then(function(response) {
+                if (response.data.status == "started") {
+                    dispatch(setLastStartedTask(response.data));
+                }
                 dispatch(saveTaskComplete());
             })
             .catch(function(error) {

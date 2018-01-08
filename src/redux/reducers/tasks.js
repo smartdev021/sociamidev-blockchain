@@ -1,6 +1,7 @@
 import { 
   TASKS_SET,
   TASK_LASTSAVED_SET,
+  TASK_LASTSTARTED_SET,
   FETCH_TASKS_INITIATE, 
   FETCH_TASKS_COMPLETE, 
   SAVE_TASK_INITIATE, 
@@ -100,6 +101,15 @@ export function isTaskSaveInProgress(state = false, action) {
 
 export function lastSavedTask(state = {}, action) {
   if (action.type == TASK_LASTSAVED_SET) {
+    return action.task;
+  }
+  else {
+    return state;
+  }
+}
+
+export function lastStartedTask(state = {}, action) {
+  if (action.type == TASK_LASTSTARTED_SET) {
     return action.task;
   }
   else {
