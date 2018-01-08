@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -19,14 +20,47 @@ class Notifications extends React.Component {
     super(props);
   }
 
+
   handleClickOutside() {
-    console.log("HANGLE CLICK OUTSIDE");
     this.props.onClose();
+  }
+
+  handleNotificationClick(notification) {
+    console.log("Notification clicked");
+    this.props.onClose();
+  }
+
+  renderNotifications() {
+    const DummyNotifications = [
+      { title: "Daniel has accepted your Hangout on roadmap 'Data Science'", metaData: {task: {_id: "44h34gh43y34h34"}}, isSeen: false },
+      { title: "John has added his answers for your Hangout 'Big Data'", isSeen: true },
+      { title: "Mery has cancelled her Hagout on roadmap 'Python", metaData: {task: {_id: "44h34gh43y34h34"}}, isSeen: false },
+      { title: "Mike has started the Hangout", metaData: {task: {_id: "44h34gh43y34h34"}}, isSeen: true },
+      { title: "Lydia has joined your Hangout 'Data Science'", metaData: {task: {_id: "44h34gh43y34h34"}}, isSeen: false },
+    ];
+    const that = this;
+    return (
+      <div className="container-fluid">
+        {
+          DummyNotifications.map(function(notification, i) {
+            return (
+            <div className="row" key={i}>
+              <div className="col-lg-12">
+                <Link to = "/taskManagement" onClick={()=>that.handleNotificationClick(notification)} className={notification.isSeen ? "notification-seen" : "notification"}>
+                  {notification.title}
+                </Link>
+              </div>
+            </div>);
+          })
+        }
+      </div>
+    );
   }
 
   render() {
     return (
         <div id="notifications-widget">
+          {this.renderNotifications()}
         </div>
     );
   }

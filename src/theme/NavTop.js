@@ -34,10 +34,13 @@ class NavTop extends React.Component {
     return ConnectionsViewLink;
   }
 
-  toggleNotificationsOpen() {
-    this.setState({notificationsOpen: !this.state.notificationsOpen});
+  handleNotificationsOpen() {
+    this.setState({notificationsOpen: true});
   }
 
+  handleNotificationsClose() {
+    this.setState({notificationsOpen: false});
+  }
 
   render() {
     const ButtonClassName = "top-nav-btn";
@@ -54,7 +57,7 @@ class NavTop extends React.Component {
               </button>
             </div>
             <div className="collapse navbar-collapse" id="navbar-content-top">
-                {this.state.notificationsOpen &&<Notifications onClose={()=>this.toggleNotificationsOpen()}/>}
+                {this.state.notificationsOpen &&<Notifications onClose={()=>this.handleNotificationsClose()}/>}
                 <ul className="nav navbar-nav">
                   <li>
                     <p className="navbar-btn">
@@ -96,9 +99,9 @@ class NavTop extends React.Component {
                     <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/close-envelope.png"/></a>
                   </li>
                   <li className="nav-user-profile-control">
-                    <ActionLink href="#" onClick={()=>this.toggleNotificationsOpen()}>
+                    {this.props.isAuthorized &&<ActionLink href="#" onClick={ ()=>this.handleNotificationsOpen()}>
                       (5)<img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/notification.png"/>
-                    </ActionLink>
+                    </ActionLink>}
                   </li>
                   <li className="nav-user-profile-control">
                   {this.renderConnectionsView()}
