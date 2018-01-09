@@ -85,7 +85,7 @@ const RenderStatusBox = (activeTask, props) => {
           className="organizer-action-link">Cancel</ActionLink>
         <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("reschedule", activeTask)} 
           className="organizer-action-link">Reschedule</ActionLink>
-        {activeTask ? <div><Link className="organizer-action-link" to={`/taskBrowser?id=5a533c2e01ecda6608be0b1e`}>Answer Questions</Link></div>
+        {activeTask ? <div><Link className="organizer-action-link" to={`/taskBrowser?id=${activeTask._id}`}>Answer Questions</Link></div>
         : <div><Link className="organizer-action-link" to={`/taskBrowser`}>Answer Questions</Link></div>}
       </div>
     </div>
