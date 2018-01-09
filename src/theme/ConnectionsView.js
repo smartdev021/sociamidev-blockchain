@@ -12,6 +12,7 @@ class ConnectionsView extends React.Component {
         this.state = {
             // Takes active tab from props if it is defined there
             allFriendList: [],
+            allConnectionsList:[],
             friendList: [],
             receivedList: [],
             sentList: [],
@@ -96,15 +97,20 @@ class ConnectionsView extends React.Component {
             }
         })
             .then(function (response) {
-                self.setState({friendList: response.data});
+                self.setState({allConnectionsList: response.data});
                 self.setState({
-                    receivedList: self.state.friendList.filter(function (fList) {
+                    receivedList: self.state.allConnectionsList.filter(function (fList) {
                         return fList.connectionStatus === "Received";
                     })
                 });
                 self.setState({
-                    sentList: self.state.friendList.filter(function (fList) {
+                    sentList: self.state.allConnectionsList.filter(function (fList) {
                         return fList.connectionStatus === "Sent";
+                    })
+                });
+                self.setState({
+                    friendList: self.state.allConnectionsList.filter(function (fList) {
+                        return fList.connectionStatus === "Friends";
                     })
                 });
             })
@@ -262,30 +268,11 @@ class ConnectionsView extends React.Component {
                     </Tab>
                     <Tab eventKey={2} title="Connections">
                         <ul> {
-
                             this.state.friendList.map(function (friend) {
                                 const reqState = friend.connectionStatus;
                                 let button = null;
-                                let mainbtn = <span>
-                                    <button type="button" className="btn btn-success"
-                                            onClick={()=>this.handleFriendRequest(friend, 'Accept')}> Accept
-                                    </button>
-                                    &nbsp;&nbsp;
-                                    <button type="button" className="btn btn-warning"
-                                            onClick={()=>this.handleFriendRequest(friend, 'Reject')}>Reject
-                                    </button>
-                                </span>;
-
-                                if (reqState == "Received") {
-                                    button = mainbtn;
-                                } else if (reqState == "Sent") {
-                                    button = <button type="button" className="btn btn-primary"
-                                                     onClick={()=>this.handleFriendRequest(friend, 'Withdraw')}>
-                                        Withdraw</button>;
-                                } else {
-                                    button = <button type="button" className="btn btn-primary"
+                                button = <button type="button" className="btn btn-primary"
                                                      onClick={()=>this.handleFriendRequest(friend, reqState)}>{reqState}</button>;
-                                }
                                 return (
                                     <li key={friend.id} className="borderStyle">
                                         <div className="imageContainer">                                  
