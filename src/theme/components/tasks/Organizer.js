@@ -106,8 +106,11 @@ const Organizer = (props) => {
 
     if (StartedHangouts.length > 0) {
       StartedHangouts.sort(function(hangout1, hangout2) {
-        return (hangout1.timeStarted - hangout2.timeStarted);
+        return (hangout2.timeStarted - hangout1.timeStarted);
       });
+
+      console.log("StartedHangouts");
+      console.dir(StartedHangouts);
 
       activeTask = StartedHangouts[0];
 
