@@ -20,7 +20,7 @@ class ThemeHeader extends React.Component {
   }
 
   onSignOut() {
-    
+    window.location.reload();
   }
 
   renderProfileLink() {
