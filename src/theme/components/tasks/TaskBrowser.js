@@ -61,6 +61,9 @@ class TaskBrowser extends React.Component {
     if (this.state.isQuestionsLoading != prevState.isQuestionsLoading || this.state.isTaskLoading != prevState.isTaskLoading) {
       this.setState({isLoading: this.state.isQuestionsLoading && this.state.isTaskLoading});
     }
+
+    console.log("%cTaskBrowser did update", "backrgound: black; color: white;");
+    console.dir(this.state);
   }
 
   renderQuestions() {
@@ -74,13 +77,13 @@ class TaskBrowser extends React.Component {
 
     const DummyQuestions = [
       {
-        title: "What is the future of Fintech?", 
+        question: "What is the future of Fintech?", 
       },
       {
-        title: "What are some examples of usage of Fintech?",
+        question: "What are some examples of usage of Fintech?",
       },
       {
-        title: "What are the key challenges of Fintech?",
+        question: "What are the key challenges of Fintech?",
       },
     ];
 
@@ -100,7 +103,7 @@ class TaskBrowser extends React.Component {
             return (
               <div className="row" key={i}>
                 <div className="col-lg-12">
-                  {i + 1}) {question.title}
+                  {i + 1}) {question.question}
                 </div>
                 <div className="col-lg-6">
                   <div>{"You"}</div>
