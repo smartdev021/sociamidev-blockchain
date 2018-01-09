@@ -59,14 +59,17 @@ const RenderList = (props) => {
             return (
               <li key={i}>
                 <span className="organizer-list-item-text">{GenerateHangoutText(hangout, props)}</span>
-                {hangout.creator._id == props.currentUserID && <span className="organizer-list-item-actions pull-right">
-                {hangout.status != "started" && <ActionLink href="#" className={StartActionClass}
+                <span className="organizer-list-item-actions pull-right">
+                {(hangout.status != "started" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" className={StartActionClass}
                     onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
                   {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
                     onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
-                  {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>}
-                </span>}
+                  {hangout.creator._id == props.currentUserID ? hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                    onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>
+                  :
+                  hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                    onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Leave</ActionLink>}
+                </span>
               </li>
             );
           })

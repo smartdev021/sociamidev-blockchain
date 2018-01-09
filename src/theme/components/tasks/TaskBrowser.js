@@ -19,6 +19,10 @@ import "~/src/theme/appearance.css"
 import "~/src/theme/layout.css"
 import "~/src/theme/css/taskBrowser.css"
 
+import {
+  setLastStartedTask,
+} from '~/src/redux/actions/tasks'
+
 class TaskBrowser extends React.Component {
 
   constructor(props) {
@@ -34,6 +38,7 @@ class TaskBrowser extends React.Component {
   }
 
   componentDidMount() {
+    this.props.setLastStartedTask({});
     const URLParams = new URLSearchParams(this.props.location.search);
 
     const taskId = URLParams.get("id");
@@ -191,6 +196,7 @@ class TaskBrowser extends React.Component {
 }
 
 TaskBrowser.propTypes = {
+  setLastStartedTask: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 }
@@ -201,6 +207,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  setLastStartedTask: bindActionCreators(setLastStartedTask, dispatch),
 })
 
 

@@ -231,3 +231,25 @@ console.log("publishedOnly: " + publishedOnly);
             }));
         }
     }
+
+    export function taskLeave(taskId, user) {
+        return function (dispatch) {
+          dispatch(saveTaskInitiate());
+          
+          const url = `${ConfigMain.getBackendURL()}/taskLeave`;
+
+          const body = {
+              id : taskId,
+              user: user,
+            };
+
+            return (
+            Axios.post(url, body)
+            .then(function(response) {
+                dispatch(saveTaskComplete());
+            })
+            .catch(function(error) {
+                dispatch(saveTaskComplete());
+            }));
+        }
+    }
