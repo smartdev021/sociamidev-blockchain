@@ -35,10 +35,15 @@ const MyTasksContainer = (props) => {
           </div>
         </div>
         <div id="my-tasks-container">
-          <Organizer/>
+          <Organizer onHangoutActionPerform={(action, hangout) => props.onHangoutActionPerform(action, hangout)} 
+            tasks={props.assignedTasks}
+              currentUserID={props.currentUserID}
+                timeNow={props.timeNow}/>
           {<MyTasks tasks={props.tasks} 
                onHangoutRequestAccept={(hangout, user)=>props.onHangoutRequestAccept(hangout, user)}
                onHangoutRequestReject={(hangout, user)=>props.onHangoutRequestReject(hangout, user)}
+               onHangoutActionPerform={(action, hangout) => props.onHangoutActionPerform(action, hangout)}
+               currentUserID={props.currentUserID}
                selectedCategory={props.selectedCategory}
                handleOpenCancelTaskDetailsPopup={(task)=>props.handleOpenCancelTaskDetailsPopup(task)}/>
           }

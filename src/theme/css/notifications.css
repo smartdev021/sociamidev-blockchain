@@ -1,0 +1,35 @@
+#notifications-widget {
+    position: absolute;
+    z-index: 100;
+    min-width: 500px;
+    height: 600px;
+    overflow-y: auto;
+    background: rgba( 122, 204, 200, 0.8);
+    border: 1px solid black;
+}
+
+.notification, .notification-seen {
+  padding: 5px;
+  background: rgb(77, 76, 76);
+  border: 1px solid black;
+  color: rgb(206, 199, 199);
+}
+
+.notification-seen {
+  padding: 5px;
+  background: white;
+  border: 1px solid black;
+  color: rgba(0, 0, 0, 0.219);
+}
+
+.notification:focused, .notification-seen:focused, .notification:visited, .notification-seen:visited{
+  padding: 5px;
+  background: white;
+  border: 1px solid black;
+  color: black;
+}
+
+.notification:hover, .notification-seen:hover {
+  background: rgb(185, 177, 177);
+  border: 1px solid black;
+}

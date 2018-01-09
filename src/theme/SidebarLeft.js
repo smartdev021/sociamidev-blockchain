@@ -126,7 +126,7 @@ class SidebarLeft extends React.Component {
   }
 
   renderActivity(activity) {
-    let result = <span className="friend-news-feed-text">Unhandled feed</span>;
+    let result = <span className="friend-news-feed-text"></span>;
 
     switch(activity.activity.type) {
       case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:

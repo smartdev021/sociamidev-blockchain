@@ -9,6 +9,7 @@ import {
     TASK_REMOVE,
 
     TASK_LASTSAVED_SET,
+    TASK_LASTSTARTED_SET,
 
     FETCH_TASKS_INITIATE,
     FETCH_TASKS_COMPLETE,
@@ -54,6 +55,13 @@ export function updateTask(taskId, newTask) {
 export function setLastSavedTask(newTask) {
     return {
         type: TASK_LASTSAVED_SET,
+        task: newTask,
+    }
+}
+
+export function setLastStartedTask(newTask) {
+    return {
+        type: TASK_LASTSTARTED_SET,
         task: newTask,
     }
 }
@@ -188,6 +196,53 @@ console.log("publishedOnly: " + publishedOnly);
                   lastName : user.lastName,
               },
             };
+            return (
+            Axios.post(url, body)
+            .then(function(response) {
+                dispatch(saveTaskComplete());
+            })
+            .catch(function(error) {
+                dispatch(saveTaskComplete());
+            }));
+        }
+    }
+
+    export function taskStatusChange(taskId, status) {
+        return function (dispatch) {
+          dispatch(saveTaskInitiate());
+          
+          const url = `${ConfigMain.getBackendURL()}/taskStatusChange`;
+
+          const body = {
+              id : taskId,
+              status: status,
+            };
+
+            return (
+            Axios.post(url, body)
+            .then(function(response) {
+                if (response.data.status == "started") {
+                    dispatch(setLastStartedTask(response.data));
+                }
+                dispatch(saveTaskComplete());
+            })
+            .catch(function(error) {
+                dispatch(saveTaskComplete());
+            }));
+        }
+    }
+
+    export function taskLeave(taskId, user) {
+        return function (dispatch) {
+          dispatch(saveTaskInitiate());
+          
+          const url = `${ConfigMain.getBackendURL()}/taskLeave`;
+
+          const body = {
+              id : taskId,
+              user: user,
+            };
+
             return (
             Axios.post(url, body)
             .then(function(response) {

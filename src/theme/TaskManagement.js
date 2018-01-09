@@ -5,6 +5,8 @@
 import React, { Component } from 'react';
 import { withCookies, Cookies } from 'react-cookie';
 
+import { Redirect} from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
@@ -36,6 +38,8 @@ import {
   fetchTasksInitiate,
   fetchTasksComplete,
   hangoutJoin,
+  taskStatusChange,
+  taskLeave,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -82,7 +86,12 @@ class TaskManagement extends React.Component {
     this.state = {
       tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
+      timeNow: Date.now(),
     }
+
+    this.redirectLocation = undefined;    
+
+    this.timeNowUpdateInterval = undefined;
   }
 
   groupTasksByProjects(tasks) {
@@ -142,6 +151,35 @@ class TaskManagement extends React.Component {
     this.setState({scannerQuery: e.target.value});
   }
 
+  hangoutActionPerform(action, hangout) {
+    switch (action) {
+      case "start": {
+        if (this.state.timeNow >= hangout.metaData.time) {
+          this.props.taskStatusChange(hangout._id, "started");
+        }
+        break;
+      }
+      case "cancel": {
+        this.props.taskStatusChange(hangout._id, "canceled");
+        break;
+      }
+      case "leave": {
+        this.props.taskLeave(hangout._id, {
+          _id: this.props.userProfile._id, 
+          firstName: this.props.userProfile.firstName, 
+          lastName: this.props.userProfile.lastName
+        });
+        break;
+      }
+      case "reschedule": {
+        this.props.taskStatusChange(hangout._id, "rescheduled");
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
   storeAndFetchTasks() {
     const { cookies } = this.props;
     const lastViewedRoadmap = cookies.get('lastViewedRoadmap');
@@ -167,6 +205,18 @@ class TaskManagement extends React.Component {
     this.fetchUserTasks();
   }
 
+  componentDidMount() {
+    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeNowUpdateInterval);
+  }
+
+  updateTimeNow() {
+    this.setState({timeNow: Date.now()});
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.userProfile._id && this.props.userProfile._id) {
       console.log("!prevProps.userProfile._id && this.props.userProfile._id");
@@ -179,6 +229,10 @@ class TaskManagement extends React.Component {
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
       console.log("%cisTaskSaveInProgress", "background:red; color:green;");
+      if (this.props.lastStartedTask._id) {
+        this.redirectLocation = `/taskBrowser?id=${this.props.lastStartedTask._id}`
+      }
+
       this.fetchUserTasks();
       this.props.onFetchAllTasks(false);
     }
@@ -379,6 +433,10 @@ class TaskManagement extends React.Component {
           handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
           selectedCategory={this.state.tasksCategory}
           categories={Categories}
+          onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
+          assignedTasks={this.props.tasksAssignedToCurrentUser}
+          currentUserID={this.props.userProfile._id}
+          timeNow={this.state.timeNow}
 
           onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
           onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
@@ -421,8 +479,11 @@ class TaskManagement extends React.Component {
   }
 
   render() {
+    const RedirectTo = this.redirectLocation ? <Redirect to={this.redirectLocation} push/> : null;
+
     return (
         <div className="content-2-columns-wrapper">
+        {RedirectTo}
         <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
           onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation"
           task={this.state.detailsPopupItem} />   
@@ -453,6 +514,8 @@ TaskManagement.propTypes = {
 
   openSignUpForm: PropTypes.func.isRequired,
   hangoutJoin: PropTypes.func.isRequired,
+  taskStatusChange: PropTypes.func.isRequired,
+  taskLeave: PropTypes.func.isRequired,
   setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
@@ -473,11 +536,15 @@ const mapStateToProps = state => ({
   projects: state.projects,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
   isTaskSaveInProgress: state.isTaskSaveInProgress,
+
+  lastStartedTask: state.lastStartedTask,
 });
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   hangoutJoin: bindActionCreators(hangoutJoin, dispatch),
+  taskStatusChange: bindActionCreators(taskStatusChange, dispatch),
+  taskLeave: bindActionCreators(taskLeave, dispatch),
   setTasks: bindActionCreators(setTasks, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),

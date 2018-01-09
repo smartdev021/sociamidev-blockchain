@@ -8,6 +8,9 @@ import {
     FETCH_USER_PROFILE_TASKS_INITIATE,
     FETCH_USER_PROFILE_TASKS_COMPLETE,
 
+    FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
+    FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
+
     PROGRESSION_TREE_START_INITIATE,
     PROGRESSION_TREE_START_COMPLETE,
 
@@ -68,6 +71,42 @@ export function fetchUserProfileTasksComplete(assignedTasks, createdTasks) {
         type: FETCH_USER_PROFILE_TASKS_COMPLETE,
         tasksAssigned: assignedTasks,
         tasksCreated: createdTasks,
+    }
+}
+
+export function fetchUserActivitiesInitiate() {
+    return {
+        type: FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
+    }
+}
+
+export function fetchUserActivitiesComplete(activities) {
+    return {
+        type: FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
+        activities: activities,
+    }
+}
+
+export function fetchUserActivities(userId) {
+    
+    return function (dispatch) {
+
+        dispatch(fetchUserActivitiesInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/userActivitiesGet?id=${userId}&doNotTransform=1`;
+    
+        return (
+          Axios.get(url)
+          .then(function(response) {
+              console.log("%cfetchUserActivities: ", "color: red; background: grey;");
+              console.dir(response.data);
+            dispatch(fetchUserActivitiesComplete(response.data[0].activities.map(function(userActivityData, i) {
+                return userActivityData.activity;
+            })));
+          })
+          .catch(function(error) {
+            dispatch(fetchUserActivitiesComplete([]));
+        }));
     }
 }
 

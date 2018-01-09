@@ -7,6 +7,8 @@ import {
     SIGNUP_FORM_CLOSE,
     FETCH_USER_PROFILE_TASKS_INITIATE,
     FETCH_USER_PROFILE_TASKS_COMPLETE,
+    FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
+    FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
 
     PROGRESSION_TREE_START_INITIATE,
     PROGRESSION_TREE_START_COMPLETE,
@@ -41,6 +43,10 @@ const userProfileInitialState = {
     created: [],
     isLoading: false,
   },
+  activities: {
+    data: [],
+    isLoading: false,
+  },
   isAuthorized: false,
   isLoading: false,
 };
@@ -56,6 +62,12 @@ export function userProfile(state = userProfileInitialState, action) {
     }
     case FETCH_USER_PROFILE_TASKS_COMPLETE: {
       return {...state, tasks: {assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false}};
+    }
+    case FETCH_USER_PROFILE_ACTIVITIES_INITIATE: {
+      return {...state, activities: { data: action.activities, isLoading: true }};
+    }
+    case FETCH_USER_PROFILE_ACTIVITIES_COMPLETE: {
+      return {...state, activities: { data: action.activities, isLoading: false }};
     }
     case PROGRESSION_TREE_START_INITIATE:
       return state;

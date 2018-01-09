@@ -21,10 +21,16 @@ const RenderSingleTask = (task, i, props) => {
         <MySubtasks task={task} handleOpenCancelTaskDetailsPopup={(task)=>props.handleOpenCancelTaskDetailsPopup(task)}/>
       </div>
     :
-      <ActionLink href="#" onClick={()=>props.handleOpenCancelTaskDetailsPopup(task)} className="tasks-management-my-task">
-        <span>{task.type == "hangout" ? `Hangout for skill "${task.metaData.subject.skill.name}." Creator: ${task.creator.firstName}` 
-        : task.name}</span>
-      </ActionLink>
+      <div>
+        <div href="#" onClick={()=>props.handleOpenCancelTaskDetailsPopup(task)} className="tasks-management-my-task">
+          <span>{task.type == "hangout" ? `Hangout for skill "${task.metaData.subject.skill.name}." Creator: ${task.creator.firstName}` 
+          : task.name}</span>
+        </div>
+      
+        {/*(task.type == "hangout" && task.creator._id == props.currentUserID) && <ActionLink href="#" className="tasks-management-my-task"
+          onClick={()=>props.onHangoutActionPerform("start", task)}>Start</ActionLink>
+    */}
+      </div>
     }  
     </div>
     );

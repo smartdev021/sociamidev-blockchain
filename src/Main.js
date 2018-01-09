@@ -21,6 +21,7 @@ import TrendScanner from '~/src/theme/TrendScanner.js';
 import TaskManagement from '~/src/theme/TaskManagement';
 import ProjectManager from '~/src/theme/ProjectManagement';
 import ProjectBrowser from '~/src/theme/ProjectBrowser';
+import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser'
 import ProgressionTreeBrowser from '~/src/theme/ProgressionTreeBrowser';
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import About from '~/src/theme/About.js';
@@ -28,9 +29,11 @@ import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
 import "~/src/theme/css/main.css";
 import UserProfile from '~/src/theme/UserProfile.js';
-// Michael ->
+
 import NewUserProfile from '~/src/theme/NewUserProfile.js';
-// <- Michael
+
+import Privacy from '~/src/theme/Privacy.js';
+
 
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
@@ -71,14 +74,18 @@ class Main extends React.Component {
         <Route path='/taskManagement' render={routeProps => <TaskManagement {...routeProps}{...this.props}/>}/>
         <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
         <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
+        <Route path='/taskBrowser' render={routeProps => <TaskBrowser {...routeProps}{...this.props}/>}/>
         <Route exact path='/about' render={routeProps => <About {...routeProps}{...this.props}/>} />
         {/*<Route exact path='/ico' render={routeProps => <ICO {...routeProps}{...this.props}/>} />*/}
         <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
-        {/*<Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>*/}
+        <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
+
         {/*Michael ->*/}
         <Route path='/newUserProfile' render={routeProps => <NewUserProfile {...routeProps}{...this.props}/>}/>
         {/* <- Michael*/}
+
+        <Route path='/privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>} />)}/>
       </Switch>)
   }
 
