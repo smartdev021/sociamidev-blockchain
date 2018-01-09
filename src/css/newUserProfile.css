@@ -186,4 +186,18 @@
 .new-user-right-bar-next {
 	text-align: center;
 }
+@media screen and (max-width: 1230px) {
+    .new-userProf-textWrap {
+		margin-left: 110px;
+	}
+}
+@media screen and (max-width: 990px) {
+    .new-userProf-textWrap {
+		margin-left: 15px;
+	}
+	.new-user-stars-wrap {
+		position: static;
+		margin-left: 140px;
+	}
+}
 
