@@ -113,6 +113,8 @@ class TaskBrowser extends React.Component {
         .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
 
         this.getUserAnswersFromCookies();
+
+        this.getUserAnswersFromServerMy();
       }
     }
 
@@ -121,7 +123,7 @@ class TaskBrowser extends React.Component {
     }
 
     if (this.state.answersMy != prevState.answersMy) {
-      this.storeUserAnswersToCookies();
+      this.storeUserAnswersToCookies(this.state.answersMy);
     }
 
     console.log("%cTaskBrowser did update", "backrgound: black; color: white;");
@@ -129,6 +131,7 @@ class TaskBrowser extends React.Component {
   }
 
   getUserAnswersFromServerMy() {
+    console.log("%cgetUserAnswersFromServerMy", "color: white; background: orange;");
     if (this.state.currentTask._id) {
       const CurrentUserID = this.props.userProfile._id;
 
@@ -138,47 +141,53 @@ class TaskBrowser extends React.Component {
 
       const that = this;
 
-      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersGet?taskId=${this.state.currentTask._id}&userId=${this.props.userProfile._id}&userId=${Partner.user._id}`)
-        .then((response)=>{that.getUserAnswersFromServerMySuccess(response)})
+      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersGet?taskId=${this.state.currentTask._id}`)
+      .then((response) =>this.getUserAnswersFromServerMySuccess(response, that))
         .catch((error)=>{console.log(error)});
     }
   }
 
-  getUserAnswersFromServerMySuccess(response) {
+  getUserAnswersFromServerMySuccess(response, that) {
     const answers = response.data;
 
-    const CurrentUserID = this.props.userProfile._id;
+    console.log("%cgetUserAnswersFromServerMySuccess", "color: white; background: orange;");
 
-    const answersMyIndex = response.data.findIndex(function(answers) {
-      return answers.userID == CurrentUserID;
+    const foundAnswersForUser = answers[0].userAnswers.find(function(userAnswer) {
+      return userAnswer._id == that.props.userProfile._id;
     });
 
-    const answersPartnerIndex = response.data.findIndex(function(answers) {
-      return answers.userID != CurrentUserID;
+    let newAnswersMy = Object.assign({}, that.state.answersMy);
+
+    if (foundAnswersForUser) {
+      newAnswersMy = foundAnswersForUser.answers;
+    }
+
+    let newAnswersPartner = Object.assign({}, that.state.answersPartner);
+
+    const CurrentUserID = that.props.userProfile._id;
+
+    const Partner = that.state.currentTask.metaData.participants.find(function(participant) {
+      return participant.user._id != CurrentUserID;
     });
 
-    if (answersMyIndex != -1) {
-      const answersMap = answers[answersMyIndex].answers;
+    const foundAnswersForPartner = answers[0].userAnswers.find(function(userAnswer) {
+      return userAnswer._id == Partner.user._id;
+    });
 
-      for (let key in answersMap) {
-        if (!this.state.answersMy[key] || this.state.answersMy[key].timeChanged < answersMap[key].timeChanged) {
-          this.state.answersMy[key] = answersMap[key];
-        }
-      }
+    console.dir(Partner);
+    console.dir(foundAnswersForPartner);
+    console.dir(answers[0].userAnswers);
+
+    if (foundAnswersForPartner) {
+      newAnswersPartner = foundAnswersForPartner.answers;
     }
 
-    if (answersPartnerIndex != -1) {
-      const answersMap = answers[answersPartnerIndex].answers;
+    this.storeUserAnswersToCookies(newAnswersMy);
 
-      for (let key in answersMap) {
-        if (!this.state.answersPartneranswersMy[key] || this.state.answersPartner[key].timeChanged < answersMap[key].timeChanged) {
-          this.state.answersPartner[key] = answersMap[key];
-        }
-      }
-    }
+    that.setState({answersMy: newAnswersMy, answersPartner: newAnswersPartner});
   }
 
-  storeUserAnswersToCookies() {
+  storeUserAnswersToCookies(answersMy) {
     if (this.state.currentTask._id) {
       console.log("%cstoreUserAnswersToCookies", "color: black; background: purple;");
       const { cookies } = this.props;
@@ -193,7 +202,7 @@ class TaskBrowser extends React.Component {
         answersForTask = {};
       }
 
-      answersForTask[this.props.userProfile._id] = this.state.answersMy;
+      answersForTask[this.props.userProfile._id] = answersMy;
 
       cookies.set(`answers_for_task_${this.state.currentTask._id}`, answersForTask, options); 
     }
