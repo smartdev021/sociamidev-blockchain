@@ -128,6 +128,56 @@ class TaskBrowser extends React.Component {
     console.dir(this.state);
   }
 
+  getUserAnswersFromServerMy() {
+    if (this.state.currentTask._id) {
+      const CurrentUserID = this.props.userProfile._id;
+
+      const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
+        return participant.user._id != CurrentUserID;
+      });
+
+      const that = this;
+
+      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersGet?taskId=${this.state.currentTask._id}&userId=${this.props.userProfile._id}&userId=${Partner.user._id}`)
+        .then((response)=>{that.getUserAnswersFromServerMySuccess(response)})
+        .catch((error)=>{console.log(error)});
+    }
+  }
+
+  getUserAnswersFromServerMySuccess(response) {
+    const answers = response.data;
+
+    const CurrentUserID = this.props.userProfile._id;
+
+    const answersMyIndex = response.data.findIndex(function(answers) {
+      return answers.userID == CurrentUserID;
+    });
+
+    const answersPartnerIndex = response.data.findIndex(function(answers) {
+      return answers.userID != CurrentUserID;
+    });
+
+    if (answersMyIndex != -1) {
+      const answersMap = answers[answersMyIndex].answers;
+
+      for (let key in answersMap) {
+        if (!this.state.answersMy[key] || this.state.answersMy[key].timeChanged < answersMap[key].timeChanged) {
+          this.state.answersMy[key] = answersMap[key];
+        }
+      }
+    }
+
+    if (answersPartnerIndex != -1) {
+      const answersMap = answers[answersPartnerIndex].answers;
+
+      for (let key in answersMap) {
+        if (!this.state.answersPartneranswersMy[key] || this.state.answersPartner[key].timeChanged < answersMap[key].timeChanged) {
+          this.state.answersPartner[key] = answersMap[key];
+        }
+      }
+    }
+  }
+
   storeUserAnswersToCookies() {
     if (this.state.currentTask._id) {
       console.log("%cstoreUserAnswersToCookies", "color: black; background: purple;");
