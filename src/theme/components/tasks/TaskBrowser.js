@@ -31,9 +31,36 @@ class TaskBrowser extends React.Component {
     this.state = {
       currentTask: undefined,
       questions: [],
+
+      answersMy: {},
+
+      answersPartner: {},
+
       isTaskLoading: true,
       isQuestionsLoading: true,
+
       isLoading: true,
+    }
+  }
+
+  getAnswerMy(questionId) {
+    return this.state.answersMy[questionId] ? this.state.answersMy[questionId].text : "";
+  }
+
+  getAnswerPartner(questionId) {
+    return this.state.answersPartner[questionId] ? this.state.answersPartner[questionId].text : "";
+  }
+
+  handleAnswerInput(e) {
+    if (e.target.id.startsWith('answer_your_')) {
+      const questionId = e.target.id.replace('answer_your_', '');
+
+      if (questionId) {
+        let answersMyCopy = Object.assign({}, this.state.answersMy);
+        answersMyCopy[questionId] = { text: e.target.value, timeChanged: Date.now()};
+
+        this.setState({answersMy: answersMyCopy});
+      }
     }
   }
 
@@ -82,12 +109,15 @@ class TaskBrowser extends React.Component {
 
     const DummyQuestions = [
       {
+        _id: "5a48fedf9bc3de107547f460",
         question: "What is the future of Fintech?", 
       },
       {
+        _id: "5a4b508a0b318a2b33e1c544",
         question: "What are some examples of usage of Fintech?",
       },
       {
+        _id: "5a51a83bf745483195e4e342",
         question: "What are the key challenges of Fintech?",
       },
     ];
@@ -100,11 +130,17 @@ class TaskBrowser extends React.Component {
       return participant.user._id != CurrentUserID;
     });
 
+    const that = this;
+
     return (
     <div id="questions-list">
       <div className="container-fluid">
         {
           Questions.map(function(question, i) {
+            
+            const AnswerMy = that.getAnswerMy([question._id]);
+            const AnswerPartner = that.getAnswerPartner([question._id]);
+
             return (
               <div className="row" key={i}>
                 <div className="col-lg-12">
@@ -113,15 +149,15 @@ class TaskBrowser extends React.Component {
                 <div className="col-lg-6">
                   <div>{"You"}</div>
                   <div className="form-group">
-                    <textarea id="answer_your" className="form-control validate-field required question-text-area" 
-                      name="answer_your" onChange={(e)=>{}} />
+                    <textarea id={`answer_your_${question._id}`} className="form-control validate-field required question-text-area" 
+                      name="answer_your" onChange={(e)=>that.handleAnswerInput(e)} value={AnswerMy}/>
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div>{Partner.user.firstName}</div>
                   <div className="form-group">
-                    <textarea id="answer_partner" className="form-control validate-field required question-text-area" 
-                      name="answer_partner" onChange={(e)=>{}} />
+                    <textarea readOnly={true} id={`answer_partner_${question._id}`} className="form-control validate-field required question-text-area" 
+                      name="answer_partner" onChange={(e)=>{}} value={AnswerPartner}/>
                   </div>
                 </div>
               </div>
