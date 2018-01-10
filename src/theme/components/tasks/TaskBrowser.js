@@ -70,7 +70,20 @@ class TaskBrowser extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({isSubmitted: true});
+
+    const that = this;
+
+    const body = {
+      userId: this.props.userProfile._id,
+
+      taskId: this.state.currentTask._id,
+
+      answers: this.state.answersMy,
+    };
+
+    Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
+      .then((response)=>{that.setState({isSubmitted: true});})
+      .catch((error)=>{that.setState({isSubmitted: true}); console.log(error)});
   }
 
   componentDidMount() {
