@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Icon} from 'react-fa'
 
+import { withCookies, Cookies } from 'react-cookie';
+
 import Axios from 'axios'
 
 import ConfigMain from '~/configs/main'
@@ -36,19 +38,19 @@ class TaskBrowser extends React.Component {
 
       answersPartner: {},
 
-      isTaskLoading: true,
-      isQuestionsLoading: true,
+      isTaskLoading: false,
+      isQuestionsLoading: false,
 
-      isLoading: true,
+      isLoading: false,
     }
   }
 
   getAnswerMy(questionId) {
-    return this.state.answersMy[questionId] ? this.state.answersMy[questionId].text : "";
+    return this.state.answersMy && this.state.answersMy[questionId] ? this.state.answersMy[questionId].text : "";
   }
 
   getAnswerPartner(questionId) {
-    return this.state.answersPartner[questionId] ? this.state.answersPartner[questionId].text : "";
+    return this.state.answersPartner && this.state.answersPartner[questionId] ? this.state.answersPartner[questionId].text : "";
   }
 
   handleAnswerInput(e) {
@@ -73,6 +75,7 @@ class TaskBrowser extends React.Component {
     const that = this;
 
     if (taskId) {
+      that.setState({isTaskLoading: true});
       Axios.get(`${ConfigMain.getBackendURL()}/taskGetById?id=${taskId}`)
       .then((response)=>{that.setState({currentTask: response.data, isTaskLoading: false})})
       .catch((error)=>{that.setState({isTaskLoading: false}); console.log(error)});
@@ -84,9 +87,12 @@ class TaskBrowser extends React.Component {
 
     if (prevState.currentTask != this.state.currentTask) {
       if (this.state.currentTask && this.state.currentTask.type == "hangout") {
+        that.setState({isQuestionsLoading: true});
         Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}`)
         .then((response)=>{that.setState({questions: response.data, isQuestionsLoading: false})})
         .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
+
+        this.getUserAnswersFromCookies();
       }
     }
 
@@ -94,8 +100,42 @@ class TaskBrowser extends React.Component {
       this.setState({isLoading: this.state.isQuestionsLoading && this.state.isTaskLoading});
     }
 
+    if (this.state.answersMy != prevState.answersMy) {
+      this.storeUserAnswersToCookies();
+    }
+
     console.log("%cTaskBrowser did update", "backrgound: black; color: white;");
     console.dir(this.state);
+  }
+
+  storeUserAnswersToCookies() {
+    if (this.state.currentTask._id) {
+      console.log("%cstoreUserAnswersToCookies", "color: black; background: purple;");
+      const { cookies } = this.props;
+
+      let dateExpire = new Date();
+      dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()); 
+
+      let options = { path: '/', expires: dateExpire};
+
+      let answersForTask = cookies.get(`answers_for_task_${this.state.currentTask._id}`);
+
+      answersForTask = this.state.answersMy;
+
+      cookies.set(`answers_for_task_${this.state.currentTask._id}`, answersForTask, options); 
+    }
+  }
+
+  getUserAnswersFromCookies() {
+    if (this.state.currentTask._id) {
+      console.log("%cgetUserAnswersFromCookies", "color: black; background: orange;");
+      const { cookies } = this.props;
+      const answersForTask = cookies.get(`answers_for_task_${this.state.currentTask._id}`);
+
+      if (answersForTask) {
+        this.setState({answersMy: answersForTask});
+      }
+    }
   }
 
   renderQuestions() {
@@ -197,6 +237,19 @@ class TaskBrowser extends React.Component {
       );
     }
 
+    if (!this.state.currentTask) {
+      return (
+        <div id="main-content_1">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-12 content-2-columns-left-title">
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     const CurrentUserID = this.props.userProfile._id;
 
     const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
@@ -248,4 +301,4 @@ const mapDispatchToProps = dispatch => ({
 
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(TaskBrowser);
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(TaskBrowser));
