@@ -189,8 +189,11 @@ class TaskBrowser extends React.Component {
       let options = { path: '/', expires: dateExpire};
 
       let answersForTask = cookies.get(`answers_for_task_${this.state.currentTask._id}`);
+      if (!answersForTask) {
+        answersForTask = {};
+      }
 
-      answersForTask = this.state.answersMy;
+      answersForTask[this.props.userProfile._id] = this.state.answersMy;
 
       cookies.set(`answers_for_task_${this.state.currentTask._id}`, answersForTask, options); 
     }
@@ -202,8 +205,8 @@ class TaskBrowser extends React.Component {
       const { cookies } = this.props;
       const answersForTask = cookies.get(`answers_for_task_${this.state.currentTask._id}`);
 
-      if (answersForTask) {
-        this.setState({answersMy: answersForTask});
+      if (answersForTask && answersForTask[this.props.userProfile._id]) {
+        this.setState({answersMy: answersForTask[this.props.userProfile._id]});
       }
     }
   }
