@@ -42,6 +42,8 @@ class TaskBrowser extends React.Component {
       isQuestionsLoading: false,
 
       isLoading: false,
+
+      isSubmitted: false,
     }
   }
 
@@ -64,6 +66,11 @@ class TaskBrowser extends React.Component {
         this.setState({answersMy: answersMyCopy});
       }
     }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({isSubmitted: true});
   }
 
   componentDidMount() {
@@ -237,6 +244,20 @@ class TaskBrowser extends React.Component {
       );
     }
 
+    if (this.state.isSubmitted) {
+      return (
+        <div id="main-content_1">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-12 content-2-columns-left-title">
+                <h3>Thank you for submitting your answers</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     if (!this.state.currentTask) {
       return (
         <div id="main-content_1">
@@ -267,6 +288,8 @@ class TaskBrowser extends React.Component {
                   className="organizer-action-link">Cancel</ActionLink>
                 <ActionLink href="#" onClick={()=>{}} 
                   className="organizer-action-link">Reschedule</ActionLink>
+                  <button type="button" className="btn btn-ьв btn-outline-inverse" 
+                    onClick={(e) => this.handleSubmit(e)}>Submit</button>
               </div>
               <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={this.props.history.goBack}>
                 <span className="glyphicon glyphicon-arrow-left"></span>
