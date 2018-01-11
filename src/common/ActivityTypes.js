@@ -6,6 +6,7 @@ const ActivityTypeNames = {
     TASK_STARTED: "task_started",
     TASK_STATUS_CHANGED: "task_status_changed",
     TASK_CANCELLED: "task_cancelled",
+    USER_TASK_ACTION: "user_task_action",
 }
 
 export default ActivityTypeNames;

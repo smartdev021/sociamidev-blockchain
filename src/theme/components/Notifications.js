@@ -38,7 +38,7 @@ class Notifications extends React.Component {
   renderNotifications() {
     const that = this;
     const TaskStartedActivities = this.props.userActivities ? this.props.userActivities.filter(function(activity) {
-      return activity.type == ActivityTypes.TASK_STATUS_CHANGED;
+      return activity.type == ActivityTypes.TASK_STATUS_CHANGED || activity.type == ActivityTypes.USER_TASK_ACTION;
     }) : [];
 
     const Notifications = TaskStartedActivities.length > 0 
@@ -55,6 +55,27 @@ class Notifications extends React.Component {
         return {
           title: `${activity.metadata.userActor.firstName} has cancelled a Hangout on skill "${activity.metadata.task.metaData.subject.skill.name}"`,
           isSeen: activity.witnessIDs && activity.witnessIDs.find(function(witnessID) { return witnessID == that.props.currentUserID; }),
+          _id: activity._id,
+        };
+      }
+      else if (activity.subType == "leave") {
+        return {
+          title: `${activity.metadata.userActor.firstName} has left your Hangout on skill "${activity.metadata.task.metaData.subject.skill.name}"`,
+          isSeen: activity.witnessIDs && activity.witnessIDs.find(function(witnessID) { return witnessID == that.props.currentUserID; }),
+          _id: activity._id,
+        };
+      }
+      else if (activity.subType == "cancelled_automatically") {
+        return {
+          title: `Hangout on skill "${activity.metadata.task.metaData.subject.skill.name} has been cancelled due to not enough participants!"`,
+          isSeen: activity.witnessIDs && activity.witnessIDs.find(function(witnessID) { return witnessID == that.props.currentUserID; }),
+          _id: activity._id,
+        };
+      }
+      else {
+        return {
+          title: `Unsupported notification subType "${activity.subType}"`,
+          isSeen: false,
           _id: activity._id,
         };
       }
