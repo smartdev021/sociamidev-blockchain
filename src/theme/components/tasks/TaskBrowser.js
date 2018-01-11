@@ -141,7 +141,7 @@ class TaskBrowser extends React.Component {
 
       const that = this;
 
-      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersGet?taskId=${this.state.currentTask._id}`)
+      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswerGetForTask?taskId=${this.state.currentTask._id}`)
       .then((response) =>this.getUserAnswersFromServerMySuccess(response, that))
         .catch((error)=>{console.log(error)});
     }
@@ -152,7 +152,7 @@ class TaskBrowser extends React.Component {
 
     console.log("%cgetUserAnswersFromServerMySuccess", "color: white; background: orange;");
 
-    const foundAnswersForUser = answers[0].userAnswers.find(function(userAnswer) {
+    const foundAnswersForUser = answers.userAnswers.find(function(userAnswer) {
       return userAnswer._id == that.props.userProfile._id;
     });
 
@@ -170,13 +170,13 @@ class TaskBrowser extends React.Component {
       return participant.user._id != CurrentUserID;
     });
 
-    const foundAnswersForPartner = answers[0].userAnswers.find(function(userAnswer) {
+    const foundAnswersForPartner = answers.userAnswers.find(function(userAnswer) {
       return userAnswer._id == Partner.user._id;
     });
 
     console.dir(Partner);
     console.dir(foundAnswersForPartner);
-    console.dir(answers[0].userAnswers);
+    console.dir(answers.userAnswers);
 
     if (foundAnswersForPartner) {
       newAnswersPartner = foundAnswersForPartner.answers;
