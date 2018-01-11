@@ -236,7 +236,7 @@ console.log("publishedOnly: " + publishedOnly);
         return function (dispatch) {
           dispatch(saveTaskInitiate());
           
-          const url = `${ConfigMain.getBackendURL()}/taskLeave`;
+          const url = `${ConfigMain.getBackendURL()}/hangoutLeave`;
 
           const body = {
               id : taskId,

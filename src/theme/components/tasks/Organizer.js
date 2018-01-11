@@ -20,10 +20,17 @@ const MonthFromNumber = (monthNum)=> {
   return MonthNames[monthNum];
 }
 
-const GenerateHangoutText = (hangout, props)=> {
+const GetHangoutPartner = (hangout, props) => {
   const Partner = hangout.metaData.participants.find(function(participant) {
-      return participant.user._id != props.currentUserID;
+    return participant.user._id != props.currentUserID;
   });
+
+  return Partner;
+}
+
+const GenerateHangoutText = (hangout, props)=> {
+  const Partner = GetHangoutPartner(hangout, props);
+
   const HangoutDate = new Date(hangout.metaData.time);
 
   const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
@@ -56,22 +63,24 @@ const RenderList = (props) => {
 
             const StartActionClass = props.timeNow >= hangout.metaData.time ? "organizer-action-link" : "organizer-action-link-disabled";
 
-            return (
-              <li key={i}>
-                <span className="organizer-list-item-text">{GenerateHangoutText(hangout, props)}</span>
-                <span className="organizer-list-item-actions pull-right">
-                {(hangout.status != "started" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" className={StartActionClass}
-                    onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
-                  {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
-                  {hangout.creator._id == props.currentUserID ? hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>
-                  :
-                  hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                    onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Leave</ActionLink>}
-                </span>
-              </li>
-            );
+            if (hangout.metaData.participants.length > 1) {
+              return (
+                <li key={i}>
+                  <span className="organizer-list-item-text">{GenerateHangoutText(hangout, props)}</span>
+                  <span className="organizer-list-item-actions pull-right">
+                  {(hangout.status != "started" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" className={StartActionClass}
+                      onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
+                    {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                      onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
+                    {hangout.creator._id == props.currentUserID ? hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                      onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>
+                    :
+                    hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                      onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Leave</ActionLink>}
+                  </span>
+                </li>
+              );
+            }
           })
         }
       </ul>
