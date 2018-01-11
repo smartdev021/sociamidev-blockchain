@@ -41,10 +41,15 @@ class TaskBrowser extends React.Component {
       isTaskLoading: false,
       isQuestionsLoading: false,
 
+      isAnswersFetchFromServerInProgress: false,
+      isAnswersFetchFromCookiesInProgress: false,
+
       isLoading: false,
 
       isSubmitted: false,
     }
+
+    this.getPartnerProfile = this.getPartnerProfile.bind(this);
   }
 
   getAnswerMy(questionId) {
@@ -112,48 +117,69 @@ class TaskBrowser extends React.Component {
         .then((response)=>{that.setState({questions: response.data, isQuestionsLoading: false})})
         .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
 
-        this.getUserAnswersFromCookies();
+        this.fetchUserAnswersFromCookies();
 
-        this.getUserAnswersFromServerMy();
+        this.fetchUserAnswersFromServerMy();
       }
     }
 
-    if (this.state.isQuestionsLoading != prevState.isQuestionsLoading || this.state.isTaskLoading != prevState.isTaskLoading) {
-      this.setState({isLoading: this.state.isQuestionsLoading && this.state.isTaskLoading});
+    if (this.state.isQuestionsLoading != prevState.isQuestionsLoading 
+        || this.state.isTaskLoading != prevState.isTaskLoading 
+          || prevState.isAnswersFetchFromCookiesInProgress != this.state.isAnswersFetchFromCookiesInProgress
+            || prevState.isAnswersFetchFromServerInProgress != this.state.isAnswersFetchFromServerInProgress) {
+      this.setState({isLoading: (this.state.isQuestionsLoading 
+        || this.state.isTaskLoading 
+          || this.state.isAnswersFetchFromCookiesInProgress
+            || this.state.isAnswersFetchFromServerInProgress
+      )});
     }
 
     if (this.state.answersMy != prevState.answersMy) {
       this.storeUserAnswersToCookies(this.state.answersMy);
     }
-
-    console.log("%cTaskBrowser did update", "backrgound: black; color: white;");
-    console.dir(this.state);
   }
 
-  getUserAnswersFromServerMy() {
-    console.log("%cgetUserAnswersFromServerMy", "color: white; background: orange;");
+  fetchUserAnswersFromServerMy() {
     if (this.state.currentTask._id) {
+      this.setState({isAnswersFetchFromServerInProgress: true});
       const CurrentUserID = this.props.userProfile._id;
 
-      const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
-        return participant.user._id != CurrentUserID;
-      });
+      const Partner = this.getPartnerProfile();
 
       const that = this;
 
       Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswerGetForTask?taskId=${this.state.currentTask._id}`)
-      .then((response) =>this.getUserAnswersFromServerMySuccess(response, that))
-        .catch((error)=>{console.log(error)});
+      .then((response) =>this.fetchUserAnswersFromServerMySuccess(response, that))
+        .catch((error) => {
+          that.setState({isAnswersFetchFromServerInProgress: false});
+          console.log(error)
+        });
     }
   }
 
-  getUserAnswersFromServerMySuccess(response, that) {
+  getPartnerProfile() {
+    const CurrentUserID = this.props.userProfile._id;
+
+    const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
+      return participant.user._id != CurrentUserID;
+    });
+
+    return Partner;
+  }
+
+  fetchUserAnswersFromServerMySuccess(response, that) {
     const answers = response.data;
 
-    console.log("%cgetUserAnswersFromServerMySuccess", "color: white; background: orange;");
+    const CurrentUserID = that.props.userProfile._id;
+
+    const Partner = that.getPartnerProfile();
 
     const foundAnswersForUser = answers.userAnswers.find(function(userAnswer) {
-      return userAnswer._id == that.props.userProfile._id;
+      return userAnswer._id == CurrentUserID;
+    });
+
+    const foundAnswersForPartner = answers.userAnswers.find(function(userAnswer) {
+      return Partner && userAnswer._id == Partner.user._id;
     });
 
     let newAnswersMy = Object.assign({}, that.state.answersMy);
@@ -164,32 +190,21 @@ class TaskBrowser extends React.Component {
 
     let newAnswersPartner = Object.assign({}, that.state.answersPartner);
 
-    const CurrentUserID = that.props.userProfile._id;
-
-    const Partner = that.state.currentTask.metaData.participants.find(function(participant) {
-      return participant.user._id != CurrentUserID;
-    });
-
-    const foundAnswersForPartner = answers.userAnswers.find(function(userAnswer) {
-      return userAnswer._id == Partner.user._id;
-    });
-
-    console.dir(Partner);
-    console.dir(foundAnswersForPartner);
-    console.dir(answers.userAnswers);
-
     if (foundAnswersForPartner) {
       newAnswersPartner = foundAnswersForPartner.answers;
     }
 
     this.storeUserAnswersToCookies(newAnswersMy);
 
-    that.setState({answersMy: newAnswersMy, answersPartner: newAnswersPartner});
+    that.setState({
+      answersMy: newAnswersMy, 
+      answersPartner: newAnswersPartner, 
+      isAnswersFetchFromServerInProgress: false
+    });
   }
 
   storeUserAnswersToCookies(answersMy) {
     if (this.state.currentTask._id) {
-      console.log("%cstoreUserAnswersToCookies", "color: black; background: purple;");
       const { cookies } = this.props;
 
       let dateExpire = new Date();
@@ -208,14 +223,17 @@ class TaskBrowser extends React.Component {
     }
   }
 
-  getUserAnswersFromCookies() {
+  fetchUserAnswersFromCookies() {
     if (this.state.currentTask._id) {
-      console.log("%cgetUserAnswersFromCookies", "color: black; background: orange;");
+      this.setState({isAnswersFetchFromCookiesInProgress: true});
       const { cookies } = this.props;
       const answersForTask = cookies.get(`answers_for_task_${this.state.currentTask._id}`);
 
       if (answersForTask && answersForTask[this.props.userProfile._id]) {
-        this.setState({answersMy: answersForTask[this.props.userProfile._id]});
+        this.setState({answersMy: answersForTask[this.props.userProfile._id], isAnswersFetchFromCookiesInProgress: false});
+      }
+      else {
+        this.setState({isAnswersFetchFromCookiesInProgress: false});
       }
     }
   }
@@ -229,28 +247,11 @@ class TaskBrowser extends React.Component {
         </div>);
     }
 
-    const DummyQuestions = [
-      {
-        _id: "5a48fedf9bc3de107547f460",
-        question: "What is the future of Fintech?", 
-      },
-      {
-        _id: "5a4b508a0b318a2b33e1c544",
-        question: "What are some examples of usage of Fintech?",
-      },
-      {
-        _id: "5a51a83bf745483195e4e342",
-        question: "What are the key challenges of Fintech?",
-      },
-    ];
-
     const CurrentUserID = this.props.userProfile._id;
 
-    const Questions = this.state.questions.length > 0 ? this.state.questions : DummyQuestions;
+    const Questions = this.state.questions.length > 0 ? this.state.questions : [];
 
-    const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
-      return participant.user._id != CurrentUserID;
-    });
+    const Partner = this.getPartnerProfile();
 
     const that = this;
 
@@ -348,9 +349,7 @@ class TaskBrowser extends React.Component {
 
     const CurrentUserID = this.props.userProfile._id;
 
-    const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
-      return participant.user._id != CurrentUserID;
-    });
+    const Partner = this.getPartnerProfile();
 
     return (
       <div id="main-content_1">
