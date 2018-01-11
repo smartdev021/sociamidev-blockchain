@@ -38,20 +38,20 @@ class Notifications extends React.Component {
   renderNotifications() {
     const that = this;
     const TaskStartedActivities = this.props.userActivities ? this.props.userActivities.filter(function(activity) {
-      return activity.type == ActivityTypes.TASK_STARTED || activity.type == ActivityTypes.TASK_CANCELLED;
+      return activity.type == ActivityTypes.TASK_STATUS_CHANGED;
     }) : [];
 
     const Notifications = TaskStartedActivities.length > 0 
     ? 
     TaskStartedActivities.map(function(activity, i) {
-      if (activity.type == ActivityTypes.TASK_STARTED) {
+      if (activity.subType == "started") {
         return {
           title: `${activity.metadata.task.creator.firstName} has started a Hangout on skill "${activity.metadata.task.metaData.subject.skill.name}"`,
           isSeen: activity.witnessIDs && activity.witnessIDs.find(function(witnessID) { return witnessID == that.props.currentUserID; }),
           _id: activity._id,
         };
       }
-      else if (activity.type == ActivityTypes.TASK_CANCELLED) {
+      else if (activity.subType == "cancelled") {
         return {
           title: `${activity.metadata.userActor.firstName} has cancelled a Hangout on skill "${activity.metadata.task.metaData.subject.skill.name}"`,
           isSeen: activity.witnessIDs && activity.witnessIDs.find(function(witnessID) { return witnessID == that.props.currentUserID; }),
