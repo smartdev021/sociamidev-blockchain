@@ -151,6 +151,9 @@ class TaskManagement extends React.Component {
     this.setState({scannerQuery: e.target.value});
   }
 
+  handleHangoutRate(action, hangout) {
+  }
+
   hangoutActionPerform(action, hangout) {
     switch (action) {
       case "start": {
@@ -434,6 +437,7 @@ class TaskManagement extends React.Component {
           selectedCategory={this.state.tasksCategory}
           categories={Categories}
           onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
+          onHangoutRate={(hangout, rate) => this.handleHangoutRate(hangout, rate)}
           assignedTasks={this.props.tasksAssignedToCurrentUser}
           currentUserID={this.props.userProfile._id}
           timeNow={this.state.timeNow}

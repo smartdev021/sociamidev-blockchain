@@ -67,17 +67,7 @@ const RenderList = (props) => {
               return (
                 <li key={i}>
                   <span className="organizer-list-item-text">{GenerateHangoutText(hangout, props)}</span>
-                  <span className="organizer-list-item-actions pull-right">
-                  {(hangout.status != "started" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" className={StartActionClass}
-                      onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
-                    {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                      onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
-                    {hangout.creator._id == props.currentUserID ? hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                      onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>
-                    :
-                    hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
-                      onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Leave</ActionLink>}
-                  </span>
+                  {RenderHangoutActions(hangout, props)}
                 </li>
               );
             }
@@ -97,10 +87,40 @@ const RenderStatusBox = (activeTask, props) => {
           className="organizer-action-link">Cancel</ActionLink>
         <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("reschedule", activeTask)} 
           className="organizer-action-link">Reschedule</ActionLink>
-        {activeTask ? <div><Link className="organizer-action-link" to={`/taskBrowser?id=${activeTask._id}`}>Answer Questions</Link></div>
-        : <div><Link className="organizer-action-link" to={`/taskBrowser`}>Answer Questions</Link></div>}
+        {(activeTask && activeTask.status == "started") 
+          && <div><Link className="organizer-action-link" to={`/taskBrowser?id=${activeTask._id}`}>Answer Questions</Link></div>
+        }
       </div>
     </div>
+  );
+}
+
+const RenderHangoutActions = (hangout, props) => {
+  if (hangout.status == "finished") {
+    return (
+      <span className="organizer-list-item-actions pull-right">
+          <ActionLink href="#" 
+            className="organizer-action-link" onClick={()=>props.onHangoutRate(hangout, "good")}>Good</ActionLink>
+          <ActionLink href="#" 
+            className="organizer-action-link" onClick={()=>props.onHangoutRate(hangout, "bad")}>Bad</ActionLink>
+      </span>
+    );
+  }
+  const StartActionClass = props.timeNow >= hangout.metaData.time ? "organizer-action-link" : "organizer-action-link-disabled";
+  return (
+  <span className="organizer-list-item-actions pull-right">
+                  {(hangout.status != "started" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" 
+                    className={StartActionClass}
+                      onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
+                    {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                      onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</ActionLink>}
+                    {hangout.creator._id == props.currentUserID ? hangout.status == "started" && <ActionLink href="#" 
+                      className="organizer-action-link" 
+                      onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</ActionLink>
+                    :
+                    hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
+                      onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Leave</ActionLink>}
+                  </span>
   );
 }
 
