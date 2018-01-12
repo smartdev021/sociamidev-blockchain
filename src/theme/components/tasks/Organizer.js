@@ -28,24 +28,56 @@ const GetHangoutPartner = (hangout, props) => {
   return Partner;
 }
 
+const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
+
+const GenerateDateString = (time, props) => {
+  const DateFromTime = new Date(time);
+  
+  const Noon = new Date(DateFromTime.getFullYear(), 
+                        DateFromTime.getMonth(),
+                        DateFromTime.getDate()
+                        , 12, 0, 0);
+
+  const AmPm = (DateFromTime.getTime() < Noon.getTime()) ? 'am' : 'pm';
+
+  const Hours = String(Hours12(DateFromTime)) + AmPm;
+
+  const DateString = props.timeNow >= time ? ` today at ${Hours}` 
+         : `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
+
+  return DateString;
+}
+
 const GenerateHangoutText = (hangout, props)=> {
   const Partner = GetHangoutPartner(hangout, props);
 
-  const HangoutDate = new Date(hangout.metaData.time);
+  let HangoutText = "Not available";
 
-  const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
+  switch (hangout.status) {
+    case "started": {
+      HangoutText = `Your Hangout on skill ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} has been started`;
+      break;
+    }
+    case "finished": {
+      const DateString = GenerateDateString(hangout.timeStatusChanged, props);
 
-  const Noon = new Date(HangoutDate.getFullYear(), HangoutDate.getMonth(),HangoutDate.getDate(), 12, 0, 0);
-  const AmPm = (HangoutDate.getTime() < Noon.getTime()) ? 'am' : 'pm';
-
-  const Hours = String(Hours12(HangoutDate)) + AmPm;
-
-  const DateString = props.timeNow >= hangout.metaData.time ? ` at ${Hours}` 
-  : `${HangoutDate.getDate()} ${MonthFromNumber(HangoutDate.getMonth())} at ${Hours}`;
-
-  const HangoutText = hangout.status != "started" 
-    ? `You have an upcoming Hangout on skill ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} ${DateString}`
-    : `Your Hangout on skill ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} has been started`;
+      HangoutText = `You met ${Partner.user.firstName} ${DateString} for ${hangout.metaData.subject.skill.name}. How was it?`;
+      break;
+    }
+    case "cancelled": {
+      HangoutText = `Your Hangout on ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} has been cancelled.`;
+      break;
+    }
+    case "complete": {
+      HangoutText = `Your Hangout on ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} is complete.`;
+      break;
+    }
+    default: {
+      const DateString = GenerateDateString(hangout.metaData.time, props);
+      HangoutText = `You have an upcoming Hangout on skill ${hangout.metaData.subject.skill.name} with ${Partner.user.firstName} ${DateString}`;
+      break;
+    }
+  }
 
   return HangoutText;
 }
@@ -138,7 +170,7 @@ const Organizer = (props) => {
 
     if (StartedHangouts.length > 0) {
       StartedHangouts.sort(function(hangout1, hangout2) {
-        return (hangout2.timeStarted - hangout1.timeStarted);
+        return (hangout2.timeStatusChanged - hangout1.timeStatusChanged);
       });
 
       console.log("StartedHangouts");
