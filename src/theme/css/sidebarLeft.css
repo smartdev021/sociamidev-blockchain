@@ -131,3 +131,12 @@
 .friend-news-feed-text {
   color: rgb( 128, 163, 235 );
 }
+
+#user-rating {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  font-size: 15px;
+  font-family: "Comfortaa";
+  color: rgb(60, 200, 224);
+}

@@ -223,6 +223,9 @@ class SidebarLeft extends React.Component {
             <div id="user-text">
               Good Morning {this.props.userProfile.firstName ? this.props.userProfile.firstName : "Dan"}, update your status here
             </div>
+            <div id="user-rating">
+              {this.props.userProfile.rating > 0 && this.props.userProfile.rating}
+            </div>
           </div>
           <hr></hr>
           <div id="status-input-container">

@@ -205,6 +205,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
               progressionTrees: response.data.progressionTrees,
               balance:responseProfile.balance,
               facebook: response.data.facebook,
+              rating: responseProfile.rating,
             }
 
             //async action exit point
