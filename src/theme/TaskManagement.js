@@ -92,6 +92,8 @@ class TaskManagement extends React.Component {
     this.redirectLocation = undefined;    
 
     this.timeNowUpdateInterval = undefined;
+
+    this.handleHangoutRateSuccess = this.handleHangoutRateSuccess.bind(this);
   }
 
   groupTasksByProjects(tasks) {
@@ -151,7 +153,21 @@ class TaskManagement extends React.Component {
     this.setState({scannerQuery: e.target.value});
   }
 
-  handleHangoutRate(action, hangout) {
+  handleHangoutRate(hangout, userId, rate) {
+    if (rate == 'good' || rate == 'bad') {
+      const rateNumber = rate == 'good' ? 10 : 1;
+
+      const body = {taskId: hangout._id, fromUser: this.props.userProfile._id, toUser: userId, rate: rateNumber}
+
+      Axios.post(`${BackendURL}/hangoutRateParticipant`, body)
+      .then((response) =>this.handleHangoutRateSuccess(response))
+      .catch((error) =>{console.log(error)});
+    }
+  }
+
+  handleHangoutRateSuccess() {
+    this.fetchUserTasks();
+    this.props.onFetchAllTasks(false);
   }
 
   hangoutActionPerform(action, hangout) {
@@ -437,7 +453,7 @@ class TaskManagement extends React.Component {
           selectedCategory={this.state.tasksCategory}
           categories={Categories}
           onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
-          onHangoutRate={(hangout, rate) => this.handleHangoutRate(hangout, rate)}
+          onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
           assignedTasks={this.props.tasksAssignedToCurrentUser}
           currentUserID={this.props.userProfile._id}
           timeNow={this.state.timeNow}

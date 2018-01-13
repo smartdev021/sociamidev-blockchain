@@ -129,14 +129,26 @@ const RenderStatusBox = (activeTask, props) => {
 
 const RenderHangoutActions = (hangout, props) => {
   if (hangout.status == "finished") {
-    return (
-      <span className="organizer-list-item-actions pull-right">
-          <ActionLink href="#" 
-            className="organizer-action-link" onClick={()=>props.onHangoutRate(hangout, "good")}>Good</ActionLink>
-          <ActionLink href="#" 
-            className="organizer-action-link" onClick={()=>props.onHangoutRate(hangout, "bad")}>Bad</ActionLink>
-      </span>
-    );
+    const Partner = GetHangoutPartner(hangout, props);
+
+    if (!hangout.metaData.ratings || hangout.metaData.ratings.findIndex(function(rating) {
+      return rating.fromUser == props.currentUserID && rating.toUser == Partner.user._id;
+    }) == -1) {
+      return (
+        <span className="organizer-list-item-actions pull-right">
+            <ActionLink href="#" 
+              className="organizer-action-link" onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "good")}>Good</ActionLink>
+            <ActionLink href="#" 
+              className="organizer-action-link" onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "bad")}>Bad</ActionLink>
+        </span>
+      );
+    }
+    else {
+      return (<span className="organizer-list-item-actions pull-right">
+        <ActionLink href="#" 
+          className="organizer-action-link-disabled" onClick={()=>{}}>Thanks for rating</ActionLink>
+      </span>);
+    }
   }
   const StartActionClass = props.timeNow >= hangout.metaData.time ? "organizer-action-link" : "organizer-action-link-disabled";
   return (
