@@ -153,7 +153,7 @@ const RenderHangoutActions = (hangout, props) => {
   const StartActionClass = props.timeNow >= hangout.metaData.time ? "organizer-action-link" : "organizer-action-link-disabled";
   return (
   <span className="organizer-list-item-actions pull-right">
-                  {(hangout.status != "started" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" 
+                  {(hangout.status == "None" && hangout.creator._id == props.currentUserID) && <ActionLink href="#" 
                     className={StartActionClass}
                       onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</ActionLink>}
                     {hangout.status == "started" && <ActionLink href="#" className="organizer-action-link" 
