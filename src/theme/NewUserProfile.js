@@ -61,7 +61,6 @@ class UserProfile extends React.Component {
 
 
 	render() {
-		console.log('sdfsdf',this.props.userProfile)
 		return (
 			<div className="row mt center">
 				<div className="col-md-11 col-sm-11">
