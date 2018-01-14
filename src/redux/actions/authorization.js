@@ -14,6 +14,9 @@ import {
     PROGRESSION_TREE_START_INITIATE,
     PROGRESSION_TREE_START_COMPLETE,
 
+    PROGRESSION_TREE_STOP_INITIATE,
+    PROGRESSION_TREE_STOP_COMPLETE,
+
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
 
@@ -123,6 +126,19 @@ export function startProgressionTreeComplete(tree) {
     }
 }
 
+export function stopProgressionTreeInitiate(tree) {
+    return {
+        type: PROGRESSION_TREE_STOP_INITIATE,
+    }
+}
+
+export function stopProgressionTreeComplete(tree) {
+    return {
+        type: PROGRESSION_TREE_STOP_COMPLETE,
+        tree: tree,
+    }
+}
+
 export function startProgressionTree(userId, progressionTree) {
     
     return function (dispatch) {
@@ -140,6 +156,27 @@ export function startProgressionTree(userId, progressionTree) {
             })
             .catch(function(error) {
                 dispatch(startProgressionTreeComplete([]));
+            }));
+    }
+}
+
+export function stopProgressionTree(userId, progressionTree) {
+    
+    return function (dispatch) {
+
+        dispatch(startProgressionTreeInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStop`;
+
+        const body = {userId: userId, progTree: progressionTree};
+    
+        return (
+          Axios.post(url, body)
+            .then(function(response) {
+                dispatch(stopProgressionTreeComplete(response.data));
+            })
+            .catch(function(error) {
+                dispatch(stopProgressionTreeComplete([]));
             }));
     }
 }

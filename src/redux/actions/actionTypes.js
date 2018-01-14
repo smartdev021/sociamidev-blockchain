@@ -16,6 +16,9 @@ export const FETCH_USER_PROFILE_ACTIVITIES_COMPLETE = "fetch_user_activities_com
 export const PROGRESSION_TREE_START_INITIATE = "progression_tree_start_initiate";
 export const PROGRESSION_TREE_START_COMPLETE = "progression_tree_start_complete";
 
+export const PROGRESSION_TREE_STOP_INITIATE = "progression_tree_stop_initiate";
+export const PROGRESSION_TREE_STOP_COMPLETE = "progression_tree_stop_complete";
+
 export const FETCH_JOB_ITEMS_INITIATE = "fetch_job_items_initiate";
 export const FETCH_EVENT_ITEMS_INITIATE = "fetch_event_items_initiate";
 export const FETCH_COURSE_ITEMS_INITIATE = "fetch_course_items_initiate";

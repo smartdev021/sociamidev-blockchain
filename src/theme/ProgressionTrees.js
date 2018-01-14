@@ -26,6 +26,7 @@ import {
 
 import {
   startProgressionTree,
+  stopProgressionTree,
 } from '~/src/redux/actions/authorization'
 
 import {
@@ -47,6 +48,8 @@ class ProgressionTrees extends React.Component {
 
       selectedTreeFromMyProgressIndex: -1,
     }
+
+    this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
   }
 
   handleChange(e) {
@@ -62,6 +65,11 @@ class ProgressionTrees extends React.Component {
     if (foundTreeIndex != -1) {
       this.setState({ selectedTreeFromMyProgressIndex: foundTreeIndex });
     }
+  }
+
+  handleStopProgressionTree(id) {
+    console.log("Removing progression tree");
+    this.props.stopProgressionTree(this.props.userProfile._id, {_id: id});
   }
 
   handleCloseSingleTree(id) {
@@ -89,7 +97,8 @@ class ProgressionTrees extends React.Component {
               </div>
             </div>
             <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} 
-              isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}/>
+              isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
+              stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
           </div>
       }
         
@@ -109,8 +118,6 @@ class ProgressionTrees extends React.Component {
     console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
 
     if (option === true && treeId) {
-      const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStart`;
-
       let foundRoadmaps = [];
       
       const scannerQuery = this.state.scannerQuery.toLowerCase();
@@ -215,6 +222,7 @@ const mapDispatchToProps = dispatch => ({
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
   saveTask: bindActionCreators(saveTask, dispatch),
   startProgressionTree: bindActionCreators(startProgressionTree, dispatch),
+  stopProgressionTree: bindActionCreators(stopProgressionTree, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 
