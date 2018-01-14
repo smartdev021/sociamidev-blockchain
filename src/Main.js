@@ -79,10 +79,6 @@ class Main extends React.Component {
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
         <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
 
-        {/*Michael ->*/}
-        <Route path='/newUserProfile' render={routeProps => <NewUserProfile {...routeProps}{...this.props}/>}/>
-        {/* <- Michael*/}
-
         <Route path='/privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>} />)}/>
       </Switch>)
   }
