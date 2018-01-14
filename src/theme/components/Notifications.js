@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
+import {ListGroupItem, ListGroup} from 'react-bootstrap';
 
 import {
   markActivitySeen,
@@ -81,28 +82,38 @@ class Notifications extends React.Component {
       }
     })
     : [];
-    
     return (
-      <div className="container-fluid">
+      <ListGroup>
+        <ListGroupItem>
+        <div  id="notifyTitle">
+          Notifications
+        </div>
+        </ListGroupItem>
+        <div id="notificationSection">
         {
-          Notifications.map(function(notification, i) {
-            return (
-            <div className="row" key={i}>
-              <div className="col-lg-12">
-                <Link to = "/taskManagement" onClick={()=>that.handleNotificationClick(notification)} className={notification.isSeen ? "notification-seen" : "notification"}>
-                  {notification.title}
-                </Link>
+        Notifications.map(function(notification, i) {
+          return (
+            <ListGroupItem href="/taskManagement" onClick={()=>that.handleNotificationClick(notification)} className={notification.isSeen ? "notification-seen" : "notification"}>
+            <div className="notificationRow" key={i}>
+              <div className="notifyIcon">
+                <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png"/>
               </div>
-            </div>);
+              <div className="notifyDesc">
+               {notification.title}
+              </div>
+            </div>
+            </ListGroupItem>);
           })
         }
-      </div>
+        </div>
+        </ListGroup>
+        
     );
   }
 
   render() {
     return (
-        <div id="notifications-widget">
+        <div id="notificationTile">
           {this.renderNotifications()}
         </div>
     );

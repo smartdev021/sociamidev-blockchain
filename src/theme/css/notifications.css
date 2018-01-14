@@ -1,35 +1,55 @@
-#notifications-widget {
-    position: absolute;
-    z-index: 100;
-    min-width: 500px;
-    height: 600px;
-    overflow-y: auto;
-    background: rgba( 122, 204, 200, 0.8);
-    border: 1px solid black;
+#notificationTile{
+  position: absolute;
+  z-index: 100;
+  min-width: 580px;
+  line-height: 1;
 }
 
 .notification, .notification-seen {
-  padding: 5px;
-  background: rgb(77, 76, 76);
-  border: 1px solid black;
-  color: rgb(206, 199, 199);
+padding: 20px;
+background: #eaeaea;
+color: rgb(46,147,148) !important;
 }
 
 .notification-seen {
-  padding: 5px;
-  background: white;
-  border: 1px solid black;
-  color: rgba(0, 0, 0, 0.219);
+background: #f2f2f2;
 }
 
 .notification:focused, .notification-seen:focused, .notification:visited, .notification-seen:visited{
-  padding: 5px;
-  background: white;
-  border: 1px solid black;
-  color: black;
+padding: 5px;
+background: white;
+color: black;
 }
 
 .notification:hover, .notification-seen:hover {
-  background: rgb(185, 177, 177);
-  border: 1px solid black;
+background: rgb(185, 177, 177);
+}
+
+.notifyIcon {
+float: left;
+padding-right: 10px;
+}
+
+.notifyDesc {
+padding-top: 5px;
+text-align: left;
+}
+
+.notificationRow {
+padding-bottom: 11px;
+}
+
+#notifyTitle{
+text-align: left;
+color: black;
+}
+
+.list-group-item:first-child {
+background-color: #f2f2f2;
+padding-top: 15px;
+}
+
+#notificationSection {
+  height: 352px;
+  overflow-y: auto;
 }
