@@ -33,7 +33,8 @@ class UserProfile extends React.Component {
 		super(props);
 
 		this.state = {
-			userName: 'Dan Shen',
+			firstName: this.props.userProfile.firstName,
+			lastName: this.props.userProfile.lastName,
 			work: 'Product Manager at Soqqle',
 			from: 'Singapore | Hong Kong',
 			email: 'Danshen@gmail.com',
@@ -50,8 +51,17 @@ class UserProfile extends React.Component {
 		}
 	}
 
+	componentWillReceiveProps() {
+		this.setState({
+			firstName: this.props.userProfile.firstName,
+			lastName: this.props.userProfile.lastName
+		})
+
+	}
+
 
 	render() {
+		console.log('sdfsdf',this.props.userProfile)
 		return (
 			<div className="row mt center">
 				<div className="col-md-11 col-sm-11">
@@ -63,7 +73,7 @@ class UserProfile extends React.Component {
 						<div className="test-wrap">
 							<div className="col-md-4 col-sm-12">
 								<div className="new-userProf-textWrap">
-									<h4 className="new-user-name">{this.state.userName}</h4>
+									<h4 className="new-user-name">{this.state.firstName} {this.state.lastName}</h4>
 									<p className="new-user-work">{this.state.work}</p>
 									<p className="new-user-text">{this.state.from}</p>
 									<br/>
