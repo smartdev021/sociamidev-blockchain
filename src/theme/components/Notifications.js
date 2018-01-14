@@ -74,11 +74,7 @@ class Notifications extends React.Component {
         };
       }
       else {
-        return {
-          title: `Unsupported notification subType "${activity.subType}"`,
-          isSeen: false,
-          _id: activity._id,
-        };
+        console.log(`Unsupported notification subType "${activity.subType}"`);
       }
     })
     : [];
