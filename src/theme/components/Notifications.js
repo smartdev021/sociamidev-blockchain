@@ -74,36 +74,41 @@ class Notifications extends React.Component {
         };
       }
       else {
-        console.log(`Unsupported notification subType "${activity.subType}"`);
+        return {
+          title: `Unsupported notification subType "${activity.subType}"`,
+          isSeen: false,
+          _id: activity._id,
+        };
       }
     })
     : [];
     return (
       <ListGroup>
-        <ListGroupItem>
-        <div  id="notifyTitle">
-          Notifications
-        </div>
+        <ListGroupItem   className="notifyTitle">
+          <div>
+            Notifications
+          </div>
         </ListGroupItem>
         <div id="notificationSection">
         {
-        Notifications.map(function(notification, i) {
+          Notifications.map(function(notification, i) {
           return (
-            <ListGroupItem href="/taskManagement" onClick={()=>that.handleNotificationClick(notification)} className={notification.isSeen ? "notification-seen" : "notification"}>
-            <div className="notificationRow" key={i}>
-              <div className="notifyIcon">
-                <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png"/>
-              </div>
-              <div className="notifyDesc">
-               {notification.title}
-              </div>
-            </div>
+            <ListGroupItem className={notification.isSeen ? "notification-seen" : "notification"}>
+              <Link to = "/taskManagement" onClick={()=>that.handleNotificationClick(notification)} >
+                <div className="notificationRow" key={i}>
+                  <div className="notifyIcon">
+                    <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png"/>
+                  </div>
+                  <div className="notifyDesc">
+                    {notification.title}
+                  </div>
+                </div>
+              </Link>
             </ListGroupItem>);
           })
         }
         </div>
-        </ListGroup>
-        
+      </ListGroup>  
     );
   }
 

@@ -6,9 +6,7 @@
 }
 
 .notification, .notification-seen {
-padding: 20px;
 background: #eaeaea;
-color: rgb(46,147,148) !important;
 }
 
 .notification-seen {
@@ -22,7 +20,7 @@ color: black;
 }
 
 .notification:hover, .notification-seen:hover {
-background: rgb(185, 177, 177);
+background: white
 }
 
 .notifyIcon {
@@ -33,23 +31,25 @@ padding-right: 10px;
 .notifyDesc {
 padding-top: 5px;
 text-align: left;
+color: rgb(46,147,148) ;
 }
 
 .notificationRow {
-padding-bottom: 11px;
+  padding-bottom: 25px;
 }
 
-#notifyTitle{
+.notifyTitle{
 text-align: left;
 color: black;
+background-color: #f2f2f2;
 }
 
-.list-group-item:first-child {
-background-color: #f2f2f2;
-padding-top: 15px;
-}
 
 #notificationSection {
   height: 352px;
   overflow-y: auto;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
 }
