@@ -37,7 +37,7 @@ class UserProfile extends React.Component {
 			lastName: this.props.userProfile.lastName,
 			work: 'Product Manager at Soqqle',
 			from: 'Singapore | Hong Kong',
-			email: 'Danshen@gmail.com',
+			email: this.props.userProfile.email ? this.props.userProfile.email : 'Danshen@gmail.com',
 			url: 'Soqqle.com',
 			tel: '+8521234567',
 			tasks: 78,
@@ -66,8 +66,8 @@ class UserProfile extends React.Component {
 				<div className="col-md-11 col-sm-11">
 					<div className="new-userProf-wrap">
 						<div className="col-md-2 col-sm-12 new-user-padding">
-					{/*Alex user image should be on nex line ↓ ↓ ↓ ↓ ↓ ↓ ↓ */}
-							<img className="new-userProf-img" src={profilePic} />
+							<img className="new-userProf-img" src={this.props.userProfile.pictureURL 
+								? this.props.userProfile.pictureURL : profilePic} />
 							<div className="new-userProf-dot new-userProf-green"></div>
 						</div>
 						<div className="test-wrap">
@@ -77,7 +77,8 @@ class UserProfile extends React.Component {
 									<p className="new-user-work">{this.state.work}</p>
 									<p className="new-user-text">{this.state.from}</p>
 									<br/>
-									<p className="new-user-text">{this.state.email}</p>
+									<p className="new-user-text">{this.props.userProfile.email 
+										? this.props.userProfile.email : "mail@example.com"}</p>
 									<br/>
 									<p className="new-user-text">{this.state.url}</p>
 									<br/>

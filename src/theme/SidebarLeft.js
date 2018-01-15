@@ -212,14 +212,15 @@ class SidebarLeft extends React.Component {
   }
 
   render() {
-    const DanImage = "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
+    const ProfileImage = this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL
+    : "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
 
     return (
       <aside>
         <div id="sidebar-left">
         <div id="user-status-widget">
           <div className="user-widget">
-            <img src={DanImage}/>
+            <img src={ProfileImage}/>
             <div id="user-text">
               Good Morning {this.props.userProfile.firstName ? this.props.userProfile.firstName : "Dan"}, update your status here
             </div>
