@@ -243,6 +243,8 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
               balance:responseProfile.balance,
               facebook: response.data.facebook,
               rating: responseProfile.rating,
+              email: responseProfile.email,
+              pictureURL: responseProfile.pictureURL,
             }
 
             //async action exit point
