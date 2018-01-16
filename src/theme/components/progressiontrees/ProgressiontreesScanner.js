@@ -42,12 +42,18 @@ const ProgressiontreesScanner = (props) => {
                   starRatedColor={"rgb(180, 177, 3)"}/>
               </span>
 
-              <div className="deleted tree-scanner-tree-description">{roadmap.description}</div>
+              {props.isExpanded && <div className="tree-scanner-tree-name">{roadmap.description}</div>}
 
-              <div className="tree-scanner-tree-icons">
-                <span className="tree-scanner-tree-icon glyphicon glyphicon-education"></span>
-                <span className="tree-scanner-tree-icon glyphicon glyphicon-bitcoin"></span>
-                <span className="tree-scanner-tree-icon glyphicon glyphicon-dashboard"></span>
+              <div className="tree-scanner-tree-footer">
+                <div className="tree-scanner-tree-icons pull-left">
+                  <span className="tree-scanner-tree-icon glyphicon glyphicon-education"></span>
+                  <span className="tree-scanner-tree-icon glyphicon glyphicon-bitcoin"></span>
+                  <span className="tree-scanner-tree-icon glyphicon glyphicon-dashboard"></span>
+                </div>
+
+                {props.isExpanded && <div className="tree-scanner-tree-network pull-right">
+                  825 others are learning {roadmap.name}
+                </div>}
               </div>
             </li>);
         })

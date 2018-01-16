@@ -84,13 +84,23 @@ class ProgressionTrees extends React.Component {
     this.props.fetchRoadmapsFromAdmin();
   }
 
-  toggleTreeScannerExpanded() {
+  setTreeScannerExpanded(expanded) {
     if (this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0) {
-      this.setState({isScannerExpanded: !this.state.isScannerExpanded});
+      this.setState({isScannerExpanded: expanded});
     }
   }
 
   renderUserProgressionTrees() {
+    if (this.state.isScannerExpanded) {
+      return (
+        <div id="progression-trees-trees">
+          <ActionLink id="user-prog-tree-collapse" href="#" onClick={()=> this.setTreeScannerExpanded(false)}>
+            <span className="glyphicon glyphicon-menu-right"></span>
+          </ActionLink>
+        </div>
+      );
+    }
+
     return (
       <div id="progression-trees-trees">
       {
@@ -102,9 +112,7 @@ class ProgressionTrees extends React.Component {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="content-2-columns-left-title">
-                    <ActionLink href="#" onClick={()=> this.toggleTreeScannerExpanded()}>
-                      My Progress
-                    </ActionLink>
+                    My Progress
                   </div>
                 </div>
               </div>
@@ -207,8 +215,14 @@ class ProgressionTrees extends React.Component {
                       <div className="">
                         <div className="">
                           <div id="trees-scanner-container">
+                            {!this.state.isScannerExpanded &&
+                              <ActionLink id="user-prog-tree-expand" href="#" onClick={()=> this.setTreeScannerExpanded(true)}>
+                                <span className="glyphicon glyphicon-menu-left"></span>
+                              </ActionLink>
+                            }
                             <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
-                              openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
+                              openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
+                              isExpanded={this.state.isScannerExpanded}/>
                           </div>
                         </div>
                       </div>
