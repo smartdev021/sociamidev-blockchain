@@ -48,7 +48,7 @@ class ProgressionTrees extends React.Component {
 
       selectedTreeFromMyProgressIndex: -1,
 
-      isScannerExpanded: false,
+      isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0,
     }
 
     this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
@@ -84,6 +84,13 @@ class ProgressionTrees extends React.Component {
     this.props.fetchRoadmapsFromAdmin();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isAuthorized != this.props.isAuthorized 
+      || prevProps.userProfile.progressionTrees.length != this.props.userProfile.progressionTrees.length) {
+        this.setState({isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0});
+      }
+  }
+
   setTreeScannerExpanded(expanded) {
     if (this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0) {
       this.setState({isScannerExpanded: expanded});
@@ -92,13 +99,21 @@ class ProgressionTrees extends React.Component {
 
   renderUserProgressionTrees() {
     if (this.state.isScannerExpanded) {
-      return (
-        <div id="progression-trees-trees">
-          <ActionLink id="user-prog-tree-collapse" href="#" onClick={()=> this.setTreeScannerExpanded(false)}>
-            <span className="glyphicon glyphicon-menu-right"></span>
-          </ActionLink>
-        </div>
-      );
+      if ((this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0)) {
+        return (
+          <div id="progression-trees-trees">
+            <ActionLink id="user-prog-tree-collapse" href="#" onClick={()=> this.setTreeScannerExpanded(false)}>
+              <span className="glyphicon glyphicon-menu-right"></span>
+            </ActionLink>
+          </div>
+        );
+      }
+      else {
+        return (
+          <div id="progression-trees-trees">
+          </div>
+        );
+      }
     }
 
     return (
@@ -171,22 +186,9 @@ class ProgressionTrees extends React.Component {
       return that.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == roadmap._id;}) == -1;
     });
 
-    let rightSideClassName = "col-lg-3";
+    let rightSideClassName = this.state.isScannerExpanded ? "col-lg-11" : "col-lg-3";
 
-    if (!this.props.isAuthorized) {
-      rightSideClassName = "col-lg-12";
-    }
-    else {
-      if (this.props.userProfile.progressionTrees.length == 0 || this.state.isScannerExpanded) {
-        rightSideClassName = "col-lg-11";
-      }
-    }
-
-    let leftSideClassName = "col-lg-9";
-
-    if (this.props.userProfile.progressionTrees.length == 0 || this.state.isScannerExpanded) {
-      leftSideClassName = "col-lg-1";
-    }
+    let leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1";
 
     return (
         <div className="row">
@@ -197,7 +199,7 @@ class ProgressionTrees extends React.Component {
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
               />
           }
-              {this.props.isAuthorized && 
+              {
                 <div className={leftSideClassName}>
                   <div className="content-2-columns-left">
                     {this.renderUserProgressionTrees()}
