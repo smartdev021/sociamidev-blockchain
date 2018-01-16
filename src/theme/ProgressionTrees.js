@@ -47,6 +47,8 @@ class ProgressionTrees extends React.Component {
       scannerSelectedTreeName: "",
 
       selectedTreeFromMyProgressIndex: -1,
+
+      isScannerExpanded: false,
     }
 
     this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
@@ -93,7 +95,16 @@ class ProgressionTrees extends React.Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-12">
-                <div className="content-2-columns-left-title">My Progress</div>
+                <div className="content-2-columns-left-title">
+                <ActionLink href="#" onClick={()=> {
+                  if (this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0) {
+                    this.setState({isScannerExpanded: this.state.isScannerExpanded});
+                  }
+                     
+                  }}>
+                  My Progress
+                </ActionLink>
+                </div>
               </div>
             </div>
             <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} 
@@ -149,6 +160,23 @@ class ProgressionTrees extends React.Component {
       return that.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == roadmap._id;}) == -1;
     });
 
+    let rightSideClassName = "col-lg-3";
+
+    if (!this.props.isAuthorized) {
+      rightSideClassName = "col-lg-12";
+    }
+    else {
+      if (this.props.userProfile.progressionTrees.length == 0 || this.state.isScannerExpanded) {
+        rightSideClassName = "col-lg-11";
+      }
+    }
+
+    let leftSideClassName = "col-lg-9";
+
+    if (this.props.userProfile.progressionTrees.length == 0 || this.state.isScannerExpanded) {
+      leftSideClassName = "col-lg-1";
+    }
+
     return (
         <div className="content-2-columns-wrapper" id="progression-trees">
           {this.state.isAcceptProgressionTreePopupOpen 
@@ -160,13 +188,15 @@ class ProgressionTrees extends React.Component {
           }
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-9">
-              <div className="content-2-columns-left">
-                {this.renderUserProgressionTrees()}
-              </div>
-              </div>
+              {this.props.isAuthorized && 
+                <div className={leftSideClassName}>
+                  <div className="content-2-columns-left">
+                    {this.renderUserProgressionTrees()}
+                  </div>
+                </div>
+              }
               {/*Right Side*/}
-              <div className="col-lg-3">
+              <div className={rightSideClassName}>
                 <div id="progression-trees-scanner">
                   <div id="progression-trees-scanner-container">
                     <div className="container-fluid">

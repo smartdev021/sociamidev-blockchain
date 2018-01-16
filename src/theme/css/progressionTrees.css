@@ -5,6 +5,7 @@
 #progression-trees-trees {
   width: 90%;
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
 #progression-trees-scanner {
