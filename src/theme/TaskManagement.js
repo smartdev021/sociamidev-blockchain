@@ -502,20 +502,16 @@ class TaskManagement extends React.Component {
     const RedirectTo = this.redirectLocation ? <Redirect to={this.redirectLocation} push/> : null;
 
     return (
-        <div className="content-2-columns-wrapper">
-        {RedirectTo}
-        <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
-          onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation"
-          task={this.state.detailsPopupItem} />   
-        <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} 
-          onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" 
-          task={this.state.detailsPopupItem}/>   
-          <div className="container-fluid">
-            <div className="row">
+        <div className="row">
+            {RedirectTo}
+            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
+              onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation"
+                task={this.state.detailsPopupItem} />   
+            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} 
+              onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" 
+                task={this.state.detailsPopupItem}/>   
               {(this.getMyTasksAll().length > 0 || this.getHangoutsAll().length > 0) && this.renderLeftSide()}
               {this.renderRightSide()}
-            </div>
-          </div>
         </div>
     );
   }

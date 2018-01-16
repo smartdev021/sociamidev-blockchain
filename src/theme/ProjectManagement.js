@@ -177,7 +177,7 @@ class ProjectManager extends React.Component {
     console.dir(selectedProject);
 
   return (
-      <div className="content-2-columns-wrapper" id="project-manager">
+    <div className="row">
       {this.state.modalIsOpen ? 
           <PopupNewProject modalIsOpen={this.state.modalIsOpen} 
             onCloseModal={(project)=>this.closeModal(project)} project={selectedProject}
@@ -195,8 +195,6 @@ class ProjectManager extends React.Component {
             setLastSavedTask = {this.props.setLastSavedTask}
             /> : null
         }
-        <div className="container-fluid">
-          <div className="row">
             <div className="col-lg-9">
               <div className="content-2-columns-left">
                 <MyProjectsContainer
@@ -215,8 +213,6 @@ class ProjectManager extends React.Component {
                 <ProjectsScanner projects={this.props.projects} 
                   isAuthorized={this.props.isAuthorized} currentUserId={this.props.userProfile._id} userFriends={this.props.userFriends}/>
               </div>
-            </div>
-          </div>
         </div>
       </div>
   );

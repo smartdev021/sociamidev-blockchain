@@ -98,20 +98,22 @@ class ProgressionTrees extends React.Component {
           <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
             onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask}/>
           :
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="content-2-columns-left-title">
-                <ActionLink href="#" onClick={()=> this.toggleTreeScannerExpanded()}>
-                  My Progress
-                </ActionLink>
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="content-2-columns-left-title">
+                    <ActionLink href="#" onClick={()=> this.toggleTreeScannerExpanded()}>
+                      My Progress
+                    </ActionLink>
+                  </div>
                 </div>
               </div>
+              <div>
+                <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} 
+                  isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
+                  stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
+              </div>
             </div>
-            <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} 
-              isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
-              stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
-          </div>
       }
         
       </div>
@@ -179,7 +181,7 @@ class ProgressionTrees extends React.Component {
     }
 
     return (
-        <div className="content-2-columns-wrapper" id="progression-trees">
+        <div className="row">
           {this.state.isAcceptProgressionTreePopupOpen 
               && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
               treeName={this.state.scannerSelectedTreeName}
@@ -187,8 +189,6 @@ class ProgressionTrees extends React.Component {
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
               />
           }
-          <div className="container-fluid">
-            <div className="row">
               {this.props.isAuthorized && 
                 <div className={leftSideClassName}>
                   <div className="content-2-columns-left">
@@ -200,16 +200,12 @@ class ProgressionTrees extends React.Component {
               <div className={rightSideClassName}>
                 <div id="progression-trees-scanner">
                   <div id="progression-trees-scanner-container">
-                    <div className="container-fluid">
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div id="scanner-input-container">
-                            <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-12">
+                    <div className="">
+                    <div id="scanner-input-container">
+                    <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
+                  </div>
+                      <div className="">
+                        <div className="">
                           <div id="trees-scanner-container">
                             <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
                               openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
@@ -220,9 +216,7 @@ class ProgressionTrees extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
-        </div>
     );
   }
 }

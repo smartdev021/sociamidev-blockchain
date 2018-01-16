@@ -8,6 +8,8 @@ import "~/src/theme/css/about.css"
 
 function About(props) {
   return (
+    <div className="row">
+    <div className="col-lg-12">
     <div id="main-content_1">
     <div id="about-page">
 <div className="container-fluid">
@@ -55,6 +57,8 @@ function About(props) {
     </div>
   </div>
 </div>
+    </div>
+    </div>
     </div>
     </div>
   );

@@ -1,7 +1,3 @@
-#progression-trees {
-  margin: 0 auto;
-}
-
 #progression-trees-trees {
   width: 90%;
   margin: 0 auto;
@@ -98,10 +94,6 @@
 #trees-scanner-list-trees img {
   width: 28px;
   height: 28px;
-}
-  
-#progression-trees {
-  font-family: "Comfortaa";
 }
   
 #progression-trees .progress {

@@ -138,11 +138,7 @@ class Main extends React.Component {
                         {this.renderSearchInput()}
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-lg-12">
-                        {this.renderRoutes()}
-                      </div>
-                    </div>
+                    {this.renderRoutes()}
                   </div>
                 </main>
               </div>

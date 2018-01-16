@@ -7,11 +7,11 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 const ProgressiontreesMyProgress = (props) => {
   return (
-    <div className="row" id="my-progress-list">
+    <div id="my-progress-list">
           {
             props.trees.map(function(roadmap, i) {
             return (
-              <div key={i} className="col-lg-12">
+              <div key={i}>
                 <ActionLink className="progression-tree-my-text" onClick={()=> props.openSingleTree(roadmap._id)}>
                   {roadmap.name}
                 </ActionLink>
