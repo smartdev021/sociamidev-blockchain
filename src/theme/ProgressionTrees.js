@@ -84,6 +84,12 @@ class ProgressionTrees extends React.Component {
     this.props.fetchRoadmapsFromAdmin();
   }
 
+  toggleTreeScannerExpanded() {
+    if (this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0) {
+      this.setState({isScannerExpanded: !this.state.isScannerExpanded});
+    }
+  }
+
   renderUserProgressionTrees() {
     return (
       <div id="progression-trees-trees">
@@ -96,12 +102,7 @@ class ProgressionTrees extends React.Component {
             <div className="row">
               <div className="col-lg-12">
                 <div className="content-2-columns-left-title">
-                <ActionLink href="#" onClick={()=> {
-                  if (this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0) {
-                    this.setState({isScannerExpanded: this.state.isScannerExpanded});
-                  }
-                     
-                  }}>
+                <ActionLink href="#" onClick={()=> this.toggleTreeScannerExpanded()}>
                   My Progress
                 </ActionLink>
                 </div>

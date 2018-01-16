@@ -37,7 +37,7 @@ const ProgressiontreesScanner = (props) => {
               <span className="star-rating">
                 <StarRatings rating={3.5} 
                 isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
-                  starWidthAndHeight={20} starSpacing={2}
+                  starWidthAndHeight={'20px'} starSpacing={'2px'}
                   starEmptyColor={"white"}
                   starRatedColor={"rgb(180, 177, 3)"}/>
               </span>
