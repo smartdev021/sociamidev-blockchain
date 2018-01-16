@@ -165,31 +165,27 @@ class ProgressionTrees extends React.Component {
                 {this.renderUserProgressionTrees()}
               </div>
               </div>
+              {/*Right Side*/}
               <div className="col-lg-3">
-                <div className="content-2-columns-left" id="progression-trees-scanner">
-                <div id="progression-trees-scanner-container">
-                  <div className="container-fluid">
-                    <div className="row">
-                       <div className="col-lg-12">
-                         <div className="content-2-columns-right-title">Tree scanner</div>
-                       </div>
-                    </div>
-                    <div className="row">
-                       <div className="col-lg-12">
-                         <div id="scanner-input-container">
-                           <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
-                         </div>
-                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <div id="trees-scanner-container">
-                          <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
-                            openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
+                <div id="progression-trees-scanner">
+                  <div id="progression-trees-scanner-container">
+                    <div className="container-fluid">
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div id="scanner-input-container">
+                            <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div id="trees-scanner-container">
+                            <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
+                              openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}/>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   </div>
                 </div>
               </div>

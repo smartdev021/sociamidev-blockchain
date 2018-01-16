@@ -41,3 +41,7 @@ main {
   margin-bottom: 20px;
   width: 100%;
 }
+
+.deleted {
+  display: none;
+}

@@ -7,13 +7,48 @@
   margin: 0 auto;
 }
 
+#progression-trees-scanner {
+  border: 1px solid rgb(216, 206, 206);
+  height: 633px;
+  color: rgb(161, 158, 158);
+}
+
+#progression-trees-scanner ul li {
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.tree-scanner-tree-name {
+  margin-right: 5px;
+}
+
+.tree-scanner-tree-icon {
+  margin-right: 10px;
+}
+
+#progression-trees-scanner ul li a, 
+#progression-trees-scanner ul li a:hover, 
+#progression-trees-scanner ul li a:visited,
+#progression-trees-scanner ul li a:focus {
+  color: rgb(88, 88, 88);
+}
+
+#progression-trees-scanner ul li a:hover {
+  text-decoration: underline;
+}
+
 #progression-trees-scanner-container {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
 }
 
 #progression-trees-scanner-container .content-2-columns-right-title {
   margin-left: 15px;
+}
+
+#scanner-input-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
   
 #scanner-input-container input[type="text"] {
@@ -22,7 +57,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
   border: 1px solid white;
-  color: white;
+  color: rgb(88, 88, 88);
   border-radius: 3px;
   background-color: transparent;
   margin: 0 auto;
@@ -105,7 +140,7 @@
 }
 
 #trees-scanner-container {
-  height: 450px;
+  height: 520px;
   overflow-y: scroll;
 }
 

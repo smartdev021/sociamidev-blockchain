@@ -3,22 +3,11 @@
 */
 import React from 'react';
 
+import StarRatings from 'react-star-ratings';
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 const ProgressiontreesScanner = (props) => {
-  const DummyTrees = [
-    {name: "AI for Beginners", secondaryInfo: {
-      image_1: "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/matthewicon.png", 
-      image_2: "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/Mathildaicon.png"
-      , text: "and 1282 others"}
-    }, 
-    {name: "AI for Intermediates", secondaryInfo: {image_1: null, image_2: null, text: "256 learners"}}, 
-    {name: "AI for advanced learners", secondaryInfo: {image_1: null, image_2: null, text: "32 learners"}}, 
-    {name: "AI for corporations", secondaryInfo: {
-      image_1: "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/johnicon.png", 
-      image_2: null, text: "and 10 others"}
-    }, 
-  ];
 
   let foundRoadmaps = [];
 
@@ -36,23 +25,31 @@ const ProgressiontreesScanner = (props) => {
   const openTreeAcceptConfirmationPopup = (treeId, treeName)=>props.openTreeAcceptConfirmationPopup(treeId, treeName);
 
   return (
-    <ul id="trees-scanner-list-trees">
+    <ul className="list-group">
       {
         foundRoadmaps.map(function(roadmap, i) {
-          let tree = DummyTrees[Math.floor(Math.random() * (DummyTrees.length - 0)) + 0];
-          return (<li key={i}>
-          <div className="tree-list-item">
-            <ActionLink href="#" onClick={()=>openTreeAcceptConfirmationPopup(roadmap._id, roadmap.name)}>{roadmap.name}</ActionLink>
-            {tree.secondaryInfo ? 
-            <div className="pull-right">
-              <span>
-                <span>{tree.secondaryInfo.image_1 ? <img src={tree.secondaryInfo.image_1}/> : null}</span>
-                <span>{tree.secondaryInfo.image_2 ? <img src={tree.secondaryInfo.image_2}/> : null}</span>
+          return (
+            <li key={i} className="list-group-item">
+              <ActionLink className="tree-scanner-tree-name" href="#" onClick={()=>openTreeAcceptConfirmationPopup(roadmap._id, roadmap.name)}>
+                {roadmap.name}
+              </ActionLink>
+
+              <span className="star-rating">
+                <StarRatings rating={3.5} 
+                isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
+                  starWidthAndHeight={20} starSpacing={2}
+                  starEmptyColor={"white"}
+                  starRatedColor={"rgb(180, 177, 3)"}/>
               </span>
-              {tree.secondaryInfo.text ? <div id="tree-list-item-secondary-text">{tree.secondaryInfo.text}</div> : null}
-            </div> : null}
-          </div>
-        </li>);
+
+              <div className="deleted tree-scanner-tree-description">{roadmap.description}</div>
+
+              <div className="tree-scanner-tree-icons">
+                <span className="tree-scanner-tree-icon glyphicon glyphicon-education"></span>
+                <span className="tree-scanner-tree-icon glyphicon glyphicon-bitcoin"></span>
+                <span className="tree-scanner-tree-icon glyphicon glyphicon-dashboard"></span>
+              </div>
+            </li>);
         })
       }
     </ul>
