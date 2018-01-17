@@ -186,7 +186,11 @@ class ProgressionTrees extends React.Component {
       return that.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == roadmap._id;}) == -1;
     });
 
-    let rightSideClassName = this.state.isScannerExpanded ? "col-lg-11" : "col-lg-3";
+    let rightSideClassName = "col-lg-3";
+
+    if (this.state.isScannerExpanded) {
+      rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-11";
+    }
 
     let leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1";
 
@@ -199,7 +203,7 @@ class ProgressionTrees extends React.Component {
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
               />
           }
-              {
+              {this.props.userProfile.progressionTrees.length != 0 &&
                 <div className={leftSideClassName}>
                   <div className="content-2-columns-left">
                     {this.renderUserProgressionTrees()}
@@ -208,31 +212,27 @@ class ProgressionTrees extends React.Component {
               }
               {/*Right Side*/}
               <div className={rightSideClassName}>
-                <div id="progression-trees-scanner">
-                  <div id="progression-trees-scanner-container">
-                    <div className="">
-                    <div id="scanner-input-container">
-                    <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
-                  </div>
-                      <div className="">
-                        <div className="">
-                          <div id="trees-scanner-container">
-                            {!this.state.isScannerExpanded &&
-                              <ActionLink id="user-prog-tree-expand" href="#" onClick={()=> this.setTreeScannerExpanded(true)}>
-                                <span className="glyphicon glyphicon-menu-left"></span>
-                              </ActionLink>
-                            }
-                            <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
-                              openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
-                              isExpanded={this.state.isScannerExpanded}/>
-                          </div>
-                        </div>
+                <div className="content-2-columns-left">
+                  <div id="progression-trees-scanner">
+                    <div id="progression-trees-scanner-container">
+                      <div id="scanner-input-container">
+                        <input type="text" autoComplete="off" id="scanner_trees" placeholder="" onChange={(e) => this.handleChange(e)}/>
+                      </div>
+                      <div id="trees-scanner-container">
+                        {!this.state.isScannerExpanded &&
+                          <ActionLink id="user-prog-tree-expand" href="#" onClick={()=> this.setTreeScannerExpanded(true)}>
+                            <span className="glyphicon glyphicon-menu-left"></span>
+                          </ActionLink>
+                        }
+                        <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
+                          openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
+                            isExpanded={this.state.isScannerExpanded}/>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-          </div>
+           </div>
     );
   }
 }
