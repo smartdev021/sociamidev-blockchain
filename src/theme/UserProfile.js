@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Axios from 'axios';
+import StarRatings from 'react-star-ratings';
+
 import profilePic from './images/profilePic.png';
 import tasks from './images/tasks.png';
 import hangout from './images/hangout.png';
@@ -108,7 +110,12 @@ class UserProfile extends React.Component {
 									<img className="new-user-mentees" src={mentees} />
 									<p className="new-user-text-mentees-num">{this.state.mentees} <span className="new-user-text-mentees">mentees</span></p>
 									<div className="new-user-stars-wrap">
-										<span className="new-user-rating">{this.state.rating}</span><img className="new-user-star" src={star} /><img className="new-user-star" src={star} /><img className="new-user-star" src={star} /><img className="new-user-star" src={star} /><img className="new-user-star" src={star} />
+										<span className="new-user-rating">{this.state.rating}</span>
+										<StarRatings rating={this.state.rating/2} 
+											isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
+											starWidthAndHeight={'35px'} starSpacing={'2px'}
+											starEmptyColor={"white"}
+											starRatedColor={"rgb(255, 204, 0)"}/>
 									</div>
 								</div>
 							</div>
