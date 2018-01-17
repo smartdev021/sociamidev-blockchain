@@ -45,7 +45,7 @@ class UserProfile extends React.Component {
 			tasks: 78,
 			hangout: 63,
 			mentees: 36,
-			rating: 9.3,
+			rating: 10,
 			blogs: [
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '30 minutes ago'}, 
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago'},
@@ -58,7 +58,6 @@ class UserProfile extends React.Component {
 			firstName: this.props.userProfile.firstName,
 			lastName: this.props.userProfile.lastName
 		})
-
 	}
 
 
@@ -110,8 +109,10 @@ class UserProfile extends React.Component {
 									<img className="new-user-mentees" src={mentees} />
 									<p className="new-user-text-mentees-num">{this.state.mentees} <span className="new-user-text-mentees">mentees</span></p>
 									<div className="new-user-stars-wrap">
-										<span className="new-user-rating">{this.state.rating}</span>
-										<StarRatings rating={this.state.rating/2} 
+										<span className="new-user-rating">Rating: {this.props.userProfile.rating 
+										? this.props.userProfile.rating : 0}</span>
+										<StarRatings rating={this.props.userProfile.rating 
+										? this.props.userProfile.rating/2 : 0} 
 											isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
 											starWidthAndHeight={'35px'} starSpacing={'2px'}
 											starEmptyColor={"white"}
