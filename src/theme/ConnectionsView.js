@@ -214,7 +214,7 @@ class ConnectionsView extends React.Component {
         const loaderMainClasses = `loading ${loaderMainClass}` ;
 
         const allFriendsList = this.getListOfFriendsSorted();
-
+        // image src "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
         return (
             <div style={divStyle} className="allFriendList">
               <div className={loaderMainClasses}></div>
@@ -229,7 +229,7 @@ class ConnectionsView extends React.Component {
                                     <li key={friend.id} className="borderStyle"> 
                                         <div className="imageContainer">                                  
                                             <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
+                                            src={friend.profilePic}
                                             className="img-circle tmp"/>
                                         </div>
                                         <div className="friendInfoContainer">
@@ -277,7 +277,7 @@ class ConnectionsView extends React.Component {
                                     <li key={friend.id} className="borderStyle">
                                         <div className="imageContainer">                                  
                                             <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
+                                            src={friend.profilePic}
                                             className="img-circle tmp"/>
                                         </div>
                                         <div className="friendInfoContainer">
@@ -321,7 +321,7 @@ class ConnectionsView extends React.Component {
                                     <li key={friend.id} className="borderStyle">
                                         <div className="imageContainer">                                  
                                             <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
+                                            src={friend.profilePic}
                                             className="img-circle tmp"/>
                                         </div>
                                         <div className="friendInfoContainer">
@@ -364,7 +364,7 @@ class ConnectionsView extends React.Component {
                                     <li key={friend.id} className="borderStyle">
                                         <div className="imageContainer">                                  
                                             <img
-                                            src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png"
+                                            src={friend.profilePic}
                                             className="img-circle tmp"/>
                                         </div>
                                         <div className="friendInfoContainer">
