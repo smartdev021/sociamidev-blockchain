@@ -232,20 +232,12 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
             const responseProfile = response.data.profile;
             let newUserProfile = {
               _id: response.data._id,
-              firstName: responseProfile.firstName, 
-              lastName: responseProfile.lastName, 
-              interests: responseProfile.interests, //TODO: receive FaceBook advanced permissions
-              skills: responseProfile.skills, //TODO: receive FaceBook advanced permissions
-              experience: responseProfile.experience,
-              education: responseProfile.education,
               roadmaps: response.data.roadmaps,
               progressionTrees: response.data.progressionTrees,
-              balance:responseProfile.balance,
               facebook: response.data.facebook,
-              rating: responseProfile.rating,
-              email: responseProfile.email,
-              pictureURL: responseProfile.pictureURL,
             }
+
+            newUserProfile = Object.assign({}, newUserProfile, {...responseProfile});
 
             //async action exit point
             dispatch(fetchUserProfileComplete(newUserProfile, true));

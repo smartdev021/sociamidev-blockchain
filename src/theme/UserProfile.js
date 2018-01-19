@@ -115,6 +115,15 @@ class UserProfile extends React.Component {
 											starWidthAndHeight={'35px'} starSpacing={'2px'}
 											starEmptyColor={"white"}
 											starRatedColor={"rgb(255, 204, 0)"}/>
+									    {this.props.isAuthorized && 
+										  <h5>{`Level: ${this.props.userProfile.level}`}</h5>
+										}
+										{this.props.isAuthorized && 
+										  <h5>{`Current Level XP: ${this.props.userProfile.currentLevelXP}`}</h5>
+										}
+										{this.props.isAuthorized && 
+										  <h5>{`Total XP: ${this.props.userProfile.totalXP}`}</h5>
+										}
 									</div>
 								</div>
 							</div>
