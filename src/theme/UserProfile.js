@@ -13,22 +13,20 @@ import { bindActionCreators } from 'redux';
 import Axios from 'axios';
 import StarRatings from 'react-star-ratings';
 
-import profilePic from './images/profilePic.png';
-import tasks from './images/tasks.png';
-import hangout from './images/hangout.png';
-import mentees from './images/mentees.png';
-import star from './images/star.png';
-import x from './images/rightBarX.png';
-import eyeglasses from './images/rightBarEyeglasses.png';
-import coffee from './images/rightBarCoffee-cup.png';
-import question from './images/rightBarQuestion.png';
-import friend from './images/rightBarAdd-friend.png';
-import tag from './images/rightBarTag.png';
-
-
 import ConfigMain from '~/configs/main';
 import { openUserProfileComplete } from '~/src/redux/actions/authorization';
 import "~/src/css/newUserProfile.css";
+
+const tag = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarTag.png";
+const friend = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarAdd-friend.png";
+const question = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarQuestion.png";
+const coffee = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarCoffee-cup.png";
+const eyeglasses = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarEyeglasses.png";
+const close = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarX.png";
+const mentees = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/mentees.png";
+const hangout = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/hangout.png";
+const tasks = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/tasks.png";
+const profilePic = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
 
 class UserProfile extends React.Component {
 	constructor(props) {
@@ -147,7 +145,7 @@ class UserProfile extends React.Component {
 				<div className="col-md-1 col-sm-12">
 					<div className="new-user-right-bar">
 						<div className="new-user-right-bar-first">
-							<img className="new-user-right-bar-img-X" src={x} />
+							<img className="new-user-right-bar-img-X" src={close} />
 							<p>Return</p>
 						</div>
 						<div className="new-user-right-bar-next">
