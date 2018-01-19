@@ -76,28 +76,28 @@ class SidebarLeft extends React.Component {
   //---------------------------------------------------------------------
 
   getListOfFriends() {
-    const DummyFriendImages = [
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png",
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/johnicon.png",
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Joshicon.png", 
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/marciaicon.png",
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Mathildaicon.png",
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/matthewicon.png", 
-      "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Thomasicon.png",
-    ];
+    // const DummyFriendImages = [
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png",
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/johnicon.png",
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Joshicon.png", 
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/marciaicon.png",
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Mathildaicon.png",
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/matthewicon.png", 
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Thomasicon.png",
+    // ];
 
     let ListOfFriends = this.props.userFriends.friends;
 
     //TODO: Remove once profile image is fetched from back-end
-    for (let i = 0; i < ListOfFriends.length; ++i) {
-      if (!ListOfFriends[i].profileImage) {
-        ListOfFriends[i].profileImage = DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0];
-      }
+    // for (let i = 0; i < ListOfFriends.length; ++i) {
+    //   if (!ListOfFriends[i].profileImage) {
+    //     ListOfFriends[i].profileImage = DummyFriendImages[Math.floor(Math.random() * (DummyFriendImages.length - 0)) + 0];
+    //   }
 
-      if (!ListOfFriends[i].userText) {
-        ListOfFriends[i].userText = "Mobile app testing 50 mutual friends";
-      }
-    }
+    //   if (!ListOfFriends[i].userText) {
+    //     ListOfFriends[i].userText = "Mobile app testing 50 mutual friends";
+    //   }
+    // }
 
     return ListOfFriends;
   }
@@ -193,7 +193,7 @@ class SidebarLeft extends React.Component {
               ListOfFriends.map(function(friend, i) {
                 return (
                   <div key={i} className="friend-widget">
-                    <img src={friend.profileImage}/>
+                    <img src={friend.profilePic}/>
                     <div id="user-text">
                       <div className="user-text-name">{friend.firstName}</div>
                         {(friend.activities && friend.activities.length > 0) 
