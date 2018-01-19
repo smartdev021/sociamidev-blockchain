@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDom from 'react-dom'
 import io from 'socket.io-client';
 import { withRouter } from 'react-router-dom'
+import PubSub from 'pubsub-js'; 
+import Axios from 'axios';
 
 import Messages from './Messages';
 import Users from './Users';
@@ -15,6 +17,11 @@ const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
 
 class ChatApp extends React.Component {
+  componentWillMount() {
+    //this.props.cookies.getAll();
+    this.token = PubSub.subscribe('HELLO', this.mySubscriber.bind(this));//()=>this.mySubscriber());
+  }
+
   componentDidMount() {
     const botUser = {
       username: "chatbot",
@@ -30,6 +37,8 @@ class ChatApp extends React.Component {
 
     let copy = Object.assign({}, this.state, {users: tUsers});
     this.setState(copy);
+
+    //PubSub.publish('HELLO', 'message');
   }
   
   constructor(props) {
@@ -41,7 +50,8 @@ class ChatApp extends React.Component {
                    activeUserID: "", 
                    activeUserFullName: "",
                    lastMessageStack: [],
-                   anonymousUserId: ""
+                   anonymousUserId: "",
+                   rtMessage: ""
                 };    
 
     if(this.props.loggedin){
@@ -82,6 +92,7 @@ class ChatApp extends React.Component {
         lastMessageRec = message;
         this.addMessage(message);
         this.addLastMessage(message);
+        PubSub.publish('HELLO', message);
       });
     }
 
@@ -94,9 +105,30 @@ class ChatApp extends React.Component {
         lastMessageRec = message;
         this.addMessage(message);
         this.addLastMessage(message);
+        PubSub.publish('HELLO', message);
       });
     }
   }
+
+  testMessage() {
+      console.log("ddddd");
+      const url = `${ConfigMain.getBackendURL()}/testMessage?message=Heelllloooo`;
+          Axios.get(url)
+          .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
+        })
+  }
+
+  mySubscriber(msg, data) {
+    console.log("Message - " + msg);
+    console.log("Data - " + data);
+
+    let copy = Object.assign({}, this.state, {rtMessage: data});
+    this.setState(copy);
+  };
 
   tabChanges(activeUserID,activeUserFullname){
     let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname});
@@ -222,6 +254,10 @@ class ChatApp extends React.Component {
           <div className={divChatClasses} id="chatContainer">
             <div className="topName">
               <span>To: <span id="activeUserName">{active}</span></span>
+              <button onClick={()=>this.testMessage()}>
+                Send Message
+              </button>
+              <span>{this.state.rtMessage}</span>
               <span className="close-chat" id="close-chat" onClick={()=>this.closeChatWindow()}>x</span>
             </div>
             <div id="test" className="messages">

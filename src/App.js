@@ -16,6 +16,8 @@ import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
+import io from 'socket.io-client';
+import PubSub from 'pubsub-js';  
 
 import Main from './Main';
 import ChatApp from '~/src/components/chat/ChatApp';
@@ -58,12 +60,36 @@ class App extends Component {
       linkedInID: null,
     };
 
+    var uuid = this.uuidv1();
+    this.state.anonymousUserId = uuid;
+    this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
+
+    this.socket.on('test:message', data => {
+      PubSub.publish('HELLO', data);
+    });
+
     console.log(`Config BackendURL: ${BackendURL}`);
+  }
+
+  uuidv1() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
   }
 
   componentWillMount() {
     this.props.cookies.getAll();
+    //this.token = PubSub.subscribe('HELLO', this.mySubscriber.bind(this));
   }
+
+  componentDidMount(){
+    //PubSub.publish('HELLO', "kkkk");
+  }
+
+  /*mySubscriber(msg, data) {
+    console.log("Message 1- " + msg);
+    console.log("Data 1- " + data);
+  };*/
 
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, {linkedInID: id});
