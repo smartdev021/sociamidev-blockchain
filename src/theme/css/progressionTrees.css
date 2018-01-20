@@ -196,3 +196,11 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+.tree-scanner-tree-locked-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #c23e3e;
+}

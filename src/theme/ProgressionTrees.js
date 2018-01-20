@@ -44,6 +44,7 @@ class ProgressionTrees extends React.Component {
       scannerQuery: "",
       isAcceptProgressionTreePopupOpen: false,
       scannerSelectedTreeId: undefined,
+      selectedTree: undefined,
       scannerSelectedTreeName: "",
 
       selectedTreeFromMyProgressIndex: -1,
@@ -146,12 +147,34 @@ class ProgressionTrees extends React.Component {
   openTreeAcceptConfirmationPopup(treeId, treeName) {
     console.log(`treeId: ${treeId}, treeName: ${treeName}`);
     if (this.props.isAuthorized) {
-        this.setState({scannerSelectedTreeId: treeId, scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
+
+      const findById = (currentRoadmap) => {
+        return currentRoadmap._id == treeId;
+      }
+
+      let foundRoadmaps = [];
+      
+      const scannerQuery = this.state.scannerQuery.toLowerCase();
+          
+      if (scannerQuery != "") {
+        foundRoadmaps = this.props.roadmapsAdmin.data.filter(function(roadmap) {
+          return roadmap.name && roadmap.name.toLowerCase().startsWith(scannerQuery);
+        });
+      }
+      else {
+        foundRoadmaps = this.props.roadmapsAdmin.data;
+      }
+
+      const foundTree = foundRoadmaps.find(findById);
+
+      this.setState({selectedTree: Object.assign({}, foundTree, {isLocked: true}), scannerSelectedTreeId: treeId, 
+        scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
     }
   }
 
   onTreeAcceptConfirmationPopupClose(option, treeId) {
-    this.setState({scannerSelectedTreeId: undefined, scannerSelectedTreeName: "", isAcceptProgressionTreePopupOpen: false});
+    this.setState({selectedTree: undefined, scannerSelectedTreeId: undefined, 
+        scannerSelectedTreeName: "", isAcceptProgressionTreePopupOpen: false});
     console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
 
     if (option === true && treeId) {
@@ -198,6 +221,7 @@ class ProgressionTrees extends React.Component {
         <div className="row">
           {this.state.isAcceptProgressionTreePopupOpen 
               && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
+              tree={this.state.selectedTree}
               treeName={this.state.scannerSelectedTreeName}
               modalIsOpen={this.state.isAcceptProgressionTreePopupOpen}
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}

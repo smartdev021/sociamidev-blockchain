@@ -54,6 +54,9 @@ const ProgressiontreesScanner = (props) => {
                 {props.isExpanded && <div className="tree-scanner-tree-network pull-right">
                   825 others are learning {roadmap.name}
                 </div>}
+                {
+                  roadmap.isLocked && <span className="tree-scanner-tree-locked-icon glyphicon glyphicon-lock"></span>
+                }
               </div>
             </li>);
         })

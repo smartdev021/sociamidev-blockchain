@@ -42,19 +42,36 @@ class PopupAcceptProgressionTree extends React.Component {
                  <p>Progression Tree Accept</p>
                </div>
              </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <p>Do you really want to accept "{this.props.treeName}" ?</p>
+          {!this.props.tree.isLocked ?
+            <div className="row">
+              <div className="col-lg-12">
+                <p>Do you really want to accept "{this.props.treeName}" ?</p>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <button type="button" className="btn btn-lg btn-outline-inverse" 
+            :
+            <div className="row">
+              <div className="col-lg-12">
+                <p>{`"${this.props.treeName}" is locked by level requirements, and can't be accepted yet!`}</p>
+              </div>
+            </div>
+          }
+          {!this.props.tree.isLocked ?
+            <div className="row">
+              <div className="col-lg-12">
+                <button type="button" className="btn btn-lg btn-outline-inverse" 
                     onClick={() => this.props.onConfirmationPopupClose(true, this.props.treeId)}>Yes</button>
-              <button type="button" className="btn btn-lg btn-outline-inverse" 
+                <button type="button" className="btn btn-lg btn-outline-inverse" 
                     onClick={() => this.props.onConfirmationPopupClose(false, this.props.treeId)}>No</button>
+              </div>
             </div>
-          </div>
+            :
+            <div className="row">
+              <div className="col-lg-12">
+                <button type="button" className="btn btn-lg btn-outline-inverse" 
+                    onClick={() => this.props.onConfirmationPopupClose(false, this.props.treeId)}>Ok</button>
+              </div>
+            </div>
+          }
         </div>
         </Modal>
         );
