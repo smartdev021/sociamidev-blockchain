@@ -81,11 +81,16 @@ class ProgressionTrees extends React.Component {
 
   componentWillMount() {
     this.props.fetchRoadmaps();
-
-    this.props.fetchRoadmapsFromAdmin();
+    this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isAuthorized != this.props.isAuthorized) {
+      if (this.props.isAuthorized) {
+        this.props.fetchRoadmapsFromAdmin(this.props.userProfile._id);
+      }
+    }
+
     if (prevProps.isAuthorized != this.props.isAuthorized 
       || prevProps.userProfile.progressionTrees.length != this.props.userProfile.progressionTrees.length) {
         this.setState({isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0});

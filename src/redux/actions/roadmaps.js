@@ -61,14 +61,16 @@ export function fetchRoadmaps(query="") {
   }
 }
 
-export function fetchRoadmapsFromAdmin() {
+export function fetchRoadmapsFromAdmin(userId) {
     return function (dispatch) {
       dispatch(fetchRoadmapsFromAdminInitiate());
       
       const url = `${ConfigMain.getBackendURL()}/roadmapsGet`;
+
+      const params = userId ? {userId: userId} : {};
       
       return (
-          Axios.get(url)
+          Axios.get(url, {params: params})
           .then(function(response) {
             dispatch(fetchRoadmapsFromAdminComplete(response.data));
         })
