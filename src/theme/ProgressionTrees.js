@@ -271,14 +271,12 @@ ProgressionTrees.propTypes = {
   saveTask: PropTypes.func.isRequired,
   fetchRoadmapsFromAdmin: PropTypes.func.isRequired,
   startProgressionTree: PropTypes.func.isRequired,
-  roadmaps: PropTypes.object.isRequired,
   roadmapsAdmin: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-  roadmaps: state.roadmaps,
   roadmapsAdmin: state.roadmapsAdmin,
   isAuthorized: state.userProfile.isAuthorized,
   userProfile: state.userProfile.profile,

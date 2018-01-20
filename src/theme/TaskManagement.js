@@ -54,6 +54,10 @@ import {
   fetchUserTasks,
 } from '~/src/redux/actions/authorization'
 
+import {
+  fetchRoadmapsFromAdmin,
+} from '~/src/redux/actions/roadmaps'
+
 const BackendURL = ConfigMain.getBackendURL();
 
 const TaskCategoryYour = {
@@ -222,6 +226,8 @@ class TaskManagement extends React.Component {
   componentWillMount() {
     // this.storeAndFetchTasks();
     this.fetchUserTasks();
+
+    this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
   }
 
   componentDidMount() {
@@ -244,6 +250,7 @@ class TaskManagement extends React.Component {
 
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
       this.fetchUserTasks();
+      this.props.fetchRoadmapsFromAdmin(this.props.userProfile._id);
     }
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
@@ -485,6 +492,22 @@ class TaskManagement extends React.Component {
       tasksFiltered = this.props.tasks;
     }
 
+    if (this.props.roadmapsAdmin.data.length > 0) {
+      const roadmapsLocked = this.props.roadmapsAdmin.data.filter(function(roadmap) {
+        return roadmap.isLocked;
+      });
+
+      if (roadmapsLocked.length > 0) {
+        for (let i = 0; i < tasksFiltered.length; ++i) {
+          if (tasksFiltered[i].type == "hangout") {
+            tasksFiltered[i].isLocked = roadmapsLocked.findIndex(function(roadmap) {
+              return roadmap._id == tasksFiltered[i].metaData.subject.roadmap._id;
+            }) != -1;
+          }
+        }
+      }
+    }
+
     return (
       <div className={this.getMyTasksAll().length > 0 || this.getHangoutsAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
         <div className="content-2-columns-right">
@@ -520,6 +543,8 @@ class TaskManagement extends React.Component {
 TaskManagement.propTypes = {
   tasks: PropTypes.array.isRequired,
 
+  roadmapsAdmin: PropTypes.object.isRequired,
+
   tasksCreatedCurrentUser: PropTypes.array.isRequired,
   tasksAssignedToCurrentUser: PropTypes.array.isRequired,
   isUserTasksLoading: PropTypes.bool.isRequired,
@@ -543,6 +568,8 @@ const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
   tasks: state.tasks,
 
+  roadmapsAdmin: state.roadmapsAdmin,
+
   userTasks: state.userProfile.tasks,
 
   tasksCreatedCurrentUser: state.userProfile.tasks.created,
@@ -565,6 +592,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

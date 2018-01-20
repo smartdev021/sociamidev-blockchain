@@ -52,9 +52,12 @@ const RenderSingleTask = (task, i, props)=> {
       <li key={i}>
         <div>
         <span className="hangout-text">{task.creator.firstName} is looking to Hangout for roadmap: {task.metaData.subject.roadmap.name} at {time}</span>
-          <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+          {!task.isLocked ? <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
             Accept
           </ActionLink>
+          :
+            <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
+          }
         </div>
       </li>
     );
