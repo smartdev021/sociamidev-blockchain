@@ -122,7 +122,7 @@ class SkillBreakdown extends React.Component {
         ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
         ratings: [],
         time: date.getTime(),
-        awardXP: RandomInt(10, 100),
+        awardXP: RandomInt(30, 40),
       },
     };
 
