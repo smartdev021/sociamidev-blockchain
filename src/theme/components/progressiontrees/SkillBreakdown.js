@@ -82,6 +82,10 @@ class SkillBreakdown extends React.Component {
   }
 
   handleStartHangout(date) {
+    const RandomInt = function RandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     const hangout = {
       name: `Hangout for roadmap "${this.props.tree.name}"`,
       description: "Hangout with John, and answer questions together",
@@ -118,6 +122,7 @@ class SkillBreakdown extends React.Component {
         ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
         ratings: [],
         time: date.getTime(),
+        awardXP: RandomInt(10, 100),
       },
     };
 
