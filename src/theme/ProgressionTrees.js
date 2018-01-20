@@ -167,7 +167,7 @@ class ProgressionTrees extends React.Component {
 
       const foundTree = foundRoadmaps.find(findById);
 
-      this.setState({selectedTree: Object.assign({}, foundTree, {isLocked: true}), scannerSelectedTreeId: treeId, 
+      this.setState({selectedTree: foundTree, scannerSelectedTreeId: treeId, 
         scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
     }
   }
