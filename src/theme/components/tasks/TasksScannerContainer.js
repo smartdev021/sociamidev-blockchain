@@ -40,6 +40,7 @@ const TasksScannerContainer = (props) => {
                 <div className="col-lg-12">
                   <NetworkTasks 
                     tasks={props.tasks}
+                    isExpanded = {props.isExpanded}
                     scannerQuery={props.scannerQuery}
                     currentUserID={props.currentUserID}
                     handleOpenConfirmTaskDetailsPopup={(task)=>props.handleOpenConfirmTaskDetailsPopup(task)}

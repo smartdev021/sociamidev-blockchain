@@ -73,6 +73,69 @@ const RenderSingleTask = (task, i, props)=> {
   }
 };
 
+const RenderSingleTaskExpanded = (task, i, props)=> {
+  if (task.type == TaskTypes.HANGOUT) {
+    const date = new Date(task.metaData.time);
+
+    const dateNow = new Date(Date.now());
+    const dateTomorrow = new Date(Date.now() + (60 * 60 * 24));
+
+    const Noon = new Date(date.getFullYear(), date.getMonth(),date.getDate(), 12, 0, 0);
+    const AmPm = (date.getTime() < Noon.getTime()) ? 'am' : 'pm';
+
+    const Hours = String(Hours12(date)) + AmPm;
+    let time = "";
+
+    if (dateNow.getDate() == date.getDate() && dateNow.getMonth() == date.getMonth() && dateNow.getFullYear() == date.getFullYear()) {
+      time = `${Hours} today`;
+    }
+    else if (dateTomorrow.getDate() == date.getDate() && dateTomorrow.getMonth() == date.getMonth() && dateTomorrow.getFullYear() == date.getFullYear()) {
+      time = `${Hours} tomorrow`;
+    }
+    else {
+      time = `${Hours} on ${DayFromNumber(date.getDay())} (${date.getDate()} ${MonthFromNumber(date.getMonth())})`; 
+    }
+    
+    return (
+      <div className="col-lg-4 col-md-3 col-sm-12" key={i}>
+        <div className="task-scanner-task-expanded">
+          <div className="hangout-text-expanded">
+            <div className="hangout-text-expanded-creator">
+              {task.creator.firstName }
+            </div> 
+            is looking to Hangout to discuss: {task.metaData.subject.roadmap.name} at {time}
+            <div className="hangout-text-expanded-creator-detailed">
+              {task.creator.firstName} is in your wider network
+            </div> 
+            <div className="hangout-text-expanded-task-reward">
+              Earn up to 10 tokens completing this task
+            </div> 
+          </div>
+          <div className="hangout-expanded-accept-button-container">
+            {!task.isLocked ? 
+              <ActionLink className="hangout-expanded-accept-button" href="#" 
+                onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+                Accept
+              </ActionLink>
+              :
+              <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
+            }
+          </div>
+        </div>
+      </div>
+    );
+  }
+  else {
+    return (
+      <li key={i}>
+        <div>
+          <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>{task.name}</ActionLink>
+        </div>
+      </li>
+    );
+  }
+};
+
 const NetworkTasks = (props) => {
     
   let foundTasks = [];
@@ -92,17 +155,32 @@ const NetworkTasks = (props) => {
   let that = this;
 
   if (foundTasks.length > 0) {
-    return (
-      <div id="tasks-scanner-list-container">
-        <ul id="tasks-scanner-list-tasks">
-        {
-          foundTasks.map(function(task, i) {
-            return RenderSingleTask(task, i, props);
-            })
-          }
-        </ul>
-      </div>
-    );
+    if (props.isExpanded) {
+      return (
+        <div className="container-fluid" id="tasks-scanner-list-container">
+          <div className="row" id="tasks-scanner-list-tasks">
+          {
+            foundTasks.map(function(task, i) {
+              return RenderSingleTaskExpanded(task, i, props);
+              })
+            }
+          </div>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div id="tasks-scanner-list-container">
+          <ul id="tasks-scanner-list-tasks">
+          {
+            foundTasks.map(function(task, i) {
+              return RenderSingleTask(task, i, props);
+              })
+            }
+          </ul>
+        </div>
+      );
+    }
   }
   else {
     return null;

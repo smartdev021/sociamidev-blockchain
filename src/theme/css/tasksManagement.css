@@ -97,7 +97,6 @@
 }
 
 #tasks-scanner-container {
-    width: 90%;
     margin: 0 auto;
 }
 
@@ -156,4 +155,46 @@
 #tasks-scanner-container:hover #tasks-scanner-expand {
     opacity: 1.0;
     transition: opacity 0.5s;
-  }
+}
+
+.task-scanner-task-expanded {
+    border-radius: 2px;
+    background-color: rgb( 255, 255, 255 );
+    padding: 10px;
+    margin-bottom: 10px;
+
+}
+
+.task-scanner-task-expanded .hangout-text-expanded {
+    font-size: 10px;
+    font-family: "Comfortaa";
+    color: rgb( 92, 91, 91 );
+}
+
+.task-scanner-task-expanded .hangout-text-expanded .hangout-text-expanded-creator {
+    text-decoration: underline;
+}
+
+.task-scanner-task-expanded .hangout-text-expanded .hangout-text-expanded-task-reward {
+    color: rgb(197, 197, 197);
+}
+
+.task-scanner-task-expanded .hangout-text-expanded .hangout-text-expanded-creator-detailed {
+    color: rgb(181, 197, 234);
+}
+
+.task-scanner-task-expanded .hangout-expanded-accept-button-container {
+    width: 100%;
+    text-align: right;
+    padding-top: 5px;
+}
+
+.task-scanner-task-expanded .hangout-expanded-accept-button {
+    color: rgb(255, 255, 255);
+    background: rgb(74,191,234); /* Old browsers */
+    background-image: -moz-linear-gradient(45deg, rgb( 128, 163, 235 ) 100%, rgb( 155, 207, 204 ) 100%);
+    background-image: -webkit-linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%);
+    background: linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    padding: 5px;
+}
