@@ -44,6 +44,7 @@ import {
 
 import {
   openSignUpForm,
+  fetchUserTasks,
 } from '~/src/redux/actions/authorization'
 
 import {
@@ -51,14 +52,8 @@ import {
 } from '~/src/redux/actions/projects'
 
 import {
-  fetchUserTasks,
-} from '~/src/redux/actions/authorization'
-
-import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
-
-const BackendURL = ConfigMain.getBackendURL();
 
 const TaskCategoryYour = {
   type: "my_tasks",
@@ -80,6 +75,8 @@ const TaskCategoryMyOffers = {
   name: "Sent"
 };
 
+const BackendURL = ConfigMain.getBackendURL();
+
 const Categories = [TaskCategoryYour, TaskCategoryAssigned, TaskCategoryMyRequests, TaskCategoryMyOffers];
 
 class TaskManagement extends React.Component {
@@ -87,14 +84,18 @@ class TaskManagement extends React.Component {
   constructor(props) {
     super(props);
 
+    console.dir(TaskCategoryYour);
+
     this.state = {
       tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
       timeNow: Date.now(),
+      isScannerExpanded: !this.props.isAuthorized,
     }
 
     this.redirectLocation = undefined;    
 
+    //this is for making task 'Start' button available in real time
     this.timeNowUpdateInterval = undefined;
 
     this.handleHangoutRateSuccess = this.handleHangoutRateSuccess.bind(this);
@@ -138,8 +139,6 @@ class TaskManagement extends React.Component {
   getMyTasksAll() {
     const tasksAssignedToMe = this.getTasksAssignedToMe();
     const tasksCreatedByMe = this.getTasksCreatedByMe();
-
-    console.log("TasksAssignedToMe.length: " + tasksAssignedToMe.length + "TasksCreatedByMe.length: " + tasksCreatedByMe.length);
 
     return tasksAssignedToMe.concat(tasksCreatedByMe);
   }
@@ -226,7 +225,6 @@ class TaskManagement extends React.Component {
   componentWillMount() {
     // this.storeAndFetchTasks();
     this.fetchUserTasks();
-
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
   }
 
@@ -243,18 +241,13 @@ class TaskManagement extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.userProfile._id && this.props.userProfile._id) {
-      console.log("!prevProps.userProfile._id && this.props.userProfile._id");
-      this.storeAndFetchTasks();
-    }
-
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
       this.fetchUserTasks();
+      this.storeAndFetchTasks();
       this.props.fetchRoadmapsFromAdmin(this.props.userProfile._id);
     }
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
-      console.log("%cisTaskSaveInProgress", "background:red; color:green;");
       if (this.props.lastStartedTask._id) {
         this.redirectLocation = `/taskBrowser?id=${this.props.lastStartedTask._id}`
       }
@@ -262,18 +255,36 @@ class TaskManagement extends React.Component {
       this.fetchUserTasks();
       this.props.onFetchAllTasks(false);
     }
+    
+    if (prevProps.userTasks.length != this.props.userTasks.length || prevProps.tasks.length != this.props.tasks.length) {
+      let tasks = [];
+
+      const CurrentUserID = this.props.userProfile._id;
+
+      tasks = this.props.tasks.filter(function(task) {
+        return task.type == "hangout" && task.creator._id == CurrentUserID;
+      });
+
+      if (tasks.length == 0) {
+        tasks = this.props.tasks.filter(function(task) {
+          return task.type == "hangout" && task.metaData.participants.findIndex(function(participant) {
+            return participant.user._id == CurrentUserID && participant.status == "pending"; 
+          }) != -1;
+        });
+      }
+
+      this.setState({isScannerExpanded: !this.props.isAuthorized || (this.props.userTasks.length == 0 && tasks.length == 0)});
+
+      console.log("%cComponent Did Update: ", "color: red; background: green;");
+      console.dir(this.props.userTasks);
+      console.dir(tasks);
+    }
   }
 
   handleCategoryChange(e) {
-    console.log("handleCategoryChange: ");
-    console.dir(e.target);
-
     const newCategory = Categories.find(function(category){
       return category.type == e.target.value;
     });
-
-    console.log("newCategory: ");
-    console.dir(newCategory);
 
     let copy = Object.assign({}, this.state, {tasksCategory: newCategory});
     this.setState(copy);
@@ -281,7 +292,6 @@ class TaskManagement extends React.Component {
 
   createAndSaveNewTask(roadmap) {
     //TODO: Move this to Redux
-    console.log("TaskManagement::createAndSaveNewTask");
     this.props.fetchTasksInitiate();
     let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
     const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}
@@ -293,20 +303,17 @@ class TaskManagement extends React.Component {
   }
 
   handleSaveNewTaskSuccess(response) {
-    console.log("TaskManagement::handleSaveNewTaskSuccess");
-    console.dir(response.data);
     this.props.fetchTasksComplete();
     this.props.onFetchAllTasks(false);
   }
 
   handleSaveNewTaskError(error) {
+    console.log(error);
     this.props.fetchTasksComplete();
     this.props.onFetchAllTasks(false);
   }
   
   handleOpenConfirmTaskDetailsPopup(item) {
-    console.log(item);
-    
     if (this.props.isAuthorized && item.userID != this.props.userProfile._id) {
       let copy = Object.assign({}, this.state, {isDetailsPopupOpen: true, detailsPopupItem: item});
       this.setState(copy)
@@ -321,9 +328,6 @@ class TaskManagement extends React.Component {
   }
 
   handleAcceptConfirm(item){
-    console.log("%c Accepting a task: ", "color: white; background: black");
-    console.dir(this.state.detailsPopupItem);
-
     if (this.state.detailsPopupItem.type != TaskTypes.HANGOUT) {
       let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
     var params={
@@ -356,8 +360,6 @@ class TaskManagement extends React.Component {
   }
 
   handleOpenCancelTaskDetailsPopup(item){
-    console.log(item);
-
     if (this.props.isAuthorized && item.userID != this.props.userProfile._id) {
       let copy = Object.assign({}, this.state, {isDetailsPopupOpenCancelTask: true,detailsPopupItem: item});
       this.setState(copy)
@@ -446,36 +448,8 @@ class TaskManagement extends React.Component {
     return tasks;
   }
 
-  renderLeftSide() {
-    const myTasks = this.getMyTasksAndHangouts();
-    
-    return (
-      <div className="col-lg-9">
-      <div className="content-2-columns-left">
-        <MyTasksContainer 
-          tasks={myTasks}
-          tasksCategoryName={this.state.tasksCategory.name}
-          onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
-          handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
-          selectedCategory={this.state.tasksCategory}
-          categories={Categories}
-          onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
-          onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
-          assignedTasks={this.props.tasksAssignedToCurrentUser}
-          currentUserID={this.props.userProfile._id}
-          timeNow={this.state.timeNow}
-
-          onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
-          onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
-        />
-      </div>
-    </div>
-    );
-  }
-
-  renderRightSide() {
+  getTaskScannerTasks() {
     let tasksFiltered = [];
-
     const currentUserId = this.props.userProfile._id;
 
     if (this.props.isAuthorized) {
@@ -508,8 +482,43 @@ class TaskManagement extends React.Component {
       }
     }
 
+    return tasksFiltered;
+  }
+
+  renderLeftSide() {
+    const myTasks = this.getMyTasksAndHangouts();
+    
     return (
-      <div className={this.getMyTasksAll().length > 0 || this.getHangoutsAll().length > 0 ? "col-lg-3" : "col-lg-12"}>
+      <div className="col-lg-9">
+        <div className="content-2-columns-left">
+          <MyTasksContainer tasks={myTasks} tasksCategoryName={this.state.tasksCategory.name}
+            onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
+            handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
+            selectedCategory={this.state.tasksCategory} categories={Categories}
+            onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
+            onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
+            assignedTasks={this.props.tasksAssignedToCurrentUser} currentUserID={this.props.userProfile._id}
+            timeNow={this.state.timeNow}
+
+            onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
+            onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
+          />
+       </div>
+    </div>
+    );
+  }
+
+  renderRightSide() {
+    const tasksFiltered = this.getTaskScannerTasks();
+
+    let rightSideClassName = "col-lg-3";
+
+    if (this.state.isScannerExpanded) {
+      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-11";
+    }
+
+    return (
+      <div className={rightSideClassName}>
         <div className="content-2-columns-right">
           <TasksScannerContainer tasks={tasksFiltered} scannerQuery={this.state.scannerQuery} 
             currentUserID={this.props.userProfile._id}
@@ -524,17 +533,50 @@ class TaskManagement extends React.Component {
   render() {
     const RedirectTo = this.redirectLocation ? <Redirect to={this.redirectLocation} push/> : null;
 
+    if (this.props.isTasksFetchInProgress || this.props.isUserTasksLoading || this.props.isTaskSaveInProgress) {
+      return (
+        <div className="row">
+          {RedirectTo}
+          <div className="col-lg-12">
+            <div className="content-2-columns-left">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="content-2-columns-left-title">
+                      Loading...<Icon spin name="spinner" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
         <div className="row">
-            {RedirectTo}
-            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
-              onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} item={this.state.detailsPopupItem} item="accept_confirmation"
-                task={this.state.detailsPopupItem} />   
-            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} onConfirm={(item)=>this.handleAcceptCancel(item)} 
-              onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} item={this.state.detailsPopupItem} item="cancel_confirmation" 
-                task={this.state.detailsPopupItem}/>   
-              {(this.getMyTasksAll().length > 0 || this.getHangoutsAll().length > 0) && this.renderLeftSide()}
-              {this.renderRightSide()}
+          {RedirectTo}
+          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
+            onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} 
+              item={this.state.detailsPopupItem} item="accept_confirmation"
+                task={this.state.detailsPopupItem}/> 
+
+          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} 
+            onConfirm={(item)=>this.handleAcceptCancel(item)} 
+              onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} 
+                item={this.state.detailsPopupItem} item="cancel_confirmation" 
+                  task={this.state.detailsPopupItem}/>
+
+              {
+                (this.getMyTasksAll().length > 0) && 
+                /*LEFT SIDE*/
+                this.renderLeftSide()
+              }
+              {
+                /*RIGHT SIDE*/
+                this.renderRightSide()
+              }
         </div>
     );
   }
