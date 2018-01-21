@@ -256,7 +256,10 @@ class TaskManagement extends React.Component {
       this.props.onFetchAllTasks(false);
     }
     
-    if (prevProps.userTasks.length != this.props.userTasks.length || prevProps.tasks.length != this.props.tasks.length) {
+    if (prevProps.userTasks.length != this.props.userTasks.length || prevProps.tasks.length != this.props.tasks.length
+    || (prevProps.isTaskSaveInProgress != this.props.isTaskSaveInProgress 
+      || prevProps.isTasksFetchInProgress != this.props.isTasksFetchInProgress
+      || prevProps.isUserTasksLoading != this.props.isUserTasksLoading )) {
       let tasks = [];
 
       const CurrentUserID = this.props.userProfile._id;
@@ -487,9 +490,11 @@ class TaskManagement extends React.Component {
 
   renderLeftSide() {
     const myTasks = this.getMyTasksAndHangouts();
+
+    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1";
     
     return (
-      <div className="col-lg-9">
+      <div className={leftSideClassName}>
         <div className="content-2-columns-left">
           <MyTasksContainer tasks={myTasks} tasksCategoryName={this.state.tasksCategory.name}
             onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
@@ -499,6 +504,9 @@ class TaskManagement extends React.Component {
             onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
             assignedTasks={this.props.tasksAssignedToCurrentUser} currentUserID={this.props.userProfile._id}
             timeNow={this.state.timeNow}
+            isAuthorized={this.props.isAuthorized}
+            isCollapsed={this.state.isScannerExpanded}
+            onSetTreeScannerExpanded={(value)=>this.setTreeScannerExpanded(value)}
 
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
@@ -506,6 +514,12 @@ class TaskManagement extends React.Component {
        </div>
     </div>
     );
+  }
+
+  setTreeScannerExpanded(expanded) {
+    if (this.props.isAuthorized) {
+      this.setState({isScannerExpanded: expanded});
+    }
   }
 
   renderRightSide() {
@@ -524,6 +538,8 @@ class TaskManagement extends React.Component {
             currentUserID={this.props.userProfile._id}
             handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}
             handleChange={(e)=>this.handleChange(e)}
+            onSetTreeScannerExpanded={(value)=>this.setTreeScannerExpanded(value)}
+            isExpanded={this.state.isScannerExpanded}
           />
         </div>
       </div>

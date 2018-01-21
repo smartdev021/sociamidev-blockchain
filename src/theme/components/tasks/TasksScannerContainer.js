@@ -5,9 +5,16 @@ import React from 'react';
 
 import NetworkTasks from './NetworkTasks'
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 const TasksScannerContainer = (props) => {
     return(
       <div id="tasks-scanner-container">
+            {!props.isExpanded &&
+              <ActionLink id="tasks-scanner-expand" href="#" onClick={()=> props.onSetTreeScannerExpanded(true)}>
+                <span className="glyphicon glyphicon-menu-left"></span>
+              </ActionLink>
+            }
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">

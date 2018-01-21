@@ -140,3 +140,20 @@
     font-size: 18px;
     color: #b36c6c;
 }
+
+#tasks-scanner-expand {
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    bottom: 50%;
+    left: 0;
+    font-size: 32px;
+    color: rgb(88, 88, 88);
+    opacity: 0.0;
+    transition: opacity 0.5s;
+}
+
+#tasks-scanner-container:hover #tasks-scanner-expand {
+    opacity: 1.0;
+    transition: opacity 0.5s;
+  }

@@ -10,6 +10,25 @@ import Organizer from '~/src/theme/components/tasks/Organizer'
 import ActionLink from '~/src/components/common/ActionLink'
 
 const MyTasksContainer = (props) => {
+
+  if (props.isCollapsed) {
+    if ((props.isAuthorized && props.tasks.length > 0)) {
+      return (
+        <div id="tasks-management-my-tasks">
+          <ActionLink id="user-prog-tree-collapse" href="#" onClick={()=> props.onSetTreeScannerExpanded(false)}>
+            <span className="glyphicon glyphicon-menu-right"></span>
+          </ActionLink>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div id="tasks-management-my-tasks">
+        </div>
+      );
+    }
+  }
+
     return(
     <div id="tasks-management-my-tasks">
       <div className="container-fluid">
