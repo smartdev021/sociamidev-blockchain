@@ -64,8 +64,8 @@ class App extends Component {
     this.state.anonymousUserId = uuid;
     this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
 
-    this.socket.on('test:message', data => {
-      PubSub.publish('HELLO', data);
+    this.socket.on('EVENT', eventObj => {
+      PubSub.publish(eventObj.eventType, eventObj);
     });
 
     console.log(`Config BackendURL: ${BackendURL}`);
