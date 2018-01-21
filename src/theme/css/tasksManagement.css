@@ -162,7 +162,7 @@
     background-color: rgb( 255, 255, 255 );
     padding: 10px;
     margin-bottom: 10px;
-
+    min-height: 125px;
 }
 
 .task-scanner-task-expanded .hangout-text-expanded {
