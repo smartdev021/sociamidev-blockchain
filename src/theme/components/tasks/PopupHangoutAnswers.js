@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/PopupHangoutAnswers.css"
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 class PopupHangoutAnswers extends React.Component {
     constructor(props) {
       super(props);
@@ -45,20 +47,22 @@ class PopupHangoutAnswers extends React.Component {
               return (
                 <div className="row" key={i}>
                   <div className="col-lg-12">
-                    {i + 1}) {question.question}
-                  </div>
-                  <div className="col-lg-6">
-                    <div>{"You"}</div>
-                    <div className="form-group">
-                      <textarea id={`answer_your_${question._id}`} className="form-control validate-field required question-text-area" 
-                        name="answer_your" onChange={(e)=>{}}/>
+                    <div className="question-name">
+                      <span>{question.question}</span>
                     </div>
                   </div>
                   <div className="col-lg-6">
-                    <div>{Partner.user.firstName}</div>
                     <div className="form-group">
-                      <textarea readOnly={true} id={`answer_partner_${question._id}`} className="form-control validate-field required question-text-area" 
-                        name="answer_partner" onChange={(e)=>{}}/>
+                      <textarea id={`answer_your_${question._id}`} 
+                        className="form-control validate-field required question-text-area" placeholder="You"
+                          name="answer_your" onChange={(e)=>{}}/>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="form-group">
+                      <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
+                        className="form-control validate-field required question-text-area" placeholder={Partner.user.firstName}
+                          name="answer_partner" onChange={(e)=>{}}/>
                     </div>
                   </div>
                 </div>
@@ -79,10 +83,10 @@ class PopupHangoutAnswers extends React.Component {
         onRequestClose={() => this.props.onCloseModal()}
         contentLabel={title}>
         <div className="container-fluid popup-hangout-qustions">
-        <a href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></a>
+        <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
         <div className="row">
               <div className="col-lg-12 text-center">
-              <span className="popup-hangout-title">Earn up to <i>30 tokens</i> by completing this task with Alexander</span>
+                <span className="popup-hangout-title">Earn up to <i>30 tokens</i> by completing this task with Alexander</span>
             </div>
             </div>
             
