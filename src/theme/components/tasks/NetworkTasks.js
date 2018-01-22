@@ -49,26 +49,57 @@ const RenderSingleTask = (task, i, props)=> {
 
     
     return (
-      <li key={i}>
-        <div>
-        <span className="hangout-text">{task.creator.firstName} is looking to Hangout for roadmap: {task.metaData.subject.roadmap.name} at {time}</span>
-          {!task.isLocked ? <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
-            Accept
-          </ActionLink>
-          :
-            <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
-          }
-        </div>
-      </li>
+      <li className="task-scanner-task-expanded">
+          <div className="hangout-text-expanded">
+            <div className="hangout-text-expanded-creator">
+              {task.creator.firstName }
+            </div> 
+            is looking to Hangout to discuss: {task.metaData.subject.roadmap.name} at {time}
+            <div className="hangout-text-expanded-creator-detailed">
+              {task.creator.firstName} is in your wider network
+            </div> 
+            <div className="hangout-text-expanded-task-reward">
+              Earn up to 10 tokens completing this task
+            </div> 
+          </div>
+          <div className="hangout-expanded-accept-button-container">
+            {!task.isLocked ? 
+              <ActionLink className="hangout-expanded-accept-button" href="#" 
+                onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+                Accept
+              </ActionLink>
+              :
+              <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
+            }
+          </div>
+        </li>
     );
   }
   else {
     return (
-      <li key={i}>
-        <div>
-          <ActionLink href="#" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>{task.name}</ActionLink>
-        </div>
-      </li>
+      <li className="task-scanner-task-expanded">
+          <div className="hangout-text-expanded">
+            <div className="hangout-text-expanded-creator">
+              {task.name}
+            </div> 
+            <div className="hangout-text-expanded-creator-detailed">
+              {task.creator.firstName} is in your wider network
+            </div> 
+            <div className="hangout-text-expanded-task-reward">
+              Earn up to 10 tokens completing this task
+            </div> 
+          </div>
+          <div className="hangout-expanded-accept-button-container">
+            {!task.isLocked ? 
+              <ActionLink className="hangout-expanded-accept-button" href="#" 
+                onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+                Accept
+              </ActionLink>
+              :
+              <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
+            }
+          </div>
+        </li>
     );
   }
 };

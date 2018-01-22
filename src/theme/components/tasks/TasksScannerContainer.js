@@ -21,7 +21,6 @@ const TasksScannerContainer = (props) => {
                   <div className="content-2-columns-right-title">Network tasks scanner</div>
                 </div>
               </div>
-              <div id="tasks-scanner-container-bg">
               <div className="row">
                 <div className="col-lg-12">
                   <div id="tasks-scanner-description">
@@ -46,7 +45,6 @@ const TasksScannerContainer = (props) => {
                     handleOpenConfirmTaskDetailsPopup={(task)=>props.handleOpenConfirmTaskDetailsPopup(task)}
                   />
                 </div>
-              </div>
               </div>
             </div>
           </div>);
