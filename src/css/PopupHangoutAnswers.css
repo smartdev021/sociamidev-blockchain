@@ -1,0 +1,41 @@
+.popup-hangout-qustions {
+    padding: 40px;
+    margin: 0 auto;
+    background: rgb(255, 255, 255); /* Old browsers */
+    height: 100%;
+  }
+
+.popup-hangout-qustions img {
+    max-width: 50%;
+}
+  
+.popup-hangout-qustions .glyphicon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+  
+.checkbox {
+    font-weight: normal;
+}
+
+.popup-hangout-title {
+    font-size: 18px;
+    color: rgba(59, 197, 186, 0.75);
+}
+
+.popup-close-icon {
+    color: grey;
+    font-size: 18px;
+}
+
+.popup-hangout-answers-button-container {
+    margin-top: 10px;
+}
+
+.popup-hangout-answers-button-container button {
+    background: rgb(59, 197, 186);
+    border: 1px solid rgb(59, 197, 186);
+    border-radius: 15px;
+    color: white;
+}

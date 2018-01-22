@@ -17,6 +17,8 @@ import ConfigMain from '~/configs/main'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import PopupAnswers from '~/src/theme/components/tasks/PopupHangoutAnswers';
+
 import "~/src/theme/appearance.css"
 import "~/src/theme/layout.css"
 import "~/src/theme/css/taskBrowser.css"
@@ -47,6 +49,8 @@ class TaskBrowser extends React.Component {
       isLoading: false,
 
       isSubmitted: false,
+
+      isPopupOpen: true,
     }
 
     this.getPartnerProfile = this.getPartnerProfile.bind(this);
@@ -238,6 +242,14 @@ class TaskBrowser extends React.Component {
     }
   }
 
+  handlePopupSubmit() {
+    this.setState({isPopupOpen: false});
+  }
+
+  handlePopupClose() {
+    this.setState({isPopupOpen: false});
+  }
+
   renderQuestions() {
     if (!this.props.isAuthorized) {
       return (
@@ -351,6 +363,18 @@ class TaskBrowser extends React.Component {
 
     const Partner = this.getPartnerProfile();
 
+   /* if (this.state.isPopupOpen) {
+      const Questions = this.state.questions.length > 0 ? this.state.questions : [];
+
+       const Partner = this.getPartnerProfile();
+
+      return (
+        <PopupAnswers onSubmit={()=>this.handlePopupSubmit()} 
+          onCloseModal={()=>this.handlePopupClose()}
+          questions={Questions} partner={Partner}/>
+      );
+    }*/
+    
     return (
       <div id="main-content_1">
         <div className="container-fluid">
