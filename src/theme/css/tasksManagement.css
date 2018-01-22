@@ -96,7 +96,7 @@
 #tasks-scanner-container #tasks-scanner-description {
     font-size: 14px;
     font-family: "Comfortaa";
-    color: rgb( 255, 255, 255 );
+    color: rgb( 92, 91, 91 );
     line-height: 2.143;
     text-align: center;
     padding-left: 10px;
@@ -115,8 +115,9 @@
 }
 
 #tasks-scanner-container #scanner-input-container {
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
+    border: 1px solid rgb( 92, 91, 91 );
 }
 
 #tasks-scanner-container #scanner-input-container input[type="text"] {
@@ -190,4 +191,8 @@
     background: linear-gradient(45deg, rgb( 128, 163, 235 ) 0%, rgb( 155, 207, 204 ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     padding: 5px;
+}
+
+#tasks-scanner-container .content-2-columns-right-title {
+    color: rgb( 92, 91, 91 );
 }

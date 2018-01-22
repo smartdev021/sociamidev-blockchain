@@ -533,7 +533,7 @@ class TaskManagement extends React.Component {
 
     return (
       <div className={rightSideClassName}>
-        <div className="content-2-columns-right">
+        <div className="content-2-columns-right-no-bg">
           <TasksScannerContainer tasks={tasksFiltered} scannerQuery={this.state.scannerQuery} 
             currentUserID={this.props.userProfile._id}
             handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}

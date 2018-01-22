@@ -12,6 +12,11 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4abfea', endColorstr='#21a7e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   border-radius: 3px;
 }
+.content-2-columns-left-no-bg, .content-2-columns-right-no-bg {
+  border: 1px solid grey;
+  border-radius: 3px;
+  height: 633px;
+}
 /*------------------*/
 
 /*Think of better fix later*/
