@@ -28,6 +28,8 @@ import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks'
 
 import TasksScannerContainer from '~/src/theme/components/tasks/TasksScannerContainer'
 
+import AnswerQuestions from '~/src/theme/components/tasks/AnswerQuestions'
+
 import TaskTypes from "~/src/common/TaskTypes"
 
 import "~/src/theme/css/common.css"
@@ -91,6 +93,9 @@ class TaskManagement extends React.Component {
       scannerQuery: "",
       timeNow: Date.now(),
       isScannerExpanded: !this.props.isAuthorized,
+
+      activeHangout: undefined,
+      isAnswerQuestionsOpen: false,
     }
 
     this.redirectLocation = undefined;    
@@ -197,6 +202,10 @@ class TaskManagement extends React.Component {
         this.props.taskStatusChange(hangout._id, "rescheduled");
         break;
       }
+      case "answer_questions": {
+        this.setState({isAnswerQuestionsOpen: true, activeHangout: hangout});
+        break;
+      }
       default:
         break;
     }
@@ -249,7 +258,7 @@ class TaskManagement extends React.Component {
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
       if (this.props.lastStartedTask._id) {
-        this.redirectLocation = `/taskBrowser?id=${this.props.lastStartedTask._id}`
+        this.hangoutActionPerform("answer_questions", this.props.lastStartedTask);
       }
 
       this.fetchUserTasks();
@@ -546,6 +555,10 @@ class TaskManagement extends React.Component {
     );
   }
 
+  handleAnswersSubmitComplete() {
+    this.setState({isAnswerQuestionsOpen: false});
+  }
+
   render() {
     const RedirectTo = this.redirectLocation ? <Redirect to={this.redirectLocation} push/> : null;
 
@@ -573,6 +586,10 @@ class TaskManagement extends React.Component {
     return (
         <div className="row">
           {RedirectTo}
+          {this.state.isAnswerQuestionsOpen &&
+            <AnswerQuestions currentTask={this.state.activeHangout}
+            onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
+          }
           <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
             onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} 
               item={this.state.detailsPopupItem} item="accept_confirmation"

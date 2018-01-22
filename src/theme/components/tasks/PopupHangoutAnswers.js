@@ -30,6 +30,14 @@ class PopupHangoutAnswers extends React.Component {
       Modal.defaultStyles.overlay.background = "rgba(0, 0, 0, 0.25)";
     }
 
+    getAnswerMy(questionId) {
+      return this.props.answersMy && this.props.answersMy[questionId] ? this.props.answersMy[questionId].text : "";
+    }
+  
+    getAnswerPartner(questionId) {
+      return this.props.answersPartner && this.props.answersPartner[questionId] ? this.props.answersPartner[questionId].text : "";
+    }
+
     componentWillUnmount() {
       console.log("PopupHangoutAnswers::componentWillUnmount");
       Modal.defaultStyles = this.modalDefaultStyles;
@@ -37,12 +45,17 @@ class PopupHangoutAnswers extends React.Component {
 
     renderQuestions() {
       const Partner = this.props.partner;
+
+      const that = this;
       
       return (
       <div id="questions-list">
         <div className="container-fluid">
           {
             this.props.questions.map(function(question, i) {
+
+              const AnswerMy = that.getAnswerMy([question._id]);
+              const AnswerPartner = that.getAnswerPartner([question._id]);
 
               return (
                 <div className="row" key={i}>
@@ -55,14 +68,14 @@ class PopupHangoutAnswers extends React.Component {
                     <div className="form-group">
                       <textarea id={`answer_your_${question._id}`} 
                         className="form-control validate-field required question-text-area" placeholder="You"
-                          name="answer_your" onChange={(e)=>{}}/>
+                          name="answer_your" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerMy}/>
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="form-group">
                       <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
                         className="form-control validate-field required question-text-area" placeholder={Partner.user.firstName}
-                          name="answer_partner" onChange={(e)=>{}}/>
+                          name="answer_partner" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
                     </div>
                   </div>
                 </div>
@@ -76,6 +89,24 @@ class PopupHangoutAnswers extends React.Component {
 
     renderHangoutAnswers() {
       const title = "Earn up to 30 tokens by completing this task with Alexander";
+      if (this.props.isLoading) {
+        return (
+          <Modal 
+          isOpen={true}
+          onRequestClose={() => this.props.onCloseModal()}
+          contentLabel={title}>
+          <div className="container-fluid popup-hangout-qustions">
+          <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
+          <div className="row">
+                <div className="col-lg-12 text-center">
+                  <span className="popup-hangout-title">Loading...</span>
+              </div>
+              </div>
+              
+                </div>
+        </Modal>
+        );
+      }
 
       return (
         <Modal 
@@ -99,7 +130,7 @@ class PopupHangoutAnswers extends React.Component {
               <div className="col-lg-12">
                 <div className="popup-hangout-answers-button-container">
                   <button type="button" className="btn btn-sm btn-outline-inverse pull-right" 
-                    onClick={() => this.props.onSubmit()}>Submit</button>
+                    onClick={(e) => this.props.onSubmit(e)}>Submit</button>
                 </div>
               </div>
             </div>
