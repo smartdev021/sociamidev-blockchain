@@ -70,6 +70,7 @@
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
+    "react-bootstrap-dropdown-menu": "^1.1.14",
     "react-click-outside": "^3.0.0",
     "react-cookie": "^2.1.1",
     "react-datalist": "^4.0.0",
