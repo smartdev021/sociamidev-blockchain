@@ -36,7 +36,6 @@ import "~/src/theme/css/common.css"
 import "~/src/theme/css/tasksManagement.css"
 
 import {
-  setTasks,
   fetchTasksInitiate,
   fetchTasksComplete,
   hangoutJoin,
@@ -632,7 +631,6 @@ TaskManagement.propTypes = {
   hangoutJoin: PropTypes.func.isRequired,
   taskStatusChange: PropTypes.func.isRequired,
   taskLeave: PropTypes.func.isRequired,
-  setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
@@ -663,7 +661,6 @@ const mapDispatchToProps = dispatch => ({
   hangoutJoin: bindActionCreators(hangoutJoin, dispatch),
   taskStatusChange: bindActionCreators(taskStatusChange, dispatch),
   taskLeave: bindActionCreators(taskLeave, dispatch),
-  setTasks: bindActionCreators(setTasks, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
