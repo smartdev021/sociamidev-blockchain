@@ -51,6 +51,7 @@ let DataProviderUdemy = require("~/src/data_providers/udemy/DataProvider");
 let DataProviderFreelancer = require("~/src/data_providers/freelancer/DataProvider");
 
 const BackendURL = ConfigMain.getBackendURL();
+var socketConn;
 
 class App extends Component {
   constructor(props) {
@@ -58,11 +59,29 @@ class App extends Component {
     this.state = {
       faceBookID: null,
       linkedInID: null,
+      verfiedSocketConnection: false,
     };
-
+    
     var uuid = this.uuidv1();
     this.state.anonymousUserId = uuid;
     this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
+    socketConn = this.socket;
+
+   this.socket.on('newUser', user => {
+      var chatObj = {
+        eventType: 'newUser',
+        data: user
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('server:user', newUsers => {
+      var chatObj = {
+        eventType: 'server:user',
+        data: newUsers
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
 
     this.socket.on('EVENT', eventObj => {
       PubSub.publish(eventObj.eventType, eventObj);
@@ -83,7 +102,12 @@ class App extends Component {
   }
 
   componentDidMount(){
-    //PubSub.publish('HELLO', "kkkk");
+    /*if(this.state.faceBookID || this.state.linkedInID){
+      this.initiateSocketConnectionForLoggedInUser();
+    }
+    else{
+      this.initiateSocketConnectionForAnonymousUser();
+    }*/
   }
 
   /*mySubscriber(msg, data) {
@@ -227,6 +251,13 @@ class App extends Component {
     if (this.props.cookies != prevProps.cookies) {
       console.log("Cookies has been changed");
     }
+
+    if(this.state.userID && this.state.verfiedSocketConnection == false){
+      let copy = Object.assign({}, this.state, {verfiedSocketConnection: true});
+      this.setState(copy);
+    }
+
+
   }
 
   getRedirectLocation() {
@@ -260,25 +291,37 @@ class App extends Component {
   }
   
   render() {
-    let RedirectTo = this.getRedirectLocation();
-
+    let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
-    // Check if user is logged in
-		if(this.props.isAuthorized && this.state.userID){
-      // Check if user is logged in via FB
-			if (this.state.faceBookID) {
-        var tempUserType = "facebook";
-				ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.faceBookID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
-			}
-			// Check if user is logged in via LinkedIn
-			else if(this.state.linkedInID) {
-        var tempUserType = "linkedin";
-				ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.linkedInID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
-			}
+    var username = "";
+    var userType = "";
+    if(this.state.faceBookID){
+      username = this.state.faceBookID;
+      userType = "facebook";
+    }
+    else if(this.state.linkedInID){
+      username = this.state.linkedInID;
+      userType = "linkedin";
+    }
+
+    if(this.props.isAuthorized && this.state.userID){
+      ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.faceBookID} userType={userType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
     }
     else if(!this.props.isAuthorized){
       ChatAppLink = <ChatApp loggedin={this.props.isAuthorized}/>;
     }
+
+    if(this.state.userID && this.state.verfiedSocketConnection == false){
+      var userData = {
+        username: username,
+        userType: userType,
+        userID: this.state.userID,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
+      }
+      socketConn.emit('UserLoggedIn', userData);      
+    }
+    
     
     return (
       <div className="outer-container">

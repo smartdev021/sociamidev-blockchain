@@ -9,6 +9,7 @@ import Axios from 'axios';
 import Messages from './Messages';
 import Users from './Users';
 import ChatInput from './ChatInput';
+import PubSub from 'pubsub-js';
 
 import ConfigMain from '../../../configs/main';
 
@@ -18,6 +19,8 @@ var lastMessageRec = "";
 class ChatApp extends React.Component {
   componentWillMount() {
     //this.props.cookies.getAll();
+    this.token = PubSub.subscribe('ChatStartPoint', this.chatStartListener.bind(this));
+    console.log("Token - " + this.token);
   }
 
   componentDidMount() {
@@ -35,8 +38,14 @@ class ChatApp extends React.Component {
 
     let copy = Object.assign({}, this.state, {users: tUsers});
     this.setState(copy);
+
+    //this.token = PubSub.subscribe('ChatStartPoint', this.chatStartListener);
   }
   
+  componentWillUnmount(){
+    //PubSub.unubscribe(this.token);
+  }
+
   constructor(props) {
     super(props);
     this.state = { messageStack: [],
@@ -49,10 +58,11 @@ class ChatApp extends React.Component {
                    anonymousUserId: ""
                 };    
 
+    //this.chatStartListener = this.chatStartListener.bind(this)
     if(this.props.loggedin){
-      this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
+      //this.socket = io(BackendURL, { query: `username=${props.username}&userID=${props.userID}&firstName=${props.firstName}&lastName=${props.lastName}&userType=${props.userType}` }).connect();
                   
-      this.socket.on('server:user', newUsers => {
+    /*  this.socket.on('server:user', newUsers => {
         var tempUsers = this.state.users;
 
         for(var i=0; i<newUsers.length; i++){
@@ -93,14 +103,33 @@ class ChatApp extends React.Component {
     else{
       var uuid = this.uuidv1();
       this.state.anonymousUserId = uuid;
-      this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
+      //this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
 
       this.socket.on('chatbotServer:message', message => {
         lastMessageRec = message;
         this.addMessage(message);
         this.addLastMessage(message);
       });
+    }*/
+  }
+  }
+
+  chatStartListener(event,data){
+    if(data.eventType == "server:user"){
+      this.loadConnectedUsers(data);
     }
+  }
+
+  loadConnectedUsers(newUsers){
+    var tempUsers = this.state.users;
+
+    for(var i=0; i<newUsers.length; i++){
+      var newUser = newUsers[i];
+      tempUsers.push(newUser);
+    }
+
+    let copy = Object.assign({}, this.state, {users: tempUsers});
+    this.setState(copy);
   }
 
   tabChanges(activeUserID,activeUserFullname){
@@ -134,10 +163,10 @@ class ChatApp extends React.Component {
     }
     // Emit the message to the server
     if(this.state.activeUserID == "chatbot"){
-      this.socket.emit('chatbotClient:message', messageObject);
+      //this.socket.emit('chatbotClient:message', messageObject);
     }
     else{
-      this.socket.emit('client:message', messageObject);      
+      //this.socket.emit('client:message', messageObject);      
     }
 
     messageObject.fromMe = true;
