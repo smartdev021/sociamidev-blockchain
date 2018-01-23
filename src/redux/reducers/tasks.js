@@ -18,7 +18,7 @@ const tasksInitialState = [];
 
 export function tasks(state = tasksInitialState, action) {
   switch (action.type) {
-    case TASKS_SET:
+    case FETCH_TASKS_COMPLETE:
       return action.tasks;
     case TASK_UPDATE: {
       let findByID = function(task) {

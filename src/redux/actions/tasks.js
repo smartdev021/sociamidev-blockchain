@@ -3,7 +3,6 @@ import Axios from 'axios'
 import ConfigMain from '~/configs/main'
 
 import {
-    TASKS_SET,
     TASK_UPDATE,
     TASK_ADD,
     TASK_REMOVE,
@@ -22,13 +21,6 @@ import {
     TASK_SET_PUBLISHED,
 
 } from './actionTypes';
-
-export function setTasks(newTasks) {
-    return {
-        type: TASKS_SET,
-        tasks: newTasks
-    }
-}
 
 export function addTask(newTask) {
     return {
@@ -72,9 +64,10 @@ export function fetchTasksInitiate() {
     }
 }
 
-export function fetchTasksComplete() {
+export function fetchTasksComplete(tasks) {
     return {
         type: FETCH_TASKS_COMPLETE,
+        tasks: tasks,
     }
 }
 
@@ -169,14 +162,10 @@ console.log("publishedOnly: " + publishedOnly);
           return (
             Axios.get(url)
             .then(function(response) {
-                //async action exit point
-                dispatch(setTasks(response.data));
-                dispatch(fetchTasksComplete());
+                dispatch(fetchTasksComplete(response.data));
             })
             .catch(function(error) {
-                //async action exit point
-                dispatch(setTasks({}));
-                dispatch(fetchTasksComplete({}));
+                dispatch(fetchTasksComplete([]));
             }));
         }
     }

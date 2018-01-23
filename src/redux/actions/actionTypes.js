@@ -59,8 +59,6 @@ export const ROADMAPS_ADMIN_FETCH_COMPLETE = "roadmaps_admin_fetch_complete";
 
 export const EXACT_LOCATION_SET = "exact_location_set";
 
-export const TASKS_SET = "tasks_set";
-
 export const TASK_LASTSAVED_SET = "task_lastsaved_set";
 export const TASK_LASTSTARTED_SET = "task_laststarted_set";
 
