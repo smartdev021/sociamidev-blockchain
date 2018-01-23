@@ -1,0 +1,56 @@
+.my-tasks-container-new {
+    height: 90%;
+}
+
+.my-tasks-container-new-tasks-list {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.my-tasks-task {
+    border-bottom: 1px solid grey;
+    min-height: 120px;
+}
+
+.my-tasks-task #title {
+    font-size: 12px;
+    font-family: "Comfortaa";
+    color: rgb( 62, 62, 62 );
+}
+
+.my-tasks-task #partner-name {
+    text-decoration: underline;
+}
+
+.my-tasks-task #description, .my-tasks-task #description_1 {
+    font-size: 12px;
+    font-family: "Comfortaa";
+    color: rgba(62, 62, 62, 0.5);
+}
+
+.task-actions-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 40%;
+}
+
+.my-tasks-task-text {
+    height: 60%;
+}
+
+.task-actions-container button {
+    background-color: rgb( 240, 98, 59 );
+    width: 66px;
+    height: 23px;
+    border: 1px solid rgb( 240, 98, 59 );
+    border-radius: 15px;
+    font-size: 8px;
+    color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.task-actions-container button:disabled {
+    border: 1px solid rgb( 215, 215, 215 );
+    background-color: rgb( 215, 215, 215 );
+}
