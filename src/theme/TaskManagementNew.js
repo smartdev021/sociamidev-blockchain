@@ -77,11 +77,16 @@ const TaskCategoryMyOffers = {
   name: "Sent"
 };
 
+const TasksAll = {type: "all", label: "All"};
+const TasksConfirmed = {type: "confirmed", label: "Confirmed"};
+const TasksMy = {type: "my_deepdive", label: "My Deepdive"};
+const TasksSentRequests = {type: "sent_requests", label: "Sent Requests"};
+
 const Filters = [
-  {type: "all", label: "All"}, 
-  {type: "confirmed", label: "Confirmed"}, 
-  {type: "my_deepdive", label: "My Deepdive"}, 
-  {type: "sent_requests", label: "Sent Requests"}
+  TasksAll, 
+  TasksConfirmed, 
+  TasksMy, 
+  TasksSentRequests
 ];
 
 const BackendURL = ConfigMain.getBackendURL();
@@ -442,30 +447,38 @@ class TaskManagementNew extends React.Component {
 
     const CurrentUserID = this.props.userProfile._id;
 
-    switch (this.state.tasksCategory.type) {
-      case TaskCategoryAssigned.type: {
-        tasks = this.getTasksAssignedToMe();
-        break;
-      }
-      case TaskCategoryYour.type: {
-        tasks = this.getTasksCreatedByMe();
-        break;
-      }
-      case TaskCategoryMyRequests.type: {
+    const that = this;
+
+    switch (this.state.filterCurrent.type) {
+      case TasksConfirmed.type: {
         tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.creator._id == CurrentUserID;
-        });
-        break;
-      }
-      case TaskCategoryMyOffers.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.metaData.participants.findIndex(function(participant) {
-            return participant.user._id == CurrentUserID && participant.status == "pending"; 
+          return task.type == "hangout" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+            return participant.user._id == CurrentUserID && participant.status == "accepted";
           }) != -1;
         });
         break;
       }
+      case TasksSentRequests.type: {
+        tasks = this.props.tasks.filter(function(task) {
+          return task.type == "hangout" && task.status == "None" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+            return participant.user._id == CurrentUserID && participant.status == "pending";
+          }) != -1;
+        });
+        break;
+      }
+      case TasksMy.type: {
+        tasks = that.props.tasksCreatedCurrentUser.filter(function(task) {
+          return task.type == "hangout";
+        });
+        break;
+      }
+      default:
+        tasks = this.props.tasks;
+        break;
     }
+
+    console.log("getMyTasksAndHangouts this.state.filterCurrent.type: " + this.state.filterCurrent.type);
+    console.dir(tasks);
 
     return tasks;
   }
@@ -548,7 +561,6 @@ class TaskManagementNew extends React.Component {
   }
 
   handleFilterChange(newFilter) {
-    console.log("newFilter: " + newFilter);
     this.setState({filterCurrent: newFilter});
   }
 

@@ -98,7 +98,23 @@ const GenerateHangoutText = (hangout, props)=> {
       break;
     }
     default:
-      HangoutText = <div id="title">Confirmed Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
+      let isRequestAccepted = false;
+
+      for (let i = 0; i < hangout.metaData.participants.length; ++i) {
+        if (hangout.metaData.participants[i].user._id == props.currentUserID) {
+          if (hangout.metaData.participants[i].status == "accepted") {
+            isRequestAccepted = true;
+          }
+        }
+      }
+
+      if (isRequestAccepted) {
+        HangoutText = <div id="title">Confirmed Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
+      }
+      else {
+        HangoutText = <div id="title">Your request too Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
+      }
+      
       break;
     }
 
@@ -127,6 +143,8 @@ const CategorySelection = (props) => {
 }
 
 const RenderTasks = (props) => {
+  console.log("RenderTasks");
+  console.dir(props.tasks);
   return (
     <div className="row">
       <div className="my-tasks-container-new-tasks-list">
