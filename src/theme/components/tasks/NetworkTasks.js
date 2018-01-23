@@ -49,7 +49,7 @@ const RenderSingleTask = (task, i, props)=> {
 
     
     return (
-      <li className="task-scanner-task-expanded">
+      <li className="task-scanner-task-expanded" key={i}>
           <div className="hangout-text-expanded">
             <div className="hangout-text-expanded-creator">
               {task.creator.firstName }
@@ -77,7 +77,7 @@ const RenderSingleTask = (task, i, props)=> {
   }
   else {
     return (
-      <li className="task-scanner-task-expanded">
+      <li className="task-scanner-task-expanded" key={i}>
           <div className="hangout-text-expanded">
             <div className="hangout-text-expanded-creator">
               {task.name}
