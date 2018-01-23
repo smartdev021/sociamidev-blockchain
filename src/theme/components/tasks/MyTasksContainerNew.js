@@ -108,12 +108,21 @@ const GenerateHangoutText = (hangout, props)=> {
 
 const CategorySelection = (props) => {
   return (
-    <DropdownMenu triggerType='icon' trigger='glyphicon glyphicon-menu-down'>
-        <MenuItem text='All' onClick={()=>{}}/>
-        <MenuItem text='Confirmed' onClick={()=>{}}/>
-        <MenuItem text='My Deepdive' onClick={()=>{}}/>
-        <MenuItem text='Sent requests' onClick={()=>{}}/>
-    </DropdownMenu>
+    <span className="dropdown">
+      <span className="glyphicon glyphicon-menu-down dropdown-toggle" type="button" data-toggle="dropdown"></span>
+        <ul className="dropdown-menu">
+          {
+            props.filters.map((filter, i) => {
+            const ClassName = props.filterCurrent.type == filter.type ? "tasks-category-entry" : "tasks-category-entry active"
+            return (
+              <li key={i} className={props.filterCurrent.type == filter.type ? "active" : ""}>
+                <ActionLink href="#" className={ClassName} onClick={()=>props.onFilterChange(filter)}>{filter.label}</ActionLink>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </span>
   );
 }
 

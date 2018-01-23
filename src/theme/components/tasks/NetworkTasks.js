@@ -43,10 +43,6 @@ const RenderSingleTask = (task, i, props)=> {
     else {
       time = `${Hours} on ${DayFromNumber(date.getDay())} (${date.getDate()} ${MonthFromNumber(date.getMonth())})`; 
     }
-
-    console.log("%cRenderSingleTask: ", "background: blue; color: white;");
-    console.log(`${date.toLocaleDateString()} ${date.toLocaleTimeString()} ${date.getDay()}`);
-
     
     return (
       <li className="task-scanner-task-expanded" key={i}>

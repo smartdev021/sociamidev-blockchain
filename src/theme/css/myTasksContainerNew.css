@@ -7,6 +7,14 @@
     overflow-y: auto;
 }
 
+.my-tasks-container-new .content-2-columns-left-title {
+    margin-right: 10px;
+}
+
+.my-tasks-container-new .dropdown {
+    cursor: pointer;
+}
+
 .my-tasks-task {
     border-bottom: 1px solid grey;
     min-height: 120px;

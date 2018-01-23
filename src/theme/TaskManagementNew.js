@@ -23,8 +23,6 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-//import MyTasksContainer from '~/src/theme/components/tasks/MyTasksContainer'
-
 import MyTasksContainerNew from '~/src/theme/components/tasks/MyTasksContainerNew'
 
 import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks'
@@ -39,7 +37,6 @@ import "~/src/theme/css/common.css"
 import "~/src/theme/css/tasksManagement.css"
 
 import {
-  setTasks,
   fetchTasksInitiate,
   fetchTasksComplete,
   hangoutJoin,
@@ -80,6 +77,13 @@ const TaskCategoryMyOffers = {
   name: "Sent"
 };
 
+const Filters = [
+  {type: "all", label: "All"}, 
+  {type: "confirmed", label: "Confirmed"}, 
+  {type: "my_deepdive", label: "My Deepdive"}, 
+  {type: "sent_requests", label: "Sent Requests"}
+];
+
 const BackendURL = ConfigMain.getBackendURL();
 
 const Categories = [TaskCategoryYour, TaskCategoryAssigned, TaskCategoryMyRequests, TaskCategoryMyOffers];
@@ -99,6 +103,9 @@ class TaskManagementNew extends React.Component {
 
       activeHangout: undefined,
       isAnswerQuestionsOpen: false,
+
+      //
+      filterCurrent: Filters[0],
     }
 
     this.redirectLocation = undefined;    
@@ -524,6 +531,10 @@ class TaskManagementNew extends React.Component {
 
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
+
+            onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)}
+            filterCurrent={this.state.filterCurrent}
+            filters={Filters}
           />
        </div>
     </div>
@@ -534,6 +545,11 @@ class TaskManagementNew extends React.Component {
     if (this.props.isAuthorized) {
       this.setState({isScannerExpanded: expanded});
     }
+  }
+
+  handleFilterChange(newFilter) {
+    console.log("newFilter: " + newFilter);
+    this.setState({filterCurrent: newFilter});
   }
 
   renderRightSide() {
@@ -637,7 +653,6 @@ TaskManagementNew.propTypes = {
   hangoutJoin: PropTypes.func.isRequired,
   taskStatusChange: PropTypes.func.isRequired,
   taskLeave: PropTypes.func.isRequired,
-  setTasks: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
@@ -668,7 +683,6 @@ const mapDispatchToProps = dispatch => ({
   hangoutJoin: bindActionCreators(hangoutJoin, dispatch),
   taskStatusChange: bindActionCreators(taskStatusChange, dispatch),
   taskLeave: bindActionCreators(taskLeave, dispatch),
-  setTasks: bindActionCreators(setTasks, dispatch),
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
