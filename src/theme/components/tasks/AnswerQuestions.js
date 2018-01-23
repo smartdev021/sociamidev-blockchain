@@ -270,6 +270,7 @@ class AnswerQuestions extends React.Component {
         answersMy={this.state.answersMy}
         answersPartner={this.state.answersPartner}
         isLoading={this.state.isLoading}
+        isSubmitting={this.state.isSubmitInProgress}
         onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}/>
     );
   }

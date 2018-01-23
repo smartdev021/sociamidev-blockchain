@@ -30,6 +30,11 @@
     color: rgba(59, 197, 186, 0.75);
 }
 
+.popup-questions-loading-text {
+    margin-top: 20px;
+    color: rgba(59, 197, 186, 0.75);
+}
+
 .popup-close-icon {
     color: grey;
     font-size: 18px;
@@ -37,7 +42,7 @@
 }
 
 .popup-hangout-answers-button-container {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .popup-hangout-answers-button-container button {
@@ -56,8 +61,8 @@
 
 .popup-hangout-qustions ::-webkit-input-placeholder {
     text-align: center;
-    font-size: 34px;
-    line-height: 120px;
+    font-size: 28px;
+    line-height: 110px;
     text-transform: uppercase;
     color: rgba(119, 114, 114, 0.356);
 }
@@ -65,16 +70,31 @@
     /* Firefox 18- */
     text-align: center;
     font-size: 30px;
-    line-height: 30px;
+    line-height: 115px;
+    text-transform: uppercase;
+    color: rgba(119, 114, 114, 0.356);
 }
 .popup-hangout-qustions ::-moz-placeholder {
     /* Firefox 19+ */
     text-align: center;
     font-size: 30px;
-    line-height: 30px;
+    line-height: 115px;
+    text-transform: uppercase;
+    color: rgba(119, 114, 114, 0.356);
 }
 .popup-hangout-qustions :-ms-input-placeholder {
     text-align: center;
     font-size: 30px;
-    line-height: 30px;
+    line-height: 115px;
+    text-transform: uppercase;
+    color: rgba(119, 114, 114, 0.356);
+}
+
+.popup-hangout-qustions #questions-list {
+    overflow-y: auto;
+    height: 580px;
+}
+
+.popup-hangout-qustions #questions-list .question-text-area {
+    height: 130px;
 }

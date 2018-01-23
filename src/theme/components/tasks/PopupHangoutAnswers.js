@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import {Icon} from 'react-fa'
 import "~/src/css/PopupHangoutAnswers.css"
 
 import ActionLink from '~/src/components/common/ActionLink'
@@ -11,7 +12,7 @@ class PopupHangoutAnswers extends React.Component {
       this.modalDefaultStyles = {};
     }
 
-    componentWillMount() {
+    componentDidMount() {
       console.log("PopupHangoutAnswers::componentWillMount");
       this.modalDefaultStyles = Modal.defaultStyles;
 
@@ -25,6 +26,7 @@ class PopupHangoutAnswers extends React.Component {
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
       Modal.defaultStyles.content["width"] = '90%';
+      Modal.defaultStyles.content["height"] = '720px';
       Modal.defaultStyles.content["maxWidth"] = '90%';
 
       Modal.defaultStyles.overlay.background = "rgba(0, 0, 0, 0.25)";
@@ -89,7 +91,8 @@ class PopupHangoutAnswers extends React.Component {
 
     renderHangoutAnswers() {
       const title = "Earn up to 30 tokens by completing this task with Alexander";
-      if (this.props.isLoading) {
+      if (this.props.isLoading || this.props.isSubmitting) {
+        const LoadingText = this.props.isSubmitting ? "Submitting..." : "Loading...";
         return (
           <Modal 
           isOpen={true}
@@ -99,7 +102,7 @@ class PopupHangoutAnswers extends React.Component {
           <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
           <div className="row">
                 <div className="col-lg-12 text-center">
-                  <span className="popup-hangout-title">Loading...</span>
+                  <h2 className="popup-questions-loading-text">{LoadingText}<Icon spin name="spinner" /></h2>
               </div>
               </div>
               
