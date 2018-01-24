@@ -18,7 +18,7 @@ import Authorize from '~/src/authentication/Authorize';
 
 import HomePage from '~/src/theme//HomePage.js';
 import TrendScanner from '~/src/theme/TrendScanner.js';
-import TaskManagement from '~/src/theme/TaskManagement';
+import TaskManagement from '~/src/theme/TaskManagementNew';
 import ProjectManager from '~/src/theme/ProjectManagement';
 import ProjectBrowser from '~/src/theme/ProjectBrowser';
 import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser'
