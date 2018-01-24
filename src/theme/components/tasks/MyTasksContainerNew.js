@@ -102,56 +102,25 @@ const CategorySelection = (props) => {
 }
 
 const RenderActions = (hangout, props) => {
+  const Partner = GetHangoutPartner(hangout, props);
+  const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
+  const FirstAcceptedParticipant = FirstAcceptedParticipants(hangout, props);
 
-const Partner = GetHangoutPartner(hangout, props);
-
-//Current user has created this hangout
-  if (hangout.creator._id == props.currentUserID) {
-
-    const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
-    const FirstAcceptedParticipant = FirstAcceptedParticipants(hangout, props);
-
-    if (FirstPendingParticipant) {
+  switch (hangout.status) {
+    case "complete": {
       return (
         <div className="task-actions-container">
-          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
-            onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Accept</button>
-          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
-            onClick={()=>{}}>Open Chat</button>
-          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
-            onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Reject</button>
-        </div>);
-   }
-   else {
-      return (
-        <div className="task-actions-container">
-          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-            onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</button>
-          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-            onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</button>
-          {(hangout.creator._id == props.currentUserID && hangout.status != "started") && 
-          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-            disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
-              onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</button>}
-          {
-            hangout.status == "started" &&
-            <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-            disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
-              onClick={()=>props.onHangoutActionPerform("answer_questions", hangout)}>Answer Questions</button>
-          }
         </div>
-    );
-   }
-  } 
-  else {
-    if (hangout.status == "finished") {
+      );
+    }
+    case "finished": {
       if (hangout.metaData.ratings.findIndex(function(rating) {
         return rating.fromUser == props.currentUserID && rating.toUser == Partner.user._id; }) == -1) {
           return (
             <div className="task-actions-container">
-              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-rate" 
                 onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "good")}>Good</button>
-              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-rate"
                 onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "bad")}>Bad</button>
             </div>);
       }
@@ -161,20 +130,106 @@ const Partner = GetHangoutPartner(hangout, props);
             <span>Waiting partner's feedback</span>
           </div>);
       }
+    }
+    case "None": {
+      if (hangout.creator._id == props.currentUserID) {
+        const TimeHasCome = props.timeNow >= hangout.metaData.time;
+
+        if (FirstAcceptedParticipant) {
+          return (
+            <div className="task-actions-container">
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+                onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule
+              </button>
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+                onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel
+              </button>
+              {
+                <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+                  disabled={!TimeHasCome}
+                    onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start
+                </button>
+              }
+            </div>
+          );
+        }
+        else if (FirstPendingParticipant) {
+          return (
+            <div className="task-actions-container">
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+                onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Accept
+              </button>
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+                onClick={()=>{}}>Open Chat
+              </button>
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
+                onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Reject
+              </button>
+            </div>
+          );
+        }
+        else {
+          return (
+            <div className="task-actions-container">
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+                onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule
+              </button>
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+                onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel
+              </button>
+            </div>
+          );
+        }
+    }
+    else {
+      return (
+        <div className="task-actions-container">
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-withdraw" 
+            onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Withdraw</button>
+        </div>
+      );
+    }
   }
-  else if(hangout.status == "complete") {
+  case "started": {
     return (
       <div className="task-actions-container">
-      </div>);
+        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+          onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule
+        </button>
+        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+          onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel
+        </button>
+        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+            disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
+              onClick={()=>props.onHangoutActionPerform("answer_questions", hangout)}>Answer Questions
+        </button>
+      </div>
+    );
   }
-  else {
+  case "cancelled":
+  case "canceled": {
+    if (hangout.creator._id != props.currentUserID) {
+      return (
+        <div className="task-actions-container">
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-withdraw" 
+            onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Withdraw</button>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="task-actions-container">
+        </div>
+      );
+    }
+  }
+  default: {
     return (
       <div className="task-actions-container">
-        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-withdraw" 
-          onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Withdraw</button>
-      </div>);
+      </div>
+    );
   }
-}
+ }
 }
 
 const HangoutTitleFromStatus = (task, Partner) => {
@@ -267,6 +322,7 @@ const HangoutTitleFromStatus = (task, Partner) => {
         break;
       }
       default: {
+        if (Partner.status == "accepted") {
           result = (
             <div id="title">
                 Confirmed Deepdive with <span id="partner-name">
@@ -274,7 +330,17 @@ const HangoutTitleFromStatus = (task, Partner) => {
               </span>
             </div>
             );
-          break;
+        }
+        else if (Partner.status == "pending") {
+          result = (
+            <div id="title">
+              <span id="partner-name">
+                {`${Partner.user.firstName}`}
+              </span> {`wants to join your "${task.metaData.subject.skill.name}" Deepdive`}
+            </div>
+            );
+        }
+        break;
       }
     }
   }

@@ -81,12 +81,14 @@ const TasksAll = {type: "all", label: "All"};
 const TasksConfirmed = {type: "confirmed", label: "Confirmed"};
 const TasksMy = {type: "my_deepdive", label: "My Deepdive"};
 const TasksSentRequests = {type: "sent_requests", label: "Sent Requests"};
+const TasksCompleted = {type: "completed", label: "Completed"};
 
 const Filters = [
   TasksAll, 
   TasksConfirmed, 
   TasksMy, 
-  TasksSentRequests
+  TasksSentRequests,
+  TasksCompleted,
 ];
 
 const BackendURL = ConfigMain.getBackendURL();
@@ -482,8 +484,25 @@ class TaskManagementNew extends React.Component {
       return false;
     }
 
+    const filterCompleted = (task) => {
+      if (task.status != "complete") {
+        return false;
+      }
+      
+      if (task.type == "hangout") {
+        return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1);
+      }
+      else {
+        return task.creator._id == CurrentUserID || task.assignees.findIndex(function(assignee){
+          return assignee._id == CurrentUserID;
+        }) != -1;
+      }
+    }
+
     const filterAll = (task) => {
-      return filterMy(task) || filterConfirmed(task) || filterSentRequests(task);
+      return filterMy(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
      }
 
     switch (this.state.filterCurrent.type) {
@@ -493,6 +512,10 @@ class TaskManagementNew extends React.Component {
       }
       case TasksSentRequests.type: {
         tasks = this.props.tasks.filter(filterSentRequests);
+        break;
+      }
+      case TasksCompleted.type: {
+        tasks = this.props.tasks.filter(filterCompleted);
         break;
       }
       case TasksMy.type: {
