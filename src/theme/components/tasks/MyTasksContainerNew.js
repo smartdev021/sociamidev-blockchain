@@ -81,88 +81,6 @@ const GenerateDateString = (time, props) => {
   return DateString;
 }
 
-const GenerateHangoutText = (hangout, props)=> {
-  const Partner = GetHangoutPartner(hangout, props);
-
-  let HangoutText = <div id="title">Not Available</div>;
-
-  switch (hangout.status) {
-    case "started": {
-      HangoutText = <div id="title">
-      Your Hangout on skill {hangout.metaData.subject.skill.name} with
-      <span id="partner-name"> {Partner.user.firstName}</span>
-      {` has been started`}
-      </div>;
-      
-      break;
-    }
-    case "finished": {
-      const DateString = GenerateDateString(hangout.timeStatusChanged, props);
-
-      HangoutText = <div id="title">
-        You met <span id="partner-name">{`${Partner.user.firstName} `}</span>
-        {`for ${hangout.metaData.subject.skill.name}. How was it?.`}
-        </div>;
-
-      break;
-    }
-    case "cancelled": {
-      HangoutText = <div id="title">
-        Your Deepdive on {hangout.metaData.subject.skill.name} with <span id="partner-name">{Partner.user.firstName} </span>
-        has been cancelled.
-        </div>
-      break;
-    }
-    case "complete": {
-      HangoutText = <div id="title">
-        Your Deepdive on {hangout.metaData.subject.skill.name} with <span id="partner-name">{Partner.user.firstName} </span>
-        is complete.
-        </div>
-      break;
-    }
-    default:
-      let isRequestAccepted = false;
-
-      //current user is hangout creator
-      if (hangout.creator._id == props.currentUserID) {
-        const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
-
-        if (FirstPendingParticipant) {
-          HangoutText = <div id="title"><span id="partner-name">{FirstPendingParticipant.user.firstName} </span>
-        {`wants to join your ${hangout.metaData.subject.skill.name} Deepdive`}
-        </div>
-        }
-        else {
-          HangoutText = <div id="title">
-          No new requests
-        </div>
-        }
-      }
-      else {
-        //current user is possible participant
-        for (let i = 0; i < hangout.metaData.participants.length; ++i) {
-          if (hangout.metaData.participants[i].user._id == props.currentUserID) {
-            if (hangout.metaData.participants[i].status == "accepted") {
-              isRequestAccepted = true;
-            }
-          }
-        }
-  
-        if (isRequestAccepted) {
-          HangoutText = <div id="title">Confirmed Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
-        }
-        else {
-          HangoutText = <div id="title">Your request too Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
-        }
-      }
-
-      break;
-    }
-
-  return HangoutText;
-}
-/**************** */
-
 const CategorySelection = (props) => {
   return (
     <span className="dropdown">
@@ -184,26 +102,14 @@ const CategorySelection = (props) => {
 }
 
 const RenderActions = (hangout, props) => {
-  if (hangout.status == "complete") {
-    return (
-      <div className="task-actions-container">
-      </div>
-    )  
-  }
-  else if (hangout.status == "finished") {
-    const Partner = GetHangoutPartner(hangout, props);
 
-    return (
-      <div className="task-actions-container">
-        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
-          onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "good")}>Good</button>
-        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
-          onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "bad")}>Bad</button>
-      </div>);
-  }
+const Partner = GetHangoutPartner(hangout, props);
 
+//Current user has created this hangout
   if (hangout.creator._id == props.currentUserID) {
+
     const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
+    const FirstAcceptedParticipant = FirstAcceptedParticipants(hangout, props);
 
     if (FirstPendingParticipant) {
       return (
@@ -215,28 +121,46 @@ const RenderActions = (hangout, props) => {
           <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
             onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Reject</button>
         </div>);
-    }
+   }
+   else {
+      return (
+        <div className="task-actions-container">
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+            onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</button>
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+            onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</button>
+          {(hangout.creator._id == props.currentUserID && hangout.status != "started") && 
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+            disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
+              onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</button>}
+          {
+            hangout.status == "started" &&
+            <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+            disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
+              onClick={()=>props.onHangoutActionPerform("answer_questions", hangout)}>Answer Questions</button>
+          }
+        </div>
+    );
+   }
+  } 
+  else {
+    if (hangout.status == "finished" || hangout.status == "complete") {
+    return (
+      <div className="task-actions-container">
+        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+          onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "good")}>Good</button>
+        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
+          onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "bad")}>Bad</button>
+      </div>);
   }
-
-  const FirstAcceptedParticipant = FirstAcceptedParticipants(hangout, props);
-
-  return (
-  <div className="task-actions-container">
-    <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-      onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</button>
-    <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-      onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</button>
-    {(hangout.creator._id == props.currentUserID && hangout.status != "started") && 
-    <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-      disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
-        onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</button>}
-    {
-      hangout.status == "started" &&
-      <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
-      disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
-        onClick={()=>props.onHangoutActionPerform("answer_questions", hangout)}>Answer Questions</button>
-    }
-  </div>);
+  else {
+    return (
+      <div className="task-actions-container">
+        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-withdraw" 
+          onClick={()=>props.onHangoutActionPerform("withdraw", hangout)}>Withdraw</button>
+      </div>);
+  }
+}
 }
 
 const HangoutTitleFromStatus = (task, Partner) => {

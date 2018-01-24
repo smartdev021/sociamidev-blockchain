@@ -75,3 +75,23 @@
     border: 1px solid rgb( 215, 215, 215 );
     background-color: rgb( 215, 215, 215 );
 }
+
+.task-actions-container .hangout-action-button-withdraw {
+    background-color: rgb(38, 40, 41);
+    border: 1px solid rgb(38, 40, 41);
+    border-radius: 15px;
+    font-size: 8px;
+    color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.task-actions-container .hangout-action-button-withdraw:hover {
+    background-color: rgb(103, 106, 107);
+    border: 1px solid rgb(103, 106, 107);
+    border-radius: 15px;
+    font-size: 8px;
+    color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
