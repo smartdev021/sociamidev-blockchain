@@ -55,6 +55,12 @@ const FirstAcceptedParticipants = (hangout, props) => {
   return FirstAcceptedParticipant;
 }
 
+const GetCurrentUserAsParticipant = (hangout, props) => {
+  return hangout.metaData.participants.find(function(participant){
+    return participant.user._id == props.currentUserID;
+  });
+}
+
 const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
 
 const GenerateDateString = (time, props) => {
@@ -233,6 +239,152 @@ const RenderActions = (hangout, props) => {
   </div>);
 }
 
+const HangoutTitleFromStatus = (task, Partner) => {
+  let result = <div id="title"></div>;
+
+  switch (task.status) {
+    case "cancelled": {
+      result = (
+        <div id="title">
+          Deepdive with <span id="partner-name">
+            {` ${Partner.user.firstName}`}
+          </span> has been cancelled
+        </div>
+        );
+      break;
+    }
+    case "started": {
+      result = (
+        <div id="title">
+          Deepdive with <span id="partner-name">
+            {`${Partner.user.firstName}`}
+          </span> is in progress
+        </div>
+        );
+      break;
+    }
+    case "finished": {
+      result = (
+        <div id="title">
+          Finished Deepdive with <span id="partner-name">
+            {`${Partner.user.firstName}`} </span>
+        </div>
+        );
+      break;
+    }
+    case "complete": {
+      result = (
+        <div id="title">
+          Completed Deepdive with <span id="partner-name">
+            {`${Partner.user.firstName}`} </span>
+        </div>
+        );
+      break;
+    }
+    default: {
+        result = (
+          <div id="title">
+            Deepdive with <span id="partner-name">
+              {`${Partner.user.firstName}`}
+            </span> has been cancelled
+          </div>
+          );
+        break;
+    }
+  }
+
+  return result;
+}
+
+const RenderTaskTitle = (task, props) => {
+  let result = <div id="title"></div>;
+
+  if (task.type == "hangout") {
+    const Partner = GetHangoutPartner(task, props);
+
+    //Current user has created this hangout
+    if (task.creator._id == props.currentUserID) {
+      result = HangoutTitleFromStatus(task, Partner);
+    }
+    else {
+      const CurrentUserAsParticipant = GetCurrentUserAsParticipant(task, props);
+
+      //Why is this possible???
+      if (!CurrentUserAsParticipant) {
+        result = <div id="title">Undefined</div>;
+      }
+      else {
+        //for Sent Requests
+        switch (CurrentUserAsParticipant.status) {
+          case "pending": {
+            result = (
+              <div id="title">
+                Your request to Deepdive with
+                <span id="partner-name">
+                  {` ${Partner.user.firstName}`}
+                </span>
+              </div>
+            );
+            break;
+          }
+          case "rejected": {
+            result = (
+              <div id="title">
+                <span id="partner-name">
+                  {`${Partner.user.firstName} `}
+                </span>
+                has not confirmed your request to join theirs Deepdive
+              </div>
+            );
+            break;
+          }
+          default: {
+            //request 'accepted'
+            result = HangoutTitleFromStatus(task, Partner);
+            break;
+          }
+        }
+      }
+    }
+  }
+  else {
+    result = <div id="title">{task.name}</div>;
+  }
+
+  return result;
+}
+
+const RenderTask = (task, i, props) => {
+  const Title = RenderTaskTitle(task, props);
+
+  if (task.type == "hangout") {
+    const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
+    const ThirdLine = `Time: ${GenerateDateString(task.timeStatusChanged, props)}`
+
+    return (
+      <div className="col-lg-4" key={i}>
+        <div className="my-tasks-task">
+          <div className="my-tasks-task-text">
+            {Title}
+            <div id="description">{SecondLine}</div>
+            <div id="description_1">{ThirdLine}</div>
+          </div>
+          {RenderActions(task, props)}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="col-lg-4" key={i}>
+        <div className="my-tasks-task">
+          {Title}
+          <div id="description">{task.description}</div>
+        </div>
+      </div>
+  )
+}
+
 const RenderTasks = (props) => {
   console.log("RenderTasks");
   console.dir(props.tasks);
@@ -241,33 +393,7 @@ const RenderTasks = (props) => {
       <div className="my-tasks-container-new-tasks-list">
         {
           props.tasks.map((task, i) => {
-            if (task.type == "hangout") {
-              const FirstLine = GenerateHangoutText(task, props);
-              const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
-              const ThirdLine = `Time: ${GenerateDateString(task.timeStatusChanged, props)}`
-
-              return (
-                <div className="col-lg-4" key={i}>
-                  <div className="my-tasks-task">
-                    <div className="my-tasks-task-text">
-                      {FirstLine}
-                      <div id="description">{SecondLine}</div>
-                      <div id="description_1">{ThirdLine}</div>
-                    </div>
-                    {RenderActions(task, props)}
-                  </div>
-                </div>
-              )
-            }
-
-            return (
-              <div className="col-lg-4" key={i}>
-                  <div className="my-tasks-task">
-                    <div id="title">{task.name}</div>
-                    <div id="description">{task.description}</div>
-                  </div>
-                </div>
-            )
+           return RenderTask(task, i, props)
           })
         }
       </div>

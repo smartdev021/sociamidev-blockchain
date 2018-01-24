@@ -474,7 +474,12 @@ class TaskManagementNew extends React.Component {
         break;
       }
       default:
-        tasks = this.props.tasks;
+        tasks = this.props.tasks.filter((task) => {
+          return task.creator._id == CurrentUserID || task.type == "hangout" && (task.metaData.participants.findIndex((participant) =>
+            {
+              return participant.user._id == CurrentUserID;
+            }) != -1)
+         });
         break;
     }
 
