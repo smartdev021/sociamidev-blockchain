@@ -14,13 +14,13 @@
     width: 100%;
 }
 
-body ::-webkit-scrollbar-thumb{
+html ::-webkit-scrollbar-thumb{
     border-radius: 2px; 
     background-color: #b6b6b6;
     float: left;
 }
 
-body ::-webkit-scrollbar{
+html ::-webkit-scrollbar{
     background-color: inherit;
     width: 6px; 
 }
