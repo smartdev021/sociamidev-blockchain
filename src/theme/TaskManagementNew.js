@@ -467,7 +467,8 @@ class TaskManagementNew extends React.Component {
         break;
       }
       case TasksMy.type: {
-        tasks = that.props.tasksCreatedCurrentUser.filter(function(task) {
+        const tasksAllCurrentUser = [].concat(that.props.tasksCreatedCurrentUser).concat(that.props.tasksAssignedToCurrentUser);
+        tasks = tasksAllCurrentUser.filter(function(task) {
           return task.type == "hangout";
         });
         break;

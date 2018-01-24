@@ -34,6 +34,22 @@ const GetHangoutPartner = (hangout, props) => {
   return Partner;
 }
 
+const GetFirstPendingParticipant = (hangout, props) => {
+  const FirstPendingParticipant = hangout.metaData.participants.find(function(participant){
+    return participant.status == "pending";
+  });
+
+  return FirstPendingParticipant;
+}
+
+const FirstAcceptedParticipants = (hangout, props) => {
+  const FirstAcceptedParticipant = hangout.metaData.participants.find(function(participant){
+    return participant.user._id != props.currentUserID && participant.status == "accepted";
+  });
+
+  return FirstAcceptedParticipant;
+}
+
 const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
 
 const GenerateDateString = (time, props) => {
@@ -100,21 +116,39 @@ const GenerateHangoutText = (hangout, props)=> {
     default:
       let isRequestAccepted = false;
 
-      for (let i = 0; i < hangout.metaData.participants.length; ++i) {
-        if (hangout.metaData.participants[i].user._id == props.currentUserID) {
-          if (hangout.metaData.participants[i].status == "accepted") {
-            isRequestAccepted = true;
+      //current user is hangout creator
+      if (hangout.creator._id == props.currentUserID) {
+        const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
+
+        if (FirstPendingParticipant) {
+          HangoutText = <div id="title"><span id="partner-name">{FirstPendingParticipant.user.firstName} </span>
+        {`wants to join your ${hangout.metaData.subject.skill.name} Deepdive`}
+        </div>
+        }
+        else {
+          HangoutText = <div id="title">
+          No new requests
+        </div>
+        }
+      }
+      else {
+        //current user is possible participant
+        for (let i = 0; i < hangout.metaData.participants.length; ++i) {
+          if (hangout.metaData.participants[i].user._id == props.currentUserID) {
+            if (hangout.metaData.participants[i].status == "accepted") {
+              isRequestAccepted = true;
+            }
           }
+        }
+  
+        if (isRequestAccepted) {
+          HangoutText = <div id="title">Confirmed Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
+        }
+        else {
+          HangoutText = <div id="title">Your request too Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
         }
       }
 
-      if (isRequestAccepted) {
-        HangoutText = <div id="title">Confirmed Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
-      }
-      else {
-        HangoutText = <div id="title">Your request too Deepdive with <span id="partner-name">{Partner.user.firstName}</span></div>
-      }
-      
       break;
     }
 
@@ -142,6 +176,37 @@ const CategorySelection = (props) => {
   );
 }
 
+const RenderActions = (hangout, props) => {
+  if (hangout.creator._id == props.currentUserID) {
+    const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
+
+    if (FirstPendingParticipant) {
+      return (
+        <div className="task-actions-container">
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+            onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Accept</button>
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+            onClick={()=>{}}>Open Chat</button>
+          <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
+            onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}>Reject</button>
+        </div>);
+    }
+  }
+
+  const FirstAcceptedParticipant = FirstAcceptedParticipants(hangout, props);
+
+  return (
+  <div className="task-actions-container">
+    <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+      onClick={()=>props.onHangoutActionPerform("reschedule", hangout)}>Reschedule</button>
+    <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+      onClick={()=>props.onHangoutActionPerform("cancel", hangout)}>Cancel</button>
+    <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-default" 
+      disabled={!FirstAcceptedParticipant || props.timeNow < hangout.metaData.time}
+        onClick={()=>props.onHangoutActionPerform("start", hangout)}>Start</button>
+  </div>);
+}
+
 const RenderTasks = (props) => {
   console.log("RenderTasks");
   console.dir(props.tasks);
@@ -163,14 +228,7 @@ const RenderTasks = (props) => {
                       <div id="description">{SecondLine}</div>
                       <div id="description_1">{ThirdLine}</div>
                     </div>
-                    <div className="task-actions-container">
-                      <button type="button" className="btn btn-sm btn-outline-inverse" 
-                         onClick={()=>props.onHangoutActionPerform("reschedule", task)}>Reschedule</button>
-                      <button type="button" className="btn btn-sm btn-outline-inverse" 
-                         onClick={()=>props.onHangoutActionPerform("cancel", task)}>Cancel</button>
-                      <button type="button" className="btn btn-sm btn-outline-inverse" disabled={true}
-                         onClick={()=>props.onHangoutActionPerform("start", task)}>Start</button>
-                    </div>
+                    {RenderActions(task, props)}
                   </div>
                 </div>
               )

@@ -46,7 +46,7 @@
     height: 60%;
 }
 
-.task-actions-container button {
+.task-actions-container .hangout-action-button-default {
     background-color: rgb( 240, 98, 59 );
     width: 66px;
     height: 23px;
@@ -58,7 +58,24 @@
     margin-bottom: 5px;
 }
 
-.task-actions-container button:disabled {
+.task-actions-container .hangout-action-button-default:disabled {
+    border: 1px solid rgb( 215, 215, 215 );
+    background-color: rgb( 215, 215, 215 );
+}
+
+.task-actions-container .hangout-action-button-owner {
+    background-color: rgb(59, 174, 240);
+    width: 66px;
+    height: 23px;
+    border: 1px solid rgb(59, 174, 240);
+    border-radius: 15px;
+    font-size: 8px;
+    color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.task-actions-container .hangout-action-button-owner:disabled {
     border: 1px solid rgb( 215, 215, 215 );
     background-color: rgb( 215, 215, 215 );
 }
