@@ -48,6 +48,7 @@ background-color: #f2f2f2;
 #notificationSection {
   height: 352px;
   overflow-y: auto;
+  background-color: #eaeaea;
 }
 
 a:focus, a:hover {
