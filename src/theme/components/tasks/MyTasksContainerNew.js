@@ -32,10 +32,10 @@ const GetHangoutPartner = (hangout, props) => {
   });
 
   if (!Partner) {
-    //TODO: Fix and remove thise
-    console.log("%cFix And Remove This!!!", "color: red;");
-    Partner = {user: {firstName: "Dummy"}};
+    console.log("%cPartner not found: ", "color:blue;background:red;");
+    console.dir(hangout);
   }
+
   return Partner;
 }
 
@@ -144,20 +144,34 @@ const Partner = GetHangoutPartner(hangout, props);
    }
   } 
   else {
-    if (hangout.status == "finished" || hangout.status == "complete") {
+    if (hangout.status == "finished") {
+      if (hangout.metaData.ratings.findIndex(function(rating) {
+        return rating.fromUser == props.currentUserID && rating.toUser == Partner.user._id; }) == -1) {
+          return (
+            <div className="task-actions-container">
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
+                onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "good")}>Good</button>
+              <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
+                onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "bad")}>Bad</button>
+            </div>);
+      }
+      else {
+        return (
+          <div className="task-actions-container">
+            <span>Waiting partner's feedback</span>
+          </div>);
+      }
+  }
+  else if(hangout.status == "complete") {
     return (
       <div className="task-actions-container">
-        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner" 
-          onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "good")}>Good</button>
-        <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-owner"
-          onClick={()=>props.onHangoutRate(hangout, Partner.user._id, "bad")}>Bad</button>
       </div>);
   }
   else {
     return (
       <div className="task-actions-container">
         <button type="button" className="btn btn-sm btn-outline-inverse hangout-action-button-withdraw" 
-          onClick={()=>props.onHangoutActionPerform("withdraw", hangout)}>Withdraw</button>
+          onClick={()=>props.onHangoutActionPerform("leave", hangout)}>Withdraw</button>
       </div>);
   }
 }
@@ -166,54 +180,102 @@ const Partner = GetHangoutPartner(hangout, props);
 const HangoutTitleFromStatus = (task, Partner) => {
   let result = <div id="title"></div>;
 
-  switch (task.status) {
-    case "cancelled": {
-      result = (
-        <div id="title">
-          Deepdive with <span id="partner-name">
-            {` ${Partner.user.firstName}`}
-          </span> has been cancelled
-        </div>
-        );
-      break;
-    }
-    case "started": {
-      result = (
-        <div id="title">
-          Deepdive with <span id="partner-name">
-            {`${Partner.user.firstName}`}
-          </span> is in progress
-        </div>
-        );
-      break;
-    }
-    case "finished": {
-      result = (
-        <div id="title">
-          Finished Deepdive with <span id="partner-name">
-            {`${Partner.user.firstName}`} </span>
-        </div>
-        );
-      break;
-    }
-    case "complete": {
-      result = (
-        <div id="title">
-          Completed Deepdive with <span id="partner-name">
-            {`${Partner.user.firstName}`} </span>
-        </div>
-        );
-      break;
-    }
-    default: {
+  if (!Partner) {
+    switch (task.status) {
+      case "canceled":
+      case "cancelled": {
         result = (
           <div id="title">
-            Deepdive with <span id="partner-name">
-              {`${Partner.user.firstName}`}
+            Your Deepdive has been cancelled
+          </div>
+          );
+        break;
+      }
+      case "started": {
+        result = (
+          <div id="title">
+            Your Deepdive is in progress
+          </div>
+          );
+        break;
+      }
+      case "finished": {
+        result = (
+          <div id="title">
+            Your Deepdive is finished
+          </div>
+          );
+        break;
+      }
+      case "complete": {
+        result = (
+          <div id="title">
+            Your Deepdive is complete
+          </div>
+          );
+        break;
+      }
+      default: {
+          result = (
+            <div id="title">
+                Your Deepdive has no any mets yet
+            </div>
+            );
+          break;
+      }
+    } 
+  }
+  else {
+    switch (task.status) {
+      case "canceled":
+      case "cancelled": {
+        result = (
+          <div id="title">
+              Deepdive with <span id="partner-name">
+              {` ${Partner.user.firstName}`}
             </span> has been cancelled
           </div>
           );
         break;
+      }
+      case "started": {
+        result = (
+          <div id="title">
+              Deepdive with <span id="partner-name">
+              {`${Partner.user.firstName}`}
+            </span> is in progress
+          </div>
+          );
+        break;
+      }
+      case "finished": {
+        result = (
+          <div id="title">
+              Deepdive with <span id="partner-name">
+              {`${Partner.user.firstName}`} </span> is finished
+          </div>
+          );
+        break;
+      }
+      case "complete": {
+        result = (
+          <div id="title">
+              Deepdive with <span id="partner-name">
+              {`${Partner.user.firstName}`} </span> is complete
+          </div>
+          );
+        break;
+      }
+      default: {
+          result = (
+            <div id="title">
+                Confirmed Deepdive with <span id="partner-name">
+                {`${Partner.user.firstName}`}
+              </span>
+            </div>
+            );
+          break;
+      }
     }
   }
 
@@ -235,7 +297,8 @@ const RenderTaskTitle = (task, props) => {
 
       //Why is this possible???
       if (!CurrentUserAsParticipant) {
-        result = <div id="title">Undefined</div>;
+        console.log("%c!CurrentUserAsParticipant", "color:red;background:green;");
+        result = <div id="title"></div>;
       }
       else {
         //for Sent Requests
@@ -246,7 +309,7 @@ const RenderTaskTitle = (task, props) => {
                 Your request to Deepdive with
                 <span id="partner-name">
                   {` ${Partner.user.firstName}`}
-                </span>
+                </span> is pending approval
               </div>
             );
             break;
@@ -279,18 +342,21 @@ const RenderTaskTitle = (task, props) => {
 }
 
 const RenderTask = (task, i, props) => {
-  const Title = RenderTaskTitle(task, props);
+  const DebugOutputClick = (task) => {
+    console.log("Clicked task: "); 
+    console.dir(task);
+  };
 
   if (task.type == "hangout") {
     const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
-    const ThirdLine = `Time: ${GenerateDateString(task.timeStatusChanged, props)}`
+    const ThirdLine = `Time: ${GenerateDateString(task.status == "None" ? task.metaData.time : task.timeStatusChanged, props)}`
 
     return (
       <div className="col-lg-4" key={i}>
         <div className="my-tasks-task">
           <div className="my-tasks-task-text">
-            {Title}
-            <div id="description">{SecondLine}</div>
+            {RenderTaskTitle(task, props)}
+            <div id="description" onClick={()=>DebugOutputClick(task)}>{SecondLine}</div>
             <div id="description_1">{ThirdLine}</div>
           </div>
           {RenderActions(task, props)}
@@ -302,8 +368,8 @@ const RenderTask = (task, i, props) => {
   return (
     <div className="col-lg-4" key={i}>
         <div className="my-tasks-task">
-          {Title}
-          <div id="description">{task.description}</div>
+          {RenderTaskTitle(task, props)}
+          <div id="description" onClick={()=>DebugOutputClick(task)}>{task.description}</div>
         </div>
       </div>
   )

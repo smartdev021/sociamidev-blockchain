@@ -449,37 +449,58 @@ class TaskManagementNew extends React.Component {
 
     const that = this;
 
+    const filterMy = (task) => {
+      if (task.type == "hangout") {
+        return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1);
+      }
+      else {
+        return task.creator._id == CurrentUserID || task.assignees.findIndex(function(assignee){
+          return assignee._id == CurrentUserID;
+        }) != -1;
+      }
+    }
+
+    const filterConfirmed = (task) => {
+      if (task.type == "hangout") {
+        return task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1;
+      }
+      
+      return false;
+    }
+
+    const filterSentRequests = (task) => {
+      if (task.type == "hangout") {
+        return task.status == "None" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+          return participant.user._id == CurrentUserID;
+        }) != -1;
+      }
+      
+      return false;
+    }
+
+    const filterAll = (task) => {
+      return filterMy(task) || filterConfirmed(task) || filterSentRequests(task);
+     }
+
     switch (this.state.filterCurrent.type) {
       case TasksConfirmed.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
-            return participant.user._id == CurrentUserID && participant.status == "accepted";
-          }) != -1;
-        });
+        tasks = this.props.tasks.filter(filterConfirmed);
         break;
       }
       case TasksSentRequests.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.status == "None" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
-            return participant.user._id == CurrentUserID && participant.status == "pending";
-          }) != -1;
-        });
+        tasks = this.props.tasks.filter(filterSentRequests);
         break;
       }
       case TasksMy.type: {
-        const tasksAllCurrentUser = [].concat(that.props.tasksCreatedCurrentUser).concat(that.props.tasksAssignedToCurrentUser);
-        tasks = tasksAllCurrentUser.filter(function(task) {
-          return task.type == "hangout";
-        });
+        tasks = this.props.tasks.filter(filterMy);
         break;
       }
       default:
-        tasks = this.props.tasks.filter((task) => {
-          return task.creator._id == CurrentUserID || task.type == "hangout" && (task.metaData.participants.findIndex((participant) =>
-            {
-              return participant.user._id == CurrentUserID;
-            }) != -1)
-         });
+        tasks = this.props.tasks.filter(filterAll);
         break;
     }
 
@@ -498,9 +519,9 @@ class TaskManagementNew extends React.Component {
         return (task.userID != currentUserId && (!task.assignees || !task.assignees.find(function(assignee) {
           return assignee._id == currentUserId;
         })) &&
-          (task.type != "hangout" || task.metaData.participants.findIndex(function(participant) {
+          (task.type != "hangout" || (task.status=="None" && task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == currentUserId;
-          }) == -1));
+          }) == -1)));
       });
     }
     else {
