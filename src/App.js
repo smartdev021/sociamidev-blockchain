@@ -99,6 +99,10 @@ class App extends Component {
   componentWillMount() {
     this.props.cookies.getAll();
     //this.token = PubSub.subscribe('HELLO', this.mySubscriber.bind(this));
+    this.token_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
+
+    console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
+    console.dir(this.token_tasks_update);
   }
 
   componentDidMount(){
@@ -114,6 +118,15 @@ class App extends Component {
     console.log("Message 1- " + msg);
     console.log("Data 1- " + data);
   };*/
+
+  serverEventTasksUpdate(msg, data) {
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+    console.dir(data);
+
+    if (data.eventType == "tasks_update") {
+      this.props.fetchAllTasks(true);
+    }
+  };
 
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, {linkedInID: id});
@@ -255,6 +268,21 @@ class App extends Component {
     if(this.state.userID && this.state.verfiedSocketConnection == false){
       let copy = Object.assign({}, this.state, {verfiedSocketConnection: true});
       this.setState(copy);
+    }
+
+    if (prevProps.isAuthorized != this.props.isAuthorized) {
+      if (this.props.isAuthorized) {
+        this.token_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
+
+        console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
+        console.dir(this.token_tasks_update);
+      }
+      else {
+        PubSub.unsubscribe(this.token_tasks_update);
+
+        console.log(`%cUnsubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
+        console.dir(this.token_tasks_update);
+      }
     }
 
 
