@@ -75,10 +75,26 @@ class App extends Component {
       PubSub.publish('ChatStartPoint', chatObj);
     });
 
-    this.socket.on('server:user', newUsers => {
+    this.socket.on('server:user', userObj => {
       var chatObj = {
         eventType: 'server:user',
-        data: newUsers
+        data: userObj
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('server:message', message => {
+      var chatObj = {
+        eventType: 'server:message',
+        data: message
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('chatbotServer:message', message => {
+      var chatObj = {
+        eventType: 'chatbotServer:message',
+        data: message
       }
       PubSub.publish('ChatStartPoint', chatObj);
     });
@@ -98,22 +114,8 @@ class App extends Component {
 
   componentWillMount() {
     this.props.cookies.getAll();
-    //this.token = PubSub.subscribe('HELLO', this.mySubscriber.bind(this));
+    this.token = PubSub.subscribe('ChatEndPoint', this.chatEndListener.bind(this));
   }
-
-  componentDidMount(){
-    /*if(this.state.faceBookID || this.state.linkedInID){
-      this.initiateSocketConnectionForLoggedInUser();
-    }
-    else{
-      this.initiateSocketConnectionForAnonymousUser();
-    }*/
-  }
-
-  /*mySubscriber(msg, data) {
-    console.log("Message 1- " + msg);
-    console.log("Data 1- " + data);
-  };*/
 
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, {linkedInID: id});
@@ -289,7 +291,10 @@ class App extends Component {
 
     return ProfileLink;
   }
-  
+
+  chatEndListener(event,data){
+    socketConn.emit(data.eventType, data.data);
+  }
   render() {
     let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
@@ -303,13 +308,8 @@ class App extends Component {
       username = this.state.linkedInID;
       userType = "linkedin";
     }
-
-    if(this.props.isAuthorized && this.state.userID){
-      ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.faceBookID} userType={userType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
-    }
-    else if(!this.props.isAuthorized){
-      ChatAppLink = <ChatApp loggedin={this.props.isAuthorized}/>;
-    }
+    
+    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userID={this.state.anonymousUserId}/>;
 
     if(this.state.userID && this.state.verfiedSocketConnection == false){
       var userData = {
