@@ -29,11 +29,6 @@ const GetHangoutPartner = (hangout, props) => {
     return participant.user._id != props.currentUserID;
   });
 
-  if (!Partner) {
-    console.log("%cPartner not found: ", "color:blue;background:red;");
-    console.dir(hangout);
-  }
-
   return Partner;
 }
 
