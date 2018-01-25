@@ -9,8 +9,6 @@ import Organizer from '~/src/theme/components/tasks/Organizer'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
-
 import "~/src/theme/css/myTasksContainerNew.css"
 
 /*Helper functions*/
