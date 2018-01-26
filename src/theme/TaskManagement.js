@@ -24,6 +24,7 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 import ActionLink from '~/src/components/common/ActionLink'
 
 import MyTasksContainer from '~/src/theme/components/tasks/MyTasksContainer'
+
 import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks'
 
 import TasksScannerContainer from '~/src/theme/components/tasks/TasksScannerContainer'
@@ -76,6 +77,20 @@ const TaskCategoryMyOffers = {
   name: "Sent"
 };
 
+const TasksAll = {type: "all", label: "All"};
+const TasksConfirmed = {type: "confirmed", label: "Confirmed"};
+const TasksMy = {type: "my_deepdive", label: "My Deepdive"};
+const TasksSentRequests = {type: "sent_requests", label: "Sent Requests"};
+const TasksCompleted = {type: "completed", label: "Completed"};
+
+const Filters = [
+  TasksAll, 
+  TasksConfirmed, 
+  TasksMy, 
+  TasksSentRequests,
+  TasksCompleted,
+];
+
 const BackendURL = ConfigMain.getBackendURL();
 
 const Categories = [TaskCategoryYour, TaskCategoryAssigned, TaskCategoryMyRequests, TaskCategoryMyOffers];
@@ -95,6 +110,9 @@ class TaskManagement extends React.Component {
 
       activeHangout: undefined,
       isAnswerQuestionsOpen: false,
+
+      //
+      filterCurrent: Filters[0],
     }
 
     this.redirectLocation = undefined;    
@@ -431,29 +449,92 @@ class TaskManagement extends React.Component {
 
     const CurrentUserID = this.props.userProfile._id;
 
-    switch (this.state.tasksCategory.type) {
-      case TaskCategoryAssigned.type: {
-        tasks = this.getTasksAssignedToMe();
+    const that = this;
+
+    const filterMy = (task) => {
+      if (task.type == "hangout") {
+        return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1);
+      }
+      else {
+        return task.creator._id == CurrentUserID || task.assignees.findIndex(function(assignee){
+          return assignee._id == CurrentUserID;
+        }) != -1;
+      }
+    }
+
+    const filterConfirmed = (task) => {
+      if (task.type == "hangout") {
+        return task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1;
+      }
+      
+      return false;
+    }
+
+    const filterSentRequests = (task) => {
+      if (task.type == "hangout") {
+        return task.status == "None" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+          return participant.user._id == CurrentUserID;
+        }) != -1;
+      }
+      
+      return false;
+    }
+
+    const filterCompleted = (task) => {
+      if (task.status != "complete") {
+        return false;
+      }
+      
+      if (task.type == "hangout") {
+        return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1);
+      }
+      else {
+        return task.creator._id == CurrentUserID || task.assignees.findIndex(function(assignee){
+          return assignee._id == CurrentUserID;
+        }) != -1;
+      }
+    }
+
+    const filterAll = (task) => {
+      return filterMy(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
+     }
+
+    switch (this.state.filterCurrent.type) {
+      case TasksConfirmed.type: {
+        tasks = this.props.tasks.filter(filterConfirmed);
         break;
       }
-      case TaskCategoryYour.type: {
-        tasks = this.getTasksCreatedByMe();
+      case TasksSentRequests.type: {
+        tasks = this.props.tasks.filter(filterSentRequests);
         break;
       }
-      case TaskCategoryMyRequests.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.creator._id == CurrentUserID;
-        });
+      case TasksCompleted.type: {
+        tasks = this.props.tasks.filter(filterCompleted);
         break;
       }
-      case TaskCategoryMyOffers.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.metaData.participants.findIndex(function(participant) {
-            return participant.user._id == CurrentUserID && participant.status == "pending"; 
-          }) != -1;
-        });
+      case TasksMy.type: {
+        tasks = this.props.tasks.filter(filterMy);
         break;
       }
+      default:
+        tasks = this.props.tasks.filter(filterAll);
+        break;
+    }
+
+    if (tasks.length > 0) {
+      //sort descending by date
+      tasks.sort((task1, task2) => {
+        const task1CreationDate = task1.date ? task1.date : task1.metaData.time;
+        const task2CreationDate = task2.date ? task2.date : task2.metaData.time;
+
+        return task2CreationDate - task1CreationDate;
+      });
     }
 
     return tasks;
@@ -468,9 +549,9 @@ class TaskManagement extends React.Component {
         return (task.userID != currentUserId && (!task.assignees || !task.assignees.find(function(assignee) {
           return assignee._id == currentUserId;
         })) &&
-          (task.type != "hangout" || task.metaData.participants.findIndex(function(participant) {
+          (task.type != "hangout" || (task.status=="None" && task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == currentUserId;
-          }) == -1));
+          }) == -1)));
       });
     }
     else {
@@ -499,11 +580,11 @@ class TaskManagement extends React.Component {
   renderLeftSide() {
     const myTasks = this.getMyTasksAndHangouts();
 
-    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1";
+    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-3";
     
     return (
       <div className={leftSideClassName}>
-        <div className="content-2-columns-left">
+        <div className="content-2-columns-left-bg-white">
           <MyTasksContainer tasks={myTasks} tasksCategoryName={this.state.tasksCategory.name}
             onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
             handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
@@ -516,8 +597,14 @@ class TaskManagement extends React.Component {
             isCollapsed={this.state.isScannerExpanded}
             onSetTreeScannerExpanded={(value)=>this.setTreeScannerExpanded(value)}
 
+            currentUserID={this.props.userProfile._id}
+
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
+
+            onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)}
+            filterCurrent={this.state.filterCurrent}
+            filters={Filters}
           />
        </div>
     </div>
@@ -530,13 +617,17 @@ class TaskManagement extends React.Component {
     }
   }
 
+  handleFilterChange(newFilter) {
+    this.setState({filterCurrent: newFilter});
+  }
+
   renderRightSide() {
     const tasksFiltered = this.getTaskScannerTasks();
 
     let rightSideClassName = "col-lg-3";
 
     if (this.state.isScannerExpanded) {
-      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-11";
+      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-9";
     }
 
     return (
@@ -566,7 +657,7 @@ class TaskManagement extends React.Component {
         <div className="row">
           {RedirectTo}
           <div className="col-lg-12">
-            <div className="content-2-columns-left">
+            <div className="content-2-columns-left-bg-white">
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">

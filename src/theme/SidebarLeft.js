@@ -11,8 +11,6 @@ import {Link} from 'react-router-dom'
 
 import {Icon} from 'react-fa'
 
-import ActionLink from '~/src/components/common/ActionLink'
-
 import ActivityTypes from "~/src/common/ActivityTypes"
 
 import "~/src/theme/css/sidebarLeft.css"

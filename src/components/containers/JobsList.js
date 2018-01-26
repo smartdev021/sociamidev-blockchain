@@ -4,7 +4,6 @@
 */
 
 import React, { Component } from 'react';
-import {Table} from 'react-bootstrap';
 import JobItem from './JobItem';
 
 class JobsList extends React.Component {

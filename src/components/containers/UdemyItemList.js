@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import UdemyItem from './UdemyItem';
-import {Table} from 'react-bootstrap';
 
 class UdemyItemList extends React.Component {
 

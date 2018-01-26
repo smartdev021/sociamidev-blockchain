@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 import {Icon} from 'react-fa'
 import ActionLink from '~/src/components/common/ActionLink'
 
-import {ProgressBar} from 'react-bootstrap'
-
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

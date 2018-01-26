@@ -2,8 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
-import DataList from 'react-datalist'
-
 import "~/src/theme/css/popupProjectManagement.css"
 
 import Axios from 'axios'
