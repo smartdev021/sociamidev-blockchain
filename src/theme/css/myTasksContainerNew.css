@@ -16,8 +16,9 @@
 }
 
 .my-tasks-task {
+    margin-top: 10px;
     border-bottom: 1px solid grey;
-    min-height: 150px;
+    min-height: 180px;
 }
 
 .my-tasks-task #title {
@@ -37,13 +38,10 @@
 }
 
 .task-actions-container {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 40%;
 }
 
 .my-tasks-task-text {
-    height: 60%;
+    height: 120px;
 }
 
 .task-actions-container .hangout-action-button-default {
