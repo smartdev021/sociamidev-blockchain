@@ -2,6 +2,21 @@
     height: 90%;
 }
 
+#user-tasks-expand {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 32px;
+    z-index: 999;
+    opacity: 0.0;
+    transition: opacity 0.5s;
+  }
+
+.my-tasks-container-new:hover #user-tasks-expand  {
+    opacity: 1.0;
+    transition: opacity 0.5s;
+}
+
 .my-tasks-container-new-tasks-list {
     height: 500px;
     overflow-y: auto;

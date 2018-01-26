@@ -406,12 +406,14 @@ const RenderTask = (task, i, props) => {
     console.dir(task);
   };
 
+  const TaskColClass = props.isCollapsed ? "col-lg-12" : "col-lg-4";
+
   if (task.type == "hangout") {
     const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
     const ThirdLine = `Time: ${GenerateDateString(task.status == "None" ? task.metaData.time : task.timeStatusChanged, props)}`
 
     return (
-      <div className="col-lg-4" key={i}>
+      <div className={TaskColClass} key={i}>
         <div className="my-tasks-task">
           <div className="my-tasks-task-text">
             {RenderTaskTitle(task, props)}
@@ -425,7 +427,7 @@ const RenderTask = (task, i, props) => {
   }
 
   return (
-    <div className="col-lg-4" key={i}>
+    <div className={TaskColClass} key={i}>
         <div className="my-tasks-task">
           {RenderTaskTitle(task, props)}
           <div id="description" onClick={()=>DebugOutputClick(task)}>{task.description}</div>
@@ -451,27 +453,13 @@ const RenderTasks = (props) => {
 }
 
 const MyTasksContainerNew = (props) => {
-
-  if (props.isCollapsed) {
-    if ((props.isAuthorized && props.tasks.length > 0)) {
-      return (
-        <div id="tasks-management-my-tasks">
-          <ActionLink id="user-prog-tree-collapse" href="#" onClick={()=> props.onSetTreeScannerExpanded(false)}>
-            <span className="glyphicon glyphicon-menu-right"></span>
-          </ActionLink>
-        </div>
-      );
-    }
-    else {
-      return (
-        <div id="tasks-management-my-tasks">
-          <h1>Coming soon...</h1>
-        </div>
-      );
-    }
-  }
-    return(
+return(
     <div id="tasks-management-my-tasks" className="my-tasks-container-new">
+    {props.isCollapsed &&
+      <ActionLink id="user-tasks-expand" href="#" onClick={()=> props.onSetTreeScannerExpanded(false)}>
+            <span className="glyphicon glyphicon-menu-right"></span>
+      </ActionLink>
+    }
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12">

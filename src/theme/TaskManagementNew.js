@@ -581,7 +581,7 @@ class TaskManagementNew extends React.Component {
   renderLeftSide() {
     const myTasks = this.getMyTasksAndHangouts();
 
-    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1";
+    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-3";
     
     return (
       <div className={leftSideClassName}>
@@ -628,7 +628,7 @@ class TaskManagementNew extends React.Component {
     let rightSideClassName = "col-lg-3";
 
     if (this.state.isScannerExpanded) {
-      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-11";
+      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-9";
     }
 
     return (
