@@ -189,22 +189,30 @@ class SidebarLeft extends React.Component {
       else {
         return (
           <div id="list-friends">
+          <div className="container-fluid">
             {
               ListOfFriends.map(function(friend, i) {
                 return (
-                  <div key={i} className="friend-widget">
-                    <img src={friend.profilePic}/>
-                    <div id="user-text">
-                      <div className="user-text-name">{friend.firstName}</div>
-                        {(friend.activities && friend.activities.length > 0) 
-                          ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
-                          : friend.userText
-                        }
+                  <div className="row">
+                    <div key={i} className="friend-widget">
+                      <div className="col-lg-3">
+                        <img src={friend.profilePic}/>
+                      </div>
+                      <div className="col-lg-9">
+                        <div id="user-text">
+                          <div className="user-text-name">{friend.firstName}</div>
+                            {(friend.activities && friend.activities.length > 0) 
+                              ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
+                              : friend.userText
+                            }
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )
               })
             }
+          </div>
         </div>
         );
       }
