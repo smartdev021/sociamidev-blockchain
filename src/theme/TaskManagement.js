@@ -42,6 +42,7 @@ import {
   hangoutJoin,
   taskStatusChange,
   taskLeave,
+  rateTaskPartner,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -96,8 +97,6 @@ class TaskManagement extends React.Component {
 
     //this is for making task 'Start' button available in real time
     this.timeNowUpdateInterval = undefined;
-
-    this.handleHangoutRateSuccess = this.handleHangoutRateSuccess.bind(this);
   }
 
   groupTasksByProjects(tasks) {
@@ -159,17 +158,8 @@ class TaskManagement extends React.Component {
     if (rate == 'good' || rate == 'bad') {
       const rateNumber = rate == 'good' ? 10 : 1;
 
-      const body = {taskId: hangout._id, fromUser: this.props.userProfile._id, toUser: userId, rate: rateNumber}
-
-      Axios.post(`${BackendURL}/hangoutRateParticipant`, body)
-      .then((response) =>this.handleHangoutRateSuccess(response))
-      .catch((error) =>{console.log(error)});
+      this.props.rateTaskPartner(hangout._id, this.props.userProfile._id, userId, rateNumber);
     }
-  }
-
-  handleHangoutRateSuccess() {
-    this.fetchUserTasks();
-    this.props.onFetchAllTasks(false);
   }
 
   hangoutActionPerform(action, hangout) {
@@ -463,7 +453,7 @@ class TaskManagement extends React.Component {
     }
 
     const filterAll = (task) => {
-      return filterMy(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
+      return filterMy(task) || filterOthers(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
     }
 
     switch (this.state.filterCurrent.type) {
@@ -686,6 +676,7 @@ TaskManagement.propTypes = {
   taskStatusChange: PropTypes.func.isRequired,
   taskLeave: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
+  rateTaskPartner: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
 }
@@ -718,6 +709,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  rateTaskPartner: bindActionCreators(rateTaskPartner, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 

@@ -93,9 +93,9 @@ class Notifications extends React.Component {
         {
           Notifications.map(function(notification, i) {
           return (
-            <ListGroupItem className={notification.isSeen ? "notification-seen" : "notification"}>
+            <ListGroupItem key={i} className={notification.isSeen ? "notification-seen" : "notification"}>
               <Link to = "/taskManagement" onClick={()=>that.handleNotificationClick(notification)} >
-                <div className="notificationRow" key={i}>
+                <div className="notificationRow">
                   <div className="notifyIcon">
                     <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png"/>
                   </div>

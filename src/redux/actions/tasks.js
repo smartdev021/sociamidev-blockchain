@@ -112,6 +112,25 @@ export function setTaskPublished(taskId, published) {
     }
 }
 
+export function rateTaskPartner(taskId, fromUser, toUser, rate) {
+    return function (dispatch) {
+      dispatch(updateTaskInitiate());
+
+      const url = `${ConfigMain.getBackendURL()}/hangoutRateParticipant`;
+      const body = {taskId: taskId, fromUser: fromUser, toUser: toUser, rate: rate}
+
+      return (Axios.post(url, body)
+      .then(function(response) {
+        dispatch(updateTask(response.data._id, response.data));
+        dispatch(updateTaskComplete());
+      })
+      .catch((error) => {
+          console.log(error);
+          dispatch(updateTaskComplete({}));
+       }));
+    }
+}
+
 export function saveTask(task) {
     return function (dispatch) {
         

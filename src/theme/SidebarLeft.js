@@ -191,8 +191,8 @@ class SidebarLeft extends React.Component {
             {
               ListOfFriends.map(function(friend, i) {
                 return (
-                  <div className="row">
-                    <div key={i} className="friend-widget">
+                  <div className="row" key={i}>
+                    <div className="friend-widget">
                       <div className="col-lg-3">
                         <img src={friend.profilePic}/>
                       </div>
