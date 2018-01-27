@@ -43,6 +43,7 @@ import {
   taskStatusChange,
   taskLeave,
   rateTaskPartner,
+  taskAssign,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -284,33 +285,20 @@ class TaskManagement extends React.Component {
     }
   }
 
-  handleCloseConfirmTaskDetailsPopup(item) {
-    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false});
-    this.setState(copy)
-    this.props.onFetchAllTasks(false);
-    this.fetchUserTasks();
+  handleCloseConfirmTaskDetailsPopup() {
+    this.setState({isDetailsPopupOpen: false})
   }
 
   handleAcceptConfirm(item){
     if (this.state.detailsPopupItem.type != TaskTypes.HANGOUT) {
-      let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
-    var params={
-      _id:this.state.detailsPopupItem._id,
-      taskAsigneeId:userID
-    }
 
-    const body = {
-      _id: this.state.detailsPopupItem._id, 
-      assignee: {
+      const Assignee = {
         _id: this.props.userProfile._id,
         firstName: this.props.userProfile.firstName,
         lastName: this.props.userProfile.lastName,
-      }
-    };
+      };
 
-    Axios.post(`${ConfigMain.getBackendURL()}/taskAssign`, body)
-    .then((response) =>this.handleCloseConfirmTaskDetailsPopup(response))
-    .catch((error) =>this.handleCloseConfirmTaskDetailsPopup(error));
+      this.props.taskAssign(this.state.detailsPopupItem._id, Assignee);
     }
     else {
       this.props.hangoutJoin(this.state.detailsPopupItem._id, {
@@ -318,9 +306,9 @@ class TaskManagement extends React.Component {
         firstName: this.props.userProfile.firstName, 
         lastName: this.props.userProfile.lastName
       });
-      
-      this.setState({isDetailsPopupOpen: false});
     }
+
+    this.handleCloseConfirmTaskDetailsPopup();
   }
 
   handleOpenCancelTaskDetailsPopup(item){
@@ -387,7 +375,7 @@ class TaskManagement extends React.Component {
     const that = this;
     
     const filterMy = (task) => {
-      return (task.creator._id == CurrentUserID);
+      return ((task.creator && task.creator._id == CurrentUserID) || task.userID == CurrentUserID);
     }
 
     const filterOthers = (task) => {
@@ -656,6 +644,7 @@ TaskManagement.propTypes = {
   hangoutJoin: PropTypes.func.isRequired,
   taskStatusChange: PropTypes.func.isRequired,
   taskLeave: PropTypes.func.isRequired,
+  taskAssign: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
   rateTaskPartner: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
@@ -691,6 +680,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
   rateTaskPartner: bindActionCreators(rateTaskPartner, dispatch),
+  taskAssign: bindActionCreators(taskAssign, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 

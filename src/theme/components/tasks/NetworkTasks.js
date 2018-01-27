@@ -72,6 +72,10 @@ const RenderSingleTask = (task, i, props)=> {
     );
   }
   else {
+    if (!task.creator) {
+      console.log("%cNo Creator For Task", "color:orange; background:grey;");
+      console.dir(task);
+    }
     return (
       <li className="task-scanner-task-expanded" key={i}>
           <div className="hangout-text-expanded">

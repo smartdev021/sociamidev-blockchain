@@ -131,6 +131,29 @@ export function rateTaskPartner(taskId, fromUser, toUser, rate) {
     }
 }
 
+export function taskAssign(taskId, assignee) {
+    return function (dispatch) {
+      dispatch(updateTaskInitiate());
+
+      const url = `${ConfigMain.getBackendURL()}/taskAssign`;
+
+      const body = {
+        _id: taskId, 
+        assignee: assignee,
+      };
+
+      return (Axios.post(url, body)
+      .then(function(response) {
+        dispatch(updateTask(response.data._id, response.data));
+        dispatch(updateTaskComplete());
+      })
+      .catch((error) => {
+          console.log(error);
+          dispatch(updateTaskComplete({}));
+       }));
+    }
+}
+
 export function saveTask(task) {
     return function (dispatch) {
         
