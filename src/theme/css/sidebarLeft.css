@@ -38,7 +38,7 @@
   height: 50px;
 }
   
-.user-widget #user-text{
+.user-widget #user-text {
   padding-top: 5px;
   width:200px;
 }
@@ -55,8 +55,9 @@
   height: 55px;
 }
   
-.friend-widget #user-text{
+.friend-widget #user-text {
   padding-top: 5px;
+  padding-left: 20px;
   width:180px;
 }
   

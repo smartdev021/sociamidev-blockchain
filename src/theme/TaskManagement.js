@@ -57,53 +57,30 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
-const TaskCategoryYour = {
-  type: "my_tasks",
-  name: "Created"
-};
-
-const TaskCategoryAssigned = {
-  type: "assign_tasks",
-  name: "Assigned"
-};
-
-const TaskCategoryMyRequests = {
-  type: "requested_hangouts",
-  name: "My Requests"
-};
-
-const TaskCategoryMyOffers = {
-  type: "requests_sent_hangouts",
-  name: "Sent"
-};
-
 const TasksAll = {type: "all", label: "All"};
 const TasksConfirmed = {type: "confirmed", label: "Confirmed"};
-const TasksMy = {type: "my_deepdive", label: "My Deepdive"};
+const TasksMy = {type: "takks_my", label: "Mine"};
+const TasksOthers = {type: "tasks_others", label: "Others"};
 const TasksSentRequests = {type: "sent_requests", label: "Sent Requests"};
 const TasksCompleted = {type: "completed", label: "Completed"};
 
 const Filters = [
   TasksAll, 
   TasksConfirmed, 
-  TasksMy, 
+  TasksMy,
+  TasksOthers,
   TasksSentRequests,
   TasksCompleted,
 ];
 
 const BackendURL = ConfigMain.getBackendURL();
 
-const Categories = [TaskCategoryYour, TaskCategoryAssigned, TaskCategoryMyRequests, TaskCategoryMyOffers];
-
 class TaskManagement extends React.Component {
 
   constructor(props) {
     super(props);
 
-    console.dir(TaskCategoryYour);
-
     this.state = {
-      tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
       timeNow: Date.now(),
       isScannerExpanded: !this.props.isAuthorized,
@@ -303,20 +280,7 @@ class TaskManagement extends React.Component {
       }
 
       this.setState({isScannerExpanded: !this.props.isAuthorized || (this.props.userTasks.length == 0 && tasks.length == 0)});
-
-      console.log("%cComponent Did Update: ", "color: red; background: green;");
-      console.dir(this.props.userTasks);
-      console.dir(tasks);
     }
-  }
-
-  handleCategoryChange(e) {
-    const newCategory = Categories.find(function(category){
-      return category.type == e.target.value;
-    });
-
-    let copy = Object.assign({}, this.state, {tasksCategory: newCategory});
-    this.setState(copy);
   }
 
   createAndSaveNewTask(roadmap) {
@@ -450,18 +414,15 @@ class TaskManagement extends React.Component {
     const CurrentUserID = this.props.userProfile._id;
 
     const that = this;
-
+    
     const filterMy = (task) => {
-      if (task.type == "hangout") {
-        return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
-          return participant.user._id == CurrentUserID && participant.status == "accepted";
-        }) != -1);
-      }
-      else {
-        return task.creator._id == CurrentUserID || task.assignees.findIndex(function(assignee){
-          return assignee._id == CurrentUserID;
-        }) != -1;
-      }
+      return (task.creator._id == CurrentUserID);
+    }
+
+    const filterOthers = (task) => {
+      return !filterMy(task) && (task.type == "hangout" && (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+        return participant.user._id == CurrentUserID && participant.status != "pending";
+      }) != -1));
     }
 
     const filterConfirmed = (task) => {
@@ -477,7 +438,7 @@ class TaskManagement extends React.Component {
     const filterSentRequests = (task) => {
       if (task.type == "hangout") {
         return task.status == "None" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
-          return participant.user._id == CurrentUserID;
+          return participant.user._id == CurrentUserID && participant.status != "accepted";
         }) != -1;
       }
       
@@ -503,7 +464,7 @@ class TaskManagement extends React.Component {
 
     const filterAll = (task) => {
       return filterMy(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
-     }
+    }
 
     switch (this.state.filterCurrent.type) {
       case TasksConfirmed.type: {
@@ -516,6 +477,10 @@ class TaskManagement extends React.Component {
       }
       case TasksCompleted.type: {
         tasks = this.props.tasks.filter(filterCompleted);
+        break;
+      }
+      case TasksOthers.type: {
+        tasks = this.props.tasks.filter(filterOthers);
         break;
       }
       case TasksMy.type: {
@@ -585,10 +550,8 @@ class TaskManagement extends React.Component {
     return (
       <div className={leftSideClassName}>
         <div className="content-2-columns-left-bg-white">
-          <MyTasksContainer tasks={myTasks} tasksCategoryName={this.state.tasksCategory.name}
-            onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
+          <MyTasksContainer tasks={myTasks}
             handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
-            selectedCategory={this.state.tasksCategory} categories={Categories}
             onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
             onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
             assignedTasks={this.props.tasksAssignedToCurrentUser} currentUserID={this.props.userProfile._id}
