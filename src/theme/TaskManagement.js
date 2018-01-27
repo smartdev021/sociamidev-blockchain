@@ -195,29 +195,20 @@ class TaskManagement extends React.Component {
     }
   }
 
-  storeAndFetchTasks() {
-    const { cookies } = this.props;
-    const lastViewedRoadmap = cookies.get('lastViewedRoadmap');
-
-    if (this.props.userProfile._id && lastViewedRoadmap) {
-
-      this.createAndSaveNewTask(lastViewedRoadmap);
-      cookies.remove('lastViewedRoadmap');
-    }
-    else {
-      this.props.onFetchAllTasks(false);
-    }
-  }
-
   fetchUserTasks() {
-    if (this.props.isAuthorized && !this.props.isUserTasksLoading) {
+    if (this.props.isAuthorized) {
       this.props.fetchUserTasks(this.props.userProfile._id);
     }
   }
 
   componentWillMount() {
-    // this.storeAndFetchTasks();
     this.fetchUserTasks();
+    if (!this.props.isAuthorized) {
+      this.props.onFetchAllTasks(false);
+    }
+    else {
+      this.props.onFetchAllTasks(true);
+    }
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
   }
 
@@ -236,7 +227,9 @@ class TaskManagement extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
       this.fetchUserTasks();
-      this.storeAndFetchTasks();
+
+      this.props.onFetchAllTasks(true);
+
       this.props.fetchRoadmapsFromAdmin(this.props.userProfile._id);
     }
 
@@ -271,18 +264,6 @@ class TaskManagement extends React.Component {
 
       this.setState({isScannerExpanded: !this.props.isAuthorized || (this.props.userTasks.length == 0 && tasks.length == 0)});
     }
-  }
-
-  createAndSaveNewTask(roadmap) {
-    //TODO: Move this to Redux
-    this.props.fetchTasksInitiate();
-    let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
-    const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}
-    &userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}&isHidden=0`;
-
-    Axios.get(url)
-    .then((response) =>this.handleSaveNewTaskSuccess(response))
-    .catch((error) =>this.handleSaveNewTaskError(error));
   }
 
   handleSaveNewTaskSuccess(response) {
@@ -580,7 +561,7 @@ class TaskManagement extends React.Component {
     let rightSideClassName = "col-lg-3";
 
     if (this.state.isScannerExpanded) {
-      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-9";
+      rightSideClassName = this.getMyTasksAndHangouts().length != 0 ? "col-lg-9" : "col-lg-12";
     }
 
     return (
