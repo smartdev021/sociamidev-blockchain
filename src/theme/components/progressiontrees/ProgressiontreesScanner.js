@@ -23,7 +23,6 @@ const ProgressiontreesScanner = (props) => {
   }
 
   const openTreeAcceptConfirmationPopup = (treeId, treeName)=>props.openTreeAcceptConfirmationPopup(treeId, treeName);
-
   return (
     <ul className="list-group">
       {
@@ -34,7 +33,7 @@ const ProgressiontreesScanner = (props) => {
                 {roadmap.name}
               </ActionLink>
 
-              <span className="star-rating">
+              <span className="tree-scaner-star-rating">
                 <StarRatings rating={3.5} 
                 isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
                   starWidthAndHeight={'20px'} starSpacing={'2px'}
@@ -42,7 +41,7 @@ const ProgressiontreesScanner = (props) => {
                   starRatedColor={"rgb(180, 177, 3)"}/>
               </span>
 
-              {props.isExpanded && <div className="tree-scanner-tree-name">{roadmap.description}</div>}
+              {props.isExpanded ? <div className="tree-scanner-tree-name">{roadmap.description}</div> : <div className="tree-scanner-tree-name">{(roadmap.description).slice(0,100)} ...</div>}
 
               <div className="tree-scanner-tree-footer">
                 <div className="tree-scanner-tree-icons pull-left">

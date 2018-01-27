@@ -1,15 +1,30 @@
+.progress-browser-wrap{
+    padding-left: 35px;
+}
 #tree-skills {
     margin-top: 20px;
     height: 400px;
     overflow-y: scroll;
 }
-
+.progress-browser-name{
+    display: inline-block;
+}
+.list-skill-wrap a{
+    text-decoration: underline;
+    line-height: 2;
+}
 #tree-skills a, #skill-break-down a {
-    color: white;
+    color: #4d4b4b;
+    /*color: white;*/
 }
 
+#progression-trees-trees {
+    color: #4d4b4b;
+    /*color: white;*/
+}
 #progression-trees-trees a {
-    color: white;
+    color: #4d4b4b;
+    /*color: white;*/
 }
 
 .weightage-section {
@@ -53,7 +68,8 @@
 }
 
 #hangout-submit-form form input::placeholder {
-    color: white;
+    color: #4d4b4b;
+    /*color: white;*/
 }
 
 #hangout-submit-form form input[type="text"], #hangout-submit-form form input[type="time"]

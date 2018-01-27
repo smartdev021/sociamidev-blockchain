@@ -18,7 +18,8 @@
 #navbar-trend-scanner ul li>a {
   font-size: 18px;
   font-family: "Comfortaa";
-  color: rgb( 255, 255, 255 );
+  color: #4d4b4b;
+  /*color: rgb( 255, 255, 255 );*/
   padding-left: 0;
 }
 
@@ -59,7 +60,8 @@
 #trend-scanner-results .list-item #text {
   font-size: 18px;
   font-family: "Comfortaa";
-  color: rgb( 255, 255, 255 );
+  color: #4d4b4b;
+  /*color: rgb( 255, 255, 255 );*/
   padding-left: 0;
   transition-duration: 0.5s;
 }
@@ -78,7 +80,8 @@
 }
   
 #trend-scanner-results .list-item #icons a {
-  color: rgb( 255, 255, 255 );
+  color: #4d4b4b;
+  /*color: rgb( 255, 255, 255 );*/
 }
 
 #trend-scanner-results .list-item #icons {
