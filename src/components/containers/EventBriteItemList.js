@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import EventBriteItem from './EventBriteItem';
-import {Table} from 'react-bootstrap';
 
 class EventBriteItemList extends React.Component {
 

@@ -24,6 +24,7 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 import ActionLink from '~/src/components/common/ActionLink'
 
 import MyTasksContainer from '~/src/theme/components/tasks/MyTasksContainer'
+
 import NetworkTasks from '~/src/theme/components/tasks/NetworkTasks'
 
 import TasksScannerContainer from '~/src/theme/components/tasks/TasksScannerContainer'
@@ -41,6 +42,8 @@ import {
   hangoutJoin,
   taskStatusChange,
   taskLeave,
+  rateTaskPartner,
+  taskAssign,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -56,53 +59,45 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
-const TaskCategoryYour = {
-  type: "my_tasks",
-  name: "Created"
-};
+const TasksAll = {type: "all", label: "All"};
+const TasksConfirmed = {type: "confirmed", label: "Confirmed"};
+const TasksMy = {type: "takks_my", label: "Mine"};
+const TasksOthers = {type: "tasks_others", label: "Others"};
+const TasksSentRequests = {type: "sent_requests", label: "Sent Requests"};
+const TasksCompleted = {type: "completed", label: "Completed"};
 
-const TaskCategoryAssigned = {
-  type: "assign_tasks",
-  name: "Assigned"
-};
-
-const TaskCategoryMyRequests = {
-  type: "requested_hangouts",
-  name: "My Requests"
-};
-
-const TaskCategoryMyOffers = {
-  type: "requests_sent_hangouts",
-  name: "Sent"
-};
+const Filters = [
+  TasksAll, 
+  TasksConfirmed, 
+  TasksMy,
+  TasksOthers,
+  TasksSentRequests,
+  TasksCompleted,
+];
 
 const BackendURL = ConfigMain.getBackendURL();
-
-const Categories = [TaskCategoryYour, TaskCategoryAssigned, TaskCategoryMyRequests, TaskCategoryMyOffers];
 
 class TaskManagement extends React.Component {
 
   constructor(props) {
     super(props);
 
-    console.dir(TaskCategoryYour);
-
     this.state = {
-      tasksCategory: TaskCategoryAssigned,
       scannerQuery: "",
       timeNow: Date.now(),
       isScannerExpanded: !this.props.isAuthorized,
 
       activeHangout: undefined,
       isAnswerQuestionsOpen: false,
+
+      //
+      filterCurrent: Filters[0],
     }
 
     this.redirectLocation = undefined;    
 
     //this is for making task 'Start' button available in real time
     this.timeNowUpdateInterval = undefined;
-
-    this.handleHangoutRateSuccess = this.handleHangoutRateSuccess.bind(this);
   }
 
   groupTasksByProjects(tasks) {
@@ -164,17 +159,8 @@ class TaskManagement extends React.Component {
     if (rate == 'good' || rate == 'bad') {
       const rateNumber = rate == 'good' ? 10 : 1;
 
-      const body = {taskId: hangout._id, fromUser: this.props.userProfile._id, toUser: userId, rate: rateNumber}
-
-      Axios.post(`${BackendURL}/hangoutRateParticipant`, body)
-      .then((response) =>this.handleHangoutRateSuccess(response))
-      .catch((error) =>{console.log(error)});
+      this.props.rateTaskPartner(hangout._id, this.props.userProfile._id, userId, rateNumber);
     }
-  }
-
-  handleHangoutRateSuccess() {
-    this.fetchUserTasks();
-    this.props.onFetchAllTasks(false);
   }
 
   hangoutActionPerform(action, hangout) {
@@ -210,29 +196,20 @@ class TaskManagement extends React.Component {
     }
   }
 
-  storeAndFetchTasks() {
-    const { cookies } = this.props;
-    const lastViewedRoadmap = cookies.get('lastViewedRoadmap');
-
-    if (this.props.userProfile._id && lastViewedRoadmap) {
-
-      this.createAndSaveNewTask(lastViewedRoadmap);
-      cookies.remove('lastViewedRoadmap');
-    }
-    else {
-      this.props.onFetchAllTasks(false);
-    }
-  }
-
   fetchUserTasks() {
-    if (this.props.isAuthorized && !this.props.isUserTasksLoading) {
+    if (this.props.isAuthorized) {
       this.props.fetchUserTasks(this.props.userProfile._id);
     }
   }
 
   componentWillMount() {
-    // this.storeAndFetchTasks();
     this.fetchUserTasks();
+    if (!this.props.isAuthorized) {
+      this.props.onFetchAllTasks(false);
+    }
+    else {
+      this.props.onFetchAllTasks(true);
+    }
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
   }
 
@@ -251,7 +228,9 @@ class TaskManagement extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.isAuthorized && this.props.isAuthorized) {
       this.fetchUserTasks();
-      this.storeAndFetchTasks();
+
+      this.props.onFetchAllTasks(true);
+
       this.props.fetchRoadmapsFromAdmin(this.props.userProfile._id);
     }
 
@@ -285,32 +264,7 @@ class TaskManagement extends React.Component {
       }
 
       this.setState({isScannerExpanded: !this.props.isAuthorized || (this.props.userTasks.length == 0 && tasks.length == 0)});
-
-      console.log("%cComponent Did Update: ", "color: red; background: green;");
-      console.dir(this.props.userTasks);
-      console.dir(tasks);
     }
-  }
-
-  handleCategoryChange(e) {
-    const newCategory = Categories.find(function(category){
-      return category.type == e.target.value;
-    });
-
-    let copy = Object.assign({}, this.state, {tasksCategory: newCategory});
-    this.setState(copy);
-  }
-
-  createAndSaveNewTask(roadmap) {
-    //TODO: Move this to Redux
-    this.props.fetchTasksInitiate();
-    let userName = `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`;
-    const url = `${BackendURL}/taskSave?userID=${this.props.userProfile._id}
-    &userName=${userName}&type=${'find_mentor'}&roadmapID=${roadmap.id}&roadmapName=${roadmap.name}&isHidden=0`;
-
-    Axios.get(url)
-    .then((response) =>this.handleSaveNewTaskSuccess(response))
-    .catch((error) =>this.handleSaveNewTaskError(error));
   }
 
   handleSaveNewTaskSuccess(response) {
@@ -331,33 +285,20 @@ class TaskManagement extends React.Component {
     }
   }
 
-  handleCloseConfirmTaskDetailsPopup(item) {
-    let copy = Object.assign({}, this.state, {isDetailsPopupOpen: false});
-    this.setState(copy)
-    this.props.onFetchAllTasks(false);
-    this.fetchUserTasks();
+  handleCloseConfirmTaskDetailsPopup() {
+    this.setState({isDetailsPopupOpen: false})
   }
 
   handleAcceptConfirm(item){
     if (this.state.detailsPopupItem.type != TaskTypes.HANGOUT) {
-      let userID = this.props.userProfile ? this.props.userProfile._id : undefined; //"59fdda7f82fff92dc7527d28";
-    var params={
-      _id:this.state.detailsPopupItem._id,
-      taskAsigneeId:userID
-    }
 
-    const body = {
-      _id: this.state.detailsPopupItem._id, 
-      assignee: {
+      const Assignee = {
         _id: this.props.userProfile._id,
         firstName: this.props.userProfile.firstName,
         lastName: this.props.userProfile.lastName,
-      }
-    };
+      };
 
-    Axios.post(`${ConfigMain.getBackendURL()}/taskAssign`, body)
-    .then((response) =>this.handleCloseConfirmTaskDetailsPopup(response))
-    .catch((error) =>this.handleCloseConfirmTaskDetailsPopup(error));
+      this.props.taskAssign(this.state.detailsPopupItem._id, Assignee);
     }
     else {
       this.props.hangoutJoin(this.state.detailsPopupItem._id, {
@@ -365,9 +306,9 @@ class TaskManagement extends React.Component {
         firstName: this.props.userProfile.firstName, 
         lastName: this.props.userProfile.lastName
       });
-      
-      this.setState({isDetailsPopupOpen: false});
     }
+
+    this.handleCloseConfirmTaskDetailsPopup();
   }
 
   handleOpenCancelTaskDetailsPopup(item){
@@ -431,29 +372,93 @@ class TaskManagement extends React.Component {
 
     const CurrentUserID = this.props.userProfile._id;
 
-    switch (this.state.tasksCategory.type) {
-      case TaskCategoryAssigned.type: {
-        tasks = this.getTasksAssignedToMe();
+    const that = this;
+    
+    const filterMy = (task) => {
+      return ((task.creator && task.creator._id == CurrentUserID) || task.userID == CurrentUserID);
+    }
+
+    const filterOthers = (task) => {
+      return !filterMy(task) && (task.type == "hangout" && (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+        return participant.user._id == CurrentUserID && participant.status != "pending";
+      }) != -1));
+    }
+
+    const filterConfirmed = (task) => {
+      if (task.type == "hangout") {
+        return task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1;
+      }
+      
+      return false;
+    }
+
+    const filterSentRequests = (task) => {
+      if (task.type == "hangout") {
+        return task.status == "None" && task.creator._id != CurrentUserID && task.metaData.participants.findIndex(function(participant){
+          return participant.user._id == CurrentUserID && participant.status != "accepted";
+        }) != -1;
+      }
+      
+      return false;
+    }
+
+    const filterCompleted = (task) => {
+      if (task.status != "complete") {
+        return false;
+      }
+      
+      if (task.type == "hangout") {
+        return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
+          return participant.user._id == CurrentUserID && participant.status == "accepted";
+        }) != -1);
+      }
+      else {
+        return task.creator._id == CurrentUserID || task.assignees.findIndex(function(assignee){
+          return assignee._id == CurrentUserID;
+        }) != -1;
+      }
+    }
+
+    const filterAll = (task) => {
+      return filterMy(task) || filterOthers(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
+    }
+
+    switch (this.state.filterCurrent.type) {
+      case TasksConfirmed.type: {
+        tasks = this.props.tasks.filter(filterConfirmed);
         break;
       }
-      case TaskCategoryYour.type: {
-        tasks = this.getTasksCreatedByMe();
+      case TasksSentRequests.type: {
+        tasks = this.props.tasks.filter(filterSentRequests);
         break;
       }
-      case TaskCategoryMyRequests.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.creator._id == CurrentUserID;
-        });
+      case TasksCompleted.type: {
+        tasks = this.props.tasks.filter(filterCompleted);
         break;
       }
-      case TaskCategoryMyOffers.type: {
-        tasks = this.props.tasks.filter(function(task) {
-          return task.type == "hangout" && task.metaData.participants.findIndex(function(participant) {
-            return participant.user._id == CurrentUserID && participant.status == "pending"; 
-          }) != -1;
-        });
+      case TasksOthers.type: {
+        tasks = this.props.tasks.filter(filterOthers);
         break;
       }
+      case TasksMy.type: {
+        tasks = this.props.tasks.filter(filterMy);
+        break;
+      }
+      default:
+        tasks = this.props.tasks.filter(filterAll);
+        break;
+    }
+
+    if (tasks.length > 0) {
+      //sort descending by date
+      tasks.sort((task1, task2) => {
+        const task1CreationDate = task1.date ? task1.date : task1.metaData.time;
+        const task2CreationDate = task2.date ? task2.date : task2.metaData.time;
+
+        return task2CreationDate - task1CreationDate;
+      });
     }
 
     return tasks;
@@ -468,9 +473,9 @@ class TaskManagement extends React.Component {
         return (task.userID != currentUserId && (!task.assignees || !task.assignees.find(function(assignee) {
           return assignee._id == currentUserId;
         })) &&
-          (task.type != "hangout" || task.metaData.participants.findIndex(function(participant) {
+          (task.type != "hangout" || (task.status=="None" && task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == currentUserId;
-          }) == -1));
+          }) == -1)));
       });
     }
     else {
@@ -499,15 +504,13 @@ class TaskManagement extends React.Component {
   renderLeftSide() {
     const myTasks = this.getMyTasksAndHangouts();
 
-    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1";
+    const leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-3";
     
     return (
       <div className={leftSideClassName}>
-        <div className="content-2-columns-left">
-          <MyTasksContainer tasks={myTasks} tasksCategoryName={this.state.tasksCategory.name}
-            onHandleCategoryChange={(e)=>this.handleCategoryChange(e)}
+        <div className="content-2-columns-left-bg-white">
+          <MyTasksContainer tasks={myTasks}
             handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
-            selectedCategory={this.state.tasksCategory} categories={Categories}
             onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
             onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
             assignedTasks={this.props.tasksAssignedToCurrentUser} currentUserID={this.props.userProfile._id}
@@ -516,8 +519,14 @@ class TaskManagement extends React.Component {
             isCollapsed={this.state.isScannerExpanded}
             onSetTreeScannerExpanded={(value)=>this.setTreeScannerExpanded(value)}
 
+            currentUserID={this.props.userProfile._id}
+
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
+
+            onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)}
+            filterCurrent={this.state.filterCurrent}
+            filters={Filters}
           />
        </div>
     </div>
@@ -530,13 +539,17 @@ class TaskManagement extends React.Component {
     }
   }
 
+  handleFilterChange(newFilter) {
+    this.setState({filterCurrent: newFilter});
+  }
+
   renderRightSide() {
     const tasksFiltered = this.getTaskScannerTasks();
 
     let rightSideClassName = "col-lg-3";
 
     if (this.state.isScannerExpanded) {
-      rightSideClassName = tasksFiltered.length == 0 ? "col-lg-12" : "col-lg-11";
+      rightSideClassName = this.getMyTasksAndHangouts().length != 0 ? "col-lg-9" : "col-lg-12";
     }
 
     return (
@@ -566,7 +579,7 @@ class TaskManagement extends React.Component {
         <div className="row">
           {RedirectTo}
           <div className="col-lg-12">
-            <div className="content-2-columns-left">
+            <div className="content-2-columns-left-bg-white">
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">
@@ -631,7 +644,9 @@ TaskManagement.propTypes = {
   hangoutJoin: PropTypes.func.isRequired,
   taskStatusChange: PropTypes.func.isRequired,
   taskLeave: PropTypes.func.isRequired,
+  taskAssign: PropTypes.func.isRequired,
   fetchTasksInitiate: PropTypes.func.isRequired,
+  rateTaskPartner: PropTypes.func.isRequired,
   fetchTasksComplete: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
 }
@@ -664,6 +679,8 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  rateTaskPartner: bindActionCreators(rateTaskPartner, dispatch),
+  taskAssign: bindActionCreators(taskAssign, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 

@@ -50,6 +50,7 @@
     border: 1px solid rgb(59, 197, 186);
     border-radius: 15px;
     color: white;
+    margin-right: 30px;
 }
 
 .popup-hangout-qustions .question-name {

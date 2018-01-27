@@ -33,19 +33,19 @@
 }
   
 .user-widget img {
-  float: left;
   margin-right: 20px;
   width: 50px;
   height: 50px;
 }
   
-.user-widget #user-text{
+.user-widget #user-text {
   padding-top: 5px;
   width:200px;
 }
   
 .friend-widget {
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  height: 75px;
 }
   
 .friend-widget img {
@@ -55,8 +55,9 @@
   height: 55px;
 }
   
-.friend-widget #user-text{
+.friend-widget #user-text {
   padding-top: 5px;
+  padding-left: 20px;
   width:180px;
 }
   

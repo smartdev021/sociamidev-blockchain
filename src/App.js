@@ -16,6 +16,8 @@ import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
+import io from 'socket.io-client';
+import PubSub from 'pubsub-js';  
 
 import Main from './Main';
 import ChatApp from '~/src/components/chat/ChatApp';
@@ -49,6 +51,7 @@ let DataProviderUdemy = require("~/src/data_providers/udemy/DataProvider");
 let DataProviderFreelancer = require("~/src/data_providers/freelancer/DataProvider");
 
 const BackendURL = ConfigMain.getBackendURL();
+var socketConn;
 
 class App extends Component {
   constructor(props) {
@@ -56,14 +59,77 @@ class App extends Component {
     this.state = {
       faceBookID: null,
       linkedInID: null,
+      verfiedSocketConnection: false,
     };
+    
+    var uuid = this.uuidv1();
+    this.state.anonymousUserId = uuid;
+    this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
+    socketConn = this.socket;
+
+   this.socket.on('newUser', user => {
+      var chatObj = {
+        eventType: 'newUser',
+        data: user
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('server:user', userObj => {
+      var chatObj = {
+        eventType: 'server:user',
+        data: userObj
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('server:message', message => {
+      var chatObj = {
+        eventType: 'server:message',
+        data: message
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('chatbotServer:message', message => {
+      var chatObj = {
+        eventType: 'chatbotServer:message',
+        data: message
+      }
+      PubSub.publish('ChatStartPoint', chatObj);
+    });
+
+    this.socket.on('EVENT', eventObj => {
+      PubSub.publish(eventObj.eventType, eventObj);
+    });
 
     console.log(`Config BackendURL: ${BackendURL}`);
   }
 
+  uuidv1() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+  }
+
   componentWillMount() {
     this.props.cookies.getAll();
+    this.token_chat_token = PubSub.subscribe('ChatEndPoint', this.chatEndListener.bind(this));
+
+    this.token_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
+
+    console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
+    console.dir(this.token_tasks_update);
   }
+
+  serverEventTasksUpdate(msg, data) {
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+    console.dir(data);
+
+    if (data.eventType == "tasks_update") {
+      this.props.fetchAllTasks(true);
+    }
+  };
 
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, {linkedInID: id});
@@ -201,6 +267,28 @@ class App extends Component {
     if (this.props.cookies != prevProps.cookies) {
       console.log("Cookies has been changed");
     }
+
+    if(this.state.userID && this.state.verfiedSocketConnection == false){
+      let copy = Object.assign({}, this.state, {verfiedSocketConnection: true});
+      this.setState(copy);
+    }
+
+    if (prevProps.isAuthorized != this.props.isAuthorized) {
+      if (this.props.isAuthorized) {
+        this.token_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
+
+        console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
+        console.dir(this.token_tasks_update);
+      }
+      else {
+        PubSub.unsubscribe(this.token_tasks_update);
+
+        console.log(`%cUnsubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
+        console.dir(this.token_tasks_update);
+      }
+    }
+
+
   }
 
   getRedirectLocation() {
@@ -232,27 +320,37 @@ class App extends Component {
 
     return ProfileLink;
   }
-  
-  render() {
-    let RedirectTo = this.getRedirectLocation();
 
+  chatEndListener(event,data){
+    socketConn.emit(data.eventType, data.data);
+  }
+  render() {
+    let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
-    // Check if user is logged in
-		if(this.props.isAuthorized && this.state.userID){
-      // Check if user is logged in via FB
-			if (this.state.faceBookID) {
-        var tempUserType = "facebook";
-				ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.faceBookID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
-			}
-			// Check if user is logged in via LinkedIn
-			else if(this.state.linkedInID) {
-        var tempUserType = "linkedin";
-				ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} username={this.state.linkedInID} userType={tempUserType} userID={this.state.userID} firstName={this.state.firstName} lastName={this.state.lastName}/>;
-			}
+    var username = "";
+    var userType = "";
+    if(this.state.faceBookID){
+      username = this.state.faceBookID;
+      userType = "facebook";
     }
-    else if(!this.props.isAuthorized){
-      ChatAppLink = <ChatApp loggedin={this.props.isAuthorized}/>;
+    else if(this.state.linkedInID){
+      username = this.state.linkedInID;
+      userType = "linkedin";
     }
+    
+    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userID={this.state.anonymousUserId}/>;
+
+    if(this.state.userID && this.state.verfiedSocketConnection == false){
+      var userData = {
+        username: username,
+        userType: userType,
+        userID: this.state.userID,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
+      }
+      socketConn.emit('UserLoggedIn', userData);      
+    }
+    
     
     return (
       <div className="outer-container">

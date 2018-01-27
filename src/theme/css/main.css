@@ -10,6 +10,17 @@
     line-height: 47px;
   }
 
-  .formSearchPage .form-group {
+.formSearchPage .form-group {
     width: 100%;
-  }
+}
+
+html ::-webkit-scrollbar-thumb{
+    border-radius: 2px; 
+    background-color: #b6b6b6;
+    float: left;
+}
+
+html ::-webkit-scrollbar{
+    background-color: inherit;
+    width: 6px; 
+}

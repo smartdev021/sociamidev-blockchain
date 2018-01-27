@@ -119,6 +119,14 @@ class PopupHangoutAnswers extends React.Component {
         <div className="container-fluid popup-hangout-qustions">
         <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
         <div className="row">
+              <div className="col-lg-12">
+                <div className="popup-hangout-answers-button-container">
+                  <button type="button" className="btn btn-sm btn-outline-inverse pull-right" 
+                    onClick={(e) => this.props.onSubmit(e)}>Submit</button>
+                </div>
+              </div>
+            </div>
+        <div className="row">
               <div className="col-lg-12 text-center">
                 <span className="popup-hangout-title">Earn up to <i>30 tokens</i> by completing this task with Alexander</span>
             </div>
@@ -127,14 +135,6 @@ class PopupHangoutAnswers extends React.Component {
             <div className="row">
               <div className="col-lg-12">
                 {this.renderQuestions()}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="popup-hangout-answers-button-container">
-                  <button type="button" className="btn btn-sm btn-outline-inverse pull-right" 
-                    onClick={(e) => this.props.onSubmit(e)}>Submit</button>
-                </div>
               </div>
             </div>
             
@@ -150,6 +150,7 @@ class PopupHangoutAnswers extends React.Component {
     render() {
         return (
           <div>
+            
             {this.renderHangoutAnswers()}
           </div>
         );
