@@ -52,7 +52,8 @@
   margin-bottom: 30px; /*Michael for landing*/
   font-size: 18px;
   font-family: "Comfortaa";
-  color: rgb( 255, 255, 255 );
+  color: black;
+  /*color: rgb( 255, 255, 255 );*/
   line-height: 1.667;
 }
 
@@ -74,6 +75,17 @@
   float: left;
   margin: 0px;
 }
-
+/*shoud be deleted after new ui of landing page ->*/
+#scanner_trees_landing {
+  border: 1px solid #ddd;
+  width: 410px;
+  height: 40px;
+  padding-left: 15px;
+  border-radius: 5px;
+}
+#scanner-input-container-landing {
+  margin: 20px 0 20px 10px;
+}
+/* <- shoud be deleted after new ui of landing page*/
 
 

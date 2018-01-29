@@ -9,7 +9,7 @@
 }
 #progression-trees-scanner {
   /*border: 1px solid rgba(36, 126, 230, 0.534);*/
-  height: 633px;
+  min-height: 633px;
   color: #4d4b4b;
 }
 
@@ -145,7 +145,7 @@
 }
 
 #trees-scanner-container {
-  height: 520px;
+  min-height: 520px;
   overflow-y: scroll;
 }
 
