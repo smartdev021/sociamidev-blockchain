@@ -1,6 +1,18 @@
 .progress-browser-wrap{
     padding-left: 35px;
 }
+.text-align-center {
+    text-align: center;
+}
+.skill-breakdown-solidity {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #f38162;
+    padding: 30px 0 0 15px;
+    margin: 25px 0 0 -12px;
+    color: white;
+}
 #tree-skills {
     margin-top: 20px;
     height: 400px;
@@ -19,6 +31,7 @@
 }
 
 #progression-trees-trees {
+    box-shadow: 1px 1px 4px 1px #b4b4b4;
     color: #4d4b4b;
     /*color: white;*/
 }
@@ -54,16 +67,42 @@
 }
 
 #hangout-submit-form {
-    border: 1px solid cyan;
-    border-radius: 3px;
-    min-height: 100px;
+    box-shadow: 1px 1px 3px 2px #b4b4b4;
+    /*border: 1px solid cyan;*/
+    /*border-radius: 3px;*/
+    min-height: 250px;
     padding: 5px;
-    margin-bottom: 10px;
+    margin: 15px 0 10px 0;
+}
+.deep-dive-button-wrap {
+    width: 200px;
+    margin: 0 auto;
+}
+.deep-dive-button {
+    border: 0;
+    outline-style: none;
+    width: 190px;
+    height: 40px;
+    background-color: #f38162;
+    color: white;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+}
+.hangout-btn-go {
+    border: 0;
+    outline-style: none;
+    width: 97px;
+    height: 40px;
+    background-color: #f38162;
+    color: white;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+}
+.hangout-bottom-line-wrap {
+    margin-top: 5px;
 }
 
 #hangout-submit-form form input{
-    background: rgb(119, 112, 112);
-    border: 1ps solid rgb(119, 112, 112);
+    /*background: rgb(119, 112, 112);*/
+    border: 1ps solid black;
     border-radius: 3px;
 }
 

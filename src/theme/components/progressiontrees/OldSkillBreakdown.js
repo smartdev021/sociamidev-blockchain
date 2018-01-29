@@ -37,7 +37,6 @@ class SkillBreakdown extends React.Component {
     this.state = {
      skillInfo: undefined,
      isHangoutFormVisible: false,
-     TrendScannerComponentVisible: false
     }
   }
 
@@ -75,11 +74,7 @@ class SkillBreakdown extends React.Component {
   }
 
   toggleHangoutForm(skillInfo) {
-    this.setState( { isHangoutFormVisible: true } );
-  }
-
-  toggleTrendScannerComponent() {
-    this.setState( { TrendScannerComponentVisible: true } );
+    this.setState( { isHangoutFormVisible: !this.state.isHangoutFormVisible } );
   }
 
   handleSelectCategory(e) {
@@ -145,72 +140,59 @@ class SkillBreakdown extends React.Component {
 
   render() {
     const that = this;
-    console.log(this.props.skillName)
     return (
-      <div className="container-fluid progress-browser-wrap" id="skill-break-down">
-        <div className="col-md-1">
-          <div className="skill-breakdown-solidity">
-            Solidity
+      <div className="container-fluid" id="skill-break-down">
+        <div className="row">
+          <div className="content-2-columns-left-title">
+            <span>Skill Breakdown</span>
+            <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.onCloseSkillBreakdown()}>
+              <span className="glyphicon glyphicon-arrow-left"></span>
+            </ActionLink>
+            <button type="button" className="btn btn-md btn-outline-inverse skill-breakdown-control pull-right" 
+              onClick={()=> this.toggleHangoutForm() }>Hangout</button>
           </div>
         </div>
-        <div className="col-md-11">
-          <div className="row">
-            <div className="content-2-columns-left-title text-align-center">
-              {this.props.skillName ? <span>{this.props.skillName}</span> : <span>Skill Breakdown</span> }
-              <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.onCloseSkillBreakdown()}>
-                <span className="glyphicon glyphicon-arrow-left"></span>
-              </ActionLink>
-            </div>
-          </div>
-          {!this.state.skillInfo &&
-            <div className="row">
-              <div className="col-lg-12">
-                <h3>Skill not Found!!!</h3>
-              </div>
-            </div>
-          }
-          <div className="row">
-            <div className="col-lg-12 text-align-center">
-              <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
-            </div>
-          </div>
+        {!this.state.skillInfo &&
           <div className="row">
             <div className="col-lg-12">
-              <h4>Related Sub-Skills</h4>
+              <h3>Skill not Found!!!</h3>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <ul id="related-topics">
-                {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
-                {
-                  const skillNameTrimmed = skill.trim();
-                  return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink></li>
-                })}
-              </ul>
-            </div>
+        }
+        {this.state.isHangoutFormVisible && 
+        <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
+        onTimeChange={(e)=>handleTimeChange(e)}/>}
+        <div className="row">
+          <div className="col-lg-12">
+            <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
           </div>
-          <div className="deep-dive-button-wrap">
-            <button type="button" className="btn-md btn-outline-inverse deep-dive-button" 
-                  onClick={()=> this.toggleHangoutForm() }>DeepDive</button>
-          </div>
-          <div className="row">
-            {this.state.isHangoutFormVisible && 
-              <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
-              onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()} />}
-          </div>
-          <br/>
-          {this.state.TrendScannerComponentVisible && <div className="row">
-            <div className="col-lg-12">
-              <div id="skill-breakdown-trend-scanner">
-                <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
-                  resultsSelectedCategory={this.props.resultsSelectedCategory}
-                    isFetchInProgress={this.props.isFetchInProgress}
-                      searchResults={this.props.searchResults}/>
-              </div>
-            </div>
-          </div>}
         </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <h4>Related Sub-Skills</h4>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <ul id="related-topics">
+              {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
+              {
+                const skillNameTrimmed = skill.trim();
+                return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink></li>
+              })}
+            </ul>
+          </div>
+        </div>
+        {!this.state.isHangoutFormVisible && <div className="row">
+          <div className="col-lg-12">
+            <div id="skill-breakdown-trend-scanner">
+              <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
+                resultsSelectedCategory={this.props.resultsSelectedCategory}
+                  isFetchInProgress={this.props.isFetchInProgress}
+                    searchResults={this.props.searchResults}/>
+            </div>
+          </div>
+        </div>}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 #progression-trees-trees {
   width: 100%;
   margin: 0 auto;
+  padding-right: 15px;
   overflow-x: hidden;
 }
 .scanner-expanded {

@@ -1,6 +1,6 @@
 /*2 columns content*/
 .content-2-columns-left, .content-2-columns-right{
-  height: 633px;
+  min-height: 200px;
 }
   
 .content-2-columns-left, .content-2-columns-right {
