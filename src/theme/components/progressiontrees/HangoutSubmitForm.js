@@ -82,7 +82,6 @@ class HangoutSubmitForm extends React.Component {
   }
 
   renderForm()  {
-    console.log(this.state.location)
     return (
       <form action="#" onSubmit={(e) => this.handleStartHangout(e)}>
         <label className="radio-inline">

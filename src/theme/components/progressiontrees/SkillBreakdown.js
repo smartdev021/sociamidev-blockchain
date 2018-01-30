@@ -79,7 +79,10 @@ class SkillBreakdown extends React.Component {
   }
 
   toggleTrendScannerComponent() {
-    this.setState( { TrendScannerComponentVisible: true } );
+    this.setState({ 
+      TrendScannerComponentVisible: true,
+      isHangoutFormVisible: true
+    });
   }
 
   handleSelectCategory(e) {
