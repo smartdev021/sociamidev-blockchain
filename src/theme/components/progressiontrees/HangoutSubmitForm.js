@@ -77,7 +77,7 @@ class HangoutSubmitForm extends React.Component {
     date.setHours(TimeInputSplitted[0]);
     date.setMinutes(TimeInputSplitted[1]);
 
-    // this.props.onHandleStartHangout(date);
+    this.props.onHandleStartHangout(date);
     this.props.toogleTrenScan();
   }
 
