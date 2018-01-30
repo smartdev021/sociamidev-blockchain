@@ -11,6 +11,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
+import ReactGA from 'react-ga'
+
 import PropTypes from 'prop-types';
 
 import {Icon} from 'react-fa'
@@ -215,6 +217,9 @@ class TaskManagement extends React.Component {
 
   componentDidMount() {
     this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 60000);
+
+    ReactGA.set({page: window.location.pathname});
+    ReactGA.pageview(window.location.pathname);
   }
 
   componentWillUnmount() {

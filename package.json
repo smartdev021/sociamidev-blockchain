@@ -75,6 +75,7 @@
     "react-dom": "^15.6.1",
     "react-fa": "^5.0.0",
     "react-file-loader": "^1.2.3",
+    "react-ga": "^2.4.1",
     "react-modal": "^2.3.2",
     "react-redux": "^5.0.6",
     "react-star-ratings": "^1.4.1",
