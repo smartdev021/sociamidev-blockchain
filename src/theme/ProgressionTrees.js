@@ -50,6 +50,7 @@ class ProgressionTrees extends React.Component {
       selectedTreeFromMyProgressIndex: -1,
 
       isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0,
+      isTreeExpanded: false,
     }
 
     this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
@@ -103,6 +104,11 @@ class ProgressionTrees extends React.Component {
     }
   }
 
+  progressionTreeFS() {
+    console.log('hey')
+    this.setState({isTreeExpanded: true})
+  }
+
   renderArrow(){
     if (this.state.isScannerExpanded) {
       if ((this.props.isAuthorized && this.props.userProfile.progressionTrees.length > 0)) {
@@ -144,7 +150,7 @@ class ProgressionTrees extends React.Component {
               <div>
                 <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} allTrees={this.props.roadmapsAdmin.data}
                   isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
-                  stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
+                  stopProgressionTree={(id)=>this.handleStopProgressionTree(id)} progressionTreeFS={()=>this.progressionTreeFS()}/>
               </div>
             </div>
       }
@@ -223,8 +229,13 @@ class ProgressionTrees extends React.Component {
     if (this.state.isScannerExpanded) {
       rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-12";
     }
+    var leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1 hide";
+    if (this.state.isTreeExpanded) {
+      rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-1 hide";
+      leftSideClassName = "col-lg-12";
+    }
 
-    let leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1 hide";
+    
     return (
         <div className="row">
           {this.state.isAcceptProgressionTreePopupOpen 

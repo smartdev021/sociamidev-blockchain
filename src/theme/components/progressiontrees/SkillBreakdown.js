@@ -200,6 +200,7 @@ class SkillBreakdown extends React.Component {
               onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()} />}
           </div>
           <br/>
+        </div>
           {this.state.TrendScannerComponentVisible && <div className="row">
             <div className="col-lg-12">
               <div id="skill-breakdown-trend-scanner">
@@ -210,7 +211,6 @@ class SkillBreakdown extends React.Component {
               </div>
             </div>
           </div>}
-        </div>
       </div>
     );
   }

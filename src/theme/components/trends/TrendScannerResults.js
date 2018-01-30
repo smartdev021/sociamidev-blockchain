@@ -22,7 +22,7 @@ const renderGigs = (props) => {
         props.searchResults.gigs.map(function(gig, i) {
           return (<li key={i}>
           <div className="list-item">
-            <div id="icons">
+            <div id="icons" className="icons-margin">
               <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
               <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
             </div>
@@ -46,7 +46,7 @@ const renderTrainings = (props) => {
         props.searchResults.courses.map(function(course, i) {
           return (<li key={i}>
           <div className="list-item">
-            <div id="icons">
+            <div id="icons" className="icons-margin">
               <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
               <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
             </div>
@@ -73,7 +73,7 @@ const renderEvents = (props) => {
 
             return (<li key={i}>
             <div className="list-item">
-              <div id="icons">
+              <div id="icons" className="icons-margin">
                 <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
                 <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
               </div>
@@ -100,7 +100,7 @@ const renderJobs = (props) => {
 
           return (<li key={i}>
           <div className="list-item">
-            <div id="icons">
+            <div id="icons" className="icons-margin">
               <a href="#"><span className="glyphicon glyphicon-tag"></span></a>
               <a href="#"><div><i className="fa fa-share-alt" aria-hidden="true"></i></div></a>
             </div>

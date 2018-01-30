@@ -21,7 +21,7 @@ const ProgressiontreesMyProgress = (props) => {
 						props.trees.map(function(roadmap, i) {
 						return (
 							<div key={i} className="trees-wrap" >
-								<ActionLink className="progression-tree-my-text" onClick={()=> props.openSingleTree(roadmap._id)}>
+								<ActionLink className="progression-tree-my-text" onClick={()=> { props.openSingleTree(roadmap._id); props.progressionTreeFS()}}>
 									{roadmap.name}
 								</ActionLink>
 								<span className="progression-tree-star-rating">

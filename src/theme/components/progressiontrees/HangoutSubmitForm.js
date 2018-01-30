@@ -42,6 +42,9 @@ class HangoutSubmitForm extends React.Component {
   handleOptionChange(e) {
     this.setState({dayPeriod: e.target.value});
   }
+  handleOptionChangeLocation(e) {
+    this.setState( {location: e.target.value} )
+  }
 
   handleStartHangout(e) {
     e.preventDefault();
@@ -79,13 +82,14 @@ class HangoutSubmitForm extends React.Component {
   }
 
   renderForm()  {
+    console.log(this.state.location)
     return (
       <form action="#" onSubmit={(e) => this.handleStartHangout(e)}>
         <label className="radio-inline">
           When
         </label>
         <label className="radio-inline">
-          <input type="checkBox" name="optradio" value="today" onChange={(e)=>this.handleOptionChange(e)}/>Today
+          <input type="checkBox" className="hangout-form-input today" name="optradio" value="today" onChange={(e)=>this.handleOptionChange(e)}/>Today
           <input type="date" className="validate-field required" data-validation-type="string" 
             id="date" name="date" autoComplete="off" placeholder="Date" defaultValue="2020-01-01"
               onChange={(e)=>this.handleDateInputChange(e)}/>
@@ -101,9 +105,9 @@ class HangoutSubmitForm extends React.Component {
             Location
           </label>
           <label className="radio-inline">
-            <input type="checkBox" name="location" value="Virtual" checked={this.state.location=="Virtual"} onChange={(e)=>this.handleOptionChange(e)}/>Virtual
+            <input type="checkBox" className="hangout-form-input" name="location" value="Virtual" onChange={(e)=>this.handleOptionChangeLocation(e)}/>Virtual
           </label> 
-          <input type="text" name="location" value="" placeholder="Location" onChange={(e)=>this.handleOptionChange(e)}/>
+          <input type="text" name="location" value={this.state.location} placeholder="Location" onChange={(e)=>this.handleOptionChangeLocation(e)}/>
         </div>
         <button type="submit" className="btn-md btn-outline-inverse pull-right hangout-btn-go">Go</button>
       </form>
@@ -116,7 +120,7 @@ class HangoutSubmitForm extends React.Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12">
-              <h4>Great! You want to DeepDive into this topic!</h4>
+              <p>Great! You want to DeepDive into this topic!</p>
             </div>
           </div>
           <div className="row">

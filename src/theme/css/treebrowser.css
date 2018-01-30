@@ -74,6 +74,13 @@
     padding: 5px;
     margin: 15px 0 10px 0;
 }
+.hangout-form-input {
+    transform: scale(1.5);
+    margin-right: 10px!important;
+}
+.today {
+    margin-left: 20px!important;
+}
 .deep-dive-button-wrap {
     width: 200px;
     margin: 0 auto;
@@ -86,6 +93,20 @@
     background-color: #f38162;
     color: white;
     box-shadow: 1px 2px 3px 1px #b4b4b4;
+}
+#hangout-submit-form {
+    width: 630px;
+    min-height: 300px;
+    padding: 20px 15px 0 20px;
+    margin: 35px auto;
+}
+@media (max-width: 950px) {
+    #hangout-submit-form {
+        width: auto;
+    }
+}
+#hangout-submit-form p {
+    line-height: 22px;
 }
 .hangout-btn-go {
     border: 0;
@@ -102,8 +123,8 @@
 
 #hangout-submit-form form input{
     /*background: rgb(119, 112, 112);*/
-    border: 1ps solid black;
-    border-radius: 3px;
+    /*border: 1px solid black;*/
+    /*border-radius: 3px;*/
 }
 
 #hangout-submit-form form input::placeholder {
