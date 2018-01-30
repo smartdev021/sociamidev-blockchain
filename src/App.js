@@ -17,7 +17,8 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {Link} from 'react-router-dom'
 import io from 'socket.io-client';
-import PubSub from 'pubsub-js';  
+import PubSub from 'pubsub-js';
+import ReactGA from 'react-ga'
 
 import Main from './Main';
 import ChatApp from '~/src/components/chat/ChatApp';
@@ -103,7 +104,7 @@ class App extends Component {
       PubSub.publish(eventObj.eventType, eventObj);
     });
 
-    console.log(`Config BackendURL: ${BackendURL}`);
+    ReactGA.initialize('UA-113317436-1');
   }
 
   uuidv1() {
