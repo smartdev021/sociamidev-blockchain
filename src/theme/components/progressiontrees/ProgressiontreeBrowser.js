@@ -30,12 +30,13 @@ class ProgressiontreeBrowser extends React.Component {
     }
     else {
       return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} 
-                skillName={this.state.selectedSkill} userProfile={this.props.userProfile} tree={this.props.tree} saveTask={this.props.saveTask}/>);
+                skillName={this.state.selectedSkill} userProfile={this.props.userProfile} tree={this.props.tree} saveTask={this.props.saveTask} />);
     }
   }
 
   handleCloseSkillBreakdown() {
     this.setState( { selectedSkill: undefined });
+    this.props.progressionTreeSS();
   }
 
   handleOpenSkillBreakdown(skill) {
@@ -55,7 +56,7 @@ class ProgressiontreeBrowser extends React.Component {
     <div className="list-skill-wrap">
       {
         skillParsed.map(function(skill, i) {
-          return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}>{skill}<br/></ActionLink>);
+          return (<ActionLink key={i} onClick={()=> {that.handleOpenSkillBreakdown(skill); that.props.progressionTreeFS()}}>{skill}<br/></ActionLink>);
         })
       }
     </div>);
@@ -102,6 +103,11 @@ class ProgressiontreeBrowser extends React.Component {
                   <div className="weightage-section">
                     <h4>Related skills</h4>
                     {this.renderSkills(this.props.tree.weightage3)}
+                  </div>
+                </div>
+                <div className="col-md-2 col-sm-12">
+                  <div className="add-tom-my-tree">
+                    Add to My tree
                   </div>
                 </div>
               </div>

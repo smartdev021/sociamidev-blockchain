@@ -43,6 +43,15 @@
 .weightage-section {
     margin-bottom: 10px;
 }
+.add-tom-my-tree{
+    width: 115px;
+    height: 43px;
+    border: 1px solid #f4986f;
+    border-radius: 2px;
+    color: #f4986f;
+    margin: 210px 0 0 -10px;
+    padding: 2px 20px 0 25px;
+}
 
 .skill-breakdown-control {
     margin-left: 50px;

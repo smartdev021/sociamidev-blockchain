@@ -105,8 +105,11 @@ class ProgressionTrees extends React.Component {
   }
 
   progressionTreeFS() {
-    console.log('hey')
     this.setState({isTreeExpanded: true})
+  }
+
+  progressionTreeSS() {
+    this.setState({isTreeExpanded: false})
   }
 
   renderArrow(){
@@ -136,7 +139,7 @@ class ProgressionTrees extends React.Component {
       {
         this.state.selectedTreeFromMyProgressIndex != -1 ?
           <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
-            onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask}/>
+            onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask} progressionTreeFS={()=>this.progressionTreeFS()} progressionTreeSS={()=>this.progressionTreeSS()}/>
           :
             <div className="container-fluid">
               <div className="row">
@@ -150,7 +153,7 @@ class ProgressionTrees extends React.Component {
               <div>
                 <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} allTrees={this.props.roadmapsAdmin.data}
                   isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
-                  stopProgressionTree={(id)=>this.handleStopProgressionTree(id)} progressionTreeFS={()=>this.progressionTreeFS()}/>
+                  stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
               </div>
             </div>
       }
@@ -230,11 +233,11 @@ class ProgressionTrees extends React.Component {
       rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-12";
     }
     var leftSideClassName = !this.state.isScannerExpanded ? "col-lg-9" : "col-lg-1 hide";
+
     if (this.state.isTreeExpanded) {
       rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-1 hide";
       leftSideClassName = "col-lg-12";
     }
-
     
     return (
         <div className="row">
