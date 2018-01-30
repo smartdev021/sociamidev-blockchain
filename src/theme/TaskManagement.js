@@ -311,6 +311,13 @@ class TaskManagement extends React.Component {
         firstName: this.props.userProfile.firstName, 
         lastName: this.props.userProfile.lastName
       });
+
+        ReactGA.event({
+          category: 'hangout_action',
+          action: 'join_request',
+          label: 'Hangouts',
+          value: 1,
+        });
     }
 
     this.handleCloseConfirmTaskDetailsPopup();
@@ -359,6 +366,7 @@ class TaskManagement extends React.Component {
       .then((response) => {
         that.props.onFetchAllTasks(false);
         that.fetchUserTasks();
+
       }).catch(function(error) {
         console.log(error);
       });
