@@ -8,8 +8,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import ReactGA from 'react-ga'
-
 import ActionLink from '~/src/components/common/ActionLink'
 
 import Axios from 'axios'
@@ -39,7 +37,6 @@ class SkillBreakdown extends React.Component {
     this.state = {
      skillInfo: undefined,
      isHangoutFormVisible: false,
-     TrendScannerComponentVisible: false
     }
   }
 
@@ -64,11 +61,8 @@ class SkillBreakdown extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
-
-        const pagePath = `skill/${this.state.skillInfo._id}`;
-        ReactGA.set({page: pagePath});
-        ReactGA.pageview(pagePath);
-
+        console.log("this.state.skillInfo: ");
+        console.dir(this.state.skillInfo);
         this.props.setSearchQuery(this.state.skillInfo.skill);
 
         this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
@@ -77,30 +71,10 @@ class SkillBreakdown extends React.Component {
         this.props.fetchResults("gigs_freelancer", this.state.skillInfo.skill);
       }
     }
-
-    if (prevState.isHangoutFormVisible != this.state.isHangoutFormVisible) {
-      if (this.state.isHangoutFormVisible) {
-
-        const action = `hangout_prepare/${this.state.skillInfo._id}`;
-        ReactGA.event({
-          category: 'hangout_action',
-          action: action,
-          label: 'Hangouts',
-        });
-
-      }
-    }
   }
 
   toggleHangoutForm(skillInfo) {
-    this.setState( { isHangoutFormVisible: true } );
-  }
-
-  toggleTrendScannerComponent() {
-    this.setState({ 
-      TrendScannerComponentVisible: true,
-      isHangoutFormVisible: true
-    });
+    this.setState( { isHangoutFormVisible: !this.state.isHangoutFormVisible } );
   }
 
   handleSelectCategory(e) {
@@ -154,13 +128,6 @@ class SkillBreakdown extends React.Component {
 
     if (hangout.userName != "" && hangout.name != "" && hangout.description != "") {
       this.props.saveTask(hangout);
-
-      const action = `hangout_create/${this.state.skillInfo._id}`;
-        ReactGA.event({
-          category: 'hangout_action',
-          action: action,
-          label: 'Hangouts',
-        });
     }
     
     this.setState( { isHangoutFormVisible: false } );
@@ -171,85 +138,61 @@ class SkillBreakdown extends React.Component {
     console.log(e.currentTarget.value);
   }
 
-  handleClose() {
-    const action = `skill_back/${this.state.skillInfo._id}`;
-        ReactGA.event({
-          category: 'hangout_action',
-          action: action,
-          label: 'Hangouts',
-        });
-
-    this.props.onCloseSkillBreakdown();
-  }
-
   render() {
     const that = this;
-    console.log(this.props.skillName)
     return (
-      <div className="container-fluid progress-browser-wrap" id="skill-break-down">
-        <div className="col-md-1">
-          <div className="skill-breakdown-solidity">
-            Solidity
+      <div className="container-fluid" id="skill-break-down">
+        <div className="row">
+          <div className="content-2-columns-left-title">
+            <span>Skill Breakdown</span>
+            <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.onCloseSkillBreakdown()}>
+              <span className="glyphicon glyphicon-arrow-left"></span>
+            </ActionLink>
+            <button type="button" className="btn btn-md btn-outline-inverse skill-breakdown-control pull-right" 
+              onClick={()=> this.toggleHangoutForm() }>Hangout</button>
           </div>
         </div>
-        <div className="col-md-11">
-          <div className="row">
-            <div className="content-2-columns-left-title text-align-center">
-              {this.props.skillName ? <span>{this.props.skillName}</span> : <span>Skill Breakdown</span> }
-              <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.props.onCloseSkillBreakdown()}}>
-                <span className="glyphicon glyphicon-arrow-left"></span>
-              </ActionLink>
-            </div>
-          </div>
-          {!this.state.skillInfo &&
-            <div className="row">
-              <div className="col-lg-12">
-                <h3>Skill not Found!!!</h3>
-              </div>
-            </div>
-          }
-          <div className="row">
-            <div className="col-lg-12 text-align-center">
-              <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
-            </div>
-          </div>
+        {!this.state.skillInfo &&
           <div className="row">
             <div className="col-lg-12">
-              <h4>Related Sub-Skills</h4>
+              <h3>Skill not Found!!!</h3>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <ul id="related-topics">
-                {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
-                {
-                  const skillNameTrimmed = skill.trim();
-                  return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink></li>
-                })}
-              </ul>
-            </div>
+        }
+        {this.state.isHangoutFormVisible && 
+        <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
+        onTimeChange={(e)=>handleTimeChange(e)}/>}
+        <div className="row">
+          <div className="col-lg-12">
+            <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
           </div>
-          <div className="deep-dive-button-wrap">
-            <button type="button" className="btn-md btn-outline-inverse deep-dive-button" 
-                  onClick={()=> this.toggleHangoutForm() }>DeepDive</button>
-          </div>
-          <div className="row">
-            {this.state.isHangoutFormVisible && 
-              <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
-              onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()} />}
-          </div>
-          <br/>
         </div>
-          {this.state.TrendScannerComponentVisible && <div className="row">
-            <div className="col-lg-12">
-              <div id="skill-breakdown-trend-scanner">
-                <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
-                  resultsSelectedCategory={this.props.resultsSelectedCategory}
-                    isFetchInProgress={this.props.isFetchInProgress}
-                      searchResults={this.props.searchResults}/>
-              </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <h4>Related Sub-Skills</h4>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <ul id="related-topics">
+              {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
+              {
+                const skillNameTrimmed = skill.trim();
+                return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink></li>
+              })}
+            </ul>
+          </div>
+        </div>
+        {!this.state.isHangoutFormVisible && <div className="row">
+          <div className="col-lg-12">
+            <div id="skill-breakdown-trend-scanner">
+              <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
+                resultsSelectedCategory={this.props.resultsSelectedCategory}
+                  isFetchInProgress={this.props.isFetchInProgress}
+                    searchResults={this.props.searchResults}/>
             </div>
-          </div>}
+          </div>
+        </div>}
       </div>
     );
   }

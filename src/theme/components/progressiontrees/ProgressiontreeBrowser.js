@@ -3,11 +3,13 @@
 */
 import React from 'react';
 
-import ActionLink from '~/src/components/common/ActionLink'
+import ActionLink from '~/src/components/common/ActionLink';
 
-import SkillBreakdown from "~/src/theme/components/progressiontrees/SkillBreakdown"
+import StarRatings from 'react-star-ratings';
 
-import "~/src/theme/css/treebrowser.css"
+import SkillBreakdown from "~/src/theme/components/progressiontrees/SkillBreakdown";
+
+import "~/src/theme/css/treebrowser.css";
 
 class ProgressiontreeBrowser extends React.Component {
 
@@ -28,12 +30,13 @@ class ProgressiontreeBrowser extends React.Component {
     }
     else {
       return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} 
-                skillName={this.state.selectedSkill} userProfile={this.props.userProfile} tree={this.props.tree} saveTask={this.props.saveTask}/>);
+                skillName={this.state.selectedSkill} userProfile={this.props.userProfile} tree={this.props.tree} saveTask={this.props.saveTask} />);
     }
   }
 
   handleCloseSkillBreakdown() {
     this.setState( { selectedSkill: undefined });
+    this.props.progressionTreeSS();
   }
 
   handleOpenSkillBreakdown(skill) {
@@ -50,44 +53,63 @@ class ProgressiontreeBrowser extends React.Component {
       skillParsed[i] = skillParsed[i].trim();
     }
     return (
-    <ul>
+    <div className="list-skill-wrap">
       {
         skillParsed.map(function(skill, i) {
-          return (<ActionLink key={i} onClick={()=> that.handleOpenSkillBreakdown(skill)}><li>{skill}</li></ActionLink>);
+          return (<ActionLink key={i} onClick={()=> {that.handleOpenSkillBreakdown(skill); that.props.progressionTreeFS()}}>{skill}<br/></ActionLink>);
         })
       }
-    </ul>);
+    </div>);
   }
 
   renderTree() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid progress-browser-wrap">
         <div className="row">
           <div className="content-2-columns-left-title">
-            <span>Progression Tree</span>
             <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.onCloseSingleTree()}>
               <span className="glyphicon glyphicon-arrow-left"/>
             </ActionLink>
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-2">
-            <div>{this.props.tree.name}</div>
-          </div>
-          <div className="col-lg-10">
+          <div className="col-lg-12">
+            <div className="progress-browser-name">
+              <h3>{this.props.tree.name}</h3>
+            </div>
+            <span className="tree-scaner-star-rating">
+              <StarRatings rating={3.5} 
+              isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
+                starWidthAndHeight={'20px'} starSpacing={'2px'}
+                starEmptyColor={"white"}
+                starRatedColor={"rgb(180, 177, 3)"}/>
+            </span>
             <p>{this.props.tree.description}</p>
-            <div id="tree-skills">
-              <div className="weightage-section">
-                <b>Weightage 1</b>
-                {this.renderSkills(this.props.tree.weightage1)}
-              </div>
-              <div className="weightage-section">
-                <b>Weightage 2</b>
-                {this.renderSkills(this.props.tree.weightage2)}
-              </div>
-              <div className="weightage-section">
-                <b>Weightage 3</b>
-                {this.renderSkills(this.props.tree.weightage3)}
+            <div className="row">
+              <div id="tree-skills">
+                <div className="col-md-3 col-sm-12">
+                  <div className="weightage-section">
+                    <h4>Essentials skills</h4>
+                    {this.renderSkills(this.props.tree.weightage1)}
+                  </div>
+                </div>
+                <div className="col-md-4 col-sm-12">
+                  <div className="weightage-section">
+                    <h4>Complimentary skils</h4>
+                    {this.renderSkills(this.props.tree.weightage2)}
+                  </div>
+                </div>
+                <div className="col-md-3 col-sm-12">
+                  <div className="weightage-section">
+                    <h4>Related skills</h4>
+                    {this.renderSkills(this.props.tree.weightage3)}
+                  </div>
+                </div>
+                <div className="col-md-2 col-sm-12">
+                  <div className="add-tom-my-tree">
+                    Add to My tree
+                  </div>
+                </div>
               </div>
             </div>
           </div>

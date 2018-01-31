@@ -1,23 +1,35 @@
 #progression-trees-trees {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
+  padding-right: 15px;
   overflow-x: hidden;
 }
-
+.scanner-expanded {
+  margin-left: 70%;
+}
 #progression-trees-scanner {
-  border: 1px solid rgba(36, 126, 230, 0.534);
-  height: 633px;
-  color: rgb(161, 158, 158);
+  /*border: 1px solid rgba(36, 126, 230, 0.534);*/
+  min-height: 633px;
+  color: #4d4b4b;
 }
 
 #progression-trees-scanner ul li {
   margin-bottom: 10px;
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
+  /*background-color: rgba(255, 255, 255, 0.5);*/
+}
+#scanner_trees {
+  background-color: white;
+  border-radius: 45px;
 }
 
 .tree-scanner-tree-name {
   margin-right: 5px;
+}
+.tree-scaner-star-rating {
+  position: relative;
+  top: -4px;
+  left: 15px;
 }
 
 .tree-scanner-tree-icon {
@@ -28,7 +40,7 @@
 #progression-trees-scanner ul li a:hover, 
 #progression-trees-scanner ul li a:visited,
 #progression-trees-scanner ul li a:focus {
-  color: rgb(88, 88, 88);
+  color: #4d4b4b;
 }
 
 #progression-trees-scanner ul li a:hover {
@@ -45,8 +57,7 @@
 }
 
 #scanner-input-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0px 20px 50px;
 }
   
 #scanner-input-container input[type="text"] {
@@ -56,8 +67,8 @@
   padding-bottom: 10px;
   border: 1px solid white;
   color: rgb(88, 88, 88);
-  border-radius: 3px;
-  background-color: transparent;
+  /*border-radius: 3px;*/
+  /*background-color: transparent;*/
   margin: 0 auto;
 }
   
@@ -134,14 +145,14 @@
 }
 
 #trees-scanner-container {
-  height: 520px;
+  min-height: 520px;
   overflow-y: scroll;
 }
 
 #my-progress-list {
-  height: 500px;
+  min-height: 500px;
   padding-right: 30px;
-  padding-top: 30px;
+  padding-top: 15px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -155,27 +166,42 @@
   font-weight: bold;
   margin-right: 5px;
 }
-
+.trees-wrap {
+  position: relative;
+}
 .progression-tree-my-text {
   font-size: 18px;
   color: white;
   margin-right: 5px;
 }
+.progression-tree-star-rating {
+  position: relative;
+  top: -4px;
+  left: 15px;
+}
+.progression-tree-my-descr {
+  margin-top: 15px;
+}
+.tree-bin-wrap {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
 
 #user-prog-tree-collapse {
   position: absolute;
-  top: 50%;
-  bottom: 50%;
-  left: 50%;
-  right: 50%;
+  top: 2%;
+  /*bottom: 50%;*/
+  left: 1%;
+  /*right: 50%;*/
   font-size: 32px;
 }
 
 #user-prog-tree-expand {
   position: absolute;
   z-index: 999;
-  top: 50%;
-  bottom: 50%;
+  top: 1.4%;
+  /*bottom: 50%;*/
   left: 0;
   font-size: 32px;
   color: rgb(88, 88, 88);
