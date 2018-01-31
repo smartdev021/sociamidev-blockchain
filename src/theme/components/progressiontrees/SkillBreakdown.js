@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import ReactGA from 'react-ga'
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 import Axios from 'axios'
@@ -62,14 +64,30 @@ class SkillBreakdown extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
-        console.log("this.state.skillInfo: ");
-        console.dir(this.state.skillInfo);
+
+        const pagePath = `skill/${this.state.skillInfo._id}`;
+        ReactGA.set({page: pagePath});
+        ReactGA.pageview(pagePath);
+
         this.props.setSearchQuery(this.state.skillInfo.skill);
 
         this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
         this.props.fetchResults("events_eventbrite", this.state.skillInfo.skill);
         this.props.fetchResults("courses_udemy", this.state.skillInfo.skill);
         this.props.fetchResults("gigs_freelancer", this.state.skillInfo.skill);
+      }
+    }
+
+    if (prevState.isHangoutFormVisible != this.state.isHangoutFormVisible) {
+      if (this.state.isHangoutFormVisible) {
+
+        const action = `hangout_prepare/${this.state.skillInfo._id}`;
+        ReactGA.event({
+          category: 'hangout_action',
+          action: action,
+          label: 'Hangouts',
+        });
+
       }
     }
   }
@@ -136,6 +154,13 @@ class SkillBreakdown extends React.Component {
 
     if (hangout.userName != "" && hangout.name != "" && hangout.description != "") {
       this.props.saveTask(hangout);
+
+      const action = `hangout_create/${this.state.skillInfo._id}`;
+        ReactGA.event({
+          category: 'hangout_action',
+          action: action,
+          label: 'Hangouts',
+        });
     }
     
     this.setState( { isHangoutFormVisible: false } );
@@ -144,6 +169,17 @@ class SkillBreakdown extends React.Component {
   handleTimeChange(e) {
     e.preventDefault();
     console.log(e.currentTarget.value);
+  }
+
+  handleClose() {
+    const action = `skill_back/${this.state.skillInfo._id}`;
+        ReactGA.event({
+          category: 'hangout_action',
+          action: action,
+          label: 'Hangouts',
+        });
+
+    this.props.onCloseSkillBreakdown();
   }
 
   render() {
