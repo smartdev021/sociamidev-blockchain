@@ -190,7 +190,7 @@
 
 #user-prog-tree-collapse {
   position: absolute;
-  top: 4%;
+  top: 2%;
   /*bottom: 50%;*/
   left: 1%;
   /*right: 50%;*/
@@ -200,7 +200,7 @@
 #user-prog-tree-expand {
   position: absolute;
   z-index: 999;
-  top: 4%;
+  top: 1.4%;
   /*bottom: 50%;*/
   left: 0;
   font-size: 32px;
