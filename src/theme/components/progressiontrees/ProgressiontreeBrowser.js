@@ -9,6 +9,17 @@ import StarRatings from 'react-star-ratings';
 
 import SkillBreakdown from "~/src/theme/components/progressiontrees/SkillBreakdown";
 
+import UserInteractions from "~/src/common/UserInteractions"
+
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import {
+  userInteractionPush,
+} from '~/src/redux/actions/userInteractions'
+
 import "~/src/theme/css/treebrowser.css";
 
 class ProgressiontreeBrowser extends React.Component {
@@ -18,6 +29,30 @@ class ProgressiontreeBrowser extends React.Component {
 
     this.state = {
      selectedSkill: undefined, 
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.userProfile && this.props.userProfile._id) {
+      this.props.userInteractionPush(this.props.userProfile._id, 
+        UserInteractions.Types.PAGE_OPEN, 
+        UserInteractions.SubTypes.PROG_TREE_VIEW, 
+        { 
+          treeId: this.props.tree._id,
+        }
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.userProfile && this.props.userProfile._id) {
+      this.props.userInteractionPush(this.props.userProfile._id, 
+        UserInteractions.Types.PAGE_CLOSE, 
+        UserInteractions.SubTypes.PROG_TREE_VIEW, 
+        { 
+          treeId: this.props.tree._id,
+        }
+      );
     }
   }
 
@@ -119,4 +154,16 @@ class ProgressiontreeBrowser extends React.Component {
   }
 }
 
-export default ProgressiontreeBrowser;
+ProgressiontreeBrowser.PropTypes = {
+  userInteractionPush: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+  userProfile: state.userProfile.profile,
+});
+
+const mapDispatchToProps = dispatch => ({
+  userInteractionPush: bindActionCreators(userInteractionPush, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressiontreeBrowser);

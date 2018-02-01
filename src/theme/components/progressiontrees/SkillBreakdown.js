@@ -8,8 +8,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import ReactGA from 'react-ga'
-
 import ActionLink from '~/src/components/common/ActionLink'
 
 import Axios from 'axios'
@@ -26,10 +24,16 @@ import {
   setSearchQuery,
 } from '~/src/redux/actions/fetchResults'
 
+import {
+  userInteractionPush,
+} from '~/src/redux/actions/userInteractions'
+
 import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
 import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
 
 import TaskTypes from "~/src/common/TaskTypes"
+
+import UserInteractions from "~/src/common/UserInteractions"
 
 class SkillBreakdown extends React.Component {
 
@@ -65,10 +69,16 @@ class SkillBreakdown extends React.Component {
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
 
-        const pagePath = `skill/${this.state.skillInfo._id}`;
-        ReactGA.set({page: pagePath});
-        ReactGA.pageview(pagePath);
-
+        if (this.props.userProfile && this.props.userProfile._id) {
+          this.props.userInteractionPush(this.props.userProfile._id, 
+            UserInteractions.Types.PAGE_OPEN, 
+            UserInteractions.SubTypes.SKILL_VIEW, 
+            { 
+              skillId: this.state.skillInfo._id,
+            }
+          );
+        }
+        
         this.props.setSearchQuery(this.state.skillInfo.skill);
 
         this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
@@ -80,14 +90,15 @@ class SkillBreakdown extends React.Component {
 
     if (prevState.isHangoutFormVisible != this.state.isHangoutFormVisible) {
       if (this.state.isHangoutFormVisible) {
-
-        const action = `hangout_prepare/${this.state.skillInfo._id}`;
-        ReactGA.event({
-          category: 'hangout_action',
-          action: action,
-          label: 'Hangouts',
-        });
-
+        if (this.props.userProfile && this.props.userProfile._id) {
+          this.props.userInteractionPush(this.props.userProfile._id, 
+            UserInteractions.Types.ACTION_EXECUTE, 
+            UserInteractions.SubTypes.DEEPDIVE_PREPARE, 
+            { 
+              skillId: this.state.skillInfo._id,
+            }
+          );
+        }
       }
     }
   }
@@ -155,12 +166,15 @@ class SkillBreakdown extends React.Component {
     if (hangout.userName != "" && hangout.name != "" && hangout.description != "") {
       this.props.saveTask(hangout);
 
-      const action = `hangout_create/${this.state.skillInfo._id}`;
-        ReactGA.event({
-          category: 'hangout_action',
-          action: action,
-          label: 'Hangouts',
-        });
+      if (this.props.userProfile && this.props.userProfile._id) {
+        this.props.userInteractionPush(this.props.userProfile._id, 
+          UserInteractions.Types.ACTION_EXECUTE, 
+          UserInteractions.SubTypes.DEEPDIVE_START, 
+          { 
+            skillId: this.state.skillInfo._id,
+          }
+        );
+      }
     }
     
     this.setState( { isHangoutFormVisible: false } );
@@ -172,12 +186,15 @@ class SkillBreakdown extends React.Component {
   }
 
   handleClose() {
-    const action = `skill_back/${this.state.skillInfo._id}`;
-        ReactGA.event({
-          category: 'hangout_action',
-          action: action,
-          label: 'Hangouts',
-        });
+    if (this.props.userProfile && this.props.userProfile._id) {
+      this.props.userInteractionPush(this.props.userProfile._id, 
+        UserInteractions.Types.PAGE_CLOSE, 
+        UserInteractions.SubTypes.SKILL_VIEW, 
+        { 
+          skillId: this.state.skillInfo._id,
+        }
+      );
+    }
 
     this.props.onCloseSkillBreakdown();
   }
@@ -196,7 +213,7 @@ class SkillBreakdown extends React.Component {
           <div className="row">
             <div className="content-2-columns-left-title text-align-center">
               {this.props.skillName ? <span>{this.props.skillName}</span> : <span>Skill Breakdown</span> }
-              <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.props.onCloseSkillBreakdown()}}>
+              <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.handleClose()}}>
                 <span className="glyphicon glyphicon-arrow-left"></span>
               </ActionLink>
             </div>
@@ -256,6 +273,7 @@ class SkillBreakdown extends React.Component {
 }
 
 SkillBreakdown.propTypes = {
+  userInteractionPush: PropTypes.func.isRequired,
   selectResultsCategory: PropTypes.func.isRequired,
   saveTask: PropTypes.func.isRequired,
   fetchResults: PropTypes.func.isRequired,
@@ -272,6 +290,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  userInteractionPush: bindActionCreators(userInteractionPush, dispatch),
   selectResultsCategory: bindActionCreators(selectResultsCategory, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
