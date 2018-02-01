@@ -1,3 +1,4 @@
+//this should correspond to same file in back-end
 const UserInteractions = {
     Types: {
         PAGE_OPEN: "page_open",
