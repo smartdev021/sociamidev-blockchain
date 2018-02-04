@@ -1,7 +1,7 @@
 #progression-trees-trees {
   width: 100%;
   margin: 0 auto;
-  padding-right: 15px;
+  /*padding-right: 15px;*/
   overflow-x: hidden;
 }
 .scanner-expanded {
@@ -151,7 +151,7 @@
 
 #my-progress-list {
   min-height: 500px;
-  padding-right: 30px;
+  /*padding-right: 30px;*/
   padding-top: 15px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -190,7 +190,7 @@
 
 #user-prog-tree-collapse {
   position: absolute;
-  top: 2%;
+  top: 1%;
   /*bottom: 50%;*/
   left: 1%;
   /*right: 50%;*/
@@ -200,7 +200,7 @@
 #user-prog-tree-expand {
   position: absolute;
   z-index: 999;
-  top: 1.4%;
+  top: 0.7%;
   /*bottom: 50%;*/
   left: 0;
   font-size: 32px;
