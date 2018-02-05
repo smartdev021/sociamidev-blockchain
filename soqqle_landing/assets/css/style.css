@@ -78,6 +78,12 @@ body{
     font-size: 18px;
 }
 
+.btn-base:hover,
+.btn-base:focus,
+.btn-base:active{
+    outline: none;
+}
+
 .btn-yellow{
     width: 215px;
     color: #f05043;
