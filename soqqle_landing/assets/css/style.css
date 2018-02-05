@@ -130,6 +130,8 @@ body{
 .btn-login{
     float: right;
     margin: 15px 0px;
+    visibility: hidden;
+    /*hide login button for now, as it currently does nothing*/
 }
 
 .box-intro{
