@@ -82,8 +82,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Join us</button>
+                            <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="ok" type="button" class="btn btn-primary">Join us</button>
                         </div>
                     </div>
                 </div>
@@ -112,8 +112,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Join us</button>
+                            <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="ok" type="button" class="btn btn-primary">Join us</button>
                         </div>
                     </div>
                 </div>
@@ -556,5 +556,45 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="assets/js/bootstrap.min.js"></script>
+<!-- Axios networking library-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Main js file -->
+<script src="assets/js/main.js"></script>
+<script>
+
+  var handleGroupSubscriberAddSuccess = function handleGroupSubscriberAddSuccess(response) {
+    console.log("Successfully added");
+    console.dir(response.data);
+  }
+
+  var handleGroupSubscriberAddFail = function handleGroupSubscriberAddFail(error) {
+    console.log("Failed to add subscriber: " + error);
+  }
+
+  //modal #token
+  $(".modal#token").on("click","#ok",function() { 
+      var name = $("#token-name").val();
+      var email = $("#token-email").val();
+      
+     console.log("Modal token ok name: " + name + " email: " + email);
+  });
+    
+  $(".modal#token").on("click","#cancel",function() { 
+    console.log("Modal token cancel");
+  });
+
+  //modal #alpha
+  $(".modal#alpha").on("click","#ok",function() { 
+      var name = $("#alpha-name").val();
+      var email = $("#alpha-email").val();
+      
+     console.log("Modal alpha ok name: " + name + " email: " + email);
+  });
+    
+  $(".modal#alpha").on("click","#cancel",function() { 
+    console.log("Modal alpha cancel");
+  });
+
+</script>
 </body>
 </html>
