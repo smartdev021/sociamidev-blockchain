@@ -23,7 +23,7 @@ class LandingPage extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-xs-6">
-                <h1 className="logo"><a href="#"><img src="assets/img/logo.png" alt=""/></a></h1>
+                <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
               </div>
               <div className="col-xs-6 pull-right">
                 <a href="#" className="btn-base btn-yellow btn-login">Sign in</a>
@@ -45,7 +45,7 @@ class LandingPage extends React.Component {
                         <span className="font-small">Register for</span> alpha</a>
                       </p>
                       <div className="col-md-6 col-md-offset-3 video">
-                            <img src="assets/img/video.png" className="img-responsive" alt=""/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/video.png" className="img-responsive" alt=""/>
                         </div>
                     </div>
                 </div>
@@ -322,7 +322,7 @@ class LandingPage extends React.Component {
                 <div className="row">
                     <div className="col-sm-4 col-sm-push-8 no-padding">
                         <div className="avatar-p1">
-                            <img src="assets/img/p1.png" alt="" className="img-avatar"/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/p1.png" alt="" className="img-avatar"/>
                             <div className="btn-name btn-contact-red1">Leona</div>
                         </div>
                     </div>
@@ -344,7 +344,7 @@ class LandingPage extends React.Component {
                 <div className="row">
                     <div className="col-md-4 col-sm-4 no-padding">
                         <div className="avatar-p2">
-                            <img src="assets/img/p2.png" alt="" className="img-avatar"/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/p2.png" alt="" className="img-avatar"/>
 
                             <div className="btn-name btn-contact-red2">Leo</div>
                         </div>
@@ -368,7 +368,7 @@ class LandingPage extends React.Component {
                 <div className="row">
                     <div className="col-sm-4 col-sm-push-8 no-padding">
                         <div className="avatar-p1">
-                            <img src="assets/img/p3.png" alt="" className="img-avatar"/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/p3.png" alt="" className="img-avatar"/>
                             <div className="btn-name btn-contact-pink1">Max</div>
                         </div>
                     </div>
@@ -390,7 +390,7 @@ class LandingPage extends React.Component {
                 <div className="row">
                     <div className="col-md-4 col-sm-4 no-padding">
                         <div className="avatar-p2">
-                            <img src="assets/img/p4.png" alt="" className="img-avatar"/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/p4.png" alt="" className="img-avatar"/>
 
                             <div className="btn-name btn-contact-pink2">Ashe</div>
                         </div>
@@ -414,7 +414,7 @@ class LandingPage extends React.Component {
                 <div className="row">
                     <div className="col-sm-4 col-sm-push-8 no-padding">
                         <div className="avatar-p1">
-                            <img src="assets/img/p5.png" alt="" className="img-avatar"/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/p5.png" alt="" className="img-avatar"/>
 
                             <div className="btn-name btn-contact-green1">Kaye</div>
                         </div>
@@ -438,7 +438,7 @@ class LandingPage extends React.Component {
                 <div className="row">
                     <div className="col-md-4 col-sm-4 no-padding">
                         <div className="avatar-p2">
-                            <img src="assets/img/p6.png" alt="" className="img-avatar"/>
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/p6.png" alt="" className="img-avatar"/>
 
                             <div className="btn-name btn-contact-green2">Nelson</div>
                         </div>
@@ -532,7 +532,7 @@ class LandingPage extends React.Component {
 
     <div className="session-footer">
         <div className="container">
-            <img src="assets/img/logo.png" className="logo-footer" alt=""/>
+            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" className="logo-footer" alt=""/>
         </div>
     </div>
 </div>

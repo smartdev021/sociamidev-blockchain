@@ -25,6 +25,8 @@ import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
 
+import LandingPage from '~/src/theme/new_ui/LandingPage'
+
 import {
   fetchUserProfile,
   openUserProfile,
@@ -353,6 +355,8 @@ class App extends Component {
       }
       socketConn.emit('UserLoggedIn', userData);      
     }
+
+    //return (<LandingPage/>);
     
     
     return (

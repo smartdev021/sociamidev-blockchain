@@ -1,55 +1,54 @@
 @font-face {
     font-family: 'Berlin-Sans-FB-Regular';
-    src: url('../fonts/Berlin-Sans-FB-Regular.eot');
+    src: url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlin-Sans-FB-Regular.eot');
     src: local('☺'),
-    url('../fonts/Berlin-Sans-FB-Regular.woff') format('woff'),
-    url('../fonts/Berlin-Sans-FB-Regular.ttf') format('truetype'),
-    url('../fonts/Berlin-Sans-FB-Regular.svg') format('svg');
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlin-Sans-FB-Regular.woff') format('woff'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlin-Sans-FB-Regular.ttf') format('truetype'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlin-Sans-FB-Regular.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
-/*http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlin-Sans-FB-Regular.otf*/
 
 @font-face {
     font-family: 'Berlin-Sans-Light';
-    src: url('../fonts/Berlinsans-Light.eot');
+    src: url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlinsans-Light.eot');
     src: local('☺'),
-    url('../fonts/Berlinsans-Light.woff') format('woff'),
-    url('../fonts/Berlinsans-Light.ttf') format('truetype'),
-    url('../fonts/Berlinsans-Light.svg') format('svg');
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlinsans-Light.woff') format('woff'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlinsans-Light.ttf') format('truetype'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Berlinsans-Light.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Franklin-Gothic-Demi-Regular';
-    src: url('../fonts/Franklin-Gothic-Demi-Regular.eot');
+    src: url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Franklin-Gothic-Demi-Regular.eot');
     src: local('☺'),
-    url('../fonts/Franklin-Gothic-Demi-Regular.woff') format('woff'),
-    url('../fonts/Franklin-Gothic-Demi-Regular.ttf') format('truetype'),
-    url('../fonts/Franklin-Gothic-Demi-Regular.svg') format('svg');
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Franklin-Gothic-Demi-Regular.woff') format('woff'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Franklin-Gothic-Demi-Regular.ttf') format('truetype'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Franklin-Gothic-Demi-Regular.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'FjallaOne-Regular';
-    src: url('../fonts/FjallaOne-Regular.eot');
+    src: url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/FjallaOne-Regular.eot');
     src: local('☺'),
-    url('../fonts/FjallaOne-Regular.woff') format('woff'),
-    url('../fonts/FjallaOne-Regular.ttf') format('truetype'),
-    url('../fonts/FjallaOne-Regular.svg') format('svg');
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/FjallaOne-Regular.woff') format('woff'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/FjallaOne-Regular.ttf') format('truetype'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/FjallaOne-Regular.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Titling-Gothic-Bold';
-    src: url('../fonts/Titling-Gothic-Bold.eot');
+    src: url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Titling-Gothic-Bold.eot');
     src: local('☺'),
-    url('../fonts/Titling-Gothic-Bold.woff') format('woff'),
-    url('../fonts/Titling-Gothic-Bold.ttf') format('truetype'),
-    url('../fonts/Titling-Gothic-Bold.svg') format('svg');
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Titling-Gothic-Bold.woff') format('woff'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Titling-Gothic-Bold.ttf') format('truetype'),
+    url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/fonts/Titling-Gothic-Bold.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -62,7 +61,7 @@ body{
 }
 
 .session-header{
-    background: url("../img/bg-header.jpg") no-repeat top center;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/bg-header.jpg") no-repeat top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -88,12 +87,12 @@ body{
 .btn-yellow{
     width: 215px;
     color: #f05043;
-    background: url("../img/button-yellow.png") no-repeat 0px 0px;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-yellow.png") no-repeat 0px 0px;
 }
 .btn-yellow:hover,
 .btn-yellow:focus,
 .btn-yellow:active{
-    background: url("../img/button-yellow.png") no-repeat 0px -55px;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-yellow.png") no-repeat 0px -55px;
     text-decoration: none;
     color: #f05043;
 }
@@ -102,12 +101,12 @@ body{
     font-size: 16px;
     width: 275px;
     color: #ffffff;
-    background: url("../img/button-red.png") no-repeat 0px 0px;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-red.png") no-repeat 0px 0px;
 }
 .btn-red:hover,
 .btn-red:focus,
 .btn-red:active{
-    background: url("../img/button-red.png") no-repeat 0px -60px;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-red.png") no-repeat 0px -60px;
     text-decoration: none;
     color: #ffffff;
 }
@@ -250,16 +249,16 @@ body{
 .heading-border:before {
     right: 100%;
     margin-right: -5px;
-    background: url("../img/arrow-prev.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/arrow-prev.png") no-repeat;
 }
 .heading-border:after {
     left: 100%;
     margin-left: 5px;
-    background: url("../img/arrow-next.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/arrow-next.png") no-repeat;
 }
 
 /*.seed-left{*/
-    /*background: url("../img/seed-left.png") no-repeat;*/
+    /*background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/seed-left.png") no-repeat;*/
     /*display: inline-block;*/
     /*width: 100%;*/
     /*height: 400px;*/
@@ -315,7 +314,7 @@ body{
 }
 
 .session2{
-    background: url("../img/bg2.png") no-repeat top center;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/bg2.png") no-repeat top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -327,7 +326,7 @@ body{
 }
 
 .block-feature{
-    background: url("../img/feature.png") no-repeat top center;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/feature.png") no-repeat top center;
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     background-size: 100%;
@@ -362,7 +361,7 @@ body{
 }
 
 .session-mid2{
-    background: #14aad5 url("../img/bg3.png") no-repeat top center;
+    background: #14aad5 url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/bg3.png") no-repeat top center;
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     background-size: 100%;
@@ -375,7 +374,7 @@ body{
 }
 
 .block-token{
-    background: url("../img/feature2.png") no-repeat top center;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/feature2.png") no-repeat top center;
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     background-size: 100%;
@@ -598,7 +597,7 @@ body{
 }
 
 .btn-contact-red1{
-    background: url("../img/btn-red-p1.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-red-p1.png") no-repeat;
     right: 0px;
     padding: 5px 30px 5px 0px;
     text-align: right;
@@ -607,7 +606,7 @@ body{
 }
 
 .btn-contact-red2{
-    background: url("../img/btn-red-p2.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-red-p2.png") no-repeat;
     right: 0px;
     padding: 5px 0px 5px 30px;
     text-align: left;
@@ -616,7 +615,7 @@ body{
 }
 
 .btn-contact-pink1{
-    background: url("../img/btn-pink-p1.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-pink-p1.png") no-repeat;
     right: 0px;
     padding: 5px 30px 5px 0px;
     text-align: right;
@@ -625,7 +624,7 @@ body{
 }
 
 .btn-contact-pink2{
-    background: url("../img/btn-pink-p2.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-pink-p2.png") no-repeat;
     right: 0px;
     padding: 5px 0px 5px 30px;
     text-align: left;
@@ -634,7 +633,7 @@ body{
 }
 
 .btn-contact-green1{
-    background: url("../img/btn-green-p1.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-green-p1.png") no-repeat;
     right: 0px;
     padding: 5px 30px 5px 0px;
     text-align: right;
@@ -643,7 +642,7 @@ body{
 }
 
 .btn-contact-green2{
-    background: url("../img/btn-green-p2.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-green-p2.png") no-repeat;
     right: 0px;
     padding: 5px 0px 5px 30px;
     text-align: left;
@@ -652,7 +651,7 @@ body{
 }
 
 .session-mid4{
-    background: #14aad5 url("../img/bg4.jpg") no-repeat top center;
+    background: #14aad5 url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/bg4.jpg") no-repeat top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -678,7 +677,7 @@ body{
 }
 
 .block-1{
-    background: url("../img/system1.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/system1.png") no-repeat;
     width: 400px;
     height: 405px;
     background-size: 100%;
@@ -686,7 +685,7 @@ body{
 }
 
 .block-2{
-    background: url("../img/system2.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/system2.png") no-repeat;
     width: 330px;
     height: 325px;
     background-size: 100%;
@@ -694,7 +693,7 @@ body{
 }
 
 .block-3{
-    background: url("../img/system4.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/system4.png") no-repeat;
     width: 250px;
     height: 246px;
     background-size: 100%;
@@ -703,7 +702,7 @@ body{
 }
 
 .block-4{
-    background: url("../img/system3.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/system3.png") no-repeat;
     width: 250px;
     height: 246px;
     background-size: 100%;
@@ -711,7 +710,7 @@ body{
 }
 
 .block-5{
-    background: url("../img/system5.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/system5.png") no-repeat;
     width: 300px;
     height: 295px;
     background-size: 100%;
