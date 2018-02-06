@@ -16,7 +16,7 @@ import ThemeHeader from '~/src/theme/ThemeHeader.js';
 //routes
 import Authorize from '~/src/authentication/Authorize';
 
-import HomePage from '~/src/theme//HomePage.js';
+import HomePage from '~/src/theme/HomePage.js';
 import TrendScanner from '~/src/theme/TrendScanner.js';
 import TaskManagement from '~/src/theme/TaskManagement';
 import ProjectManager from '~/src/theme/ProjectManagement';
@@ -31,7 +31,6 @@ import "~/src/theme/css/main.css";
 import UserProfile from '~/src/theme/UserProfile.js';
 
 import Privacy from '~/src/theme/Privacy.js';
-
 
 //<Route exact path='/howItWorks' render={routeProps => <HowItWorks {...routeProps}{...this.props}/>} />
 
