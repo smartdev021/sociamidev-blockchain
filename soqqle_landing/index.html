@@ -560,50 +560,5 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- Main js file -->
 <script src="assets/js/main.js"></script>
-<script>
-
-  var lastActiveModal = undefined;
-
-  var handleGroupSubscriberAddSuccess = function handleGroupSubscriberAddSuccess(response) {
-    console.log("Successfully added");
-    console.dir(response.data);
-
-    $(lastActiveModal).modal('hide');
-    lastActiveModal = undefined;
-  }
-
-  var handleGroupSubscriberAddFail = function handleGroupSubscriberAddFail(error) {
-    console.log("Failed to add subscriber: " + error);
-  }
-
-  //modal #token
-  $(".modal#token").on("click","#ok",function() { 
-    var name = $("#token-name").val();
-    var email = $("#token-email").val();
-
-    lastActiveModal = ".modal#token";
-      
-    addGroupSubscriber(9146090, {name: name, email: email}, handleGroupSubscriberAddSuccess, handleGroupSubscriberAddFail);
-  });
-    
-  $(".modal#token").on("click","#cancel",function() { 
-    console.log("Modal token cancel");
-  });
-
-  //modal #alpha
-  $(".modal#alpha").on("click","#ok",function() { 
-      var name = $("#alpha-name").val();
-      var email = $("#alpha-email").val();
-
-      lastActiveModal = ".modal#alpha";
-      
-      addGroupSubscriber(8797324, {name: name, email: email}, handleGroupSubscriberAddSuccess, handleGroupSubscriberAddFail);
-  });
-    
-  $(".modal#alpha").on("click","#cancel",function() { 
-    console.log("Modal alpha cancel");
-  });
-
-</script>
 </body>
 </html>
