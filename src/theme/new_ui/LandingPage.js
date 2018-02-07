@@ -10,15 +10,33 @@ import { bindActionCreators } from 'redux'
 
 import "~/src/theme/new_ui/css/style.css"
 
+import SignUpFormPopup from  '~/src/authentication/SignUpForm';
+
+import ActionLink from '~/src/components/common/ActionLink'
+
+import {
+    openSignUpForm,
+  } from '~/src/redux/actions/authorization'
+
 class LandingPage extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  renderSignUpForm() {
+    return (this.props.isSignUpFormOpen ? 
+      <SignUpFormPopup modalIsOpen={this.props.isSignUpFormOpen} isAuthorized={this.props.isAuthorized} onCloseModal={() => this.props.onCloseSignUpModal()}
+        onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+          pathname={this.props.pathname}/>
+            : null
+    );
+  }
+
   render() {
     return (
       <div className="wrapper">
+        {this.renderSignUpForm()}
         <div className="session-header">
           <div className="container">
             <div className="row">
@@ -26,7 +44,8 @@ class LandingPage extends React.Component {
                 <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
               </div>
               <div className="col-xs-6 pull-right">
-                <a href="#" className="btn-base btn-yellow btn-login">Sign in</a>
+                <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base btn-yellow btn-login">
+                  Sign in</ActionLink>
               </div>
             </div>
             <div className="row">
@@ -52,7 +71,7 @@ class LandingPage extends React.Component {
 
             </div>
 
-            <div className="modal fade" id="token" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div className="modal fade" id="token" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -81,7 +100,7 @@ class LandingPage extends React.Component {
                 </div>
             </div>
             
-            <div className="modal fade" id="alpha" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div className="modal fade" id="alpha" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -542,9 +561,11 @@ class LandingPage extends React.Component {
 
 LandingPage.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
+  isSignUpFormOpen: PropTypes.bool.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
+  openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
 });
 
 const mapStateToProps = state => ({
