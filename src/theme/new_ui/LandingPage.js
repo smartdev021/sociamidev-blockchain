@@ -83,11 +83,11 @@ class LandingPage extends React.Component {
                                 The only Blockchain powered smart social network that propels you to the forefront of humankind.</p>
                             <form>
                                 <div className="form-group">
-                                    <label for="token-name" className="control-label">Name:</label>
+                                    <label htmlFor="token-name" className="control-label">Name:</label>
                                     <input type="text" className="form-control" id="token-name" placeholder="Enter you name here"/>
                                 </div>
                                 <div className="form-group">
-                                    <label for="token-email" className="control-label">Email:</label>
+                                    <label htmlFor="token-email" className="control-label">Email:</label>
                                     <input type="text" className="form-control" id="token-email" placeholder="Enter you email here"/>
                                 </div>
                             </form>
@@ -112,11 +112,11 @@ class LandingPage extends React.Component {
                                 The only Blockchain powered smart social network that propels you to the forefront of humankind.</p>
                             <form>
                                 <div className="form-group">
-                                    <label for="alpha-name" className="control-label">Name:</label>
+                                    <label htmlFor="alpha-name" className="control-label">Name:</label>
                                     <input type="text" className="form-control" id="alpha-name" placeholder="Enter you name here"/>
                                 </div>
                                 <div className="form-group">
-                                    <label for="alpha-email" className="control-label">Email:</label>
+                                    <label htmlFor="alpha-email" className="control-label">Email:</label>
                                     <input type="text" className="form-control" id="alpha-email" placeholder="Enter you email here"/>
                                 </div>
                             </form>
