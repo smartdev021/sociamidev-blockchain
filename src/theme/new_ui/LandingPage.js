@@ -18,6 +18,9 @@ import {
     openSignUpForm,
   } from '~/src/redux/actions/authorization'
 
+import {Route, Switch} from 'react-router-dom' //temporarily here, remove it!!!!!!!
+import Authorize from '~/src/authentication/Authorize';
+
 class LandingPage extends React.Component {
 
   constructor(props) {
@@ -33,10 +36,18 @@ class LandingPage extends React.Component {
     );
   }
 
+  renderRoutes() {
+    return (
+      <Switch>
+        <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
+      </Switch>)
+  }
+
   render() {
     return (
       <div className="wrapper">
         {this.renderSignUpForm()}
+        {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <div className="session-header">
           <div className="container">
             <div className="row">

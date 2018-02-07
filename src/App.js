@@ -360,8 +360,10 @@ class App extends Component {
       return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
                  onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} 
                    onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-                     isSignUpFormOpen={this.props.isSignUpFormOpen}
-                       pathname={this.props.history.location.pathname}/>
+                     onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} 
+                       onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+                         isSignUpFormOpen={this.props.isSignUpFormOpen}
+                           pathname={this.props.history.location.pathname}/>
       );
     }
 
