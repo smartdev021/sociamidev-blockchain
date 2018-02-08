@@ -14,7 +14,7 @@ class HangoutSubmitForm extends React.Component {
     const dateNow = new Date(timeNow);
 
     this.state = {
-     dayPeriod: "today",
+     isToday: false,
      date: dateNow,
      location: '',
 
@@ -39,8 +39,8 @@ class HangoutSubmitForm extends React.Component {
     console.log(e.target.value);
   }
 
-  handleOptionChange(e) {
-    this.setState({dayPeriod: e.target.value});
+  handleToggleToday(e) {
+    this.setState({isToday: e.target.checked});
   }
   handleOptionChangeLocation(e) {
     this.setState( {location: e.target.value} )
@@ -49,28 +49,7 @@ class HangoutSubmitForm extends React.Component {
   handleStartHangout(e) {
     e.preventDefault();
 
-    let dateTime = Date.now();
-
-    const day = (60 * 60 * 24) * 1000;
-
-    switch (this.state.dayPeriod) {
-      case "tomorrow": {
-        dateTime += day;
-        break;
-      }
-      case "day_after": {
-        dateTime += (day * 2);
-        break;
-      }
-      case "other": {
-        dateTime = this.state.dateInputValue;
-        break;
-      }
-      default:
-        break;
-    }
-
-    let date = new Date(dateTime);
+    let date = new Date(this.state.isToday ? Date.now() : this.state.dateInputValue);
 
     const TimeInputSplitted = this.state.timeInputValue.split(':');
 
@@ -88,7 +67,8 @@ class HangoutSubmitForm extends React.Component {
           When
         </label>
         <label className="radio-inline">
-          <input type="checkBox" className="hangout-form-input today" name="optradio" value="today" onChange={(e)=>this.handleOptionChange(e)}/>Today
+          <input type="checkBox" checked={this.state.isToday} className="hangout-form-input today" name="optradio" value="today" 
+            onChange={(e)=>this.handleToggleToday(e)}/>Today
           <input type="date" className="validate-field required" data-validation-type="string" 
             id="date" name="date" autoComplete="off" placeholder="Date" defaultValue="2020-01-01"
               onChange={(e)=>this.handleDateInputChange(e)}/>
