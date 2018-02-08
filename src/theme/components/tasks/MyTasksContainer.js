@@ -64,9 +64,33 @@ const GenerateDateString = (time, props) => {
 
   const Hours = String(Hours12(DateFromTime)) + AmPm;
 
-  const DateString = props.timeNow >= time ? ` today at ${Hours}` 
-         : `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
+  const CurrentDate = new Date;
 
+  const Today = new Date();
+  const Tomorrow = new Date(Today.getTime() + 24 * 60 * 60 * 1000);
+  const AfterTomorrow = new Date(Tomorrow.getTime() + 24 * 60 * 60 * 1000);
+  const ThisSunday = new Date(CurrentDate.setDate(CurrentDate.getDate() - CurrentDate.getDay() + 6));
+
+  let DateString = "";
+  
+  if (DateFromTime.getFullYear() == Today.getFullYear() 
+      && DateFromTime.getMonth() == Today.getMonth() 
+        && DateFromTime.getDate() == Today.getDate()) {
+    DateString = ` today at ${Hours}`;
+  }
+  else if (DateFromTime.getFullYear() == Tomorrow.getFullYear() 
+            && DateFromTime.getMonth() == Tomorrow.getMonth() 
+              && DateFromTime.getDate() == Tomorrow.getDate()) {
+    DateString = ` tomorrow at ${Hours}`;
+  }
+  else if (DateFromTime.getFullYear() == ThisSunday.getFullYear() 
+             && DateFromTime.getMonth() == ThisSunday.getMonth() && DateFromTime.getDate() <= ThisSunday.getDate()) {
+    DateString = ` on ${DayFromNumber(DateFromTime.getDay())} at ${Hours}`;
+  }
+  else {
+    DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
+  }
+  
   return DateString;
 }
 
@@ -398,15 +422,28 @@ const RenderTaskTitle = (task, props) => {
 
 const RenderTask = (task, i, props) => {
   const DebugOutputClick = (task) => {
-    console.log("Clicked task: "); 
-    console.dir(task);
+    console.log("Clicked task: ");
+
+    let taskCopy = Object.assign({}, task);
+    if (taskCopy.metaData.time) {
+      taskCopy.dateHangoutShouldStart = new Date(taskCopy.metaData.time);
+    }
+
+    if (taskCopy.timeStatusChanged) {
+      taskCopy.dateHangoutStatusChanged = new Date(taskCopy.timeStatusChanged);
+    }
+
+    console.dir(taskCopy);
   };
 
   const TaskColClass = props.isCollapsed ? "col-lg-12" : "col-lg-4";
 
   if (task.type == "hangout") {
+    const taskTime = task.status == "None" ? task.metaData.time : task.timeStatusChanged;
+    
+
     const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
-    const ThirdLine = `Time: ${GenerateDateString(task.status == "None" ? task.metaData.time : task.timeStatusChanged, props)}`
+    const ThirdLine = `Time: ${GenerateDateString(taskTime, props)}`
 
     return (
       <div className={TaskColClass} key={i}>
