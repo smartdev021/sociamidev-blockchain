@@ -343,7 +343,7 @@ class App extends Component {
       userType = "linkedin";
     }
     
-    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userID={this.state.anonymousUserId}/>;
+    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile}/>;
 
     if(this.state.userID && this.state.verfiedSocketConnection == false){
       var userData = {

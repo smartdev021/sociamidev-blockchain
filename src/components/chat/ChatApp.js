@@ -33,7 +33,7 @@ class ChatApp extends React.Component {
 
     var tUsers = [];
     tUsers.push(botUser);
-    let copy = Object.assign({}, this.state, {users: tUsers,userID: this.props.userID});
+    let copy = Object.assign({}, this.state, {users: tUsers,userID: this.props.userProfile._id});
     this.setState(copy);
   }
 
@@ -111,9 +111,10 @@ class ChatApp extends React.Component {
 
   sendHandler(message) {
     var messageObject = [];
-    if(this.state.loggedin){
+
+    if(this.props.loggedin){
       messageObject = {
-        sender: this.state.userID,
+        sender: this.props.userProfile._id,
         message,
         receiver: this.state.activeUserID,
         time: new Date()
