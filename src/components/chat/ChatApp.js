@@ -3,6 +3,7 @@ require('~/src/css/ChatApp.css');
 import React from 'react';
 import ReactDom from 'react-dom'
 import io from 'socket.io-client';
+import Axios from 'axios'
 import { withRouter } from 'react-router-dom' 
 
 import Messages from './Messages';
@@ -215,9 +216,25 @@ class ChatApp extends React.Component {
     const divMainClasses = `chatapp-main-container ${chatMainClass}` ;
     var componentMessages = "";
     var active = "";
+    var self = this;
     if(this.state.activeUserID != ""){
        if(this.state.messageStack[this.state.activeUserID]){
           componentMessages = <Messages messages={this.state.messageStack[this.state.activeUserID]} />;
+       }
+       else {
+        const url = `${ConfigMain.getBackendURL()}/fetchConversationByParticipants?ids=${this.props.userProfile._id};${this.state.activeUserID}`;
+         Axios.get(url)
+          .then(function(response) {
+            for(var message of response.data.reverse()) {
+              message.username = message.sender;
+              message.receiver = self.state.activeUserID;
+              message.fromMe = message.sender === self.props.userProfile._id
+              self.addMessage(message);
+              self.addLastMessage(message);
+            }
+
+            componentMessages = <Messages messages={self.state.messageStack[self.state.activeUserID]} />;
+          })
        }
        active = this.state.activeUserFullName;
     }
