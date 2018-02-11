@@ -3,6 +3,7 @@ require('~/src/css/ChatApp.css');
 import React from 'react';
 import ReactDom from 'react-dom'
 import io from 'socket.io-client';
+import Axios from 'axios'
 import { withRouter } from 'react-router-dom' 
 
 import Messages from './Messages';
@@ -162,13 +163,21 @@ class ChatApp extends React.Component {
     
     if(!(tempReceiver in this.state.messageStack)){
       var messages = [];
-      messages.push(message);
+      if(message.unshift) {
+        messages.unshift(message);
+      } else {
+        messages.push(message);
+      }
       tempMessageStack = this.state.messageStack;
       tempMessageStack[tempReceiver] = messages;
     }
     else{
       var messages = this.state.messageStack[tempReceiver];
-      messages.push(message);
+      if(message.unshift) {
+        messages.unshift(message);
+      } else {
+        messages.push(message);
+      }
       tempMessageStack = this.state.messageStack;
       tempMessageStack[tempReceiver] = messages;
     }
@@ -215,9 +224,31 @@ class ChatApp extends React.Component {
     const divMainClasses = `chatapp-main-container ${chatMainClass}` ;
     var componentMessages = "";
     var active = "";
+    var self = this;
     if(this.state.activeUserID != ""){
        if(this.state.messageStack[this.state.activeUserID]){
-          componentMessages = <Messages messages={this.state.messageStack[this.state.activeUserID]} />;
+          componentMessages = <Messages 
+            messages={this.state.messageStack[this.state.activeUserID]}
+            addMessage={(message)=>this.addMessage(message)} addLastMessage={(message)=>this.addLastMessage(message)}
+            sender={this.props.userProfile._id} receiver={this.state.activeUserID}/>;
+       }
+       else {
+        const url = `${ConfigMain.getBackendURL()}/fetchConversationByParticipants?ids=${this.props.userProfile._id};${this.state.activeUserID}`;
+         Axios.get(url)
+          .then(function(response) {
+            for(var message of response.data.reverse()) {
+              message.username = message.sender;
+              message.receiver = self.state.activeUserID;
+              message.fromMe = message.sender === self.props.userProfile._id
+              self.addMessage(message);
+              self.addLastMessage(message);
+            }
+
+            componentMessages = <Messages
+              messages={self.state.messageStack[self.state.activeUserID]} 
+              addMessage={(message)=>self.addMessage(message)} addLastMessage={(message)=>self.addLastMessage(message)}
+              sender={self.props.userProfile._id} receiver={self.state.activeUserID}/>;
+          })
        }
        active = this.state.activeUserFullName;
     }
