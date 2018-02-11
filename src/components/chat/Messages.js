@@ -37,18 +37,13 @@ class Messages extends React.Component {
 
   handleScroll(event) {
     let scrollTop = document.getElementById('messageList').scrollTop;
-    console.log(scrollTop)
     if(scrollTop < 1 && this.state.isLoadingMore === false && this.state.hasMorePreviousMessage) {
       const url = `${ConfigMain.getBackendURL()}/fetchConversationByParticipants?ids=${this.props.sender};${this.props.receiver}&skip=${this.props.messages.length}`;
-      console.log('load more')
-      console.log(url)
       self = this;
       this.state.isLoadingMore = true;
       this.state.previousHeight = document.getElementById('messageList').scrollHeight;
-      console.log(`previouosH: ${this.state.previousHeight}`)
       Axios.get(url)
         .then(function(response) {
-          console.log(response)
           if(response.data.length) {
             for(var message of response.data) {
               message.username = message.sender;
@@ -60,7 +55,6 @@ class Messages extends React.Component {
           } else {
             self.state.hasMorePreviousMessage = false;
           }
-            
           self.state.isLoadingMore = false;
         });
     }
@@ -81,7 +75,6 @@ class Messages extends React.Component {
 
     return (
       <div id='messageList' className="messageList">
-        {this.state.isLoadingMore && <Icon spin name="spinner" />}
         { messages }
         <br className="clear" />
       </div>
