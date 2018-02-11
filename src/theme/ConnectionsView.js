@@ -222,47 +222,49 @@ class ConnectionsView extends React.Component {
                     <Tab eventKey={1} title="All">
                         <ul> {
                             allFriendsList.map(function (friend) {
-                                let addBtn = <button type="button" className="btn btn-primary"
-                                                     onClick={()=>this.handleAddSoqqler(friend.id)}>
-                                    Add Soqqler</button>;
-                                return (
-                                    <li key={friend.id} className="borderStyle"> 
-                                        <div className="imageContainer">                                  
-                                            <img
-                                            src={friend.profilePic}
-                                            className="img-circle tmp"/>
-                                        </div>
-                                        <div className="friendInfoContainer">
-                                            <div className="friendInfo">
-                                                <span className="friendName">
-                                                  {friend.firstName} {friend.lastName}
-                                                  {friend.isFacebookFriend &&
-                                                    <span className="friendFacebookRecommendation"> (You are friends on Facebook)</span>
-                                                  }
-                                                </span>
-                                                <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
+                                // Hide people in connections that are not friends
+                                if (friend.isFacebookFriend) {
+                                    let addBtn = <button type="button" className="btn btn-primary"
+                                                         onClick={()=>this.handleAddSoqqler(friend.id)}>
+                                        Add Soqqler</button>;
+                                    return (
+                                        <li key={friend.id} className="borderStyle">
+                                            <div className="imageContainer">
+                                                <img
+                                                src={friend.profilePic}
+                                                className="img-circle tmp"/>
                                             </div>
-                                        </div>
-                                        <div className="followersContainer">
-                                            <span className="followersCount">1121</span>
-                                            <span className="followersText">Friends</span>
-                                        </div>
-                                        <div className="followingContainer">
-                                            <span className="followingCount">2230</span>
-                                            <span className="followingText">Progression Trees</span>
-                                        </div>
-                                        <div className="photosContainer">
-                                            <span className="photosCount">456</span>
-                                            <span className="photosText">Projects</span>
-                                        </div>
-                                        <div className="videosContainer">
-                                            <span className="videosCount">198</span>
-                                            <span className="videosText">Tasks</span>
-                                        </div>
-                                        <div className="buttonContainer">
-                                            <span className="actionBtn">{addBtn}</span>
-                                        </div>
-                                    </li>);                                        
+                                            <div className="friendInfoContainer">
+                                                <div className="friendInfo">
+                                                    <span className="friendName">
+                                                      {friend.firstName} {friend.lastName}
+                                                      <span className="friendFacebookRecommendation"> (You are friends on Facebook)</span>
+
+                                                    </span>
+                                                    <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
+                                                </div>
+                                            </div>
+                                            <div className="followersContainer">
+                                                <span className="followersCount">1121</span>
+                                                <span className="followersText">Friends</span>
+                                            </div>
+                                            <div className="followingContainer">
+                                                <span className="followingCount">2230</span>
+                                                <span className="followingText">Progression Trees</span>
+                                            </div>
+                                            <div className="photosContainer">
+                                                <span className="photosCount">456</span>
+                                                <span className="photosText">Projects</span>
+                                            </div>
+                                            <div className="videosContainer">
+                                                <span className="videosCount">198</span>
+                                                <span className="videosText">Tasks</span>
+                                            </div>
+                                            <div className="buttonContainer">
+                                                <span className="actionBtn">{addBtn}</span>
+                                            </div>
+                                        </li>);
+                                    }
                             }, this)}
                         </ul>
                     </Tab>
@@ -275,7 +277,7 @@ class ConnectionsView extends React.Component {
                                                      onClick={()=>this.handleFriendRequest(friend, reqState)}>{reqState}</button>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
-                                        <div className="imageContainer">                                  
+                                        <div className="imageContainer">
                                             <img
                                             src={friend.profilePic}
                                             className="img-circle tmp"/>
@@ -319,7 +321,7 @@ class ConnectionsView extends React.Component {
                                             onClick={()=>this.handleFriendRequest(friend, 'Reject')}>Reject</button> </span>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
-                                        <div className="imageContainer">                                  
+                                        <div className="imageContainer">
                                             <img
                                             src={friend.profilePic}
                                             className="img-circle tmp"/>
@@ -362,7 +364,7 @@ class ConnectionsView extends React.Component {
                                     Withdraw</button>;
                                 return (
                                     <li key={friend.id} className="borderStyle">
-                                        <div className="imageContainer">                                  
+                                        <div className="imageContainer">
                                             <img
                                             src={friend.profilePic}
                                             className="img-circle tmp"/>
