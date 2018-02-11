@@ -66,7 +66,20 @@ class UserProfile extends React.Component {
 
 			if (!ProgressionTreeLevels || ProgressionTreeLevels.length == 0) {
 				UserProgressionTrees.forEach(function(progressionTree) {
-					ProgressionTreeLevels.push({name: progressionTree.name, currentLevelXP: 0, totalXP: 0, level: 0});
+					ProgressionTreeLevels.push({
+						_id: progressionTree._id, name: progressionTree.name, currentLevelXP: 0, totalXP: 0, level: 0
+					});
+				});
+			}
+			else {
+				UserProgressionTrees.forEach(function(progressionTree) {
+					if (!ProgressionTreeLevels.find(function(progressionTreeLevel) {
+						return progressionTreeLevel._id == progressionTree._id;
+					})) {
+						ProgressionTreeLevels.push({
+							_id: progressionTree._id, name: progressionTree.name, currentLevelXP: 0, totalXP: 0, level: 0
+						});
+					}
 				});
 			}
 
