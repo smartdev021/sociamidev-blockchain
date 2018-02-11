@@ -201,3 +201,23 @@
 	}
 }
 
+.progressionTreeLevels {
+	height: 100px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.progressionTreeLevels ul {
+	padding: 0;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.progressionTreeLevels ul li {
+	list-style: none;
+	text-align: left;
+}
+
+.progressionTreeLevels .prog-tree-list-column {
+	margin-right: 10px;
+}

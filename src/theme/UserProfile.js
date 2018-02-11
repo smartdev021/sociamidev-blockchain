@@ -58,8 +58,51 @@ class UserProfile extends React.Component {
 		})
 	}
 
+	renderLevels() {
+		const UserProgressionTrees = this.props.userProfile.progressionTrees;
+
+		if (UserProgressionTrees && UserProgressionTrees.length > 0) {
+			let ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels;
+
+			if (!ProgressionTreeLevels || ProgressionTreeLevels.length == 0) {
+				UserProgressionTrees.forEach(function(progressionTree) {
+					ProgressionTreeLevels.push({name: progressionTree.name, currentLevelXP: 0, totalXP: 0, level: 0});
+				});
+			}
+
+			return (
+				<div className="progressionTreeLevels">
+				  <ul>
+					  {
+						ProgressionTreeLevels.map(function(ProgTreeLevel, i) {
+							return (
+							  <li key={i}>
+								<span className="prog-tree-list-column">
+								   {ProgTreeLevel.name}
+								 </span>
+								 <span className="prog-tree-list-column">
+								   CurrentLevelXP: {ProgTreeLevel.currentLevelXP}
+								 </span>
+								 <span className="prog-tree-list-column">
+								   TotalXP: {ProgTreeLevel.totalXP}
+								 </span>
+								 <span className="prog-tree-list-column">
+								   Level: {ProgTreeLevel.level}
+								 </span>
+							  </li>
+							);
+						})
+					  }
+				  </ul>
+				</div>
+			)
+		}
+
+		return null;
+	}
 
 	render() {
+		//Incorrect usage of bootstrap row col. @Michael?
 		return (
 			<div className="row mt center">
 				<div className="col-md-11 col-sm-11">
@@ -115,18 +158,14 @@ class UserProfile extends React.Component {
 											starWidthAndHeight={'35px'} starSpacing={'2px'}
 											starEmptyColor={"white"}
 											starRatedColor={"rgb(255, 204, 0)"}/>
-									    {this.props.isAuthorized && 
-										  <h5>{`Level: ${this.props.userProfile.level}`}</h5>
-										}
-										{this.props.isAuthorized && 
-										  <h5>{`Current Level XP: ${this.props.userProfile.currentLevelXP}`}</h5>
-										}
-										{this.props.isAuthorized && 
-										  <h5>{`Total XP: ${this.props.userProfile.totalXP}`}</h5>
-										}
 									</div>
 								</div>
 							</div>
+						</div>
+						<div className="row">
+						  <div className="col-lg-12">
+						    {this.renderLevels()}
+						  </div>
 						</div>
 						{this.state.blogs.map((item, index) => {
 							return (
