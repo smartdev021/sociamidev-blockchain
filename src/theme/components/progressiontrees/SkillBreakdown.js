@@ -187,21 +187,58 @@ class SkillBreakdown extends React.Component {
 
   handleClose() {
     if (this.props.userProfile && this.props.userProfile._id) {
-      this.props.userInteractionPush(this.props.userProfile._id, 
-        UserInteractions.Types.PAGE_CLOSE, 
-        UserInteractions.SubTypes.SKILL_VIEW, 
-        { 
-          skillId: this.state.skillInfo._id,
-        }
-      );
+      if (this.state.skillInfo) {
+        this.props.userInteractionPush(this.props.userProfile._id, 
+          UserInteractions.Types.PAGE_CLOSE, 
+          UserInteractions.SubTypes.SKILL_VIEW, 
+          { 
+            skillId: this.state.skillInfo._id,
+          }
+        );
+      }
     }
 
     this.props.onCloseSkillBreakdown();
   }
 
+  isDeepdiveAvailable() {
+    return true;
+    console.log("%isDeepdiveAvailable before sort", "color:blue;background:white");
+    if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
+      const CurrentTree = this.props.tree;
+      let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter((hangout) => {
+        return hangout.treeId == CurrentTree._id;
+      });
+
+      if (hangoutsForCurrentTree.length > 0) {
+        console.log("%changoutsForCurrentTree before sort", "color:white;background:purple");
+        console.dir(hangoutsForCurrentTree);
+        hangoutsForCurrentTree.sort((a, b) => {
+          return a.dateJoined - b.dateJoined;
+        });
+        console.log("%changoutsForCurrentTree after sort", "color:white;background:orange");
+        console.dir(hangoutsForCurrentTree);
+
+        console.log("Date.now() - hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined: " + Date.now() - hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined);
+
+        console.log("CurrentTree.dailyQuota: " + CurrentTree.deepDiveIntervalLimit);
+
+        if (Date.now() - hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined < CurrentTree.deepDiveIntervalLimit) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   render() {
     const that = this;
-    console.log(this.props.skillName)
+    console.log(this.props.skillName);
+
+    const deepdiveButtonClass = this.isDeepdiveAvailable() ? "btn-md btn-outline-inverse deep-dive-button" 
+      : "btn-md btn-outline-inverse deep-dive-button-disabled";
+
     return (
       <div className="container-fluid progress-browser-wrap" id="skill-break-down">
         <div className="col-md-1">
@@ -247,8 +284,8 @@ class SkillBreakdown extends React.Component {
             </div>
           </div>
           <div className="deep-dive-button-wrap">
-            <button type="button" className="btn-md btn-outline-inverse deep-dive-button" 
-                  onClick={()=> this.toggleHangoutForm() }>DeepDive</button>
+            <button type="button" className={deepdiveButtonClass}
+                  onClick={this.isDeepdiveAvailable() ? ()=> this.toggleHangoutForm() : () => {}}>DeepDive</button>
           </div>
           <div className="row">
             {this.state.isHangoutFormVisible && 

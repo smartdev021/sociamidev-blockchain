@@ -232,6 +232,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
             const responseProfile = response.data.profile;
             let newUserProfile = {
               _id: response.data._id,
+              hangouts: response.data.hangouts,
               roadmaps: response.data.roadmaps,
               progressionTrees: response.data.progressionTrees,
               facebook: response.data.facebook,
