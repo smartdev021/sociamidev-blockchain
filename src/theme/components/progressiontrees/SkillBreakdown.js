@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Modal from 'react-modal';
+import { Redirect } from 'react-router'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
@@ -30,7 +32,6 @@ import {
 
 import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
 import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
-
 import TaskTypes from "~/src/common/TaskTypes"
 
 import UserInteractions from "~/src/common/UserInteractions"
@@ -43,12 +44,35 @@ class SkillBreakdown extends React.Component {
     this.state = {
      skillInfo: undefined,
      isHangoutFormVisible: false,
-     TrendScannerComponentVisible: false
+     TrendScannerComponentVisible: false,
+     isIlluminateFormVisible: false,
+     redirectToTaskManagement: false
     }
+    this.modalDefaultStyles = {};
   }
 
   componentWillMount() {
     this.updateSkill(this.props.skillName);
+
+     console.log("DetailsPopup::componentWillMount");
+      this.modalDefaultStyles = Modal.defaultStyles;
+
+      Modal.defaultStyles.content.border = "none";
+      Modal.defaultStyles.content.background = "transparent";
+      Modal.defaultStyles.content.overflow = "visible";
+      Modal.defaultStyles.content.padding = '0';
+      Modal.defaultStyles.content["maxWidth"] = '300px';
+      Modal.defaultStyles.content["minHeight"] = '300px';
+      Modal.defaultStyles.content["marginLeft"] = 'auto';
+      Modal.defaultStyles.content["marginRight"] = 'auto';
+      Modal.defaultStyles.content["left"] = '0';
+      Modal.defaultStyles.content["top"] = '100';
+      Modal.defaultStyles.content["right"] = '0';
+  }
+
+  componentWillUnmount() {
+      console.log("DetailsPopup::componentWillUnmount");
+      Modal.defaultStyles = this.modalDefaultStyles;
   }
 
   updateSkill(name) {
@@ -105,6 +129,10 @@ class SkillBreakdown extends React.Component {
 
   toggleHangoutForm(skillInfo) {
     this.setState( { isHangoutFormVisible: true } );
+  }
+
+  toggleIlluminateForm() {
+    this.setState( { isIlluminateFormVisible: true } );
   }
 
   toggleTrendScannerComponent() {
@@ -187,15 +215,13 @@ class SkillBreakdown extends React.Component {
 
   handleClose() {
     if (this.props.userProfile && this.props.userProfile._id) {
-      if (this.state.skillInfo) {
-        this.props.userInteractionPush(this.props.userProfile._id, 
-          UserInteractions.Types.PAGE_CLOSE, 
-          UserInteractions.SubTypes.SKILL_VIEW, 
-          { 
-            skillId: this.state.skillInfo._id,
-          }
-        );
-      }
+      this.props.userInteractionPush(this.props.userProfile._id, 
+        UserInteractions.Types.PAGE_CLOSE, 
+        UserInteractions.SubTypes.SKILL_VIEW, 
+        { 
+          skillId: this.state.skillInfo._id,
+        }
+      );
     }
 
     this.props.onCloseSkillBreakdown();
@@ -232,13 +258,27 @@ class SkillBreakdown extends React.Component {
     return true;
   }
 
+  onCloseModal() {
+    this.setState({isIlluminateFormVisible: false});
+  }
+
+  goToIlluminate(e){
+    e.preventDefault();
+    this.setState({redirectToTaskManagement: true});
+  }
+
   render() {
     const that = this;
-    console.log(this.props.skillName);
+    const { redirectToTaskManagement } = this.state;
 
-    const deepdiveButtonClass = this.isDeepdiveAvailable() ? "btn-md btn-outline-inverse deep-dive-button" 
+    const IsDeepdiveAbailable = this.isDeepdiveAvailable();
+
+    const DeepdiveButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse deep-dive-button" 
       : "btn-md btn-outline-inverse deep-dive-button-disabled";
 
+    if (redirectToTaskManagement) {
+      return <Redirect to='/taskManagement'/>;
+    }
     return (
       <div className="container-fluid progress-browser-wrap" id="skill-break-down">
         <div className="col-md-1">
@@ -284,9 +324,31 @@ class SkillBreakdown extends React.Component {
             </div>
           </div>
           <div className="deep-dive-button-wrap">
-            <button type="button" className={deepdiveButtonClass}
-                  onClick={this.isDeepdiveAvailable() ? ()=> this.toggleHangoutForm() : () => {}}>DeepDive</button>
+
+            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
+
+            <button type="button" className={DeepdiveButtonClass} 
+                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {}}>DeepDive</button>
           </div>
+          <div className="row">
+            <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
+              <a href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()}></a>
+              <div className="container-fluid popup-new-project">
+                <span>
+                  <div className="row">
+                      <div className="col-lg-12">
+                        <div className="header">
+                            <div>This will create a task in task manager!</div>
+                          </div>
+                        </div>
+                    </div>
+                  </span>
+                  <hr/>
+                  <button onClick={(e)=> this.goToIlluminate(e) } className="btn-md btn-outline-inverse illuminate-btn-go">Go</button>
+              </div>
+            </Modal>
+          </div>
+          <br/>
           <div className="row">
             {this.state.isHangoutFormVisible && 
               <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}

@@ -93,7 +93,7 @@
     margin-left: 20px!important;
 }
 .deep-dive-button-wrap {
-    width: 200px;
+    /*width: 200px;*/
     margin: 0 auto;
 }
 .deep-dive-button, .deep-dive-button-disabled {
@@ -155,4 +155,34 @@
 
 .input-time {
     width: 105px;
+}
+
+.illuminate-button {
+    border: 0;
+    outline-style: none;
+    width: 190px;
+    height: 40px;
+    background-color: #f38162;
+    color: white;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+    margin-left: 10%;
+    margin-right: 25px;
+}
+
+.illuminate-btn-go {
+    border: 0;
+    outline-style: none;
+    width: 97px;
+    height: 40px;
+    background-color: #f38162;
+    color: white;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+    margin-left: 25%;
+}
+
+.illuminate-popup-close-icon {
+    color: darkgray;
+    font-size: 18px;
+    z-index: 999;
+    float: right;
 }
