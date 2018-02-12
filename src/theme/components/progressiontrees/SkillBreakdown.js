@@ -228,8 +228,6 @@ class SkillBreakdown extends React.Component {
   }
 
   isDeepdiveAvailable() {
-    return true;
-    console.log("%isDeepdiveAvailable before sort", "color:blue;background:white");
     if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
       const CurrentTree = this.props.tree;
       let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter((hangout) => {
@@ -237,19 +235,14 @@ class SkillBreakdown extends React.Component {
       });
 
       if (hangoutsForCurrentTree.length > 0) {
-        console.log("%changoutsForCurrentTree before sort", "color:white;background:purple");
-        console.dir(hangoutsForCurrentTree);
         hangoutsForCurrentTree.sort((a, b) => {
           return a.dateJoined - b.dateJoined;
         });
-        console.log("%changoutsForCurrentTree after sort", "color:white;background:orange");
-        console.dir(hangoutsForCurrentTree);
 
-        console.log("Date.now() - hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined: " + Date.now() - hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined);
+        const LatestHangoutDateJoined = hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined;
+        const DateNow = Date.now();
 
-        console.log("CurrentTree.dailyQuota: " + CurrentTree.deepDiveIntervalLimit);
-
-        if (Date.now() - hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined < CurrentTree.deepDiveIntervalLimit) {
+        if (DateNow - LatestHangoutDateJoined < CurrentTree.deepDiveIntervalLimit) {
           return false;
         }
       }
