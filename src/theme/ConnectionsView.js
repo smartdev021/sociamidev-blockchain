@@ -333,19 +333,19 @@ class ConnectionsView extends React.Component {
                                             </div>
                                         </div>
                                         <div className="followersContainer">
-                                            <span className="followersCount">1121</span>
+                                            <span className="followersCount">{friend.connections.friendCount}</span>
                                             <span className="followersText">Friends</span>
                                         </div>
                                         <div className="followingContainer">
-                                            <span className="followingCount">2230</span>
+                                            <span className="followingCount">{friend.connections.progressionCount}</span>
                                             <span className="followingText">Progression Trees</span>
                                         </div>
                                         <div className="photosContainer">
-                                            <span className="photosCount">456</span>
+                                            <span className="photosCount">{friend.connections.projectCount}</span>
                                             <span className="photosText">Projects</span>
                                         </div>
                                         <div className="videosContainer">
-                                            <span className="videosCount">198</span>
+                                            <span className="videosCount">{friend.connections.taskCount}</span>
                                             <span className="videosText">Tasks</span>
                                         </div>
                                         <div className="buttonContainer">
@@ -376,19 +376,19 @@ class ConnectionsView extends React.Component {
                                             </div>
                                         </div>
                                         <div className="followersContainer">
-                                            <span className="followersCount">1121</span>
+                                            <span className="followersCount">{friend.connections.friendCount}</span>
                                             <span className="followersText">Friends</span>
                                         </div>
                                         <div className="followingContainer">
-                                            <span className="followingCount">2230</span>
+                                            <span className="followingCount">{friend.connections.progressionCount}</span>
                                             <span className="followingText">Progression Trees</span>
                                         </div>
                                         <div className="photosContainer">
-                                            <span className="photosCount">456</span>
+                                            <span className="photosCount">{friend.connections.projectCount}</span>
                                             <span className="photosText">Projects</span>
                                         </div>
                                         <div className="videosContainer">
-                                            <span className="videosCount">198</span>
+                                            <span className="videosCount">{friend.connections.taskCount}</span>
                                             <span className="videosText">Tasks</span>
                                         </div>
                                         <div className="buttonContainer">
