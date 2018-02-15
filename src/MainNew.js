@@ -68,6 +68,8 @@ class MainNew extends React.Component {
             <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
             <Route path='/taskManagement' render={routeProps => <TaskManager {...routeProps}{...this.props}/>}/>
             <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
+            <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
+            <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
           </Switch>)
       }
 
@@ -76,7 +78,8 @@ class MainNew extends React.Component {
       return (
         <div className="wrapper">
           {RedirectTo}
-          <ThemeHeader />
+          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} 
+            fetchUserActivities={() => this.props.fetchUserActivities()}/>
           <div className="session-content">
             <SidebarLeft />
             <div className="content-tokens">
@@ -90,6 +93,7 @@ class MainNew extends React.Component {
 
 MainNew.propTypes = {
     onFetchAllTasks: PropTypes.func.isRequired,
+    userActivities: PropTypes.array.isRequired,
   }
 
   const mapDispatchToProps = dispatch => ({

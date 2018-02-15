@@ -213,7 +213,7 @@ class SidebarLeft extends React.Component {
 
     return ListOfFriends.map(function(friend, i) {
         return (
-            <div className="item-account clearfix">
+            <div key={i} className="item-account clearfix">
             <div className="row">
                 <div className="col-xs-3">
                     <div className="avatar">

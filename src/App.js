@@ -32,6 +32,7 @@ import {
   openUserProfile,
   openSignUpForm,
   closeSignUpForm,
+  fetchUserActivities,
 } from '~/src/redux/actions/authorization'
 
 import {
@@ -356,7 +357,9 @@ class App extends Component {
       onHandleQueryChange={this.props.setSearchQuery}
       currentUserId={this.props.userProfile._id}
       userProfile={this.props.userProfile}
-      isFetchInProgress={this.props.isFetchInProgress}/>
+      isFetchInProgress={this.props.isFetchInProgress}
+      currentUserId={this.props.userProfile._id}
+      userActivities={this.props.userActivities}/>
     );
     let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
@@ -417,6 +420,7 @@ App.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
+  userActivities: PropTypes.array.isRequired,
   
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
@@ -425,6 +429,7 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
+  fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
 }
@@ -439,6 +444,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),
+  fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
 })
 
@@ -452,6 +458,7 @@ const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
   exactLocation: state.exactLocation,
   searchResults: state.searchResults,
+  userActivities: state.userProfile.activities.data,
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })
