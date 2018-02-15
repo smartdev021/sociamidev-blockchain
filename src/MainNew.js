@@ -4,744 +4,99 @@
 
 import React, { Component } from 'react';
 
+import {Route, Switch} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types';
+
 import {Icon} from 'react-fa'
+
+import ThemeHeader from '~/src/new-ui-rin/ThemeHeader';
+import SidebarLeft from '~/src/new-ui-rin/SidebarLeft';
+import TaskManager from '~/src/new-ui-rin/TaskManager';
+
+//routes
+import Authorize from '~/src/authentication/Authorize';
+
+import HomePage from '~/src/theme/HomePage.js';
+import TrendScanner from '~/src/theme/TrendScanner.js';
+import TaskManagement from '~/src/theme/TaskManagement';
+import ProjectManager from '~/src/theme/ProjectManagement';
+import ProjectBrowser from '~/src/theme/ProjectBrowser';
+import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser'
+import ProgressionTreeBrowser from '~/src/theme/ProgressionTreeBrowser';
+import ProgressionTrees from '~/src/theme/ProgressionTrees';
+import About from '~/src/theme/About.js';
+import ICO from '~/src/theme/ICO.js';
+import ConnectionsView from '~/src/theme/ConnectionsView.js';
+import "~/src/theme/css/main.css";
+import UserProfile from '~/src/theme/UserProfile.js';
+
+import Privacy from '~/src/theme/Privacy.js';
+
+import {
+    fetchAllTasks
+  } from '~/src/redux/actions/tasks'
 
 import '~/src/style.css'
 
 class MainNew extends React.Component {
-    render() {
+    getRedirectLocation() {
+        let RedirectTo = null;
+        if (this.props.isOpenSearchResultsPending) {
+          if (this.props.location.pathname != '/searchResults') {
+            RedirectTo = <Redirect to="/searchResults" push />;
+          }
+        }
+        else if (this.props.isOpenProfilePending) {
+          if (this.props.location.pathname != '/userProfile') {
+            RedirectTo = <Redirect to="/userProfile" push />;
+          }
+        }
+    
+        console.log("RedirectTo: " + RedirectTo);
+    
+        return RedirectTo;
+      }
+
+    renderRoutes() {
         return (
-            <div className="wrapper">
-    <div className="session-header">
-        <div className="container">
-            <div className="row">
-                <div className="col-md-3">
-                    <div className="menu-hamburger">
-                        <a href="#" className="open-menu">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </a>
+          <Switch>
+            <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
+            <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
+            <Route path='/taskManagement' render={routeProps => <TaskManager {...routeProps}{...this.props}/>}/>
+            <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
+          </Switch>)
+      }
 
-                        <a href="#" className="close-menu">
-                            <Icon className="fa fa-times" aria-hidden="true"></Icon>
-                        </a>
-                    </div>
-                    <h1 className="logo">
-                        <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt=""/></a>
-                    </h1>
-                </div>
-
-                <div className="col-md-6">
-                    <div className="task-manager">
-                        <a href="#" className="btn-base btn-yellow">Challenges Scanner</a>
-                        <a href="#" className="btn-base btn-yellow">Tree Scanner</a>
-                        <a href="#" className="btn-base btn-yellow">Tasks Manager</a>
-                    </div>
-                </div>
-
-                <div className="col-md-3">
-                    <ul className="navbar-top-links">
-                        <li className="mail"><a href="#"><Icon className="fa fa-envelope" aria-hidden="true"></Icon></a></li>
-                        <li className="notification"><a href="#"><Icon className="fa fa-bell" aria-hidden="true"></Icon></a></li>
-                        <li className="register"><a href="#"><Icon className="fa fa-user-plus" aria-hidden="true"></Icon></a></li>
-                        <li className="account">
-                            <a href="#" className="text-logout">
-                                <Icon className="fa fa-user" aria-hidden="true"></Icon> <span>Logout</span></a></li>
-                    </ul>
-                </div>
+    render() {
+      const RedirectTo = this.getRedirectLocation();
+      return (
+        <div className="wrapper">
+          {RedirectTo}
+          <ThemeHeader />
+          <div className="session-content">
+            <SidebarLeft />
+            <div className="content-tokens">
+              {this.renderRoutes()}
             </div>
-
+          </div>
         </div>
-    </div>
-
-    <div className="session-content">
-        <div className="category-left">
-            <div className="item-account line-bottom clearfix">
-                <div className="row">
-                    <div className="col-xs-3">
-                        <div className="avatar">
-                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar1.png" alt="" />
-                        </div>
-                    </div>
-                    <div className="col-xs-9 none-padding-right">
-                        <div className="text-status">
-                            Good Morning Daniel, Update your status <a href="#">Here</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="specialized">
-                Android developer
-            </div>
-
-            <div className="scrollbar-inner">
-                <div className="block-account">
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Annalisa</span> <span className="text-desc">connected width 3 people in her wider netword</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Matilda</span>
-                                    <span className="text-desc">connected with 15 people at Yale </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">joined soqqle</span>
-                                    <span className="text-friends">35 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">has completed 84% of his <a href="#">Full Stack Developer roadmap</a></span>
-                                    <span className="text-friends">45 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">John</span>
-                                    <span className="text-desc">needs a Java programmer <a href="#">Contact John</a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Matilda</span>
-                                    <span className="text-desc">connected with 15 people at Yale </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">joined soqqle</span>
-                                    <span className="text-friends">35 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">has completed 84% of his <a href="#">Full Stack Developer roadmap</a></span>
-                                    <span className="text-friends">45 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">joined soqqle</span>
-                                    <span className="text-friends">35 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">has completed 84% of his <a href="#">Full Stack Developer roadmap</a></span>
-                                    <span className="text-friends">45 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">John</span>
-                                    <span className="text-desc">needs a Java programmer <a href="#">Contact John</a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Matilda</span>
-                                    <span className="text-desc">connected with 15 people at Yale </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">joined soqqle</span>
-                                    <span className="text-friends">35 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="item-account clearfix">
-                        <div className="row">
-                            <div className="col-xs-3">
-                                <div className="avatar">
-                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-xs-9 none-padding-right">
-                                <div className="text-job">
-                                    <span className="text-name">Josh</span>
-                                    <span className="text-desc">has completed 84% of his <a href="#">Full Stack Developer roadmap</a></span>
-                                    <span className="text-friends">45 mutal friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div className="content-tokens">
-            <div className="row">
-                <div className="col-md-8 expand-deep">
-                    <div className="head-deep">
-                        <div className="dropdown">
-                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span className="text-head">Deepdive</span>
-                                <Icon className="fa fa-chevron-down" aria-hidden="true"></Icon>
-                            </button>
-                            <ul className="dropdown-menu" aria-labelledby="dLabel">
-                                <li><a href="#">All</a></li>
-                                <li><a href="#">Confirmed</a></li>
-                                <li><a href="#">My Deepdive</a></li>
-                                <li><a href="#">Sent Requests</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="scrollbar-inner">
-                        <div className="block-deepdive">
-                            <div className="scrollbar-inner">
-                            <div className="row">
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <div className="col-deep col-sm-6">
-                                    <div className="item-deep">
-                                    <div className="deep-content">
-                                        <h4>Comfirmed Deepdive with <a href="#" className="link-black">Alexander</a></h4>
-                                        <p>Skill: Blockchain</p>
-                                        <p>Time: Tomorrow, 1am</p>
-                                    </div>
-                                    <div className="deep-tools">
-                                        <ul>
-                                            <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                                            <li><a href="#" className="btn-base btn-red">Cancel</a></li>
-                                            <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                              </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div className="col-md-4 expand-tokens">
-                    <div className="block-tokens">
-                        <div className="expanding">
-                            <a href="#" className="open-expanding"><Icon className="fa fa-chevron-left" aria-hidden="true"></Icon></a>
-                            <a href="#" className="close-expanding"><Icon className="fa fa-chevron-right" aria-hidden="true"></Icon></a>
-                        </div>
-
-                        <div className="expanding expanding-mobile">
-                            <a href="#" className="open-expanding"><Icon className="fa fa-chevron-left" aria-hidden="true"></Icon></a>
-                            <a href="#" className="close-expanding"><Icon className="fa fa-chevron-right" aria-hidden="true"></Icon></a>
-                        </div>
-
-                        <div className="bt-search">
-                            <a href="#" className="icon-search">
-                                <Icon className="fa fa-search" aria-hidden="true"></Icon>
-                            </a>
-
-                            <div className="block-search">
-                                <div className="close-search">
-                                    <a href="#"><Icon className="fa fa-times" aria-hidden="true"></Icon></a>
-                                </div>
-                                <div className="form-search-tokens">
-                                    <div id="imaginary_container">
-                                        <div className="input-group stylish-input-group">
-                                            <input type="text" className="form-control input-text"  placeholder="Search" />
-                                            <span className="input-group-addon">
-                                                <button type="submit">
-                                                    <span className="glyphicon glyphicon-search"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="box-head">
-                            <h1 className="text-heading heading-border">
-                                <span>Complete quests to earn tokens</span>
-                            </h1>
-                        </div>
-
-                        <div className="box-location clearfix">
-                            <div className="text-location">
-                                <span>Hong Kong Island</span>
-                            </div>
-                        </div>
-
-
-                          <div className="scrollbar-inner clearfix">
-                            <div className="wrapper-tokens clearfix">
-
-                                <div className="scrollbar-inner clearfix">
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-red">
-                                            <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                            <div className="token-bottom">
-                                                <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                                    <span className="font-small">Register for</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-blue">
-                                            <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-red">
-                                            <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                            <div className="token-bottom">
-                                                <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                                    <span className="font-small">Register for</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-blue">
-                                            <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-red">
-                                            <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                            <div className="token-bottom">
-                                                <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                                    <span className="font-small">Register for</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-blue">
-                                            <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-blue">
-                                            <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-red">
-                                            <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                            <div className="token-bottom">
-                                                <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                                    <span className="font-small">Register for</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-blue">
-                                            <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-red">
-                                            <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                            <div className="token-bottom">
-                                                <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                                    <span className="font-small">Register for</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-blue">
-                                            <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-tokens col-sm-12">
-                                        <div className="item-tokens tokens-red">
-                                            <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                                                Monday, 15th Jan at 1pm in Central</h4>
-                                            <p className="text-1">Alex is in your wider network</p>
-                                            <p className="text-2">Earn up to 10 tokens completing this task</p>
-                                            <div className="token-bottom">
-                                                <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                                    <span className="font-small">Register for</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-        );
+      );
     }
 }
 
-export default MainNew;
+MainNew.propTypes = {
+    onFetchAllTasks: PropTypes.func.isRequired,
+  }
+
+  const mapDispatchToProps = dispatch => ({
+    onFetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
+  });
+  
+  const mapStateToProps = state => ({
+  });
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainNew));

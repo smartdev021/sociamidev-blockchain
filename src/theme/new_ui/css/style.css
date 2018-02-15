@@ -60,7 +60,7 @@ body{
     color: #303030;
 }
 
-.session-header{
+.session-header-landing {
     background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/bg-header.jpg") no-repeat top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -70,7 +70,7 @@ body{
     height: 100%;
 }
 
-.btn-base{
+.btn-base-landing {
     display: inline-block;
     height: 55px;
     text-align: center;
@@ -84,28 +84,28 @@ body{
     outline: none;
 }
 
-.btn-yellow{
+.btn-yellow-landing{
     width: 215px;
     color: #f05043;
     background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-yellow.png") no-repeat 0px 0px;
 }
-.btn-yellow:hover,
-.btn-yellow:focus,
-.btn-yellow:active{
+.btn-yellow-landing:hover,
+.btn-yellow-landing:focus,
+.btn-yellow-landing:active{
     background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-yellow.png") no-repeat 0px -55px;
     text-decoration: none;
     color: #f05043;
 }
 
-.btn-red{
+.btn-red-landing{
     font-size: 16px;
     width: 275px;
     color: #ffffff;
     background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-red.png") no-repeat 0px 0px;
 }
-.btn-red:hover,
-.btn-red:focus,
-.btn-red:active{
+.btn-red-landing:hover,
+.btn-red-landing:focus,
+.btn-red-landing:active{
     background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/button-red.png") no-repeat 0px -60px;
     text-decoration: none;
     color: #ffffff;
@@ -133,7 +133,7 @@ body{
     width: 130px;
 }
 
-.btn-login{
+.btn-login-landing{
     float: right;
     margin: 15px 0px;
 }
@@ -595,7 +595,7 @@ body{
 }
 
 .btn-contact-red1{
-    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-red-p1.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-red-landing-p1.png") no-repeat;
     right: 0px;
     padding: 5px 30px 5px 0px;
     text-align: right;
@@ -604,7 +604,7 @@ body{
 }
 
 .btn-contact-red2{
-    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-red-p2.png") no-repeat;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/btn-red-landing-p2.png") no-repeat;
     right: 0px;
     padding: 5px 0px 5px 30px;
     text-align: left;
@@ -1023,7 +1023,7 @@ body{
         padding: 15px 0px;
     }
 
-    .btn-login{
+    .btn-login-landing{
         margin: 15px 0px;
     }
 

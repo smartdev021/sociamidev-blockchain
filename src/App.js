@@ -20,12 +20,12 @@ import io from 'socket.io-client';
 import PubSub from 'pubsub-js';
 import ReactGA from 'react-ga'
 
+import LandingPage from '~/src/theme/new_ui/LandingPage'
+
 import Main from './MainNew';
 import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
-
-//import LandingPage from '~/src/theme/new_ui/LandingPage'
 
 import {
   fetchUserProfile,
@@ -330,8 +330,33 @@ class App extends Component {
     socketConn.emit(data.eventType, data.data);
   }
   render() {
+    if (!this.props.isAuthorized) {
+      return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
+                 onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} 
+                   onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+                     onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} 
+                       onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+                         isSignUpFormOpen={this.props.isSignUpFormOpen}
+                           pathname={this.props.history.location.pathname}/>
+      );
+    }
+
     return (
-      <Main />
+      <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+      onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+      onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+      onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+      onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+      onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
+      isAuthorized={this.props.isAuthorized}
+      pathname={this.props.history.location.pathname}
+      isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
+      openSignUpForm={this.props.openSignUpForm}
+      searchQuery={this.props.searchQuery}
+      onHandleQueryChange={this.props.setSearchQuery}
+      currentUserId={this.props.userProfile._id}
+      userProfile={this.props.userProfile}
+      isFetchInProgress={this.props.isFetchInProgress}/>
     );
     let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
@@ -358,17 +383,6 @@ class App extends Component {
       }
       socketConn.emit('UserLoggedIn', userData);      
     }
-
-    /*if (!this.props.isAuthorized) {
-      return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
-                 onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} 
-                   onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-                     onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} 
-                       onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-                         isSignUpFormOpen={this.props.isSignUpFormOpen}
-                           pathname={this.props.history.location.pathname}/>
-      );
-    }*/
 
     return (
       <div className="outer-container">
