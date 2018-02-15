@@ -20,12 +20,12 @@ import io from 'socket.io-client';
 import PubSub from 'pubsub-js';
 import ReactGA from 'react-ga'
 
-import Main from './Main';
+import Main from './MainNew';
 import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
 
-import LandingPage from '~/src/theme/new_ui/LandingPage'
+//import LandingPage from '~/src/theme/new_ui/LandingPage'
 
 import {
   fetchUserProfile,
@@ -330,6 +330,9 @@ class App extends Component {
     socketConn.emit(data.eventType, data.data);
   }
   render() {
+    return (
+      <Main />
+    );
     let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
     var username = "";
@@ -356,7 +359,7 @@ class App extends Component {
       socketConn.emit('UserLoggedIn', userData);      
     }
 
-    if (!this.props.isAuthorized) {
+    /*if (!this.props.isAuthorized) {
       return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
                  onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} 
                    onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
@@ -365,7 +368,7 @@ class App extends Component {
                          isSignUpFormOpen={this.props.isSignUpFormOpen}
                            pathname={this.props.history.location.pathname}/>
       );
-    }
+    }*/
 
     return (
       <div className="outer-container">
