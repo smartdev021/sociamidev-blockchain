@@ -4,6 +4,8 @@
 
 import React, { Component } from 'react';
 
+import {Icon} from 'react-fa'
+
 import '~/src/style.css'
 
 class MainNew extends React.Component {
@@ -22,11 +24,11 @@ class MainNew extends React.Component {
                         </a>
 
                         <a href="#" className="close-menu">
-                            <i className="fa fa-times" aria-hidden="true"></i>
+                            <Icon className="fa fa-times" aria-hidden="true"></Icon>
                         </a>
                     </div>
                     <h1 className="logo">
-                        <a href="#"><img src="assets/img/logo.png" alt=""/></a>
+                        <a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt=""/></a>
                     </h1>
                 </div>
 
@@ -40,12 +42,12 @@ class MainNew extends React.Component {
 
                 <div className="col-md-3">
                     <ul className="navbar-top-links">
-                        <li className="mail"><a href="#"><i className="fa fa-envelope" aria-hidden="true"></i></a></li>
-                        <li className="notification"><a href="#"><i className="fa fa-bell" aria-hidden="true"></i></a></li>
-                        <li className="register"><a href="#"><i className="fa fa-user-plus" aria-hidden="true"></i></a></li>
+                        <li className="mail"><a href="#"><Icon className="fa fa-envelope" aria-hidden="true"></Icon></a></li>
+                        <li className="notification"><a href="#"><Icon className="fa fa-bell" aria-hidden="true"></Icon></a></li>
+                        <li className="register"><a href="#"><Icon className="fa fa-user-plus" aria-hidden="true"></Icon></a></li>
                         <li className="account">
                             <a href="#" className="text-logout">
-                                <i className="fa fa-user" aria-hidden="true"></i> <span>Logout</span></a></li>
+                                <Icon className="fa fa-user" aria-hidden="true"></Icon> <span>Logout</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -59,7 +61,7 @@ class MainNew extends React.Component {
                 <div className="row">
                     <div className="col-xs-3">
                         <div className="avatar">
-                            <img src="assets/img/avatar1.png" alt="" />
+                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar1.png" alt="" />
                         </div>
                     </div>
                     <div className="col-xs-9 none-padding-right">
@@ -81,7 +83,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar2.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -96,7 +98,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -112,7 +114,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar4.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -129,7 +131,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -146,7 +148,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar2.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -162,7 +164,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -178,7 +180,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar4.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -195,7 +197,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -212,7 +214,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar4.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -229,7 +231,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -246,7 +248,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar2.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -262,7 +264,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -278,7 +280,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar4.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar4.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -295,7 +297,7 @@ class MainNew extends React.Component {
                         <div className="row">
                             <div className="col-xs-3">
                                 <div className="avatar">
-                                    <img src="assets/img/avatar5.png" alt="" />
+                                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar5.png" alt="" />
                                 </div>
                             </div>
                             <div className="col-xs-9 none-padding-right">
@@ -319,7 +321,7 @@ class MainNew extends React.Component {
                         <div className="dropdown">
                             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span className="text-head">Deepdive</span>
-                                <i className="fa fa-chevron-down" aria-hidden="true"></i>
+                                <Icon className="fa fa-chevron-down" aria-hidden="true"></Icon>
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="dLabel">
                                 <li><a href="#">All</a></li>
@@ -545,23 +547,23 @@ class MainNew extends React.Component {
                 <div className="col-md-4 expand-tokens">
                     <div className="block-tokens">
                         <div className="expanding">
-                            <a href="#" className="open-expanding"><i className="fa fa-chevron-left" aria-hidden="true"></i></a>
-                            <a href="#" className="close-expanding"><i className="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            <a href="#" className="open-expanding"><Icon className="fa fa-chevron-left" aria-hidden="true"></Icon></a>
+                            <a href="#" className="close-expanding"><Icon className="fa fa-chevron-right" aria-hidden="true"></Icon></a>
                         </div>
 
                         <div className="expanding expanding-mobile">
-                            <a href="#" className="open-expanding"><i className="fa fa-chevron-left" aria-hidden="true"></i></a>
-                            <a href="#" className="close-expanding"><i className="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            <a href="#" className="open-expanding"><Icon className="fa fa-chevron-left" aria-hidden="true"></Icon></a>
+                            <a href="#" className="close-expanding"><Icon className="fa fa-chevron-right" aria-hidden="true"></Icon></a>
                         </div>
 
                         <div className="bt-search">
                             <a href="#" className="icon-search">
-                                <i className="fa fa-search" aria-hidden="true"></i>
+                                <Icon className="fa fa-search" aria-hidden="true"></Icon>
                             </a>
 
                             <div className="block-search">
                                 <div className="close-search">
-                                    <a href="#"><i className="fa fa-times" aria-hidden="true"></i></a>
+                                    <a href="#"><Icon className="fa fa-times" aria-hidden="true"></Icon></a>
                                 </div>
                                 <div className="form-search-tokens">
                                     <div id="imaginary_container">

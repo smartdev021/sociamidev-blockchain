@@ -11,5 +11,98 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/js/jquery.scrollbar.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.scrollbar-inner').scrollbar();
+
+        $( ".menu-hamburger a.close-menu" ).click(function() {
+
+            $(".category-left").addClass('close-category').removeClass('open-category');
+
+            $("a.open-menu").css('display','block');
+            $("a.close-menu").css('display','none');
+        });
+
+        $( ".menu-hamburger a.open-menu" ).click(function() {
+
+            $(".category-left").removeClass('close-category').addClass('open-category');
+
+            $("a.close-menu").css('display','block');
+            $("a.open-menu").css('display','none');
+        });
+
+
+        $( ".bt-search a" ).click(function() {
+            $(".bt-search").addClass("open-search");
+            $(".block-search").css("display",'block');
+        });
+
+        $( ".close-search a" ).click(function() {
+            $(".bt-search").removeClass("open-search");
+            $(".block-search").css("display",'none');
+        });
+
+
+        $( ".expanding .open-expanding" ).click(function() {
+            $(".expand-deep").removeClass("col-md-8").addClass("col-md-4");
+
+            $(".expand-tokens").removeClass("col-md-4").addClass("col-md-8");
+
+            $(".col-deep").removeClass("col-md-6").addClass("col-md-12");
+
+            $(".col-tokens").removeClass("col-md-12").addClass("col-md-6");
+
+            $(".expand-tokens").addClass("close-tokens");
+
+            $(".close-expanding").css("display",'block');
+            $(".open-expanding").css("display",'none');
+        });
+
+        $( ".expanding .close-expanding" ).click(function() {
+            $(".expand-tokens").removeClass("col-md-8").addClass("col-md-4");
+
+            $(".expand-deep").removeClass("col-md-4").addClass("col-md-8");
+
+            $(".col-deep").addClass("col-md-6").removeClass("col-md-12");
+
+            $(".col-tokens").removeClass("col-md-6").addClass("col-md-12");
+
+            $(".expand-tokens").removeClass("close-tokens");
+
+            $(".close-expanding").css("display",'none');
+            $(".open-expanding").css("display",'block');
+        });
+
+
+
+        $( ".expanding-mobile .open-expanding" ).click(function() {
+
+
+            $(".expand-tokens").removeClass("close-tokens-mobile").addClass("open-tokens-mobile");
+
+            $(".close-expanding").css("display",'block');
+            $(".open-expanding").css("display",'none');
+        });
+
+        $( ".expanding-mobile .close-expanding" ).click(function() {
+            $(".expand-tokens").removeClass("open-tokens-mobile").addClass("close-tokens-mobile");
+
+            $(".close-expanding").css("display",'none');
+            $(".open-expanding").css("display",'block');
+        });
+
+    });
+
+    $( window ).resize(function() {
+        if (screen.width < 990) {
+        }
+        else {
+            $(".category-left").removeClass('open-category');
+        }
+    });
+</script>
+
   </body>
 </html>

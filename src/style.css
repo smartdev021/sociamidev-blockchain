@@ -75,7 +75,7 @@ html, body {
 }
 
 .session-header{
-    background: "http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-header.jpg") no-repeat top center;
+    background: url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-header.jpg") no-repeat top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -265,7 +265,7 @@ html, body {
     -moz-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     position: absolute;
-    background: #e7403f "http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-category.jpg") no-repeat bottom right;
+    background: #e7403f url("http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-category.jpg") no-repeat bottom right;
     padding: 0px 10px;
     z-index: 9999;
     display: block;
@@ -540,7 +540,7 @@ html, body {
     display: inline-block;
 }
 
-.bt-search a.icon-search i.fa{
+.bt-search a.icon-search .fa{
     position: absolute;
     top: 40%;
     left: 5px;
