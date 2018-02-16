@@ -88,8 +88,12 @@ class ThemeHeader extends React.Component {
                         <li className="notification"><a href="#"><Icon name="bell" aria-hidden="true"></Icon></a></li>
                         <li className="register"><Link href="#" to='/connectionsView'><Icon name="user-plus" aria-hidden="true"></Icon></Link></li>
                         <li className="account">
-                            <ActionLink href="#" className="text-logout" onClick={() => this.onSignOut()}>
-                                <Icon name="user" aria-hidden="true"></Icon> <span>Logout</span></ActionLink></li>
+                          <ActionLink href="#" onClick={() => this.onSignOut()}>
+                            <Icon name="user" aria-hidden="true">
+                            </Icon>
+                          </ActionLink></li>
+                        <li className="account"><Link href="#" to='/privacy'><Icon name="gear" aria-hidden="true"></Icon></Link></li>
+                        <li className="account"><Link href="#" to='/userProfile'><Icon name="user-o" aria-hidden="true"></Icon></Link></li>      
                     </ul>
                 </div>
             </div>

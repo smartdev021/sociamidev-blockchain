@@ -65,11 +65,16 @@ class MainNew extends React.Component {
         return (
           <Switch>
             <Route exact path='/' render={routeProps => <HomePage {...routeProps}{...this.props}/>} />
+            <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
             <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
+            <Route path='/progressionTreeBrowser' render={routeProps => <ProgressionTreeBrowser {...routeProps}{...this.props}/>}/>
             <Route path='/taskManagement' render={routeProps => <TaskManager {...routeProps}{...this.props}/>}/>
+            <Route path='/taskBrowser' render={routeProps => <TaskBrowser {...routeProps}{...this.props}/>}/>
             <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
             <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
             <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
+            <Route path='/privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>} />)}/>
+            <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
           </Switch>)
       }
 
