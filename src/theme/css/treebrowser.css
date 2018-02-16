@@ -124,6 +124,12 @@
 #hangout-submit-form p {
     line-height: 22px;
 }
+
+#afterClickModal p {
+    padding-top: 100px;
+    text-align: center;
+    font-size: 19px;
+}
 .hangout-btn-go {
     border: 0;
     outline-style: none;
@@ -185,4 +191,16 @@
     font-size: 18px;
     z-index: 999;
     float: right;
+}
+
+.goto-task-manager-btn{
+    border: 0;
+    outline-style: none;
+    background-color: #f38162;
+    color: white;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+}
+
+#afterClickModal button {
+    margin-left: 35%;
 }

@@ -4,12 +4,13 @@
 import React from 'react';
 
 import ActionLink from '~/src/components/common/ActionLink'
-
+import {Link} from 'react-router-dom'
+import "~/src/theme/css/treebrowser.css"
 class HangoutSubmitForm extends React.Component {
 
   constructor(props) {
     super(props);
-
+    
     const timeNow = Date.now();
     const dateNow = new Date(timeNow);
 
@@ -17,7 +18,8 @@ class HangoutSubmitForm extends React.Component {
      isToday: false,
      date: dateNow,
      location: '',
-
+     IsDeepDiveCreated:'none',
+     IsDisplayForm:'block',
      dateInputValue: timeNow,
      timeInputValue: "00:00",
     }
@@ -60,6 +62,10 @@ class HangoutSubmitForm extends React.Component {
     this.props.toogleTrenScan();
   }
 
+  handleClick(){
+    this.setState({IsDisplayForm:'none',IsDeepDiveCreated:'block'});
+    this.props.handleToggle();
+  }
   renderForm()  {
     return (
       <form action="#" onSubmit={(e) => this.handleStartHangout(e)}>
@@ -88,14 +94,15 @@ class HangoutSubmitForm extends React.Component {
           </label> 
           <input type="text" name="location" value={this.state.location} placeholder="Location" onChange={(e)=>this.handleOptionChangeLocation(e)}/>
         </div>
-        <button type="submit" className="btn-md btn-outline-inverse pull-right hangout-btn-go">Go</button>
+        <button type="submit" onClick={()=>this.handleClick()} className="btn-md btn-outline-inverse pull-right hangout-btn-go">Go</button>
       </form>
     );
   }
 
   render() {
     return (
-      <div id="hangout-submit-form">
+      <div id="hangout-submit-form" >
+      <div id = "DefaultModal" style={{display:this.state.IsDisplayForm}}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12">
@@ -117,6 +124,11 @@ class HangoutSubmitForm extends React.Component {
               {this.renderForm()}
             </div>
           </div>
+        </div>
+        </div>
+        <div id="afterClickModal" style={{display:this.state.IsDeepDiveCreated}}>
+          <p>Your DeepDive has been created! Let's wait for a match!<br/>Find out more about what's happening around this topic below.</p>
+          <Link to='/taskManagement' ><button type="submit" className="btn-md btn-outline-inverse goto-task-manager-btn">Goto Task Manager Instead</button></Link>
         </div>
       </div>
     );

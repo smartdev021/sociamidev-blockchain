@@ -46,6 +46,7 @@ class SkillBreakdown extends React.Component {
      isHangoutFormVisible: false,
      TrendScannerComponentVisible: false,
      isIlluminateFormVisible: false,
+     IsDisplayForm:'block',
      redirectToTaskManagement: false
     }
     this.modalDefaultStyles = {};
@@ -227,6 +228,9 @@ class SkillBreakdown extends React.Component {
     this.props.onCloseSkillBreakdown();
   }
 
+  handleToggle() {
+    this.setState({IsDisplayForm:'none'});
+  }
   isDeepdiveAvailable() {
     if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
       const CurrentTree = this.props.tree;
@@ -275,11 +279,12 @@ class SkillBreakdown extends React.Component {
     return (
       <div className="container-fluid progress-browser-wrap" id="skill-break-down">
         <div className="col-md-1">
-          <div className="skill-breakdown-solidity">
+          <div className="skill-breakdown-solidity" style={{display:this.state.IsDisplayForm}}>
             Solidity
           </div>
         </div>
-        <div className="col-md-11">
+        <div className="col-md-11" >
+        <div className="skillDescForm" style={{display:this.state.IsDisplayForm}}>
           <div className="row">
             <div className="content-2-columns-left-title text-align-center">
               {this.props.skillName ? <span>{this.props.skillName}</span> : <span>Skill Breakdown</span> }
@@ -320,7 +325,7 @@ class SkillBreakdown extends React.Component {
 
             <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
 
-            <button type="button" className={DeepdiveButtonClass} 
+            <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
                   onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {}}>DeepDive</button>
           </div>
           <div className="row">
@@ -342,10 +347,11 @@ class SkillBreakdown extends React.Component {
             </Modal>
           </div>
           <br/>
+          </div>
           <div className="row">
             {this.state.isHangoutFormVisible && 
               <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
-              onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()} />}
+              onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()}  handleToggle={() => this.handleToggle()}/>}
           </div>
           <br/>
         </div>
