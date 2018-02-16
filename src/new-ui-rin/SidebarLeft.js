@@ -13,8 +13,6 @@ import {Icon} from 'react-fa'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
 
-import "~/src/theme/css/sidebarLeft.css"
-
 import {
   fetchUserFriends
 } from '~/src/redux/actions/social'
