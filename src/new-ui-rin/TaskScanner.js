@@ -19,6 +19,30 @@ class TaskScanner extends React.Component {
     super(props);
   }
 
+  renderTasks() {
+      if (!this.props.tasks || this.props.tasks.length == 0) {
+          return null;
+      }
+      else {
+          return this.props.tasks.map(function(task, i) {
+              return (
+                <div className="col-tokens col-sm-12" key={i}>
+                  <div className="item-tokens tokens-red">
+                    <h4><a href="#" className="link-red">Alex</a> {`is looking to hangout to discuss ${task.name} on
+                        Monday, 15th Jan at 1pm in Central`}</h4>
+                    <p className="text-1">Alex is in your wider network</p>
+                    <p className="text-2">Earn up to 10 tokens completing this task</p>
+                    <div className="token-bottom">
+                        <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
+                            <span className="font-small">Register for</span></a>
+                    </div>
+                  </div>
+                </div>
+              )
+          });
+      }
+  }
+
   render() {
     return (<div className="block-tokens">
     <div className="expanding">
@@ -70,141 +94,9 @@ class TaskScanner extends React.Component {
 
       <div className="scrollbar-inner clearfix">
         <div className="wrapper-tokens clearfix">
-
             <div className="scrollbar-inner clearfix">
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-red">
-                        <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                        <div className="token-bottom">
-                            <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                <span className="font-small">Register for</span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-blue">
-                        <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-red">
-                        <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                        <div className="token-bottom">
-                            <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                <span className="font-small">Register for</span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-blue">
-                        <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-red">
-                        <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                        <div className="token-bottom">
-                            <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                <span className="font-small">Register for</span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-blue">
-                        <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-blue">
-                        <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-red">
-                        <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                        <div className="token-bottom">
-                            <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                <span className="font-small">Register for</span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-blue">
-                        <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-red">
-                        <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                        <div className="token-bottom">
-                            <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                <span className="font-small">Register for</span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-blue">
-                        <h4><a href="#" className="link-blue">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    </div>
-                </div>
-
-                <div className="col-tokens col-sm-12">
-                    <div className="item-tokens tokens-red">
-                        <h4><a href="#" className="link-red">Alex</a> is looking to hangout to discuss Regression Tree on
-                            Monday, 15th Jan at 1pm in Central</h4>
-                        <p className="text-1">Alex is in your wider network</p>
-                        <p className="text-2">Earn up to 10 tokens completing this task</p>
-                        <div className="token-bottom">
-                            <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                                <span className="font-small">Register for</span></a>
-                        </div>
-                    </div>
-                </div>
+              {this.renderTasks()}
             </div>
-
         </div>
     </div>
 </div>
