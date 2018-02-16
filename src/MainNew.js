@@ -40,6 +40,10 @@ import {
     fetchAllTasks
   } from '~/src/redux/actions/tasks'
 
+  import {
+    markActivitySeen,
+  } from '~/src/redux/actions/activities'
+
 import '~/src/style.css'
 
 class MainNew extends React.Component {
@@ -97,15 +101,21 @@ class MainNew extends React.Component {
 }
 
 MainNew.propTypes = {
+    isAuthorized: PropTypes.bool.isRequired,
     onFetchAllTasks: PropTypes.func.isRequired,
     userActivities: PropTypes.array.isRequired,
+    markActivitySeen: PropTypes.func.isRequired,
   }
 
   const mapDispatchToProps = dispatch => ({
     onFetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
+    markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
   });
   
   const mapStateToProps = state => ({
+    currentUserID: state.userProfile.profile._id,
+    isAuthorized: state.userProfile.isAuthorized,
+    userActivities: state.userProfile.activities.data,
   });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainNew));

@@ -11,7 +11,7 @@ import {Icon} from 'react-fa'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-//import Notifications from '~/src/theme/components/Notifications'
+import Notifications from '~/src/theme/components/Notifications'
 
 class ThemeHeader extends React.Component {
 
@@ -56,7 +56,7 @@ class ThemeHeader extends React.Component {
 
     return (
       <div className="session-header">
-      {/*this.state.notificationsOpen &&<Notifications onClose={()=>this.handleNotificationsClose()}/>*/}
+      {this.state.notificationsOpen && <Notifications onClose={()=>this.handleNotificationsClose()} userActivities={this.props.userActivities}/>}
         <div className="container">
             <div className="row">
                 <div className="col-md-3">
@@ -84,7 +84,11 @@ class ThemeHeader extends React.Component {
                 </div>
                 <div className="col-md-3">
                     <ul className="navbar-top-links">
-                        <li className="mail"><a href="#"><Icon name="envelope" aria-hidden="true">{NumNotificationsString}</Icon></a></li>
+                        <li className="mail">
+                          <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
+                            <Icon name="envelope" aria-hidden="true"></Icon>
+                          </ActionLink>{NumNotificationsString}
+                        </li>
                         <li className="notification"><a href="#"><Icon name="bell" aria-hidden="true"></Icon></a></li>
                         <li className="register"><Link href="#" to='/connectionsView'><Icon name="user-plus" aria-hidden="true"></Icon></Link></li>
                         <li className="account">

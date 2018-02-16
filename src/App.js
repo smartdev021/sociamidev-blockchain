@@ -285,6 +285,8 @@ class App extends Component {
 
         console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
         console.dir(this.token_tasks_update);
+
+        this.props.fetchUserActivities(this.props.userProfile._id);
       }
       else {
         PubSub.unsubscribe(this.token_tasks_update);
@@ -349,17 +351,14 @@ class App extends Component {
       onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
       onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
       onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
-      isAuthorized={this.props.isAuthorized}
       pathname={this.props.history.location.pathname}
       isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
       openSignUpForm={this.props.openSignUpForm}
       searchQuery={this.props.searchQuery}
       onHandleQueryChange={this.props.setSearchQuery}
-      currentUserId={this.props.userProfile._id}
       userProfile={this.props.userProfile}
       isFetchInProgress={this.props.isFetchInProgress}
-      currentUserId={this.props.userProfile._id}
-      userActivities={this.props.userActivities}/>
+      currentUserId={this.props.userProfile._id}/>
     );
     let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
@@ -420,7 +419,6 @@ App.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
-  userActivities: PropTypes.array.isRequired,
   
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,

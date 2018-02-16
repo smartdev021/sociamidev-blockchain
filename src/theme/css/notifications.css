@@ -1,11 +1,13 @@
-#notificationTile{
+#notificationTile {
   position: absolute;
+  left: 50%;
+  right: 50%;
   z-index: 100;
   min-width: 580px;
   line-height: 1;
 }
 
-.notification, .notification-seen {
+.notification-item, .notification-item-seen {
 background: #eaeaea;
 }
 
@@ -13,13 +15,13 @@ background: #eaeaea;
 background: #f2f2f2;
 }
 
-.notification:focused, .notification-seen:focused, .notification:visited, .notification-seen:visited{
+.notification-item:focused, .notification-item-seen:focused, .notification-item:visited, .notification-item-seen:visited{
 padding: 5px;
 background: white;
 color: black;
 }
 
-.notification:hover, .notification-seen:hover {
+.notification-item:hover, .notification-item-seen:hover {
 background: white
 }
 
@@ -51,6 +53,6 @@ background-color: #f2f2f2;
   background-color: #eaeaea;
 }
 
-a:focus, a:hover {
+notificationSection a:focus, notificationSection a:hover {
   text-decoration: none;
 }
