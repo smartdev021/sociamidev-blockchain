@@ -13,6 +13,95 @@ import ActivityTypes from "~/src/common/ActivityTypes"
 
 const RenderDummyFriends = false;
 
+import ActionLink from '~/src/components/common/ActionLink'
+
+import TaskTypes from "~/src/common/TaskTypes"
+
+const DayFromNumber = (dayNum)=> {
+  const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  return DayNames[dayNum];
+}
+
+const MonthFromNumber = (monthNum)=> {
+  const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
+
+  return MonthNames[monthNum];
+}
+
+const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
+
+const RenderSingleTask = (task, i, props)=> {
+  if (task.type == TaskTypes.HANGOUT) {
+    const date = new Date(task.metaData.time);
+
+    const dateNow = new Date(Date.now());
+    const dateTomorrow = new Date(Date.now() + (60 * 60 * 24));
+
+    const Noon = new Date(date.getFullYear(), date.getMonth(),date.getDate(), 12, 0, 0);
+    const AmPm = (date.getTime() < Noon.getTime()) ? 'am' : 'pm';
+
+    const Hours = String(Hours12(date)) + AmPm;
+    let time = "";
+
+    if (dateNow.getDate() == date.getDate() && dateNow.getMonth() == date.getMonth() && dateNow.getFullYear() == date.getFullYear()) {
+      time = `${Hours} today`;
+    }
+    else if (dateTomorrow.getDate() == date.getDate() && dateTomorrow.getMonth() == date.getMonth() && dateTomorrow.getFullYear() == date.getFullYear()) {
+      time = `${Hours} tomorrow`;
+    }
+    else {
+      time = `${Hours} on ${DayFromNumber(date.getDay())} (${date.getDate()} ${MonthFromNumber(date.getMonth())})`; 
+    }
+    
+    return (
+    <div className="col-tokens col-sm-12" key={i}>
+      <div className="item-tokens tokens-red">
+      <h4><a href="#" className="link-red">{task.creator.firstName}</a> {` is looking to hangout to discuss ${task.metaData.subject.roadmap.name} at ${time}`}
+     </h4>
+     <p className="text-1">Alex is in your wider network</p>
+     <p className="text-2">Earn up to 10 tokens completing this task</p>
+     <div className="token-bottom">
+      {!task.isLocked && <ActionLink href="#" className="btn-bg-red" data-toggle="modal" data-target="#token" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+          <span className="font-small">Register for</span></ActionLink>}
+     </div>
+   </div>
+   </div>
+    );
+  }
+  else {
+    if (!task.creator) {
+      console.log("%cNo Creator For Task", "color:orange; background:grey;");
+      console.dir(task);
+    }
+    return (
+      <li className="task-scanner-task-expanded" key={i}>
+          <div className="hangout-text-expanded">
+            <div className="hangout-text-expanded-creator">
+              {task.name}
+            </div> 
+            <div className="hangout-text-expanded-creator-detailed">
+              {task.creator.firstName} is in your wider network
+            </div> 
+            <div className="hangout-text-expanded-task-reward">
+              Earn up to 10 tokens completing this task
+            </div> 
+          </div>
+          <div className="hangout-expanded-accept-button-container">
+            {!task.isLocked ? 
+              <ActionLink className="hangout-expanded-accept-button" href="#" 
+                onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+                Accept
+              </ActionLink>
+              :
+              <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
+            }
+          </div>
+        </li>
+    );
+  }
+};
+
 class TaskScanner extends React.Component {
 
   constructor(props) {
@@ -20,25 +109,28 @@ class TaskScanner extends React.Component {
   }
 
   renderTasks() {
-      if (!this.props.tasks || this.props.tasks.length == 0) {
+    let foundTasks = [];
+  
+    const scannerQuery = this.props.scannerQuery.toLowerCase();
+  
+    if (scannerQuery != "") {
+      foundTasks = this.props.tasks.filter(function(task) {
+        return (this.props.currentUserID == undefined || task.userID != this.props.currentUserID) 
+          && task.name && task.name.toLowerCase().startsWith(scannerQuery);
+      });
+    }
+    else {
+      foundTasks = this.props.tasks;
+    }
+  
+    let that = this;
+    
+      if (!foundTasks.length == 0) {
           return null;
       }
       else {
           return this.props.tasks.map(function(task, i) {
-              return (
-                <div className="col-tokens col-sm-12" key={i}>
-                  <div className="item-tokens tokens-red">
-                    <h4><a href="#" className="link-red">Alex</a> {`is looking to hangout to discuss ${task.name} on
-                        Monday, 15th Jan at 1pm in Central`}</h4>
-                    <p className="text-1">Alex is in your wider network</p>
-                    <p className="text-2">Earn up to 10 tokens completing this task</p>
-                    <div className="token-bottom">
-                        <a href="#" className="btn-bg-red" data-toggle="modal" data-target="#token">
-                            <span className="font-small">Register for</span></a>
-                    </div>
-                  </div>
-                </div>
-              )
+              return RenderSingleTask(task, i, this.props)
           });
       }
   }
