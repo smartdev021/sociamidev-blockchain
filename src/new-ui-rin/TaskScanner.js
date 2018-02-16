@@ -32,6 +32,7 @@ const MonthFromNumber = (monthNum)=> {
 const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
 
 const RenderSingleTask = (task, i, props)=> {
+  console.log("Render Single Task");
   if (task.type == TaskTypes.HANGOUT) {
     const date = new Date(task.metaData.time);
 
@@ -62,8 +63,11 @@ const RenderSingleTask = (task, i, props)=> {
      <p className="text-1">Alex is in your wider network</p>
      <p className="text-2">Earn up to 10 tokens completing this task</p>
      <div className="token-bottom">
-      {!task.isLocked && <ActionLink href="#" className="btn-bg-red" data-toggle="modal" data-target="#token" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
-          <span className="font-small">Register for</span></ActionLink>}
+      {!task.isLocked ? <ActionLink href="#" className="btn-bg-red" data-toggle="modal" 
+        data-target="#token" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+          <span className="font-small">Register for</span></ActionLink>
+          :
+          <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>}
      </div>
    </div>
    </div>
@@ -74,31 +78,23 @@ const RenderSingleTask = (task, i, props)=> {
       console.log("%cNo Creator For Task", "color:orange; background:grey;");
       console.dir(task);
     }
+
     return (
-      <li className="task-scanner-task-expanded" key={i}>
-          <div className="hangout-text-expanded">
-            <div className="hangout-text-expanded-creator">
-              {task.name}
-            </div> 
-            <div className="hangout-text-expanded-creator-detailed">
-              {task.creator.firstName} is in your wider network
-            </div> 
-            <div className="hangout-text-expanded-task-reward">
-              Earn up to 10 tokens completing this task
-            </div> 
-          </div>
-          <div className="hangout-expanded-accept-button-container">
-            {!task.isLocked ? 
-              <ActionLink className="hangout-expanded-accept-button" href="#" 
-                onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
-                Accept
-              </ActionLink>
-              :
-              <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>
-            }
-          </div>
-        </li>
-    );
+      <div className="col-tokens col-sm-12" key={i}>
+        <div className="item-tokens tokens-red">
+        <h4>{task.name}</h4>
+       <p className="text-1">{task.creator.firstName} is in your wider network</p>
+       <p className="text-2">Earn up to 10 tokens completing this task</p>
+       <div className="token-bottom">
+        {!task.isLocked ? <ActionLink href="#" className="btn-bg-red" data-toggle="modal" data-target="#token" 
+          onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
+            <span className="font-small">Register for</span></ActionLink>
+            :
+            <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>}
+       </div>
+     </div>
+     </div>
+      );
   }
 };
 
@@ -109,9 +105,15 @@ class TaskScanner extends React.Component {
   }
 
   renderTasks() {
+    console.log("%cRender Tasks:", "background:cyan;color:white;font-size:16px;");
     let foundTasks = [];
   
     const scannerQuery = this.props.scannerQuery.toLowerCase();
+
+    console.log("scannerQuery: " + scannerQuery);
+
+    console.log("this.props.tasks: ");
+    console.dir(this.props.tasks);
   
     if (scannerQuery != "") {
       foundTasks = this.props.tasks.filter(function(task) {
@@ -122,15 +124,18 @@ class TaskScanner extends React.Component {
     else {
       foundTasks = this.props.tasks;
     }
+
+    console.log("foundTasks: ");
+    console.dir(foundTasks);
   
     let that = this;
     
-      if (!foundTasks.length == 0) {
+      if (foundTasks.length == 0) {
           return null;
       }
       else {
-          return this.props.tasks.map(function(task, i) {
-              return RenderSingleTask(task, i, this.props)
+          return foundTasks.map(function(task, i) {
+              return RenderSingleTask(task, i, that.props)
           });
       }
   }

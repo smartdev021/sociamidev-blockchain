@@ -20,6 +20,8 @@ import HeaderTaskManager from './HeaderTaskManager';
 
 import AnswerQuestions from '~/src/theme/components/tasks/AnswerQuestions'
 
+import DetailsPopup from '~/src/components/common/DetailsPopup';
+
 import {
   fetchTasksInitiate,
   fetchTasksComplete,
@@ -511,6 +513,16 @@ class TaskManager extends React.Component {
             <AnswerQuestions currentTask={this.state.activeHangout}
             onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
         }
+        <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
+            onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} 
+              item={this.state.detailsPopupItem} item="accept_confirmation"
+                task={this.state.detailsPopupItem}/> 
+
+          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} 
+            onConfirm={(item)=>this.handleAcceptCancel(item)} 
+              onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} 
+                item={this.state.detailsPopupItem} item="cancel_confirmation" 
+                  task={this.state.detailsPopupItem}/>
           <HeaderTaskManager />
           <TasksMyComponent tasks={myTasks}
             handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
