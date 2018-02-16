@@ -11,6 +11,8 @@ import {Icon} from 'react-fa'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 const RenderDummyFriends = false;
 
 class HeaderTaskManager extends React.Component {
@@ -20,6 +22,7 @@ class HeaderTaskManager extends React.Component {
   }
 
   render() {
+      const that = this;
     return (<div className="head-deep">
     <div className="dropdown">
         <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,10 +30,15 @@ class HeaderTaskManager extends React.Component {
             <Icon name="chevron-down" aria-hidden="true"></Icon>
         </button>
         <ul className="dropdown-menu" aria-labelledby="dLabel">
-            <li><a href="#">All</a></li>
-            <li><a href="#">Confirmed</a></li>
-            <li><a href="#">My Deepdive</a></li>
-            <li><a href="#">Sent Requests</a></li>
+            {
+              this.props.filters.map((filter, i) => {
+                return (
+                  <li key={i} className={this.props.filterCurrent.type == filter.type ? "active" : ""}>
+                    <ActionLink href="#" onClick={()=>that.props.onFilterChange(filter)}>{filter.label}</ActionLink>
+                  </li>
+                )
+              })
+           }
         </ul>
     </div>
 </div>

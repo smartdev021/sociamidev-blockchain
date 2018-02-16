@@ -22,6 +22,8 @@ import AnswerQuestions from '~/src/theme/components/tasks/AnswerQuestions'
 
 import DetailsPopup from '~/src/components/common/DetailsPopup';
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 import {
   fetchTasksInitiate,
   fetchTasksComplete,
@@ -523,7 +525,7 @@ class TaskManager extends React.Component {
               onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} 
                 item={this.state.detailsPopupItem} item="cancel_confirmation" 
                   task={this.state.detailsPopupItem}/>
-          <HeaderTaskManager />
+          <HeaderTaskManager filters={Filters} onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)} filterCurrent={this.state.filterCurrent}/>
           <TasksMyComponent tasks={myTasks}
             handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
             onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
@@ -538,10 +540,7 @@ class TaskManager extends React.Component {
 
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
-
-            onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)}
-            filterCurrent={this.state.filterCurrent}
-            filters={Filters}/>
+            />
         </div>
         <div className="col-md-4 expand-tokens">
           <TaskScanner tasks={tasksScanner}

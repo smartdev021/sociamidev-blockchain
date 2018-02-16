@@ -32,7 +32,10 @@ const MonthFromNumber = (monthNum)=> {
 const Hours12 = (date) => { return (date.getHours() + 24) % 12 || 12; }
 
 const RenderSingleTask = (task, i, props)=> {
-  console.log("Render Single Task");
+  if (!task.type) {
+      return null;
+  }
+
   if (task.type == TaskTypes.HANGOUT) {
     const date = new Date(task.metaData.time);
 
@@ -74,11 +77,6 @@ const RenderSingleTask = (task, i, props)=> {
     );
   }
   else {
-    if (!task.creator) {
-      console.log("%cNo Creator For Task", "color:orange; background:grey;");
-      console.dir(task);
-    }
-
     return (
       <div className="col-tokens col-sm-12" key={i}>
         <div className="item-tokens tokens-red">
@@ -105,15 +103,9 @@ class TaskScanner extends React.Component {
   }
 
   renderTasks() {
-    console.log("%cRender Tasks:", "background:cyan;color:white;font-size:16px;");
     let foundTasks = [];
   
     const scannerQuery = this.props.scannerQuery.toLowerCase();
-
-    console.log("scannerQuery: " + scannerQuery);
-
-    console.log("this.props.tasks: ");
-    console.dir(this.props.tasks);
   
     if (scannerQuery != "") {
       foundTasks = this.props.tasks.filter(function(task) {
@@ -124,9 +116,6 @@ class TaskScanner extends React.Component {
     else {
       foundTasks = this.props.tasks;
     }
-
-    console.log("foundTasks: ");
-    console.dir(foundTasks);
   
     let that = this;
     
