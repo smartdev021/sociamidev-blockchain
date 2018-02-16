@@ -18,6 +18,8 @@ import TaskScanner from './TaskScanner';
 import TasksMyComponent from './TasksMy';
 import HeaderTaskManager from './HeaderTaskManager';
 
+import AnswerQuestions from '~/src/theme/components/tasks/AnswerQuestions'
+
 import {
   fetchTasksInitiate,
   fetchTasksComplete,
@@ -505,6 +507,10 @@ class TaskManager extends React.Component {
     return (
       <div className="row">
         <div className="col-md-8 expand-deep">
+        {this.state.isAnswerQuestionsOpen &&
+            <AnswerQuestions currentTask={this.state.activeHangout}
+            onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
+        }
           <HeaderTaskManager />
           <TasksMyComponent tasks={myTasks}
             handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
