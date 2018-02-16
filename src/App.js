@@ -343,23 +343,6 @@ class App extends Component {
                            pathname={this.props.history.location.pathname}/>
       );
     }
-
-    return (
-      <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-      onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-      onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-      onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-      onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-      onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
-      pathname={this.props.history.location.pathname}
-      isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
-      openSignUpForm={this.props.openSignUpForm}
-      searchQuery={this.props.searchQuery}
-      onHandleQueryChange={this.props.setSearchQuery}
-      userProfile={this.props.userProfile}
-      isFetchInProgress={this.props.isFetchInProgress}
-      currentUserId={this.props.userProfile._id}/>
-    );
     let RedirectTo = this.getRedirectLocation();    
     let ChatAppLink = '';
     var username = "";
@@ -385,6 +368,26 @@ class App extends Component {
       }
       socketConn.emit('UserLoggedIn', userData);      
     }
+
+    return (
+      <div>
+      <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+      onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+      onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+      onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+      onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
+      onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
+      pathname={this.props.history.location.pathname}
+      isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
+      openSignUpForm={this.props.openSignUpForm}
+      searchQuery={this.props.searchQuery}
+      onHandleQueryChange={this.props.setSearchQuery}
+      userProfile={this.props.userProfile}
+      isFetchInProgress={this.props.isFetchInProgress}
+      currentUserId={this.props.userProfile._id}/>
+      {ChatAppLink}
+      </div>
+    );
 
     return (
       <div className="outer-container">
