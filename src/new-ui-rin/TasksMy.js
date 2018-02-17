@@ -9,6 +9,8 @@ import {Link} from 'react-router-dom'
 
 import {Icon} from 'react-fa'
 
+import Countdown from 'react-countdown-now';
+
 import ActionLink from '~/src/components/common/ActionLink'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
@@ -108,6 +110,10 @@ const DayFromNumber = (dayNum)=> {
     const FirstAcceptedParticipant = FirstAcceptedParticipants(hangout, props);
 
     const TimeHasCome = props.timeNow >= hangout.metaData.time;
+
+    const ButtonStartText = !TimeHasCome ? <span><span>Start </span><Countdown date={props.timeNow + hangout.metaData.time}/></span> : <span>Start</span>;
+
+    const StartDisabled = !TimeHasCome;
   
     switch (hangout.status) {
       case "complete": {
@@ -151,9 +157,9 @@ const DayFromNumber = (dayNum)=> {
                       <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", hangout)} className="btn-base btn-red">Cancel</ActionLink>
                     </li>
                     <li>
-                      <ActionLink href="#" disabled={!TimeHasCome} 
-                        onClick={()=>props.onHangoutActionPerform("start", hangout)} className="btn-base btn-red">
-                        Start
+                      <ActionLink href="#" disabled={StartDisabled} 
+                        onClick={()=>props.onHangoutActionPerform("start", hangout)} className={StartDisabled ? "btn-base btn-red disabled" : "btn-base btn-red "}>
+                        {ButtonStartText}
                       </ActionLink>
                     </li>
                   </ul>
