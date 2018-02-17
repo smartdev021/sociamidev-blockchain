@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/DetailsPopup.css"
 
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
+
 import StringUtils from "~/src/utils/StringUtils"
 
 import TaskTypes from "~/src/common/TaskTypes"
@@ -42,7 +44,7 @@ class DetailsPopup extends React.Component {
       let date = this.props.item.date;
 
       return (
-        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title}>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title} parentSelector={getPopupParentElement}>
           <div className="container-fluid default-popup-details">
             <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
 
@@ -81,7 +83,7 @@ class DetailsPopup extends React.Component {
       let description = this.props.item.description ? StringUtils.trim(this.props.item.description, 100) : '';
 
       return (
-        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title}>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title} parentSelector={getPopupParentElement}>
           <div className="container-fluid default-popup-details">
             <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
             <div className="row">
@@ -119,7 +121,7 @@ class DetailsPopup extends React.Component {
         <Modal 
         isOpen={this.props.modalIsOpen}
         onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title}>
+        contentLabel={title} parentSelector={getPopupParentElement}>
         <div className="container-fluid default-popup-details">
         <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
         <div className="row">
@@ -153,7 +155,7 @@ class DetailsPopup extends React.Component {
         <Modal 
         isOpen={this.props.modalIsOpen}
         onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title}>
+        contentLabel={title} parentSelector={getPopupParentElement}>
         <div className="container-fluid default-popup-details">
         <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
         <div className="row">
@@ -187,7 +189,7 @@ class DetailsPopup extends React.Component {
         <Modal 
         isOpen={this.props.modalIsOpen}
         onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title}>
+        contentLabel={title} parentSelector={getPopupParentElement}>
         <div className="container-fluid default-popup-details">
         <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
         <div className="row">

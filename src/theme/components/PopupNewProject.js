@@ -11,6 +11,8 @@ import ConfigMain from '~/configs/main'
 import PopupConfirmWithdraw from '~/src/theme/components/PopupConfirmation';
 import NewProjectForm from '~/src/theme/components/PopupNewProjectForm';
 
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
+
 import TaskTypes from "~/src/common/TaskTypes"
 
 const arrayDifference = function(arrayFirst, arraySecond) {
@@ -325,7 +327,7 @@ class PopupNewProject extends React.Component {
 
     renderModal() {
       return (
-        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.handleClose()} contentLabel={">Add a new Project"}>
+        <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.handleClose()} contentLabel={">Add a new Project"} parentSelector={getPopupParentElement}>
             <NewProjectForm milestoneTemp={this.state.milestoneTemp}
               isTaskSaveInProgress = {this.props.isTaskSaveInProgress}
               isTasksUpdateInProgress = {this.props.isTasksUpdateInProgress}

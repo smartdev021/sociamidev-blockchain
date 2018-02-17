@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/PopupLatestTask.css"
 
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
+
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
 
 class DetailsPopupLatestTask extends React.Component {
@@ -48,7 +50,7 @@ class DetailsPopupLatestTask extends React.Component {
       return (
         <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onCloseModal()} contentLabel={title}>
           <div className="container-fluid popup-latest-task">
-            <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()}></a>
+            <a href='#' className="glyphicon glyphicon-remove" onClick={() => this.props.onCloseModal()} parentSelector={getPopupParentElement}></a>
             <div className="row">
               <div className="col-lg-12">
                 <h2>{title}</h2>

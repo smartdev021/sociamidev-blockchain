@@ -48,14 +48,14 @@ class LandingPage extends React.Component {
       <div className="wrapper">
         {this.renderSignUpForm()}
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <div className="session-header">
+        <div className="session-header-landing">
           <div className="container">
             <div className="row">
               <div className="col-xs-6">
                 <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
               </div>
               <div className="col-xs-6 pull-right">
-                <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base btn-yellow btn-login">
+                <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base-landing btn-yellow-landing btn-login-landing">
                   Sign in</ActionLink>
               </div>
             </div>
@@ -69,9 +69,9 @@ class LandingPage extends React.Component {
                       prepare and solve challenges to unlock the next-generation Human Renaissance.
                   </p>
                   <p>
-                    <a href="#" className="btn-base btn-red only-line" data-toggle="modal" data-target="#token">
+                    <a href="#" className="btn-base-landing btn-red-landing only-line" data-toggle="modal" data-target="#token">
                       <span className="font-small">Register for</span><br/>Token Events Updates</a>
-                      <a href="#" className="btn-base btn-red" data-toggle="modal" data-target="#alpha">
+                      <a href="#" className="btn-base-landing btn-red-landing" data-toggle="modal" data-target="#alpha">
                         <span className="font-small">Register for</span> alpha</a>
                       </p>
                       <div className="col-md-6 col-md-offset-3 video">

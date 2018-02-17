@@ -5,15 +5,9 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 import {ListGroupItem, ListGroup} from 'react-bootstrap';
-
-import {
-  markActivitySeen,
-} from '~/src/redux/actions/activities'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
 
@@ -93,7 +87,7 @@ class Notifications extends React.Component {
         {
           Notifications.map(function(notification, i) {
           return (
-            <ListGroupItem key={i} className={notification.isSeen ? "notification-seen" : "notification"}>
+            <ListGroupItem key={i} className={notification.isSeen ? "notification-item-seen" : "notification-item"}>
               <Link to = "/taskManagement" onClick={()=>that.handleNotificationClick(notification)} >
                 <div className="notificationRow">
                   <div className="notifyIcon">
@@ -129,15 +123,6 @@ Notifications.PropTypes = {
 }
 
 
-const mapDispatchToProps = dispatch => ({
-  markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
-});
-
-const mapStateToProps = state => ({
-  currentUserID: state.userProfile.profile._id,
-  isAuthorized: state.userProfile.isAuthorized,
-  userActivities: state.userProfile.activities.data,
-});
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(require('react-click-outside')(Notifications));
+export default (require('react-click-outside')(Notifications));
