@@ -36,6 +36,8 @@ import TaskTypes from "~/src/common/TaskTypes"
 
 import UserInteractions from "~/src/common/UserInteractions"
 
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
+
 class SkillBreakdown extends React.Component {
 
   constructor(props) {
@@ -214,7 +216,7 @@ class SkillBreakdown extends React.Component {
   }
 
   handleClose() {
-    if (this.props.userProfile && this.props.userProfile._id) {
+    if (this.props.userProfile && this.props.userProfile._id && this.state.skillInfo) {
       this.props.userInteractionPush(this.props.userProfile._id, 
         UserInteractions.Types.PAGE_CLOSE, 
         UserInteractions.SubTypes.SKILL_VIEW, 
@@ -325,7 +327,7 @@ class SkillBreakdown extends React.Component {
           </div>
           <div className="row">
             <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
-              <a href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()}></a>
+              <a href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()} parentSelector={getPopupParentElement}></a>
               <div className="container-fluid popup-new-project">
                 <span>
                   <div className="row">

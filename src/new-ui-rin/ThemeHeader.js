@@ -55,7 +55,7 @@ class ThemeHeader extends React.Component {
     const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
 
     return (
-      <div className="session-header">
+      <div className="session-header" id="popup-root">
       {this.state.notificationsOpen && <Notifications onClose={()=>this.handleNotificationsClose()} userActivities={this.props.userActivities}/>}
         <div className="container">
             <div className="row">

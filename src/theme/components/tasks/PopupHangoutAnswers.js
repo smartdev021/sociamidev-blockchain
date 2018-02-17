@@ -5,6 +5,8 @@ import "~/src/css/PopupHangoutAnswers.css"
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
+
 class PopupHangoutAnswers extends React.Component {
     constructor(props) {
       super(props);
@@ -97,7 +99,7 @@ class PopupHangoutAnswers extends React.Component {
           <Modal 
           isOpen={true}
           onRequestClose={() => this.props.onCloseModal()}
-          contentLabel={title}>
+          contentLabel={title} parentSelector={getPopupParentElement}>
           <div className="container-fluid popup-hangout-qustions">
           <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
           <div className="row">
@@ -115,8 +117,8 @@ class PopupHangoutAnswers extends React.Component {
         <Modal 
         isOpen={true}
         onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title}>
-        <div className="container-fluid popup-hangout-qustions">
+        contentLabel={title} parentSelector={getPopupParentElement}>
+        <div className="container-fluid popup-hangout-qustions" parentSelector={getPopupParentElement}>
         <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
         <div className="row">
               <div className="col-lg-12">

@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import "~/src/css/DetailsPopup.css"
 
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
+
 class PopupAcceptProgressionTree extends React.Component {
     constructor(props) {
       super(props);
@@ -35,7 +37,7 @@ class PopupAcceptProgressionTree extends React.Component {
     render() {
         return (
         <Modal isOpen={this.props.modalIsOpen} onRequestClose={() => this.props.onConfirmationPopupClose(false, this.props.treeName)} 
-          contentLabel={this.props.treeId}>
+          contentLabel={this.props.treeId} parentSelector={getPopupParentElement}>
            <div className="container-fluid default-popup-details">
              <div className="row">
                <div className="col-lg-12">
