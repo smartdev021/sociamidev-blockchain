@@ -263,8 +263,8 @@ class SidebarLeft extends React.Component {
                 <div className="col-xs-9 none-padding-right">
                     <div className="text-job">
                         <span className="text-name">{friend.firstName}</span>
-                        <span className="text-desc">connected with 15 people at Yale </span>
-                        <span className="text-friends">35 mutal friends</span>
+                        {/*<span className="text-desc">connected with 15 people at Yale </span>*/}
+                        {/*<span className="text-friends">35 mutal friends</span>*/}
                         {(friend.activities && friend.activities.length > 0) 
                               ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
                               : friend.userText
