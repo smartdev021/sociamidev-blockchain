@@ -129,7 +129,7 @@ class SidebarLeft extends React.Component {
     switch(activity.activity.type) {
       case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
       {
-        result = <span className="text-friends">Has started: 
+        result = <span className="text-friends">{"Has started: "}
         <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
           onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
           {activity.activity.metadata.treeName}
@@ -139,7 +139,7 @@ class SidebarLeft extends React.Component {
       }
       case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
       {
-        result = <span className="text-friends">Has created: 
+        result = <span className="text-friends">{"Has created: "}
         <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
           onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
           {activity.activity.metadata.projectName}
@@ -149,7 +149,7 @@ class SidebarLeft extends React.Component {
       }
       case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
       {
-        result = <span className="text-friends">Has added: 
+        result = <span className="text-friends">{"Has added: "} 
         <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
         : activity.activity.metadata.friend._id}`}
           onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
