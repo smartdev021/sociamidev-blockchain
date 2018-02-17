@@ -124,12 +124,12 @@ class SidebarLeft extends React.Component {
   }
 
   renderActivity(activity) {
-    let result = <span className="friend-news-feed-text"></span>;
+    let result = <span className="text-friends"></span>;
 
     switch(activity.activity.type) {
       case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
       {
-        result = <span className="friend-news-feed-text">Has started: 
+        result = <span className="text-friends">Has started: 
         <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
           onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
           {activity.activity.metadata.treeName}
@@ -139,7 +139,7 @@ class SidebarLeft extends React.Component {
       }
       case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
       {
-        result = <span className="friend-news-feed-text">Has created: 
+        result = <span className="text-friends">Has created: 
         <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
           onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
           {activity.activity.metadata.projectName}
@@ -149,7 +149,7 @@ class SidebarLeft extends React.Component {
       }
       case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
       {
-        result = <span className="friend-news-feed-text">Has added: 
+        result = <span className="text-friends">Has added: 
         <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
         : activity.activity.metadata.friend._id}`}
           onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
@@ -192,6 +192,48 @@ class SidebarLeft extends React.Component {
     return dummyFriends;
   }
 
+  renderActivity(activity) {
+    let result = <span className="text-friends"></span>;
+
+    switch(activity.activity.type) {
+      case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
+      {
+        result = <span className="text-friends">Has started: 
+        <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          {activity.activity.metadata.treeName}
+        </Link></span>;
+        
+        break;
+      }
+      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
+      {
+        result = <span className="text-friends">Has created: 
+        <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          {activity.activity.metadata.projectName}
+        </Link></span>;
+
+        break;
+      }
+      case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
+      {
+        result = <span className="text-friends">Has added: 
+        <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
+        : activity.activity.metadata.friend._id}`}
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          {activity.activity.metadata.friend.firstName}
+        </Link></span>;
+
+        break;
+      }
+      default:
+        break;
+    }
+
+    return result;
+  }
+
   renderFriends() {
     const ListOfFriends = this.attachActivitiesToFriends(this.getListOfFriends());
     
@@ -222,6 +264,11 @@ class SidebarLeft extends React.Component {
                     <div className="text-job">
                         <span className="text-name">{friend.firstName}</span>
                         <span className="text-desc">connected with 15 people at Yale </span>
+                        <span className="text-friends">35 mutal friends</span>
+                        {(friend.activities && friend.activities.length > 0) 
+                              ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
+                              : friend.userText
+                            }
                     </div>
                 </div>
             </div>
