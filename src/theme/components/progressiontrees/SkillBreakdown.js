@@ -38,6 +38,8 @@ import UserInteractions from "~/src/common/UserInteractions"
 
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
+import Countdown from 'react-countdown-now';
+
 class SkillBreakdown extends React.Component {
 
   constructor(props) {
@@ -49,9 +51,16 @@ class SkillBreakdown extends React.Component {
      TrendScannerComponentVisible: false,
      isIlluminateFormVisible: false,
      IsDisplayForm:'block',
-     redirectToTaskManagement: false
+     redirectToTaskManagement: false,
+     timeNow: Date.now(),
     }
     this.modalDefaultStyles = {};
+
+    this.timeNowUpdateInterval = undefined;
+  }
+
+  updateTimeNow() {
+    this.setState({timeNow: Date.now()});
   }
 
   componentWillMount() {
@@ -73,8 +82,13 @@ class SkillBreakdown extends React.Component {
       Modal.defaultStyles.content["right"] = '0';
   }
 
+  componentDidMount() {
+    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 60000);
+  }
+
   componentWillUnmount() {
       console.log("DetailsPopup::componentWillUnmount");
+      clearInterval(this.timeNowUpdateInterval);
       Modal.defaultStyles = this.modalDefaultStyles;
   }
 
@@ -233,7 +247,9 @@ class SkillBreakdown extends React.Component {
   handleToggle() {
     this.setState({IsDisplayForm:'none'});
   }
-  isDeepdiveAvailable() {
+  lastHangoutDateJoined() {
+    let LatestHangoutDateJoined = undefined;
+
     if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
       const CurrentTree = this.props.tree;
       let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter((hangout) => {
@@ -245,16 +261,11 @@ class SkillBreakdown extends React.Component {
           return a.dateJoined - b.dateJoined;
         });
 
-        const LatestHangoutDateJoined = hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined;
-        const DateNow = Date.now();
-
-        if (DateNow - LatestHangoutDateJoined < CurrentTree.deepDiveIntervalLimit) {
-          return false;
-        }
+        LatestHangoutDateJoined = hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined;
       }
     }
 
-    return true;
+    return LatestHangoutDateJoined;
   }
 
   onCloseModal() {
@@ -270,7 +281,15 @@ class SkillBreakdown extends React.Component {
     const that = this;
     const { redirectToTaskManagement } = this.state;
 
-    const IsDeepdiveAbailable = this.isDeepdiveAvailable();
+    const LatestHangoutDateJoined = this.lastHangoutDateJoined();
+
+    const IsDeepdiveAbailable =  this.state.timeNow - LatestHangoutDateJoined >= this.props.tree.deepDiveIntervalLimit;
+
+    console.log(`%cthis.props.tree.deepDiveIntervalLimit: ${this.props.tree.deepDiveIntervalLimit}`, "color:red;background:green");
+
+    const DeepDiveButtonText = !IsDeepdiveAbailable ? 
+      <span><span>DeepDive </span><Countdown daysInHours={false} date={this.state.timeNow + LatestHangoutDateJoined + this.props.tree.deepDiveIntervalLimit} /></span> 
+      : <span>DeepDive</span>;
 
     const DeepdiveButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse deep-dive-button" 
       : "btn-md btn-outline-inverse deep-dive-button-disabled";
@@ -328,7 +347,7 @@ class SkillBreakdown extends React.Component {
             <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
-                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {}}>DeepDive</button>
+                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {}}>{DeepDiveButtonText}</button>
           </div>
           <div className="row">
             <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
