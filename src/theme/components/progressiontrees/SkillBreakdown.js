@@ -83,7 +83,7 @@ class SkillBreakdown extends React.Component {
   }
 
   componentDidMount() {
-    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 60000);
+    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 1000);
   }
 
   componentWillUnmount() {
@@ -261,6 +261,9 @@ class SkillBreakdown extends React.Component {
           return a.dateJoined - b.dateJoined;
         });
 
+        console.log("%changoutsForCurrentTree: ", "background:purpe;color:white;font-size:15px");
+        console.dir(hangoutsForCurrentTree);
+
         LatestHangoutDateJoined = hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined;
       }
     }
@@ -283,12 +286,10 @@ class SkillBreakdown extends React.Component {
 
     const LatestHangoutDateJoined = this.lastHangoutDateJoined();
 
-    const IsDeepdiveAbailable =  this.state.timeNow - LatestHangoutDateJoined >= this.props.tree.deepDiveIntervalLimit;
-
-    console.log(`%cthis.props.tree.deepDiveIntervalLimit: ${this.props.tree.deepDiveIntervalLimit}`, "color:red;background:green");
+    const IsDeepdiveAbailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= this.props.tree.deepDiveIntervalLimit;
 
     const DeepDiveButtonText = !IsDeepdiveAbailable ? 
-      <span><span>DeepDive </span><Countdown daysInHours={false} date={this.state.timeNow + LatestHangoutDateJoined + this.props.tree.deepDiveIntervalLimit} /></span> 
+      <span><span>DeepDive </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + this.props.tree.deepDiveIntervalLimit} /></span> 
       : <span>DeepDive</span>;
 
     const DeepdiveButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse deep-dive-button" 
@@ -347,7 +348,9 @@ class SkillBreakdown extends React.Component {
             <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
-                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {}}>{DeepDiveButtonText}</button>
+                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
+                    console.log(`this.state.timeNow: ${this.state.timeNow} LatestHangoutDateJoined: ${LatestHangoutDateJoined} this.props.tree.deepDiveIntervalLimit: ${this.props.tree.deepDiveIntervalLimit} his.state.timeNow - LatestHangoutDateJoined: ${this.state.timeNow - LatestHangoutDateJoined}`);
+                  }}>{DeepDiveButtonText}</button>
           </div>
           <div className="row">
             <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>

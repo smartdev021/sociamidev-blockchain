@@ -201,7 +201,7 @@ class TaskManager extends React.Component {
   }
 
   componentDidMount() {
-    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 60000);
+    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 1000);
   }
 
   componentWillUnmount() {

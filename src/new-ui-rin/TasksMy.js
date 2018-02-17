@@ -111,7 +111,7 @@ const DayFromNumber = (dayNum)=> {
 
     const TimeHasCome = props.timeNow >= hangout.metaData.time;
 
-    const ButtonStartText = !TimeHasCome ? <span><span>Start </span><Countdown date={props.timeNow + hangout.metaData.time}/></span> : <span>Start</span>;
+    const ButtonStartText = !TimeHasCome ? <span><span>Start </span><Countdown date={hangout.metaData.time}/></span> : <span>Start</span>;
 
     const StartDisabled = !TimeHasCome;
   
@@ -218,7 +218,7 @@ const DayFromNumber = (dayNum)=> {
               <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", hangout)} className="btn-base btn-red">Cancel</ActionLink>
             </li>
             <li>
-              <ActionLink href="#" disabled={!TimeHasCome} 
+              <ActionLink href="#"
                 onClick={()=>props.onHangoutActionPerform("answer_questions", hangout)} className="btn-base btn-red">
                 Answer Questions
               </ActionLink>
