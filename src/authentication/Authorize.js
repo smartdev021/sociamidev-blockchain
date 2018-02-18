@@ -64,6 +64,10 @@ class Authorize extends React.Component {
         }
     }
 
+    //force redirect to /progressionTrees
+
+    RedirectTo = <Redirect to="/progressionTrees" push />;
+
     return RedirectTo;
   }
 
