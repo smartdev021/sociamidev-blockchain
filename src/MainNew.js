@@ -4,8 +4,7 @@
 
 import React, { Component } from 'react';
 
-import {Route, Switch} from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -28,6 +27,7 @@ import ProjectBrowser from '~/src/theme/ProjectBrowser';
 import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser'
 import ProgressionTreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew"
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
+import SkillBrowser from "~/src/theme/components/progressiontrees/SkillBrowser";
 import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
@@ -72,6 +72,7 @@ class MainNew extends React.Component {
             <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>} />)}/>
             <Route exact path='/progressionTrees' render={routeProps => <ProgressionTrees {...routeProps}{...this.props}/>} />
             <Route path='/progressionTreeBrowser' render={routeProps => <ProgressionTreeBrowser {...routeProps}{...this.props}/>}/>
+            <Route path='/skillBrowser' render={routeProps => <SkillBrowser {...routeProps}{...this.props}/>}/>
             <Route path='/taskManagement' render={routeProps => <TaskManager {...routeProps}{...this.props}/>}/>
             <Route path='/taskBrowser' render={routeProps => <TaskBrowser {...routeProps}{...this.props}/>}/>
             <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>

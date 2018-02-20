@@ -7,6 +7,8 @@ import Axios from 'axios'
 
 import {Icon} from 'react-fa'
 
+import {Link} from 'react-router-dom'
+
 import ConfigMain from '~/configs/main'
 
 import ActionLink from '~/src/components/common/ActionLink';
@@ -111,13 +113,7 @@ class ProgressiontreeBrowser extends React.Component {
     console.log("%cBrowsing Single Tree", "background: purple; color: white;");
     console.dir(this.state.tree);
 
-    if (!this.state.selectedSkill) {
-      return this.renderTree();
-    }
-    else {
-      return (<SkillBreakdown onCloseSkillBreakdown={()=>this.handleCloseSkillBreakdown()} 
-                skillName={this.state.selectedSkill} userProfile={this.props.userProfile} tree={this.state.tree} saveTask={this.props.saveTask} />);
-    }
+    return this.renderTree();
   }
 
   handleCloseSkillBreakdown() {
@@ -146,7 +142,7 @@ class ProgressiontreeBrowser extends React.Component {
     <div className="list-skill-wrap">
       {
         skillParsed.map(function(skill, i) {
-          return (<ActionLink key={i} onClick={()=> {that.handleOpenSkillBreakdown(skill); that.props.progressionTreeFS()}}>{skill}<br/></ActionLink>);
+          return (<Link key={i} to={{pathname:'/skillBrowser', query: {name: skill, tree: that.state.tree}}}>{skill}</Link>);
         })
       }
     </div>);
