@@ -338,7 +338,7 @@ class SkillBrowser extends React.Component {
         <div className="skillDescForm" style={{display:this.state.IsDisplayForm}}>
           <div className="row">
             <div className="content-2-columns-left-title text-align-center">
-              {this.props.skillName ? <span>{this.props.skillName}</span> : <span>Skill Breakdown</span> }
+              {this.state.skillInfo.skill ? <span>{this.state.skillInfo.skill}</span> : <span>Skill Breakdown</span> }
               <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.handleClose()}}>
                 <span className="glyphicon glyphicon-arrow-left"></span>
               </ActionLink>

@@ -245,16 +245,19 @@ class App extends Component {
     }
 
     if (prevProps.isFetchInProgress != this.props.isFetchInProgress) {
-      if (!this.props.isFetchInProgress) {
+      /*if (!this.props.isFetchInProgress) {
         //TODO: Fix this
-        if (this.props.history.location.pathname != "/searchResults" 
+        if (this.props.history.location.pathname != "/searchResults"
+        && this.props.history.location.pathname != "/progressionTrees"
+        && this.props.history.location.pathname != "/progressionTreeBrowser"
+        && this.props.history.location.pathname != "/progressionTreeBrowser/" 
           && this.props.history.location.pathname != "/skillBrowser" 
             && this.props.history.location.pathname != "/skillBrowser/") {
           console.log("this.props.history.location.pathname: " + this.props.history.location.pathname);
           console.log("opening search results");
           this.props.openSearchResults();
         }
-      }
+      }*/
     }
 
     if (prevProps.userProfile != this.props.userProfile) {
