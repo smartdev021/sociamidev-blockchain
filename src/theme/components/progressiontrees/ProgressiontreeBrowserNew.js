@@ -5,6 +5,8 @@ import React from 'react';
 
 import Axios from 'axios'
 
+import {Icon} from 'react-fa'
+
 import ConfigMain from '~/configs/main'
 
 import ActionLink from '~/src/components/common/ActionLink';
@@ -34,29 +36,38 @@ class ProgressiontreeBrowser extends React.Component {
     this.state = {
      selectedSkill: undefined,
      tree: undefined,
+     isLoading: true,
     }
   }
 
   treeFetchSuccess(response) {
-    this.setState({tree: response.data});
+    this.setState({isLoading: false, tree: response.data});
   }
 
   treeFetchFailed(error) {
     console.log("Tree fetch error: " + error);
+    this.setState({isLoading: false});
   }
 
   componentDidMount() {
     const URLParams = new URLSearchParams(this.props.location.search);
+
+    console.log("this.props.location");
+    console.dir(this.props.location);
 
     const treeId = URLParams.get("id");
 
     console.log("URLParams");
     console.dir(URLParams);
 
-    if (1 == 1) {
-      Axios.get(`${ConfigMain.getBackendURL()}/roadmapGet?id=${'5a896f285eff6943fe76cfcd'}`)
+    if (treeId) {
+      this.setState({isLoading: true});
+      Axios.get(`${ConfigMain.getBackendURL()}/roadmapGet?id=${treeId}`)
       .then((response)=>this.treeFetchSuccess(response))
       .catch((error)=>this.treeFetchFailed(error));
+    }
+    else {
+      this.setState({isLoading: false});
     }
   }
 
@@ -128,10 +139,28 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   renderTree() {
-    if (!this.state.tree) {
-      return (<div className="container-fluid progress-browser-wrap">
+    if (this.state.isLoading) {
+      return (
+      <div className="container-fluid progress-browser-wrap">
+        <div className="row">
+          <div className="content-2-columns-left-title">
+            Loading...<Icon spin name="spinner" />
+          </div>
+        </div>
       </div>);
     }
+    
+    if (!this.state.tree) {
+      return (
+      <div className="container-fluid progress-browser-wrap">
+        <div className="row">
+          <div className="content-2-columns-left-title">
+            Tree Not Found
+          </div>
+        </div>
+      </div>);
+    }
+
     return (
       <div className="container-fluid progress-browser-wrap">
         <div className="row">

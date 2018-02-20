@@ -22,7 +22,7 @@ const ProgressiontreesMyProgress = (props) => {
 						props.trees.map(function(roadmap, i) {
 						return (
 							<div key={i} className="trees-wrap" >
-								<Link className="progression-tree-my-text" to={`/progressionTreeBrowser/id=${roadmap._id}`}>
+								<Link className="progression-tree-my-text" to={`/progressionTreeBrowser/?id=${roadmap._id}`}>
 									{roadmap.name}
 								</Link>
 								<span className="progression-tree-star-rating">
