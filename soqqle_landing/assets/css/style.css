@@ -170,6 +170,10 @@ body{
     padding-top: 20px;
 }
 
+#intro-video {
+    border: none;
+}
+
 
 .box-problem{
     padding: 50px 0px;
