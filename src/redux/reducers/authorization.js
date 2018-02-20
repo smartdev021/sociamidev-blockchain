@@ -72,27 +72,28 @@ export function userProfile(state = userProfileInitialState, action) {
     case FETCH_USER_PROFILE_ACTIVITIES_COMPLETE: {
       return {...state, activities: { data: action.activities, isLoading: false }};
     }
-    case PROGRESSION_TREE_START_INITIATE:
-      return state;
+    case PROGRESSION_TREE_START_INITIATE: {
+      return {...state, isLoading: true};
+    }
     case PROGRESSION_TREE_START_COMPLETE:
-      return {...state, profile: Object.assign({}, state.profile, {progressionTrees: state.profile.progressionTrees.concat(action.tree)})};
+      return {...state, profile: Object.assign({}, state.profile, {progressionTrees: state.profile.progressionTrees.concat(action.tree)}), isLoading: false};
     case PROGRESSION_TREE_STOP_INITIATE:
-      return state;
+      return {...state, isLoading: true};
     case PROGRESSION_TREE_STOP_COMPLETE:
       const foundTreeIndex = state.profile.progressionTrees.findIndex(function(tree) {
         return tree._id == action.tree._id;
       })
 
       if (foundTreeIndex == -1) {
-        return state;
+        return {...state, isLoading: false};
       }
       else {
         let progressionTreesCopy = state.profile.progressionTrees.slice();
         progressionTreesCopy.splice(foundTreeIndex, 1);
 
-        return {...state, profile: Object.assign({}, state.profile, {progressionTrees: progressionTreesCopy})};
+        return {...state, profile: Object.assign({}, state.profile, {progressionTrees: progressionTreesCopy}), isLoading: false};
       }
-      return {...state, profile: Object.assign({}, state.profile, {progressionTrees: state.profile.progressionTrees.concat(action.tree)})};
+      return {...state, profile: Object.assign({}, state.profile, {progressionTrees: state.profile.progressionTrees.concat(action.tree)}), isLoading: false};
     default:
       return state;
     }

@@ -7,6 +7,8 @@ import StarRatings from 'react-star-ratings';
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import {Link} from 'react-router-dom'
+
 const ProgressiontreesScanner = (props) => {
 
   let foundRoadmaps = [];
@@ -29,9 +31,9 @@ const ProgressiontreesScanner = (props) => {
         foundRoadmaps.map(function(roadmap, i) {
           return (
             <li key={i} className="list-group-item">
-              <ActionLink className="tree-scanner-tree-name" href="#" onClick={()=>openTreeAcceptConfirmationPopup(roadmap._id, roadmap.name)}>
+              <Link className="progression-tree-my-text" to={`/progressionTreeBrowser/?id=${roadmap._id}`}>
                 {roadmap.name}
-              </ActionLink>
+              </Link>
 
               <span className="tree-scaner-star-rating">
                 <StarRatings rating={3.5} 

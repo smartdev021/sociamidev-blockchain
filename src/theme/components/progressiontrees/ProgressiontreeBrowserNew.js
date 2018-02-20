@@ -26,6 +26,10 @@ import {
   userInteractionPush,
 } from '~/src/redux/actions/userInteractions'
 
+import {
+  startProgressionTree,
+} from '~/src/redux/actions/authorization'
+
 import "~/src/theme/css/treebrowser.css";
 
 class ProgressiontreeBrowser extends React.Component {
@@ -47,6 +51,12 @@ class ProgressiontreeBrowser extends React.Component {
   treeFetchFailed(error) {
     console.log("Tree fetch error: " + error);
     this.setState({isLoading: false});
+  }
+
+  isAddedTree() {
+    return this.props.userProfile.progressionTrees.find((tree) => {
+      return tree._id == this.state.tree._id;
+    })
   }
 
   componentDidMount() {
@@ -119,6 +129,10 @@ class ProgressiontreeBrowser extends React.Component {
     this.setState( { selectedSkill: skill });
   }
 
+  handleAddToMyTree() {
+    this.props.startProgressionTree(this.props.userProfile._id, {_id: this.state.tree._id, name: this.state.tree.name});
+  }
+
   renderSkills(skills) {
     console.log("%c renderSkills: ", "color: green; background: red");
     console.dir(skills);
@@ -139,7 +153,7 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   renderTree() {
-    if (this.state.isLoading) {
+    if (this.state.isLoading || this.props.isProfileLoading) {
       return (
       <div className="container-fluid progress-browser-wrap">
         <div className="row">
@@ -203,11 +217,11 @@ class ProgressiontreeBrowser extends React.Component {
                     {this.renderSkills(this.state.tree.weightage3)}
                   </div>
                 </div>
-                <div className="col-md-2 col-sm-12">
-                  <div className="add-tom-my-tree">
+                {!this.isAddedTree() && <div className="col-md-2 col-sm-12">
+                  <div className="add-tom-my-tree" onClick={() => this.handleAddToMyTree()}>
                     Add to My tree
                   </div>
-                </div>
+                </div>}
               </div>
             </div>
           </div>
@@ -219,14 +233,17 @@ class ProgressiontreeBrowser extends React.Component {
 
 ProgressiontreeBrowser.PropTypes = {
   userInteractionPush: PropTypes.func.isRequired,
+  startProgressionTree: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
+  isProfileLoading: state.userProfile.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
   userInteractionPush: bindActionCreators(userInteractionPush, dispatch),
+  startProgressionTree: bindActionCreators(startProgressionTree, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgressiontreeBrowser);
