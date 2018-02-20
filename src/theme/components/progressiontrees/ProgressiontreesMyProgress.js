@@ -3,6 +3,7 @@
 */
 import React from 'react';
 import StarRatings from 'react-star-ratings';
+import {Link} from 'react-router-dom'
 
 import ActionLink from '~/src/components/common/ActionLink'
 const wastBin = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/progressionTrees/waste-bin.png"
@@ -21,9 +22,9 @@ const ProgressiontreesMyProgress = (props) => {
 						props.trees.map(function(roadmap, i) {
 						return (
 							<div key={i} className="trees-wrap" >
-								<ActionLink className="progression-tree-my-text" onClick={()=> props.openSingleTree(roadmap._id)}>
+								<Link className="progression-tree-my-text" to={`/progressionTreeBrowser/id=${roadmap._id}`}>
 									{roadmap.name}
-								</ActionLink>
+								</Link>
 								<span className="progression-tree-star-rating">
 									<StarRatings rating={3.5} 
 									isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 

@@ -26,7 +26,7 @@ import TaskManagement from '~/src/theme/TaskManagement';
 import ProjectManager from '~/src/theme/ProjectManagement';
 import ProjectBrowser from '~/src/theme/ProjectBrowser';
 import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser'
-import ProgressionTreeBrowser from '~/src/theme/ProgressionTreeBrowser';
+import ProgressionTreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew"
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';

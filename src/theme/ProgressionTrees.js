@@ -15,7 +15,7 @@ import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgre
 
 import ProgressiontreesScanner from "~/src/theme/components/progressiontrees/ProgressiontreesScanner"
 import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/ProgressiontreesMyProgress"
-import ProgressiontreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowser"
+import ProgressiontreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew"
 
 import ActionLink from '~/src/components/common/ActionLink'
 
