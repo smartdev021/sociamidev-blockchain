@@ -143,6 +143,10 @@ body{
     padding: 20px;
 }
 
+#intro-video {
+    border: none;
+}
+
 
 .heading-1{
     /*font-family: 'Franklin-Gothic-Demi-Regular';*/

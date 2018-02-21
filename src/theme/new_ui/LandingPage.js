@@ -74,9 +74,8 @@ class LandingPage extends React.Component {
                       <a href="#" className="btn-base-landing btn-red-landing" data-toggle="modal" data-target="#alpha">
                         <span className="font-small">Register for</span> alpha</a>
                       </p>
-                      <div className="col-md-6 col-md-offset-3 video">
-                            <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/video.png" className="img-responsive" alt=""/>
-                        </div>
+                      <iframe width="420" height="345" id="intro-video" class="img-responsive" src="https://www.youtube.com/embed/i8PJgSclIf0">
+                      </iframe>
                     </div>
                 </div>
 
