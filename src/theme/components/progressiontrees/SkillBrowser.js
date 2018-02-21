@@ -72,6 +72,14 @@ class SkillBrowser extends React.Component {
     this.setState({timeNow: Date.now()});
   }
 
+  isTreeAdded() {
+    const CurrentTree = this.props.location.state.tree;
+
+    return this.props.userProfile.progressionTrees.find((tree) => {
+      return tree._id == CurrentTree._id;
+    });
+  }
+
   componentWillMount() {
     const URLParams = new URLSearchParams(this.props.location.search);
     const name = URLParams.get("name");
@@ -386,7 +394,7 @@ class SkillBrowser extends React.Component {
               </ul>
             </div>
           </div>
-          <div className="deep-dive-button-wrap">
+          {this.isTreeAdded() &&<div className="deep-dive-button-wrap">
 
             <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
 
@@ -394,7 +402,7 @@ class SkillBrowser extends React.Component {
                   onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
                     console.log(`this.state.timeNow: ${this.state.timeNow} LatestHangoutDateJoined: ${LatestHangoutDateJoined} CurrentTree.deepDiveIntervalLimit: ${CurrentTree.deepDiveIntervalLimit} his.state.timeNow - LatestHangoutDateJoined: ${this.state.timeNow - LatestHangoutDateJoined}`);
                   }}>{DeepDiveButtonText}</button>
-          </div>
+          </div>}
           <div className="row">
             <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
               <a href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()} parentSelector={getPopupParentElement}></a>
