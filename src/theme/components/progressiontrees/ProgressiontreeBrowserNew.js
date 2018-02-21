@@ -110,9 +110,6 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   render() {
-    console.log("%cBrowsing Single Tree", "background: purple; color: white;");
-    console.dir(this.state.tree);
-
     return this.renderTree();
   }
 

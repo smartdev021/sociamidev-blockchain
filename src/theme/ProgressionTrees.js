@@ -72,7 +72,6 @@ class ProgressionTrees extends React.Component {
   }
 
   handleStopProgressionTree(id) {
-    console.log("Removing progression tree");
     this.props.stopProgressionTree(this.props.userProfile._id, {_id: id});
   }
 
@@ -163,7 +162,6 @@ class ProgressionTrees extends React.Component {
   }
 
   openTreeAcceptConfirmationPopup(treeId, treeName) {
-    console.log(`treeId: ${treeId}, treeName: ${treeName}`);
     if (this.props.isAuthorized) {
 
       const findById = (currentRoadmap) => {
@@ -193,7 +191,6 @@ class ProgressionTrees extends React.Component {
   onTreeAcceptConfirmationPopupClose(option, treeId) {
     this.setState({selectedTree: undefined, scannerSelectedTreeId: undefined, 
         scannerSelectedTreeName: "", isAcceptProgressionTreePopupOpen: false});
-    console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
 
     if (option === true && treeId) {
       let foundRoadmaps = [];

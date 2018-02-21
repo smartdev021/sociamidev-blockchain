@@ -84,26 +84,22 @@ class SkillBrowser extends React.Component {
     const URLParams = new URLSearchParams(this.props.location.search);
     const name = URLParams.get("name");
 
-    console.log(`%ccomponentWillMount name: ${name}`, "color: green; background: red");
-
     if (name) {
       this.updateSkill(name);
     }
-
-     console.log("DetailsPopup::componentWillMount");
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "none";
       Modal.defaultStyles.content.background = "transparent";
       Modal.defaultStyles.content.overflow = "visible";
-      Modal.defaultStyles.content.padding = '0';
-      Modal.defaultStyles.content["maxWidth"] = '300px';
-      Modal.defaultStyles.content["minHeight"] = '300px';
-      Modal.defaultStyles.content["marginLeft"] = 'auto';
-      Modal.defaultStyles.content["marginRight"] = 'auto';
-      Modal.defaultStyles.content["left"] = '0';
-      Modal.defaultStyles.content["top"] = '100';
-      Modal.defaultStyles.content["right"] = '0';
+      Modal.defaultStyles.content.padding = "0";
+      Modal.defaultStyles.content["maxWidth"] = "300px";
+      Modal.defaultStyles.content["minHeight"] = "300px";
+      Modal.defaultStyles.content["marginLeft"] = "auto";
+      Modal.defaultStyles.content["marginRight"] = "auto";
+      Modal.defaultStyles.content["left"] = "0px";
+      Modal.defaultStyles.content["top"] = "100px";
+      Modal.defaultStyles.content["right"] = "0px";
   }
 
   componentDidMount() {
@@ -111,7 +107,6 @@ class SkillBrowser extends React.Component {
   }
 
   componentWillUnmount() {
-      console.log("DetailsPopup::componentWillUnmount");
       clearInterval(this.timeNowUpdateInterval);
       Modal.defaultStyles = this.modalDefaultStyles;
   }
@@ -124,11 +119,9 @@ class SkillBrowser extends React.Component {
     Axios.get(url)
       .then(function(response) {
         that.setState( {skillInfo: response.data, isLoading: false} );
-        console.log(response.data);
     })
     .catch(function(error) {
       that.setState( {skillInfo: undefined, isLoading: false} );
-      console.log(error);
     });
   }
 
@@ -265,7 +258,6 @@ class SkillBrowser extends React.Component {
 
   handleTimeChange(e) {
     e.preventDefault();
-    console.log(e.currentTarget.value);
   }
 
   handleClose() {
@@ -298,9 +290,6 @@ class SkillBrowser extends React.Component {
         hangoutsForCurrentTree.sort((a, b) => {
           return a.dateJoined - b.dateJoined;
         });
-
-        console.log("%changoutsForCurrentTree: ", "background:purpe;color:white;font-size:15px");
-        console.dir(hangoutsForCurrentTree);
 
         LatestHangoutDateJoined = hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined;
       }
@@ -400,12 +389,12 @@ class SkillBrowser extends React.Component {
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
                   onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
-                    console.log(`this.state.timeNow: ${this.state.timeNow} LatestHangoutDateJoined: ${LatestHangoutDateJoined} CurrentTree.deepDiveIntervalLimit: ${CurrentTree.deepDiveIntervalLimit} his.state.timeNow - LatestHangoutDateJoined: ${this.state.timeNow - LatestHangoutDateJoined}`);
                   }}>{DeepDiveButtonText}</button>
           </div>}
           <div className="row">
-            <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
-              <a href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()} parentSelector={getPopupParentElement}></a>
+            <Modal contentLabel="Illuminate" parentSelector={getPopupParentElement} 
+              style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
+              <ActionLink href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()}></ActionLink>
               <div className="container-fluid popup-new-project">
                 <span>
                   <div className="row">
