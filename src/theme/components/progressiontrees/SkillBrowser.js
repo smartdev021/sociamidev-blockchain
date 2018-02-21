@@ -114,7 +114,7 @@ class SkillBrowser extends React.Component {
   updateSkill(name) {
     const url = `${ConfigMain.getBackendURL()}/skillGet?name=${name}`;
     const that = this;
-    that.setState( {isLoading: true} );
+    that.setState( {isLoading: true, isHangoutFormVisible: false} );
     
     Axios.get(url)
       .then(function(response) {
