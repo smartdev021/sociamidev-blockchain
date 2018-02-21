@@ -73,8 +73,10 @@ class SkillBrowser extends React.Component {
   }
 
   componentWillMount() {
+    const URLParams = new URLSearchParams(this.props.location.search);
+    const name = URLParams.get("name");
 
-    const {name} = this.props.location.query;
+    console.log(`%ccomponentWillMount name: ${name}`, "color: green; background: red");
 
     if (name) {
       this.updateSkill(name);
@@ -109,6 +111,8 @@ class SkillBrowser extends React.Component {
   updateSkill(name) {
     const url = `${ConfigMain.getBackendURL()}/skillGet?name=${name}`;
     const that = this;
+    that.setState( {isLoading: true} );
+    
     Axios.get(url)
       .then(function(response) {
         that.setState( {skillInfo: response.data, isLoading: false} );
@@ -121,6 +125,16 @@ class SkillBrowser extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+
+    if (prevProps.location.search != this.props.location.search) {
+      const URLParams = new URLSearchParams(this.props.location.search);
+      const name = URLParams.get("name");
+
+      if (name) {
+        this.updateSkill(name);
+      }
+    }
+
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
 
@@ -182,7 +196,7 @@ class SkillBrowser extends React.Component {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const CurrentTree = this.props.location.query.tree;
+    const CurrentTree = this.props.location.state.tree;
 
     const hangout = {
       name: `Hangout for roadmap "${CurrentTree.name}"`,
@@ -267,7 +281,7 @@ class SkillBrowser extends React.Component {
     let LatestHangoutDateJoined = undefined;
 
     if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
-      const CurrentTree = this.props.location.query.tree;
+      const CurrentTree = this.props.location.state.tree;
       let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter((hangout) => {
         return hangout.treeId == CurrentTree._id;
       });
@@ -313,7 +327,7 @@ class SkillBrowser extends React.Component {
 
     const LatestHangoutDateJoined = this.lastHangoutDateJoined();
 
-    const CurrentTree = this.props.location.query.tree;
+    const CurrentTree = this.props.location.state.tree;
 
     const IsDeepdiveAbailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
 
@@ -367,7 +381,7 @@ class SkillBrowser extends React.Component {
                 {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
                 {
                   const skillNameTrimmed = skill.trim();
-                  return <li key={i}><ActionLink onClick={()=> that.updateSkill(skillNameTrimmed)}>{skillNameTrimmed}</ActionLink></li>
+                  return <li key={i}><Link key={i} to={{pathname:`/skillBrowser`, state: that.props.location.state, search:`?name=${skillNameTrimmed}`}}>{skillNameTrimmed}</Link></li>
                 })}
               </ul>
             </div>

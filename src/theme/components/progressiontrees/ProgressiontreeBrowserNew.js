@@ -130,8 +130,6 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   renderSkills(skills) {
-    console.log("%c renderSkills: ", "color: green; background: red");
-    console.dir(skills);
     const that = this;
     //TODO: Fix incorrect database structure
     let skillParsed = skills.length > 1 ? skills : skills[0].split(',');
@@ -142,7 +140,7 @@ class ProgressiontreeBrowser extends React.Component {
     <div className="list-skill-wrap">
       {
         skillParsed.map(function(skill, i) {
-          return (<Link key={i} to={{pathname:'/skillBrowser', query: {name: skill, tree: that.state.tree}}}>{skill}</Link>);
+          return (<Link key={i} to={{pathname:`/skillBrowser`, state: {tree: that.state.tree}, search:`?name=${skill}`}}>{skill}</Link>);
         })
       }
     </div>);
