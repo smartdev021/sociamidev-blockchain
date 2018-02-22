@@ -41,6 +41,61 @@
    </head>
 
    <body>
+     <!-- Modal -->
+  <div class="modal fade" id="modal_success" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Subscription success!</h4>
+          </div>
+          <div class="modal-body">
+            <p>More information will be sent to you.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal_failure" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Subscription failed!</h4>
+            </div>
+            <div class="modal-body">
+              <p>Failed to subscribe.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="modal fade" id="modal_in_progress" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Please wait!</h4>
+              </div>
+              <div class="modal-body">
+                <p>Please wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
       <div class="body-inner">
          <!-- Header start -->
          <header id="header" class="header header-transparent">
