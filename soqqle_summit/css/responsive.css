@@ -38,7 +38,7 @@
 
 	/* Subscribe */
 
-	.newsletter-form input{
+	.newsletter-form input, .sponsor-form input{
 		min-width: 340px;
 	}
 
@@ -324,11 +324,11 @@
 
 	/* Newsletter */
 
-	.newsletter-form h3{
+	.newsletter-form h3, .sponsor-form h3{
 		margin-bottom: 30px;
 	}
 
-	.newsletter-form input{
+	.newsletter-form input, .sponsor-form input {
 		margin-left: 0;
 	}
 
@@ -746,15 +746,15 @@
 
 	/* Newsletter */
 
-	.newsletter-form{
+	.newsletter-form, .sponsor-form{
 		padding: 0 80px 0 20px;
 	}
 
-	.newsletter-form h3{
+	.newsletter-form h3, .sponsor-form h3{
 		margin-bottom: 30px;
 	}
 
-	.newsletter-form input{
+	.newsletter-form input, .sponsor-form input{
 		margin-left: 0;
 	}
 

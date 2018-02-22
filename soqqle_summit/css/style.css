@@ -1859,13 +1859,13 @@ ul.navbar-nav > li:hover > a{
     padding: 100px 0;
 }
 
-.newsletter-form {
+.newsletter-form, .sponsor-form{
     position: relative;
     z-index: 1;
     padding: 0 80px;
 }
 
-.newsletter-form h2 {
+.newsletter-form h2, .sponsor-form h2 {
     color: #ff0763;
     margin-top: 0;
     font-size: 14px;
@@ -1873,17 +1873,17 @@ ul.navbar-nav > li:hover > a{
     font-weight: 400;
 }
 
-.newsletter-form h3 {
+.newsletter-form h3, .sponsor-form h3{
     color: #fff;
     margin: 5px 0 0;
     font-size: 30px;
 }
 
-.newsletter-form form{
+.newsletter-form form, .sponsor-form form{
     margin-top: 5px;
 }
 
-.newsletter-form input {
+.newsletter-form input, .sponsor-form input{
     width: 100%;
     display: inline-block;
     font-size: 12px;
@@ -1896,7 +1896,12 @@ ul.navbar-nav > li:hover > a{
     border: 1px solid #1d1c1c;
 }
 
-.newsletter-form button {
+.sponsor-form input {
+    background: #ffffff;
+    color: black;
+}
+
+.newsletter-form button, .sponsor-form button{
     position: absolute;
     top: 5px;
     right: -50px;

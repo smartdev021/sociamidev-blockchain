@@ -777,7 +777,7 @@
                      </div>
                      <!-- Col end -->
                      <div class="col-md-8 col-xs-12">
-                        <form action="#" method="post">
+                        <form id="form_subscribe_news_letter" action="#" method="post">
                            <div class="form-group">
                               <input type="email" name="email" id="newsletter-form-email" class="form-control form-control-lg" placeholder="Your Email Here" autocomplete="off">
                               <button class="btn btn-primary">Subscribe</button>
@@ -818,9 +818,19 @@
                </div>
                <!--/ Content row 1 end -->
                <div class="row">
-                  <div class="general-btn text-center">
-                     <a class="btn btn-primary" href="#">Become our Sponsor</a>
+                  <div class="sponsor-form clearfix">
+                     <!-- Col end -->
+                     <div class="col-md-12">
+                        <form id="form_subscribe_sponsor" action="#" method="post">
+                           <div class="form-group">
+                              <input type="email" name="email" id="sponsor-form-email" class="form-control form-control-lg" placeholder="Your Email Here" autocomplete="off">
+                              <button class="btn btn-primary">Become our Sponsor</button>
+                           </div>
+                        </form>
+                     </div>
+                     <!-- Col end -->
                   </div>
+                  <!-- Newsletter form end -->
                </div>
                <!--/ Content row 3 end -->
             </div>
@@ -1439,6 +1449,11 @@
          <script type="text/javascript" src="js/gmap3.js"></script>
          <!-- Template custom -->
          <script type="text/javascript" src="js/custom.js"></script>
+
+         <!-- Axios networking library-->
+         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+         <script src="./js/main.js"></script>
 
       </div>
       <!-- Body inner end -->
