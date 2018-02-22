@@ -1899,6 +1899,8 @@ ul.navbar-nav > li:hover > a{
 .sponsor-form input {
     background: #ffffff;
     color: black;
+    margin:0;
+    min-width: 240px;
 }
 
 .newsletter-form button, .sponsor-form button{
@@ -1910,6 +1912,13 @@ ul.navbar-nav > li:hover > a{
     height: 50px;
     border: 0 !important;
     border-radius: 0 !important;
+}
+
+.sponsor-form button{
+    position: relative;
+    top: initial;
+    right: initial;
+    min-width: 240px;
 }
 
 /* Sponsors
