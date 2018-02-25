@@ -13,6 +13,24 @@ var addGroupSubscriber = function addGroupSubscriber(groupId, subscriber, onCall
 }
 /******************************************************** */
 
+var showDialog = function showDialog(success) {
+  if (success) {
+    $("#modal_success").modal("show");
+  }
+  else {
+    $("#modal_failure").modal("show");
+  }
+}
+
+var toggleProgress = function toggleProgress(success) {
+  if (success) {
+    $("#modal_in_progress").modal("show");
+  }
+  else {
+    $("#modal_in_progress").modal("hide");
+  }
+}
+
 //logic for adding subscribers into groups
 var lastActiveInputField = undefined;
 
@@ -22,28 +40,33 @@ var lastActiveInputField = undefined;
     console.dir(response.data);
 
     onNetworkOperationFinish();
+
+    showDialog(true);
   }
 
   var handleGroupSubscriberAddFail = function handleGroupSubscriberAddFail(error) {
     console.log("Failed to add subscriber: " + error);
 
     onNetworkOperationFinish();
+
+    showDialog(false);
   }
   /**************************************** */
 
   /*put code for visual notification of network request in progress here (loading spinner)*/
   var onNetworkOperationStart = function onNetworkOperationStart() {
     console.log("Loading...");
+    toggleProgress(true);
     //put code for showing the spinner here
   }
 
   var onNetworkOperationFinish = function onNetworkOperationFinish() {
     console.log("Complete!");
     //put code for hiding the spinner here
-    $(lastActiveInputField).val("Subscribed!");
     console.log("lastActiveInputField: " + lastActiveInputField);
     console.log("lastActiveInputField.value: " + $(lastActiveInputField).val());
     lastActiveInputField = undefined;
+    toggleProgress(false);
   }
 
   /* add click event listeners for modal buttons */
@@ -64,9 +87,6 @@ var lastActiveInputField = undefined;
     console.log("email: " + email);
 
     lastActiveInputField = NewsLetterInputId;
-
-    //add subscriber, with name and email taken from input fields
-    $(lastActiveInputField).val("Wait a moment...");
 
     onNetworkOperationStart();
     addGroupSubscriber(9224454, {name: name, email: email}, handleGroupSubscriberAddSuccess, handleGroupSubscriberAddFail);
@@ -89,9 +109,6 @@ var lastActiveInputField = undefined;
       console.log("email: " + email);
   
       lastActiveInputField = SponsorFormInputId;
-  
-      //add subscriber, with name and email taken from input fields
-      $(lastActiveInputField).val("Wait a moment...");
   
       onNetworkOperationStart();
       addGroupSubscriber(9227992, {name: name, email: email}, handleGroupSubscriberAddSuccess, handleGroupSubscriberAddFail);
