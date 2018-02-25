@@ -304,6 +304,56 @@ class SkillBrowser extends React.Component {
 
   goToIlluminate(e){
     e.preventDefault();
+    // TODO call hangout-ish
+
+    const RandomInt = function RandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const CurrentTree = this.props.location.state.tree;
+
+    const illuminate = {
+      name: `Illuminate for roadmap "${CurrentTree.name}"`,
+      description: `Illuminate for roadmap "${CurrentTree.name}"`,
+      type: TaskTypes.ILLUMINATE,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+      userID: this.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      },
+      metaData : {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: this.state.skillInfo._id,
+            name: this.state.skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: this.props.userProfile._id, 
+              firstName: this.props.userProfile.firstName,
+              lastName: this.props.userProfile.lastName,
+            },
+            status: "accepted",
+            isCreator: true,
+          }
+        ],
+        ratings: [],
+        awardXP: RandomInt(30, 40),
+      }
+    };
+
+    if (illuminate.userName != "" && illuminate.name != "" && illuminate.description != "") {
+      this.props.saveTask(illuminate);
+    }
     this.setState({redirectToTaskManagement: true});
   }
 
