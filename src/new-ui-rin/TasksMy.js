@@ -373,6 +373,9 @@ const DayFromNumber = (dayNum)=> {
         }
       }
     }
+    else if (task.type === "illuminate") {
+      result = <div id="title">Illuminate is in progress</div>;
+    }
     else {
       result = <div id="title">{task.name}</div>;
     }
@@ -416,6 +419,29 @@ const DayFromNumber = (dayNum)=> {
         {RenderActions(task, props)}
     </div>
     </div>)
+    } else if (task.type === "illuminate"){
+      const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
+
+      return (
+        <div className="col-deep col-sm-6" key={i}>
+          <div className="item-deep">
+            <div className="deep-content">
+                {RenderTaskTitle(task, props)}
+                <p>{SecondLine}</p>
+            </div>
+            <div className="deep-tools">
+              <ul>
+                <li>
+                  <ActionLink href="#"
+                    onClick={()=>props.onHangoutActionPerform("answer_questions", task)} className="btn-base btn-red">
+                    Answer Questions
+                  </ActionLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      );
     }
   
     return (
