@@ -92,14 +92,18 @@ class PopupHangoutAnswers extends React.Component {
     }
 
     renderHangoutAnswers() {
-      const title = "Earn up to 30 tokens by completing this task with Alexander";
+      const Partner = this.props.partner;
+      const contentLabel = `Earn 1 Electronic-XP by completing this task with ${Partner ? Partner.user.firstName : ""}`;
+      const Title = <span className="popup-hangout-title">
+        {"Earn "}<i>{"1 Electronic-XP "}</i>{`by completing this task with ${Partner ? Partner.user.firstName : ""}`}
+      </span>;
       if (this.props.isLoading || this.props.isSubmitting) {
         const LoadingText = this.props.isSubmitting ? "Submitting..." : "Loading...";
         return (
           <Modal 
           isOpen={true}
           onRequestClose={() => this.props.onCloseModal()}
-          contentLabel={title} parentSelector={getPopupParentElement}>
+          contentLabel={contentLabel} parentSelector={getPopupParentElement}>
           <div className="container-fluid popup-hangout-qustions">
           <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
           <div className="row">
@@ -117,8 +121,8 @@ class PopupHangoutAnswers extends React.Component {
         <Modal 
         isOpen={true}
         onRequestClose={() => this.props.onCloseModal()}
-        contentLabel={title} parentSelector={getPopupParentElement}>
-        <div className="container-fluid popup-hangout-qustions" parentSelector={getPopupParentElement}>
+        contentLabel={contentLabel} parentSelector={getPopupParentElement}>
+        <div className="container-fluid popup-hangout-qustions">
         <ActionLink href='#' className="glyphicon glyphicon-remove popup-close-icon" onClick={() => this.props.onCloseModal()}></ActionLink>
         <div className="row">
               <div className="col-lg-12">
@@ -130,7 +134,7 @@ class PopupHangoutAnswers extends React.Component {
             </div>
         <div className="row">
               <div className="col-lg-12 text-center">
-                <span className="popup-hangout-title">Earn up to <i>30 tokens</i> by completing this task with Alexander</span>
+                {Title}
             </div>
             </div>
             
