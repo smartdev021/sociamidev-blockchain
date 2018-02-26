@@ -4,13 +4,7 @@ const BACKEND_URL_REMOTE_STAGING = 'http://13.59.19.153:8080';
 
 var ConfigMain = {
     getBackendURL : function() {
-        if (process.env.dev_env =="local") {
-            return BACKEND_URL_LOCAL;
-        }
-        else {
-            //return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
-            return BACKEND_URL_REMOTE_STAGING;
-        }
+        return BACKEND_URL_LOCAL;
     },
     getCookiesExpirationPeriod : function() {
         //10 years
