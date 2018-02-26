@@ -67,10 +67,10 @@ export function userProfile(state = userProfileInitialState, action) {
       return {...state, tasks: {assigned: action.tasksAssigned, created: action.tasksCreated, isLoading: false}};
     }
     case FETCH_USER_PROFILE_ACTIVITIES_INITIATE: {
-      return {...state, activities: { data: action.activities, isLoading: true }};
+      return {...state, activities: Object.assign({}, state.activities, { isLoading: true })};
     }
     case FETCH_USER_PROFILE_ACTIVITIES_COMPLETE: {
-      return {...state, activities: { data: action.activities, isLoading: false }};
+      return {...state, activities: Object.assign({}, state.activities, { data: action.activities, isLoading: false })};
     }
     case PROGRESSION_TREE_START_INITIATE: {
       return {...state, isLoading: true};
