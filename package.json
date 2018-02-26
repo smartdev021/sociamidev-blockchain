@@ -1,7 +1,7 @@
 {
-  "name": "react-indeed-jobs-list",
+  "name": "soqqle",
   "version": "1.0.0",
-  "description": "ReactIndeedJobsList",
+  "description": "Soqqle",
   "scripts": {
     "start": "node server.js",
     "startLocal": "dev_env=local node server.js",
