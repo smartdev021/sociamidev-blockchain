@@ -1,8 +1,8 @@
-## How to deploy from dev local machine
+
 ### Pre-requisite:
 - Python is installed. If not, download and install from the following link https://www.python.org/downloads/
 - python-pip Python package manager is installed. If not, run the following command: ```apt-get install python-pip```
-- boto3 is installed. If not, run the following command: ```pip install boto3==1.3.0```
+- boto3 is installed. If not, run the following command: ```pip install boto3==1.3.0```. Use python3 and pip3 if you already have python2 configured on your system
 ### Configure AWS Credential
 Open/create file ~/.aws/config , add the following:
 ```
@@ -11,14 +11,18 @@ aws_access_key_id = AWS_ACCESS_KEY_ID
 aws_secret_access_key = AWS_SECRET_ACCESS_KEY
 region=AWS_REGION
 ```
+
+## How to deploy from dev local machine
 ### Run command to deploy to AWS
 ```
 python deploy.py Staging
 ```
 Whatever inside folder `dist` will be deployed to the indicated environment.
 
----
 
+## How to Deploy to UAT from local machine.
+- We are currently deploying the master branch into the UAT system. 
+- Please configure aws cli to default profile before you run this command `npm run deploy:uat`
 
 
 >## A Big Update Is Coming

@@ -11,6 +11,7 @@
     "clean": "rimraf dist",
     "build": "npm run clean && npm run compile",
     "deploy:dev": "python deploy.py Staging",
+    "deploy:uat": "npm run build && aws s3 sync dist/ s3://uat.soqqle.com",
     "deploy:prod": "python deploy.py Production",
     "publish:dev": "npm run build && npm run deploy:dev",
     "publish:prod": "npm run build && npm run deploy:prod"
