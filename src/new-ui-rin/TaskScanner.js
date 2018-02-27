@@ -100,6 +100,10 @@ class TaskScanner extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      isSearchExpanded: false
+    }
   }
 
   renderTasks() {
@@ -130,36 +134,32 @@ class TaskScanner extends React.Component {
   }
 
   handleExpandSearch(expand) {
-      console.log(`handleExpandSearch expand: ${expand}`);   
-  }
-
-  handleExpand(expand) {
-    console.log(`handleExpand expand: ${expand}`);
-    this.props.onExpand(expand);
+      this.setState({isSearchExpanded: expand}); 
   }
 
   render() {
+    const BtSearchClass = this.state.isSearchExpanded ? "bt-search open-search" : "bt-search";
     return (<div className="block-tokens">
     <div className="expanding">
-        <ActionLink href="#" className="open-expanding" 
-          onClick={() => this.handleExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
-        <ActionLink href="#" className="close-expanding" 
-          onClick={() => this.handleExpand(false)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>
+        {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
+          onClick={() => this.props.onExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        : <ActionLink href="#" className="close-expanding"
+          onClick={() => this.props.onExpand(false)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
     </div>
 
     <div className="expanding expanding-mobile">
-        <ActionLink href="#" className="open-expanding" 
-          onClick={() => this.handleExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
-        <ActionLink href="#" className="close-expanding" 
-          onClick={() => this.handleExpand(true)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>
+        {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
+          onClick={() => this.props.onExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        : <ActionLink href="#" className="close-expanding"
+          onClick={() => this.props.onExpand(false)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
     </div>
 
-    <div className="bt-search">
+    <div className={BtSearchClass}>
         <ActionLink href="#" className="icon-search" onClick={() => this.handleExpandSearch(true)}>
             <Icon name="search" aria-hidden="true"></Icon>
         </ActionLink>
 
-        <div className="block-search">
+        <div className="block-search" style={{display: this.state.isSearchExpanded ? "block" : "none"}}>
             <div className="close-search">
                 <ActionLink href="#" onClick={() => this.handleExpandSearch(false)}><Icon name="times" aria-hidden="true"></Icon></ActionLink>
             </div>

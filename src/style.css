@@ -820,11 +820,6 @@ html, body {
     background: rgba(238, 137, 47, 1);
 }
 
-.expanding a.close-expanding{
-    display: none;
-}
-
-
 .expanding-mobile a{
     position: absolute;
     left: -40px;

@@ -509,9 +509,12 @@ class TaskManager extends React.Component {
 
     const tasksScanner = this.getTaskScannerTasks();
 
+    const MyTasksColClass = this.state.isScannerExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
+    const ScannerColClass = this.state.isScannerExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
+
     return (
       <div className="row">
-        <div className="col-md-8 expand-deep">
+        <div className={MyTasksColClass}>
         {this.state.isAnswerQuestionsOpen &&
             <AnswerQuestions currentTask={this.state.activeHangout}
             onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
@@ -542,7 +545,7 @@ class TaskManager extends React.Component {
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
             />
         </div>
-        <div className="col-md-4 expand-tokens">
+        <div className={ScannerColClass}>
           <TaskScanner tasks={tasksScanner}
           scannerQuery={this.state.scannerQuery} 
           currentUserID={this.props.userProfile._id}
