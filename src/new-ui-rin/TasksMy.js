@@ -432,9 +432,7 @@ const DayFromNumber = (dayNum)=> {
     if (!props.tasks || props.tasks.length == 0) {
         return null;
     }
-
-    console.log("RenderTasks");
-    console.dir(props.tasks);
+    
     return (
         props.tasks.map((task, i) => {
             return RenderTask(task, i, props)

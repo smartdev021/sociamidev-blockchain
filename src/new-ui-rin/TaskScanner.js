@@ -129,26 +129,39 @@ class TaskScanner extends React.Component {
       }
   }
 
+  handleExpandSearch(expand) {
+      console.log(`handleExpandSearch expand: ${expand}`);   
+  }
+
+  handleExpand(expand) {
+    console.log(`handleExpand expand: ${expand}`);
+    this.props.onExpand(expand);
+  }
+
   render() {
     return (<div className="block-tokens">
     <div className="expanding">
-        <a href="#" className="open-expanding"><Icon name="chevron-left" aria-hidden="true"></Icon></a>
-        <a href="#" className="close-expanding"><Icon name="chevron-right" aria-hidden="true"></Icon></a>
+        <ActionLink href="#" className="open-expanding" 
+          onClick={() => this.handleExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        <ActionLink href="#" className="close-expanding" 
+          onClick={() => this.handleExpand(false)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>
     </div>
 
     <div className="expanding expanding-mobile">
-        <a href="#" className="open-expanding"><Icon name="chevron-left" aria-hidden="true"></Icon></a>
-        <a href="#" className="close-expanding"><Icon name="chevron-right" aria-hidden="true"></Icon></a>
+        <ActionLink href="#" className="open-expanding" 
+          onClick={() => this.handleExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        <ActionLink href="#" className="close-expanding" 
+          onClick={() => this.handleExpand(true)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>
     </div>
 
     <div className="bt-search">
-        <a href="#" className="icon-search">
+        <ActionLink href="#" className="icon-search" onClick={() => this.handleExpandSearch(true)}>
             <Icon name="search" aria-hidden="true"></Icon>
-        </a>
+        </ActionLink>
 
         <div className="block-search">
             <div className="close-search">
-                <a href="#"><Icon name="times" aria-hidden="true"></Icon></a>
+                <ActionLink href="#" onClick={() => this.handleExpandSearch(false)}><Icon name="times" aria-hidden="true"></Icon></ActionLink>
             </div>
             <div className="form-search-tokens">
                 <div id="imaginary_container">

@@ -272,6 +272,13 @@ class TaskManager extends React.Component {
     }
   }
 
+  handleExpandScanner(expand) {
+    if (this.props.isAuthorized) {
+      console.log(`handleExpandScanner expanded: ${expand}`);
+      this.setState({isScannerExpanded: expand});
+    }
+  }
+
   handleCloseConfirmTaskDetailsPopup() {
     this.setState({isDetailsPopupOpen: false})
   }
@@ -489,12 +496,6 @@ class TaskManager extends React.Component {
     return tasksFiltered;
   }
 
-  setTreeScannerExpanded(expanded) {
-    if (this.props.isAuthorized) {
-      this.setState({isScannerExpanded: expanded});
-    }
-  }
-
   handleFilterChange(newFilter) {
     this.setState({filterCurrent: newFilter});
   }
@@ -534,7 +535,6 @@ class TaskManager extends React.Component {
             timeNow={this.state.timeNow}
             isAuthorized={this.props.isAuthorized}
             isCollapsed={this.state.isScannerExpanded}
-            onSetTreeScannerExpanded={(value)=>this.setTreeScannerExpanded(value)}
 
             currentUserID={this.props.userProfile._id}
 
@@ -548,7 +548,7 @@ class TaskManager extends React.Component {
           currentUserID={this.props.userProfile._id}
           handleOpenConfirmTaskDetailsPopup={(task)=>this.handleOpenConfirmTaskDetailsPopup(task)}
           handleChange={(e)=>this.handleChange(e)}
-          onSetTreeScannerExpanded={(value)=>this.setTreeScannerExpanded(value)}
+          onExpand={(expand)=>this.handleExpandScanner(expand)}
           isExpanded={this.state.isScannerExpanded}/>
         </div>
       </div>
