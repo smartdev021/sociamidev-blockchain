@@ -123,7 +123,6 @@ class App extends Component {
 
   updateWindowDimensions() {
     this.setState({ screenWidth: window.innerWidth, screenHeight: window.innerHeight });
-    console.log(`window.innerWidth: ${window.innerWidth}`);
   }
 
   componentWillMount() {

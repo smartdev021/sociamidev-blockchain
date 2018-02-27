@@ -58,11 +58,9 @@ class SidebarLeft extends React.Component {
       }
     }
 
-    console.log("this.props.screenWidth: " + this.props.screenWidth);
     if (prevProps.screenWidth != this.props.screenWidth) {
       this.setState({isMobileView: this.props.screenWidth < 990});
     }
-    console.log("this.state.isMobileView: " + this.state.isMobileView);
   }
 
   //Temporary solution to update user activities once per... time
@@ -290,9 +288,6 @@ class SidebarLeft extends React.Component {
     if (this.state.isMobileView) {
       CategoryClassName = `category-left ${this.props.isOpen ? " open-category" : " close-category"}`;
     }
-
-    console.log("CategoryClassName");
-    console.log(CategoryClassName);
 
     const ProfileImage = this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL
     : "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
