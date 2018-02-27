@@ -650,6 +650,13 @@ html, body {
     margin: 10px;
 }
 
+.heading-border-decorators-visible:before, 
+.heading-border-decorators-visible:after,
+.heading-border-decorators-visible span:before,
+.heading-border-decorators-visible span:after {
+    display: block;
+}
+
 .text-location{
     -webkit-clip-path: polygon(92% 0, 100% 52%, 92% 100%, 8% 100%, 0 53%, 8% 0);
     clip-path: polygon(92% 0, 100% 52%, 92% 100%, 8% 100%, 0 53%, 8% 0);

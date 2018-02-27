@@ -139,6 +139,7 @@ class TaskScanner extends React.Component {
 
   render() {
     const BtSearchClass = this.state.isSearchExpanded ? "bt-search open-search" : "bt-search";
+    const HeadingBorderClass = this.props.isExpanded ? "text-heading heading-border heading-border-decorators-visible" : "text-heading heading-border";
     return (<div className="block-tokens">
     <div className="expanding">
         {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
@@ -179,7 +180,7 @@ class TaskScanner extends React.Component {
     </div>
 
     <div className="box-head">
-        <h1 className="text-heading heading-border">
+        <h1 className={HeadingBorderClass}>
             <span>Complete quests to earn tokens</span>
         </h1>
     </div>
