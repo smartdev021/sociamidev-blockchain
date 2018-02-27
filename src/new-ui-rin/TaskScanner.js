@@ -142,21 +142,21 @@ class TaskScanner extends React.Component {
     return (<div className="block-tokens">
     <div className="expanding">
         {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
-          onClick={() => this.props.onExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+          onClick={() => this.props.onExpand(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
         : <ActionLink href="#" className="close-expanding"
-          onClick={() => this.props.onExpand(false)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+          onClick={() => this.props.onExpand(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
     </div>
 
     <div className="expanding expanding-mobile">
         {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
-          onClick={() => this.props.onExpand(true)}><Icon name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+          onClick={() => this.props.onExpand(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
         : <ActionLink href="#" className="close-expanding"
-          onClick={() => this.props.onExpand(false)}><Icon name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+          onClick={() => this.props.onExpand(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
     </div>
 
     <div className={BtSearchClass}>
         <ActionLink href="#" className="icon-search" onClick={() => this.handleExpandSearch(true)}>
-            <Icon name="search" aria-hidden="true"></Icon>
+            <Icon className="none-padding-left" name="search" aria-hidden="true"></Icon>
         </ActionLink>
 
         <div className="block-search" style={{display: this.state.isSearchExpanded ? "block" : "none"}}>
