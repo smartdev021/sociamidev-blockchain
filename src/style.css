@@ -923,37 +923,13 @@ html, body {
     width: 0;
 }
 
-/**************REACT SCROLLBAR*************************/
-.thumb-vertical {
-    background: #fdd924;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-    filter: alpha(opacity=40);
-    opacity: 0.4;
-}
-
-.track-vertical {
-    /*this properties have been copied from defaults as they can't be copied through override :( */
-    position: absolute;
-    width: 5px;
-    right: 2px;
-    bottom: 2px;
-    top: 2px;
-    /*-----------_*/
-    background: #e8403f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    height: 100%;
-}
-/***********************************************************
-
 /*************** SIMPLE INNER SCROLLBAR ***************/
 
 .scrollbar-inner {
     padding: 0 5px;
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 800px;
 }
 
 .scrollbar-inner > .scroll-element,

@@ -479,11 +479,9 @@ class TasksMy extends React.Component {
   render() {
     return (<div className="scrollbar-inner">
     <div className="block-deepdive">
-        <div className="scrollbar-inner">
         <div className="row">
             {RenderTasks(this.props)}
         </div>
-          </div>
     </div>
 </div>
     );

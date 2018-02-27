@@ -11,8 +11,6 @@ import {Link} from 'react-router-dom'
 
 import {Icon} from 'react-fa'
 
-import { Scrollbars } from 'react-custom-scrollbars';
-
 import ActivityTypes from "~/src/common/ActivityTypes"
 
 import {
@@ -303,16 +301,11 @@ class SidebarLeft extends React.Component {
         <div className="specialized">
             Android developer
         </div>
-        <Scrollbars style={{ width: "100%", height: "100%", maxHeight: "800px" }} 
-          renderThumbVertical={props => <div {...props} className="thumb-vertical"/>}
-          renderTrackVertical={props => <div className="track-vertical"/>}
-          >
           <div className="scrollbar-inner">
             <div className="block-account">
               {RenderDummyFriends ? this.renderFriendsDummy() : this.renderFriends()}
             </div>
           </div>
-        </Scrollbars>
     </div>
     );
   }
