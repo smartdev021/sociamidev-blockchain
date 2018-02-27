@@ -100,7 +100,6 @@ html, body {
     position: relative;
     width: 35px;
     height: 40px;
-    display: block;
 }
 
 .menu-hamburger a.open-menu span{
@@ -131,7 +130,6 @@ html, body {
     top: -10px;
     position: absolute;
     z-index: 999;
-    display: none;
 }
 
 
@@ -999,6 +997,10 @@ html, body {
 
 .scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
 .scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
+
+.display-none { 
+    display: none;
+}
 
 @media all and (max-width: 1200px) {
     .item-tokens{

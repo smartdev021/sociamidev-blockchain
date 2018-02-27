@@ -20,6 +20,7 @@ class ThemeHeader extends React.Component {
 
     this.state = {
         notificationsOpen: false,
+        isMenuOpen: false,
       }
   }
 
@@ -45,6 +46,11 @@ class ThemeHeader extends React.Component {
     window.location.reload();
   }
 
+  openMenu(open) {
+    console.log("openMenu: " + open);
+    this.setState({isMenuOpen: open});
+  }
+
   render() {
     const CurrentUserID = this.props.currentUserID;
 
@@ -54,6 +60,9 @@ class ThemeHeader extends React.Component {
 
     const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
 
+    const OpenMenuClass = !this.state.isMenuOpen ? "open-menu" : "open-menu";
+    const CloseMenuClass = this.state.isMenuOpen ? "close-menu" : "close-menu";
+
     return (
       <div className="session-header" id="popup-root">
       {this.state.notificationsOpen && <Notifications onClose={()=>this.handleNotificationsClose()} userActivities={this.props.userActivities}/>}
@@ -61,15 +70,15 @@ class ThemeHeader extends React.Component {
             <div className="row">
                 <div className="col-md-3">
                     <div className="menu-hamburger">
-                        <a href="#" className="open-menu">
+                        <ActionLink href="#" className={OpenMenuClass} style={{dispay: "none"}} onClick={() => this.openMenu(true)} style={{display: !this.state.isMenuOpen? "block" : "none"}}>
                             <span></span>
                             <span></span>
                             <span></span>
-                        </a>
+                        </ActionLink>
 
-                        <a href="#" className="close-menu">
+                        <ActionLink href="#" className={CloseMenuClass} onClick={() => this.openMenu(false)} style={{display: this.state.isMenuOpen? "block" : "none"}}>
                             <Icon name="times" aria-hidden="true"></Icon>
-                        </a>
+                        </ActionLink>
                     </div>
                     <h1 className="logo">
                         <Link to='/'><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt=""/></Link>
