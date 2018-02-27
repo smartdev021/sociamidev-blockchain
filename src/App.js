@@ -66,6 +66,7 @@ class App extends Component {
       faceBookID: null,
       linkedInID: null,
       verfiedSocketConnection: false,
+      screenWidth: 0, screenHeight: 0,
     };
     
     var uuid = this.uuidv1();
@@ -109,6 +110,8 @@ class App extends Component {
       PubSub.publish(eventObj.eventType, eventObj);
     });
 
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
     ReactGA.initialize('UA-113317436-1');
   }
 
@@ -116,6 +119,11 @@ class App extends Component {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
+  }
+
+  updateWindowDimensions() {
+    this.setState({ screenWidth: window.innerWidth, screenHeight: window.innerHeight });
+    console.log(`window.innerWidth: ${window.innerWidth}`);
   }
 
   componentWillMount() {
@@ -126,6 +134,15 @@ class App extends Component {
 
     console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
     console.dir(this.token_tasks_update);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
   serverEventTasksUpdate(msg, data) {
@@ -391,7 +408,9 @@ class App extends Component {
       onHandleQueryChange={this.props.setSearchQuery}
       userProfile={this.props.userProfile}
       isFetchInProgress={this.props.isFetchInProgress}
-      currentUserId={this.props.userProfile._id}/>
+      currentUserId={this.props.userProfile._id}
+      screenWidth={this.state.screenWidth}
+      screenHeight={this.state.screenHeight}/>
       {ChatAppLink}
       </div>
     );

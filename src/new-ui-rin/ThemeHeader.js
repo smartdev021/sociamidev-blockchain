@@ -20,7 +20,6 @@ class ThemeHeader extends React.Component {
 
     this.state = {
         notificationsOpen: false,
-        isMenuOpen: false,
       }
   }
 
@@ -46,11 +45,6 @@ class ThemeHeader extends React.Component {
     window.location.reload();
   }
 
-  openMenu(open) {
-    console.log("openMenu: " + open);
-    this.setState({isMenuOpen: open});
-  }
-
   render() {
     const CurrentUserID = this.props.currentUserID;
 
@@ -60,8 +54,8 @@ class ThemeHeader extends React.Component {
 
     const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
 
-    const OpenMenuClass = !this.state.isMenuOpen ? "open-menu" : "open-menu";
-    const CloseMenuClass = this.state.isMenuOpen ? "close-menu" : "close-menu";
+    const OpenMenuClass = !this.props.isSidebarOpen ? "open-menu" : "open-menu";
+    const CloseMenuClass = this.props.isSidebarOpen ? "close-menu" : "close-menu";
 
     return (
       <div className="session-header" id="popup-root">
@@ -70,13 +64,13 @@ class ThemeHeader extends React.Component {
             <div className="row">
                 <div className="col-md-3">
                     <div className="menu-hamburger">
-                        <ActionLink href="#" className={OpenMenuClass} style={{dispay: "none"}} onClick={() => this.openMenu(true)} style={{display: !this.state.isMenuOpen? "block" : "none"}}>
+                        <ActionLink href="#" className={OpenMenuClass} style={{dispay: "none"}} onClick={() => this.props.openSidebar(true)} style={{display: !this.props.isSidebarOpen? "block" : "none"}}>
                             <span></span>
                             <span></span>
                             <span></span>
                         </ActionLink>
 
-                        <ActionLink href="#" className={CloseMenuClass} onClick={() => this.openMenu(false)} style={{display: this.state.isMenuOpen? "block" : "none"}}>
+                        <ActionLink href="#" className={CloseMenuClass} onClick={() => this.props.openSidebar(false)} style={{display: this.props.isSidebarOpen? "block" : "none"}}>
                             <Icon name="times" aria-hidden="true"></Icon>
                         </ActionLink>
                     </div>
