@@ -458,9 +458,7 @@ const DayFromNumber = (dayNum)=> {
     if (!props.tasks || props.tasks.length == 0) {
         return null;
     }
-
-    console.log("RenderTasks");
-    console.dir(props.tasks);
+    
     return (
         props.tasks.map((task, i) => {
             return RenderTask(task, i, props)
@@ -505,11 +503,9 @@ class TasksMy extends React.Component {
   render() {
     return (<div className="scrollbar-inner">
     <div className="block-deepdive">
-        <div className="scrollbar-inner">
         <div className="row">
             {RenderTasks(this.props)}
         </div>
-          </div>
     </div>
 </div>
     );

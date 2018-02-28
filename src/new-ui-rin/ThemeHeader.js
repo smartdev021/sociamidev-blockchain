@@ -54,6 +54,9 @@ class ThemeHeader extends React.Component {
 
     const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
 
+    const OpenMenuClass = !this.props.isSidebarOpen ? "open-menu" : "open-menu";
+    const CloseMenuClass = this.props.isSidebarOpen ? "close-menu" : "close-menu";
+
     return (
       <div className="session-header" id="popup-root">
       {this.state.notificationsOpen && <Notifications onClose={()=>this.handleNotificationsClose()} userActivities={this.props.userActivities}/>}
@@ -61,15 +64,15 @@ class ThemeHeader extends React.Component {
             <div className="row">
                 <div className="col-md-3">
                     <div className="menu-hamburger">
-                        <a href="#" className="open-menu">
+                        <ActionLink href="#" className={OpenMenuClass} style={{dispay: "none"}} onClick={() => this.props.openSidebar(true)} style={{display: !this.props.isSidebarOpen? "block" : "none"}}>
                             <span></span>
                             <span></span>
                             <span></span>
-                        </a>
+                        </ActionLink>
 
-                        <a href="#" className="close-menu">
+                        <ActionLink href="#" className={CloseMenuClass} onClick={() => this.props.openSidebar(false)} style={{display: this.props.isSidebarOpen? "block" : "none"}}>
                             <Icon name="times" aria-hidden="true"></Icon>
-                        </a>
+                        </ActionLink>
                     </div>
                     <h1 className="logo">
                         <Link to='/'><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt=""/></Link>

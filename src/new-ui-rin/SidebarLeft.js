@@ -32,6 +32,7 @@ class SidebarLeft extends React.Component {
     this.state = {
       toggleFriendsUpdate: false,
       intervalId: undefined,
+      isMobileView: this.props.screenWidth < 990,
     }
   }
 
@@ -55,6 +56,10 @@ class SidebarLeft extends React.Component {
         });
         this.props.activitiesFetch(UserFriendIDs);
       }
+    }
+
+    if (prevProps.screenWidth != this.props.screenWidth) {
+      this.setState({isMobileView: this.props.screenWidth < 990});
     }
   }
 
@@ -171,7 +176,7 @@ class SidebarLeft extends React.Component {
 
     for (let i = 0; i < 20; ++i) {
         dummyFriends.push(
-            <div className="item-account clearfix">
+          <div className="item-account clearfix" key={i}>
         <div className="row">
             <div className="col-xs-3">
                 <div className="avatar">
@@ -276,12 +281,19 @@ class SidebarLeft extends React.Component {
         )
       })
   }
+
   render() {
+    let CategoryClassName = "category-left";
+
+    if (this.state.isMobileView) {
+      CategoryClassName = `category-left ${this.props.isOpen ? " open-category" : " close-category"}`;
+    }
+
     const ProfileImage = this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL
     : "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
 
     return (
-        <div className="category-left">
+        <div className={CategoryClassName}>
         <div className="item-account line-bottom clearfix">
             <div className="row">
                 <div className="col-xs-3">
@@ -300,13 +312,11 @@ class SidebarLeft extends React.Component {
         <div className="specialized">
             Android developer
         </div>
-
-        <div className="scrollbar-inner">
+          <div className="scrollbar-inner">
             <div className="block-account">
-                {RenderDummyFriends ? this.renderFriendsDummy() : this.renderFriends()}
+              {RenderDummyFriends ? this.renderFriendsDummy() : this.renderFriends()}
             </div>
-        </div>
-
+          </div>
     </div>
     );
   }

@@ -100,6 +100,10 @@ class TaskScanner extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      isSearchExpanded: false
+    }
   }
 
   renderTasks() {
@@ -129,26 +133,36 @@ class TaskScanner extends React.Component {
       }
   }
 
+  handleExpandSearch(expand) {
+      this.setState({isSearchExpanded: expand}); 
+  }
+
   render() {
+    const BtSearchClass = this.state.isSearchExpanded ? "bt-search open-search" : "bt-search";
+    const HeadingBorderClass = this.props.isExpanded ? "text-heading heading-border heading-border-decorators-visible" : "text-heading heading-border";
     return (<div className="block-tokens">
     <div className="expanding">
-        <a href="#" className="open-expanding"><Icon name="chevron-left" aria-hidden="true"></Icon></a>
-        <a href="#" className="close-expanding"><Icon name="chevron-right" aria-hidden="true"></Icon></a>
+        {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
+          onClick={() => this.props.onExpand(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        : <ActionLink href="#" className="close-expanding"
+          onClick={() => this.props.onExpand(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
     </div>
 
     <div className="expanding expanding-mobile">
-        <a href="#" className="open-expanding"><Icon name="chevron-left" aria-hidden="true"></Icon></a>
-        <a href="#" className="close-expanding"><Icon name="chevron-right" aria-hidden="true"></Icon></a>
+        {!this.props.isExpanded ? <ActionLink href="#" className="open-expanding"
+          onClick={() => this.props.onExpand(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        : <ActionLink href="#" className="close-expanding"
+          onClick={() => this.props.onExpand(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
     </div>
 
-    <div className="bt-search">
-        <a href="#" className="icon-search">
-            <Icon name="search" aria-hidden="true"></Icon>
-        </a>
+    <div className={BtSearchClass}>
+        <ActionLink href="#" className="icon-search" onClick={() => this.handleExpandSearch(true)}>
+            <Icon className="none-padding-left" name="search" aria-hidden="true"></Icon>
+        </ActionLink>
 
-        <div className="block-search">
+        <div className="block-search" style={{display: this.state.isSearchExpanded ? "block" : "none"}}>
             <div className="close-search">
-                <a href="#"><Icon name="times" aria-hidden="true"></Icon></a>
+                <ActionLink href="#" onClick={() => this.handleExpandSearch(false)}><Icon name="times" aria-hidden="true"></Icon></ActionLink>
             </div>
             <div className="form-search-tokens">
                 <div id="imaginary_container">
@@ -166,7 +180,7 @@ class TaskScanner extends React.Component {
     </div>
 
     <div className="box-head">
-        <h1 className="text-heading heading-border">
+        <h1 className={HeadingBorderClass}>
             <span>Complete quests to earn tokens</span>
         </h1>
     </div>

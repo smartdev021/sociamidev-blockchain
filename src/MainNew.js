@@ -49,6 +49,17 @@ import {
 import '~/src/style.css'
 
 class MainNew extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isSidebarOpen: false,
+    }
+  }
+
+  handleSidebarOpen(open) {
+    this.setState({isSidebarOpen: open});
+  }
     getRedirectLocation() {
         let RedirectTo = null;
         if (this.props.isOpenSearchResultsPending) {
@@ -91,9 +102,10 @@ class MainNew extends React.Component {
         <div className="wrapper">
           {RedirectTo}
           <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} 
-            fetchUserActivities={() => this.props.fetchUserActivities()}/>
+            fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
+            isSidebarOpen={this.state.isSidebarOpen}/>
           <div className="session-content">
-            <SidebarLeft />
+            <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/>
             <div className="content-tokens">
               {this.renderRoutes()}
             </div>
