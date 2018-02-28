@@ -382,8 +382,15 @@ class SkillBrowser extends React.Component {
       <span><span>DeepDive </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
       : <span>DeepDive</span>;
 
+      const IlluminateButtonText = !IsDeepdiveAbailable ? 
+      <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
+      : <span>Illuminate</span>;
+    
     const DeepdiveButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse deep-dive-button" 
       : "btn-md btn-outline-inverse deep-dive-button-disabled";
+
+    const IlluminateButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse illuminate-button" 
+      : "btn-md btn-outline-inverse illuminate-button-disabled";
 
     if (redirectToTaskManagement) {
       return <Redirect to='/taskManagement'/>;
@@ -435,7 +442,9 @@ class SkillBrowser extends React.Component {
           </div>
           {this.isTreeAdded() &&<div className="deep-dive-button-wrap">
 
-            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
+            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className={IlluminateButtonClass}
+              onClick={IsDeepdiveAbailable ? ()=> this.toggleIlluminateForm() : () => {
+              }}>{IlluminateButtonText}</button>
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
                   onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
