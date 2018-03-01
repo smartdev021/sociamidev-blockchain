@@ -1,0 +1,30 @@
+#character-selection-container {
+    height: 100%;
+    padding: 0 30px;
+}
+
+#character-selection-container-inner {
+    height: 100%;
+    overflow-y: scroll;
+}
+.character-info {
+    width: 100%;
+}
+
+.character-selection-button {
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.character-selection-button img {
+    width: 100%;;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.1;
+    margin-bottom: 20px;
+}
+
+.character-selected img {
+    opacity: 1;
+}

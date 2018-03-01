@@ -1,5 +1,13 @@
 .character-creation-popup-close-icon {
     font-size: 32px;
     cursor: pointer;
-    float: right;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/*avoid scrolling of parent content*/
+.ReactModal__Body--open {
+    overflow-y: hidden;
 }
