@@ -21,10 +21,36 @@ import {
 import {Route, Switch} from 'react-router-dom' //temporarily here, remove it!!!!!!!
 import Authorize from '~/src/authentication/Authorize';
 
+//character selection
+import CharacterSelection from "~/src/character-creation/CharacterSelection"
+import TraitsSelection from "~/src/character-creation/TraitsSelection"
+
 class LandingPage extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+        isCharacterCreationFlowActive: false,
+    }
+  }
+
+  handleCloseCharacterCreation() {
+      this.setState({isCharacterCreationFlowActive: false});
+  }
+
+  startCharacterCreation() {
+    this.setState({isCharacterCreationFlowActive: true});
+  }
+
+  renderCharacterCreationForm() {
+      if (!this.state.isCharacterCreationFlowActive) {
+          return null;
+      }
+
+      return (
+          <CharacterSelection onClose={() => this.handleCloseCharacterCreation()}/>
+      );
   }
 
   renderSignUpForm() {
@@ -47,6 +73,7 @@ class LandingPage extends React.Component {
     return (
       <div className="wrapper">
         {this.renderSignUpForm()}
+        {this.renderCharacterCreationForm()}
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <div className="session-header-landing">
           <div className="container">
@@ -55,6 +82,8 @@ class LandingPage extends React.Component {
                 <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
               </div>
               <div className="col-xs-6 pull-right">
+                <ActionLink href="#" onClick={()=> this.startCharacterCreation()} className="btn-base-landing btn-red-landing btn-login-landing">
+                  Create Account</ActionLink>
                 <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base-landing btn-yellow-landing btn-login-landing">
                   Sign in</ActionLink>
               </div>
