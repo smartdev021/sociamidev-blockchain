@@ -256,17 +256,28 @@ class ProgressionTrees extends React.Component {
               {/*Right Side*/}
               <div className={rightSideClassName}>
                 <div className="content-2-columns-left-new-ui">
+
+
+
                   <div id="progression-trees-scanner">
                     <div id="progression-trees-scanner-container">
-                      <div id="scanner-input-container">
-                      {!this.state.isScannerExpanded ?
-                        <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
-                        :
-                        <div className="scanner-expanded">
-                          <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
+                      <div className="row">
+                        <div className="col-xs-6">
+                            <h1 className="heading-trees">My Progress</h1>
                         </div>
-                      }
+                        <div>
+                            <div id="scanner-input-container">
+                                {!this.state.isScannerExpanded ?
+                                    <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
+                                    :
+                                    <div className="scanner-expanded">
+                                        <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                       </div>
+
                       <div id="trees-scanner-container">
                         {!this.state.isScannerExpanded && 
                           <ActionLink id="user-prog-tree-expand" href="#" onClick={()=> this.setTreeScannerExpanded(true)}>
