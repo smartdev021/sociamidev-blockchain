@@ -23,7 +23,8 @@ import Authorize from '~/src/authentication/Authorize';
 
 //character selection
 import CharacterSelection from "~/src/character-creation/CharacterSelection"
-import TraitsSelection from "~/src/character-creation/TraitsSelection"
+import CharacterTraitsSelection from "~/src/character-creation/TraitsSelection"
+import CharacterAuthentication from "~/src/character-creation/Authentication"
 
 class LandingPage extends React.Component {
 
@@ -49,7 +50,7 @@ class LandingPage extends React.Component {
       }
 
       return (
-          <CharacterSelection onClose={() => this.handleCloseCharacterCreation()}/>
+          <CharacterAuthentication onClose={() => this.handleCloseCharacterCreation()}/>
       );
   }
 

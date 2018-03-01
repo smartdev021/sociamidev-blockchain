@@ -2,14 +2,14 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
-import {Icon} from 'react-fa'
-
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
-import "./common.css"
-import "./traitsSelection.css"
+import {Icon} from 'react-fa'
 
-class TraitsSelection extends React.Component {
+import "./common.css"
+import "./authentication.css"
+
+class Authentication extends React.Component {
     constructor(props) {
       super(props);
       this.modalDefaultStyles = {};
@@ -46,16 +46,16 @@ class TraitsSelection extends React.Component {
 
     render() {
         return (
-          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Traits Selection"} 
+          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
             parentSelector={getPopupParentElement}>
-            <div id="character-traits-selection-container">
+            <div id="character-authenticate-container">
               <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
                 name="times" aria-hidden="true"></Icon>
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="text-center" id="character-seelection-header">
-                      <h3 className="text-uppercase">Select Your Traits</h3>
+                      <h3 className="text-uppercase">Plug In</h3>
                     </div>
                   </div>
                 </div>
@@ -66,7 +66,7 @@ class TraitsSelection extends React.Component {
     }
   }
 
-  TraitsSelection.propTypes = {
+  Authentication.propTypes = {
   }
  
-  export default require('react-click-outside')(TraitsSelection);
+  export default require('react-click-outside')(Authentication);
