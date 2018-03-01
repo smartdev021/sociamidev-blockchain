@@ -1,5 +1,6 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 class User extends React.Component {
 
@@ -36,6 +37,12 @@ class User extends React.Component {
     const classes = `${tabClass}` ;
     var fullname = this.props.firstName + " " + this.props.lastName;
     var imgSrc = "";
+
+    var showLastMessage = this.props.lastMessage;
+    if(this.props.lastMessage.indexOf('<img') >= 0){
+      showLastMessage = "image";
+    }
+
     const statusImgSrc = this.props.loggedinStatus == true || this.props.userType == "chatbot" ? "http://s3.amazonaws.com/gs.apps.icons/B_Bpusg8EeKT7hIxPR901Q_%2Fgreen+dot.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Location_dot_grey.svg/2000px-Location_dot_grey.svg.png";
     if(this.props.userType == "facebook"){
       imgSrc = "http://graph.facebook.com/" + this.props.username + "/picture?type=square";
@@ -51,7 +58,7 @@ class User extends React.Component {
             <img src={imgSrc} alt="" className="profilePic"/>
             <span className="name">{ fullname } <img src={statusImgSrc} className="statusDot"/></span>
             <span className="time"><TimeAgo date={this.props.lastMessageTimeStamp} minPeriod={60}/></span>
-            <span className="preview">{this.props.lastMessage}</span>
+            <span className="preview">{ReactHtmlParser(showLastMessage)}</span>
             <div className={messageCountContainerClasses}><span className="messageCount">{this.state.unreadCount}</span></div>
           </div>
     );

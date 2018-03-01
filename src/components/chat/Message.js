@@ -1,5 +1,6 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 class Message extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class Message extends React.Component {
     return (
       <div>
       <div className={`bubble ${fromMe}`}>
-        { this.props.message}
+        { ReactHtmlParser(this.props.message)}
       </div>
       <div className={`${timeStampClass}`}>
       <TimeAgo date={this.props.time} minPeriod={60}/>
