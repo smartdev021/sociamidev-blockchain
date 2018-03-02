@@ -155,7 +155,7 @@ class CharacterSelection extends React.Component {
                           <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
                         </div>
                         <div id="character-select-confirm-button-container">
-                          <button className="btn btn-danger text-uppercase" onClick={()=>this.handleCharacterSelectConfirm()}>
+                          <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.state.selectedIndex})}>
                             Select
                           </button>
                         </div>

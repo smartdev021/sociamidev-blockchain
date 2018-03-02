@@ -117,7 +117,7 @@ class TraitsSelection extends React.Component {
                   <div className="row">
                     <div className="col-lg-12">
                       <div id="character-trait-select-confirm-button-container" className="text-center">
-                        <button className="btn btn-danger text-uppercase" onClick={()=>this.handleSelectConfirm()}>
+                        <button className="btn btn-danger text-uppercase"  onClick={()=>this.props.onNextStep({characterTraitsIndex: this.state.selectedIndex})}>
                           Next
                         </button>
                       </div>
