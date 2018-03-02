@@ -199,7 +199,7 @@ const DayFromNumber = (dayNum)=> {
                       <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)} className="btn-base btn-red">Accept</ActionLink>
                     </li>
                     <li>
-                      <ActionLink href="#" onClick={()=>{}} className="btn-base btn-red">Open Chat</ActionLink>
+                      <ActionLink href="#" onClick={()=>{ document.getElementById(Partner.user._id).click()}} className="btn-base btn-red">Open Chat</ActionLink>
                     </li>
                     <li>
                       <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout, FirstPendingParticipant.user)} className="btn-base btn-red">Reject</ActionLink>
