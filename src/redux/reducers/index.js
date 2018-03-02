@@ -9,6 +9,7 @@ import { isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authoriza
 import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./projects"
 import { userFriends } from "./social"
 import { userFriendsActivities } from "./activities"
+import { characterCreation, characterCreationData } from "./characterCreation"
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -35,4 +36,6 @@ export default combineReducers({
   isTasksFetchInProgress,
   isTaskSaveInProgress,
   isTasksUpdateInProgress,
+  characterCreation,
+  characterCreationData,
 });

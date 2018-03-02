@@ -11,53 +11,10 @@ import ActionLink from '~/src/components/common/ActionLink'
 import "./common.css"
 import "./characterSelection.css"
 
-const charactersData = [
-  {
-    name: "Ashe", 
-    image: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Ashe.png",
-    imageBig: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Ashe_big.png",
-    descriptionText: "Ashe is a kin enthusias is in robotics and AI"
-  },
-  {
-    name: "Kaye", 
-    image: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Kaye.png",
-    imageBig: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Kaye_big.png",
-    descriptionText: "Kaye is a kin enthusias is in robotics and AI"
-  },
-  {
-    name: "Leo", 
-    image: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Leo.png",
-    imageBig: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Leo_big.png",
-    descriptionText: "Leo is a kin enthusias is in robotics and AI"
-  },
-  {
-    name: "Leona", 
-    image: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Leona.png",
-    imageBig: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Leona_big.png",
-    descriptionText: "Leona is a kin enthusias is in robotics and AI"
-  },
-  {
-    name: "Max", 
-    image: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Max.png",
-    imageBig: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Max_big.png",
-    descriptionText: "Max is a kin enthusias is in robotics and AI"
-  },
-  {
-    name: "Nelson", 
-    image: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png",
-    imageBig: "http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson_big.png",
-    descriptionText: "Nelson is a kin enthusias is in robotics and AI"
-  },
-];
-
 class CharacterSelection extends React.Component {
     constructor(props) {
       super(props);
       this.modalDefaultStyles = {};
-
-      this.state = {
-        selectedIndex: 0,
-      }
     }
 
     componentWillMount() {
@@ -90,7 +47,7 @@ class CharacterSelection extends React.Component {
     }
 
     handleChangeSelectedChatacter(index) {
-      this.setState({selectedIndex: index});
+      this.props.onSelect(index);
     }
 
     handleCharacterSelectConfirm() {
@@ -107,9 +64,9 @@ class CharacterSelection extends React.Component {
                   <div className="col-lg-12 col-md-4 col-sm-4 col-xsm-12" key={i}>
                     <div className="character-selection-button-container">
                       <ActionLink onClick={()=>this.handleChangeSelectedChatacter(i)} 
-                        className={`character-selection-button ${this.state.selectedIndex == i ? 
+                        className={`character-selection-button ${this.props.selectedIndex == i ? 
                         'character-selected' : ""}`}>
-                        <img src={charactersData[i].image}/>
+                        <img src={this.props.charactersList[i].image}/>
                       </ActionLink>
                     </div>
                   </div>
@@ -131,7 +88,7 @@ class CharacterSelection extends React.Component {
               <div id="character-selection-container-inner">
                 <div className="container-fluid">
                   <div id="character-selection-image-big">
-                    <img src={charactersData[this.state.selectedIndex].imageBig}/>
+                    <img src={this.props.charactersList[this.props.selectedIndex].imageBig}/>
                   </div>
                   <div className="row">
                     <div className="col-lg-12">
@@ -142,27 +99,27 @@ class CharacterSelection extends React.Component {
                   </div>
                   <div className="row">
                     <div className="col-lg-2 col-md-12">
-                      {this.renderCharacters(charactersData, 0, 2)}
+                      {this.renderCharacters(this.props.charactersList, 0, 2)}
                     </div>
                     <div className="col-lg-8 col-md-12">
                       <div className="text-center" id="character-info">
                         <div id="character-name">
-                          <h4 className="text-uppercase">{charactersData[this.state.selectedIndex].name}</h4>
+                          <h4 className="text-uppercase">{this.props.charactersList[this.props.selectedIndex].name}</h4>
                         </div>
                         <div id="character-description">
-                          <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
-                          <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
-                          <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
+                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText}</p>
+                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText}</p>
+                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText}</p>
                         </div>
                         <div id="character-select-confirm-button-container">
-                          <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.state.selectedIndex})}>
+                          <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.props.selectedIndex})}>
                             Select
                           </button>
                         </div>
                       </div>
                     </div>
                     <div className="col-lg-2 col-md-12">
-                      {this.renderCharacters(charactersData, 3, charactersData.length - 1)}
+                      {this.renderCharacters(this.props.charactersList, 3, this.props.charactersList.length - 1)}
                     </div>
                   </div>
                 </div>

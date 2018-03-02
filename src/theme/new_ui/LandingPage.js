@@ -30,6 +30,11 @@ import CharacterAuthentication from "~/src/character-creation/Authentication"
 
 import ConfigMain from '~/configs/main'
 
+import {
+    setSelectedCharacterIndex,
+    setSelectedCharacterTraitsIndex,
+  } from '~/src/redux/actions/characterCreation'
+
 const SELECT_TRAITS = "SelectTraits";
 const SELECT_CHARACTER = "SelectCharacter";
 const SELECT_AUTH_METHOD = "SelectAuthMethod";
@@ -77,22 +82,29 @@ class LandingPage extends React.Component {
   }
 
   startCharacterCreation() {
-      console.log("startCharacterCreation");
+    const StartFlowIndex = 0;
     this.setState({
-        characterCreationState: !this.state.characterCreationState ? CharacterCreationFlow[0] : this.state.characterCreationState,
-        characterCreationFlowStepIndex: !this.state.characterCreationFlowStepIndex ? 0 : this.state.characterCreationFlowStepIndex,
+        characterCreationState: !this.state.characterCreationState ? CharacterCreationFlow[StartFlowIndex] : this.state.characterCreationState,
+        characterCreationFlowStepIndex: !this.state.characterCreationFlowStepIndex ? StartFlowIndex : this.state.characterCreationFlowStepIndex,
         isCharacterCreationFlowActive: true
     });
   }
 
   characterCreationNextStep(data) {
     const characterCreationFlowStepIndex = (this.state.characterCreationFlowStepIndex + 1) % CharacterCreationFlow.length;
-    console.log(`characterCreationNextStep characterCreationFlowStepIndex: ${characterCreationFlowStepIndex}`);
     this.setState( {
             characterCreationState: CharacterCreationFlow[characterCreationFlowStepIndex], 
             characterCreationFlowStepIndex: characterCreationFlowStepIndex,
             characterCreationData: Object.assign({}, this.state.characterCreationData, {...data})
     });
+  }
+
+  handleSelectCharacterTraits(index) {
+      this.props.setSelectedCharacterTraitsIndex(index);
+  }
+
+  handleSelectCharacter(index) {
+      this.props.setSelectedCharacterIndex(index);
   }
 
   renderCharacterCreationForm() {
@@ -102,12 +114,19 @@ class LandingPage extends React.Component {
         switch (this.state.characterCreationState.step) {
             case SELECT_TRAITS: {
                 FormToRender = <CharacterTraitsSelection characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}/>
+                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}
+                  onSelect={(index)=>this.handleSelectCharacterTraits(index)}
+                  selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
+                  traitsList={this.props.listCharacterTraits}/>
                 break;
             }
             case SELECT_CHARACTER: {
                 FormToRender = <CharacterSelection characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}/>
+                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}
+                  onSelect={(index)=>this.handleSelectCharacter(index)}
+                  selectedIndex={this.props.characterCreationData.selectedCharacterIndex}
+                  charactersList={this.props.listCharacters}
+                  characterCreationData={this.props.characterCreationData}/>
                 break;
             }
             case SELECT_AUTH_METHOD: {
@@ -119,10 +138,6 @@ class LandingPage extends React.Component {
               break;
         }
     }
-
-    console.log("this.state.creationState: ");
-    console.dir(this.state.characterCreationState);
-    console.dir(FormToRender);
 
     return FormToRender;
   }
@@ -692,14 +707,23 @@ class LandingPage extends React.Component {
 LandingPage.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
+  characterCreationData: PropTypes.object.isRequired,
+  listCharacterTraits: PropTypes.array.isRequired,
+  listCharacters: PropTypes.array.isRequired,
+  setSelectedCharacterIndex: PropTypes.func.isRequired,
+  setSelectedCharacterTraitsIndex: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  setSelectedCharacterIndex: bindActionCreators(setSelectedCharacterIndex, dispatch),
+  setSelectedCharacterTraitsIndex: bindActionCreators(setSelectedCharacterTraitsIndex, dispatch),
 });
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
+  characterCreationData: state.characterCreationData,
+  listCharacterTraits: state.characterCreation.listCharacterTraits,
+  listCharacters: state.characterCreation.listCharacters,
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
