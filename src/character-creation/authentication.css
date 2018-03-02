@@ -1,0 +1,9 @@
+#character-authenticate-container { 
+    height: 100%;
+    padding: 0px 30px;
+}
+
+#character-authenticate-container-inner { 
+    height: 100%;
+    overflow-y: scroll;
+}

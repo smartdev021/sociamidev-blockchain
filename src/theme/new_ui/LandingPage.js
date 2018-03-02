@@ -50,7 +50,7 @@ class LandingPage extends React.Component {
       }
 
       return (
-          <CharacterTraitsSelection onClose={() => this.handleCloseCharacterCreation()}/>
+          <CharacterAuthentication onClose={() => this.handleCloseCharacterCreation()}/>
       );
   }
 

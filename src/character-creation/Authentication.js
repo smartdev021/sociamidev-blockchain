@@ -43,14 +43,19 @@ class Authentication extends React.Component {
     handleClose() {
       this.props.onClose();
     }
+    
+    handleCharacterSelectConfirm() {
+      this.props.onClose();
+    }
 
     render() {
         return (
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
             parentSelector={getPopupParentElement}>
-            <div id="character-authenticate-container">
-              <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
+            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
                 name="times" aria-hidden="true"></Icon>
+            <div id="character-authenticate-container">
+              <div id="character-authenticate-container-inner">
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">
@@ -59,9 +64,35 @@ class Authentication extends React.Component {
                     </div>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-lg-6 col-md-12">
+                    <div className="character-creation-authenticate-button-container">
+                      <button className="btn btn-primary" onClick={()=>this.handleCharacterSelectConfirm()}>
+                        Login with Facebook
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-12">
+                    <div className="character-creation-authenticate-button-container">
+                      <button className="btn btn-primary" onClick={()=>this.handleCharacterSelectConfirm()}>
+                        Login with LinkedIn
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <p>
+                      By clicking on any of the above authentication methods, 
+                      you agree yo our t and c's and confirm that you have read our 
+                      Data Privacy (which includes our Cookie Use Plociy).
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </Modal>
+          </div>
+        </Modal>
       )
     }
   }
