@@ -93,6 +93,10 @@ class CharacterSelection extends React.Component {
       this.setState({selectedIndex: index});
     }
 
+    handleCharacterSelectConfirm() {
+      this.props.onClose();
+    }
+
     renderCharacters(characters, firstIndex, lastIndex) {
       return (
         <div className="row">
@@ -149,6 +153,11 @@ class CharacterSelection extends React.Component {
                           <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
                           <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
                           <p>{charactersData[this.state.selectedIndex].descriptionText}</p>
+                        </div>
+                        <div id="character-select-confirm-button-container">
+                          <button className="btn btn-danger text-uppercase" onClick={()=>this.handleCharacterSelectConfirm()}>
+                            Select
+                          </button>
                         </div>
                       </div>
                     </div>
