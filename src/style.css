@@ -104,7 +104,7 @@ html, body {
 
 .menu-hamburger a.open-menu span{
     background: #ffffff;
-    width: 35px;
+    width: 30px;
     height: 4px;
     left: 0px;
     position: absolute;
@@ -1040,7 +1040,7 @@ html, body {
     }
 
     .logo{
-        margin-left: 50px;
+        margin-left: 40px;
     }
 
     .category-left{
@@ -1101,7 +1101,7 @@ html, body {
     }
 
     .expanding-mobile a{
-        display: block;
+        display: block !important;
     }
 
     .bt-search a.icon-search i.fa{
@@ -1111,11 +1111,15 @@ html, body {
     .wrapper{
         overflow-y: hidden;
     }
+
+    .heading-border span:before, .heading-border span:after{
+        display: none;
+    }
 }
 
 @media all and (max-width: 480px) {
     .btn-yellow{
-        padding: 5px 10px;
+        padding: 5px 5px;
     }
 
     .logo{
@@ -1137,6 +1141,41 @@ html, body {
     .expanding-mobile a,
     .expanding a{
         left: -30px;
+    }
+
+    #progression-trees-scanner ul li{
+        padding: 20px 10px;
+    }
+
+    .tree-scanner-tree-name{
+        font-size: 16px;
+    }
+
+    .tree-scaner-star-rating{
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+
+    .progression-tree-my-text{
+        width: 100%;
+        display: block;
+    }
+
+    .heading-trees{
+        font-size: 28px;
+    }
+
+    .scanner-expanded,
+    #scanner-input-container{
+        margin-left: 0%;
+    }
+
+    .navbar-top-links{
+        position: static;
+        top: 0px;
+        margin-top: 0px;
+        padding-top: 0px;
     }
 }
 

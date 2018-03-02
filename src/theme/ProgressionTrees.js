@@ -262,10 +262,10 @@ class ProgressionTrees extends React.Component {
                   <div id="progression-trees-scanner">
                     <div id="progression-trees-scanner-container">
                       <div className="row">
-                        <div className="col-xs-6">
+                        <div className="col-xs-7 col-md-6">
                             <h1 className="heading-trees">My Progress</h1>
                         </div>
-                        <div>
+                        <div className="col-xs-5 col-md-6">
                             <div id="scanner-input-container">
                                 {!this.state.isScannerExpanded ?
                                     <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
