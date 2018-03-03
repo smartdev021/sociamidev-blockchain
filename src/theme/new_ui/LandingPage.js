@@ -66,8 +66,6 @@ class LandingPage extends React.Component {
         isCharacterCreationFlowActive: false,
         characterCreationState: undefined,
         characterCreationFlowStepIndex: undefined,
-
-        characterCreationData: undefined,
     }
   }
 
@@ -90,12 +88,11 @@ class LandingPage extends React.Component {
     });
   }
 
-  characterCreationNextStep(data) {
+  characterCreationNextStep() {
     const characterCreationFlowStepIndex = (this.state.characterCreationFlowStepIndex + 1) % CharacterCreationFlow.length;
     this.setState( {
             characterCreationState: CharacterCreationFlow[characterCreationFlowStepIndex], 
             characterCreationFlowStepIndex: characterCreationFlowStepIndex,
-            characterCreationData: Object.assign({}, this.state.characterCreationData, {...data})
     });
   }
 

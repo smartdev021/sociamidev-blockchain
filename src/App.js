@@ -189,12 +189,17 @@ class App extends Component {
   }
 
   getCharacterCreationData() {
-    let data = {
-      characterName: "ASHE",
-      traitsName: "Creator",
-      traitsIndex: 0,
-      characterIndex: 0,
-    };
+    let data = undefined;
+
+    if (this.props.characterCreationData && this.props.characterCreationData.isInProgress) {
+      data = {
+        characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex].name,
+        traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
+        traitsDescription: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].description,
+        traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
+        characterIndex: this.props.characterCreationData.selectedCharacterIndex,
+      };
+    }
 
     return data;
   }
@@ -526,6 +531,11 @@ const mapStateToProps = state => ({
   exactLocation: state.exactLocation,
   searchResults: state.searchResults,
   userActivities: state.userProfile.activities.data,
+
+  characterCreationData: state.characterCreationData,
+  listCharacterTraits: state.characterCreation.listCharacterTraits,
+  listCharacters: state.characterCreation.listCharacters,
+
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

@@ -7,6 +7,7 @@ import {
 const characterCreationDataInitialState = {
   selectedCharacterIndex: 0,
   selectedTraitsIndex: 0,
+  isInProgress: true,
 };
 
 export function characterCreationData(state = characterCreationDataInitialState, action) {
