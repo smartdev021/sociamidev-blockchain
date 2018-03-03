@@ -271,7 +271,11 @@ class AnswerQuestions extends React.Component {
 
     const Partner = this.getPartnerProfile();
 
-    const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, 10/*limit questions to 10*/) : [];
+    let limit = 10;
+    if (this.state.currentTask.type == "illuminate") {
+      limit = 3;
+    }
+    const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
 
     return (
       <PopupAnswers onSubmit={(e)=>this.handlePopupSubmit(e)} 
