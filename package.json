@@ -7,14 +7,19 @@
     "startLocal": "cross-env dev_env=local node server.js",
     "lint": "eslint src",
     "compile": "webpack -p",
+    "compile-stg": "webpack -p --config webpack.staging.js",
+    "compile-prod": "webpack -p --config webpack.prod.js",
     "dev": "webpack -d --watch",
     "clean": "rimraf dist",
     "build": "npm run clean && npm run compile",
-    "deploy:dev": "python deploy.py Staging",
+    "build-stg": "npm run clean && npm run compile-stg",
+    "build-prod": "npm run clean && npm run compile-prod",
+    "deploy:stg": "python deploy.py Staging",
     "deploy:uat": "npm run build && aws s3 sync dist/ s3://uat.soqqle.com",
     "deploy:prod": "python deploy.py Production",
     "publish:dev": "npm run build && npm run deploy:dev",
-    "publish:prod": "npm run build && npm run deploy:prod"
+    "publish:stg": "npm run build-stg && npm run deploy:stg",
+    "publish:prod": "npm run build-prod && npm run deploy:prod"
   },
   "repository": {
     "type": "git",
@@ -59,6 +64,7 @@
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0",
+    "webpack-merge": "^4.1.2",
     "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {

@@ -26,8 +26,6 @@ module.exports = {
       title: 'Soqqle',
       inject: 'body',
     })
-    ,
-    new Webpack.EnvironmentPlugin(['dev_env'])
   ],
   module: {
     loaders: 
