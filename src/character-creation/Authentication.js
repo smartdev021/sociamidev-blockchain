@@ -67,14 +67,14 @@ class Authentication extends React.Component {
                 <div className="row">
                   <div className="col-lg-6 col-md-12">
                     <div className="character-creation-authenticate-button-container">
-                      <button className="btn btn-primary" onClick={()=>this.handleCharacterSelectConfirm()}>
+                      <button className="btn btn-primary" onClick={()=>this.props.onHandleSignUpFacebook()}>
                         Login with Facebook
                       </button>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-12">
                     <div className="character-creation-authenticate-button-container">
-                      <button className="btn btn-primary" onClick={()=>this.handleCharacterSelectConfirm()}>
+                      <button className="btn btn-primary" onClick={()=>this.props.onHandleSignUpLinkedIn()}>
                         Login with LinkedIn
                       </button>
                     </div>

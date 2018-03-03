@@ -128,7 +128,9 @@ class LandingPage extends React.Component {
             }
             case SELECT_AUTH_METHOD: {
                 FormToRender = <CharacterAuthentication characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()}/>
+                  onClose={() => this.handleCloseCharacterCreation()}
+                  onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
+                  onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}/>
                 break;
             }
             default:
