@@ -37,9 +37,9 @@ body {
  #changeBtn {
      float: right;
 }
- .fa{
-     padding-left: 10px;
-}
+ /*.fa{*/
+     /*padding-left: 10px;*/
+/*}*/
  #privacyTitle{
      margin-top: 0;
      margin-bottom: .5em;

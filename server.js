@@ -1,12 +1,20 @@
 let path = require('path');
 let webpack = require('webpack');
 let express = require('express');
-let config = require('./webpack.config');
+let fs = require('fs');
+let config = require('./webpack.local');
+
+const env = process.env.NODE_ENV;
+
+const configFile = `./webpack.${env}.js`;
+if (fs.existsSync(configFile)) {
+  config = require(configFile);
+}
 
 let app = express();
 let compiler = webpack(config);
 
-let port = process.env.NODE_ENV == "Staging"? 8080: 3000;
+let port = env == "Staging"? 8080: 3000;
 
 app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath

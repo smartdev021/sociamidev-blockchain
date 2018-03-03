@@ -22,7 +22,7 @@ import ReactGA from 'react-ga'
 
 import LandingPage from '~/src/theme/new_ui/LandingPage'
 
-import Main from './MainNew';
+import Main from './Main';
 import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'

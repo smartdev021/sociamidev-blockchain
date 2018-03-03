@@ -1144,6 +1144,10 @@ body{
         min-height: auto;
         margin-top: 0px;
     }
+
+    .session-header-landing .logo{
+        margin-left: 0px;
+    }
 }
 
 @media all and (max-width: 360px) {
