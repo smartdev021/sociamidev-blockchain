@@ -277,6 +277,28 @@ class SkillBrowser extends React.Component {
   handleToggle() {
     this.setState({IsDisplayForm:'none'});
   }
+
+  lastIlluminateDateAnswered() {
+    let LatestIlluminateDateAnswered = undefined;
+
+    if (this. props.userProfile.illuminates && this.props.userProfile.illuminates.length > 0) {
+      const CurrentTree = this.props.location.state.tree;
+      let illuminatessForCurrentTree = this.props.userProfile.illuminates.filter((illuminate) => {
+        return illuminate.treeId == CurrentTree._id;
+      });
+
+      if (illuminatessForCurrentTree.length > 0) {
+        illuminatessForCurrentTree.sort((a, b) => {
+          return a.dateJoined - b.dateJoined;
+        });
+
+        LatestIlluminateDateAnswered = illuminatessForCurrentTree[illuminatessForCurrentTree.length - 1].dateJoined;
+      }
+    }
+
+    return LatestIlluminateDateAnswered;
+  }
+
   lastHangoutDateJoined() {
     let LatestHangoutDateJoined = undefined;
 
@@ -373,23 +395,23 @@ class SkillBrowser extends React.Component {
     const { redirectToTaskManagement } = this.state;
 
     const LatestHangoutDateJoined = this.lastHangoutDateJoined();
-
+    const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
     const CurrentTree = this.props.location.state.tree;
 
     const IsDeepdiveAbailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
-
+    const IsIlluminateAvailable = !LatestIlluminateDateAnswered || this.state.timeNow - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
     const DeepDiveButtonText = !IsDeepdiveAbailable ? 
       <span><span>DeepDive </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
       : <span>DeepDive</span>;
 
-      const IlluminateButtonText = !IsDeepdiveAbailable ? 
-      <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
+      const IlluminateButtonText = !IsIlluminateAvailable ? 
+      <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit} /></span> 
       : <span>Illuminate</span>;
     
     const DeepdiveButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse deep-dive-button" 
       : "btn-md btn-outline-inverse deep-dive-button-disabled";
 
-    const IlluminateButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse illuminate-button" 
+    const IlluminateButtonClass = IsIlluminateAvailable ? "btn-md btn-outline-inverse illuminate-button" 
       : "btn-md btn-outline-inverse illuminate-button-disabled";
 
     if (redirectToTaskManagement) {
