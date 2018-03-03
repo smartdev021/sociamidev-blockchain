@@ -717,6 +717,7 @@ LandingPage.propTypes = {
 const mapDispatchToProps = dispatch => ({
   setSelectedCharacterIndex: bindActionCreators(setSelectedCharacterIndex, dispatch),
   setSelectedCharacterTraitsIndex: bindActionCreators(setSelectedCharacterTraitsIndex, dispatch),
+  openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
 });
 
 const mapStateToProps = state => ({

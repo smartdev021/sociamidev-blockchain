@@ -188,12 +188,38 @@ class App extends Component {
     cookies.set('lastLocation', lastLocation, options);
   }
 
+  getCharacterCreationData() {
+    let data = {
+      name: "ASHE",
+      traitsName: "Creator",
+      traitsIndex: 0,
+      characterIndex: 0,
+    };
+
+    return data;
+  }
+
   HandleSignUpFacebook() {
     this.props.closeSignUpForm();
 
     this.storeCurrentLocationInCookies();
 
-    window.location.href = `${BackendURL}/auth/facebook`;
+    const characterCreationData = this.getCharacterCreationData();
+
+    if (characterCreationData) {
+      let parameters = "";
+
+      parameters = "?";
+
+      for (let key in characterCreationData) {
+        parameters += `${key}=${characterCreationData[key]}&`;
+      }
+      
+      window.location.href = `${BackendURL}/auth/facebook${parameters}`;
+    }
+    else {
+      window.location.href = `${BackendURL}/auth/facebook`;
+    }
   }
 
   HandleSignUpLinkedIn() {
@@ -201,7 +227,22 @@ class App extends Component {
     
     this.storeCurrentLocationInCookies();
 
-    window.location.href = `${BackendURL}/auth/linkedin`;
+    const characterCreationData = this.getCharacterCreationData();
+
+    if (characterCreationData) {
+      let parameters = "";
+
+      parameters = "?";
+
+      for (let key in characterCreationData) {
+        parameters += `${key}=${characterCreationData[key]}&`;
+      }
+
+      window.location.href = `${BackendURL}/auth/linkedin${parameters}`;
+    }
+    else {
+      window.location.href = `${BackendURL}/auth/linkedin`;
+    }
   }
 
   handleStartSearch() {
