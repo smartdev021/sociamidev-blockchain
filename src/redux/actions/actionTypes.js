@@ -96,6 +96,8 @@ export const FETCH_USER_FRIENDS_INITIATE = "fetch_user_friends_initiate";
 export const FETCH_USER_FRIENDS_COMPLETE = "fetch_user_friends_complete";
 
 //character creation
+export const SET_CHARACTER_CREATION_DATA = "set_character_creation_data";
+
 export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX = "set_character_creation_character_index";
 export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX = "set_character_creation_character_traits_index";
 

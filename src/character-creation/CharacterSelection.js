@@ -107,9 +107,9 @@ class CharacterSelection extends React.Component {
                           <h4 className="text-uppercase">{this.props.charactersList[this.props.selectedIndex].name}</h4>
                         </div>
                         <div id="character-description">
-                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText}</p>
-                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText}</p>
-                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText}</p>
+                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText1}</p>
+                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText2}</p>
+                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText3}</p>
                         </div>
                         <div id="character-select-confirm-button-container">
                           <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.props.selectedIndex})}>

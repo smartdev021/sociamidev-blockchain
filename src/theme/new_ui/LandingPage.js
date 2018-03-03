@@ -35,6 +35,7 @@ import {
     setSelectedCharacterTraitsIndex,
     startCharacterCreation,
     finishCharacterCreation,
+    setCharacterCreationData,
   } from '~/src/redux/actions/characterCreation'
 
 const SELECT_TRAITS = "SelectTraits";
@@ -77,16 +78,51 @@ class LandingPage extends React.Component {
       this.restoreCharacterCreation();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+      if (prevProps.characterCreationData != this.props.characterCreationData
+          || this.state.characterCreationState != prevState.characterCreationState
+            || this.state.characterCreationFlowStepIndex != prevState.characterCreationFlowStepIndex) {
+        const { cookies } = this.props;
+        console.log("if (prevProps.characterCreationData != this.props.characterCreationData)");
+        console.dir(cookies);
+        console.dir(this.props.characterCreationData);
+        if (cookies) {
+            const characterCreationSave = cookies.get("characterCreation");
+
+            console.log("if (cookies) {");
+
+            console.dir(characterCreationSave);
+            console.dir(this.props.characterCreationData);
+
+            if (!characterCreationSave || this.props.characterCreationData != characterCreationSave
+            || characterCreationSave.state.index != this.state.characterCreationFlowStepIndex
+            || characterCreation.state.data != this.state.characterCreationState) {
+
+                let dateExpire = new Date();
+                dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()); 
+
+                const options = { path: '/', expires: dateExpire};
+                cookies.set("characterCreation", {
+                    data: this.props.characterCreationData, 
+                    state: {
+                        index: this.state.characterCreationFlowStepIndex, 
+                        data: this.state.characterCreationState
+                      } 
+                }, options); 
+            }
+        }
+      }
+  }
+
   handleCloseCharacterCreation() {
-    this.setState({isCharacterCreationFlowActive: false});
+    this.props.finishCharacterCreation();
   }
 
   startCharacterCreation() {
     const StartFlowIndex = 0;
     this.setState({
-        characterCreationState: !this.state.characterCreationState ? CharacterCreationFlow[StartFlowIndex] : this.state.characterCreationState,
-        characterCreationFlowStepIndex: !this.state.characterCreationFlowStepIndex ? StartFlowIndex : this.state.characterCreationFlowStepIndex,
-        isCharacterCreationFlowActive: true
+        characterCreationState: CharacterCreationFlow[StartFlowIndex],
+        characterCreationFlowStepIndex: StartFlowIndex,
     });
 
     this.props.startCharacterCreation();
@@ -111,7 +147,7 @@ class LandingPage extends React.Component {
   renderCharacterCreationForm() {
     let FormToRender = null;
 
-    if (this.state.isCharacterCreationFlowActive && this.state.characterCreationState) {
+    if (this.props.characterCreationData.isInProgress && this.state.characterCreationState) {
         switch (this.state.characterCreationState.step) {
             case SELECT_TRAITS: {
                 FormToRender = <CharacterTraitsSelection characterCreationState={this.state.characterCreationState} 
@@ -149,15 +185,20 @@ class LandingPage extends React.Component {
   restoreCharacterCreation() {
     const { cookies } = this.props;
 
+    console.log("restoreCharacterCreation");
+    console.dir(cookies);
+
+    if (cookies) {
+        console.dir(cookies.get("characterCreation"));
+    }
+
     if (cookies) {
         const characterCreationSave = cookies.get("characterCreation");
 
-        if (characterCreationSave && characterCreationSave.isInprogress) {
-            this.setState({characterCreationState: characterCreationSave.state});
+        if (characterCreationSave) {
+            this.props.setCharacterCreationData(characterCreationSave.data);
+            this.setState({characterCreationState: characterCreationSave.state.data, characterCreationFlowStepIndex: characterCreationSave.state.index});
         }
-
-        //const options = { path: '/', expires: Date.now() + ConfigMain.getCookiesExpirationPeriod()};
-        //cookies.set(`answers_for_task_${this.state.currentTask._id}`, answersForTask, options); 
     }
   }
 
@@ -718,6 +759,7 @@ LandingPage.propTypes = {
   setSelectedCharacterTraitsIndex: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
   finishCharacterCreation: PropTypes.func.isRequired,
+  setCharacterCreationData: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -726,6 +768,7 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   finishCharacterCreation: bindActionCreators(finishCharacterCreation, dispatch),
+  setCharacterCreationData: bindActionCreators(setCharacterCreationData, dispatch),
 });
 
 const mapStateToProps = state => ({
