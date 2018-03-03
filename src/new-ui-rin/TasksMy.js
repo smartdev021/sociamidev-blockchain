@@ -104,6 +104,31 @@ const DayFromNumber = (dayNum)=> {
     return DateString;
   }
 
+  const RenderIlluminateActions = (task, props) => {
+    switch (task.status) {
+      case "None": {
+        return (
+          <div className="deep-tools">
+            <ul>
+              <li>
+                <ActionLink href="#"
+                  onClick={()=>props.onHangoutActionPerform("answer_questions", task)} className="btn-base btn-red">
+                  Answer Questions
+                </ActionLink>
+              </li>
+            </ul>
+         </div>);
+      }
+      case "complete": {
+        return (
+          <div className="deep-tools">
+          </div>
+        );
+      }
+    }
+
+  }
+
   const RenderActions = (hangout, props) => {
     const Partner = GetHangoutPartner(hangout, props);
     const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
@@ -254,6 +279,37 @@ const DayFromNumber = (dayNum)=> {
    }
   }
 
+  const IlluminateTitleFromStatus = (task) => {
+    let result = <h4> <a href="#" className="link-black"></a> </h4>
+    switch (task.status) {
+      case "started":
+        result = (
+          <h4>Illuminate is in progress</h4>
+        )
+        break;
+      case "finished": {
+        result = (
+            <h4>Illuminate is finished</h4>
+          );
+        break;
+      }
+      case "complete": {
+        result = (
+          <h4>Illuminate is complete</h4>
+          );
+        break;
+      }
+      default: {
+        result = (
+          <h4>Illuminate is progress</h4>
+          );
+        break;
+      }
+    }
+
+    return result;
+  }
+
   const HangoutTitleFromStatus = (task, Partner) => {
     let result = <h4> <a href="#" className="link-black"></a> </h4>
   
@@ -374,7 +430,7 @@ const DayFromNumber = (dayNum)=> {
       }
     }
     else if (task.type === "illuminate") {
-      result = <div id="title">Illuminate is in progress</div>;
+      result = IlluminateTitleFromStatus(task);
     }
     else {
       result = <div id="title">{task.name}</div>;
@@ -429,16 +485,7 @@ const DayFromNumber = (dayNum)=> {
                 {RenderTaskTitle(task, props)}
                 <p>{SecondLine}</p>
             </div>
-            <div className="deep-tools">
-              <ul>
-                <li>
-                  <ActionLink href="#"
-                    onClick={()=>props.onHangoutActionPerform("answer_questions", task)} className="btn-base btn-red">
-                    Answer Questions
-                  </ActionLink>
-                </li>
-              </ul>
-            </div>
+            {RenderIlluminateActions(task, props)}
           </div>
         </div>
       );
@@ -458,9 +505,7 @@ const DayFromNumber = (dayNum)=> {
     if (!props.tasks || props.tasks.length == 0) {
         return null;
     }
-
-    console.log("RenderTasks");
-    console.dir(props.tasks);
+    
     return (
         props.tasks.map((task, i) => {
             return RenderTask(task, i, props)
@@ -505,11 +550,9 @@ class TasksMy extends React.Component {
   render() {
     return (<div className="scrollbar-inner">
     <div className="block-deepdive">
-        <div className="scrollbar-inner">
         <div className="row">
             {RenderTasks(this.props)}
         </div>
-          </div>
     </div>
 </div>
     );

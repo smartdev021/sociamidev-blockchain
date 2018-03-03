@@ -6,16 +6,19 @@ class ActionLink extends React.Component {
     this.props.onClick(e);
   }
   render() {
-    const style = this.props.className ? this.props.className : "";
+    const className = this.props.className ? this.props.className : "";
+    const styleTag = this.props.style ? this.props.style : {};
     const tagId = this.props.id ? this.props.id : "";
     const tagAriaControls = this.props['aria-controls'] ? this.props['aria-controls'] : "";
     const tagRole = this.props.role ? this.props.role : "";
     const tagDataToggle = this.props['data-toggle'] ? this.props['data-toggle'] : "";
     const tagHref = this.props.href ? this.props.href : "";
 
+    if (this.props.style) {
+      console.dir(styleTag);    }
+
     return (
-      <a className={style} id={tagId} href={tagHref} onClick={(e)=> this.handleClick(e)} 
-      aria-controls={tagAriaControls} role={tagRole} data-toggle={tagDataToggle}>
+      <a {...this.props}>
         {this.props.children}</a>
     );
   }

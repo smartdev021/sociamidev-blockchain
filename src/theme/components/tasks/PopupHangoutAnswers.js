@@ -68,20 +68,23 @@ class PopupHangoutAnswers extends React.Component {
                       <span>{question.question}</span>
                     </div>
                   </div>
-                  <div className="col-lg-6">
+
+                  <div className={Partner ? "col-lg-6" : "col-lg-12"}>
                     <div className="form-group">
                       <textarea id={`answer_your_${question._id}`} 
-                        className="form-control validate-field required question-text-area" placeholder="You"
+                        className="form-control validate-field required question-text-area"
                           name="answer_your" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerMy}/>
                     </div>
                   </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
-                        className="form-control validate-field required question-text-area" placeholder={Partner.user.firstName}
-                          name="answer_partner" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
-                    </div>
-                  </div>
+                  {Partner &&
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
+                            className="form-control validate-field required question-text-area" placeholder={Partner.user.firstName}
+                              name="answer_partner" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
+                        </div>
+                      </div>
+                  }
                 </div>
               );
             })

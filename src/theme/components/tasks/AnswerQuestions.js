@@ -104,6 +104,16 @@ class AnswerQuestions extends React.Component {
       this.fetchUserAnswersFromCookies();
 
       this.fetchUserAnswersFromServerMy();
+    } else if (this.state.currentTask && this.state.currentTask.type == "illuminate") {
+      that.setState({isQuestionsLoading: true});
+
+      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}`)
+      .then((response)=>{
+        that.setState({
+          questions: response.data,
+          isQuestionsLoading: false
+        })})
+      .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
     }
 
     this.props.setLastStartedTask({});

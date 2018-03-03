@@ -1,7 +1,7 @@
 {
-  "name": "react-indeed-jobs-list",
+  "name": "soqqle",
   "version": "1.0.0",
-  "description": "ReactIndeedJobsList",
+  "description": "Soqqle",
   "scripts": {
     "start": "node server.js",
     "startLocal": "dev_env=local node server.js",
@@ -11,6 +11,7 @@
     "clean": "rimraf dist",
     "build": "npm run clean && npm run compile",
     "deploy:dev": "python deploy.py Staging",
+    "deploy:uat": "npm run build && aws s3 sync dist/ s3://uat.soqqle.com",
     "deploy:prod": "python deploy.py Production",
     "publish:dev": "npm run build && npm run deploy:dev",
     "publish:prod": "npm run build && npm run deploy:prod"
@@ -73,6 +74,7 @@
     "react-click-outside": "^3.0.0",
     "react-cookie": "^2.1.1",
     "react-countdown-now": "^1.3.0",
+    "react-custom-scroll": "^2.0.3",
     "react-dom": "^15.6.1",
     "react-fa": "^5.0.0",
     "react-file-loader": "^1.2.3",

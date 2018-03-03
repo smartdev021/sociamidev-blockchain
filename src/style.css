@@ -100,7 +100,6 @@ html, body {
     position: relative;
     width: 35px;
     height: 40px;
-    display: block;
 }
 
 .menu-hamburger a.open-menu span{
@@ -131,7 +130,6 @@ html, body {
     top: -10px;
     position: absolute;
     z-index: 999;
-    display: none;
 }
 
 
@@ -501,7 +499,6 @@ html, body {
 }
 
 .block-search{
-    display: none;
     width: 90%;
     margin: 0px auto;
 }
@@ -649,6 +646,13 @@ html, body {
 .box-location{
     text-align: right;
     margin: 10px;
+}
+
+.heading-border-decorators-visible:before, 
+.heading-border-decorators-visible:after,
+.heading-border-decorators-visible span:before,
+.heading-border-decorators-visible span:after {
+    display: block;
 }
 
 .text-location{
@@ -820,11 +824,6 @@ html, body {
     background: rgba(238, 137, 47, 1);
 }
 
-.expanding a.close-expanding{
-    display: none;
-}
-
-
 .expanding-mobile a{
     position: absolute;
     left: -40px;
@@ -925,6 +924,13 @@ html, body {
 
 /*************** SIMPLE INNER SCROLLBAR ***************/
 
+.scrollbar-inner {
+    padding: 0 5px;
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 800px;
+}
+
 .scrollbar-inner > .scroll-element,
 .scrollbar-inner > .scroll-element div
 {
@@ -991,6 +997,10 @@ html, body {
 
 .scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
 .scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
+
+.display-none { 
+    display: none;
+}
 
 @media all and (max-width: 1200px) {
     .item-tokens{
