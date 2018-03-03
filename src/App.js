@@ -190,7 +190,7 @@ class App extends Component {
 
   getCharacterCreationData() {
     let data = {
-      name: "ASHE",
+      characterName: "ASHE",
       traitsName: "Creator",
       traitsIndex: 0,
       characterIndex: 0,
