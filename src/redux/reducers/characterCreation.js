@@ -2,12 +2,14 @@
 import {
     SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX,
     SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX,
+    START_CHARACTER_CREATION,
+    FINISH_CHARACTER_CREATION,
 } from '~/src/redux/actions/actionTypes';
 
 const characterCreationDataInitialState = {
   selectedCharacterIndex: 0,
   selectedTraitsIndex: 0,
-  isInProgress: true,
+  isInProgress: false,
 };
 
 export function characterCreationData(state = characterCreationDataInitialState, action) {
@@ -16,6 +18,10 @@ export function characterCreationData(state = characterCreationDataInitialState,
       return {...state, selectedCharacterIndex: action.index}
     case SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX:
       return {...state, selectedTraitsIndex: action.index}
+    case START_CHARACTER_CREATION:
+      return {...state, isInProgress: true}
+    case FINISH_CHARACTER_CREATION:
+      return {...state, isInProgress: false}
     default:
       return state;
   }

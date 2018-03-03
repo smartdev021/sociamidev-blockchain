@@ -33,6 +33,8 @@ import ConfigMain from '~/configs/main'
 import {
     setSelectedCharacterIndex,
     setSelectedCharacterTraitsIndex,
+    startCharacterCreation,
+    finishCharacterCreation,
   } from '~/src/redux/actions/characterCreation'
 
 const SELECT_TRAITS = "SelectTraits";
@@ -86,6 +88,8 @@ class LandingPage extends React.Component {
         characterCreationFlowStepIndex: !this.state.characterCreationFlowStepIndex ? StartFlowIndex : this.state.characterCreationFlowStepIndex,
         isCharacterCreationFlowActive: true
     });
+
+    this.props.startCharacterCreation();
   }
 
   characterCreationNextStep() {
@@ -130,7 +134,8 @@ class LandingPage extends React.Component {
                 FormToRender = <CharacterAuthentication characterCreationState={this.state.characterCreationState} 
                   onClose={() => this.handleCloseCharacterCreation()}
                   onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
-                  onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}/>
+                  onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+                  onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
                 break;
             }
             default:
@@ -711,12 +716,16 @@ LandingPage.propTypes = {
   listCharacters: PropTypes.array.isRequired,
   setSelectedCharacterIndex: PropTypes.func.isRequired,
   setSelectedCharacterTraitsIndex: PropTypes.func.isRequired,
+  startCharacterCreation: PropTypes.func.isRequired,
+  finishCharacterCreation: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
   setSelectedCharacterIndex: bindActionCreators(setSelectedCharacterIndex, dispatch),
   setSelectedCharacterTraitsIndex: bindActionCreators(setSelectedCharacterTraitsIndex, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  finishCharacterCreation: bindActionCreators(finishCharacterCreation, dispatch),
 });
 
 const mapStateToProps = state => ({
