@@ -76,6 +76,7 @@
     "object-hash": "^1.2.0",
     "prop-types": "^15.6.0",
     "pubsub-js": "^1.6.0",
+    "query-string": "^5.1.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-click-outside": "^3.0.0",
