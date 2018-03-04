@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Axios from 'axios';
 import StarRatings from 'react-star-ratings';
+import qs from 'query-string';
 
 import ConfigMain from '~/configs/main';
 import { openUserProfileComplete } from '~/src/redux/actions/authorization';
@@ -31,6 +32,7 @@ const profilePic = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/imag
 class UserProfile extends React.Component {
 	constructor(props) {
 		super(props);
+		const queryId = qs.parse(this.props.location.search).id;
 
 		this.state = {
 			firstName: this.props.userProfile.firstName,
@@ -49,14 +51,59 @@ class UserProfile extends React.Component {
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago'},
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago'}]
 		}
-	}
 
-	componentWillReceiveProps() {
 		this.setState({
-			firstName: this.props.userProfile.firstName,
-			lastName: this.props.userProfile.lastName
+			isProfileLoading: queryId ? true : false
 		})
 	}
+
+	componentWillMount () {
+		const queryId = qs.parse(this.props.location.search).id;
+		if(queryId) {
+			Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
+				.then(response => {
+					console.log(response.data);
+					this.setState({
+						firstName: response.data.profile.firstName,
+						lastName: response.data.profile.lastName,
+						pictureURL: response.data.profile.pictureURL,
+						isProfileLoading: false
+					})
+				}).catch(err => {
+
+				});
+		} else {
+			this.setState({
+				firstName: this.props.userProfile.firstName,
+				lastName: this.props.userProfile.lastName,
+				isProfileLoading: false
+			})
+		}
+	}
+
+	// componentWillReceiveProps() {
+	// 	const queryId = qs.parse(this.props.location.search).id;
+	// 	if(queryId) {
+	// 		Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
+	// 			.then(response => {
+	// 				console.log(response.data);
+	// 				this.setState({
+	// 					firstName: response.data.profile.firstName,
+	// 					lastName: response.data.profile.lastName,
+	// 					pictureURL: response.data.profile.pictureURL,
+	// 					isProfileLoaded: true
+	// 				})
+	// 			}).catch(err => {
+
+	// 			});
+	// 	} else {
+	// 		this.setState({
+	// 			firstName: this.props.userProfile.firstName,
+	// 			lastName: this.props.userProfile.lastName
+	// 		})
+	// 	}
+		
+	// }
 
 	renderLevels() {
 		const UserProgressionTrees = this.props.userProfile.progressionTrees;
@@ -117,12 +164,23 @@ class UserProfile extends React.Component {
 	render() {
 		//Incorrect usage of bootstrap row col. @Michael?
 		return (
+		<div>
+			{
+				this.state.isProfileLoading &&  
+				<div className="row mt center">
+				<div className="col-md-11 col-sm-11">
+					Loading...
+				</div>
+				</div>
+			}
+			{ 
+			!this.state.isProfileLoading && 
 			<div className="row mt center">
 				<div className="col-md-11 col-sm-11">
 					<div className="new-userProf-wrap">
 						<div className="col-md-2 col-sm-12 new-user-padding">
-							<img className="new-userProf-img" src={this.props.userProfile.pictureURL 
-								? this.props.userProfile.pictureURL : profilePic} />
+							<img className="new-userProf-img" src={this.state.pictureURL 
+								? this.state.pictureURL : profilePic} />
 							<div className="new-userProf-dot new-userProf-green"></div>
 						</div>
 						<div className="test-wrap">
@@ -232,6 +290,8 @@ class UserProfile extends React.Component {
 					</div>
 				</div>
 			</div>
+			}
+		</div>
 		);
 	}
 }
