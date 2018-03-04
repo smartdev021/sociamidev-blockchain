@@ -35,8 +35,10 @@ class UserProfile extends React.Component {
 		const queryId = qs.parse(this.props.location.search).id;
 
 		this.state = {
+			isProfileLoading: queryId ? true : false,
 			firstName: this.props.userProfile.firstName,
 			lastName: this.props.userProfile.lastName,
+			userID: this.props.userProfile._id,
 			work: 'Product Manager at Soqqle',
 			from: 'Singapore | Hong Kong',
 			email: this.props.userProfile.email ? this.props.userProfile.email : 'Danshen@gmail.com',
@@ -51,10 +53,6 @@ class UserProfile extends React.Component {
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago'},
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago'}]
 		}
-
-		this.setState({
-			isProfileLoading: queryId ? true : false
-		})
 	}
 
 	componentWillMount () {
@@ -64,6 +62,7 @@ class UserProfile extends React.Component {
 				.then(response => {
 					console.log(response.data);
 					this.setState({
+						userID: queryId,
 						firstName: response.data.profile.firstName,
 						lastName: response.data.profile.lastName,
 						pictureURL: response.data.profile.pictureURL,
@@ -81,29 +80,31 @@ class UserProfile extends React.Component {
 		}
 	}
 
-	// componentWillReceiveProps() {
-	// 	const queryId = qs.parse(this.props.location.search).id;
-	// 	if(queryId) {
-	// 		Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
-	// 			.then(response => {
-	// 				console.log(response.data);
-	// 				this.setState({
-	// 					firstName: response.data.profile.firstName,
-	// 					lastName: response.data.profile.lastName,
-	// 					pictureURL: response.data.profile.pictureURL,
-	// 					isProfileLoaded: true
-	// 				})
-	// 			}).catch(err => {
+	componentWillReceiveProps(nextProps) {
+		const queryId = qs.parse(nextProps.location.search).id;
+		if(queryId && this.state.userID != queryId) {
+			this.setState({isProfileLoading: true});
+			Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
+				.then(response => {
+					console.log(response.data);
+					this.setState({
+						userID: queryId,
+						firstName: response.data.profile.firstName,
+						lastName: response.data.profile.lastName,
+						pictureURL: response.data.profile.pictureURL,
+						isProfileLoading: false
+					})
+				}).catch(err => {
 
-	// 			});
-	// 	} else {
-	// 		this.setState({
-	// 			firstName: this.props.userProfile.firstName,
-	// 			lastName: this.props.userProfile.lastName
-	// 		})
-	// 	}
-		
-	// }
+				});
+		} else {
+			this.setState({
+				firstName: this.props.userProfile.firstName,
+				lastName: this.props.userProfile.lastName,
+				isProfileLoading: false
+			})
+		}
+	}
 
 	renderLevels() {
 		const UserProgressionTrees = this.props.userProfile.progressionTrees;
@@ -163,6 +164,7 @@ class UserProfile extends React.Component {
 
 	render() {
 		//Incorrect usage of bootstrap row col. @Michael?
+
 		return (
 		<div>
 			{
