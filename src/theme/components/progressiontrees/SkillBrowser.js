@@ -465,7 +465,7 @@ class SkillBrowser extends React.Component {
           {this.isTreeAdded() &&<div className="deep-dive-button-wrap">
 
             <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className={IlluminateButtonClass}
-              onClick={IsDeepdiveAbailable ? ()=> this.toggleIlluminateForm() : () => {
+              onClick={IsIlluminateAvailable ? ()=> this.toggleIlluminateForm() : () => {
               }}>{IlluminateButtonText}</button>
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
