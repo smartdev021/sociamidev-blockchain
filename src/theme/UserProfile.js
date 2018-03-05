@@ -76,7 +76,7 @@ class UserProfile extends React.Component {
 		const Character = this.props.userProfile.character;
 
 		const CharacterClass = this.props.listCharacters[Number(this.props.userProfile.character.characterIndex)];
-		const CharacterTraits = this.props.listCharacters[Number(this.props.userProfile.character.traitsIndex)];
+		const CharacterTraits = this.props.listCharacterTraits[Number(this.props.userProfile.character.traitsIndex)];
 
 		return (
 			<div id="userprofile-page-character-info">
