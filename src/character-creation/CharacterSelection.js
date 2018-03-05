@@ -79,6 +79,7 @@ class CharacterSelection extends React.Component {
     }
 
     render() {
+        const SelectedCharacter = this.props.charactersList[this.props.selectedIndex];
         return (
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
             parentSelector={getPopupParentElement}>
@@ -88,7 +89,7 @@ class CharacterSelection extends React.Component {
               <div id="character-selection-container-inner">
                 <div className="container-fluid">
                   <div id="character-selection-image-big">
-                    <img src={this.props.charactersList[this.props.selectedIndex].imageBig}/>
+                    <img src={SelectedCharacter.imageBig}/>
                   </div>
                   <div className="row">
                     <div className="col-lg-12">
@@ -104,12 +105,19 @@ class CharacterSelection extends React.Component {
                     <div className="col-lg-8 col-md-12">
                       <div className="text-center" id="character-info">
                         <div id="character-name">
-                          <h4 className="text-uppercase">{this.props.charactersList[this.props.selectedIndex].name}</h4>
+                          <h4 className="text-uppercase">{SelectedCharacter.name}</h4>
                         </div>
                         <div id="character-description">
-                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText1}</p>
-                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText2}</p>
-                          <p>{this.props.charactersList[this.props.selectedIndex].descriptionText3}</p>
+                          <p>{SelectedCharacter.descriptionText1}</p>
+                          <p>{SelectedCharacter.descriptionText2}</p>
+                          <p>{SelectedCharacter.descriptionText3}</p>
+                        </div>
+                        <div id="character-skills">
+                          {
+                            SelectedCharacter.skills.map((skill, i) => {
+                              return <span className="character-skill">{skill}</span>
+                            })
+                          }
                         </div>
                         <div id="character-select-confirm-button-container">
                           <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.props.selectedIndex})}>
