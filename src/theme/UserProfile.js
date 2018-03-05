@@ -4,6 +4,7 @@
 */
 
 import React, { Component } from 'react';
+import {Icon} from 'react-fa'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
@@ -57,6 +58,7 @@ class UserProfile extends React.Component {
   }
   
   setUserProfile(queryId) {
+    this.state.isProfileLoading = true;
 		if(queryId && this.state.userID != queryId) {
 			Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
 				.then(response => {
@@ -156,11 +158,13 @@ class UserProfile extends React.Component {
 		<div>
 			{
 				this.state.isProfileLoading &&  
-				<div className="row mt center">
-				<div className="col-md-11 col-sm-11">
-					Loading...
-				</div>
-				</div>
+        <div className="container-fluid progress-browser-wrap">
+        <div className="row">
+          <div className="content-2-columns-left-title">
+            Loading...<Icon spin name="spinner" />
+          </div>
+        </div>
+      </div>
 			}
 			{ 
 			!this.state.isProfileLoading && 
