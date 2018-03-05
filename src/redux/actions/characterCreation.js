@@ -7,6 +7,9 @@ import {
 
     FETCH_LIST_CHARACTER_CLASSES_INITIATE,
     FETCH_LIST_CHARACTER_CLASSES_COMPLETE,
+
+    FETCH_LIST_CHARACTER_TRAITS_INITIATE,
+    FETCH_LIST_CHARACTER_TRAITS_COMPLETE,
 } from './actionTypes'
 
 import Axios from 'axios'
@@ -71,6 +74,35 @@ export function fetchListCharacterClasses() {
         })
         .catch(function(error) {
             dispatch(fetchListCharacterClassesComplete([]));
+        }));
+    }
+}
+
+export function fetchListCharacterTraitsInitiate() {
+    return {
+        type: FETCH_LIST_CHARACTER_TRAITS_INITIATE,
+    }
+}
+
+export function fetchListCharacterTraitsComplete(data) {
+    return {
+        type: FETCH_LIST_CHARACTER_TRAITS_COMPLETE,
+        data: data,
+    }
+}
+
+export function fetchListCharacterTraits() {
+    return function (dispatch) {
+      dispatch(fetchListCharacterTraitsInitiate());
+      
+      const url = `${ConfigMain.getBackendURL()}/charactertraitsGet`;
+        return (
+        Axios.get(url)
+        .then(function(response) {
+            dispatch(fetchListCharacterTraitsComplete(response.data));
+        })
+        .catch(function(error) {
+            dispatch(fetchListCharacterTraitsComplete([]));
         }));
     }
 }

@@ -195,7 +195,6 @@ class App extends Component {
       data = {
         characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex].name,
         traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
-        traitsDescription: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].description,
         traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
         characterIndex: this.props.characterCreationData.selectedCharacterIndex,
       };

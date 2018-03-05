@@ -55,6 +55,24 @@ class TraitsSelection extends React.Component {
     }
 
     render() {
+      if (this.props.isFetchingCharacterTraits) {
+        <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Traits Selection"} 
+            parentSelector={getPopupParentElement}>
+            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
+                name="times" aria-hidden="true"></Icon>
+            <div id="character-traits-selection-container">
+              <div id="character-traits-selection-container-inner">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <Icon spin name="spinner" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </Modal>
+      }
         return (
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Traits Selection"} 
             parentSelector={getPopupParentElement}>

@@ -81,8 +81,6 @@ class CharacterSelection extends React.Component {
     }
 
     render() {
-      console.log("this.props.isFetchingCharacters: " + this.props.isFetchingCharacters);
-      console.dir(this.props.charactersList);
       if (this.props.isFetchingCharacters) {
         return(
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 

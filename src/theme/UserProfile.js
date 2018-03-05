@@ -18,7 +18,8 @@ import { openUserProfileComplete } from '~/src/redux/actions/authorization';
 import "~/src/css/newUserProfile.css";
 
 import {
-    fetchListCharacterClasses,
+	fetchListCharacterClasses,
+	fetchListCharacterTraits,
 } from '~/src/redux/actions/characterCreation'
 
 const tag = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarTag.png";
@@ -57,6 +58,7 @@ class UserProfile extends React.Component {
 
 	componentWillMount() {
 		this.props.fetchListCharacterClasses();
+		this.props.fetchListCharacterTraits();
 	}
 
 	componentWillReceiveProps() {
@@ -67,21 +69,22 @@ class UserProfile extends React.Component {
 	}
 
 	renderCharacter() {
-		if (!this.props.userProfile || !this.props.userProfile.character || this.props.isFetchingCharacters) {
+		if (!this.props.userProfile || !this.props.userProfile.character || this.props.isFetchingCharacters || this.props.isFetchingCharacterTraits) {
 			return null;
 		}
 
 		const Character = this.props.userProfile.character;
 
 		const CharacterClass = this.props.listCharacters[Number(this.props.userProfile.character.characterIndex)];
+		const CharacterTraits = this.props.listCharacters[Number(this.props.userProfile.character.traitsIndex)];
 
 		return (
 			<div id="userprofile-page-character-info">
 			  {CharacterClass.imageURL ? <img src={CharacterClass.imageURL}/> 
 			  : <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png"/>}
 			  <h2>{CharacterClass.name}</h2>
-			  <h3>{Character.traitsName}</h3>
-			  <h4>{Character.traitsDescription}</h4>
+			  <h3>{CharacterTraits.name}</h3>
+			  <h4>{CharacterTraits.description}</h4>
 			</div>
 		)
 	}
@@ -271,12 +274,14 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = state => ({
 	isFetchingCharacters: state.characterCreation.isFetchingCharacters,
+	isFetchingCharacterTraits: state.characterCreation.isFetchingCharacterTraits,
 	listCharacters: state.characterCreation.listCharacters,
 	listCharacterTraits: state.characterCreation.listCharacterTraits,
 })
 
 const mapDispatchToProps = dispatch => ({
 	fetchListCharacterClasses: bindActionCreators(fetchListCharacterClasses, dispatch),
+	fetchListCharacterTraits: bindActionCreators(fetchListCharacterTraits, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

@@ -106,3 +106,6 @@ export const FINISH_CHARACTER_CREATION = "finish_character_creation";
 
 export const FETCH_LIST_CHARACTER_CLASSES_INITIATE = "fetch_list_character_classes_initiate";
 export const FETCH_LIST_CHARACTER_CLASSES_COMPLETE = "fetch_list_character_classes_complete";
+
+export const FETCH_LIST_CHARACTER_TRAITS_INITIATE = "fetch_list_character_traits_initiate";
+export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = "fetch_list_character_traits_complete";

@@ -38,6 +38,7 @@ import {
     setCharacterCreationData,
 
     fetchListCharacterClasses,
+    fetchListCharacterTraits,
 
   } from '~/src/redux/actions/characterCreation'
 
@@ -79,6 +80,7 @@ class LandingPage extends React.Component {
 
   componentWillMount() {
       this.props.fetchListCharacterClasses();
+      this.props.fetchListCharacterTraits();
       this.restoreCharacterCreation();
   }
 
@@ -161,7 +163,8 @@ class LandingPage extends React.Component {
                   onSelect={(index)=>this.handleSelectCharacterTraits(index)}
                   selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
                   traitsList={this.props.listCharacterTraits}
-                  progressValue={progressValue}/>
+                  progressValue={progressValue}
+                  isFetchingCharacterTraits={this.props.isFetchingCharacterTraits}/>
                 break;
             }
             case SELECT_CHARACTER: {
@@ -781,6 +784,7 @@ const mapDispatchToProps = dispatch => ({
   finishCharacterCreation: bindActionCreators(finishCharacterCreation, dispatch),
   setCharacterCreationData: bindActionCreators(setCharacterCreationData, dispatch),
   fetchListCharacterClasses: bindActionCreators(fetchListCharacterClasses, dispatch),
+  fetchListCharacterTraits: bindActionCreators(fetchListCharacterTraits, dispatch),
 });
 
 const mapStateToProps = state => ({
@@ -789,6 +793,7 @@ const mapStateToProps = state => ({
   listCharacterTraits: state.characterCreation.listCharacterTraits,
   listCharacters: state.characterCreation.listCharacters,
   isFetchingCharacters: state.characterCreation.isFetchingCharacters,
+  isFetchingCharacterTraits: state.characterCreation.isFetchingCharacterTraits,
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
