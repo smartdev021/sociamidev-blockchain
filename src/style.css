@@ -92,7 +92,7 @@ html, body {
 .menu-hamburger{
     display: none;
     position: absolute;
-    top: 10px;
+    top: 15px;
     z-index: 999;
 }
 
@@ -104,8 +104,8 @@ html, body {
 
 .menu-hamburger a.open-menu span{
     background: #ffffff;
-    width: 35px;
-    height: 5px;
+    width: 30px;
+    height: 4px;
     left: 0px;
     position: absolute;
     display: inline-block;
@@ -116,11 +116,11 @@ html, body {
 }
 
 .menu-hamburger a.open-menu span:nth-child(2){
-    top: 15px;
+    top: 10px;
 }
 
 .menu-hamburger a.open-menu span:nth-child(3){
-    top: 30px;
+    top: 20px;
 }
 
 .menu-hamburger a.close-menu{
@@ -196,6 +196,10 @@ html, body {
     text-align: right;
 }
 
+.task-manager a.btn-base{
+    margin: 0px 5px;
+}
+
 .navbar-top-links{
     list-style: none;
     padding: 12px 0px;
@@ -205,7 +209,7 @@ html, body {
 
 .navbar-top-links li{
     display: inline-block;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .navbar-top-links li.mail a{
@@ -229,7 +233,7 @@ html, body {
     border-radius: 50%;
     display: inline-block;
     /* float: left; */
-    padding: 2px;
+    padding: 4px;
     width: 22px;
     height: 22px;
     margin: 0px auto;
@@ -1009,8 +1013,26 @@ html, body {
 }
 
 @media all and (max-width: 990px) {
+    .navbar-top-links{
+        list-style: none;
+        padding: 12px 0px;
+        margin: 0px auto;
+        text-align: right;
+        position: absolute;
+        top: -100px;
+        right: 0px;
+    }
+
     .navbar-top-links li{
-        margin-right: 2px;
+        margin-right: 15px;
+    }
+
+    .task-manager{
+        padding: 0px 0px 10px;
+    }
+
+    .task-manager a.btn-base{
+        margin: 0px 0px 0px 10px;
     }
 
     .menu-hamburger{
@@ -1018,7 +1040,7 @@ html, body {
     }
 
     .logo{
-        margin-left: 50px;
+        margin-left: 40px;
     }
 
     .category-left{
@@ -1040,19 +1062,7 @@ html, body {
 }
 
 @media all and (max-width: 768px) {
-    .navbar-top-links{
-        list-style: none;
-        padding: 12px 0px;
-        margin: 0px auto;
-        text-align: right;
-        position: absolute;
-        top: -110px;
-        right: 0px;
-    }
 
-    .navbar-top-links li{
-        margin-right: 15px;
-    }
 
     .item-tokens{
         height: 170px;
@@ -1091,7 +1101,7 @@ html, body {
     }
 
     .expanding-mobile a{
-        display: block;
+        display: block !important;
     }
 
     .bt-search a.icon-search i.fa{
@@ -1101,11 +1111,15 @@ html, body {
     .wrapper{
         overflow-y: hidden;
     }
+
+    .heading-border span:before, .heading-border span:after{
+        display: none;
+    }
 }
 
 @media all and (max-width: 480px) {
     .btn-yellow{
-        padding: 5px 10px;
+        padding: 5px 5px;
     }
 
     .logo{
@@ -1127,6 +1141,41 @@ html, body {
     .expanding-mobile a,
     .expanding a{
         left: -30px;
+    }
+
+    #progression-trees-scanner ul li{
+        padding: 20px 10px;
+    }
+
+    .tree-scanner-tree-name{
+        font-size: 16px;
+    }
+
+    .tree-scaner-star-rating{
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+
+    .progression-tree-my-text{
+        width: 100%;
+        display: block;
+    }
+
+    .heading-trees{
+        font-size: 28px;
+    }
+
+    .scanner-expanded,
+    #scanner-input-container{
+        margin-left: 0%;
+    }
+
+    .navbar-top-links{
+        position: static;
+        top: 0px;
+        margin-top: 0px;
+        padding-top: 0px;
     }
 }
 

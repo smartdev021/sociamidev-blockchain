@@ -26,7 +26,7 @@ class HeaderTaskManager extends React.Component {
     return (<div className="head-deep">
     <div className="dropdown">
         <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span className="text-head">Deepdive</span>
+            <span className="text-head">My Tasks</span>
             <Icon name="chevron-down" aria-hidden="true"></Icon>
         </button>
         <ul className="dropdown-menu" aria-labelledby="dLabel">

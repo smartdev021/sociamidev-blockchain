@@ -40,7 +40,7 @@ const ProgressiontreesScanner = (props) => {
                 isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
                   starWidthAndHeight={'20px'} starSpacing={'2px'}
                   starEmptyColor={"white"}
-                  starRatedColor={"rgb(180, 177, 3)"}/>
+                  starRatedColor={"rgb(239, 206, 74)"}/>
               </span>
 
               {props.isExpanded ? <div className="tree-scanner-tree-name">{roadmap.description}</div> : <div className="tree-scanner-tree-name">{(roadmap.description).slice(0,100)} ...</div>}
@@ -52,7 +52,7 @@ const ProgressiontreesScanner = (props) => {
                   <span className="tree-scanner-tree-icon glyphicon glyphicon-dashboard"></span>
                 </div>
 
-                {props.isExpanded && <div className="tree-scanner-tree-network pull-right">
+                {props.isExpanded && <div className="tree-scanner-tree-network">
                   825 others are learning {roadmap.name}
                 </div>}
                 {

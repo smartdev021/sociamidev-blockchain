@@ -304,6 +304,56 @@ class SkillBrowser extends React.Component {
 
   goToIlluminate(e){
     e.preventDefault();
+    // TODO call hangout-ish
+
+    const RandomInt = function RandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const CurrentTree = this.props.location.state.tree;
+
+    const illuminate = {
+      name: `Illuminate for roadmap "${CurrentTree.name}"`,
+      description: `Illuminate for roadmap "${CurrentTree.name}"`,
+      type: TaskTypes.ILLUMINATE,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+      userID: this.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      },
+      metaData : {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: this.state.skillInfo._id,
+            name: this.state.skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: this.props.userProfile._id, 
+              firstName: this.props.userProfile.firstName,
+              lastName: this.props.userProfile.lastName,
+            },
+            status: "accepted",
+            isCreator: true,
+          }
+        ],
+        ratings: [],
+        awardXP: RandomInt(30, 40),
+      }
+    };
+
+    if (illuminate.userName != "" && illuminate.name != "" && illuminate.description != "") {
+      this.props.saveTask(illuminate);
+    }
     this.setState({redirectToTaskManagement: true});
   }
 
@@ -332,8 +382,15 @@ class SkillBrowser extends React.Component {
       <span><span>DeepDive </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
       : <span>DeepDive</span>;
 
+      const IlluminateButtonText = !IsDeepdiveAbailable ? 
+      <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
+      : <span>Illuminate</span>;
+    
     const DeepdiveButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse deep-dive-button" 
       : "btn-md btn-outline-inverse deep-dive-button-disabled";
+
+    const IlluminateButtonClass = IsDeepdiveAbailable ? "btn-md btn-outline-inverse illuminate-button" 
+      : "btn-md btn-outline-inverse illuminate-button-disabled";
 
     if (redirectToTaskManagement) {
       return <Redirect to='/taskManagement'/>;
@@ -385,7 +442,9 @@ class SkillBrowser extends React.Component {
           </div>
           {this.isTreeAdded() &&<div className="deep-dive-button-wrap">
 
-            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className="btn-md btn-outline-inverse illuminate-button" onClick={()=> this.toggleIlluminateForm() }>Illuminate</button>
+            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className={IlluminateButtonClass}
+              onClick={IsDeepdiveAbailable ? ()=> this.toggleIlluminateForm() : () => {
+              }}>{IlluminateButtonText}</button>
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
                   onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {

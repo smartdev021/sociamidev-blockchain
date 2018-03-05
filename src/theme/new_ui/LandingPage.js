@@ -147,11 +147,13 @@ class LandingPage extends React.Component {
                 <div className="col-md-5">
                     <div className="box-problem">
                         <div className="icon-format">?</div>
-                        <h1 className="text-heading">PROBLEM</h1>
-                        <p>A mysterious technology epidemic is surging across the world today - and
-                            many will not know it until it’s too late. It’s called the future of work.
-                            Bands of people must now come together to change how they learn to beat threatening technologies
-                            like artificial intelligence to ensure the survival of humankind.</p>
+                        <h1 className="text-heading">The Revolution War</h1>
+                        <div>
+                            <p>It’s no secret. </p>
+                            <p>A mysterious technology epidemic surges across the world today. And this epidemic is called the 4th Industrial Revolution aka “Future of Work”.  </p>
+                            <p>Bands of people must now come together to build new next-generation high-tech to beat threatening technologies to ensure the survival of humankind.</p>
+                            <p>But we need to be better with how we learn and grow.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -173,32 +175,33 @@ class LandingPage extends React.Component {
                 <div className="col-md-4 no-padding">
                     <div className="box-seed seed-left">
                         <div className="block-capital">
-                            <h4>Speed Up Human Capital Growth</h4>
-                            <p>Revolutionize Learning Spaces by making it spontaneous, engaging and fun through a
-                                gamification engine borrowed from online games like World of Warcraft.
-                                Integrated with a Tokenized Social Network,
-                                we place people at the right place, at the right time with the right people.</p>
+                            <h4>Complete Learning Challenges</h4>
+                            <div>
+                                <p>Browse progression trees to discover opportunities you may not have known about or know how to get deeper into .</p>
+                                <p>Complete tasks along each tree that guides you closer to the mastery level you need!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-md-4 no-padding">
                     <div className="box-seed seed-mid">
                         <div className="block-capital">
-                            <h4>Redefine Social Circles</h4>
-                            <p>Automate rich opportunities through chal- lenge-driven tasks to build and measure up social
-                                reputation. Flex under- utilized expertise to hit deep moti- vations of connections to
-                                lay footholds into social stardom.
-                                Cast reputation gain on the "Blockchain Stone" never to be forgotten again!</p>
+                            <h4>Loop in your Friends</h4>
+                            <div>
+                                <p>Don’t go into battle alone! Bring friends to master your journeys togethe</p>
+                                <p>Rewards tend to be bigger, and come faster in groups. Earn reputation and cast it on the “Blockchain Stone”</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-md-4 no-padding">
                     <div className="box-seed seed-right">
                         <div className="block-capital">
-                            <h4>Tokenized Learning</h4>
-                            <p>At advanced levels, special abilities unlock to contribute in a tokenized world where
-                                digital tokens can be earned based on growth and contributions,
-                                to fire up community projects and launch power up effects like experience gains.</p>
+                            <h4>The Force of the Block</h4>
+                            <div>
+                                <p>A Mysterious Force spits out tokens digitally to pioneering Soqqle Users (Soqqlers) and records social reputation. The word going around is that it is powered by “Blockchain”.</p>
+                                <p>Grow your character and gain mastery to unlock more powerful tasks to gain more control over the “Force of the Block”.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,16 +214,13 @@ class LandingPage extends React.Component {
                     <div className="col-md-3">
                         <div className="box-feature">
                             <div className="item-feature feature-1">
-                                Convert Virtue Tokens to SOQQ tokens to obtain special powerup tokens to generate random
-                                special effects like random progress trees, experience boosts, and more.
+                              Discover the world of the future as you pick up quests and challenges in progression trees.
                             </div>
                             <div className="item-feature feature-2">
-                                Unlock advanced tasks as you progress. These advanced tasks net you VIRTUE tokens,
-                                used for purchase of other in-game benefits.
+                               Feel like being alone? Explore the game in Single Player by completing tasks laid out to you.
                             </div>
                             <div className="item-feature feature-3">
-                                Complete tasks to earn virtue points to progress through your progression tree levels.
-                                Levels get harder higher up.
+                                Want to be social? Put out a request to engage others to work on tasks together.
                             </div>
                         </div>
                     </div>
@@ -232,14 +232,13 @@ class LandingPage extends React.Component {
                     <div className="col-md-3">
                         <div className="box-feature">
                             <div className="item-feature feature-4">
-                                Browse and select challenges for completion. Each challenge consist of progression
-                                trees that are mix-and-matched.
+                                As you complete group tasks you earn EXP (Electronic XP) to solidify the social engagement you contributed in.
                             </div>
                             <div className="item-feature feature-5">
-                                See dailies, and weeklies that are open for completion
+                                Use E-XP to convert to merchant vouchers (A future enhancement) or Token (To be released in Beta).
                             </div>
                             <div className="item-feature feature-6">
-                                Join others in their challenges or create your own and invite others
+                                Use tokens to boost your experience gain, or save it until you need it later. Or, you could give it to a friend
                             </div>
                         </div>
                     </div>
@@ -260,22 +259,17 @@ class LandingPage extends React.Component {
         </div>
         <div className="container">
             <div className="row">
-                <h2 className="heading-token">Dual-token mechanism</h2>
+                <h2 className="heading-token">Token-Leveling System</h2>
                 <div className="col-md-4">
                     <div className="box-token token-1">
-                        <h3>VIRT: The worker token</h3>
-                        <p>Through the completion of challenge-driven tasks in the systems,
-                            users get to earn get to earn Virtue (VIR) Tokens that represent
-                            the value received as part of completing the learning objectives.
-                            As users start going through more and more complex objectives,
-                            they will unlock more unique tasks and benefits. </p>
+                        <h3>Electronic XP (EXP)</h3>
+                        <p>Special tasks (Group Only) churn out EXP. You can see how many EXP is given when you pick up your tasks.  EXP is Experience, or Expertise that solidify your growth.</p>
                     </div>
                 </div>
                 <div className="col-md-4">
                     <div className="box-token token-2">
                         <h3>SOQQ: The Powerup token</h3>
                         <p>SOQQ Tokens power-up pre-defined group or individual’s experience gains like a booster pack.
-                            Users can purchase these tokens through either offline methods or exchange with other users.
                         </p>
                     </div>
                 </div>

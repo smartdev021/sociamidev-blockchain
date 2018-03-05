@@ -60,7 +60,7 @@ class ThemeHeader extends React.Component {
     return (
       <div className="session-header" id="popup-root">
       {this.state.notificationsOpen && <Notifications onClose={()=>this.handleNotificationsClose()} userActivities={this.props.userActivities}/>}
-        <div className="container">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-md-3">
                     <div className="menu-hamburger">
@@ -92,15 +92,34 @@ class ThemeHeader extends React.Component {
                             <Icon name="envelope" aria-hidden="true"></Icon>
                           </ActionLink>{NumNotificationsString}
                         </li>
-                        <li className="notification"><a href="#"><Icon name="bell" aria-hidden="true"></Icon></a></li>
-                        <li className="register"><Link href="#" to='/connectionsView'><Icon name="user-plus" aria-hidden="true"></Icon></Link></li>
-                        <li className="account">
-                          <ActionLink href="#" onClick={() => this.onSignOut()}>
-                            <Icon name="user" aria-hidden="true">
-                            </Icon>
-                          </ActionLink></li>
-                        <li className="account"><Link href="#" to='/privacy'><Icon name="gear" aria-hidden="true"></Icon></Link></li>
-                        <li className="account"><Link href="#" to='/userProfile'><Icon name="user-o" aria-hidden="true"></Icon></Link></li>      
+                        <li className="notification">
+                            <a href="#">
+                                <Icon name="bell" aria-hidden="true"></Icon>
+                            </a>
+                        </li>
+                        <li className="register">
+                            <Link href="#" to='/connectionsView'>
+                                <Icon name="user-plus" aria-hidden="true"></Icon>
+                            </Link>
+                        </li>
+
+                        <li className="account privacy">
+                            <Link href="#" to='/privacy'>
+                                <Icon name="gear" aria-hidden="true"></Icon>
+                            </Link>
+                        </li>
+                        <li className="account profile">
+                            <Link href="#" to='/userProfile'>
+                                <Icon name="user-o" aria-hidden="true"></Icon>
+                            </Link>
+                        </li>
+                        <li className="account-logout">
+                            <ActionLink className="text-logout" href="#" onClick={() => this.onSignOut()}>
+                                <span>Logout</span>
+                                {/*<Icon name="user" aria-hidden="true">*/}
+                                {/*</Icon>*/}
+                            </ActionLink>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -76,24 +76,7 @@ const RenderSingleTask = (task, i, props)=> {
    </div>
     );
   }
-  else {
-    return (
-      <div className="col-tokens col-sm-12" key={i}>
-        <div className="item-tokens tokens-red">
-        <h4>{task.name}</h4>
-       <p className="text-1">{task.creator.firstName} is in your wider network</p>
-       <p className="text-2">Earn up to 10 tokens completing this task</p>
-       <div className="token-bottom">
-        {!task.isLocked ? <ActionLink href="#" className="btn-bg-red" data-toggle="modal" data-target="#token" 
-          onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
-            <span className="font-small">Register for</span></ActionLink>
-            :
-            <span className="tasks-scanner-task-locked-icon glyphicon glyphicon-lock">Locked</span>}
-       </div>
-     </div>
-     </div>
-      );
-  }
+
 };
 
 class TaskScanner extends React.Component {

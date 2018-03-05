@@ -104,6 +104,31 @@ const DayFromNumber = (dayNum)=> {
     return DateString;
   }
 
+  const RenderIlluminateActions = (task, props) => {
+    switch (task.status) {
+      case "None": {
+        return (
+          <div className="deep-tools">
+            <ul>
+              <li>
+                <ActionLink href="#"
+                  onClick={()=>props.onHangoutActionPerform("answer_questions", task)} className="btn-base btn-red">
+                  Answer Questions
+                </ActionLink>
+              </li>
+            </ul>
+         </div>);
+      }
+      case "complete": {
+        return (
+          <div className="deep-tools">
+          </div>
+        );
+      }
+    }
+
+  }
+
   const RenderActions = (hangout, props) => {
     const Partner = GetHangoutPartner(hangout, props);
     const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
@@ -174,7 +199,7 @@ const DayFromNumber = (dayNum)=> {
                       <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)} className="btn-base btn-red">Accept</ActionLink>
                     </li>
                     <li>
-                      <ActionLink href="#" onClick={()=>{}} className="btn-base btn-red">Open Chat</ActionLink>
+                      <ActionLink href="#" onClick={()=>{ document.getElementById(Partner.user._id).click()}} className="btn-base btn-red">Open Chat</ActionLink>
                     </li>
                     <li>
                       <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout, FirstPendingParticipant.user)} className="btn-base btn-red">Reject</ActionLink>
@@ -252,6 +277,37 @@ const DayFromNumber = (dayNum)=> {
       );
     }
    }
+  }
+
+  const IlluminateTitleFromStatus = (task) => {
+    let result = <h4> <a href="#" className="link-black"></a> </h4>
+    switch (task.status) {
+      case "started":
+        result = (
+          <h4>Illuminate is in progress</h4>
+        )
+        break;
+      case "finished": {
+        result = (
+            <h4>Illuminate is finished</h4>
+          );
+        break;
+      }
+      case "complete": {
+        result = (
+          <h4>Illuminate is complete</h4>
+          );
+        break;
+      }
+      default: {
+        result = (
+          <h4>Illuminate is progress</h4>
+          );
+        break;
+      }
+    }
+
+    return result;
   }
 
   const HangoutTitleFromStatus = (task, Partner) => {
@@ -373,6 +429,9 @@ const DayFromNumber = (dayNum)=> {
         }
       }
     }
+    else if (task.type === "illuminate") {
+      result = IlluminateTitleFromStatus(task);
+    }
     else {
       result = <div id="title">{task.name}</div>;
     }
@@ -416,6 +475,20 @@ const DayFromNumber = (dayNum)=> {
         {RenderActions(task, props)}
     </div>
     </div>)
+    } else if (task.type === "illuminate"){
+      const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
+
+      return (
+        <div className="col-deep col-sm-6" key={i}>
+          <div className="item-deep">
+            <div className="deep-content">
+                {RenderTaskTitle(task, props)}
+                <p>{SecondLine}</p>
+            </div>
+            {RenderIlluminateActions(task, props)}
+          </div>
+        </div>
+      );
     }
   
     return (

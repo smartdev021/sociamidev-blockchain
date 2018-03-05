@@ -1,5 +1,5 @@
 const BACKEND_URL_LOCAL = 'http://localhost:3001';
-const BACKEND_URL_REMOTE_PROD = 'http://13.59.19.153:3000';
+const BACKEND_URL_REMOTE_PROD = 'https://api.soqqle.com';
 const BACKEND_URL_REMOTE_STAGING = 'http://13.59.19.153:8080';
 
 var ConfigMain = {
@@ -8,8 +8,8 @@ var ConfigMain = {
             return BACKEND_URL_LOCAL;
         }
         else {
-            //return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
-            return BACKEND_URL_REMOTE_STAGING;
+            return process.env.NODE_ENV == "staging" ? BACKEND_URL_REMOTE_STAGING : BACKEND_URL_REMOTE_PROD;
+            // return BACKEND_URL_REMOTE_STAGING;
         }
     },
     getCookiesExpirationPeriod : function() {
