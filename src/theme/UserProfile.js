@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux';
 import Axios from 'axios';
 import StarRatings from 'react-star-ratings';
 import qs from 'query-string';
+import _ from 'lodash';
 
 import ConfigMain from '~/configs/main';
 import { openUserProfileComplete } from '~/src/redux/actions/authorization';
@@ -36,16 +37,11 @@ class UserProfile extends React.Component {
 
 		this.state = {
 			isProfileLoading: queryId ? true : false,
-			firstName: this.props.userProfile.firstName,
-			lastName: this.props.userProfile.lastName,
-			userID: this.props.userProfile._id,
 			work: 'Product Manager at Soqqle',
 			from: 'Singapore | Hong Kong',
-			email: this.props.userProfile.email ? this.props.userProfile.email : 'Danshen@gmail.com',
 			url: 'Soqqle.com',
 			tel: '+8521234567',
 			tasks: 78,
-			hangout: 63,
 			mentees: 36,
 			rating: 10,
 			blogs: [
@@ -56,61 +52,52 @@ class UserProfile extends React.Component {
 	}
 
 	componentWillMount () {
-		const queryId = qs.parse(this.props.location.search).id;
-		if(queryId) {
+    const queryId = qs.parse(this.props.location.search).id;
+    this.setUserProfile(queryId)
+  }
+  
+  setUserProfile(queryId) {
+		if(queryId && this.state.userID != queryId) {
 			Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
 				.then(response => {
-					console.log(response.data);
 					this.setState({
 						userID: queryId,
-						firstName: response.data.profile.firstName,
-						lastName: response.data.profile.lastName,
-						pictureURL: response.data.profile.pictureURL,
+						firstName: _.get(response, 'data.profile.firstName', ''),
+						lastName:_.get(response, 'data.profile.lastName', ''),
+            pictureURL: _.get(response, 'data.profile.pictureURL', ''),
+            email: _.get(response, 'data.profile.email', ''),
+            hangout: _.size(_.get(response, 'data.hangouts')),
+            progressionTrees: _.get(response, 'data.progressionTrees'),
+            progressionTreeLevels: _.get(response, 'data.profile.progressionTreeLevels'),
 						isProfileLoading: false
-					})
-				}).catch(err => {
-
-				});
+          })
+				})
 		} else {
 			this.setState({
-				firstName: this.props.userProfile.firstName,
-				lastName: this.props.userProfile.lastName,
+				firstName: _.get(this, 'props.userProfile.firstName'),
+        lastName: _.get(this, 'props.userProfile.lastName'),
+        userID: _.get(this, 'props.userProfile._id'),
+        pictureURL: _.get(this, 'props.userProfile.pictureURL'),
+        email: _.get(this, 'props.userProfile.email', 'Danshen@gmail.com'),
+        progressionTrees: this.props.userProfile.progressionTrees,
+        progressionTreeLevels: this.props.userProfile.progressionTreeLevels,
+        hangout: 0,
 				isProfileLoading: false
-			})
+      })
+
 		}
-	}
+  }
 
 	componentWillReceiveProps(nextProps) {
-		const queryId = qs.parse(nextProps.location.search).id;
-		if(queryId && this.state.userID != queryId) {
-			this.setState({isProfileLoading: true});
-			Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
-				.then(response => {
-					console.log(response.data);
-					this.setState({
-						userID: queryId,
-						firstName: response.data.profile.firstName,
-						lastName: response.data.profile.lastName,
-						pictureURL: response.data.profile.pictureURL,
-						isProfileLoading: false
-					})
-				}).catch(err => {
-
-				});
-		} else {
-			this.setState({
-				firstName: this.props.userProfile.firstName,
-				lastName: this.props.userProfile.lastName,
-				isProfileLoading: false
-			})
-		}
+    const queryId = qs.parse(nextProps.location.search).id;
+    this.setUserProfile(queryId);
 	}
 
 	renderLevels() {
-		const UserProgressionTrees = this.props.userProfile.progressionTrees;
+		const UserProgressionTrees = this.state.progressionTrees;
 
 		if (UserProgressionTrees && UserProgressionTrees.length > 0) {
-			let ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels;
+			let ProgressionTreeLevels = this.state.progressionTreeLevels;
 
 			if (!ProgressionTreeLevels || ProgressionTreeLevels.length == 0) {
 				UserProgressionTrees.forEach(function(progressionTree) {
@@ -192,8 +179,7 @@ class UserProfile extends React.Component {
 									<p className="new-user-work">{this.state.work}</p>
 									<p className="new-user-text">{this.state.from}</p>
 									<br/>
-									<p className="new-user-text">{this.props.userProfile.email 
-										? this.props.userProfile.email : "mail@example.com"}</p>
+									<p className="new-user-text">{_.get(this, 'state.email', "mail@example.com")}</p>
 									<br/>
 									<p className="new-user-text">{this.state.url}</p>
 									<br/>
