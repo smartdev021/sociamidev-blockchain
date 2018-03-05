@@ -103,3 +103,6 @@ export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX = "set_chara
 
 export const START_CHARACTER_CREATION = "start_character_creation";
 export const FINISH_CHARACTER_CREATION = "finish_character_creation";
+
+export const FETCH_LIST_CHARACTER_CLASSES_INITIATE = "fetch_list_character_classes_initiate";
+export const FETCH_LIST_CHARACTER_CLASSES_COMPLETE = "fetch_list_character_classes_complete";

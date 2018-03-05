@@ -36,6 +36,9 @@ import {
     startCharacterCreation,
     finishCharacterCreation,
     setCharacterCreationData,
+
+    fetchListCharacterClasses,
+
   } from '~/src/redux/actions/characterCreation'
 
 const SELECT_TRAITS = "SelectTraits";
@@ -75,6 +78,7 @@ class LandingPage extends React.Component {
   /*CHARACTER CREATION FLOW*/
 
   componentWillMount() {
+      this.props.fetchListCharacterClasses();
       this.restoreCharacterCreation();
   }
 
@@ -167,7 +171,8 @@ class LandingPage extends React.Component {
                   selectedIndex={this.props.characterCreationData.selectedCharacterIndex}
                   charactersList={this.props.listCharacters}
                   characterCreationData={this.props.characterCreationData}
-                  progressValue={progressValue}/>
+                  progressValue={progressValue}
+                  isFetchingCharacters={this.props.isFetchingCharacters}/>
                 break;
             }
             case SELECT_AUTH_METHOD: {
@@ -765,6 +770,7 @@ LandingPage.propTypes = {
   startCharacterCreation: PropTypes.func.isRequired,
   finishCharacterCreation: PropTypes.func.isRequired,
   setCharacterCreationData: PropTypes.func.isRequired,
+  fetchListCharacterClasses: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -774,6 +780,7 @@ const mapDispatchToProps = dispatch => ({
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   finishCharacterCreation: bindActionCreators(finishCharacterCreation, dispatch),
   setCharacterCreationData: bindActionCreators(setCharacterCreationData, dispatch),
+  fetchListCharacterClasses: bindActionCreators(fetchListCharacterClasses, dispatch),
 });
 
 const mapStateToProps = state => ({
@@ -781,6 +788,7 @@ const mapStateToProps = state => ({
   characterCreationData: state.characterCreationData,
   listCharacterTraits: state.characterCreation.listCharacterTraits,
   listCharacters: state.characterCreation.listCharacters,
+  isFetchingCharacters: state.characterCreation.isFetchingCharacters,
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

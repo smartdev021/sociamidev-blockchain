@@ -68,7 +68,7 @@ class CharacterSelection extends React.Component {
                       <ActionLink onClick={()=>this.handleChangeSelectedChatacter(i)} 
                         className={`character-selection-button ${this.props.selectedIndex == i ? 
                         'character-selected' : ""}`}>
-                        <img src={this.props.charactersList[i].image}/>
+                        <img src={this.props.charactersList[i].imageURL}/>
                       </ActionLink>
                     </div>
                   </div>
@@ -81,6 +81,28 @@ class CharacterSelection extends React.Component {
     }
 
     render() {
+      console.log("this.props.isFetchingCharacters: " + this.props.isFetchingCharacters);
+      console.dir(this.props.charactersList);
+      if (this.props.isFetchingCharacters) {
+        return(
+          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
+            parentSelector={getPopupParentElement}>
+            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
+                name="times" aria-hidden="true"></Icon>
+            <div id="character-selection-container">
+              <div id="character-selection-container-inner">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <Icon spin name="spinner" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        );
+      }
         const SelectedCharacter = this.props.charactersList[this.props.selectedIndex];
         return (
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
@@ -91,7 +113,7 @@ class CharacterSelection extends React.Component {
               <div id="character-selection-container-inner">
                 <div className="container-fluid">
                   <div id="character-selection-image-big">
-                    <img src={SelectedCharacter.imageBig}/>
+                    <img src={SelectedCharacter.imageBigURL}/>
                   </div>
                   <div className="row">
                     <div className="col-lg-12">
@@ -110,14 +132,12 @@ class CharacterSelection extends React.Component {
                           <h4 className="text-uppercase">{SelectedCharacter.name}</h4>
                         </div>
                         <div id="character-description">
-                          <p>{SelectedCharacter.descriptionText1}</p>
-                          <p>{SelectedCharacter.descriptionText2}</p>
-                          <p>{SelectedCharacter.descriptionText3}</p>
+                          <p>{SelectedCharacter.description}</p>
                         </div>
                         <div id="character-skills">
                           {
                             SelectedCharacter.skills.map((skill, i) => {
-                              return <span className="character-skill">{skill}</span>
+                              return <span className="character-skill" key={i}>{skill}</span>
                             })
                           }
                         </div>

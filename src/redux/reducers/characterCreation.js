@@ -5,6 +5,9 @@ import {
     SET_CHARACTER_CREATION_DATA,
     START_CHARACTER_CREATION,
     FINISH_CHARACTER_CREATION,
+
+    FETCH_LIST_CHARACTER_CLASSES_INITIATE,
+    FETCH_LIST_CHARACTER_CLASSES_COMPLETE,
 } from '~/src/redux/actions/actionTypes';
 
 const characterCreationDataInitialState = {
@@ -112,8 +115,12 @@ const traits = [
   },
 ];
 
-export function characterCreation(state = {listCharacters: characters, listCharacterTraits: traits}, action) {
+export function characterCreation(state = {listCharacters: [], listCharacterTraits: traits, isFetchingCharacters: false}, action) {
   switch (action.type) {
+    case FETCH_LIST_CHARACTER_CLASSES_INITIATE:
+      return {...state, isFetchingCharacters: true}
+    case FETCH_LIST_CHARACTER_CLASSES_COMPLETE:
+      return {...state, listCharacters: action.data, isFetchingCharacters: false}
     default:
       return state;
   }
