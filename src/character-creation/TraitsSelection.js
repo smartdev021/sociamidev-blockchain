@@ -22,7 +22,7 @@ class TraitsSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '85%';
+      Modal.defaultStyles.content["height"] = '80%';
       Modal.defaultStyles.content["width"] = '75%';
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
@@ -56,7 +56,7 @@ class TraitsSelection extends React.Component {
 
     render() {
       if (this.props.isFetchingCharacterTraits) {
-        <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Traits Selection"} 
+        return (<Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Traits Selection"} 
             parentSelector={getPopupParentElement}>
             <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
                 name="times" aria-hidden="true"></Icon>
@@ -71,7 +71,7 @@ class TraitsSelection extends React.Component {
                 </div>
               </div>
             </div>
-        </Modal>
+        </Modal>)
       }
         return (
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Traits Selection"} 

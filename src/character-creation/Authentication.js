@@ -90,11 +90,22 @@ class Authentication extends React.Component {
                 </div>
                 <div className="row">
                   <div className="col-lg-12">
-                    <p>
-                      By clicking on any of the above authentication methods, 
-                      you agree yo our t and c's and confirm that you have read our 
-                      Data Privacy (which includes our Cookie Use Plociy).
-                    </p>
+                    <div className="text-center" id="character-creation-authorization-disclaimer">
+                      <p>
+                        {`By clicking on any of the above authentication methods, 
+                        you agree yo our t&c's and confirm that you have read our 
+                        Data Privacy (which includes our Cookie Use Plociy).`}
+                      </p>
+                      <p>
+                        &#42;We currently do not support non Facebook/LinkedIn authentication methods but plan to do so in the near future.
+                      </p>
+                      <p>
+                        &#42;Soqqle is a platform to encourage personal growth by making learning fun.
+                      </p>
+                      <p>
+                        We encourage you to support collaboration by maintaining courtesy and integrity.
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="row">

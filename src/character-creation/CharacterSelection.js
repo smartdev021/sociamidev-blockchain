@@ -24,7 +24,7 @@ class CharacterSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '85%';
+      Modal.defaultStyles.content["height"] = '80%';
       Modal.defaultStyles.content["width"] = '75%';
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
@@ -102,6 +102,8 @@ class CharacterSelection extends React.Component {
         );
       }
         const SelectedCharacter = this.props.charactersList[this.props.selectedIndex];
+        console.log("SelectedCharacter");
+        console.dir(SelectedCharacter);
         return (
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
             parentSelector={getPopupParentElement}>
@@ -130,7 +132,9 @@ class CharacterSelection extends React.Component {
                           <h4 className="text-uppercase">{SelectedCharacter.name}</h4>
                         </div>
                         <div id="character-description">
-                          <p>{SelectedCharacter.description}</p>
+                          {SelectedCharacter.description1 && <p>{SelectedCharacter.description1}</p>}
+                          {SelectedCharacter.description2 && <p>{SelectedCharacter.description2}</p>}
+                          {SelectedCharacter.description3 && <p>{SelectedCharacter.description3}</p>}
                         </div>
                         <div id="character-skills">
                           {
