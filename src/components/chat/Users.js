@@ -6,11 +6,16 @@ class Users extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {selectedItem: '-1', usersWindowOpen: 0, messageIndicatorClass : "newMessageIndicatorHide"};
+    this.state = {usersWindowOpen: 0, messageIndicatorClass : "newMessageIndicatorHide"};
   }
 
   componentWillReceiveProps(nextProps){
     if(this.props.lastMessageRec !== nextProps.lastMessageRec){
+      if(this.props.openWindow){
+        this.state.usersWindowOpen = 1;
+        this.props.checkUserWin(this.state.usersWindowOpen);
+        this.props.onTab(this.props.selectedUser,this.props.selectedUserFullName);        
+      }
       if(this.state.usersWindowOpen == 0){
         this.state.messageIndicatorClass = "newMessageIndicatorShow";
       }
@@ -30,9 +35,8 @@ class Users extends React.Component {
     objDiv.scrollTop = objDiv.scrollHeight;
   }
 
-  tabChanges(value,value1,value2){
-    this.props.onTab(value,value1);
-    this.setState({ selectedItem: value2 });
+  tabChanges(activeUserID,activeUserFullname){
+    this.props.onTab(activeUserID,activeUserFullname);
   }
 
   toggleUsersWindow(){
@@ -74,7 +78,8 @@ class Users extends React.Component {
           lastMessageRec = {this.props.lastMessageRec}
           selectedUser = {this.props.selectedUser}
           selectedTab = {this.state.selectedItem}
-          onTab={(value,value1,value2)=>this.tabChanges(value,value1,value2)}
+          onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)}
+          unreadCount={this.props.unreadCount}
         />
       );
     });

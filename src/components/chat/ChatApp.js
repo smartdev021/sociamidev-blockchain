@@ -49,7 +49,9 @@ class ChatApp extends React.Component {
                    lastMessageStack: [],
                    anonymousUserId: "",
                    loggedin: false,
-                   userID: ""
+                   userID: "",
+                   unreadCountStack: [],
+                   openWindow: false
                 };    
   }
 
@@ -94,13 +96,41 @@ class ChatApp extends React.Component {
   }
 
   newServerMessage(message){
+    if(message.sender == "chatbot"){
+      let copy = Object.assign({}, this.state, {openWindow: true, activeUserID: "chatbot", activeUserFullName: "Chatbot"});
+      this.setState(copy);
+    }
+    if(message.sender != "chatbot" && message.sender != this.state.userID){
+      var tempUsers = this.state.users;
+      var index = tempUsers.findIndex(userToCheck => userToCheck.userID==message.sender);
+      var tempUser = tempUsers[index];
+      tempUsers.splice(index, 1);
+      tempUsers.splice(1, 0, tempUser);
+      let copy = Object.assign({}, this.state, {users: tempUsers});
+      this.setState(copy);
+    }
+    if(message.sender != this.state.activeUserID){
+      var tempUnreadCountStack = this.state.unreadCountStack;
+      if(message.sender in tempUnreadCountStack){
+        tempUnreadCountStack[message.sender] = tempUnreadCountStack[message.sender] + 1;
+      }
+      else{
+        tempUnreadCountStack[message.sender] = 1;
+      }
+      let copy = Object.assign({}, this.state, {unreadCountStack: tempUnreadCountStack});
+      this.setState(copy);
+    }
     lastMessageRec = message;
     this.addMessage(message);
     this.addLastMessage(message);
   }
 
   tabChanges(activeUserID,activeUserFullname){
-    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname});
+    var tempUnreadCountStack = this.state.unreadCountStack;
+    if(activeUserID in tempUnreadCountStack){
+      tempUnreadCountStack[activeUserID] = 0;
+    }
+    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname, unreadCountStack:tempUnreadCountStack});
     this.setState(copy);
   }
 
@@ -212,7 +242,7 @@ class ChatApp extends React.Component {
       this.setState(copy);
     }
     else if(usersWindowOpen == 1){
-      let copy = Object.assign({}, this.state, {chatWindowOpen: 0});
+      let copy = Object.assign({}, this.state, {chatWindowOpen: 0, openWindow: false});
       this.setState(copy);
     }
   }
@@ -256,7 +286,7 @@ class ChatApp extends React.Component {
       <div className={divMainClasses}>
         <div className="chatapp-container">
           <div className="chatapp-userContainer" id="userContainer">
-            <Users users={this.state.users} selectedUser={this.state.activeUserID} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} />
+            <Users users={this.state.users} selectedUser={this.state.activeUserID} selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} openWindow={this.state.openWindow} />
           </div>
           <div className={divChatClasses} id="chatContainer">
             <div className="topName">
