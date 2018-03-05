@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import {Icon} from 'react-fa'
 
+import {ProgressBar} from 'react-bootstrap'
+
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import "./common.css"
@@ -89,6 +91,13 @@ class TraitsSelection extends React.Component {
                         <button className="btn btn-danger text-uppercase"  onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}>
                           Next
                         </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div className="character-creation-progressbar-container">
+                          <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
                       </div>
                     </div>
                   </div>

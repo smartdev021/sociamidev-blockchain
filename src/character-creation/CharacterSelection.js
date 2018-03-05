@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
+import {ProgressBar} from 'react-bootstrap'
+
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import {Icon} from 'react-fa'
@@ -123,6 +125,9 @@ class CharacterSelection extends React.Component {
                           <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.props.selectedIndex})}>
                             Select
                           </button>
+                        </div>
+                        <div className="character-creation-progressbar-container">
+                          <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
                         </div>
                       </div>
                     </div>

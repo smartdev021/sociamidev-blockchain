@@ -7,3 +7,12 @@
     height: 100%;
     overflow-y: scroll;
 }
+
+.character-creation-authenticate-button-container {
+    padding: 10px 0px;
+}
+
+.character-creation-auth-button {
+    margin-right: 20px;
+    padding: 20px 40px;
+}

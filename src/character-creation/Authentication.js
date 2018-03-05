@@ -6,6 +6,8 @@ import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import {Icon} from 'react-fa'
 
+import {ProgressBar} from 'react-bootstrap'
+
 import "./common.css"
 import "./authentication.css"
 
@@ -75,16 +77,12 @@ class Authentication extends React.Component {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-12">
-                    <div className="character-creation-authenticate-button-container">
-                      <button className="btn btn-primary" onClick={()=>this.handleSignUpFacebook()}>
+                  <div className="col-lg-12">
+                    <div className="character-creation-authenticate-button-container text-center">
+                      <button className="btn btn-primary character-creation-auth-button" onClick={()=>this.handleSignUpFacebook()}>
                         Login with Facebook
                       </button>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-12">
-                    <div className="character-creation-authenticate-button-container">
-                      <button className="btn btn-primary" onClick={()=>this.handleSignUpLinkedIn()}>
+                      <button className="btn btn-primary character-creation-auth-button" onClick={()=>this.handleSignUpLinkedIn()}>
                         Login with LinkedIn
                       </button>
                     </div>
@@ -97,6 +95,13 @@ class Authentication extends React.Component {
                       you agree yo our t and c's and confirm that you have read our 
                       Data Privacy (which includes our Cookie Use Plociy).
                     </p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="character-creation-progressbar-container">
+                          <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                    </div>
                   </div>
                 </div>
               </div>

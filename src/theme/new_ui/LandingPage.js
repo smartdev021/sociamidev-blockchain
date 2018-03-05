@@ -147,6 +147,8 @@ class LandingPage extends React.Component {
   renderCharacterCreationForm() {
     let FormToRender = null;
 
+    const progressValue = ((this.state.characterCreationFlowStepIndex + 1) / CharacterCreationFlow.length) * 100;
+
     if (this.props.characterCreationData.isInProgress && this.state.characterCreationState) {
         switch (this.state.characterCreationState.step) {
             case SELECT_TRAITS: {
@@ -154,7 +156,8 @@ class LandingPage extends React.Component {
                   onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}
                   onSelect={(index)=>this.handleSelectCharacterTraits(index)}
                   selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
-                  traitsList={this.props.listCharacterTraits}/>
+                  traitsList={this.props.listCharacterTraits}
+                  progressValue={progressValue}/>
                 break;
             }
             case SELECT_CHARACTER: {
@@ -163,7 +166,8 @@ class LandingPage extends React.Component {
                   onSelect={(index)=>this.handleSelectCharacter(index)}
                   selectedIndex={this.props.characterCreationData.selectedCharacterIndex}
                   charactersList={this.props.listCharacters}
-                  characterCreationData={this.props.characterCreationData}/>
+                  characterCreationData={this.props.characterCreationData}
+                  progressValue={progressValue}/>
                 break;
             }
             case SELECT_AUTH_METHOD: {
@@ -171,7 +175,8 @@ class LandingPage extends React.Component {
                   onClose={() => this.handleCloseCharacterCreation()}
                   onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
                   onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
-                  onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
+                  onHandleCreationFinish={()=>this.props.finishCharacterCreation()}
+                  progressValue={progressValue}/>
                 break;
             }
             default:
