@@ -58,6 +58,24 @@ class UserProfile extends React.Component {
 		})
 	}
 
+	renderCharacter() {
+		if (!this.props.userProfile || !this.props.userProfile.character) {
+			return null;
+		}
+
+		const Character = this.props.userProfile.character;
+
+		return (
+			<div id="userprofile-page-character-info">
+			  {Character.image ? <img src={Character.image}/> 
+			  : <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png"/>}
+			  <h2>{Character.characterName}</h2>
+			  <h3>{Character.traitsName}</h3>
+			  <h4>{Character.traitsDescription}</h4>
+			</div>
+		)
+	}
+
 	renderLevels() {
 		const UserProgressionTrees = this.props.userProfile.progressionTrees;
 
@@ -178,6 +196,11 @@ class UserProfile extends React.Component {
 						<div className="row">
 						  <div className="col-lg-12">
 						    {this.renderLevels()}
+						  </div>
+						</div>
+						<div className="row">
+						  <div className="col-lg-12">
+						    {this.renderCharacter()}
 						  </div>
 						</div>
 						{this.state.blogs.map((item, index) => {
