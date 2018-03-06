@@ -159,7 +159,7 @@ class LandingPage extends React.Component {
         switch (this.state.characterCreationState.step) {
             case SELECT_TRAITS: {
                 FormToRender = <CharacterTraitsSelection characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}
+                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={()=>this.characterCreationNextStep()}
                   onSelect={(index)=>this.handleSelectCharacterTraits(index)}
                   selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
                   traitsList={this.props.listCharacterTraits}
@@ -169,7 +169,7 @@ class LandingPage extends React.Component {
             }
             case SELECT_CHARACTER: {
                 FormToRender = <CharacterSelection characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={(data)=>this.characterCreationNextStep(data)}
+                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={()=>this.characterCreationNextStep()}
                   onSelect={(index)=>this.handleSelectCharacter(index)}
                   selectedIndex={this.props.characterCreationData.selectedCharacterIndex}
                   charactersList={this.props.listCharacters}

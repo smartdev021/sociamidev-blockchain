@@ -144,9 +144,10 @@ class CharacterSelection extends React.Component {
                           }
                         </div>
                         <div id="character-select-confirm-button-container">
-                          <button className="btn btn-danger text-uppercase" onClick={()=>this.props.onNextStep({characterIndex: this.props.selectedIndex})}>
+                          <ActionLink href="#" onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}
+                             className="btn-base-landing btn-red-landing btn-login-landing text-uppercase">
                             Select
-                          </button>
+                           </ActionLink>
                         </div>
                         <div className="character-creation-progressbar-container">
                           <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />

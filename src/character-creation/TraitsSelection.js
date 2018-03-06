@@ -6,6 +6,8 @@ import {Icon} from 'react-fa'
 
 import {ProgressBar} from 'react-bootstrap'
 
+import ActionLink from '~/src/components/common/ActionLink'
+
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import "./common.css"
@@ -106,9 +108,10 @@ class TraitsSelection extends React.Component {
                   <div className="row">
                     <div className="col-lg-12">
                       <div id="character-trait-select-confirm-button-container" className="text-center">
-                        <button className="btn btn-danger text-uppercase"  onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}>
-                          Next
-                        </button>
+                        <ActionLink href="#" onClick={()=>this.props.onNextStep()}
+                           className="btn-base-landing btn-red-landing btn-login-landing text-uppercase">
+                             Next
+                        </ActionLink>
                       </div>
                     </div>
                   </div>
