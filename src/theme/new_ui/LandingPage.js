@@ -246,10 +246,17 @@ class LandingPage extends React.Component {
                 <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
               </div>
               <div className="col-xs-6 pull-right">
-                <ActionLink href="#" onClick={()=> this.startCharacterCreation()} className="btn-base-landing btn-red-landing btn-login-landing">
-                  Create Account</ActionLink>
-                <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base-landing btn-yellow-landing btn-login-landing">
-                  Sign in</ActionLink>
+                <div className="pull-right" id="landing-header-links">
+                  <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} 
+                    className="btn-base-landing btn-yellow-landing btn-login-landing">
+                    Sign in
+                  </ActionLink>
+                  <div className="text-right">
+                    <ActionLink id="link-create-acc" href="#" onClick={()=> this.startCharacterCreation()} className="">
+                      Create an Account Instead
+                    </ActionLink>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="row">

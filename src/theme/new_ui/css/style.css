@@ -134,7 +134,6 @@ body{
 }
 
 .btn-login-landing{
-    float: right;
     margin: 15px 0px;
 }
 
@@ -145,6 +144,11 @@ body{
 
 #intro-video {
     border: none;
+}
+
+#landing-header-links #link-create-acc {
+    color: black;
+    text-decoration: underline;
 }
 
 
