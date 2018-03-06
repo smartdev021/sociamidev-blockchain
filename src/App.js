@@ -35,6 +35,8 @@ import {
   openSignUpForm,
   closeSignUpForm,
   fetchUserActivities,
+
+  setUserProfileCharacter,
 } from '~/src/redux/actions/authorization'
 
 import {
@@ -409,7 +411,7 @@ class App extends Component {
   }
 
   handleCharacterDataSet() {
-    console.log("handleCharacterDataSet");
+    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
   }
 
   chatEndListener(event,data){
@@ -520,6 +522,7 @@ App.propTypes = {
   fetchAllTasks: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
+  setUserProfileCharacter: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -535,6 +538,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
 })
 
 const mapStateToProps = state => ({

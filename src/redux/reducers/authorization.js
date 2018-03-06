@@ -10,6 +10,9 @@ import {
     FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
     FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
 
+    UPDATE_USER_PROFILE_INITIATE,
+    UPDATE_USER_PROFILE_COMPLETE,
+
     PROGRESSION_TREE_START_INITIATE,
     PROGRESSION_TREE_START_COMPLETE,
 
@@ -60,6 +63,10 @@ export function userProfile(state = userProfileInitialState, action) {
       return {...state, isAuthorized: false, isLoading: true};
     case FETCH_USER_PROFILE_COMPLETE:
       return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
+    case UPDATE_USER_PROFILE_INITIATE:
+      return {...state, isLoading: true};
+    case UPDATE_USER_PROFILE_COMPLETE:
+      return {...action.profile, isAuthorized: true, isLoading: false};
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
       return {...state, tasks: {assigned: [], created: [], isLoading: true}};
     }

@@ -109,3 +109,6 @@ export const FETCH_LIST_CHARACTER_CLASSES_COMPLETE = "fetch_list_character_class
 
 export const FETCH_LIST_CHARACTER_TRAITS_INITIATE = "fetch_list_character_traits_initiate";
 export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = "fetch_list_character_traits_complete";
+
+export const UPDATE_USER_PROFILE_INITIATE = "fetch_user_profile_initiate";
+export const UPDATE_USER_PROFILE_COMPLETE = "fetch_user_profile_complete";
