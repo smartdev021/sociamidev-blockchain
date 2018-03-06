@@ -164,7 +164,8 @@ class CharacterCreationFlow extends React.Component {
                   onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
                   onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
                   onHandleCreationFinish={()=>this.props.finishCharacterCreation()}
-                  progressValue={progressValue}/>
+                  progressValue={progressValue}
+                  isAuthorized={this.props.isAuthorized}/>
                 break;
             }
             default:
