@@ -17,6 +17,10 @@ class CharacterSelection extends React.Component {
     constructor(props) {
       super(props);
       this.modalDefaultStyles = {};
+
+      this.state = {
+        mouseOveredIndex: undefined,
+      }
     }
 
     componentWillMount() {
@@ -56,6 +60,14 @@ class CharacterSelection extends React.Component {
       this.props.onClose();
     }
 
+    handleMouseOverCharacter(index) {
+      this.setState({mouseOveredIndex: index});
+    }
+
+    handleMouseOutCharacter() {
+      this.setState({mouseOveredIndex: undefined});
+    }
+
     renderCharacters(characters, firstIndex, lastIndex) {
       return (
         <div className="row">
@@ -65,7 +77,10 @@ class CharacterSelection extends React.Component {
                 return (
                   <div className="col-lg-12 col-md-4 col-sm-4 col-xsm-12" key={i}>
                     <div className="character-selection-button-container">
-                      <ActionLink onClick={()=>this.handleChangeSelectedChatacter(i)} 
+                      <ActionLink 
+                        onClick={()=>this.handleChangeSelectedChatacter(i)} 
+                        onMouseOver={()=>this.handleMouseOverCharacter(i)}
+                        onMouseOut={()=>this.handleMouseOutCharacter()}
                         className={`character-selection-button ${this.props.selectedIndex == i ? 
                         'character-selected' : ""}`}>
                         <img src={this.props.charactersList[i].imageURL}/>
@@ -101,7 +116,8 @@ class CharacterSelection extends React.Component {
           </Modal>
         );
       }
-        const SelectedCharacter = this.props.charactersList[this.props.selectedIndex];
+        const SelectedCharacter = this.state.mouseOveredIndex ? this.props.charactersList[this.state.mouseOveredIndex] 
+        : this.props.charactersList[this.props.selectedIndex];
         console.log("SelectedCharacter");
         console.dir(SelectedCharacter);
         return (
