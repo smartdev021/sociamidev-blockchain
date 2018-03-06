@@ -27,6 +27,8 @@ import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
 
+import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
+
 import {
   fetchUserProfile,
   openUserProfile,
@@ -47,6 +49,11 @@ import {
 
   openSearchResults,
 } from '~/src/redux/actions/fetchResults'
+
+import {
+  startCharacterCreation
+
+} from '~/src/redux/actions/characterCreation'
 
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
@@ -355,6 +362,10 @@ class App extends Component {
         console.dir(this.token_tasks_update);
 
         this.props.fetchUserActivities(this.props.userProfile._id);
+
+        if (!this.props.userProfile.character) {
+          this.props.startCharacterCreation();
+        }
       }
       else {
         PubSub.unsubscribe(this.token_tasks_update);
@@ -395,6 +406,10 @@ class App extends Component {
     }
 
     return ProfileLink;
+  }
+
+  handleCharacterDataSet() {
+    console.log("handleCharacterDataSet");
   }
 
   chatEndListener(event,data){
@@ -455,6 +470,7 @@ class App extends Component {
       currentUserId={this.props.userProfile._id}
       screenWidth={this.state.screenWidth}
       screenHeight={this.state.screenHeight}/>
+      <CharacterCreationFlow onHandleCharacterDataSet={()=>this.handleCharacterDataSet()}/>
       {ChatAppLink}
       </div>
     );
@@ -503,6 +519,7 @@ App.propTypes = {
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
+  startCharacterCreation: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -517,6 +534,7 @@ const mapDispatchToProps = dispatch => ({
   fetchResults: bindActionCreators(fetchResults, dispatch),
   fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
 })
 
 const mapStateToProps = state => ({

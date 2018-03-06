@@ -109,11 +109,17 @@ class CharacterCreationFlow extends React.Component {
   }
 
   characterCreationNextStep() {
-    const characterCreationFlowStepIndex = (this.state.characterCreationFlowStepIndex + 1) % CharacterCreationFlowData.length;
-    this.setState( {
+    if (this.state.characterCreationState.step == SELECT_CHARACTER && this.props.isAuthorized) {
+        this.props.onHandleCharacterDataSet();
+        this.handleCloseCharacterCreation();
+    }
+    else {
+        const characterCreationFlowStepIndex = (this.state.characterCreationFlowStepIndex + 1) % CharacterCreationFlowData.length;
+        this.setState( {
             characterCreationState: CharacterCreationFlowData[characterCreationFlowStepIndex], 
             characterCreationFlowStepIndex: characterCreationFlowStepIndex,
-    });
+        });
+    }
   }
 
   handleSelectCharacterTraits(index) {
@@ -222,6 +228,7 @@ class CharacterCreationFlow extends React.Component {
     listCharacters: state.characterCreation.listCharacters,
     isFetchingCharacters: state.characterCreation.isFetchingCharacters,
     isFetchingCharacterTraits: state.characterCreation.isFetchingCharacterTraits,
+    isAuthorized: state.userProfile.isAuthorized,
   });
   
   //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

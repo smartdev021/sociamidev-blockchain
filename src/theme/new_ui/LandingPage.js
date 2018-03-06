@@ -62,8 +62,9 @@ class LandingPage extends React.Component {
     return (
       <div className="wrapper">
         {this.renderSignUpForm()}
-        <CharacterCreationFlow onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()} 
-          onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
+        <CharacterCreationFlow onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
+          onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+            onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <div className="session-header-landing">
           <div className="container">
