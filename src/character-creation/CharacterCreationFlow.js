@@ -65,7 +65,7 @@ class CharacterCreationFlow extends React.Component {
       if (prevProps.characterCreationData != this.props.characterCreationData
           || this.state.characterCreationState != prevState.characterCreationState
             || this.state.characterCreationFlowStepIndex != prevState.characterCreationFlowStepIndex) {
-        const { cookies } = this.props;
+        /*const { cookies } = this.props;
 
         if (cookies) {
             const characterCreationSave = cookies.get("characterCreation");
@@ -86,7 +86,7 @@ class CharacterCreationFlow extends React.Component {
                       } 
                 }, options); 
             }
-        }
+        }*/
       }
 
       if (prevProps.characterCreationData.isInProgress != this.props.characterCreationData.isInProgress) {
@@ -177,7 +177,7 @@ class CharacterCreationFlow extends React.Component {
   }
 
   restoreCharacterCreation() {
-    const { cookies } = this.props;
+    /*const { cookies } = this.props;
 
     console.log("restoreCharacterCreation");
     console.dir(cookies);
@@ -193,7 +193,7 @@ class CharacterCreationFlow extends React.Component {
             this.props.setCharacterCreationData(characterCreationSave.data);
             this.setState({characterCreationState: characterCreationSave.state.data, characterCreationFlowStepIndex: characterCreationSave.state.index});
         }
-    }
+    }*/
   }
 
     render() {
