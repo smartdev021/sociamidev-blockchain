@@ -23,199 +23,24 @@ import {
 import {Route, Switch} from 'react-router-dom' //temporarily here, remove it!!!!!!!
 import Authorize from '~/src/authentication/Authorize';
 
-//character selection
-import CharacterSelection from "~/src/character-creation/CharacterSelection"
-import CharacterTraitsSelection from "~/src/character-creation/TraitsSelection"
-import CharacterAuthentication from "~/src/character-creation/Authentication"
+import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
 
 import ConfigMain from '~/configs/main'
 
 import {
-    setSelectedCharacterIndex,
-    setSelectedCharacterTraitsIndex,
-    startCharacterCreation,
-    finishCharacterCreation,
-    setCharacterCreationData,
-
-    fetchListCharacterClasses,
-    fetchListCharacterTraits,
-
+    startCharacterCreation
+  
   } from '~/src/redux/actions/characterCreation'
-
-const SELECT_TRAITS = "SelectTraits";
-const SELECT_CHARACTER = "SelectCharacter";
-const SELECT_AUTH_METHOD = "SelectAuthMethod";
-
-const CharacterCreationFlow = [
-    {
-        step: SELECT_TRAITS,
-            data: {
-                selectedIndex: 0,
-        }
-    },
-    {
-        step: SELECT_CHARACTER,
-            data: {
-                selectedIndex: 0,
-        }
-    },
-    {
-        step: SELECT_AUTH_METHOD
-    }
-];
 
 class LandingPage extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-        isCharacterCreationFlowActive: false,
-        characterCreationState: undefined,
-        characterCreationFlowStepIndex: undefined,
-    }
-  }
-
-  /*CHARACTER CREATION FLOW*/
-
-  componentWillMount() {
-      this.props.fetchListCharacterClasses();
-      this.props.fetchListCharacterTraits();
-      this.restoreCharacterCreation();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-      if (prevProps.characterCreationData != this.props.characterCreationData
-          || this.state.characterCreationState != prevState.characterCreationState
-            || this.state.characterCreationFlowStepIndex != prevState.characterCreationFlowStepIndex) {
-        const { cookies } = this.props;
-        console.log("if (prevProps.characterCreationData != this.props.characterCreationData)");
-        console.dir(cookies);
-        console.dir(this.props.characterCreationData);
-        if (cookies) {
-            const characterCreationSave = cookies.get("characterCreation");
-
-            console.log("if (cookies) {");
-
-            console.dir(characterCreationSave);
-            console.dir(this.props.characterCreationData);
-
-            if (!characterCreationSave || this.props.characterCreationData != characterCreationSave
-            || characterCreationSave.state.index != this.state.characterCreationFlowStepIndex
-            || characterCreation.state.data != this.state.characterCreationState) {
-
-                let dateExpire = new Date();
-                dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()); 
-
-                const options = { path: '/', expires: dateExpire};
-                cookies.set("characterCreation", {
-                    data: this.props.characterCreationData, 
-                    state: {
-                        index: this.state.characterCreationFlowStepIndex, 
-                        data: this.state.characterCreationState
-                      } 
-                }, options); 
-            }
-        }
-      }
-  }
-
-  handleCloseCharacterCreation() {
-    this.props.finishCharacterCreation();
   }
 
   startCharacterCreation() {
-    const StartFlowIndex = 0;
-    this.setState({
-        characterCreationState: CharacterCreationFlow[StartFlowIndex],
-        characterCreationFlowStepIndex: StartFlowIndex,
-    });
-
     this.props.startCharacterCreation();
   }
-
-  characterCreationNextStep() {
-    const characterCreationFlowStepIndex = (this.state.characterCreationFlowStepIndex + 1) % CharacterCreationFlow.length;
-    this.setState( {
-            characterCreationState: CharacterCreationFlow[characterCreationFlowStepIndex], 
-            characterCreationFlowStepIndex: characterCreationFlowStepIndex,
-    });
-  }
-
-  handleSelectCharacterTraits(index) {
-      this.props.setSelectedCharacterTraitsIndex(index);
-  }
-
-  handleSelectCharacter(index) {
-      this.props.setSelectedCharacterIndex(index);
-  }
-
-  renderCharacterCreationForm() {
-    let FormToRender = null;
-
-    const progressValue = ((this.state.characterCreationFlowStepIndex + 1) / CharacterCreationFlow.length) * 100;
-
-    if (this.props.characterCreationData.isInProgress && this.state.characterCreationState) {
-        switch (this.state.characterCreationState.step) {
-            case SELECT_TRAITS: {
-                FormToRender = <CharacterTraitsSelection characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={()=>this.characterCreationNextStep()}
-                  onSelect={(index)=>this.handleSelectCharacterTraits(index)}
-                  selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
-                  traitsList={this.props.listCharacterTraits}
-                  progressValue={progressValue}
-                  isFetchingCharacterTraits={this.props.isFetchingCharacterTraits}/>
-                break;
-            }
-            case SELECT_CHARACTER: {
-                FormToRender = <CharacterSelection characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()} onNextStep={()=>this.characterCreationNextStep()}
-                  onSelect={(index)=>this.handleSelectCharacter(index)}
-                  selectedIndex={this.props.characterCreationData.selectedCharacterIndex}
-                  charactersList={this.props.listCharacters}
-                  characterCreationData={this.props.characterCreationData}
-                  progressValue={progressValue}
-                  isFetchingCharacters={this.props.isFetchingCharacters}/>
-                break;
-            }
-            case SELECT_AUTH_METHOD: {
-                FormToRender = <CharacterAuthentication characterCreationState={this.state.characterCreationState} 
-                  onClose={() => this.handleCloseCharacterCreation()}
-                  onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
-                  onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
-                  onHandleCreationFinish={()=>this.props.finishCharacterCreation()}
-                  progressValue={progressValue}/>
-                break;
-            }
-            default:
-              break;
-        }
-    }
-
-    return FormToRender;
-  }
-
-  restoreCharacterCreation() {
-    const { cookies } = this.props;
-
-    console.log("restoreCharacterCreation");
-    console.dir(cookies);
-
-    if (cookies) {
-        console.dir(cookies.get("characterCreation"));
-    }
-
-    if (cookies) {
-        const characterCreationSave = cookies.get("characterCreation");
-
-        if (characterCreationSave) {
-            this.props.setCharacterCreationData(characterCreationSave.data);
-            this.setState({characterCreationState: characterCreationSave.state.data, characterCreationFlowStepIndex: characterCreationSave.state.index});
-        }
-    }
-  }
-
-  /*************************/
 
   renderSignUpForm() {
     return (this.props.isSignUpFormOpen ? 
@@ -237,7 +62,8 @@ class LandingPage extends React.Component {
     return (
       <div className="wrapper">
         {this.renderSignUpForm()}
-        {this.renderCharacterCreationForm()}
+        <CharacterCreationFlow onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()} 
+          onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <div className="session-header-landing">
           <div className="container">
@@ -772,35 +598,16 @@ class LandingPage extends React.Component {
 LandingPage.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
-  characterCreationData: PropTypes.object.isRequired,
-  listCharacterTraits: PropTypes.array.isRequired,
-  listCharacters: PropTypes.array.isRequired,
-  setSelectedCharacterIndex: PropTypes.func.isRequired,
-  setSelectedCharacterTraitsIndex: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
-  finishCharacterCreation: PropTypes.func.isRequired,
-  setCharacterCreationData: PropTypes.func.isRequired,
-  fetchListCharacterClasses: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  setSelectedCharacterIndex: bindActionCreators(setSelectedCharacterIndex, dispatch),
-  setSelectedCharacterTraitsIndex: bindActionCreators(setSelectedCharacterTraitsIndex, dispatch),
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
-  finishCharacterCreation: bindActionCreators(finishCharacterCreation, dispatch),
-  setCharacterCreationData: bindActionCreators(setCharacterCreationData, dispatch),
-  fetchListCharacterClasses: bindActionCreators(fetchListCharacterClasses, dispatch),
-  fetchListCharacterTraits: bindActionCreators(fetchListCharacterTraits, dispatch),
 });
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
-  characterCreationData: state.characterCreationData,
-  listCharacterTraits: state.characterCreation.listCharacterTraits,
-  listCharacters: state.characterCreation.listCharacters,
-  isFetchingCharacters: state.characterCreation.isFetchingCharacters,
-  isFetchingCharacterTraits: state.characterCreation.isFetchingCharacterTraits,
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
