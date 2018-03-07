@@ -44,14 +44,15 @@ class ChatApp extends React.Component {
                    users: [], 
                    chatWindowOpen: 2, 
                    tabClose: -2, 
-                   activeUserID: "", 
+                   activeUserID: "chatbot", 
                    activeUserFullName: "",
                    lastMessageStack: [],
                    anonymousUserId: "",
                    loggedin: false,
                    userID: "",
                    unreadCountStack: [],
-                   openWindow: false
+                   openWindow: false,
+                   justLoggedIn: true
                 };    
   }
 
@@ -278,6 +279,15 @@ class ChatApp extends React.Component {
               messages={self.state.messageStack[self.state.activeUserID]} 
               addMessage={(message)=>self.addMessage(message)} addLastMessage={(message)=>self.addLastMessage(message)}
               sender={self.props.userProfile._id} receiver={self.state.activeUserID}/>;
+
+            if(self.state.justLoggedIn && self.props.loggedin){
+              var chatObj = {
+                eventType: 'chatbotClient:initiateWelcomeMessage',
+                data: self.props.userProfile._id
+              }
+              PubSub.publish('ChatEndPoint', chatObj);
+              self.state.justLoggedIn = false;
+            }
           })
        }
        active = this.state.activeUserFullName;
