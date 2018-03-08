@@ -34,6 +34,7 @@ class TraitsSelection extends React.Component {
       Modal.defaultStyles.content["marginRight"] = 'auto';
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
+      Modal.defaultStyles.content["padding"] = '0px 20px';
     }
       
     componentWillUnmount() {

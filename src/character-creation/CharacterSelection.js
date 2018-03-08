@@ -38,6 +38,7 @@ class CharacterSelection extends React.Component {
       Modal.defaultStyles.content["marginRight"] = 'auto';
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
+      Modal.defaultStyles.content["padding"] = '0px 20px';
     }
       
     componentWillUnmount() {
@@ -76,15 +77,13 @@ class CharacterSelection extends React.Component {
               if (i >= firstIndex && i <= lastIndex) {
                 return (
                   <div className="col-lg-12 col-md-4 col-sm-4 col-xsm-12" key={i}>
-                    <div className="character-selection-button-container">
-                      <ActionLink 
-                        onClick={()=>this.handleChangeSelectedChatacter(i)} 
-                        onMouseOver={()=>this.handleMouseOverCharacter(i)}
-                        onMouseOut={()=>this.handleMouseOutCharacter()}
-                        className={`character-selection-button ${this.props.selectedIndex == i ? 
-                        'character-selected' : ""}`}>
-                        <img src={this.props.charactersList[i].imageURL}/>
-                      </ActionLink>
+                    <div className={`character-selection-button ${this.props.selectedIndex == i ? 
+                      'character-selected' : ""}`}
+                      onClick={()=>this.handleChangeSelectedChatacter(i)} 
+                      onMouseOver={()=>this.handleMouseOverCharacter(i)}
+                      onMouseOut={()=>this.handleMouseOutCharacter()}
+                      >
+                      <img src={this.props.charactersList[i].imageURL}/>
                     </div>
                   </div>
                 )
