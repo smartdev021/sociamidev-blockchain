@@ -98,6 +98,11 @@ class ChatApp extends React.Component {
 
   newServerMessage(message){
     if(message.sender == "chatbot"){
+      if(message.message.startsWith("FALLBACK:")){
+        console.log("Error in recieving response from Dialogflow - " + message.message);
+        return;
+      }
+
       let copy = Object.assign({}, this.state, {openWindow: true, activeUserID: "chatbot", activeUserFullName: "Chatbot"});
       this.setState(copy);
     }
