@@ -3,6 +3,20 @@
     padding: 0 30px;
 }
 
+#character-selection-header {
+    font-size: 24px;
+    font-family: "Fjalla One";
+    color: rgb( 221, 48, 58 );
+}
+
+#character-name {
+    font-size: 48px;
+    font-family: "Fjalla One";
+    color: rgb( 234, 59, 22 );
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
 #character-selection-container-inner {
     height: 100%;
     overflow-y: scroll;
@@ -49,14 +63,24 @@
 
 
 #character-skills {
-    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 40px;
 }
+
+#character-select {
+    font-size: 25px;
+    font-family: "Fjalla One";
+    color: rgb( 255, 255, 255 ); 
+}
+
 .character-skill {
-    background: #127bc0;
+    background-color: rgb( 47, 167, 210 );
+    font-size: 13px;
+    font-family: "Comfortaa";
     color: white;
-    padding: 5px 20px;
+    padding: 5px 30px;
     margin-right: 20px;
-    border: 1px solid #127bc0;
+    border: 1px solid rgb( 47, 167, 210 );
     border-radius: 25px;
     display: inline-block;
     cursor: default;

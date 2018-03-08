@@ -127,16 +127,12 @@ class CharacterSelection extends React.Component {
                 name="times" aria-hidden="true"></Icon>
             <div id="character-selection-container">
               <div id="character-selection-container-inner">
+                <div className="text-center text-uppercase" id="character-selection-header">
+                  Select Your Character
+                </div>
                 <div className="container-fluid">
                   <div id="character-selection-image-big">
                     <img src={SelectedCharacter.imageBigURL}/>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="text-center" id="character-seelection-header">
-                        <h3 className="text-uppercase">Select Your Character</h3>
-                      </div>
-                    </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-2 col-md-12">
@@ -145,7 +141,7 @@ class CharacterSelection extends React.Component {
                     <div className="col-lg-8 col-md-12">
                       <div className="text-center" id="character-info">
                         <div id="character-name">
-                          <h4 className="text-uppercase">{SelectedCharacter.name}</h4>
+                          <div className="text-uppercase">{SelectedCharacter.name}</div>
                         </div>
                         <div id="character-description">
                           {SelectedCharacter.description1 && <p>{SelectedCharacter.description1}</p>}
@@ -155,24 +151,24 @@ class CharacterSelection extends React.Component {
                         <div id="character-skills">
                           {
                             SelectedCharacter.skills.map((skill, i) => {
-                              return <span className="character-skill" key={i}>{skill}</span>
+                              return <span className="character-skill text-uppercase" key={i}>{skill}</span>
                             })
                           }
                         </div>
-                        <div id="character-select-confirm-button-container">
-                          <ActionLink href="#" onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}
-                             className="btn-base-landing btn-red-landing btn-login-landing text-uppercase">
-                            Select
-                           </ActionLink>
-                        </div>
-                        <div className="character-creation-progressbar-container">
-                          <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
-                        </div>
+                      </div>
+                      <div id="character-select-confirm-button-container" className="text-center">
+                        <ActionLink href="#" onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}
+                          className="btn-base-landing btn-red-landing btn-login-landing text-uppercase" id="character-select">
+                          Select
+                        </ActionLink>
                       </div>
                     </div>
                     <div className="col-lg-2 col-md-12">
                       {this.renderCharacters(this.props.charactersList, 3, this.props.charactersList.length - 1)}
                     </div>
+                  </div>
+                  <div className="character-creation-progressbar-container">
+                    <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
                   </div>
                 </div>
               </div>

@@ -68,35 +68,34 @@ class Authentication extends React.Component {
                 name="times" aria-hidden="true"></Icon>
             <div id="character-authenticate-container">
               <div id="character-authenticate-container-inner">
+              <div className="text-center text-uppercase" id="character-seelection-header">
+                Plug In
+              </div>
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">
-                    <div className="text-center" id="character-seelection-header">
-                      <h3 className="text-uppercase">Plug In</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    <div className="character-creation-authenticate-button-container text-center">
-                      <button className="btn btn-primary character-creation-auth-button" onClick={()=>this.handleSignUpFacebook()}>
-                        Login with Facebook
-                      </button>
-                      <button className="btn btn-primary character-creation-auth-button" onClick={()=>this.handleSignUpLinkedIn()}>
-                        Login with LinkedIn
-                      </button>
+                    <div className="text-center" id="character-creation-authenticate-button-container">
+                      <span className="character-creation-auth-button" id="character-creation-button-facebook" 
+                          onClick={()=>this.handleSignUpFacebook()}>
+                        <Icon className="character-creation-social-icon" name="facebook"/>Login with Facebook
+                      </span>
+                      <span className="character-creation-auth-button" id="character-creation-button-linkedin"
+                          onClick={()=>this.handleSignUpLinkedIn()}>
+                        <Icon className="character-creation-social-icon" name="linkedin"/>Login with LinkedIn
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="text-center" id="character-creation-authorization-disclaimer">
-                      <p>
+                      <p id="character-creation-paragraph-primary"><b>
                         {`By clicking on any of the above authentication methods, 
                         you agree yo our t&c's and confirm that you have read our 
-                        Data Privacy (which includes our Cookie Use Plociy).`}
+                        Data Privacy (which includes our Cookie Use Plociy).`}</b>
                       </p>
-                      <p>
+                      <hr></hr>
+                      <p id="character-creation-paragraph-secondary">
                         &#42;We currently do not support non Facebook/LinkedIn authentication methods but plan to do so in the near future.
                       </p>
                       <p>
@@ -108,13 +107,9 @@ class Authentication extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    <div className="character-creation-progressbar-container">
-                          <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
-                    </div>
-                  </div>
-                </div>
+              </div>
+              <div className="character-creation-progressbar-container">
+                <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
               </div>
             </div>
           </div>

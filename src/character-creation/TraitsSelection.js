@@ -82,14 +82,10 @@ class TraitsSelection extends React.Component {
                 name="times" aria-hidden="true"></Icon>
             <div id="character-traits-selection-container">
               <div id="character-traits-selection-container-inner">
+                <div className="text-center text-uppercase" id="character-selection-header">
+                  Select Your Traits
+                </div>
                 <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="text-center" id="character-seelection-header">
-                        <h3 className="text-uppercase">Select Your Traits</h3>
-                      </div>
-                    </div>
-                  </div>
                   <div className="row">
                     {
                       this.props.traitsList.map((trait, i) => {
@@ -108,20 +104,16 @@ class TraitsSelection extends React.Component {
                   <div className="row">
                     <div className="col-lg-12">
                       <div id="character-trait-select-confirm-button-container" className="text-center">
-                        <ActionLink href="#" onClick={()=>this.props.onNextStep()}
+                        <ActionLink href="#" onClick={()=>this.props.onNextStep()} id="character-selection-next"
                            className="btn-base-landing btn-red-landing btn-login-landing text-uppercase">
                              Next
                         </ActionLink>
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="character-creation-progressbar-container">
-                          <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
-                      </div>
-                    </div>
-                  </div>
+                </div>
+                <div className="character-creation-progressbar-container">
+                  <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
                 </div>
               </div>
             </div>
