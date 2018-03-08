@@ -98,8 +98,8 @@ class ChatApp extends React.Component {
 
   newServerMessage(message){
     if(message.sender == "chatbot"){
-      if(message.message.startsWith("FALLBACK:")){
-        console.log("Error in recieving response from Dialogflow - " + message.message);
+      console.log(message.message);
+      if(message.message.startsWith("ERROR:")){
         return;
       }
 
@@ -293,6 +293,9 @@ class ChatApp extends React.Component {
               PubSub.publish('ChatEndPoint', chatObj);
               self.state.justLoggedIn = false;
             }
+          })
+          .catch(function(error) {
+            console.log(error);
           })
        }
        active = this.state.activeUserFullName;
