@@ -4,7 +4,6 @@
 */
 
 import React, { Component } from 'react';
-import {Icon} from 'react-fa'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
@@ -13,12 +12,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Axios from 'axios';
 import StarRatings from 'react-star-ratings';
-import qs from 'query-string';
-import _ from 'lodash';
 
 import ConfigMain from '~/configs/main';
 import { openUserProfileComplete } from '~/src/redux/actions/authorization';
 import "~/src/css/newUserProfile.css";
+
+import {
+	fetchListCharacterClasses,
+	fetchListCharacterTraits,
+} from '~/src/redux/actions/characterCreation'
 
 const tag = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarTag.png";
 const friend = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarAdd-friend.png";
@@ -34,15 +36,17 @@ const profilePic = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/imag
 class UserProfile extends React.Component {
 	constructor(props) {
 		super(props);
-		const queryId = qs.parse(this.props.location.search).id;
 
 		this.state = {
-			isProfileLoading: queryId ? true : false,
+			firstName: this.props.userProfile.firstName,
+			lastName: this.props.userProfile.lastName,
 			work: 'Product Manager at Soqqle',
 			from: 'Singapore | Hong Kong',
+			email: this.props.userProfile.email ? this.props.userProfile.email : 'Danshen@gmail.com',
 			url: 'Soqqle.com',
 			tel: '+8521234567',
 			tasks: 78,
+			hangout: 63,
 			mentees: 36,
 			rating: 10,
 			blogs: [
@@ -52,54 +56,44 @@ class UserProfile extends React.Component {
 		}
 	}
 
-	componentWillMount () {
-    const queryId = qs.parse(this.props.location.search).id;
-    this.setUserProfile(queryId)
-  }
-  
-  setUserProfile(queryId) {
-    this.state.isProfileLoading = true;
-		if(queryId && this.state.userID != queryId) {
-			Axios(`${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${queryId}`)
-				.then(response => {
-					this.setState({
-						userID: queryId,
-						firstName: _.get(response, 'data.profile.firstName', ''),
-						lastName:_.get(response, 'data.profile.lastName', ''),
-            pictureURL: _.get(response, 'data.profile.pictureURL', ''),
-            email: _.get(response, 'data.profile.email', ''),
-            hangout: _.size(_.get(response, 'data.hangouts')),
-            progressionTrees: _.get(response, 'data.progressionTrees'),
-            progressionTreeLevels: _.get(response, 'data.profile.progressionTreeLevels'),
-						isProfileLoading: false
-          })
-				})
-		} else {
-			this.setState({
-				firstName: _.get(this, 'props.userProfile.firstName'),
-        lastName: _.get(this, 'props.userProfile.lastName'),
-        userID: _.get(this, 'props.userProfile._id'),
-        pictureURL: _.get(this, 'props.userProfile.pictureURL'),
-        email: _.get(this, 'props.userProfile.email', 'Danshen@gmail.com'),
-        progressionTrees: this.props.userProfile.progressionTrees,
-        progressionTreeLevels: this.props.userProfile.progressionTreeLevels,
-        hangout: 0,
-				isProfileLoading: false
-      })
+	componentWillMount() {
+		this.props.fetchListCharacterClasses();
+		this.props.fetchListCharacterTraits();
+	}
 
+	componentWillReceiveProps() {
+		this.setState({
+			firstName: this.props.userProfile.firstName,
+			lastName: this.props.userProfile.lastName
+		})
+	}
+
+	renderCharacter() {
+		if (!this.props.userProfile || !this.props.userProfile.character || this.props.isFetchingCharacters || this.props.isFetchingCharacterTraits) {
+			return null;
 		}
-  }
 
-	componentWillReceiveProps(nextProps) {
-    const queryId = qs.parse(nextProps.location.search).id;
-    this.setUserProfile(queryId);
+		const Character = this.props.userProfile.character;
+
+		const CharacterClass = this.props.listCharacters[Number(this.props.userProfile.character.characterIndex)];
+		const CharacterTraits = this.props.listCharacterTraits[Number(this.props.userProfile.character.traitsIndex)];
+
+		return (
+			<div id="userprofile-page-character-info">
+			  {CharacterClass.imageURL ? <img src={CharacterClass.imageURL}/> 
+			  : <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png"/>}
+			  <h2>{CharacterClass.name}</h2>
+			  <h3>{CharacterTraits.name}</h3>
+			  <h4>{CharacterTraits.description}</h4>
+			</div>
+		)
 	}
 
 	renderLevels() {
-		const UserProgressionTrees = this.state.progressionTrees;
+		const UserProgressionTrees = this.props.userProfile.progressionTrees;
 
 		if (UserProgressionTrees && UserProgressionTrees.length > 0) {
-			let ProgressionTreeLevels = this.state.progressionTreeLevels;
+			let ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels;
 
 			if (!ProgressionTreeLevels || ProgressionTreeLevels.length == 0) {
 				UserProgressionTrees.forEach(function(progressionTree) {
@@ -153,27 +147,13 @@ class UserProfile extends React.Component {
 
 	render() {
 		//Incorrect usage of bootstrap row col. @Michael?
-
 		return (
-		<div>
-			{
-				this.state.isProfileLoading &&  
-        <div className="container-fluid progress-browser-wrap">
-        <div className="row">
-          <div className="content-2-columns-left-title">
-            Loading...<Icon spin name="spinner" />
-          </div>
-        </div>
-      </div>
-			}
-			{ 
-			!this.state.isProfileLoading && 
 			<div className="row mt center">
 				<div className="col-md-11 col-sm-11">
 					<div className="new-userProf-wrap">
 						<div className="col-md-2 col-sm-12 new-user-padding">
-							<img className="new-userProf-img" src={this.state.pictureURL 
-								? this.state.pictureURL : profilePic} />
+							<img className="new-userProf-img" src={this.props.userProfile.pictureURL 
+								? this.props.userProfile.pictureURL : profilePic} />
 							<div className="new-userProf-dot new-userProf-green"></div>
 						</div>
 						<div className="test-wrap">
@@ -183,7 +163,8 @@ class UserProfile extends React.Component {
 									<p className="new-user-work">{this.state.work}</p>
 									<p className="new-user-text">{this.state.from}</p>
 									<br/>
-									<p className="new-user-text">{_.get(this, 'state.email', "mail@example.com")}</p>
+									<p className="new-user-text">{this.props.userProfile.email 
+										? this.props.userProfile.email : "mail@example.com"}</p>
 									<br/>
 									<p className="new-user-text">{this.state.url}</p>
 									<br/>
@@ -228,6 +209,11 @@ class UserProfile extends React.Component {
 						<div className="row">
 						  <div className="col-lg-12">
 						    {this.renderLevels()}
+						  </div>
+						</div>
+						<div className="row">
+						  <div className="col-lg-12">
+						    {this.renderCharacter()}
 						  </div>
 						</div>
 						{this.state.blogs.map((item, index) => {
@@ -282,16 +268,20 @@ class UserProfile extends React.Component {
 					</div>
 				</div>
 			</div>
-			}
-		</div>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
+	isFetchingCharacters: state.characterCreation.isFetchingCharacters,
+	isFetchingCharacterTraits: state.characterCreation.isFetchingCharacterTraits,
+	listCharacters: state.characterCreation.listCharacters,
+	listCharacterTraits: state.characterCreation.listCharacterTraits,
 })
 
 const mapDispatchToProps = dispatch => ({
+	fetchListCharacterClasses: bindActionCreators(fetchListCharacterClasses, dispatch),
+	fetchListCharacterTraits: bindActionCreators(fetchListCharacterTraits, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

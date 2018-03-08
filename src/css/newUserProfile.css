@@ -221,3 +221,14 @@
 .progressionTreeLevels .prog-tree-list-column {
 	margin-right: 10px;
 }
+
+#userprofile-page-character-info {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-bottom: 2px solid #76c3be;
+}
+
+#userprofile-page-character-info img {
+	width: 10%;
+	height: auto;
+}

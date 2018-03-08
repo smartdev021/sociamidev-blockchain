@@ -1,0 +1,92 @@
+#character-selection-container {
+    height: 100%;
+    padding: 0 30px;
+}
+
+#character-selection-header {
+    font-size: 24px;
+    font-family: "Fjalla One";
+    color: rgb( 221, 48, 58 );
+    margin-top: 15px;
+}
+
+#character-name {
+    font-size: 48px;
+    font-family: "Fjalla One";
+    color: rgb( 234, 59, 22 );
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#character-selection-container-inner {
+    height: 100%;
+    overflow-y: scroll;
+}
+#character-selection-container-inner .container-fluid {
+    overflow: hidden;
+}
+
+.character-info {
+    width: 100%;
+}
+
+.character-selection-button-container {}
+
+.character-selection-button {
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.character-selection-button img {
+    width: 70%;
+    height: auto;
+    border-radius: 50%;
+    opacity: 0.1;
+    margin-bottom: 20px;
+}
+
+.character-selected img {
+    opacity: 1;
+}
+
+#character-selection-image-big img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 30%;
+    height: auto;
+    opacity: 0.1;
+}
+
+
+#character-skills {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+#character-select {
+    font-size: 25px;
+    font-family: "Fjalla One";
+    color: rgb( 255, 255, 255 ); 
+}
+
+.character-skill {
+    background-color: rgb( 47, 167, 210 );
+    font-size: 13px;
+    font-family: "Comfortaa";
+    color: white;
+    padding: 5px 30px;
+    margin-right: 20px;
+    border: 1px solid rgb( 47, 167, 210 );
+    border-radius: 25px;
+    display: inline-block;
+    cursor: default;
+}
+
+.character-creation-progressbar-container {
+    padding: 10px 0px;
+}

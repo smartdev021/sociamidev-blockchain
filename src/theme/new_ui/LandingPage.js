@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { withCookies, Cookies } from 'react-cookie';
+
 import "~/src/theme/new_ui/css/style.css"
 
 import SignUpFormPopup from  '~/src/authentication/SignUpForm';
@@ -21,10 +23,23 @@ import {
 import {Route, Switch} from 'react-router-dom' //temporarily here, remove it!!!!!!!
 import Authorize from '~/src/authentication/Authorize';
 
+import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
+
+import ConfigMain from '~/configs/main'
+
+import {
+    startCharacterCreation
+  
+  } from '~/src/redux/actions/characterCreation'
+
 class LandingPage extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  startCharacterCreation() {
+    this.props.startCharacterCreation();
   }
 
   renderSignUpForm() {
@@ -47,6 +62,9 @@ class LandingPage extends React.Component {
     return (
       <div className="wrapper">
         {this.renderSignUpForm()}
+        <CharacterCreationFlow onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
+          onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+            onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <div className="session-header-landing">
           <div className="container">
@@ -55,8 +73,17 @@ class LandingPage extends React.Component {
                 <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
               </div>
               <div className="col-xs-6 pull-right">
-                <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base-landing btn-yellow-landing btn-login-landing">
-                  Sign in</ActionLink>
+                <div className="pull-right" id="landing-header-links">
+                  <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} 
+                    className="btn-base-landing btn-yellow-landing btn-login-landing">
+                    Sign in
+                  </ActionLink>
+                  <div className="text-right">
+                    <ActionLink id="link-create-acc" href="#" onClick={()=> this.startCharacterCreation()} className="">
+                      Create an Account Instead
+                    </ActionLink>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="row">
@@ -566,10 +593,12 @@ class LandingPage extends React.Component {
 LandingPage.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
+  startCharacterCreation: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
 });
 
 const mapStateToProps = state => ({
@@ -577,4 +606,4 @@ const mapStateToProps = state => ({
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPage));

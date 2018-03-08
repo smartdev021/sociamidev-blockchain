@@ -27,12 +27,16 @@ import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main'
 import ActionLink from '~/src/components/common/ActionLink'
 
+import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
+
 import {
   fetchUserProfile,
   openUserProfile,
   openSignUpForm,
   closeSignUpForm,
   fetchUserActivities,
+
+  setUserProfileCharacter,
 } from '~/src/redux/actions/authorization'
 
 import {
@@ -47,6 +51,11 @@ import {
 
   openSearchResults,
 } from '~/src/redux/actions/fetchResults'
+
+import {
+  startCharacterCreation
+
+} from '~/src/redux/actions/characterCreation'
 
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
@@ -188,12 +197,42 @@ class App extends Component {
     cookies.set('lastLocation', lastLocation, options);
   }
 
+  getCharacterCreationData() {
+    let data = undefined;
+
+    if (this.props.characterCreationData && this.props.characterCreationData.isInProgress) {
+      data = {
+        characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex].name,
+        traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
+        traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
+        characterIndex: this.props.characterCreationData.selectedCharacterIndex,
+      };
+    }
+
+    return data;
+  }
+
   HandleSignUpFacebook() {
     this.props.closeSignUpForm();
 
     this.storeCurrentLocationInCookies();
 
-    window.location.href = `${BackendURL}/auth/facebook`;
+    const characterCreationData = this.getCharacterCreationData();
+
+    if (characterCreationData) {
+      let parameters = "";
+
+      parameters = "?";
+
+      for (let key in characterCreationData) {
+        parameters += `${key}=${characterCreationData[key]}&`;
+      }
+      
+      window.location.href = `${BackendURL}/auth/facebook${parameters}`;
+    }
+    else {
+      window.location.href = `${BackendURL}/auth/facebook`;
+    }
   }
 
   HandleSignUpLinkedIn() {
@@ -201,7 +240,22 @@ class App extends Component {
     
     this.storeCurrentLocationInCookies();
 
-    window.location.href = `${BackendURL}/auth/linkedin`;
+    const characterCreationData = this.getCharacterCreationData();
+
+    if (characterCreationData) {
+      let parameters = "";
+
+      parameters = "?";
+
+      for (let key in characterCreationData) {
+        parameters += `${key}=${characterCreationData[key]}&`;
+      }
+
+      window.location.href = `${BackendURL}/auth/linkedin${parameters}`;
+    }
+    else {
+      window.location.href = `${BackendURL}/auth/linkedin`;
+    }
   }
 
   handleStartSearch() {
@@ -310,6 +364,10 @@ class App extends Component {
         console.dir(this.token_tasks_update);
 
         this.props.fetchUserActivities(this.props.userProfile._id);
+
+        if (!this.props.userProfile.character) {
+          this.props.startCharacterCreation();
+        }
       }
       else {
         PubSub.unsubscribe(this.token_tasks_update);
@@ -350,6 +408,10 @@ class App extends Component {
     }
 
     return ProfileLink;
+  }
+
+  handleCharacterDataSet() {
+    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
   }
 
   chatEndListener(event,data){
@@ -410,6 +472,7 @@ class App extends Component {
       currentUserId={this.props.userProfile._id}
       screenWidth={this.state.screenWidth}
       screenHeight={this.state.screenHeight}/>
+      <CharacterCreationFlow onHandleCharacterDataSet={()=>this.handleCharacterDataSet()}/>
       {ChatAppLink}
       </div>
     );
@@ -458,6 +521,8 @@ App.propTypes = {
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
+  startCharacterCreation: PropTypes.func.isRequired,
+  setUserProfileCharacter: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -472,6 +537,8 @@ const mapDispatchToProps = dispatch => ({
   fetchResults: bindActionCreators(fetchResults, dispatch),
   fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -485,6 +552,11 @@ const mapStateToProps = state => ({
   exactLocation: state.exactLocation,
   searchResults: state.searchResults,
   userActivities: state.userProfile.activities.data,
+
+  characterCreationData: state.characterCreationData,
+  listCharacterTraits: state.characterCreation.listCharacterTraits,
+  listCharacters: state.characterCreation.listCharacters,
+
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
 })

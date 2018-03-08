@@ -20,6 +20,9 @@ import {
     SIGNUP_FORM_OPEN,
     SIGNUP_FORM_CLOSE,
 
+    UPDATE_USER_PROFILE_COMPLETE,
+    UPDATE_USER_PROFILE_INITIATE,
+
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main'
@@ -53,6 +56,19 @@ export function fetchUserProfileComplete(userProfile, authorized) {
         type: FETCH_USER_PROFILE_COMPLETE,
         profile: userProfile,
         isAuthorized: authorized,
+    }
+}
+
+export function updateUserProfileInitiate() {
+    return {
+        type: UPDATE_USER_PROFILE_INITIATE,
+    }
+}
+
+export function updateUserProfileComplete(userProfile) {
+    return {
+        type: UPDATE_USER_PROFILE_COMPLETE,
+        profile: userProfile,
     }
 }
 
@@ -247,6 +263,46 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
         .catch(function(error) {
             //async action exit point
             dispatch(fetchUserProfileComplete({}, false));
+        }));
+    }
+}
+
+export function setUserProfileCharacter(profileId, characterData) {
+
+    return function (dispatch) {
+  
+        //async action entry point
+      dispatch(updateUserProfileInitiate());
+
+      const url = `${ConfigMain.getBackendURL()}/userProfileCharacterSet`;
+      const body = {
+          id: profileId,
+          characterData: characterData,
+      };
+
+      console.log("body");
+      console.dir(body);
+
+      return (
+        Axios.post(url, body)
+        .then(function(response) {
+            const responseProfile = response.data.profile;
+            let newUserProfile = {
+              _id: response.data._id,
+              hangouts: response.data.hangouts,
+              roadmaps: response.data.roadmaps,
+              progressionTrees: response.data.progressionTrees,
+              facebook: response.data.facebook,
+            }
+
+            newUserProfile = Object.assign({}, newUserProfile, {...responseProfile});
+
+            //async action exit point
+            dispatch(updateUserProfileComplete(newUserProfile));
+        })
+        .catch(function(error) {
+            //async action exit point
+            dispatch(updateUserProfileComplete({}));
         }));
     }
 }
