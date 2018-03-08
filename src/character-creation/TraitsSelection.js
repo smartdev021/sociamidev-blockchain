@@ -83,8 +83,10 @@ class TraitsSelection extends React.Component {
                 name="times" aria-hidden="true"></Icon>
             <div id="character-traits-selection-container">
               <div id="character-traits-selection-container-inner">
-                <div className="text-center text-uppercase" id="character-selection-header">
-                  Select Your Traits
+                <div className="box-head">
+                   <h1 className="text-center text-uppercase text-heading heading-border heading-border-decorators-visible">
+                     <span>Select Your Traits</span>
+                   </h1>
                 </div>
                 <div className="container-fluid">
                   <div className="row">

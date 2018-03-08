@@ -69,9 +69,11 @@ class Authentication extends React.Component {
                 name="times" aria-hidden="true"></Icon>
             <div id="character-authenticate-container">
               <div id="character-authenticate-container-inner">
-              <div className="text-center text-uppercase" id="character-seelection-header">
-                Plug In
-              </div>
+              <div className="box-head">
+                   <h1 className="text-center text-uppercase text-heading heading-border heading-border-decorators-visible">
+                     <span>Plug In</span>
+                   </h1>
+                </div>
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">

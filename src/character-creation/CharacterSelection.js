@@ -126,8 +126,10 @@ class CharacterSelection extends React.Component {
                 name="times" aria-hidden="true"></Icon>
             <div id="character-selection-container">
               <div id="character-selection-container-inner">
-                <div className="text-center text-uppercase" id="character-selection-header">
-                  Select Your Character
+                <div className="box-head">
+                   <h1 className="text-center text-uppercase text-heading heading-border heading-border-decorators-visible">
+                     <span>Select Your Character</span>
+                   </h1>
                 </div>
                 <div className="container-fluid">
                   <div id="character-selection-image-big">
