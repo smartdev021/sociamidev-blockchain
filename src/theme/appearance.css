@@ -4,21 +4,21 @@ RESPONSIVE LAYOUT CSS
 
 @font-face {
   font-family: Comfortaa;
-  src: url(http://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Regular.ttf) format('truetype');
+  src: url(https://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Regular.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: Comfortaa;
-  src: url(http://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Light.ttf) format('truetype');
+  src: url(https://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Light.ttf) format('truetype');
   font-weight:lighter;
   font-style: normal;
 }
 
 @font-face {
   font-family: Comfortaa;
-  src: url(http://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Bold.ttf) format('truetype');
+  src: url(https://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Bold.ttf) format('truetype');
   font-weight: normal;
   font-style: bold;
 }

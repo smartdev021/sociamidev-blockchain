@@ -15,7 +15,6 @@
     "build-stg": "npm run clean && npm run compile-stg",
     "build-prod": "npm run clean && npm run compile-prod",
     "deploy:stg": "python deploy.py Staging",
-    "deploy:uat": "npm run build && aws s3 sync dist/ s3://uat.soqqle.com",
     "deploy:prod": "python deploy.py Production",
     "publish:dev": "npm run build && npm run deploy:dev",
     "publish:stg": "npm run build-stg && npm run deploy:stg",
