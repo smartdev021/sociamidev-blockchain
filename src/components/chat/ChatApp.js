@@ -52,7 +52,8 @@ class ChatApp extends React.Component {
                    userID: "",
                    unreadCountStack: [],
                    openWindow: false,
-                   justLoggedIn: true
+                   justLoggedIn: true,
+                   userChatHistoryLoaded: false
                 };    
   }
 
@@ -132,6 +133,7 @@ class ChatApp extends React.Component {
   }
 
   tabChanges(activeUserID,activeUserFullname){
+    this.state.userChatHistoryLoaded = false;
     var tempUnreadCountStack = this.state.unreadCountStack;
     if(activeUserID in tempUnreadCountStack){
       tempUnreadCountStack[activeUserID] = 0;
@@ -268,10 +270,11 @@ class ChatApp extends React.Component {
             addMessage={(message)=>this.addMessage(message)} addLastMessage={(message)=>this.addLastMessage(message)}
             sender={this.props.userProfile._id} receiver={this.state.activeUserID}/>;
        }
-       else {
+       else if(!this.state.userChatHistoryLoaded) {
+        this.state.userChatHistoryLoaded = true;
         const url = `${ConfigMain.getBackendURL()}/fetchConversationByParticipants?ids=${this.props.userProfile._id};${this.state.activeUserID}`;
          Axios.get(url)
-          .then(function(response) {
+          .then(function(response) {            
             for(var message of response.data.reverse()) {
               message.username = message.sender;
               message.receiver = self.state.activeUserID;
