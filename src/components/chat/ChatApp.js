@@ -20,6 +20,7 @@ class ChatApp extends React.Component {
   componentWillMount() {
     //this.props.cookies.getAll();
     this.token = PubSub.subscribe('ChatStartPoint', this.chatStartListener.bind(this));
+    PubSub.subscribe('OpenChat', this.openChat.bind(this));
   }
 
   componentDidMount() {
@@ -53,6 +54,9 @@ class ChatApp extends React.Component {
                 };    
   }
 
+  openChat(event, data) {
+    this.tabChanges(data.user._id, `${data.user.firstName} ${data.user.lastName}`)
+  }
   chatStartListener(event,data){
     if(data.eventType == "server:user"){
       this.loadConnectedUsers(data.data);
