@@ -15,6 +15,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
 
+import PubSub from 'pubsub-js';
+
 const RenderDummyFriends = false;
 
 /*Helper functions*/
@@ -129,6 +131,16 @@ const DayFromNumber = (dayNum)=> {
 
   }
 
+  const openChat = (partner) => {
+    const chatBoxElemet = document.getElementById(partner.user_id);
+
+    if(chatBoxElemet) {
+      chatBoxElemet.click();
+    } else {
+      PubSub.publish('OpenChat', partner);
+    }
+  }
+
   const RenderActions = (hangout, props) => {
     const Partner = GetHangoutPartner(hangout, props);
     const FirstPendingParticipant = GetFirstPendingParticipant(hangout, props);
@@ -199,7 +211,7 @@ const DayFromNumber = (dayNum)=> {
                       <ActionLink href="#" onClick={()=>props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)} className="btn-base btn-red">Accept</ActionLink>
                     </li>
                     <li>
-                      <ActionLink href="#" onClick={()=>{ document.getElementById(Partner.user._id).click()}} className="btn-base btn-red">Open Chat</ActionLink>
+                      <ActionLink href="#" onClick={()=>{openChat(Partner)}} className="btn-base btn-red">Open Chat</ActionLink>
                     </li>
                     <li>
                       <ActionLink href="#" onClick={()=>props.onHangoutRequestReject(hangout, FirstPendingParticipant.user)} className="btn-base btn-red">Reject</ActionLink>
@@ -227,6 +239,9 @@ const DayFromNumber = (dayNum)=> {
               <ul>
                 <li>
                   <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("leave", hangout)} className="btn-base btn-red">Withdraw</ActionLink>
+                </li>
+                <li>
+                  <ActionLink href="#" onClick={()=>{openChat(Partner)}} className="btn-base btn-red">Open Chat</ActionLink>
                 </li>
               </ul>
            </div>);
@@ -259,6 +274,9 @@ const DayFromNumber = (dayNum)=> {
               <ul>
                 <li>
                   <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("leave", hangout)} className="btn-base btn-red">Withdraw</ActionLink>
+                </li>
+                <li>
+                  <ActionLink href="#" onClick={()=>{openChat(Partner)}} className="btn-base btn-red">Open Chat</ActionLink>
                 </li>
               </ul>
            </div>);
