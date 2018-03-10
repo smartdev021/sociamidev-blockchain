@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom'
+
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import {Icon} from 'react-fa'
@@ -93,9 +95,8 @@ class Authentication extends React.Component {
                   <div className="col-lg-12">
                     <div className="text-center" id="character-creation-authorization-disclaimer">
                       <p id="character-creation-paragraph-primary"><b>
-                        {`By clicking on any of the above authentication methods, 
-                        you agree yo our t&c's and confirm that you have read our 
-                        Data Privacy (which includes our Cookie Use Plociy).`}</b>
+                        {"By clicking on any of the above authentication methods, you agree to our t&c's and confirm that you have read our "}
+                        <Link to="/privacyPolicy" target="_blank">Data Privacy</Link> {" (which includes our Cookie Use Plociy)."}</b>
                       </p>
                       <hr></hr>
                       <p id="character-creation-paragraph-secondary">

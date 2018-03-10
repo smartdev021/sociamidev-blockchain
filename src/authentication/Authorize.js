@@ -5,6 +5,9 @@
 import React, { Component } from 'react';
 import { Redirect} from 'react-router-dom'
 
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 
@@ -17,7 +20,7 @@ class Authorize extends React.Component {
   }
 
   componentWillMount () {
-      
+    console.log("%ccomponentWillMount", "color:purple;background:yellow");
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
 
@@ -41,6 +44,12 @@ class Authorize extends React.Component {
 
   render() {
     let RedirectTo = null;
+
+    console.log("Rendering the Authorize component!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+    if (!this.props.isAuthorized) {
+        return null;
+    }
     
     if (this.redirectRequired) {
         this.redirectRequired = false;
@@ -75,7 +84,15 @@ class Authorize extends React.Component {
 
 Authorize.propTypes = {
     cookies: instanceOf(Cookies).isRequired,
+    isAuthorized: PropTypes.bool.isRequired,
 }
 
-
-export default withCookies(Authorize);
+const mapDispatchToProps = dispatch => ({
+});
+  
+const mapStateToProps = state => ({
+    isAuthorized: state.userProfile.isAuthorized,
+});
+  
+//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(Authorize));
