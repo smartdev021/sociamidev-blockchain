@@ -20,22 +20,14 @@ import {
     openSignUpForm,
   } from '~/src/redux/actions/authorization'
 
-import {Route, Switch} from 'react-router-dom' //temporarily here, remove it!!!!!!!
-import Authorize from '~/src/authentication/Authorize';
-
 import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
-
-import ConfigMain from '~/configs/main'
 
 import {
     startCharacterCreation
   
   } from '~/src/redux/actions/characterCreation'
 
-import LandingPageContent from "~/src/theme/new_ui/LandingPageContent"
-import PrivacyPolicy from "~/src/theme/new_ui/PrivacyPolicy"
-
-class LandingPage extends React.Component {
+class LandingPageContent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -54,20 +46,13 @@ class LandingPage extends React.Component {
     );
   }
 
-  renderRoutes() {
-    return (
-      <Switch>
-        <Route exact path='/' render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
-        <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
-        <Route exact path='/privacyPolicy' render={routeProps => <PrivacyPolicy {...routeProps}{...this.props}/>}/>
-        <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
-      </Switch>)
-  }
-
   render() {
     return (
-      <div className="wrapper">
-        {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
+      <div>
+        {this.renderSignUpForm()}
+        <CharacterCreationFlow onHandleSignUpFacebook={()=>this.props.onHandleSignUpFacebook()} 
+          onHandleSignUpLinkedIn={()=>this.props.onHandleSignUpLinkedIn()}
+            onHandleCreationFinish={()=>this.props.finishCharacterCreation()}/>
         <div className="session-header-landing">
           <div className="container">
             <div className="row">
@@ -76,7 +61,14 @@ class LandingPage extends React.Component {
               </div>
               <div className="col-xs-6 pull-right">
                 <div className="pull-right" id="landing-header-links">
+                  <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} 
+                    className="btn-base-landing btn-yellow-landing btn-login-landing">
+                    Sign in
+                  </ActionLink>
                   <div className="text-right">
+                    <ActionLink id="link-create-acc" href="#" onClick={()=> this.startCharacterCreation()} className="">
+                      Create an Account Instead
+                    </ActionLink>
                   </div>
                 </div>
               </div>
@@ -91,13 +83,11 @@ class LandingPage extends React.Component {
                       prepare and solve challenges to unlock the next-generation Human Renaissance.
                   </p>
                   <p>
-                        <a href="#" onClick={()=> this.props.openSignUpForm()} className="btn-base-landing btn-red-landing">
-                            <span><b>Sign In</b></span>
-                        </a><br/>
-                        <ActionLink id="link-create-acc" href="#" onClick={()=> this.startCharacterCreation()} className="">
-                          <span style={{ textTransform: 'underline' }}>CREATE YOUR CHARACTER INSTEAD</span>
-                        </ActionLink>
-                   </p>
+                    <a href="#" className="btn-base-landing btn-red-landing only-line" data-toggle="modal" data-target="#token">
+                      <span className="font-small">Register for</span><br/>Token Events Updates</a>
+                      <a href="#" className="btn-base-landing btn-red-landing" data-toggle="modal" data-target="#alpha">
+                        <span className="font-small">Register for</span> alpha</a>
+                      </p>
                       <iframe width="420" height="345" id="intro-video" src="https://www.youtube.com/embed/i8PJgSclIf0">
                       </iframe>
                     </div>
@@ -134,6 +124,36 @@ class LandingPage extends React.Component {
                 </div>
             </div>
             
+            <div className="modal fade" id="alpha" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 className="modal-title" id="myModalLabel">Alpha</h4>
+                        </div>
+                        <div className="modal-body">
+                            <p>The easiest way to learn and collaborate with your friends.
+                                The only Blockchain powered smart social network that propels you to the forefront of humankind.</p>
+                            <form>
+                                <div className="form-group">
+                                    <label htmlFor="alpha-name" className="control-label">Name:</label>
+                                    <input type="text" className="form-control" id="alpha-name" placeholder="Enter you name here"/>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="alpha-email" className="control-label">Email:</label>
+                                    <input type="text" className="form-control" id="alpha-email" placeholder="Enter you email here"/>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button id="cancel" type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="ok" type="button" className="btn btn-primary">Join us</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="row">
                 <div className="col-md-7">
 
@@ -557,7 +577,7 @@ class LandingPage extends React.Component {
   }
 }
 
-LandingPage.propTypes = {
+LandingPageContent.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
@@ -572,5 +592,4 @@ const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
 });
 
-//withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPageContent));
