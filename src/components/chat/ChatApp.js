@@ -55,8 +55,6 @@ class ChatApp extends React.Component {
   }
 
   openChat(event, data) {
-    console.log('userrrrrrrrrrrrrrrrrrrrrrr');
-    console.log(data.user);
     this.tabChanges(data.user._id, `${data.user.firstName} ${data.user.lastName}`)
   }
   chatStartListener(event,data){
