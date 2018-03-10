@@ -60,6 +60,7 @@ class LandingPage extends React.Component {
         <Route exact path='/' render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
         <Route exact path='/privacyPolicy' render={routeProps => <PrivacyPolicy {...routeProps}{...this.props}/>}/>
+        <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
       </Switch>)
   }
 
