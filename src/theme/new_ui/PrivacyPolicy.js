@@ -6,8 +6,6 @@ import React, { Component } from 'react';
 import Axios from 'axios'
 import {Icon} from 'react-fa'
 
-import ConfigMain from '~/configs/main'
-
 import "~/src/theme/new_ui/css/privacy_policy.css"
 
 class PrivacyPolicy extends React.Component {
@@ -20,7 +18,7 @@ class PrivacyPolicy extends React.Component {
   }
 
   componentWillMount() {
-    Axios.get(`${ConfigMain.getBackendURL()}/privacyPolicyMin`)
+    Axios.get(`http://sociamibucket.s3.amazonaws.com/legal/privacy_policy_min.html`)
     .then((result) => {
       this.setState({privacyPolicyData: result.data});
     })
