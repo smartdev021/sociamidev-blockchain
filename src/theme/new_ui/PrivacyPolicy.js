@@ -8,6 +8,8 @@ import {Icon} from 'react-fa'
 
 import ConfigMain from '~/configs/main'
 
+import "~/src/theme/new_ui/css/privacy_policy.css"
+
 class PrivacyPolicy extends React.Component {
 
   constructor(props) {
@@ -29,15 +31,16 @@ class PrivacyPolicy extends React.Component {
 
   render() {
     return (
-      <div id="privacy-policy-container" style={{width: "100%", backgroundColor: "#f78b1f", color: "#000000", padding: "0px 10px"}}>
+      <div id="privacy-policy-container">
         {
           this.state.privacyPolicyData ?
           <div dangerouslySetInnerHTML={{__html: this.state.privacyPolicyData}}>
           </div>
           :
-          <div id="privacy-policy-spinner-container" className="text-center" style={{width: "100%", minHeight: "1000px"}}>
-            <div className="text-uppercase" 
-              style={{fontSize: "16px", fontWeight: "700px",  padding: "50px 0px"}}><Icon spin name="spinner"/>Loading...</div>
+          <div id="privacy-policy-spinner-container" className="text-center">
+            <div className="privacy-policy-spinner">
+              <Icon spin name="spinner"/>Loading...
+            </div>
           </div>
         }
       </div>
