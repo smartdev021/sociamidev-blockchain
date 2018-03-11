@@ -57,18 +57,16 @@ class LandingPageContent extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-xs-6">
-                <h1 className="logo"><a href="#"><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/></a></h1>
+                <h1 className="logo">
+                    <a href="#">
+                        <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" alt=""/>
+                        <span style={{ color: 'white', fontSize: '14px', position: 'relative', bottom: '-20px', left: '-30px'}}>alpha</span>
+                    </a>
+                </h1>
               </div>
               <div className="col-xs-6 pull-right">
                 <div className="pull-right" id="landing-header-links">
-                  <ActionLink href="#" onClick={()=> this.props.openSignUpForm()} 
-                    className="btn-base-landing btn-yellow-landing btn-login-landing">
-                    Sign in
-                  </ActionLink>
                   <div className="text-right">
-                    <ActionLink id="link-create-acc" href="#" onClick={()=> this.startCharacterCreation()} className="">
-                      Create an Account Instead
-                    </ActionLink>
                   </div>
                 </div>
               </div>
@@ -83,14 +81,15 @@ class LandingPageContent extends React.Component {
                       prepare and solve challenges to unlock the next-generation Human Renaissance.
                   </p>
                   <p>
-                    <a href="#" className="btn-base-landing btn-red-landing only-line" data-toggle="modal" data-target="#token">
-                      <span className="font-small">Register for</span><br/>Token Events Updates</a>
-                      <a href="#" className="btn-base-landing btn-red-landing" data-toggle="modal" data-target="#alpha">
-                        <span className="font-small">Register for</span> alpha</a>
-                      </p>
-                      <iframe width="420" height="345" id="intro-video" src="https://www.youtube.com/embed/i8PJgSclIf0">
-                      </iframe>
-                    </div>
+                      <a href="#" className="btn-base-landing btn-red-landing"  onClick={()=> this.props.openSignUpForm()}>
+                        Sign in
+                      </a><br/>
+                      <ActionLink id="link-create-acc" href="#" onClick={()=> this.startCharacterCreation()} className="">
+                       <span style={{ fontWeight: 'bold', color: 'black', textDecoration: 'underline' }}>CREATE YOUR CHARACTER INSTEAD</span>
+                      </ActionLink>
+                  </p>
+                  <iframe width="420" height="345" id="intro-video" src="https://www.youtube.com/embed/i8PJgSclIf0"></iframe>
+                  </div>
                 </div>
 
             </div>
@@ -124,36 +123,6 @@ class LandingPageContent extends React.Component {
                 </div>
             </div>
             
-            <div className="modal fade" id="alpha" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 className="modal-title" id="myModalLabel">Alpha</h4>
-                        </div>
-                        <div className="modal-body">
-                            <p>The easiest way to learn and collaborate with your friends.
-                                The only Blockchain powered smart social network that propels you to the forefront of humankind.</p>
-                            <form>
-                                <div className="form-group">
-                                    <label htmlFor="alpha-name" className="control-label">Name:</label>
-                                    <input type="text" className="form-control" id="alpha-name" placeholder="Enter you name here"/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="alpha-email" className="control-label">Email:</label>
-                                    <input type="text" className="form-control" id="alpha-email" placeholder="Enter you email here"/>
-                                </div>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button id="cancel" type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button id="ok" type="button" className="btn btn-primary">Join us</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
             <div className="row">
                 <div className="col-md-7">
 
