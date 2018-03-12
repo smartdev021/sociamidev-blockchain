@@ -13,6 +13,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import Notifications from '~/src/theme/components/Notifications'
 
+import StatsDropdown from '~/src/theme/components/StatsDropdown';
+
 class ThemeHeader extends React.Component {
 
   constructor(props) {
@@ -87,6 +89,7 @@ class ThemeHeader extends React.Component {
                 </div>
                 <div className="col-md-3">
                     <ul className="navbar-top-links">
+                        <StatsDropdown />
                         <li className="mail">
                           <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
                             <Icon name="envelope" aria-hidden="true"></Icon>
