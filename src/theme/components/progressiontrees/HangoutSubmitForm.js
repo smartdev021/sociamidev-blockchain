@@ -6,6 +6,16 @@ import React from 'react';
 import ActionLink from '~/src/components/common/ActionLink'
 import {Link} from 'react-router-dom'
 import "~/src/theme/css/treebrowser.css"
+
+const ToDateInputString = (time) => { 
+  const DateFromTime = new Date(time);
+  const YearNow = DateFromTime.getFullYear();
+  const MonthNow = (DateFromTime.getMonth() + 1) >= 10 ? DateFromTime.getMonth() + 1 : ('0' + String(DateFromTime.getMonth() + 1));
+  const DayOfMonthNow = DateFromTime.getDate() >= 10 ? String(DateFromTime.getDate()) : ('0' + String(DateFromTime.getDate()));
+
+  return `${YearNow}-${MonthNow}-${DayOfMonthNow}`;
+}
+
 class HangoutSubmitForm extends React.Component {
 
   constructor(props) {
@@ -14,14 +24,19 @@ class HangoutSubmitForm extends React.Component {
     const timeNow = Date.now();
     const dateNow = new Date(timeNow);
 
+    this.yearNow = dateNow.getFullYear();
+    this.monthNow = (dateNow.getMonth() + 1) >= 10 ? dateNow.getMonth() + 1 : ('0' + String(dateNow.getMonth() + 1));
+    this.dayOfMonthNow = dateNow.getDate() >= 10 ? String(dateNow.getDate()) : ('0' + String(dateNow.getDate()));
+
     this.state = {
      isToday: false,
+     isLocationVirtual: false,
      date: dateNow,
      location: '',
      IsDeepDiveCreated:'none',
      IsDisplayForm:'block',
      dateInputValue: timeNow,
-     timeInputValue: "00:00",
+     timeInputValue: `${dateNow.getHours() + 1}:${dateNow.getMinutes()}`,
     }
   }
 
@@ -42,10 +57,21 @@ class HangoutSubmitForm extends React.Component {
   }
 
   handleToggleToday(e) {
-    this.setState({isToday: e.target.checked});
+    if (!this.state.isToday) {
+      this.setState({isToday: e.target.checked, dateInputValue: ToDateInputString(Date.now())});
+    }
+    else {
+      this.setState({isToday: e.target.checked});
+    }
   }
+
   handleOptionChangeLocation(e) {
     this.setState( {location: e.target.value} )
+  }
+
+  handleToggleLocatioVirtual(e) {
+    const isChecked = e.target.checked;
+    this.setState( {isLocationVirtual: isChecked, location: isChecked ? e.target.value : ""} );
   }
 
   handleStartHangout(e) {
@@ -76,23 +102,23 @@ class HangoutSubmitForm extends React.Component {
           <input type="checkBox" checked={this.state.isToday} className="hangout-form-input today" name="optradio" value="today" 
             onChange={(e)=>this.handleToggleToday(e)}/>Today
           <input type="date" className="validate-field required" data-validation-type="string" 
-            id="date" name="date" autoComplete="off" placeholder="Date" defaultValue="2020-01-01"
-              onChange={(e)=>this.handleDateInputChange(e)}/>
+            id="date" name="date" autoComplete="off" placeholder="Date" value={ToDateInputString(this.state.dateInputValue)}
+              onChange={(e)=>this.handleDateInputChange(e)} disabled={this.state.isToday}/>
         </label>
           <label className="radio-inline">
             Time
           </label>
           <input type="time" className="validate-field required input-time" data-validation-type="string" 
-            id="time" name="date" autoComplete="off" placeholder="00-00" defaultValue={this.state.timeInputValue}
+            id="time" name="date" autoComplete="off" placeholder="00-00 " defaultValue={this.state.timeInputValue}
               onChange={(e)=>this.handleTimeInputChange(e)}/>
         <div className="hangout-bottom-line-wrap">
           <label className="radio-inline">
             Location
           </label>
           <label className="radio-inline">
-            <input type="checkBox" className="hangout-form-input" name="location" value="Virtual" onChange={(e)=>this.handleOptionChangeLocation(e)}/>Virtual
+            <input type="checkBox" className="hangout-form-input" name="location" value="Virtual" onChange={(e)=>this.handleToggleLocatioVirtual(e)}/>Virtual
           </label> 
-          <input type="text" name="location" value={this.state.location} placeholder="Location" onChange={(e)=>this.handleOptionChangeLocation(e)}/>
+          <input type="text" name="location" value={this.state.location} placeholder="Location" onChange={(e)=>this.handleOptionChangeLocation(e)} disabled={this.state.isLocationVirtual}/>
         </div>
         <button type="submit" onClick={()=>this.handleClick()} className="btn-md btn-outline-inverse pull-right hangout-btn-go">Go</button>
       </form>
