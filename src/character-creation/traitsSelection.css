@@ -1,0 +1,68 @@
+.character-trait-container {
+    border: 3px solid rgb( 226, 226, 226 );
+    border-radius: 20px;
+    min-height: 150px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background: white;
+}
+
+#character-selection-header {
+    font-size: 24px;
+    font-family: "Fjalla One";
+    color: rgb( 221, 48, 58 );
+    margin-bottom: 20px;
+}
+
+.character-trait-container-active {
+    border: 3px solid rgb( 47, 167, 210 );
+    border-radius: 20px;
+    background-color: rgb( 47, 167, 210 );
+}
+
+.character-trait-container-active .charactet-trait-name, 
+.character-trait-container-active .charactet-trait-description {
+    color: white;
+}
+
+.character-trait-container-active .charactet-trait-name {
+    font-size: 24px;
+    font-family: "Fjalla One";
+}
+
+.character-trait-container-active .charactet-trait-description {
+    font-size: 15px;
+    font-family: "Myriad Pro";
+}
+
+.charactet-trait-name {
+    font-size: 24px;
+    font-family: "Fjalla One";
+    color: rgb( 234, 59, 22 );
+}
+
+.charactet-trait-description {
+    font-size: 15px;
+    font-family: "Myriad Pro";
+    color: rgb( 33, 33, 33 );
+}
+
+#character-trait-select-confirm-button-container {
+    width: 100%;
+}
+
+#character-selection-next {
+    font-size: 25px;
+    font-family: "Fjalla One";
+}
+
+#character-traits-selection-container {
+    padding: 0px 30px;
+    height: 100%;
+}
+
+#character-traits-selection-container-inner {
+    height: 100%;
+    overflow-y: scroll;
+}

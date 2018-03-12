@@ -13,7 +13,6 @@ import ActionLink from '~/src/components/common/ActionLink'
 import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
 
 import ProgressionTreesLanding from '~/src/theme/ProgressionTreesLanding';
-import TaskManagement from '~/src/theme/TaskManagement';
 
 import {
   setSearchQuery,
@@ -164,9 +163,6 @@ class HomePage extends React.Component {
                 <div className="col-lg-6">
                   <ProgressionTreesLanding />
                 </div>
-                {/*<div className='col-lg-6'>
-                  <TaskManagement />
-                </div>*/}
               </div>
             </div>
           </div>

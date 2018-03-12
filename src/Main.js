@@ -14,16 +14,15 @@ import PropTypes from 'prop-types';
 
 import {Icon} from 'react-fa'
 
-import ThemeHeader from '~/src/new-ui-rin/ThemeHeader';
-import SidebarLeft from '~/src/new-ui-rin/SidebarLeft';
-import TaskManager from '~/src/new-ui-rin/TaskManager';
+import ThemeHeader from '~/src/theme/ThemeHeader';
+import SidebarLeft from '~/src/theme/SidebarLeft';
 
 //routes
 import Authorize from '~/src/authentication/Authorize';
 
 import HomePage from '~/src/theme/HomePage.js';
+import TaskManager from '~/src/theme/TaskManager';
 import TrendScanner from '~/src/theme/TrendScanner.js';
-import TaskManagement from '~/src/theme/TaskManagement';
 import ProjectManager from '~/src/theme/ProjectManagement';
 import ProjectBrowser from '~/src/theme/ProjectBrowser';
 import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser'

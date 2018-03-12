@@ -1,0 +1,19 @@
+.character-creation-popup-close-icon {
+    font-size: 32px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/*avoid scrolling of parent content*/
+.ReactModal__Body--open {
+    overflow-y: hidden;
+}
+
+.character-creation-progressbar-container .progress {
+    border-radius: 25px;
+    width: 75%;
+    margin: 0 auto;
+}

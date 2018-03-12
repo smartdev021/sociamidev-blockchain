@@ -14,9 +14,9 @@ import ConfigMain from '~/configs/main'
 
 import PropTypes from 'prop-types';
 
-import TaskScanner from './TaskScanner';
-import TasksMyComponent from './TasksMy';
-import HeaderTaskManager from './HeaderTaskManager';
+import TaskScanner from '~/src/theme/components/tasks/TaskScanner';
+import TasksMyComponent from '~/src/theme/components/tasks/TasksMy';
+import HeaderTaskManager from '~/src/theme/components/tasks/HeaderTaskManager';
 
 import AnswerQuestions from '~/src/theme/components/tasks/AnswerQuestions'
 

@@ -94,3 +94,21 @@ export const ACTIVITIES_FETCH_COMPLETE = "activities_fetch_complete";
 //social
 export const FETCH_USER_FRIENDS_INITIATE = "fetch_user_friends_initiate";
 export const FETCH_USER_FRIENDS_COMPLETE = "fetch_user_friends_complete";
+
+//character creation
+export const SET_CHARACTER_CREATION_DATA = "set_character_creation_data";
+
+export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX = "set_character_creation_character_index";
+export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX = "set_character_creation_character_traits_index";
+
+export const START_CHARACTER_CREATION = "start_character_creation";
+export const FINISH_CHARACTER_CREATION = "finish_character_creation";
+
+export const FETCH_LIST_CHARACTER_CLASSES_INITIATE = "fetch_list_character_classes_initiate";
+export const FETCH_LIST_CHARACTER_CLASSES_COMPLETE = "fetch_list_character_classes_complete";
+
+export const FETCH_LIST_CHARACTER_TRAITS_INITIATE = "fetch_list_character_traits_initiate";
+export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = "fetch_list_character_traits_complete";
+
+export const UPDATE_USER_PROFILE_INITIATE = "update_user_profile_initiate";
+export const UPDATE_USER_PROFILE_COMPLETE = "update_user_profile_complete";
