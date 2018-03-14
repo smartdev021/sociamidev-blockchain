@@ -1,6 +1,6 @@
 const BACKEND_URL_LOCAL = 'http://localhost:3001';
 const BACKEND_URL_REMOTE_PROD = 'https://api.soqqle.com';
-const BACKEND_URL_REMOTE_STAGING = 'https://13.59.19.153:8080';
+const BACKEND_URL_REMOTE_STAGING = 'https://stgapi.soqqle.com';
 
 var ConfigMain = {
     getBackendURL : function() {
