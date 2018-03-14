@@ -122,9 +122,10 @@ class StatsDropdown extends React.Component {
     const listItems = ProgressionTreeLevels.map((item,index) => {
       if(item.totalXP){
         return <ProgTreeLevelItem item={item} key={index}/>
-      }else{
-        return <NullProgTreeLevelItem item={item} key={index}/>
       }
+      // else{
+      //   return <NullProgTreeLevelItem item={item} key={index}/>
+      // }
     })
 
     
