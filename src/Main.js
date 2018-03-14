@@ -102,7 +102,7 @@ class Main extends React.Component {
           {RedirectTo}
           <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} 
             fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
-            isSidebarOpen={this.state.isSidebarOpen}/>
+            isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile}/>
           <div className="session-content">
             <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/>
             <div className="content-tokens">

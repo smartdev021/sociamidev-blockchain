@@ -104,10 +104,11 @@ Extras
   margin-top:14px;
 }
 .btn-style {
-  background-color: #F5DE24;
-  color:red;
-  font-size: 18px;
-  border-radius: 0px;
+  background-color: #F5DE24 !important;
+  color:red!important;
+  font-size: 18px!important;
+  border-radius: 0px!important;
+  font-family: 'FjallaOne-Regular' !important;
 }
 .header-fa{
   color: #B9AE2B;

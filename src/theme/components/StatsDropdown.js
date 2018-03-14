@@ -15,6 +15,50 @@ class StatsDropdown extends React.Component {
   }
 
   render() {
+
+    const ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels
+
+    const listItems = ProgressionTreeLevels.map((item,index) => (
+      <li className="stats-body" key={index}>
+        <hr className="separator-hr" />
+            <div className="row">
+              <p className="text-center">
+              <strong>
+                {item.name.toUpperCase()}
+              </strong>
+              </p>
+              <div className="col-xs-4 text-center">
+              <span className="fa-stack fa-2x fa-style">
+                <i className="fa fa-certificate fa-stack-2x white"></i>
+                <span className="fa fa-stack-1x certi-num"><b>{item.level}</b></span>
+              </span>
+                <p className="small text-center white">
+                LEVEL
+                </p>
+              </div>
+              <div className="col-xs-4 text-center">
+              <span className="fa-stack fa-2x fa-style">
+                <i className="fa fa-star fa-stack-2x white"></i>
+                <span  className="fa fa-stack-1x star-num"><b>{item.currentLevelXP}</b></span>
+              </span>
+                <p className="small text-center white">
+                /10 XP
+                </p>
+              </div>
+              <div className="col-xs-4 text-center">
+              <span className="fa-stack fa-2x fa-style">
+                <i className="fa fa-trophy fa-stack-2x white"></i>
+                <span  className="fa fa-stack-1x trophy-num"><b>{item.totalXP}</b></span>
+              </span>
+                <p className="small text-center white">
+                TOTAL XP
+                </p>
+              </div>
+            </div>
+          </li>
+    ))
+
+    
     return (
         <li className="dropdown stats stats-menu">
           <a href="#" className="dropdown-toggle" 
@@ -24,7 +68,6 @@ class StatsDropdown extends React.Component {
             
           </a>
           <ul className="dropdown-menu pull-right">
-            
             <li className="stats-body">
               <div className="row">
                 <div className="col-xs-6 text-center">
@@ -47,162 +90,15 @@ class StatsDropdown extends React.Component {
                 </div>
               </div>
             </li>
-            <hr className="separator-hr" />
-            <li className="stats-body">
-              <div className="row">
-                <p className="text-center">
-                <strong>
-                CRYPTOGRAPHY ENGINEERING
-                </strong>
-                </p>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-certificate fa-stack-2x white"></i>
-                  <span className="fa fa-stack-1x certi-num"><b>3</b></span>
-                </span>
-                  <p className="small text-center white">
-                  LEVEL
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-star fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x star-num"><b>0.5</b></span>
-                </span>
-                  <p className="small text-center white">
-                  /10 XP
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-trophy fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x trophy-num"><b>13</b></span>
-                </span>
-                  <p className="small text-center white">
-                  TOTAL XP
-                  </p>
-                </div>
-              </div>
-            </li>
-            <hr className="separator-hr" />
-            <li className="stats-body">
-              <div className="row">
-              <p className="text-center">
-              <strong>
-              MATERIAL SCIENCE
-              </strong>
-              </p>
-              
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-certificate fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x certi-num"><b>1</b></span>
-                </span>
-                  <p className="small text-center white">
-                  LEVEL
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-star fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x star-num"><b>3</b></span>
-                </span>
-                  <p className="small text-center white">
-                  /10 XP
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-trophy fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x trophy-num"><b>4</b></span>
-                </span>
-                  <p className="small text-center white">
-                  TOTAL XP
-                  </p>
-                </div>
-              </div>
-            </li>
-            <hr className="separator-hr" />
-            <li className="stats-body">
-              <div className="row">
-              <p className="text-center">
-              <strong>
-              PATTERN RECOGNITION AND CLASSIFICATION
-              </strong>
-              </p>
-              <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-certificate fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x certi-num"><b>2</b></span>
-                </span>
-                  <p className="small text-center white">
-                  LEVEL
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-star fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x star-num"><b>6</b></span>
-                </span>
-                  <p className="small text-center white">
-                  /10 XP
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-trophy fa-stack-2x white"></i>
-                  <span  className="fa fa-stack-1x trophy-num"><b>11</b></span>
-                </span>
-                  <p className="small text-center white">
-                  TOTAL XP
-                  </p>
-                </div>
-              </div>
-            </li>
-            <hr className="separator-hr" />
-            <li className="stats-body">
-              <div className="row">
-              <p className="text-center">
-              <strong>
-              DEEP LEARNING
-              </strong>
-              </p>
-              <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style">
-                  <i className="fa fa-certificate fa-stack-2x darkgrey"></i>
-                  <span  className="fa fa-stack-1x certi-num"><b className="grey">0</b></span>
-                </span>
-                  <p className="small text-center navajowhite">
-                  LEVEL
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style darkgrey">
-                  <i className="fa fa-star fa-stack-2x"></i>
-                  <span  className="fa fa-stack-1x star-num"><b className="grey">0</b></span>
-                </span>
-                  <p className="small text-center navajowhite">
-                  /10 XP
-                  </p>
-                </div>
-                <div className="col-xs-4 text-center">
-                <span className="fa-stack fa-2x fa-style darkgrey">
-                  <i className="fa fa-trophy fa-stack-2x"></i>
-                  <span  className="fa fa-stack-1x trophy-num"><b className="grey">0</b></span>
-                </span>
-                  <p className="small text-center navajowhite">
-                  TOTAL XP
-                  </p>
-                </div>
-              </div>
-              <div className="col-sm-12 btn-row">
-                <button className="btn btn-block btn-flat btn-style text-center">
-                  VIEW ALL STATS
-                </button>
-              </div>
-            </li>
 
+            {listItems}
             
+            <div className="col-sm-12 btn-row">
+              <Link className="btn btn-block btn-flat btn-style text-center" 
+              to='/progressionTrees'>
+                VIEW ALL STATS
+              </Link>
+            </div> 
             
           </ul>
       </li>
@@ -212,7 +108,6 @@ class StatsDropdown extends React.Component {
 }
 
 // StatsDropdown.propTypes = {
-
 // }
 
 export default StatsDropdown
