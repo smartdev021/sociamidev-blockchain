@@ -8,6 +8,107 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
+const NullProgTreeLevelItem = props => {
+  const { item } = props
+  const headingStyle = {
+    color : '#303030',
+    fontSize : '14px'
+  }
+  const xpStyle = {
+    fontSize : '10px',
+    color : 'grey'
+  }
+  return (
+    <Link to={'/progressionTreeBrowser/?id=' + item._id} className="stats-body">
+      <hr className="separator-hr" />
+        <div className="row">
+        <p className="text-center" style={headingStyle}>
+        <strong>
+        {item.name.toUpperCase()}
+        </strong>
+        </p>
+        <div className="col-xs-4 text-center">
+          <span className="fa-stack fa-2x fa-style">
+            <i className="fa fa-certificate fa-stack-2x darkgrey"></i>
+            <span  className="fa fa-stack-1x certi-num"><b className="grey">{item.level}</b></span>
+          </span>
+            <p className="small text-center navajowhite" style={xpStyle}>
+            LEVEL
+            </p>
+          </div>
+          <div className="col-xs-4 text-center">
+          <span className="fa-stack fa-2x fa-style darkgrey">
+            <i className="fa fa-star fa-stack-2x"></i>
+            <span  className="fa fa-stack-1x star-num"><b className="grey">{item.currentLevelXP}</b></span>
+          </span>
+            <p className="small text-center navajowhite" style={xpStyle}>
+            /10 XP
+            </p>
+          </div>
+          <div className="col-xs-4 text-center">
+          <span className="fa-stack fa-2x fa-style darkgrey">
+            <i className="fa fa-trophy fa-stack-2x"></i>
+            <span  className="fa fa-stack-1x trophy-num"><b className="grey">{item.totalXP}</b></span>
+          </span>
+            <p className="small text-center navajowhite" style={xpStyle}>
+            TOTAL XP
+            </p>
+          </div>
+        </div>
+      </Link>
+  )
+}
+
+const ProgTreeLevelItem = props => {
+  const { item } = props
+  const headingStyle = {
+    color : '#303030',
+    fontSize : '14px'
+  }
+  const xpStyle = {
+    fontSize : '10px'
+  }
+  return (
+    <Link to={'/progressionTreeBrowser/?id=' + item._id} className="stats-body">
+      <hr className="separator-hr" />
+        <div className="row">
+          <p className="text-center" style={headingStyle}>
+          <strong>
+            {item.name.toUpperCase()}
+          </strong>
+          </p>
+          <div className="col-xs-4 text-center">
+          <span className="fa-stack fa-2x fa-style">
+            <i className="fa fa-certificate fa-stack-2x white"></i>
+            <span className="fa fa-stack-1x certi-num"><b>{item.level}</b></span>
+          </span>
+            <p className="small text-center white" style={xpStyle}>
+            LEVEL
+            </p>
+          </div>
+          <div className="col-xs-4 text-center">
+          <span className="fa-stack fa-2x fa-style">
+            <i className="fa fa-star fa-stack-2x white"></i>
+            <span  className="fa fa-stack-1x star-num"><b>{item.currentLevelXP}</b></span>
+          </span>
+            <p className="small text-center white" style={xpStyle}>
+            /10 XP
+            </p>
+          </div>
+          <div className="col-xs-4 text-center">
+          <span className="fa-stack fa-2x fa-style">
+            <i className="fa fa-trophy fa-stack-2x white"></i>
+            <span  className="fa fa-stack-1x trophy-num"><b>{item.totalXP}</b></span>
+          </span>
+            <p className="small text-center white" style={xpStyle}>
+            TOTAL XP
+            </p>
+          </div>
+        </div>
+        </Link>
+  )
+}
+
 class StatsDropdown extends React.Component {
 
   constructor(props) {
@@ -17,46 +118,14 @@ class StatsDropdown extends React.Component {
   render() {
 
     const ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels
-
-    const listItems = ProgressionTreeLevels.map((item,index) => (
-      <li className="stats-body" key={index}>
-        <hr className="separator-hr" />
-            <div className="row">
-              <p className="text-center">
-              <strong>
-                {item.name.toUpperCase()}
-              </strong>
-              </p>
-              <div className="col-xs-4 text-center">
-              <span className="fa-stack fa-2x fa-style">
-                <i className="fa fa-certificate fa-stack-2x white"></i>
-                <span className="fa fa-stack-1x certi-num"><b>{item.level}</b></span>
-              </span>
-                <p className="small text-center white">
-                LEVEL
-                </p>
-              </div>
-              <div className="col-xs-4 text-center">
-              <span className="fa-stack fa-2x fa-style">
-                <i className="fa fa-star fa-stack-2x white"></i>
-                <span  className="fa fa-stack-1x star-num"><b>{item.currentLevelXP}</b></span>
-              </span>
-                <p className="small text-center white">
-                /10 XP
-                </p>
-              </div>
-              <div className="col-xs-4 text-center">
-              <span className="fa-stack fa-2x fa-style">
-                <i className="fa fa-trophy fa-stack-2x white"></i>
-                <span  className="fa fa-stack-1x trophy-num"><b>{item.totalXP}</b></span>
-              </span>
-                <p className="small text-center white">
-                TOTAL XP
-                </p>
-              </div>
-            </div>
-          </li>
-    ))
+    
+    const listItems = ProgressionTreeLevels.map((item,index) => {
+      if(item.totalXP){
+        return <ProgTreeLevelItem item={item} key={index}/>
+      }else{
+        return <NullProgTreeLevelItem item={item} key={index}/>
+      }
+    })
 
     
     return (
@@ -95,7 +164,7 @@ class StatsDropdown extends React.Component {
             
             <div className="col-sm-12 btn-row">
               <Link className="btn btn-block btn-flat btn-style text-center" 
-              to='/progressionTrees'>
+              to='/userProfile'>
                 VIEW ALL STATS
               </Link>
             </div> 
