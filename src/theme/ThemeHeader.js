@@ -77,7 +77,7 @@ class ThemeHeader extends React.Component {
                         </ActionLink>
                     </div>
                     <h1 className="logo">
-                        <Link to='/'><img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt=""/></Link>
+                        <Link to='/'><img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt=""/></Link>
                     </h1>
                 </div>
                 <div className="col-md-6">
