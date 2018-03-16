@@ -9,6 +9,12 @@
     font-family: "Fjalla One";
 }
 
+@media all and (max-width : 768px) {
+    .character-trait-container {
+        min-height: 150px;
+    }
+}
+
 #character-selection-header {
     font-size: 24px;
     font-family: "Fjalla One";
