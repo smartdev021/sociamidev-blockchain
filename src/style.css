@@ -55,7 +55,7 @@
 
 @font-face {
     font-family: 'Myriad Pro';
-    src: url('http://sociamibucket.s3.amazonaws.com/assets/fonts/MyriadPro-Regular.otf') format('opentype');
+    src: url('https://sociamibucket.s3.amazonaws.com/assets/fonts/MyriadPro-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
@@ -593,7 +593,7 @@ html, body {
 }
 
 .text-heading {
-    font-family: 'FjallaOne-Regular', sans-serif;
+    font-family: 'Fjalla One';
     /* font-family: "Times New Roman", sans-serif; */
     padding-top: 0px;
     margin-top: 0px;
