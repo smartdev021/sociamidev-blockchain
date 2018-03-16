@@ -19,8 +19,8 @@ RESPONSIVE LAYOUT CSS
 @font-face {
   font-family: Comfortaa;
   src: url(https://sociamibucket.s3.amazonaws.com/assets/fonts/Comfortaa-Bold.ttf) format('truetype');
-  font-weight: normal;
-  font-style: bold;
+  font-weight: bold;
+  font-style: normal;
 }
 
 /*body {

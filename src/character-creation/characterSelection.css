@@ -1,3 +1,13 @@
+#character-info {
+    width: 80%;
+    margin: auto;
+}
+@media only screen and (max-width : 768px) {
+    .character-info {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
 #character-selection-container {
     height: 100%;
     padding: 0 30px;
@@ -18,6 +28,11 @@
     padding-bottom: 20px;
 }
 
+#character-description {
+    font-family: "Myriad Pro";
+    font-size: 18px;
+}
+
 #character-selection-container-inner {
     height: 100%;
     overflow-y: scroll;
@@ -33,21 +48,45 @@
 .character-selection-button-container {}
 
 .character-selection-button {
-    width: 100%;
     padding: 5px;
     cursor: pointer;
-}
-
-.character-selection-button img {
-    width: 70%;
-    height: auto;
+    background: #2fa7d2;
     border-radius: 50%;
-    opacity: 0.1;
-    margin-bottom: 20px;
+    width: 180px;
+    height: 180px;
+    margin: auto;
+    margin-bottom: 10px;
+    opacity: 0.2;
+    position: relative;
+    overflow: hidden;
+    border: 6px solid #ffffff;
 }
 
-.character-selected img {
+.character-selection-button.character-selected {
+    background: #f26c30;
     opacity: 1;
+    border: 6px solid #ffca28;
+}
+
+.character-selection-button.character-order-0 img {
+    margin-left: -23px;
+    margin-top: -21px;
+}
+.character-selection-button.character-order-1 img {
+    margin-left: -119px;
+    margin-top: -40px;
+}
+.character-selection-button.character-order-2 img {
+    margin-left: -18px;
+    margin-top: -25px;
+}
+.character-selection-button.character-order-3 img {
+    margin-left: -10px;
+    margin-top: -25px;
+}
+.character-selection-button.character-order-5 img {
+    margin-left: -40px;
+    margin-top: -20px;
 }
 
 #character-selection-image-big img {
@@ -64,7 +103,7 @@
 
 
 #character-skills {
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 40px;
 }
 
@@ -79,14 +118,27 @@
     font-size: 13px;
     font-family: "Comfortaa";
     color: white;
-    padding: 5px 30px;
+    padding: 14px 30px;
     margin-right: 20px;
-    border: 1px solid rgb( 47, 167, 210 );
     border-radius: 25px;
     display: inline-block;
     cursor: default;
+    margin-top: 10px;
 }
 
 .character-creation-progressbar-container {
-    padding: 10px 0px;
+    padding: 10px 0px 10px;
+}
+
+.character-creation-progressbar-container.character-selection-progressbar {
+    position: relative;
+    bottom: 25px;
+    padding: 10px 0px 0px;
+    height: 20px;
+}
+
+@media only screen and (max-width : 768px) {
+    .character-creation-progressbar-container.character-selection-progressbar {
+        margin-top: 20px;
+    }
 }

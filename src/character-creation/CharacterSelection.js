@@ -28,10 +28,11 @@ class CharacterSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '80%';
+      Modal.defaultStyles.content["height"] = '77%';
       Modal.defaultStyles.content["width"] = '75%';
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
+      Modal.defaultStyles.content["minHeight"] = '720px';
       Modal.defaultStyles.content["overflowX"] = "hidden";
       Modal.defaultStyles.content["overflowY"] = "hidden";
       Modal.defaultStyles.content["marginLeft"] = 'auto';
@@ -77,7 +78,7 @@ class CharacterSelection extends React.Component {
               if (i >= firstIndex && i <= lastIndex) {
                 return (
                   <div className="col-lg-12 col-md-4 col-sm-4 col-xsm-12" key={i}>
-                    <div className={`character-selection-button ${this.props.selectedIndex == i ? 
+                    <div className={`character-selection-button character-order-${i} ${this.props.selectedIndex == i ? 
                       'character-selected' : ""}`}
                       onClick={()=>this.handleChangeSelectedChatacter(i)} 
                       onMouseOver={()=>this.handleMouseOverCharacter(i)}
@@ -167,9 +168,9 @@ class CharacterSelection extends React.Component {
                     <div className="col-lg-2 col-md-12">
                       {this.renderCharacters(this.props.charactersList, 3, this.props.charactersList.length - 1)}
                     </div>
-                  </div>
-                  <div className="character-creation-progressbar-container">
-                    <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                    <div className="character-creation-progressbar-container character-selection-progressbar">
+                      <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                    </div>
                   </div>
                 </div>
               </div>

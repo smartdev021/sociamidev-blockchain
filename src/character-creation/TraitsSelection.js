@@ -24,10 +24,11 @@ class TraitsSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '80%';
+      Modal.defaultStyles.content["height"] = '77%';
       Modal.defaultStyles.content["width"] = '75%';
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
+      Modal.defaultStyles.content["minHeight"] = '720px';
       Modal.defaultStyles.content["overflowX"] = "hidden";
       Modal.defaultStyles.content["overflowY"] = "hidden";
       Modal.defaultStyles.content["marginLeft"] = 'auto';
@@ -35,6 +36,7 @@ class TraitsSelection extends React.Component {
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
       Modal.defaultStyles.content["padding"] = '0px 20px';
+      Modal.defaultStyles.content["boxShadow"] = '0px 10px 62px -4px rgba(0,0,0,0.75)';
     }
       
     componentWillUnmount() {

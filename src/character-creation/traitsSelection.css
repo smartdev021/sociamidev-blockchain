@@ -1,11 +1,12 @@
 .character-trait-container {
     border: 3px solid rgb( 226, 226, 226 );
     border-radius: 20px;
-    min-height: 150px;
-    padding: 10px 20px;
+    min-height: 200px;
+    padding: 5px 27px;
     margin-bottom: 20px;
     cursor: pointer;
     background: white;
+    font-family: "Fjalla One";
 }
 
 #character-selection-header {
@@ -16,9 +17,9 @@
 }
 
 .character-trait-container-active {
-    border: 3px solid rgb( 47, 167, 210 );
+    border: 3px solid transparent;
     border-radius: 20px;
-    background-color: rgb( 47, 167, 210 );
+    background: rgb( 47, 167, 210 ) url('../../assets/img/check.png') right -50px top -50px no-repeat;
 }
 
 .character-trait-container-active .charactet-trait-name, 
@@ -28,7 +29,6 @@
 
 .character-trait-container-active .charactet-trait-name {
     font-size: 24px;
-    font-family: "Fjalla One";
 }
 
 .character-trait-container-active .charactet-trait-description {
@@ -50,6 +50,7 @@
 
 #character-trait-select-confirm-button-container {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 #character-selection-next {
@@ -58,7 +59,6 @@
 }
 
 #character-traits-selection-container {
-    padding: 0px 30px;
     height: 100%;
 }
 
