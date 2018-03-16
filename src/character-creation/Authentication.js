@@ -96,7 +96,7 @@ class Authentication extends React.Component {
                     <div className="text-center" id="character-creation-authorization-disclaimer">
                       <p id="character-creation-paragraph-primary"><b>
                         {"By clicking on any of the above authentication methods, you agree to our t&c's and confirm that you have read our "}
-                        <Link to="/privacyPolicy" target="_blank">Data Privacy</Link> {" (which includes our Cookie Use Plociy)."}</b>
+                        <Link to="/privacyPolicy" target="_blank">Data Privacy</Link> {" (which includes our Cookie Use Policy)."}</b>
                       </p>
                       <hr></hr>
                       <p id="character-creation-paragraph-secondary">
