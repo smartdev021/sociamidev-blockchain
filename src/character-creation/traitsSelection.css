@@ -19,7 +19,7 @@
 .character-trait-container-active {
     border: 3px solid transparent;
     border-radius: 20px;
-    background: rgb( 47, 167, 210 ) url('../../assets/img/check.png') right -50px top -50px no-repeat;
+    background: rgb( 47, 167, 210 ) url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/icon-close.png') right -50px top -50px no-repeat;
 }
 
 .character-trait-container-active .charactet-trait-name, 
