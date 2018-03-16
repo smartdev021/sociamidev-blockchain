@@ -12,6 +12,12 @@
     height: 100%;
     padding: 0 30px;
 }
+@media only screen and (max-width : 768px) {
+    #character-selection-container {
+        padding: 0px !important;
+    }
+}
+
 
 #character-selection-header {
     font-size: 24px;

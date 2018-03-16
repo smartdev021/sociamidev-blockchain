@@ -3,6 +3,12 @@
     padding: 0px 30px;
 }
 
+@media all and (max-width : 768px) {
+    #character-authenticate-container {
+        padding: 0px !important;
+    }
+}
+
 #character-authenticate-container p { 
     font-size: 15px;
     font-family: "Myriad Pro";
@@ -17,6 +23,11 @@
 
 #character-creation-authenticate-button-container {
     padding: 98px 0px 33px;
+}
+@media all and (max-width : 768px) {
+    #character-creation-authenticate-button-container {
+        padding-top: 35px !important;
+    }
 }
 
 .character-creation-auth-button {
@@ -108,5 +119,6 @@
     .character-creation-auth-button {
         display: block;
         margin-bottom: 10px;
+        margin-right: 0px;
     }
 }

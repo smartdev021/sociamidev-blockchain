@@ -28,7 +28,6 @@ class TraitsSelection extends React.Component {
       Modal.defaultStyles.content["width"] = '75%';
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
-      Modal.defaultStyles.content["minHeight"] = '720px';
       Modal.defaultStyles.content["overflowX"] = "hidden";
       Modal.defaultStyles.content["overflowY"] = "hidden";
       Modal.defaultStyles.content["marginLeft"] = 'auto';

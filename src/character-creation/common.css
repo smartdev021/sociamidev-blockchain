@@ -10,6 +10,14 @@
     z-index: 99999;
 }
 
+@media all and (max-width : 768px) {
+    .character-creation-popup-close-icon {
+        top: 30px;
+        right: 30px;
+    }
+}
+
+
 .character-creation-popup-close-icon:before {
     content: '';
 }
@@ -43,3 +51,12 @@
     opacity: 0.7;
     border-radius: 25px;
 }
+
+@media all and (max-width : 768px) {
+    .ReactModal__Content {
+        width: 95% !important;
+        padding: 0px !important;
+        height: 85% !important;
+    }
+}
+
