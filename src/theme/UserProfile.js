@@ -54,12 +54,15 @@ class UserProfile extends React.Component {
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago'},
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago'}],
 			promoCode: "",
+			promocodesUsed: [],
 		}
 	}
 
 	componentWillMount() {
 		this.props.fetchListCharacterClasses();
 		this.props.fetchListCharacterTraits();
+
+		this.updatePromoCodesUsed();
 	}
 
 	componentWillReceiveProps() {
@@ -67,6 +70,16 @@ class UserProfile extends React.Component {
 			firstName: this.props.userProfile.firstName,
 			lastName: this.props.userProfile.lastName
 		})
+	}
+
+	updatePromoCodesUsed() {
+		Axios.get(`${ConfigMain.getBackendURL()}/couponsGet?ownerUserId=${this.props.userProfile._id}&isUsed=${true}`)
+		.then((results) => {
+			this.setState({promocodesUsed: results.data});
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 	}
 
 	handleInputPromoCode(e) {
@@ -86,15 +99,29 @@ class UserProfile extends React.Component {
 				}
 			};
 
+			console.log("Redeeming the code");
+			console.dir(this.props.userProfile);
+			console.dir(body);
+
 			Axios.post(`${ConfigMain.getBackendURL()}/couponRedeem`, body)
 			.then((result) => {
 				this.setState({promoCode: ""});
-				alert("Thank you for redeeming the code");
+				this.updatePromoCodesUsed();
 			})
 			.catch((error) => {
-				if (error.response && error.response.status && error.response.status === 423) {
-					if (error.response.data && error.response.data.status) {
-						alert(`Error: ${error.response.data.status}`);
+				if (error.response && error.response.status) {
+					if (error.response.status === 423) {
+						if (error.response.data && error.response.data.status) {
+							if (error.response.data.status == "used") {
+								alert("Code already used");
+							}
+						}
+					}
+					else if (error.response.status === 404) {
+						alert("Invalid code");
+					}
+					else if (error.response.status === 500) {
+						alert("Server error");
 					}
 				}
 			})
@@ -191,6 +218,16 @@ class UserProfile extends React.Component {
                     onClick={() => this.handleRedeemCode()}>Redeem code</button>
 			  <input type="text" autoFocus={true} onKeyPress={(e) => this.handlePromoInputKeyPress(e)} maxLength={16}
 			    value={this.state.promoCode} onChange={(e) => this.handleInputPromoCode(e)}/>
+
+				{
+					this.state.promocodesUsed.map((promocodeUsed, i) => {
+						if (promocodeUsed.data && promocodeUsed.data.date) {
+							return (
+								<div key={i}>{`Promo code effective date: ${promocodeUsed.data.date}`}</div>
+							)
+						}
+					})
+				}
 			</div>
 		);
 	}
