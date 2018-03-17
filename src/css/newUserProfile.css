@@ -232,3 +232,12 @@
 	width: 10%;
 	height: auto;
 }
+
+#userprofile-promocode-section {
+	border-bottom: 2px solid #76c3be;
+	padding-bottom: 10px;
+}
+
+#userprofile-promocode-submit {
+	margin-right: 10px;
+}

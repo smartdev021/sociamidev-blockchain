@@ -52,7 +52,8 @@ class UserProfile extends React.Component {
 			blogs: [
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '30 minutes ago'}, 
 				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago'},
-				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago'}]
+				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago'}],
+			promoCode: "",
 		}
 	}
 
@@ -66,6 +67,23 @@ class UserProfile extends React.Component {
 			firstName: this.props.userProfile.firstName,
 			lastName: this.props.userProfile.lastName
 		})
+	}
+
+	handleInputPromoCode(e) {
+		if (e.target.value.length === 0 || /^[0-9a-zA-Z]+$/.test(e.target.value)) {
+			this.setState({promoCode: e.target.value});
+		}
+	}
+
+	handleRedeemCode() {
+		if (this.state.promoCode.length == 16) {
+		}
+	}
+
+	handlePromoInputKeyPress(event) {
+		if(event.key == 'Enter'){
+		  this.handleRedeemCode();
+		}
 	}
 
 	renderCharacter() {
@@ -145,6 +163,17 @@ class UserProfile extends React.Component {
 		return null;
 	}
 
+	renderPromoCodeSection() {
+		return (
+			<div id="userprofile-promocode-section">
+			  <button id="userprofile-promocode-submit" type="button" className="btn-base btn-yellow" 
+                    onClick={() => this.handleRedeemCode()}>Redeem code</button>
+			  <input type="text" autoFocus={true} onKeyPress={(e) => this.handlePromoInputKeyPress(e)} maxLength={16}
+			    value={this.state.promoCode} onChange={(e) => this.handleInputPromoCode(e)} className="text-uppercase"/>
+			</div>
+		);
+	}
+
 	render() {
 		//Incorrect usage of bootstrap row col. @Michael?
 		return (
@@ -214,6 +243,11 @@ class UserProfile extends React.Component {
 						<div className="row">
 						  <div className="col-lg-12">
 						    {this.renderCharacter()}
+						  </div>
+						</div>
+						<div className="row">
+						  <div className="col-lg-12">
+						    {this.renderPromoCodeSection()}
 						  </div>
 						</div>
 						{this.state.blogs.map((item, index) => {
