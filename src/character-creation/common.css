@@ -52,6 +52,11 @@
     border-radius: 25px;
 }
 
+.ReactModal__Content {
+    max-height: 721px !important;
+    max-height: 85vh;
+}
+
 @media all and (max-width : 1089px) {
     .ReactModal__Content {
         width: 95% !important;
