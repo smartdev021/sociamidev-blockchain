@@ -71,12 +71,33 @@ class UserProfile extends React.Component {
 
 	handleInputPromoCode(e) {
 		if (e.target.value.length === 0 || /^[0-9a-zA-Z]+$/.test(e.target.value)) {
-			this.setState({promoCode: e.target.value});
+			this.setState({promoCode: e.target.value.toUpperCase()});
 		}
 	}
 
 	handleRedeemCode() {
 		if (this.state.promoCode.length == 16) {
+			const body = {
+				code: this.state.promoCode,
+				owner: {
+					id: this.props.userProfile._id,
+					firstName: this.props.userProfile.firstName,
+					lastName: this.props.userProfile.lastName
+				}
+			};
+
+			Axios.post(`${ConfigMain.getBackendURL()}/couponRedeem`, body)
+			.then((result) => {
+				this.setState({promoCode: ""});
+				alert("Thank you for redeeming the code");
+			})
+			.catch((error) => {
+				if (error.response && error.response.status && error.response.status === 423) {
+					if (error.response.data && error.response.data.status) {
+						alert(`Error: ${error.response.data.status}`);
+					}
+				}
+			})
 		}
 	}
 
@@ -169,7 +190,7 @@ class UserProfile extends React.Component {
 			  <button id="userprofile-promocode-submit" type="button" className="btn-base btn-yellow" 
                     onClick={() => this.handleRedeemCode()}>Redeem code</button>
 			  <input type="text" autoFocus={true} onKeyPress={(e) => this.handlePromoInputKeyPress(e)} maxLength={16}
-			    value={this.state.promoCode} onChange={(e) => this.handleInputPromoCode(e)} className="text-uppercase"/>
+			    value={this.state.promoCode} onChange={(e) => this.handleInputPromoCode(e)}/>
 			</div>
 		);
 	}
