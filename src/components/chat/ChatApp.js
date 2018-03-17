@@ -338,25 +338,26 @@ class ChatApp extends React.Component {
     const profilePic = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
     const messi = "https://media.gettyimages.com/photos/lionel-messi-of-barcelona-celebrates-scoring-his-sides-first-goal-picture-id846141966?s=612x612"
     return (
-      // <div className={divMainClasses}>
-      //   <div className="chatapp-container">
-      //     <div className="chatapp-userContainer" id="userContainer">
-      //       <Users users={this.state.users} selectedUser={this.state.activeUserID} selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} openWindow={this.state.openWindow} />
-      //     </div>
-      //     <div className={divChatClasses} id="chatContainer">
-      //       <div className="topName">
-      //         <span>To: <span id="activeUserName">{active}</span></span>
-      //         <span className="close-chat" id="close-chat" onClick={()=>this.closeChatWindow()}>x</span>
-      //       </div>
-      //       <div id="test" className="messages">
-      //         {componentMessages}
-      //       </div>
-      //       <div id="msgBox" className="write-container">
-      //         <ChatInput onSend={(message)=>this.sendHandler(message)} />
-      //       </div>
-      //     </div>
-      //   </div>
-      // </div>
+      <div>
+      <div className={divMainClasses}>
+        <div className="chatapp-container">
+          <div className="chatapp-userContainer" id="userContainer">
+            <Users users={this.state.users} selectedUser={this.state.activeUserID} selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} openWindow={this.state.openWindow} />
+          </div>
+          <div className={divChatClasses} id="chatContainer">
+            <div className="topName">
+              <span>To: <span id="activeUserName">{active}</span></span>
+              <span className="close-chat" id="close-chat" onClick={()=>this.closeChatWindow()}>x</span>
+            </div>
+            <div id="test" className="messages">
+              {componentMessages}
+            </div>
+            <div id="msgBox" className="write-container">
+              <ChatInput onSend={(message)=>this.sendHandler(message)} />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="popout">
         <div className="chat-btn">
           <i className="fa fa-comments"></i>
@@ -435,6 +436,7 @@ class ChatApp extends React.Component {
                 </div>
             </div>
         </div>
+      </div>
       </div>
     );
   }
