@@ -10,7 +10,7 @@
 }
 #character-selection-container {
     height: 100%;
-    padding: 0 30px;
+    padding: 0 25px;
 }
 @media only screen and (max-width : 768px) {
     #character-selection-container {
@@ -46,6 +46,52 @@
 #character-selection-container-inner .container-fluid {
     overflow: hidden;
 }
+#character-selection-container-inner .box-head {
+    padding-bottom: 18px;
+}
+
+.character-center {
+    width: 604px;
+    float:left;
+    margin-left: 20px;
+    position: relative;
+}
+.character-left, .character-right {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 16.66666667%;
+    float: left;
+}
+.character-piece {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    width: 100%;
+}
+@media only screen and (max-width : 1089px) {
+    .character-center {
+        width: 100%; 
+        margin-left: 0px;    
+        z-index: 1;   
+    }
+    .character-left, .character-right {
+        width: 100%;
+        float: none;
+    }
+    .character-piece {
+        width: 33.33333333%;
+    }
+
+}
+@media only screen and (max-width : 767px) {    
+    .character-piece {
+        width: 100%;
+    }
+}
 
 .character-info {
     width: 100%;
@@ -61,11 +107,11 @@
     width: 180px;
     height: 180px;
     margin: auto;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     opacity: 0.2;
     position: relative;
     overflow: hidden;
-    border: 6px solid #ffffff;
+    border: 0px solid #ffffff;
 }
 
 .character-selection-button.character-selected {
@@ -139,13 +185,15 @@
 
 .character-creation-progressbar-container.character-selection-progressbar {
     position: relative;
-    bottom: 25px;
+    bottom: 38px;
     padding: 10px 0px 0px;
     height: 20px;
 }
 
-@media only screen and (max-width : 768px) {
+@media only screen and (max-width : 1089px) {
     .character-creation-progressbar-container.character-selection-progressbar {
         margin-top: 20px;
+        height: 40px;
+        bottom: 0px;
     }
 }

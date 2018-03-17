@@ -1,17 +1,35 @@
+.col-cs {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 33.3333%;
+    float: left;
+}
+
+@media all and (max-width : 1089px) {
+    .col-cs {
+        width: 100%;        
+    }
+}
 .character-trait-container {
     border: 3px solid rgb( 226, 226, 226 );
     border-radius: 20px;
+    /* min-height: 200px; */
+    width: 320px;
     min-height: 200px;
-    padding: 5px 27px;
+
+    padding: 5px 30px;
     margin-bottom: 20px;
     cursor: pointer;
     background: white;
     font-family: "Fjalla One";
 }
 
-@media all and (max-width : 768px) {
+@media all and (max-width : 1089px) {
     .character-trait-container {
         min-height: 150px;
+        width: 100%;
     }
 }
 
@@ -25,7 +43,7 @@
 .character-trait-container-active {
     border: 3px solid transparent;
     border-radius: 20px;
-    background: rgb( 47, 167, 210 ) url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/check.png') right -50px top -50px no-repeat;
+    background: rgb( 47, 167, 210 ) url('http://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/check.png') right -14px top -20px no-repeat;
 }
 
 .character-trait-container-active .charactet-trait-name, 

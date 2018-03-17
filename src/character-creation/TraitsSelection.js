@@ -24,8 +24,12 @@ class TraitsSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '77%';
-      Modal.defaultStyles.content["width"] = '75%';
+      // Modal.defaultStyles.content["height"] = '77%';
+      // Modal.defaultStyles.content["width"] = '75%';
+
+      Modal.defaultStyles.content["width"] = '1093px';
+      Modal.defaultStyles.content["height"] = '721px';
+
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
       Modal.defaultStyles.content["overflowX"] = "hidden";
@@ -94,7 +98,7 @@ class TraitsSelection extends React.Component {
                     {
                       this.props.traitsList.map((trait, i) => {
                         return (
-                          <div className="col-lg-4 col-md-12" key={i}>
+                          <div className="col-cs" key={i}>
                             <div onClick={()=>this.handleSelectTrait(i)} 
                               className={`character-trait-container ${i == this.props.selectedIndex ? "character-trait-container-active" : ""}`}>
                               <h3 className="charactet-trait-name">{trait.name}</h3>

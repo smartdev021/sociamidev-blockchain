@@ -600,29 +600,33 @@ html, body {
     text-transform: uppercase;
     font-size: 24px;
     color: #dd303a;
-    line-height: 40px;
-    padding: 0px 10px;
+    line-height: 42px;
 }
 
+.text-heading span {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+}
 .heading-border:before, .heading-border:after {
     content: "";
     position: absolute;
-    top: -5px;
-    width: 50px;
-    height: 67px;
+    width: 32px;
+    height: 42px;
     display: none;
 }
 
 .heading-border:before {
     right: 100%;
-    margin-right: -5px;
-    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-prev.png) no-repeat;
+    margin-right: 19px;
+    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-l.png) no-repeat;
 }
 
 .heading-border:after {
     left: 100%;
-    margin-left: 5px;
-    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-next.png) no-repeat;
+    margin-left: 19px;
+    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-r.png) no-repeat;
+    display: inline-block !important;
 }
 
 .heading-border span:before,
@@ -647,12 +651,12 @@ html, body {
 
 .heading-border span:before {
     right: 100%;
-    margin-right: 61px;
+    margin-right: 65px;
 }
 
 .heading-border span:after {
     left: 100%;
-    margin-left: 61px;
+    margin-left: 65px;
 }
 
 .box-location{
@@ -1097,7 +1101,7 @@ html, body {
 
     .heading-border:before,
     .heading-border:after{
-        display: none;
+        display: none !important;
     }
 
     .open-tokens-mobile{

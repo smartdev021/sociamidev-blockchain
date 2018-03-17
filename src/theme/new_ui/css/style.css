@@ -249,7 +249,6 @@ body{
 .heading-border:after {
     content: "";
     position: absolute;
-    top: -5px;
     width: 50px;
     height: 67px;
 }
