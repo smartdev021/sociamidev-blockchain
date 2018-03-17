@@ -221,9 +221,9 @@ class UserProfile extends React.Component {
 
 				{
 					this.state.promocodesUsed.map((promocodeUsed, i) => {
-						if (promocodeUsed.data && promocodeUsed.data.date) {
+						if (promocodeUsed.data && promocodeUsed.data.benefit && promocodeUsed.data.benefit.date && promocodeUsed.data.benefit.value) {
 							return (
-								<div key={i}>{`Promo code effective date: ${promocodeUsed.data.date}`}</div>
+								<div key={i}>{`Promo code effective date: ${promocodeUsed.data.benefit.date} ${promocodeUsed.data.benefit.value}`}</div>
 							)
 						}
 					})
