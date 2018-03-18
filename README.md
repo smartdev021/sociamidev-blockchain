@@ -1,4 +1,4 @@
-⚠️⚠️⚠️ PLEASE NOTE YOU ARE NOT ALLOWED TO COPY SOURCE CODE INTO OTHER GITHUBS! you are not allowed to disclose private, confidential information belong to SOQQLE PTE LTD without authorization. SOQQLE PTE LTD reserves all rights including legal action. ⚠️⚠️⚠️
+⚠️⚠️⚠️ PLEASE NOTE YOU ARE NOT ALLOWED TO COPY SOURCE CODE INTO OTHER GITHUBS! You are not allowed to disclose private, confidential information belonging to SOQQLE PTE LTD without authorization. SOQQLE PTE LTD reserves all rights including legal action. ⚠️⚠️⚠️
 
 ### Pre-requisite:
 - Python is installed. If not, download and install from the following link https://www.python.org/downloads/
