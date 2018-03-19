@@ -18,7 +18,7 @@ class PrivacyPolicy extends React.Component {
   }
 
   componentWillMount() {
-    Axios.get(`http://sociamibucket.s3.amazonaws.com/legal/privacy_policy_min.html`)
+    Axios.get(`https://sociamibucket.s3.amazonaws.com/legal/privacy_policy_min.html`)
     .then((result) => {
       this.setState({privacyPolicyData: result.data});
     })
