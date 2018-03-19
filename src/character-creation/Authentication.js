@@ -24,8 +24,9 @@ class Authentication extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '85%';
-      Modal.defaultStyles.content["width"] = '75%';
+      
+      Modal.defaultStyles.content["width"] = '1093px';
+
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
       Modal.defaultStyles.content["overflowX"] = "hidden";
@@ -86,7 +87,7 @@ class Authentication extends React.Component {
                       </span>
                       <span className="character-creation-auth-button" id="character-creation-button-linkedin"
                           onClick={()=>this.handleSignUpLinkedIn()}>
-                        <Icon className="character-creation-social-icon" name="linkedin"/>Login with LinkedIn
+                        <Icon className="character-creation-social-icon linkedin" name="linkedin"/>Login with LinkedIn
                       </span>
                     </div>
                   </div>
@@ -94,15 +95,16 @@ class Authentication extends React.Component {
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="text-center" id="character-creation-authorization-disclaimer">
-                      <p id="character-creation-paragraph-primary"><b>
-                        {"By clicking on any of the above authentication methods, you agree to our t&c's and confirm that you have read our "}
-                        <Link to="/privacyPolicy" target="_blank">Data Privacy</Link> {" (which includes our Cookie Use Policy)."}</b>
+                      <p id="character-creation-paragraph-primary">
+                        <b>
+                        By clicking on any of the above authentication methods, you agree to our t&c&apos;s <br/> and confirm that you have read our
+                        <Link to="/privacyPolicy" target="_blank"> Data Privacy</Link> {" (which includes our Cookie Use Plociy)."}</b>
                       </p>
                       <hr></hr>
                       <p id="character-creation-paragraph-secondary">
                         &#42;We currently do not support non Facebook/LinkedIn authentication methods but plan to do so in the near future.
                       </p>
-                      <p>
+                      <p id="character-creation-paragraph-tertiary">
                         &#42;Soqqle is a platform to encourage personal growth by making learning fun.
                       </p>
                       <p>

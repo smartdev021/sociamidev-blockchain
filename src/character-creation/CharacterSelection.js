@@ -28,8 +28,12 @@ class CharacterSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      Modal.defaultStyles.content["height"] = '80%';
-      Modal.defaultStyles.content["width"] = '75%';
+      
+      // Modal.defaultStyles.content["height"] = '77%';
+      // Modal.defaultStyles.content["width"] = '75%';
+
+      Modal.defaultStyles.content["width"] = '1093px';
+      
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
       Modal.defaultStyles.content["overflowX"] = "hidden";
@@ -76,8 +80,8 @@ class CharacterSelection extends React.Component {
             characters.map((character, i) => {
               if (i >= firstIndex && i <= lastIndex) {
                 return (
-                  <div className="col-lg-12 col-md-4 col-sm-4 col-xsm-12" key={i}>
-                    <div className={`character-selection-button ${this.props.selectedIndex == i ? 
+                  <div className="character-piece" key={i}>
+                    <div className={`character-selection-button character-order-${i} ${this.props.selectedIndex == i ? 
                       'character-selected' : ""}`}
                       onClick={()=>this.handleChangeSelectedChatacter(i)} 
                       onMouseOver={()=>this.handleMouseOverCharacter(i)}
@@ -136,10 +140,10 @@ class CharacterSelection extends React.Component {
                     <img src={SelectedCharacter.imageBigURL}/>
                   </div>
                   <div className="row">
-                    <div className="col-lg-2 col-md-12">
+                    <div className="character-left">
                       {this.renderCharacters(this.props.charactersList, 0, 2)}
                     </div>
-                    <div className="col-lg-8 col-md-12">
+                    <div className="character-center">
                       <div className="text-center" id="character-info">
                         <div id="character-name">
                           <div className="text-uppercase">{SelectedCharacter.name}</div>
@@ -164,12 +168,12 @@ class CharacterSelection extends React.Component {
                         </ActionLink>
                       </div>
                     </div>
-                    <div className="col-lg-2 col-md-12">
+                    <div className="character-right">
                       {this.renderCharacters(this.props.charactersList, 3, this.props.charactersList.length - 1)}
                     </div>
-                  </div>
-                  <div className="character-creation-progressbar-container">
-                    <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                    <div className="character-creation-progressbar-container character-selection-progressbar">
+                      <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                    </div>
                   </div>
                 </div>
               </div>

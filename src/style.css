@@ -32,7 +32,7 @@
 }
 
 @font-face {
-    font-family: 'FjallaOne-Regular';
+    font-family: 'Fjalla One';
     src: url('https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/fonts/FjallaOne-Regular.eot');
     src: local('☺'),
     url('https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/fonts/FjallaOne-Regular.woff') format('woff'),
@@ -49,6 +49,13 @@
     url('https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/fonts/Titling-Gothic-Bold.woff') format('woff'),
     url('https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/fonts/Titling-Gothic-Bold.ttf') format('truetype'),
     url('https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/fonts/Titling-Gothic-Bold.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Myriad Pro';
+    src: url('https://sociamibucket.s3.amazonaws.com/assets/fonts/MyriadPro-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
@@ -573,7 +580,7 @@ html, body {
 .box-head {
     text-align: center;
     color: #ffffff;
-    padding: 20px;
+    padding: 50px 0px 35px;
     position: relative;
     z-index: 9999;
 }
@@ -586,44 +593,49 @@ html, body {
 }
 
 .text-heading {
-    font-family: 'FjallaOne-Regular', sans-serif;
+    font-family: 'Fjalla One';
     /* font-family: "Times New Roman", sans-serif; */
     padding-top: 0px;
     margin-top: 0px;
     text-transform: uppercase;
-    font-size: 18px;
+    font-size: 24px;
     color: #dd303a;
-    line-height: 40px;
+    line-height: 42px;
 }
 
+.text-heading span {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+}
 .heading-border:before, .heading-border:after {
     content: "";
     position: absolute;
-    top: -5px;
-    width: 50px;
-    height: 67px;
+    width: 32px;
+    height: 42px;
     display: none;
 }
 
 .heading-border:before {
     right: 100%;
-    margin-right: -5px;
-    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-prev.png) no-repeat;
+    margin-right: 19px;
+    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-l.png) no-repeat;
 }
 
 .heading-border:after {
     left: 100%;
-    margin-left: 5px;
-    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-next.png) no-repeat;
+    margin-left: 19px;
+    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-r.png) no-repeat;
+    display: inline-block !important;
 }
 
 .heading-border span:before,
 .heading-border span:after {
     content: "";
     position: absolute;
-    border-bottom: 3px solid #e17726;
+    border-bottom: 2px solid #e89859;
     top: 18px;
-    width: 60px;
+    width: 81px;
     display: none;
 }
 
@@ -639,12 +651,12 @@ html, body {
 
 .heading-border span:before {
     right: 100%;
-    margin-right: 50px;
+    margin-right: 65px;
 }
 
 .heading-border span:after {
     left: 100%;
-    margin-left: 50px;
+    margin-left: 65px;
 }
 
 .box-location{
@@ -1089,7 +1101,7 @@ html, body {
 
     .heading-border:before,
     .heading-border:after{
-        display: none;
+        display: none !important;
     }
 
     .open-tokens-mobile{
@@ -1131,7 +1143,7 @@ html, body {
     }
 
     .text-heading{
-        font-size: 18px;
+        
     }
 
     .bt-search{

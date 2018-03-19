@@ -598,7 +598,6 @@ html, body {
 .heading-border:before, .heading-border:after {
     content: "";
     position: absolute;
-    top: -5px;
     width: 50px;
     height: 67px;
     display: none;
