@@ -165,6 +165,13 @@ html, body {
     text-decoration: none;
 }
 
+.btn-yellow.disabled,
+.btn-yellow.disabled:hover,
+.btn-yellow.disabled:focus,
+.btn-yellow.disabled:active{
+    background: rgba(253, 202, 20, 0.5);
+}
+
 .btn-red{
     color: #ffffff;
     background: #e45961;

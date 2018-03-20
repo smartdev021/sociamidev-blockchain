@@ -17,6 +17,8 @@ import {Icon} from 'react-fa'
 import ThemeHeader from '~/src/theme/ThemeHeader';
 import SidebarLeft from '~/src/theme/SidebarLeft';
 
+import ConfigMain from '~/configs/main'
+
 //routes
 import Authorize from '~/src/authentication/Authorize';
 
@@ -87,7 +89,7 @@ class Main extends React.Component {
             <Route path='/skillBrowser' render={routeProps => <SkillBrowser {...routeProps}{...this.props}/>}/>
             <Route path='/taskManagement' render={routeProps => <TaskManager {...routeProps}{...this.props}/>}/>
             <Route path='/taskBrowser' render={routeProps => <TaskBrowser {...routeProps}{...this.props}/>}/>
-            <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>
+            {!ConfigMain.ChallengesScannerDisabled && <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>}
             <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
             <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
             <Route path='/privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>} />)}/>
