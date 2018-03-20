@@ -28,7 +28,11 @@ class ChatWindowInput extends React.Component {
       <form className="chat-window-input" onSubmit={(event)=>this.submitHandler(event)}>
           <a href="javascript:;" className="chat-attach glyphicon glyphicon-paperclip pull-left"></a>
           <div className="chat-input-span">
-              <input type="text" className="chat-input" />
+            <input type="text"
+            onChange={(event)=>this.textChangeHandler(event)}
+            value={this.state.chatInput}
+            className="chat-input"
+            required />
         </div>
           <div className="chat-icon-btn">
                 <button className="btn btn-primary chat-send pull-right">
