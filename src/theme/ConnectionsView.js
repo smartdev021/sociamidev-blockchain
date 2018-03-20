@@ -236,8 +236,7 @@ class ConnectionsView extends React.Component {
                                                 <div className="friendInfo">
                                                     <span className="friendName">
                                                       {friend.firstName} {friend.lastName}
-                                                      <span className="friendFacebookRecommendation"> (You are friends on Facebook)</span>
-
+                                                      {friend.isFacebookFriend && <span className="friendFacebookRecommendation"> (You are friends on Facebook)</span>}
                                                     </span>
                                                     <span className="friendDetails">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl sem</span>
                                                 </div>
