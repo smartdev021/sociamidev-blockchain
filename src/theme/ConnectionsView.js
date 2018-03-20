@@ -222,8 +222,6 @@ class ConnectionsView extends React.Component {
                     <Tab eventKey={1} title="All">
                         <ul> {
                             allFriendsList.map(function (friend) {
-                                // Hide people in connections that are not friends
-                                if (friend.isFacebookFriend) {
                                     let addBtn = <button type="button" className="btn btn-primary"
                                                          onClick={()=>this.handleAddSoqqler(friend.id)}>
                                         Add Soqqler</button>;
@@ -264,7 +262,6 @@ class ConnectionsView extends React.Component {
                                                 <span className="actionBtn">{addBtn}</span>
                                             </div>
                                         </li>);
-                                    }
                             }, this)}
                         </ul>
                     </Tab>
