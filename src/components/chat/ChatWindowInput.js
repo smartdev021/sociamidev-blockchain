@@ -35,7 +35,7 @@ class ChatWindowInput extends React.Component {
             required />
         </div>
           <div className="chat-icon-btn">
-                <button className="btn btn-primary chat-send pull-right">
+                <button className="btn chat-send pull-right">
                     <i className="glyphicon glyphicon-send chat-icon"></i>
                 </button>
           </div>

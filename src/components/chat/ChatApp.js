@@ -15,9 +15,9 @@ import PubSub from 'pubsub-js';
 
 import ConfigMain from '../../../configs/main';
 
-// import ChatMessages from './ChatMessages';
-// import ChatWindowInput from './ChatWindowInput';
-// import ChatWidget from './ChatWidget'
+import ChatMessages from './ChatMessages';
+import ChatWindowInput from './ChatWindowInput';
+import ChatWidget from './ChatWidget'
 
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
@@ -175,7 +175,7 @@ class ChatApp extends React.Component {
     if(activeUserID in tempUnreadCountStack){
       tempUnreadCountStack[activeUserID] = 0;
     }
-    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname, unreadCountStack:tempUnreadCountStack,chatPanelToggle: false});
+    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname, unreadCountStack:tempUnreadCountStack, chatPanelToggle: false});
     this.setState(copy);
   }
 
@@ -293,7 +293,7 @@ class ChatApp extends React.Component {
   }
 
   toggleChatWidgetButton(){
-    let copy = Object.assign({}, this.state, {chatButtonToggle: !this.state.chatButtonToggle,chatPanelToggle: !this.state.chatPanelToggle});
+    let copy = Object.assign({}, this.state, {chatButtonToggle: !this.state.chatButtonToggle, chatPanelToggle: true});
     this.setState(copy)
   }
 
@@ -317,7 +317,7 @@ class ChatApp extends React.Component {
     var self = this;
     if(this.state.activeUserID != ""){
        if(this.state.messageStack[this.state.activeUserID]){
-          componentMessages = <Messages 
+          componentMessages = <ChatMessages 
             messages={this.state.messageStack[this.state.activeUserID]}
             addMessage={(message)=>this.addMessage(message)} addLastMessage={(message)=>this.addLastMessage(message)}
             sender={this.props.userProfile._id} receiver={this.state.activeUserID}/>;
@@ -335,7 +335,7 @@ class ChatApp extends React.Component {
               self.addLastMessage(message);
             }
 
-            componentMessages = <Messages
+            componentMessages = <ChatMessages
               messages={self.state.messageStack[self.state.activeUserID]} 
               addMessage={(message)=>self.addMessage(message)} addLastMessage={(message)=>self.addLastMessage(message)}
               sender={self.props.userProfile._id} receiver={self.state.activeUserID}/>;
@@ -355,10 +355,9 @@ class ChatApp extends React.Component {
        }
        active = this.state.activeUserFullName;
     }
-    const profilePic = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
     return (
       <div>
-        <div className={divMainClasses} >
+        {/* <div className={divMainClasses} style={{'display':'none'}}>
           <div className="chatapp-container">
             <div className="chatapp-userContainer" id="userContainer">
               <Users users={this.state.users} selectedUser={this.state.activeUserID} selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} openWindow={this.state.openWindow} />
@@ -377,22 +376,24 @@ class ChatApp extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-        {/* <div className="popout">
+        </div> */}
+        <div className="popout">
           <div className={chatButtonClass} onClick={() => this.toggleChatWidgetButton()}>
             <i className="fa fa-comments"></i>
             <span className="chat-label">15</span>
           </div>
 
-            <ChatWidget chatPanelClass={chatPanelClass} toggleChatWidgetButton={()=>this.toggleChatWidgetButton()}
+            <ChatWidget 
+            chatPanelClass={chatPanelClass} 
+            toggleChatWidgetButton={()=>this.toggleChatWidgetButton()}
             userProfile={this.props.userProfile} users={this.state.users} selectedUser={this.state.activeUserID} 
             selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} 
             lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} 
             onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} 
             checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} 
             tabClose={this.state.tabClose} openWindow={this.state.openWindow} 
-            toggleChatWindow={() => this.toggleChatWindow()}/>
-          
+            />
+
             <div className={chatClassWindow}>
               <div className="chat-window-header">
                     <h4 className="text-center">
@@ -408,7 +409,7 @@ class ChatApp extends React.Component {
               <ChatWindowInput onSend={(message)=>this.sendHandler(message)} />
             </div>
 
-          </div> */}
+          </div>
       </div>
     );
   }
