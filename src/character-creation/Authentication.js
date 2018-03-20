@@ -26,6 +26,7 @@ class Authentication extends React.Component {
       Modal.defaultStyles.content.color = 'initial';
       
       Modal.defaultStyles.content["width"] = '1093px';
+      Modal.defaultStyles.content["height"] = "auto";
 
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';

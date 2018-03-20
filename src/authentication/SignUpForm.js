@@ -33,6 +33,7 @@ class SignupForm extends React.Component {
       Modal.defaultStyles.content["minWidth"] = '260px';
       Modal.defaultStyles.content["maxWidth"] = '380px';
       Modal.defaultStyles.content["height"] = '300px';
+      Modal.defaultStyles.content["boxShadow"] = 'none';
     }
 
     componentWillUnmount() {

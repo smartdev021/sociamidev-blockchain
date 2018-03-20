@@ -29,7 +29,7 @@ class CharacterSelection extends React.Component {
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
       
-      // Modal.defaultStyles.content["height"] = '77%';
+      Modal.defaultStyles.content["height"] = "auto";
       // Modal.defaultStyles.content["width"] = '75%';
 
       Modal.defaultStyles.content["width"] = '1093px';
