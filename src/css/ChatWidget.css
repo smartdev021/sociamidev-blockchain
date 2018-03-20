@@ -85,6 +85,7 @@ body {
 	transform-origin: 100% 100%;
 	transition: transform 0.2s, visibility 0s 0.2s, opacity 0.2s;
 	opacity: 0;
+	background-color: white;
 	font-family: 'FjallaOne-Regular' !important;
 }
 .popout .chat-panel.active {
@@ -127,10 +128,12 @@ body {
 	display: flex;
 }
 .widget-user-username {
-	margin-left: 30%
+	margin-left: 30%;
+	font-size: 16px;
 }
 .widget-user-desc {
-	margin-left: 30%
+	margin-left: 30%;
+	font-size: 13px;
 }
 .widget-user-image{
 	width: 70px;
@@ -151,13 +154,19 @@ body {
     margin-right: 0;
 }
 .widget-footer-num{
-	color: white
+	color: white;
+	margin-top: 10px;
 }
 .widget-footer-desc{
-	color: white
+	color: white;
+    font-family: sans-serif;
+	font-size: 13px;
+	line-height: 0;
 }
 .chat-stat-grid{
-	background-color:	#1CABD5;
+	background-color: #1CABD5;
+    height: 80px;
+    padding: 10px;
 }
 .border-right{
 	border-right:1px solid white
@@ -182,7 +191,8 @@ div.chat-widget-tab-menu{
 div.chat-widget-tab-menu div.list-group{
 	margin-bottom: 0;
 	background-color: #F0F0F0;
-	height:100%
+	height:100%;
+	/* width:65px; */
 }
 div.chat-widget-tab-menu div.list-group>a{
 	margin-bottom: 0;
@@ -190,7 +200,7 @@ div.chat-widget-tab-menu div.list-group>a{
 }
 div.chat-widget-tab-menu div.list-group>a .glyphicon,
 div.chat-widget-tab-menu div.list-group>a .fa {
-  color: #888888;
+  color: #5C5E60;
 }
 div.chat-widget-tab-menu div.list-group>a:first-child{
 	border-top-left-radius: 0;
@@ -276,6 +286,7 @@ color: #444;
 display: block;
 font-weight: 600;
 font-size: 12px;
+font-family:sans-serif
 }
 .text-muted {
 font-weight: 400;
@@ -298,5 +309,96 @@ font-size: 9px;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	font-family: sans-serif;
 }
+.popout .chat-window {
+	/* box-shadow: 0 0 5px rgba(0,0,0,0.15); */
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 340px;
+	text-align: left;
+	overflow: hidden;
+	visibility: hidden;
+	transform: scale(0);
+	transform-origin: 100% 100%;
+	transition: transform 0.2s, visibility 0s 0.2s, opacity 0.2s;
+	opacity: 0;
+	background-color: white;
+	font-family: 'FjallaOne-Regular' !important;
+	height:520px
+}
+.popout .chat-window.active {
+	height: auto;
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1);
+	transition: transform 0.2s, visibility 0s 0s, opacity 0.2s;
+	border-radius: 10px;
+	box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+	font-family: 'FjallaOne-Regular' !important;
+}
+.chat-window-header{
+	font-size: 15px;
+    padding: 4px;
+    -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.15)
+}
+.toggle-chat-window{
+	color: black;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+.chat-window-body{
+	height:56vh;
+}
+.message-list{
+  padding:20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 57vh;
+}
+.chat-window-input{
+	display: flex;
+	  margin: 10px;
+	height: 70px;
+	vertical-align: middle;
+	box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+	  border-radius: 14px;
+	  padding: 20px;
+  }
+  .chat-input{
+	  position: relative;
+	  outline:none;
+		border: 0;
+	  border-left: 1px solid rgba(0,0,0,0.2);
+	  margin-left: 10px;
+	  padding: 5px;
+	  width: 100%;
+  }
+  .chat-attach{
+	  font-size:24px;
+	  color:#CFCFCF;
+  }
+  .chat-send{
+	bottom:0.5rem;
+	  font-size:20px;
+	box-shadow: 0px 0px 5px #444;
+	  color:white;
+	  border-radius: 50%;
+  }
+  
+  .chat-icon{
+	position:relative;
+	right:0.3rem;
+  }
+  .chat-icon-btn{
+	position: relative;
+	width:25%;
+	bottom: 8px;
+  }
+  .chat-input-span{
+	width:75%;
+  }

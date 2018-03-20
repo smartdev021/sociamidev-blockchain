@@ -10,11 +10,14 @@ import { withRouter } from 'react-router-dom'
 import Messages from './Messages';
 import Users from './Users';
 import ChatInput from './ChatInput';
+
 import PubSub from 'pubsub-js';
 
 import ConfigMain from '../../../configs/main';
 
-import Chat from './Chat'
+import ChatMessages from './ChatMessages';
+import ChatWindowInput from './ChatWindowInput';
+import ChatWidget from './ChatWidget'
 
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = "";
@@ -41,20 +44,20 @@ class ChatApp extends React.Component {
     let copy = Object.assign({}, this.state, {users: tUsers,userID: this.props.userProfile._id});
     this.setState(copy);
 
-    $(".popout .chat-btn").click(function() {
-      $(this).toggleClass("active");
-      $(this).closest(".popout").find(".chat-panel").toggleClass("active");
-    });
-    $(document).click(function() {
-        $(".popout .chat-panel").removeClass("active");
-        $(".popout .chat-btn").removeClass("active");
-    });
-    $(".popout .chat-panel").click(function(event) {
-        event.stopPropagation();
-    });
-    $(".popout .chat-btn").click(function(event) {
-        event.stopPropagation();
-    });
+    // $(".popout .chat-btn").click(function() {
+    //   $(this).toggleClass("active");
+    //   $(this).closest(".popout").find(".chat-panel").toggleClass("active");
+    // });
+    // $(document).click(function(e) {
+    //       $(".popout .chat-panel").removeClass("active");
+    //       $(".popout .chat-btn").removeClass("active");
+    // });
+    // $(".popout .chat-panel").click(function(event) {
+    //     event.stopPropagation();
+    // });
+    // $(".popout .chat-btn").click(function(event) {
+    //     event.stopPropagation();
+    // });
 
     $("div.chat-widget-tab-menu>div.list-group>a").click(function(e) {
         e.preventDefault();
@@ -82,7 +85,9 @@ class ChatApp extends React.Component {
                    unreadCountStack: [],
                    openWindow: false,
                    justLoggedIn: true,
-                   userChatHistoryLoaded: false
+                   userChatHistoryLoaded: false,
+                   chatButtonToggle:false,
+                   chatPanelToggle:false
                 };    
   }
 
@@ -170,7 +175,7 @@ class ChatApp extends React.Component {
     if(activeUserID in tempUnreadCountStack){
       tempUnreadCountStack[activeUserID] = 0;
     }
-    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname, unreadCountStack:tempUnreadCountStack});
+    let copy = Object.assign({}, this.state, {chatWindowOpen: 1, activeUserID: activeUserID, activeUserFullName:activeUserFullname, unreadCountStack:tempUnreadCountStack,chatPanelToggle: false});
     this.setState(copy);
   }
 
@@ -287,17 +292,32 @@ class ChatApp extends React.Component {
     }
   }
 
+  toggleChatWidgetButton(){
+    let copy = Object.assign({}, this.state, {chatButtonToggle: !this.state.chatButtonToggle,chatPanelToggle: !this.state.chatPanelToggle});
+    this.setState(copy)
+  }
+
+  toggleChatWindow(){
+    let copy = Object.assign({}, this.state, {chatPanelToggle: !this.state.chatPanelToggle});
+    this.setState(copy)
+  }
+
   render() {
     const chatWindowClass = this.state.chatWindowOpen == 1 ? "chatWindowShow" : "chatWindowHide";
     const divChatClasses = `chatapp-chatContainer ${chatWindowClass}` ;
     const chatMainClass = this.state.chatWindowOpen == 0 ? "chatapp-main-container-2" : this.state.chatWindowOpen == 1? "chatapp-main-container-1" : "chatapp-main-container-3";
     const divMainClasses = `chatapp-main-container ${chatMainClass}` ;
+    //
+    const chatButtonClass = this.state.chatButtonToggle == true ? "chat-btn active" : "chat-btn"
+    const chatPanelClass = (this.state.chatButtonToggle == true && this.state.chatPanelToggle == true) ? "chat-panel active" : "chat-panel"
+    const chatClassWindow = (this.state.chatButtonToggle == true && this.state.chatPanelToggle == false) ? "chat-window active" : "chat-window"
+    //
     var componentMessages = "";
     var active = "";
     var self = this;
     if(this.state.activeUserID != ""){
        if(this.state.messageStack[this.state.activeUserID]){
-          componentMessages = <Messages 
+          componentMessages = <ChatMessages 
             messages={this.state.messageStack[this.state.activeUserID]}
             addMessage={(message)=>this.addMessage(message)} addLastMessage={(message)=>this.addLastMessage(message)}
             sender={this.props.userProfile._id} receiver={this.state.activeUserID}/>;
@@ -315,7 +335,7 @@ class ChatApp extends React.Component {
               self.addLastMessage(message);
             }
 
-            componentMessages = <Messages
+            componentMessages = <ChatMessages
               messages={self.state.messageStack[self.state.activeUserID]} 
               addMessage={(message)=>self.addMessage(message)} addLastMessage={(message)=>self.addLastMessage(message)}
               sender={self.props.userProfile._id} receiver={self.state.activeUserID}/>;
@@ -336,107 +356,59 @@ class ChatApp extends React.Component {
        active = this.state.activeUserFullName;
     }
     const profilePic = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
-    const messi = "https://media.gettyimages.com/photos/lionel-messi-of-barcelona-celebrates-scoring-his-sides-first-goal-picture-id846141966?s=612x612"
     return (
       <div>
-      <div className={divMainClasses}>
-        <div className="chatapp-container">
-          <div className="chatapp-userContainer" id="userContainer">
-            <Users users={this.state.users} selectedUser={this.state.activeUserID} selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} openWindow={this.state.openWindow} />
-          </div>
-          <div className={divChatClasses} id="chatContainer">
-            <div className="topName">
-              <span>To: <span id="activeUserName">{active}</span></span>
-              <span className="close-chat" id="close-chat" onClick={()=>this.closeChatWindow()}>x</span>
+        <div className={divMainClasses} style={{'display':'none'}}>
+          <div className="chatapp-container">
+            <div className="chatapp-userContainer" id="userContainer">
+              <Users users={this.state.users} selectedUser={this.state.activeUserID} selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} tabClose={this.state.tabClose} openWindow={this.state.openWindow} />
             </div>
-            <div id="test" className="messages">
-              {componentMessages}
-            </div>
-            <div id="msgBox" className="write-container">
-              <ChatInput onSend={(message)=>this.sendHandler(message)} />
+            <div className={divChatClasses} id="chatContainer">
+              <div className="topName">
+                <span>To: <span id="activeUserName">{active}</span></span>
+                <span className="close-chat" id="close-chat" 
+                onClick={()=>this.closeChatWindow()}>x</span>
+              </div>
+              <div id="test" className="messages">
+                {componentMessages}
+              </div>
+              <div id="msgBox" className="write-container">
+                <ChatInput onSend={(message)=>this.sendHandler(message)} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="popout">
-        <div className="chat-btn">
-          <i className="fa fa-comments"></i>
-          <span className="chat-label">15</span>
-        </div>
-        <div className="chat-panel">
-          <div className="chat-panel-header">
-              <div className="widget-user-image">
-                  <img className="img-circle" 
-                  src={this.props.userProfile.pictureURL 
-                    ? this.props.userProfile.pictureURL : profilePic}
-                  alt="User Avatar" />
-                </div>
-            
-                <h3 className="widget-user-username">
-                {this.props.userProfile.firstName} {this.props.userProfile.lastName}
-                </h3>
-                <h5 className="widget-user-desc">@danielshen</h5>
-                
-          </div>  
-          <div className="chat-widget-footer text-center row">
-            <div className="col-xs-4 chat-stat-grid border-right">
-              <h3 className="widget-footer-num">12</h3>
-              <h5 className="widget-footer-desc">Connections</h5>
-            </div>
-            <div className="col-xs-4 chat-stat-grid border-right">
-              <h3 className="widget-footer-num">450</h3>
-              <h5 className="widget-footer-desc">Messages</h5>
-            </div>
-            <div className="col-xs-4 chat-stat-grid">
-              <h3 className="widget-footer-num">6</h3>
-              <h5 className="widget-footer-desc">Supports</h5>
-            </div>
+        <div className="popout">
+          <div className={chatButtonClass} onClick={() => this.toggleChatWidgetButton()}>
+            <i className="fa fa-comments"></i>
+            <span className="chat-label">15</span>
           </div>
-          <div className="chat-panel-body row">
-                <div className="col-xs-3 chat-widget-tab-menu">
-                <div className="list-group">
-                    <a href="#" className="list-group-item active text-center">
-                    <h4 className="fa fa-2x fa-question-circle"></h4><br/>
-                    </a>
-                    <a href="#" className="list-group-item text-center">
-                    <h4 className="fa fa-2x fa-comments"></h4><br/>
-                    </a>
-                    <a href="#" className="list-group-item text-center">
-                    <h4 className="fa fa-2x fa-users"></h4><br/>
-                    </a>
-                </div>
-                </div>
-                <div className="col-xs-9 chat-widget-tab">
-                    
-                    <div className="chat-widget-tab-content active">
-                        
-                        IPSUM LOREM
-                        
-                    </div>
-                    
-                    <div className="chat-widget-tab-content">
-                        
-                        <Chat />
-                        <Chat />
-                        <Chat />
-                        <Chat />
-                        <Chat />
-                        <Chat />
-                        <Chat />
-                        <Chat />
-                        
-                    </div>
 
-                    
-                    <div className="chat-widget-tab-content">
-                        
-                        LOREM IPSUM
-                        
-                    </div>
-                </div>
+            <ChatWidget chatPanelClass={chatPanelClass} toggleChatWidgetButton={()=>this.toggleChatWidgetButton()}
+            userProfile={this.props.userProfile} users={this.state.users} selectedUser={this.state.activeUserID} 
+            selectedUserFullName={this.state.activeUserFullName} lastMessageRec={lastMessageRec} 
+            lastMessages={this.state.lastMessageStack} unreadCount={this.state.unreadCountStack} 
+            onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)} 
+            checkUserWin={(usersWindowOpen)=>this.toggleUserWindow(usersWindowOpen)} 
+            tabClose={this.state.tabClose} openWindow={this.state.openWindow} 
+            toggleChatWindow={() => this.toggleChatWindow()}/>
+          
+            <div className={chatClassWindow}>
+              <div className="chat-window-header">
+                    <h4 className="text-center">
+                      <a className="fa fa-arrow-left pull-left toggle-chat-window" 
+                      onClick={() => this.toggleChatWindow()}>
+                      </a>
+                      {active}
+                    </h4>  
+              </div>
+              <div className="chat-window-body">
+                {componentMessages}
+              </div>
+              <ChatWindowInput onSend={(message)=>this.sendHandler(message)} />
             </div>
-        </div>
-      </div>
+
+          </div>
       </div>
     );
   }
