@@ -10,7 +10,7 @@ class ChatWidget extends React.Component {
                     <div className="widget-user-image">
                         <img className="img-circle" 
                         src={this.props.userProfile.pictureURL 
-                            ? this.propsuserProfile.pictureURL : profilePic}
+                            ? this.props.userProfile.pictureURL : profilePic}
                         alt="User Avatar" />
                         </div>
 
@@ -70,8 +70,8 @@ class ChatWidget extends React.Component {
                             onTab={this.props.onTab} 
                             checkUserWin={this.props.checkUserWin} 
                             tabClose={this.props.tabClose}
-                            openWindow={this.props.openWindow} 
-                            toggleChatWindow={this.props.toggleChatWindow} />
+                            openWindow={this.props.openWindow}
+                            />
                                 
 
                             

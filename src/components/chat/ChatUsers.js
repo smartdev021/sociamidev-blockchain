@@ -80,31 +80,12 @@ class ChatUsers extends React.Component {
           selectedTab = {this.state.selectedItem}
           onTab={(activeUserID,activeUserFullname)=>this.tabChanges(activeUserID,activeUserFullname)}
           unreadCount={this.props.unreadCount}
-          toggleChatWindow={this.props.toggleChatWindow}
         />
       );
     });
     
     return (
-    //   <div>
-    //     <div className="messenger-popup" onClick={()=>this.toggleUsersWindow()}>
-	// 			  <span className="messenger-title">Chat</span>
-    //       <div className={classes}></div>
-	// 		</div>
-    //     <div className="users-top">
-    //       <div className="search-field">
-	// 				  <div className="search-img">
-	// 					  <img alt="search"  src="../../assets/img/search.png"/>
-	// 				  </div>
-    //         <input className="inputStyle" type="text" placeholder="Search.." />
-    //       </div>
-    //       <a className="search"></a>
-    //     </div>
-    //     <div className="users" id='userList'>
-    //           { users }
-    //     </div>
-    //   </div>
-    <div className="chat-widget-tab-content">
+    <div className="chat-widget-tab-content" id="userList">
         { users }
     </div>
     );
