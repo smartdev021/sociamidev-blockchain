@@ -44,13 +44,6 @@ class ChatUser extends React.Component {
       unreadCountTag = String(this.props.unreadCount[this.props.userID]);
     }
     return (
-        //   <div data-id={`${this.props.tabKey}`} className={classes} onClick={(event)=>this.onItemClick(event)}  id={`${this.props.userID}`} data-user={`${fullname}`}>
-        //     <img src={imgSrc} alt="" className="profilePic"/>
-        //     <span className="name">{ fullname } <img src={statusImgSrc} className="statusDot"/></span>
-        //     <span className="time"><TimeAgo date={this.props.lastMessageTimeStamp} minPeriod={60}/></span>
-        //     <span className="preview">{ReactHtmlParser(showLastMessage)}</span>
-        //     <div className={messageCountContainerClasses}><span className="messageCount">{unreadCountTag}</span></div>
-        //   </div>
           <div data-id={`${this.props.tabKey}`} className="box-comment" style={{'cursor':'pointer'}}
           onClick={(event)=>this.onItemClick(event)}  id={`${this.props.userID}`} data-user={`${fullname}`}>
             <img className="img-circle img-sm" src={imgSrc}
