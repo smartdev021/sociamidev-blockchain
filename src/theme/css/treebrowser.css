@@ -24,6 +24,7 @@
 .list-skill-wrap a{
     text-decoration: underline;
     line-height: 2;
+    display: block;
 }
 #tree-skills a, #skill-break-down a {
     color: #4d4b4b;
