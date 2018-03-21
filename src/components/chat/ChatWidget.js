@@ -18,22 +18,24 @@ class ChatWidget extends React.Component {
                         onClick={()=>this.props.toggleChatWidgetButton()}></span>
                     
                         <h3 className="widget-user-username">
-                        {this.props.userProfile.firstName} {this.props.userProfile.lastName}
+                        {this.props.userProfile.firstName} {this.props.userProfile.lastName} &nbsp;
                         </h3>
-                        <h5 className="widget-user-desc">@danielshen</h5>
+                        <h5 className="widget-user-desc">
+                        &nbsp;
+                        </h5>
                         
                 </div>  
                 <div className="chat-widget-footer text-center row">
                     <div className="col-xs-4 chat-stat-grid border-right">
-                    <h3 className="widget-footer-num">12</h3>
+                    <h3 className="widget-footer-num">0</h3>
                     <h5 className="widget-footer-desc">Connections</h5>
                     </div>
                     <div className="col-xs-4 chat-stat-grid border-right">
-                    <h3 className="widget-footer-num">450</h3>
+                    <h3 className="widget-footer-num">0</h3>
                     <h5 className="widget-footer-desc">Messages</h5>
                     </div>
                     <div className="col-xs-4 chat-stat-grid">
-                    <h3 className="widget-footer-num">6</h3>
+                    <h3 className="widget-footer-num">0</h3>
                     <h5 className="widget-footer-desc">Supports</h5>
                     </div>
                 </div>

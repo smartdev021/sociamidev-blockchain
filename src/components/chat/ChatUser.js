@@ -16,8 +16,8 @@ class ChatUser extends React.Component {
   }
 
   render() {
-    const tempClasses = !(this.props.unreadCount[this.props.userID]) ? "messageCountContainerHide" : this.props.unreadCount[this.props.userID] == 0 ? "messageCountContainerHide" : "messageCountContainerShow";
-    const messageCountContainerClasses = `messageCountContainer ${tempClasses}`;
+    const tempClasses = !(this.props.unreadCount[this.props.userID]) ? "chatCountContainerHide" : this.props.unreadCount[this.props.userID] == 0 ? "chatCountContainerHide" : "chatCountContainerShow";
+    const messageCountContainerClasses = `chatCountContainer ${tempClasses}`;
     const tabClass = String(this.props.userID) === String(this.props.selectedUser) ? "personSelected" : "person";
     const classes = `${tabClass} box-comment` ;
     var fullname = this.props.firstName + " " + this.props.lastName;
@@ -58,7 +58,9 @@ class ChatUser extends React.Component {
                 </span>
                 <p className="chat-text">
                 {ReactHtmlParser(showLastMessage)}
+                <div className={messageCountContainerClasses}><span className="messageCount">{unreadCountTag}</span></div>
                 </p>
+                
             </div>
         </div>
     );

@@ -143,16 +143,16 @@ class StatsDropdown extends React.Component {
                 <div className="col-xs-6 text-center">
                 <span className="fa-stack fa-2x">
                   <i className="fa fa-star fa-stack-2x header-fa"></i>
-                  <span  className="fa fa-stack-1x hd-white"><b>35</b></span>
+                  <span  className="fa fa-stack-1x hd-white"><b>0</b></span>
                 </span>
                   <p className="text-center desc">
-                    EXP
+                    E-XP
                   </p>
                 </div>
                 <div className="col-xs-6 text-center">
                 <span className="fa-stack fa-2x">
                   <i className="fa fa-database fa-stack-2x header-fa"></i>
-                  <span  className="fa fa-stack-1x hd-white"><b>72</b></span>
+                  <span  className="fa fa-stack-1x hd-white"><b>0</b></span>
                 </span>
                   <p className="text-center desc">
                     SOQQ
