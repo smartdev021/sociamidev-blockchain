@@ -27,7 +27,8 @@ body {
 	background: #eee;
 	color: #00A3DD;
 	border-radius: 50%;
-	box-shadow: 0 0 5px rgba(0,0,0,0.15);
+	/* box-shadow: 0 0 16px rgba(0,0,0,1); */
+	box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
 	transition:0.2s opacity ease-in-out;
 	-webkit-transition:0.2s opacity ease-in-out;
 }
