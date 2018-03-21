@@ -40,10 +40,10 @@ class ChatWidget extends React.Component {
                 <div className="chat-panel-body row">
                         <div className="col-xs-3 chat-widget-tab-menu">
                         <div className="list-group">
-                            <a href="#" className="list-group-item active text-center">
+                            <a href="#" className="list-group-item text-center">
                             <h4 className="fa fa-2x fa-question-circle"></h4><br/>
                             </a>
-                            <a href="#" className="list-group-item text-center">
+                            <a href="#" className="list-group-item active text-center">
                             <h4 className="fa fa-2x fa-comments"></h4><br/>
                             </a>
                             <a href="#" className="list-group-item text-center">
@@ -53,7 +53,7 @@ class ChatWidget extends React.Component {
                         </div>
                         <div className="col-xs-9 chat-widget-tab">
                             
-                            <div className="chat-widget-tab-content active">
+                            <div className="chat-widget-tab-content">
                                 
                                 IPSUM LOREM
                                 

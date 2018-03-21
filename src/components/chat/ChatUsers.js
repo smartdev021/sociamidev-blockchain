@@ -85,7 +85,7 @@ class ChatUsers extends React.Component {
     });
     
     return (
-    <div className="chat-widget-tab-content" id="userList">
+    <div className="chat-widget-tab-content active" id="userList">
         { users }
     </div>
     );
