@@ -423,3 +423,8 @@ display: inline-grid;
 .chatCountContainerHide{
 display: none;	  
 }
+.bubble{
+font-family: sans-serif;
+font-size: 11px;
+box-shadow: 0px 0px 3px rgb(0,0,0,0.7)
+}
