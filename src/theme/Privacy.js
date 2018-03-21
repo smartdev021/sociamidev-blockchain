@@ -29,8 +29,6 @@ class Privacy extends Component {
 
    toggleVisibility(){
     this.state.visibilityToggle == "none" ? this.setState({visibilityToggle:"block"}) : this.setState({visibilityToggle:"none"});
-    window.location.reload();
-  
   }
 
   toggleAutoAccept(){
