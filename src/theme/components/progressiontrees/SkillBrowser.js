@@ -62,6 +62,7 @@ class SkillBrowser extends React.Component {
      redirectToTaskManagement: false,
      timeNow: Date.now(),
      isLoading: true,
+     tree: this.props.location.state.tree
     }
     this.modalDefaultStyles = {};
 
@@ -73,7 +74,7 @@ class SkillBrowser extends React.Component {
   }
 
   isTreeAdded() {
-    const CurrentTree = this.props.location.state.tree;
+    const CurrentTree = this.state.tree;
 
     return this.props.userProfile.progressionTrees.find((tree) => {
       return tree._id == CurrentTree._id;
@@ -197,7 +198,7 @@ class SkillBrowser extends React.Component {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const CurrentTree = this.props.location.state.tree;
+    const CurrentTree = this.state.tree;
 
     const hangout = {
       name: `Hangout for roadmap "${CurrentTree.name}"`,
@@ -281,8 +282,8 @@ class SkillBrowser extends React.Component {
   lastIlluminateDateAnswered() {
     let LatestIlluminateDateAnswered = undefined;
 
-    if (this. props.userProfile.illuminates && this.props.userProfile.illuminates.length > 0) {
-      const CurrentTree = this.props.location.state.tree;
+    if (this.props.userProfile.illuminates && this.props.userProfile.illuminates.length > 0) {
+      const CurrentTree = this.state.tree;
       let illuminatessForCurrentTree = this.props.userProfile.illuminates.filter((illuminate) => {
         return illuminate.treeId == CurrentTree._id;
       });
@@ -303,7 +304,7 @@ class SkillBrowser extends React.Component {
     let LatestHangoutDateJoined = undefined;
 
     if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
-      const CurrentTree = this.props.location.state.tree;
+      const CurrentTree = this.state.tree;
       let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter((hangout) => {
         return hangout.treeId == CurrentTree._id;
       });
@@ -332,7 +333,7 @@ class SkillBrowser extends React.Component {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const CurrentTree = this.props.location.state.tree;
+    const CurrentTree = this.state.tree;
 
     const illuminate = {
       name: `Illuminate for roadmap "${CurrentTree.name}"`,
@@ -396,7 +397,7 @@ class SkillBrowser extends React.Component {
 
     const LatestHangoutDateJoined = this.lastHangoutDateJoined();
     const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
-    const CurrentTree = this.props.location.state.tree;
+    const CurrentTree = this.state.tree;
 
     const IsDeepdiveAbailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
     const IsIlluminateAvailable = !LatestIlluminateDateAnswered || this.state.timeNow - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
