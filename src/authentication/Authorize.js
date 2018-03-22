@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 
 import { withCookies, Cookies } from 'react-cookie';
+import 'url-search-params-polyfill';
 
 class Authorize extends React.Component {
   constructor(props) {

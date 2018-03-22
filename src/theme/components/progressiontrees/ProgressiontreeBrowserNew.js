@@ -2,6 +2,7 @@
     author: Alexander Zolotov
 */
 import React from 'react';
+import 'url-search-params-polyfill';
 
 import Axios from 'axios'
 
