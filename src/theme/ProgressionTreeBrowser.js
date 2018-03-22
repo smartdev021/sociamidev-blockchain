@@ -3,7 +3,7 @@
 */
 
 import React, { Component } from 'react';
-
+import 'url-search-params-polyfill';
 import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
