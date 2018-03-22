@@ -2,7 +2,7 @@
     author: Alexander Zolotov
 */
 import React from 'react';
-
+import 'url-search-params-polyfill';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux'

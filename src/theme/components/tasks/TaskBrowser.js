@@ -3,7 +3,7 @@
 */
 
 import React, { Component } from 'react';
-
+import 'url-search-params-polyfill';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
