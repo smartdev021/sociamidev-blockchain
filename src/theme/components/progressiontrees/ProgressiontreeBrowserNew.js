@@ -205,17 +205,17 @@ class ProgressiontreeBrowser extends React.Component {
               <div className="tree-skills">
                     <ul className="nav nav-tabs">
                     <li className="active skill-tab">
-                        <a className="skill-tag" data-toggle="tab" href="#essential" style={{'backgroundColor':'#DC2F41'}}>Essential Skills</a>
+                        <a className="skill-tag essential-skill" data-toggle="tab" href="#essential" style={{'backgroundColor':'#DC2F41'}}>Essential Skills</a>
                     </li>
                     <li className="skill-tab">
-                        <a className="skill-tag" data-toggle="tab" href="#complimentary" style={{'backgroundColor':'#20A5D0'}}>Complimentary Skills</a>
+                        <a className="skill-tag complimentary-skill" data-toggle="tab" href="#complimentary" style={{'backgroundColor':'#20A5D0'}}>Complimentary Skills</a>
                     </li>
                     <li className="skill-tab">
-                        <a className="skill-tag" data-toggle="tab" href="#related" style={{'backgroundColor':'#F48543'}}>Related Skills</a>
+                        <a className="skill-tag related-skill" data-toggle="tab" href="#related" style={{'backgroundColor':'#F48543'}}>Related Skills</a>
                     </li>
                     </ul>
 
-                    <div className="tab-content skill-tab-content" style={{'height':'300px'}}>
+                    <div className="tab-content skill-tab-content">
                         <div id="essential" className="tab-pane fade in active">
                             <Masonry className="masonry-grid" options={masonryOptions}>
                                 {this.renderSkills(this.state.tree.weightage1)}

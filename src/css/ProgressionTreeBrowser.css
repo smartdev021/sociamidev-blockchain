@@ -18,19 +18,43 @@
     color: white !important;
     width: 150px;
 }
-.skill-tab-content{
-    height: auto !important;
-    padding: 0px !important;
-    min-height: 400px;
-}
 .skill-item{
     text-decoration: none;
     color: black;
 }
-.skill-tag{
+.nav-tabs>li>a.skill-tag {
+    color: white !important;
     border-top-right-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    color:white;
+}
+.tree-skills>.skill-tab-content {
+    height: auto !important;
+    padding: 0px !important;
+    min-height: 400px;
+}
+.nav-tabs>li.active>a.essential-skill, .nav-tabs>li.active>a.essential-skill:focus, .nav-tabs>li.active>a.essential-skill:hover {
+    background-color: #DC2F41 !important;
+    border-bottom: solid 2px #286090 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color:white !important;
+}
+.nav-tabs>li.active>a.complimentary-skill, .nav-tabs>li.active>a.complimentary-skill:focus, .nav-tabs>li.active>a.complimentary-skill:hover {
+    background-color: #20A5D0 !important;
+    border-bottom: solid 2px #286090 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: white !important;
+}
+.nav-tabs>li.active>a.related-skill, .nav-tabs>li.active>a.related-skill:focus, .nav-tabs>li.active>a.related-skill:hover {
+    background-color: #F48543 !important;
+    border-bottom: solid 2px #286090 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: white !important;
 }
 .madonry-grid:after {
     content: '';
