@@ -56,8 +56,11 @@
     border-right: 0px !important;
     color: white !important;
 }
-.madonry-grid:after {
+.masonry-grid:after {
     content: '';
     display: block;
     clear: both;
-  }
+}
+.nav-tabs>li>a.skill-tag{
+    margin-right: 0px !important;
+}
