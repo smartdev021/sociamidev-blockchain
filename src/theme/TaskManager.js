@@ -468,7 +468,7 @@ class TaskManager extends React.Component {
         return (task.userID != currentUserId && (!task.assignees || !task.assignees.find(function(assignee) {
           return assignee._id == currentUserId;
         })) &&
-          (task.type != "hangout" || (task.status=="None" && task.metaData.participants.findIndex(function(participant) {
+          (task.type != "hangout" || ((task.status=="None" || task.status=="cancelled") && task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == currentUserId;
           }) == -1)));
       });
