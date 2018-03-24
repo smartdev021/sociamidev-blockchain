@@ -191,13 +191,13 @@ const DayFromNumber = (dayNum)=> {
                       <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("reschedule", hangout)} className="btn-base btn-red">Reschedule</ActionLink>
                     </li>
                     <li>
-                      <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", hangout)} className="btn-base btn-red">Cancel</ActionLink>
-                    </li>
-                    <li>
                       <ActionLink href="#" disabled={StartDisabled} 
                         onClick={()=>props.onHangoutActionPerform("start", hangout)} className={StartDisabled ? "btn-base btn-red disabled" : "btn-base btn-red "}>
                         {ButtonStartText}
                       </ActionLink>
+                    </li>
+                    <li>
+                      <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", hangout)} className="btn-base btn-red">Cancel</ActionLink>
                     </li>
                   </ul>
                </div>);
@@ -255,13 +255,13 @@ const DayFromNumber = (dayNum)=> {
               <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("reschedule", hangout)} className="btn-base btn-red">Reschedule</ActionLink>
             </li>
             <li>
-              <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", hangout)} className="btn-base btn-red">Cancel</ActionLink>
-            </li>
-            <li>
               <ActionLink href="#"
                 onClick={()=>props.onHangoutActionPerform("answer_questions", hangout)} className="btn-base btn-red">
                 Answer Questions
               </ActionLink>
+            </li>
+            <li>
+              <ActionLink href="#" onClick={()=>props.onHangoutActionPerform("cancel", hangout)} className="btn-base btn-red">Cancel</ActionLink>
             </li>
           </ul>
        </div>);
@@ -555,8 +555,8 @@ class TasksMy extends React.Component {
             <div className="deep-tools">
                 <ul>
                     <li><a href="#" className="btn-base btn-red">Reschedule</a></li>
-                    <li><a href="#" className="btn-base btn-red">Cancel</a></li>
                     <li><a href="#" className="btn-base btn-red disabled">Start</a></li>
+                    <li><a href="#" className="btn-base btn-red">Cancel</a></li>
                 </ul>
             </div>
         </div>
