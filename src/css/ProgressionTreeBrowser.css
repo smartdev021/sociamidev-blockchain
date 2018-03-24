@@ -1,0 +1,39 @@
+.skill-tab{
+    width: calc(100%/3) ;
+    text-align: center;
+    color: white;
+}
+.tree-skills{
+    box-shadow:0 0 3px rgb(0,0,0,0.5);
+    font-family: 'FjallaOne-Regular' !important;
+    font-size:15px;
+}
+.masonry-grid-item{
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    background-color: #FCE0DF;
+    border: 1px solid white;
+    text-align: center;
+    color: white !important;
+    width: 150px;
+}
+.skill-tab-content{
+    height: auto !important;
+    padding: 0px !important;
+    min-height: 400px;
+}
+.skill-item{
+    text-decoration: none;
+    color: black;
+}
+.skill-tag{
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    color:white;
+}
+.madonry-grid:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
