@@ -177,21 +177,31 @@ class ProgressiontreeBrowser extends React.Component {
       columnWidth: 2,
       itemSelector: '.masonry-grid-item'
     }
-
+    
     return (
       <div className="container-fluid progress-browser-wrap">
-        <div className="row">
+        {/* <div className="row">
           <div className="content-2-columns-left-title">
             <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.history.goBack()}>
               <span className="glyphicon glyphicon-arrow-left"/>
             </ActionLink>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-lg-12">
-            <div className="progress-browser-name">
-              <h3>{this.state.tree.name}</h3>
+            <div className="col-xs-9 no-padding">
+              <div className="progress-browser-name">
+                <h3>{this.state.tree.name}</h3>
+              </div>
             </div>
+            <div className="pull-right col-xs-2 no-padding">
+              <ActionLink className="pull-right" id="button-arrow-back" 
+                style={{'marginTop':'20px'}} onClick={()=> this.props.history.goBack()}>
+                <span className="glyphicon glyphicon-arrow-left"/>
+              </ActionLink>
+            </div>
+              
+            
             <span className="tree-scaner-star-rating">
               <StarRatings rating={3.5} 
               isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
@@ -200,6 +210,11 @@ class ProgressiontreeBrowser extends React.Component {
                 starRatedColor={"rgb(180, 177, 3)"}/>
             </span>
             <p>{this.state.tree.description}</p>
+          </div>
+          
+          </div>
+
+            
             <div className="row">
             <div className="col-xs-12">
               <div className="tree-skills">
@@ -241,8 +256,6 @@ class ProgressiontreeBrowser extends React.Component {
             </div>
             </div>
           </div>
-        </div>
-      </div>
     );
   }
 }

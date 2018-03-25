@@ -56,6 +56,26 @@
     border-right: 0px !important;
     color: white !important;
 }
+/* not active */
+.nav-tabs>li>a.essential-skill:focus, .nav-tabs>li>a.essential-skill:hover {
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color:black !important;
+}
+.nav-tabs>li>a.complimentary-skill:focus, .nav-tabs>li>a.complimentary-skill:hover {
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+.nav-tabs>li>a.related-skill:focus, .nav-tabs>li>a.related-skill:hover {
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+/*  */
 .masonry-grid:after {
     content: '';
     display: block;
@@ -63,4 +83,7 @@
 }
 .nav-tabs>li>a.skill-tag{
     margin-right: 0px !important;
+}
+.no-padding{
+    padding: 0 !important;
 }
