@@ -1,6 +1,8 @@
-const BACKEND_URL_LOCAL = 'http://localhost:3001';
 const BACKEND_URL_REMOTE_PROD = 'https://api.soqqle.com';
 const BACKEND_URL_REMOTE_STAGING = 'https://stgapi.soqqle.com';
+
+//front-end will be using remote staging backend, so no need to run local server
+const BACKEND_URL_LOCAL = BACKEND_URL_REMOTE_STAGING;
 
 var ConfigMain = {
     getBackendURL : function() {
