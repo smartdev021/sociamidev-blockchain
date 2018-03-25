@@ -212,50 +212,42 @@ class App extends Component {
     return data;
   }
 
-  HandleSignUpFacebook() {
-    this.props.closeSignUpForm();
+  getCurrentURL() {
+    return `${window.location.protocol}//${window.location.host}`;
+  }
 
-    this.storeCurrentLocationInCookies();
-
+  getParametersForLoginRequest() {
     const characterCreationData = this.getCharacterCreationData();
 
+    const currentURL = this.getCurrentURL();
+
+    let parameters = [];
+
+    parameters.push(`frontEndURL=${currentURL}`);
+
     if (characterCreationData) {
-      let parameters = "";
-
-      parameters = "?";
-
       for (let key in characterCreationData) {
-        parameters += `${key}=${characterCreationData[key]}&`;
+        parameters.push(`${key}=${characterCreationData[key]}`);
       }
-      
-      window.location.href = `${BackendURL}/auth/facebook${parameters}`;
     }
-    else {
-      window.location.href = `${BackendURL}/auth/facebook`;
-    }
+
+    return parameters;
+  }
+
+  HandleSignUpFacebook() {
+    this.HandleSignUp("auth/facebook");
   }
 
   HandleSignUpLinkedIn() {
+    this.HandleSignUp("auth/linkedin");
+  }
+
+  HandleSignUp(endpoint) {
     this.props.closeSignUpForm();
     
     this.storeCurrentLocationInCookies();
 
-    const characterCreationData = this.getCharacterCreationData();
-
-    if (characterCreationData) {
-      let parameters = "";
-
-      parameters = "?";
-
-      for (let key in characterCreationData) {
-        parameters += `${key}=${characterCreationData[key]}&`;
-      }
-
-      window.location.href = `${BackendURL}/auth/linkedin${parameters}`;
-    }
-    else {
-      window.location.href = `${BackendURL}/auth/linkedin`;
-    }
+    window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
   }
 
   handleStartSearch() {
