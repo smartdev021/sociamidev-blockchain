@@ -23,7 +23,7 @@ class HangoutSubmitForm extends React.Component {
      IsDisplayForm:'block',
      dateSelected: oneHourFromNow,
 
-     timeInputValue: oneHourFromNow.format("hh:mm"),
+     timeInputValue: oneHourFromNow.format("HH:mm"),
     }
   }
 
