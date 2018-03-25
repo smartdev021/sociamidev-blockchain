@@ -168,11 +168,13 @@ class TaskScanner extends React.Component {
         </h1>
     </div>
 
+    {/* 
+    Remove for now. Daniel is still thinking for the purpose
     <div className="box-location clearfix">
         <div className="text-location">
             <span>Hong Kong Island</span>
         </div>
-    </div>
+    </div> */}
 
 
       <div className="scrollbar-inner clearfix">

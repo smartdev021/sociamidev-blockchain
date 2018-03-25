@@ -25,6 +25,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+require('~/src/css/ProgressionTreeBrowser.css');
+import Masonry from 'react-masonry-component'
+
 import {
   userInteractionPush,
 } from '~/src/redux/actions/userInteractions'
@@ -134,14 +137,16 @@ class ProgressiontreeBrowser extends React.Component {
     for (let i = 0; i < skillParsed.length; ++i) {
       skillParsed[i] = skillParsed[i].trim();
     }
-    return (
-    <div className="list-skill-wrap">
-      {
-        skillParsed.map(function(skill, i) {
-          return (<Link key={i} to={{pathname:`/skillBrowser`, state: {tree: that.state.tree}, search:`?name=${skill}`}}>{skill}</Link>);
-        })
-      }
-    </div>);
+    const listItems = skillParsed.map(function(skill, i) {
+      return (
+      <div className="masonry-grid-item" key={i}>
+        <Link className="skill-item"
+        key={i} to={{pathname:`/skillBrowser`, state: {tree: that.state.tree}, 
+        search:`?name=${skill}`}}>{skill}</Link>  
+      </div>
+      );
+    })
+    return listItems
   }
 
   renderTree() {
@@ -167,20 +172,36 @@ class ProgressiontreeBrowser extends React.Component {
       </div>);
     }
 
+    let masonryOptions = {
+      transitionDuration: 1,
+      columnWidth: 2,
+      itemSelector: '.masonry-grid-item'
+    }
+    
     return (
       <div className="container-fluid progress-browser-wrap">
-        <div className="row">
+        {/* <div className="row">
           <div className="content-2-columns-left-title">
             <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.props.history.goBack()}>
               <span className="glyphicon glyphicon-arrow-left"/>
             </ActionLink>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-lg-12">
-            <div className="progress-browser-name">
-              <h3>{this.state.tree.name}</h3>
+            <div className="col-xs-9 no-padding">
+              <div className="progress-browser-name">
+                <h3>{this.state.tree.name}</h3>
+              </div>
             </div>
+            <div className="pull-right col-xs-2 no-padding">
+              <ActionLink className="pull-right" id="button-arrow-back" 
+                style={{'marginTop':'20px'}} onClick={()=> this.props.history.goBack()}>
+                <span className="glyphicon glyphicon-arrow-left"/>
+              </ActionLink>
+            </div>
+              
+            
             <span className="tree-scaner-star-rating">
               <StarRatings rating={3.5} 
               isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
@@ -189,36 +210,52 @@ class ProgressiontreeBrowser extends React.Component {
                 starRatedColor={"rgb(180, 177, 3)"}/>
             </span>
             <p>{this.state.tree.description}</p>
+          </div>
+          
+          </div>
+
+            
             <div className="row">
-              <div id="tree-skills">
-                <div className="col-md-3 col-sm-12">
-                  <div className="weightage-section">
-                    <h4>Essentials skills</h4>
-                    {this.renderSkills(this.state.tree.weightage1)}
-                  </div>
+            <div className="col-xs-12">
+              <div className="tree-skills">
+                    <ul className="nav nav-tabs">
+                    <li className="active skill-tab">
+                        <a className="skill-tag essential-skill" data-toggle="tab" href="#essential" style={{'backgroundColor':'#DC2F41'}}>Essential Skills</a>
+                    </li>
+                    <li className="skill-tab">
+                        <a className="skill-tag complimentary-skill" data-toggle="tab" href="#complimentary" style={{'backgroundColor':'#20A5D0'}}>Complimentary Skills</a>
+                    </li>
+                    <li className="skill-tab">
+                        <a className="skill-tag related-skill" data-toggle="tab" href="#related" style={{'backgroundColor':'#F48543'}}>Related Skills</a>
+                    </li>
+                    </ul>
+
+                    <div className="tab-content skill-tab-content">
+                        <div id="essential" className="tab-pane fade in active">
+                            <Masonry className="masonry-grid" options={masonryOptions}>
+                                {this.renderSkills(this.state.tree.weightage1)}
+                            </Masonry>
+                        </div>
+                        <div id="complimentary" className="tab-pane fade">
+                            <Masonry className="masonry-grid" options={masonryOptions}>
+                                {this.renderSkills(this.state.tree.weightage2)}
+                            </Masonry>
+                        </div>
+                        <div id="related" className="tab-pane fade">
+                            <Masonry className="masonry-grid" options={masonryOptions}>
+                                {this.renderSkills(this.state.tree.weightage3)}
+                            </Masonry>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-md-4 col-sm-12">
-                  <div className="weightage-section">
-                    <h4>Complimentary skils</h4>
-                    {this.renderSkills(this.state.tree.weightage2)}
-                  </div>
+              {!this.isAddedTree() && <div className="col-sm-12">
+                <div className="btn-base-landing btn-red-landing pull-right" onClick={() => this.handleAddToMyTree()}>
+                  Add to My tree
                 </div>
-                <div className="col-md-3 col-sm-12">
-                  <div className="weightage-section">
-                    <h4>Related skills</h4>
-                    {this.renderSkills(this.state.tree.weightage3)}
-                  </div>
-                </div>
-                {!this.isAddedTree() && <div className="col-md-2 col-sm-12">
-                  <div className="add-tom-my-tree" onClick={() => this.handleAddToMyTree()}>
-                    Add to My tree
-                  </div>
-                </div>}
-              </div>
+              </div>}
+            </div>
             </div>
           </div>
-        </div>
-      </div>
     );
   }
 }
