@@ -64,7 +64,7 @@ const RenderSingleTask = (task, i, props)=> {
       <h4><a href="#" className="link-red">{task.creator.firstName}</a> {` is looking to hangout to discuss ${task.metaData.subject.roadmap.name} at ${time}`}
      </h4>
      <p className="text-1">{task.creator.firstName} is in your wider network</p>
-     <p className="text-2">Earn up to 10 tokens completing this task</p>
+     {/* <p className="text-2">Earn up to 10 tokens completing this task</p> */}
      <div className="token-bottom">
       {!task.isLocked ? <ActionLink href="#" className="btn-bg-red" data-toggle="modal" 
         data-target="#token" onClick={()=>props.handleOpenConfirmTaskDetailsPopup(task)}>
