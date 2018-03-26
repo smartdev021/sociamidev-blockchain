@@ -207,7 +207,7 @@ class ProgressiontreeBrowser extends React.Component {
               isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
                 starWidthAndHeight={'20px'} starSpacing={'2px'}
                 starEmptyColor={"white"}
-                starRatedColor={"rgb(180, 177, 3)"}/>
+                starRatedColor={"rgb(239, 206, 74)"}/>
             </span>
             <p>{this.state.tree.description}</p>
           </div>
