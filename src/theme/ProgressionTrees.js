@@ -249,14 +249,16 @@ class ProgressionTrees extends React.Component {
     
     let LeftColClass
     let RightColClass
+    let ifProgressionTreesExist
     if(this.props.userProfile.progressionTrees.length != 0){
       LeftColClass = this.state.isSidebarExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
       RightColClass = this.state.isSidebarExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
+      ifProgressionTreesExist = true
     }else{
       LeftColClass = ""
       RightColClass = "col-md-12";
+      ifProgressionTreesExist = false
     }
-    
     
     return (
         <div className="row">
@@ -303,7 +305,7 @@ class ProgressionTrees extends React.Component {
                 <div className="progression-tree-container">
                   <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
                           openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
-                            isExpanded={this.state.isScannerExpanded}/>
+                          ifProgressionTreesExist={ifProgressionTreesExist}  isExpanded={this.state.isSidebarExpanded}/>
                 </div>
                 
                 

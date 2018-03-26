@@ -38,6 +38,16 @@ const ProgressiontreesScanner = (props) => {
             boxClass = 'progression-list-item-blue'
             headingClass = 'progression-list-heading-blue'
           }
+          let ifExpanded
+          if(props.ifProgressionTreesExist){
+            if(props.isExpanded){
+              ifExpanded = true
+            }else{
+              ifExpanded = false
+            }
+          }else{
+            ifExpanded = true
+          }
           return (
             <li key={i} className={boxClass}>
                 <Link className={headingClass} to={`/progressionTreeBrowser/?id=${roadmap._id}`}>
@@ -53,22 +63,27 @@ const ProgressiontreesScanner = (props) => {
                 </span>
             
               
-              {props.isExpanded ? <div className="tree-scanner-tree-name">{roadmap.description}</div> : <div className="tree-scanner-tree-name">{(roadmap.description).slice(0,100)} ...</div>}
+              {ifExpanded ? <div className="tree-scanner-tree-name">{roadmap.description}</div> : <div className="tree-scanner-tree-name">{(roadmap.description).slice(0,100)} ...</div>}
 
-              <div className="tree-scanner-tree-footer">
-                <div className="tree-scanner-tree-icons pull-left">
-                  <span className="tree-scanner-tree-icon glyphicon glyphicon-education"></span>
-                  <span className="tree-scanner-tree-icon glyphicon glyphicon-bitcoin"></span>
-                  <span className="tree-scanner-tree-icon glyphicon glyphicon-dashboard"></span>
+              {ifExpanded &&
+
+                <div className="tree-scanner-tree-footer">
+                  <div className="tree-scanner-tree-icons pull-left">
+                    <span className="tree-scanner-tree-icon glyphicon glyphicon-education"></span>
+                    <span className="tree-scanner-tree-icon glyphicon glyphicon-bitcoin"></span>
+                    <span className="tree-scanner-tree-icon glyphicon glyphicon-dashboard"></span>
+                  </div>
+
+                  <div className="tree-scanner-tree-network">
+                    825 others are learning {roadmap.name}
+                  </div>
+                  {
+                    roadmap.isLocked && <span className="tree-scanner-tree-locked-icon glyphicon glyphicon-lock"></span>
+                  }
                 </div>
-
-                {props.isExpanded && <div className="tree-scanner-tree-network">
-                  825 others are learning {roadmap.name}
-                </div>}
-                {
-                  roadmap.isLocked && <span className="tree-scanner-tree-locked-icon glyphicon glyphicon-lock"></span>
-                }
-              </div>
+              
+              }
+              
             </li>);
         })
       }
