@@ -15,6 +15,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import ActivityTypes from "~/src/common/ActivityTypes"
 
+import TooltipUser from "~/src/theme/components/tasks/TooltipUser";
+
 import PubSub from 'pubsub-js';
 
 const RenderDummyFriends = false;
@@ -428,7 +430,7 @@ const DayFromNumber = (dayNum)=> {
           switch (CurrentUserAsParticipant.status) {
             case "pending": {
               result = (
-                <h4>Your request to Deepdive with <a href="#" className="link-black">{Partner.user.firstName}</a> is pending approval</h4>
+                <h4>Your request to Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is pending approval</h4>
               );
               break;
             }
