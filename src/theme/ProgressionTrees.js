@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux'
 
 import "~/src/theme/css/common.css"
 import "~/src/theme/css/progressionTrees.css"
+import "~/src/theme/css/ProgressionTreesNew.css"
 
 import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgressionTree"
 
@@ -17,6 +18,7 @@ import ProgressiontreesScanner from "~/src/theme/components/progressiontrees/Pro
 import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/ProgressiontreesMyProgress"
 import ProgressiontreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew"
 
+import {Icon} from 'react-fa'
 import ActionLink from '~/src/components/common/ActionLink'
 
 import {
@@ -51,6 +53,7 @@ class ProgressionTrees extends React.Component {
 
       isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0,
       isTreeExpanded: false,
+      isSidebarExpanded: false
     }
 
     this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
@@ -132,6 +135,11 @@ class ProgressionTrees extends React.Component {
 
   }
 
+  handleExpandSidebar(expand) {
+      console.log(`handleExpandScanner expanded: ${expand}`);
+      this.setState({isSidebarExpanded: expand});
+  }
+
   renderUserProgressionTrees() {
     return (
       <div id="progression-trees-trees">
@@ -143,17 +151,20 @@ class ProgressionTrees extends React.Component {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="content-2-columns-left-title">
+                  <h3 className="my-progress-heading">
                     My Progress
-                  </div>
-                  <hr id="progress-underline"/>
+                  </h3>
+                  <hr id="progress-underline" style={{'width':'130px'}}/>
                 </div>
               </div>
-              <div>
-                <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} allTrees={this.props.roadmapsAdmin.data}
-                  isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
-                  stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
-              </div>
+              
+              {this.props.userProfile.progressionTrees.length != 0 &&
+                <div>
+                  <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} allTrees={this.props.roadmapsAdmin.data}
+                    isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
+                    stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
+                </div>
+              }
             </div>
       }
         
@@ -235,6 +246,9 @@ class ProgressionTrees extends React.Component {
       rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-1 hide";
       leftSideClassName = "col-lg-12";
     }
+
+    const LeftColClass = this.state.isSidebarExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
+    const RightColClass = this.state.isSidebarExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
     
     return (
         <div className="row">
@@ -246,54 +260,49 @@ class ProgressionTrees extends React.Component {
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
               />
           }
-              {this.props.userProfile.progressionTrees.length != 0 &&
-                <div className={leftSideClassName}>
+              {/* {this.props.userProfile.progressionTrees.length != 0 &&
+                <div className={LeftColClass}>
                   <div className="content-2-columns-left">
                     {this.renderUserProgressionTrees()}
                   </div>
                 </div>
-              }
-              {/*Right Side*/}
-              <div className={rightSideClassName}>
-                <div className="content-2-columns-left-new-ui">
+              } */}
 
+            <div className={LeftColClass}>
+              <div className="content-2-columns-left">
+                {this.renderUserProgressionTrees()}
+              </div>
+            </div>
+            
+            <div className={RightColClass}>
+              <div className="progression-tree-sidebar">
+                <div className="expander">
+                    {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
+                      onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+                    : <ActionLink href="#" className="close-expanding"
+                      onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+                </div>
 
-
-                  <div id="progression-trees-scanner">
-                    <div id="progression-trees-scanner-container">
-                      <div className="row">
-                        <div className="col-xs-7 col-md-6">
-                            <h1 className="heading-trees">My Progress</h1>
-                        </div>
-                        <div className="col-xs-5 col-md-6">
-                            <div id="scanner-input-container">
-                                {!this.state.isScannerExpanded ?
-                                    <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
-                                    :
-                                    <div className="scanner-expanded">
-                                        <input type="text" autoComplete="off" id="scanner_trees" placeholder="Technology" onChange={(e) => this.handleChange(e)}/>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                      </div>
-
-                      <div id="trees-scanner-container">
-                        {!this.state.isScannerExpanded && 
-                          <ActionLink id="user-prog-tree-expand" href="#" onClick={()=> this.setTreeScannerExpanded(true)}>
-                            <span className="glyphicon glyphicon-menu-left"></span>
-                          </ActionLink>
-                        }
-                        {this.renderArrow()}
-                        <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
+                <div className="expanding expanding-mobile">
+                    {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
+                      onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+                    : <ActionLink href="#" className="close-expanding"
+                      onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+                </div>
+                <div className="progression-tree-header">
+                  Technology
+                </div>
+                <div className="progression-tree-container">
+                  <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
                           openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
                             isExpanded={this.state.isScannerExpanded}/>
-                      </div>
-                    </div>
-                  </div>
+                </div>
+                
+                
                 </div>
               </div>
-           </div>
+              
+        </div>
     );
   }
 }

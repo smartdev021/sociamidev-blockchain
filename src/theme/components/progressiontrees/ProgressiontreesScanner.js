@@ -29,20 +29,30 @@ const ProgressiontreesScanner = (props) => {
     <ul className="list-group">
       {
         foundRoadmaps.map(function(roadmap, i) {
+          let boxClass
+          let headingClass
+          if(i%2 == 0){
+            boxClass = 'progression-list-item-red'
+            headingClass = 'progression-list-heading-red'
+          }else{
+            boxClass = 'progression-list-item-blue'
+            headingClass = 'progression-list-heading-blue'
+          }
           return (
-            <li key={i} className="list-group-item">
-              <Link className="progression-tree-my-text" to={`/progressionTreeBrowser/?id=${roadmap._id}`}>
-                {roadmap.name}
-              </Link>
+            <li key={i} className={boxClass}>
+                <Link className={headingClass} to={`/progressionTreeBrowser/?id=${roadmap._id}`}>
+                  {roadmap.name}
+                </Link>
 
-              <span className="tree-scaner-star-rating">
-                <StarRatings rating={3.5} 
-                isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
-                  starWidthAndHeight={'20px'} starSpacing={'2px'}
-                  starEmptyColor={"white"}
-                  starRatedColor={"rgb(239, 206, 74)"}/>
-              </span>
-
+                <span className="tree-scaner-star-rating">
+                  <StarRatings rating={3.5} 
+                  isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
+                    starWidthAndHeight={'20px'} starSpacing={'2px'}
+                    starEmptyColor={"white"}
+                    starRatedColor={"rgb(239, 206, 74)"}/>
+                </span>
+            
+              
               {props.isExpanded ? <div className="tree-scanner-tree-name">{roadmap.description}</div> : <div className="tree-scanner-tree-name">{(roadmap.description).slice(0,100)} ...</div>}
 
               <div className="tree-scanner-tree-footer">
