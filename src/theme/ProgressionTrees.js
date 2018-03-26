@@ -290,7 +290,7 @@ class ProgressionTrees extends React.Component {
                       onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
                 </div>
                 <div className="progression-tree-header">
-                  Technology
+                    Technology
                 </div>
                 <div className="progression-tree-container">
                   <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
