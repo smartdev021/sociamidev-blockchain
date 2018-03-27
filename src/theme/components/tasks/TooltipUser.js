@@ -46,19 +46,11 @@ function TooltipForUser(props) {
   return (
     <Tooltip
       overlayClassName="tooltip-user"
-      // visible
       placement={"top"}
       mouseEnterDelay={0}
       mouseLeaveDelay={0.1}
       overlay={ovelayContent(props.overlayHtml, props.user)}
-      // {...props}
-    // destroyTooltipOnHide={this.state.destroyTooltipOnHide}
-    // trigger={Object.keys(this.state.trigger)}
-    // onVisibleChange={this.onVisibleChange}
-    // align={{
-    //   offset: [this.state.offsetX, this.state.offsetY],
-    // }}
-    transitionName={"animation"}
+      transitionName={"animation"}
     >
       {props.children}
     </Tooltip>
