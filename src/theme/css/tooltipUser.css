@@ -5,6 +5,7 @@
 .rc-tooltip {
   opacity: 1;
   transition: .2s ease-in-out;
+  z-index: 99999999;
 }
 
 .rc-tooltip.animation-enter,
