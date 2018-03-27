@@ -246,9 +246,19 @@ class ProgressionTrees extends React.Component {
       rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-1 hide";
       leftSideClassName = "col-lg-12";
     }
-
-    const LeftColClass = this.state.isSidebarExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
-    const RightColClass = this.state.isSidebarExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
+    
+    let LeftColClass
+    let RightColClass
+    let ifProgressionTreesExist
+    if(this.props.userProfile.progressionTrees.length != 0){
+      LeftColClass = this.state.isSidebarExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
+      RightColClass = this.state.isSidebarExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
+      ifProgressionTreesExist = true
+    }else{
+      LeftColClass = ""
+      RightColClass = "col-md-12";
+      ifProgressionTreesExist = false
+    }
     
     return (
         <div className="row">
@@ -260,42 +270,42 @@ class ProgressionTrees extends React.Component {
                 onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
               />
           }
-              {/* {this.props.userProfile.progressionTrees.length != 0 &&
+              {this.props.userProfile.progressionTrees.length != 0 &&
                 <div className={LeftColClass}>
                   <div className="content-2-columns-left">
                     {this.renderUserProgressionTrees()}
                   </div>
                 </div>
-              } */}
-
-            <div className={LeftColClass}>
-              <div className="content-2-columns-left">
-                {this.renderUserProgressionTrees()}
-              </div>
-            </div>
+              }
             
             <div className={RightColClass}>
               <div className="progression-tree-sidebar">
-                <div className="expander">
-                    {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
-                      onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
-                    : <ActionLink href="#" className="close-expanding"
-                      onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
-                </div>
 
-                <div className="expanding expanding-mobile">
+                {this.props.userProfile.progressionTrees.length != 0 &&
+                  <div className="expander">
                     {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
                       onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
                     : <ActionLink href="#" className="close-expanding"
                       onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
                 </div>
+                }
+
+                {this.props.userProfile.progressionTrees.length != 0 &&
+                  <div className="expanding expanding-mobile">
+                    {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
+                      onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+                    : <ActionLink href="#" className="close-expanding"
+                      onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+                </div>
+                }
+                
                 <div className="progression-tree-header">
                     Technology
                 </div>
                 <div className="progression-tree-container">
                   <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
                           openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
-                            isExpanded={this.state.isScannerExpanded}/>
+                          ifProgressionTreesExist={ifProgressionTreesExist}  isExpanded={this.state.isSidebarExpanded}/>
                 </div>
                 
                 
