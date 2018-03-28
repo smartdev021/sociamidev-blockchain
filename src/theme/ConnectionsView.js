@@ -126,6 +126,10 @@ class ConnectionsView extends React.Component {
         let copy = Object.assign({}, this.state, {loader: 1});
         this.setState(copy);
         var self = this;
+        console.log("handleFriendRequest: ", user);
+        console.log("self.props.userProfile: ", self.props.userProfile);
+        console.log("currentUser:", JSON.stringify(self.props.userProfile));
+        console.log("otherUser:", JSON.stringify(user));
 
         const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
         Axios.post(url, {

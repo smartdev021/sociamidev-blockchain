@@ -372,32 +372,32 @@ const DayFromNumber = (dayNum)=> {
       switch (task.status) {
         case "canceled":
         case "cancelled": {
-          result = ( <h4>Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> has been cancelled</h4>
+          result = ( <h4>Deepdive with <TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> has been cancelled</h4>
             );
           break;
         }
         case "started": {
-            result = ( <h4>Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is in progress</h4>
+            result = ( <h4>Deepdive with <TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is in progress</h4>
             );
           break;
         }
         case "finished": {
-            result = ( <h4>Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is finished</h4>
+            result = ( <h4>Deepdive with <TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is finished</h4>
             );
           break;
         }
         case "complete": {
-            result = ( <h4>Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is complete</h4>
+            result = ( <h4>Deepdive with <TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is complete</h4>
            );
           break;
         }
         default: {
           if (Partner.status == "accepted") {
-              result = ( <h4>Confirmed Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser></h4>
+              result = ( <h4>Confirmed Deepdive with <TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser></h4>
            );
           }
           else if (Partner.status == "pending") {
-            result = ( <h4><TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName} </a></TooltipUser>{` wants to join your "${task.metaData.subject.skill.name}" Deepdive`}</h4>);
+            result = ( <h4><TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName} </a></TooltipUser>{` wants to join your "${task.metaData.subject.skill.name}" Deepdive`}</h4>);
           }
           break;
         }
@@ -430,13 +430,13 @@ const DayFromNumber = (dayNum)=> {
           switch (CurrentUserAsParticipant.status) {
             case "pending": {
               result = (
-                <h4>Your request to Deepdive with <TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is pending approval</h4>
+                <h4>Your request to Deepdive with <TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> is pending approval</h4>
               );
               break;
             }
             case "rejected": {
               result = (
-                <h4><TooltipUser user={Partner.user}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> has not confirmed your request to join theirs Deepdive</h4>
+                <h4><TooltipUser user={Partner} currentUser={props.userProfile}><a href="#" className="link-black">{Partner.user.firstName}</a></TooltipUser> has not confirmed your request to join theirs Deepdive</h4>
               );
               break;
             }

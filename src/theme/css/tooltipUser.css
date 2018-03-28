@@ -27,6 +27,11 @@
   background: #fff;
 }
 
+.tooltip-user .user-header .loading-data {
+  color: #fff;
+  font-family: inherit;
+  
+}
 .tooltip-user .user-header {
   height: 150px;
   background: url("../images/profile_bg.png") no-repeat;
@@ -51,7 +56,7 @@
   align-items: center;
   justify-content: center;
   margin-right: 20px;
-  
+  background: #fff;
 }
 
 .tooltip-user .user-header .user-header-avatar img {
@@ -100,3 +105,4 @@
 .tooltip-user .user-action .item:last-child {
   border: none;
 }
+

@@ -538,7 +538,7 @@ class TaskManager extends React.Component {
             timeNow={this.state.timeNow}
             isAuthorized={this.props.isAuthorized}
             isCollapsed={this.state.isScannerExpanded}
-
+            userProfile={this.props.userProfile}
             currentUserID={this.props.userProfile._id}
 
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
