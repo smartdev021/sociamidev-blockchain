@@ -60,7 +60,7 @@ const userProfileInitialState = {
 export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
     case FETCH_USER_PROFILE_INITIATE:
-      return {...state, isAuthorized: false, isLoading: true};
+      return {...state, isLoading: true};
     case FETCH_USER_PROFILE_COMPLETE:
       return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
     case UPDATE_USER_PROFILE_INITIATE:

@@ -9,13 +9,13 @@
 import React, { Component } from 'react';
 import WebFont from 'webfontloader';
 import { withRouter } from 'react-router-dom'
-import { Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import io from 'socket.io-client';
 import PubSub from 'pubsub-js';
 import ReactGA from 'react-ga'
@@ -77,13 +77,13 @@ class App extends Component {
       verfiedSocketConnection: false,
       screenWidth: 0, screenHeight: 0,
     };
-    
+
     var uuid = this.uuidv1();
     this.state.anonymousUserId = uuid;
     this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
     socketConn = this.socket;
 
-   this.socket.on('newUser', user => {
+    this.socket.on('newUser', user => {
       var chatObj = {
         eventType: 'newUser',
         data: user
@@ -125,7 +125,7 @@ class App extends Component {
   }
 
   uuidv1() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
   }
@@ -138,10 +138,7 @@ class App extends Component {
     this.props.cookies.getAll();
     this.token_chat_token = PubSub.subscribe('ChatEndPoint', this.chatEndListener.bind(this));
 
-    this.token_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
-
-    console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
-    console.dir(this.token_tasks_update);
+    this.PubsubEventsSubscribe();
   }
 
   componentDidMount() {
@@ -151,6 +148,30 @@ class App extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
+
+    PubSub.unsubscribe(this.token_server_event_user_profile_update);
+    PubSub.unsubscribe(this.token_server_event_tasks_update);
+  }
+
+  PubsubEventsSubscribe() {
+    if (!this.token_server_event_tasks_update) {
+      this.token_server_event_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
+    }
+    if (!this.token_server_event_user_profile_update) {
+      this.token_server_event_user_profile_update = PubSub.subscribe("user_profile_updated", this.serverEventUserProfileUpdate.bind(this));
+    }
+  }
+
+  PubsubEventsUnSubscribe() {
+    if (this.token_server_event_tasks_update) {
+      PubSub.unsubscribe(this.token_server_event_tasks_update);
+      this.token_server_event_tasks_update = undefined;
+    }
+    
+    if (this.token_server_event_user_profile_update) {
+      PubSub.unsubscribe(this.token_server_event_user_profile_update);
+      this.token_server_event_user_profile_update = undefined;
+    }
   }
 
   serverEventTasksUpdate(msg, data) {
@@ -162,14 +183,23 @@ class App extends Component {
     }
   };
 
+  serverEventUserProfileUpdate(msg, data) {
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+    console.dir(data);
+
+    if (data.eventType == "user_profile_updated") {
+      this.fetchUserInfoFromDataBase(true);
+    }
+  };
+
   handleAuthorizeLinked(id) {
-    let copy = Object.assign({}, this.state, {linkedInID: id});
+    let copy = Object.assign({}, this.state, { linkedInID: id });
     this.setState(copy);
     console.log("handleAuthorizeLinked id: " + id);
   }
 
   handleAuthorizeFaceBook(id) {
-    let copy = Object.assign({}, this.state, {faceBookID: id});
+    let copy = Object.assign({}, this.state, { faceBookID: id });
     this.setState(copy);
     console.log("handleAuthorizeFaceBook id: " + id);
   }
@@ -178,16 +208,16 @@ class App extends Component {
     const { cookies } = this.props;
 
     let dateExpire = new Date();
-    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());  
-        
-    let options = { path: '/', expires: dateExpire};
-    
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
+
+    let options = { path: '/', expires: dateExpire };
+
     let lastLocation = Object.assign({}, this.props.history.location);
 
     console.log("lastLocation: " + lastLocation);
 
-     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
-     if (this.props.exactLocation && this.props.exactLocation == "RoadmapsWidgetDetails") {
+    //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
+    if (this.props.exactLocation && this.props.exactLocation == "RoadmapsWidgetDetails") {
       lastLocation.pathname = '/taskManagement';
     }
 
@@ -244,7 +274,7 @@ class App extends Component {
 
   HandleSignUp(endpoint) {
     this.props.closeSignUpForm();
-    
+
     this.storeCurrentLocationInCookies();
 
     window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
@@ -258,8 +288,8 @@ class App extends Component {
     if (!this.props.isFetchInProgress && searchQuery != "") {
       let dateExpire = new Date();
       dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
-      let options = { path: '/', expires: dateExpire};
-       
+      let options = { path: '/', expires: dateExpire };
+
       this.props.cookies.set('searchQuery', searchQuery, options);
 
       this.props.fetchResults("jobs_indeed", searchQuery);
@@ -268,9 +298,9 @@ class App extends Component {
       this.props.fetchResults("gigs_freelancer", searchQuery);
     }
   }
-  
+
   resetAuthentication() {
-    let copy = Object.assign({}, this.state, {linkedInID: "", faceBookID: "", profule: null});
+    let copy = Object.assign({}, this.state, { linkedInID: "", faceBookID: "", profule: null });
     this.setState(copy);
   }
 
@@ -283,11 +313,11 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchResults != this.props.searchResults) {
 
-      const wasFetchingResults = prevProps.searchResults.isFetchingJobs || prevProps.searchResults.isFetchingEvents 
-      || prevProps.searchResults.isFetchingCourses || prevProps.isFetchingGigs;
+      const wasFetchingResults = prevProps.searchResults.isFetchingJobs || prevProps.searchResults.isFetchingEvents
+        || prevProps.searchResults.isFetchingCourses || prevProps.isFetchingGigs;
 
-      const isFetchingResults = this.props.searchResults.isFetchingJobs || this.props.searchResults.isFetchingEvents 
-      || this.props.searchResults.isFetchingCourses || this.props.isFetchingGigs;
+      const isFetchingResults = this.props.searchResults.isFetchingJobs || this.props.searchResults.isFetchingEvents
+        || this.props.searchResults.isFetchingCourses || this.props.isFetchingGigs;
 
       if (!isFetchingResults && wasFetchingResults) {
         this.props.fetchResultsComplete();
@@ -301,7 +331,7 @@ class App extends Component {
 
     if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
       console.log("componentDidUpdate this.state.linkedInID: " + this.state.linkedInID + " this.state.faceBookID: " + this.state.faceBookID);
-    if(this.state.linkedInID || this.state.faceBookID) {
+      if (this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
       }
     }
@@ -324,12 +354,12 @@ class App extends Component {
 
     if (prevProps.userProfile != this.props.userProfile) {
 
-      let copy = Object.assign({}, this.state, 
+      let copy = Object.assign({}, this.state,
         {
           userID: this.props.userProfile._id,
-          firstName: this.props.userProfile.firstName, 
+          firstName: this.props.userProfile.firstName,
           lastName: this.props.userProfile.lastName,
-      });
+        });
 
       this.setState(copy);
     }
@@ -343,17 +373,15 @@ class App extends Component {
       console.log("Cookies has been changed");
     }
 
-    if(this.state.userID && this.state.verfiedSocketConnection == false){
-      let copy = Object.assign({}, this.state, {verfiedSocketConnection: true});
+    if (this.state.userID && this.state.verfiedSocketConnection == false) {
+      let copy = Object.assign({}, this.state, { verfiedSocketConnection: true });
       this.setState(copy);
     }
 
     if (prevProps.isAuthorized != this.props.isAuthorized) {
       if (this.props.isAuthorized) {
-        this.token_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
-
-        console.log(`%cSubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
-        console.dir(this.token_tasks_update);
+        this.PubsubEventsUnSubscribe();
+        this.PubsubEventsSubscribe();
 
         this.props.fetchUserActivities(this.props.userProfile._id);
 
@@ -362,10 +390,7 @@ class App extends Component {
         }
       }
       else {
-        PubSub.unsubscribe(this.token_tasks_update);
-
-        console.log(`%cUnsubscribed to event: ${this.token_tasks_update}`, "background:blue; color:red");
-        console.dir(this.token_tasks_update);
+        this.PubsubEventsUnSubscribe();
       }
     }
 
@@ -393,10 +418,9 @@ class App extends Component {
     if (this.props.isAuthorized) {
       ProfileLink = <Link className='btn btn-lg btn-outline-inverse pull-right' to='/userProfile'>Your account</Link>;
     }
-    else
-    {
-      ProfileLink = <ActionLink className="btn btn-lg btn-outline-inverse pull-right loginButton" 
-          onClick={()=> this.props.openSignUpForm()}>Connect with...</ActionLink>;
+    else {
+      ProfileLink = <ActionLink className="btn btn-lg btn-outline-inverse pull-right loginButton"
+        onClick={() => this.props.openSignUpForm()}>Connect with...</ActionLink>;
     }
 
     return ProfileLink;
@@ -406,36 +430,36 @@ class App extends Component {
     this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
   }
 
-  chatEndListener(event,data){
+  chatEndListener(event, data) {
     socketConn.emit(data.eventType, data.data);
   }
   render() {
     if (!this.props.isAuthorized) {
       return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
-                 onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} 
-                   onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-                     onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} 
-                       onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-                         isSignUpFormOpen={this.props.isSignUpFormOpen}
-                           pathname={this.props.history.location.pathname}/>
+        onHandleSignUpFacebook={() => this.HandleSignUpFacebook()}
+        onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
+        onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
+        onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+        isSignUpFormOpen={this.props.isSignUpFormOpen}
+        pathname={this.props.history.location.pathname} />
       );
     }
-    let RedirectTo = this.getRedirectLocation();    
+    let RedirectTo = this.getRedirectLocation();
     let ChatAppLink = '';
     var username = "";
     var userType = "";
-    if(this.state.faceBookID){
+    if (this.state.faceBookID) {
       username = this.state.faceBookID;
       userType = "facebook";
     }
-    else if(this.state.linkedInID){
+    else if (this.state.linkedInID) {
       username = this.state.linkedInID;
       userType = "linkedin";
     }
-    
-    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile}/>;
 
-    if(this.state.userID && this.state.verfiedSocketConnection == false){
+    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
+
+    if (this.state.userID && this.state.verfiedSocketConnection == false) {
       var userData = {
         username: username,
         userType: userType,
@@ -443,49 +467,49 @@ class App extends Component {
         firstName: this.state.firstName,
         lastName: this.state.lastName
       }
-      socketConn.emit('UserLoggedIn', userData);      
+      socketConn.emit('UserLoggedIn', userData);
     }
 
     return (
       <div>
-      <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-      onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-      onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-      onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-      onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-      onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
-      pathname={this.props.history.location.pathname}
-      isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
-      openSignUpForm={this.props.openSignUpForm}
-      searchQuery={this.props.searchQuery}
-      onHandleQueryChange={this.props.setSearchQuery}
-      userProfile={this.props.userProfile}
-      isFetchInProgress={this.props.isFetchInProgress}
-      currentUserId={this.props.userProfile._id}
-      screenWidth={this.state.screenWidth}
-      screenHeight={this.state.screenHeight}/>
-      <CharacterCreationFlow onHandleCharacterDataSet={()=>this.handleCharacterDataSet()}/>
-      {ChatAppLink}
+        <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+          onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+          onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+          onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+          onHandleSignUpFacebook={() => this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
+          onFetchAllTasks={(publishedOnly) => this.props.fetchAllTasks(publishedOnly)}
+          pathname={this.props.history.location.pathname}
+          isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
+          openSignUpForm={this.props.openSignUpForm}
+          searchQuery={this.props.searchQuery}
+          onHandleQueryChange={this.props.setSearchQuery}
+          userProfile={this.props.userProfile}
+          isFetchInProgress={this.props.isFetchInProgress}
+          currentUserId={this.props.userProfile._id}
+          screenWidth={this.state.screenWidth}
+          screenHeight={this.state.screenHeight} />
+        <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
+        {ChatAppLink}
       </div>
     );
 
     return (
       <div className="outer-container">
         <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-        onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-        onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-        onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-        onHandleSignUpFacebook={()=>this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={()=>this.HandleSignUpLinkedIn()}
-        onFetchAllTasks={(publishedOnly)=>this.props.fetchAllTasks(publishedOnly)}
-        isAuthorized={this.props.isAuthorized}
-        pathname={this.props.history.location.pathname}
-        isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
-        openSignUpForm={this.props.openSignUpForm}
-        searchQuery={this.props.searchQuery}
-        onHandleQueryChange={this.props.setSearchQuery}
-        currentUserId={this.props.userProfile._id}
-        userProfile={this.props.userProfile}
-        isFetchInProgress={this.props.isFetchInProgress}/>
+          onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+          onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+          onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+          onHandleSignUpFacebook={() => this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
+          onFetchAllTasks={(publishedOnly) => this.props.fetchAllTasks(publishedOnly)}
+          isAuthorized={this.props.isAuthorized}
+          pathname={this.props.history.location.pathname}
+          isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
+          openSignUpForm={this.props.openSignUpForm}
+          searchQuery={this.props.searchQuery}
+          onHandleQueryChange={this.props.setSearchQuery}
+          currentUserId={this.props.userProfile._id}
+          userProfile={this.props.userProfile}
+          isFetchInProgress={this.props.isFetchInProgress} />
         {ChatAppLink}
       </div>
     );
@@ -502,7 +526,7 @@ App.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   exactLocation: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
-  
+
   openUserProfile: PropTypes.func.isRequired,
   openSearchResults: PropTypes.func.isRequired,
   fetchResultsInitiate: PropTypes.func.isRequired,
