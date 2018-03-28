@@ -507,7 +507,7 @@ class LandingPageContent extends React.Component {
 
     <div className="footer-widget">
         <div className="container">
-            <div className="row">
+            {/*<div className="row">
                 <div className="box-specs">
                     <div className="item-specs">
                         <div className="col-md-3 col-sm-4">
@@ -532,7 +532,7 @@ class LandingPageContent extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*/}
         </div>
     </div>
 
