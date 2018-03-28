@@ -102,7 +102,7 @@ class Main extends React.Component {
       return (
         <div className="wrapper">
           {RedirectTo}
-          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} 
+          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} logout={() => this.props.logout()}
             fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
             isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile}/>
           <div className="session-content">

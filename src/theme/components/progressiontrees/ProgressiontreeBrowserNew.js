@@ -204,7 +204,7 @@ class ProgressiontreeBrowser extends React.Component {
             
             <span className="tree-scaner-star-rating">
               <StarRatings rating={3.5} 
-              isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
+                isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
                 starWidthAndHeight={'20px'} starSpacing={'2px'}
                 starEmptyColor={"white"}
                 starRatedColor={"rgb(239, 206, 74)"}/>
@@ -216,44 +216,44 @@ class ProgressiontreeBrowser extends React.Component {
 
             
             <div className="row">
-            <div className="col-xs-12">
-              <div className="tree-skills">
-                    <ul className="nav nav-tabs">
-                    <li className="active skill-tab">
-                        <a className="skill-tag essential-skill" data-toggle="tab" href="#essential" style={{'backgroundColor':'#DC2F41'}}>Essential Skills</a>
-                    </li>
-                    <li className="skill-tab">
-                        <a className="skill-tag complimentary-skill" data-toggle="tab" href="#complimentary" style={{'backgroundColor':'#20A5D0'}}>Complimentary Skills</a>
-                    </li>
-                    <li className="skill-tab">
-                        <a className="skill-tag related-skill" data-toggle="tab" href="#related" style={{'backgroundColor':'#F48543'}}>Related Skills</a>
-                    </li>
-                    </ul>
+              <div className="col-xs-12">
+                <div className="tree-skills">
+                      <ul className="nav nav-tabs">
+                      <li className="active skill-tab">
+                          <a className="skill-tag essential-skill" data-toggle="tab" href="#essential" style={{'backgroundColor':'#DC2F41'}}>Essential Skills</a>
+                      </li>
+                      <li className="skill-tab">
+                          <a className="skill-tag complimentary-skill" data-toggle="tab" href="#complimentary" style={{'backgroundColor':'#20A5D0'}}>Complimentary Skills</a>
+                      </li>
+                      <li className="skill-tab">
+                          <a className="skill-tag related-skill" data-toggle="tab" href="#related" style={{'backgroundColor':'#F48543'}}>Related Skills</a>
+                      </li>
+                      </ul>
 
-                    <div className="tab-content skill-tab-content">
-                        <div id="essential" className="tab-pane fade in active">
-                            <Masonry className="masonry-grid" options={masonryOptions}>
-                                {this.renderSkills(this.state.tree.weightage1)}
-                            </Masonry>
-                        </div>
-                        <div id="complimentary" className="tab-pane fade">
-                            <Masonry className="masonry-grid" options={masonryOptions}>
-                                {this.renderSkills(this.state.tree.weightage2)}
-                            </Masonry>
-                        </div>
-                        <div id="related" className="tab-pane fade">
-                            <Masonry className="masonry-grid" options={masonryOptions}>
-                                {this.renderSkills(this.state.tree.weightage3)}
-                            </Masonry>
-                        </div>
-                    </div>
-                </div>
-              {!this.isAddedTree() && <div className="col-sm-12">
-                <div className="btn-base-landing btn-red-landing pull-right" onClick={() => this.handleAddToMyTree()}>
-                  Add to My tree
-                </div>
-              </div>}
-            </div>
+                      <div className="tab-content skill-tab-content">
+                          <div id="essential" className="tab-pane fade in active">
+                              <Masonry className="masonry-grid" options={masonryOptions}>
+                                  {this.renderSkills(this.state.tree.weightage1)}
+                              </Masonry>
+                          </div>
+                          <div id="complimentary" className="tab-pane fade">
+                              <Masonry className="masonry-grid" options={masonryOptions}>
+                                  {this.renderSkills(this.state.tree.weightage2)}
+                              </Masonry>
+                          </div>
+                          <div id="related" className="tab-pane fade">
+                              <Masonry className="masonry-grid" options={masonryOptions}>
+                                  {this.renderSkills(this.state.tree.weightage3)}
+                              </Masonry>
+                          </div>
+                      </div>
+                  </div>
+                {!this.isAddedTree() && <div className="col-sm-12">
+                  <div className="btn-base-landing btn-red-landing pull-right" onClick={() => this.handleAddToMyTree()}>
+                    Add to My tree
+                  </div>
+                </div>}
+              </div>
             </div>
           </div>
     );
