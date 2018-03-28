@@ -4,6 +4,7 @@
   "description": "Soqqle",
   "scripts": {
     "start": "node server.js",
+    "start:local_back_end": "node server_local_backend.js",
     "startLocal": "cross-env dev_env=local node server.js",
     "lint": "eslint src",
     "compile": "webpack -p",
