@@ -23,6 +23,8 @@ import {
     UPDATE_USER_PROFILE_COMPLETE,
     UPDATE_USER_PROFILE_INITIATE,
 
+    USER_LOG_OUT,
+
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main'
@@ -69,6 +71,12 @@ export function updateUserProfileComplete(userProfile) {
     return {
         type: UPDATE_USER_PROFILE_COMPLETE,
         profile: userProfile,
+    }
+}
+
+export function logout() {
+    return {
+        type: USER_LOG_OUT,
     }
 }
 

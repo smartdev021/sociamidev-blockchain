@@ -31,6 +31,7 @@ import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlo
 
 import {
   fetchUserProfile,
+  logout,
   openUserProfile,
   openSignUpForm,
   closeSignUpForm,
@@ -487,7 +488,8 @@ class App extends Component {
           isFetchInProgress={this.props.isFetchInProgress}
           currentUserId={this.props.userProfile._id}
           screenWidth={this.state.screenWidth}
-          screenHeight={this.state.screenHeight} />
+          screenHeight={this.state.screenHeight} 
+          logout={() => this.props.logout()}/>
         <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
         {ChatAppLink}
       </div>
@@ -555,6 +557,7 @@ const mapDispatchToProps = dispatch => ({
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
+  logout: bindActionCreators(logout, dispatch),
 })
 
 const mapStateToProps = state => ({

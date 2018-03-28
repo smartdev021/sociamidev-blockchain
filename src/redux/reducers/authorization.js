@@ -18,6 +18,8 @@ import {
 
     PROGRESSION_TREE_STOP_INITIATE,
     PROGRESSION_TREE_STOP_COMPLETE,
+
+    USER_LOG_OUT,
     
 } from '~/src/redux/actions/actionTypes';
 
@@ -61,6 +63,8 @@ export function userProfile(state = userProfileInitialState, action) {
   switch (action.type) {
     case FETCH_USER_PROFILE_INITIATE:
       return {...state, isLoading: true};
+    case USER_LOG_OUT:
+      return userProfileInitialState;
     case FETCH_USER_PROFILE_COMPLETE:
       return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
     case UPDATE_USER_PROFILE_INITIATE:

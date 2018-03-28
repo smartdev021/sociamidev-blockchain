@@ -46,7 +46,7 @@ class ThemeHeader extends React.Component {
     }
 
     onSignOut() {
-        window.location.reload();
+        this.props.logout();
     }
 
     render() {

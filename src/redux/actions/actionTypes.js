@@ -112,3 +112,5 @@ export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = "fetch_list_character_traits
 
 export const UPDATE_USER_PROFILE_INITIATE = "update_user_profile_initiate";
 export const UPDATE_USER_PROFILE_COMPLETE = "update_user_profile_complete";
+
+export const USER_LOG_OUT = "user_log_out";
