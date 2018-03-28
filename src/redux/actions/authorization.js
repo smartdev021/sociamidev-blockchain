@@ -75,7 +75,6 @@ export function updateUserProfileComplete(userProfile) {
 export function fetchUserProfileInitiate() {
     return {
         type: FETCH_USER_PROFILE_INITIATE,
-        profile: {}
     }
 }
 
