@@ -84,7 +84,7 @@ class TooltipUser extends Component {
 
       })
       .catch((error) => {
-        console.warn(error);
+        // console.warn(error);
         this.setState({
           connectionStatus: "no-friend"
         })
@@ -183,7 +183,6 @@ class TooltipUser extends Component {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              this.friendRequest("Reject");
             }}
           >
             <FontAwesome.FaUserTimes size={25} style={{ marginRight: "10px" }} />

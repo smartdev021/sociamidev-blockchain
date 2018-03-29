@@ -330,7 +330,7 @@ const DayFromNumber = (dayNum)=> {
     return result;
   }
 
-  const HangoutTitleFromStatus = (task, Partner) => {
+  const HangoutTitleFromStatus = (task, Partner, props) => {
     let result = <h4> <a href="#" className="link-black"></a> </h4>
   
     if (!Partner) {
@@ -415,7 +415,7 @@ const DayFromNumber = (dayNum)=> {
   
       //Current user has created this hangout
       if (task.creator._id == props.currentUserID) {
-        result = HangoutTitleFromStatus(task, Partner);
+        result = HangoutTitleFromStatus(task, Partner, props);
       }
       else {
         const CurrentUserAsParticipant = GetCurrentUserAsParticipant(task, props);
@@ -442,7 +442,7 @@ const DayFromNumber = (dayNum)=> {
             }
             default: {
               //request 'accepted'
-              result = HangoutTitleFromStatus(task, Partner);
+              result = HangoutTitleFromStatus(task, Partner, props);
               break;
             }
           }
