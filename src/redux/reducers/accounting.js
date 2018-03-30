@@ -3,7 +3,7 @@ import {
   USER_ACCOUNTING_FETCH_COMPLETE,
 } from '~/src/redux/actions/actionTypes';
 
-const initialState = {data: {numTokens: 0}, isLoading: false};
+const initialState = {data: {numTokens: 0, userTransactions: []}, isLoading: false};
 
 export function accounting(state = initialState, action) {
   switch (action.type) {
@@ -13,7 +13,10 @@ export function accounting(state = initialState, action) {
       if (!action.data) {
         return initialState;
       }
-      return {...state, isLoading: false, data: action.data};
+      return {...state, isLoading: false, data: {
+        numTokens: (action.data.userAccounting && action.data.userAccounting.numTokens) ? action.data.userAccounting.numTokens : state.data.numTokens,
+        userTransactions: action.data.userTransactions || state.data.userTransactions
+      }};
     }
     
     default:
