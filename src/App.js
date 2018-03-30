@@ -173,7 +173,7 @@ class App extends Component {
       PubSub.unsubscribe(this.token_server_event_tasks_update);
       this.token_server_event_tasks_update = undefined;
     }
-    
+
     if (this.token_server_event_accounting_update) {
       PubSub.unsubscribe(this.token_server_event_accounting_update);
       this.token_server_event_accounting_update = undefined;
@@ -442,6 +442,7 @@ class App extends Component {
   chatEndListener(event, data) {
     socketConn.emit(data.eventType, data.data);
   }
+
   render() {
     if (!this.props.isAuthorized) {
       return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
@@ -496,31 +497,10 @@ class App extends Component {
           isFetchInProgress={this.props.isFetchInProgress}
           currentUserId={this.props.userProfile._id}
           screenWidth={this.state.screenWidth}
-          screenHeight={this.state.screenHeight} 
+          screenHeight={this.state.screenHeight}
           accounting={this.props.accounting}
-          logout={() => this.props.logout()}/>
+          logout={() => this.props.logout()} />
         <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
-        {ChatAppLink}
-      </div>
-    );
-
-    return (
-      <div className="outer-container">
-        <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-          onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-          onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-          onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-          onHandleSignUpFacebook={() => this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
-          onFetchAllTasks={(publishedOnly) => this.props.fetchAllTasks(publishedOnly)}
-          isAuthorized={this.props.isAuthorized}
-          pathname={this.props.history.location.pathname}
-          isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
-          openSignUpForm={this.props.openSignUpForm}
-          searchQuery={this.props.searchQuery}
-          onHandleQueryChange={this.props.setSearchQuery}
-          currentUserId={this.props.userProfile._id}
-          userProfile={this.props.userProfile}
-          isFetchInProgress={this.props.isFetchInProgress} />
         {ChatAppLink}
       </div>
     );

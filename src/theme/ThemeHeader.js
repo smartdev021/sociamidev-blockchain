@@ -17,6 +17,8 @@ import StatsDropdown from '~/src/theme/components/StatsDropdown'
 
 import ConfigMain from '~/configs/main'
 
+import { ToastContainer, toast } from 'react-toastify';
+
 class ThemeHeader extends React.Component {
 
     constructor(props) {
@@ -24,6 +26,7 @@ class ThemeHeader extends React.Component {
 
         this.state = {
             notificationsOpen: false,
+            allowTokenNotifications: false,
         }
     }
 
@@ -43,6 +46,21 @@ class ThemeHeader extends React.Component {
                 this.props.fetchUserActivities(this.props.currentUserID);
             }
         }
+
+        if (prevProps.accounting.data.numTokens < this.props.accounting.data.numTokens) {
+            if (this.state.allowTokenNotifications) {
+                const numTokens = this.props.accounting.data.numTokens - prevProps.accounting.data.numTokens;
+                this.showNotification(`Congratulations: You've earned ${numTokens} ${numTokens > 1 ? "tokens" : "token"}!!!`);
+                //hack - avoid showing notification on each sign in
+            }
+            else {
+                this.setState({ allowTokenNotifications: true });
+            }
+        }
+    }
+
+    showNotification(message) {
+        toast(message, { position: toast.POSITION.TOP_CENTER });
     }
 
     onSignOut() {
@@ -63,6 +81,7 @@ class ThemeHeader extends React.Component {
 
         return (
             <div className="session-header" id="popup-root">
+                <ToastContainer />
                 {this.state.notificationsOpen && <Notifications onClose={() => this.handleNotificationsClose()} userActivities={this.props.userActivities} />}
                 <div className="container-fluid">
                     <div className="row">
@@ -89,7 +108,7 @@ class ThemeHeader extends React.Component {
                             <div className="task-manager">
                                 {!ConfigMain.ChallengesScannerDisabled ? <Link to='/projectManagement' className="btn-base btn-yellow">Challenges Scanner</Link>
                                     :
-                                    <div className="btn-base btn-yellow disabled" style={{ cursor: "default", position: "relative"}}>
+                                    <div className="btn-base btn-yellow disabled" style={{ cursor: "default", position: "relative" }}>
                                         <span>Challenges Scanner</span>
                                         <div style={{
                                             fontSize: "10px",
@@ -108,7 +127,7 @@ class ThemeHeader extends React.Component {
                         </div>
                         <div className="col-md-3">
                             <ul className="navbar-top-links">
-                                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting}/>
+                                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
                                 <li className="mail">
                                     <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
                                         <Icon name="envelope" aria-hidden="true"></Icon>
