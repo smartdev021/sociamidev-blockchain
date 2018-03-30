@@ -114,3 +114,6 @@ export const UPDATE_USER_PROFILE_INITIATE = "update_user_profile_initiate";
 export const UPDATE_USER_PROFILE_COMPLETE = "update_user_profile_complete";
 
 export const USER_LOG_OUT = "user_log_out";
+
+export const USER_ACCOUNTING_FETCH_INITIATE = "user_accounting_fetch_initiate";
+export const USER_ACCOUNTING_FETCH_COMPLETE = "user_accounting_fetch_complete";

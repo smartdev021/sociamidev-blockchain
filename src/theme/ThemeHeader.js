@@ -108,7 +108,7 @@ class ThemeHeader extends React.Component {
                         </div>
                         <div className="col-md-3">
                             <ul className="navbar-top-links">
-                                <StatsDropdown userProfile={this.props.userProfile} />
+                                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting}/>
                                 <li className="mail">
                                     <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
                                         <Icon name="envelope" aria-hidden="true"></Icon>

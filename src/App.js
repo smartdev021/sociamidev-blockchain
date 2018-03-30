@@ -58,6 +58,11 @@ import {
 
 } from '~/src/redux/actions/characterCreation'
 
+import {
+  fetchUserAccounting
+} from '~/src/redux/actions/accounting'
+
+
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
 let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");
@@ -150,7 +155,7 @@ class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
 
-    PubSub.unsubscribe(this.token_server_event_user_profile_update);
+    PubSub.unsubscribe(this.token_server_event_accounting_update);
     PubSub.unsubscribe(this.token_server_event_tasks_update);
   }
 
@@ -158,8 +163,8 @@ class App extends Component {
     if (!this.token_server_event_tasks_update) {
       this.token_server_event_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
     }
-    if (!this.token_server_event_user_profile_update) {
-      this.token_server_event_user_profile_update = PubSub.subscribe("user_profile_updated", this.serverEventUserProfileUpdate.bind(this));
+    if (!this.token_server_event_accounting_update) {
+      this.token_server_event_accounting_update = PubSub.subscribe("accounting_updated", this.serverEventAccountingUpdated.bind(this));
     }
   }
 
@@ -169,9 +174,9 @@ class App extends Component {
       this.token_server_event_tasks_update = undefined;
     }
     
-    if (this.token_server_event_user_profile_update) {
-      PubSub.unsubscribe(this.token_server_event_user_profile_update);
-      this.token_server_event_user_profile_update = undefined;
+    if (this.token_server_event_accounting_update) {
+      PubSub.unsubscribe(this.token_server_event_accounting_update);
+      this.token_server_event_accounting_update = undefined;
     }
   }
 
@@ -184,12 +189,13 @@ class App extends Component {
     }
   };
 
-  serverEventUserProfileUpdate(msg, data) {
+  serverEventAccountingUpdated(msg, data) {
     console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
     console.dir(data);
 
-    if (data.eventType == "user_profile_updated") {
+    if (data.eventType == "accounting_updated") {
       this.fetchUserInfoFromDataBase(true);
+      this.props.fetchUserAccounting(this.props.userProfile._id);
     }
   };
 
@@ -386,6 +392,8 @@ class App extends Component {
 
         this.props.fetchUserActivities(this.props.userProfile._id);
 
+        this.props.fetchUserAccounting(this.props.userProfile._id);
+
         if (!this.props.userProfile.character) {
           this.props.startCharacterCreation();
         }
@@ -489,6 +497,7 @@ class App extends Component {
           currentUserId={this.props.userProfile._id}
           screenWidth={this.state.screenWidth}
           screenHeight={this.state.screenHeight} 
+          accounting={this.props.accounting}
           logout={() => this.props.logout()}/>
         <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
         {ChatAppLink}
@@ -558,6 +567,7 @@ const mapDispatchToProps = dispatch => ({
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
+  fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
 })
 
 const mapStateToProps = state => ({
@@ -575,6 +585,8 @@ const mapStateToProps = state => ({
   characterCreationData: state.characterCreationData,
   listCharacterTraits: state.characterCreation.listCharacterTraits,
   listCharacters: state.characterCreation.listCharacters,
+
+  accounting: state.accounting,
 
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,

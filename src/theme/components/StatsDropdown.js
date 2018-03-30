@@ -152,7 +152,7 @@ class StatsDropdown extends React.Component {
                 <div className="col-xs-6 text-center">
                 <span className="fa-stack fa-2x">
                   <i className="fa fa-database fa-stack-2x header-fa"></i>
-                  <span  className="fa fa-stack-1x hd-white"><b>{this.props.userProfile.numTokens? this.props.userProfile.numTokens: 0}</b></span>
+                  <span  className="fa fa-stack-1x hd-white"><b>{this.props.accounting.data.numTokens}</b></span>
                 </span>
                   <p className="text-center desc">
                     SOQQ
