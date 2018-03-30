@@ -84,7 +84,7 @@ class TooltipUser extends Component {
 
       })
       .catch((error) => {
-        console.warn(error);
+        // console.warn(error);
         this.setState({
           connectionStatus: "no-friend"
         })
@@ -133,6 +133,7 @@ class TooltipUser extends Component {
       connectionStatus: 0,
     });
 
+    console.log("friendRequest: ", action);
 
     const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
     Axios.post(url, {
@@ -141,6 +142,7 @@ class TooltipUser extends Component {
       connectAction: action
     })
       .then((response) => {
+        console.log("friendRequest:", response);
         if (response.data === 'success') {
           this.getMyFriendsFilter();
         } else {
@@ -183,7 +185,7 @@ class TooltipUser extends Component {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              this.friendRequest("Reject");
+              this.friendRequest(this.state.connectionStatus);
             }}
           >
             <FontAwesome.FaUserTimes size={25} style={{ marginRight: "10px" }} />
