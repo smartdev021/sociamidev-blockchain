@@ -26,7 +26,6 @@ class ThemeHeader extends React.Component {
 
         this.state = {
             notificationsOpen: false,
-            allowTokenNotifications: false,
         }
     }
 
@@ -48,14 +47,9 @@ class ThemeHeader extends React.Component {
         }
 
         if (prevProps.accounting.data.numTokens < this.props.accounting.data.numTokens) {
-            if (this.state.allowTokenNotifications) {
-                const numTokens = this.props.accounting.data.numTokens - prevProps.accounting.data.numTokens;
-                this.showNotification(`Congratulations: You've earned ${numTokens} ${numTokens > 1 ? "tokens" : "token"}!!!`);
-                //hack - avoid showing notification on each sign in
-            }
-            else {
-                this.setState({ allowTokenNotifications: true });
-            }
+
+            const numTokens = this.props.accounting.data.numTokens - prevProps.accounting.data.numTokens;
+            this.showNotification(`Congratulations: You've earned ${numTokens} ${numTokens > 1 ? "tokens" : "token"}!!!`);
         }
     }
 
