@@ -513,7 +513,7 @@ class TaskManager extends React.Component {
     const ScannerColClass = this.state.isScannerExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
 
     return (
-      <div className="row">
+      <div className="row content-wrap">
         <div className={MyTasksColClass}>
         {this.state.isAnswerQuestionsOpen &&
             <AnswerQuestions currentTask={this.state.activeHangout}

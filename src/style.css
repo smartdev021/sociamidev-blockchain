@@ -92,8 +92,9 @@ html, body {
     -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
-    position: relative;
+    position: fixed;
     z-index: 999999;
+    margin: 0;
 }
 
 .menu-hamburger{
@@ -275,8 +276,7 @@ html, body {
 
 .category-left{
     width: 250px;
-    height: 93%;
-    /* min-height: 91%%; */
+    height: 100%;
     -webkit-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
@@ -382,14 +382,14 @@ html, body {
     margin: 0 0 0 250px;
     /* width: 100%; */
     height: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     display: block;
 
 }
 
 .head-deep{
     padding: 60px 0px 30px;
-    margin: 0px auto;
+    /* margin: 0px auto; */
     text-align: center;
     position: relative;
     width: 200px;
@@ -501,7 +501,7 @@ html, body {
     width: 100%;
     height: 100%;
     padding: 10px;
-    min-height: 100vh;
+    min-height: 100%;
     overflow-y: scroll
 }
 
@@ -1196,8 +1196,24 @@ html, body {
     }
 }
 
-@media all and (max-width: 360px) {
-
+@media all and (max-width: 990px) {
+    .category-left{
+        padding-top: 150px;
+    }
+    .content-tokens{
+        padding-top: 150px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .category-left{
+        padding-top: 60px !important;
+    }
+    .content-tokens{
+        padding-top: 60px !important;
+    }
 }
 
-/*font-family: 'Fjalla One', sans-serif;*/
+.content-wrap{
+    display: flex;   
+    min-height: 100vh;
+}
