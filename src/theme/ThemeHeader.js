@@ -19,6 +19,8 @@ import ConfigMain from '~/configs/main'
 
 import { ToastContainer, toast } from 'react-toastify';
 
+import { withCookies, Cookies } from 'react-cookie';
+
 class ThemeHeader extends React.Component {
 
     constructor(props) {
@@ -48,9 +50,23 @@ class ThemeHeader extends React.Component {
 
         if (prevProps.accounting.data.numTokens < this.props.accounting.data.numTokens) {
 
-            const numTokens = this.props.accounting.data.numTokens - prevProps.accounting.data.numTokens;
-            this.showNotification(`Congratulations: You've earned ${numTokens} ${numTokens > 1 ? "tokens" : "token"}!!!`);
+            const { cookies } = this.props;
+            const numTokensFromCookies = cookies.get("tokens_total");
+
+            if (!numTokensFromCookies || this.props.accounting.data.numTokens > numTokensFromCookies) {
+                const amountEarned = this.props.accounting.data.numTokens - prevProps.accounting.data.numTokens;
+                this.showNotification(`Congratulations: You've earned ${amountEarned} ${amountEarned > 1 ? "tokens" : "token"}!!!`);
+
+                this.storeNumTokensInCookies(this.props.accounting.data.numTokens);
+            }
         }
+    }
+
+    storeNumTokensInCookies(numTokens) {
+        const { cookies } = this.props;
+        let dateExpire = new Date();
+        dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
+        cookies.set("tokens_total", numTokens, { path: '/', expires: dateExpire });
     }
 
     showNotification(message) {
@@ -165,4 +181,4 @@ class ThemeHeader extends React.Component {
     }
 }
 
-export default ThemeHeader;
+export default withCookies(ThemeHeader);
