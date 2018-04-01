@@ -261,7 +261,7 @@ class ProgressionTrees extends React.Component {
     }
     
     return (
-        <div className="row">
+        <div className="row content-wrap">
           {this.state.isAcceptProgressionTreePopupOpen 
               && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
               tree={this.state.selectedTree}
