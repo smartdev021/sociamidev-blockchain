@@ -50,9 +50,9 @@ class UserProfile extends React.Component {
 			mentees: 36,
 			rating: 10,
 			blogs: [
-				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '30 minutes ago'}, 
-				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago'},
-				{text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago'}],
+				{ text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '30 minutes ago' },
+				{ text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '1 day ago' },
+				{ text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium quisquam minima aliquam, necessitatibus repudiandae maiores.', date: '2 days ago' }],
 			promoCode: "",
 			promocodesUsed: [],
 		}
@@ -74,17 +74,17 @@ class UserProfile extends React.Component {
 
 	updatePromoCodesUsed() {
 		Axios.get(`${ConfigMain.getBackendURL()}/couponsGet?ownerUserId=${this.props.userProfile._id}&isUsed=${true}`)
-		.then((results) => {
-			this.setState({promocodesUsed: results.data});
-		})
-		.catch((error) => {
-			console.log(error);
-		});
+			.then((results) => {
+				this.setState({ promocodesUsed: results.data });
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	handleInputPromoCode(e) {
 		if (e.target.value.length === 0 || /^[0-9a-zA-Z]+$/.test(e.target.value)) {
-			this.setState({promoCode: e.target.value.toUpperCase()});
+			this.setState({ promoCode: e.target.value.toUpperCase() });
 		}
 	}
 
@@ -104,33 +104,33 @@ class UserProfile extends React.Component {
 			console.dir(body);
 
 			Axios.post(`${ConfigMain.getBackendURL()}/couponRedeem`, body)
-			.then((result) => {
-				this.setState({promoCode: ""});
-				this.updatePromoCodesUsed();
-			})
-			.catch((error) => {
-				if (error.response && error.response.status) {
-					if (error.response.status === 423) {
-						if (error.response.data && error.response.data.status) {
-							if (error.response.data.status == "used") {
-								alert("Code already used");
+				.then((result) => {
+					this.setState({ promoCode: "" });
+					this.updatePromoCodesUsed();
+				})
+				.catch((error) => {
+					if (error.response && error.response.status) {
+						if (error.response.status === 423) {
+							if (error.response.data && error.response.data.status) {
+								if (error.response.data.status == "used") {
+									alert("Code already used");
+								}
 							}
 						}
+						else if (error.response.status === 404) {
+							alert("Invalid code");
+						}
+						else if (error.response.status === 500) {
+							alert("Server error");
+						}
 					}
-					else if (error.response.status === 404) {
-						alert("Invalid code");
-					}
-					else if (error.response.status === 500) {
-						alert("Server error");
-					}
-				}
-			})
+				})
 		}
 	}
 
 	handlePromoInputKeyPress(event) {
-		if(event.key == 'Enter'){
-		  this.handleRedeemCode();
+		if (event.key == 'Enter') {
+			this.handleRedeemCode();
 		}
 	}
 
@@ -146,11 +146,35 @@ class UserProfile extends React.Component {
 
 		return (
 			<div id="userprofile-page-character-info">
-			  {CharacterClass.imageURL ? <img src={CharacterClass.imageURL}/> 
-			  : <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png"/>}
-			  <h2>{CharacterClass.name}</h2>
-			  <h3>{CharacterTraits.name}</h3>
-			  <h4>{CharacterTraits.description}</h4>
+				{CharacterClass.imageURL ? <img src={CharacterClass.imageURL} />
+					: <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png" />}
+				<h2>{CharacterClass.name}</h2>
+				<h3>{CharacterTraits.name}</h3>
+				<h4>{CharacterTraits.description}</h4>
+			</div>
+		)
+	}
+
+	renderTransactions() {
+		if (!this.props.accounting || !this.props.accounting.data.userTransactions || this.props.accounting.data.userTransactions.length === 0) {
+			return null;
+		}
+
+		return (
+			<div id="userprofile-page-transactions-log">
+				<h2>Transaction log</h2>
+				<ul>
+					{
+						this.props.accounting.data.userTransactions.map((transaction, i) => {
+							const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
+								: `"${transaction.source.illuminate.name}"`;
+
+							return (
+								<li key={i}><span>{`Received: ${transaction.numTokens} ${transaction.numTokens > 1 ? "tokens" : "token"} for ${Source} `}</span></li>
+							)
+						})
+					}
+				</ul>
 			</div>
 		)
 	}
@@ -162,15 +186,15 @@ class UserProfile extends React.Component {
 			let ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels;
 
 			if (!ProgressionTreeLevels || ProgressionTreeLevels.length == 0) {
-				UserProgressionTrees.forEach(function(progressionTree) {
+				UserProgressionTrees.forEach(function (progressionTree) {
 					ProgressionTreeLevels.push({
 						_id: progressionTree._id, name: progressionTree.name, currentLevelXP: 0, totalXP: 0, level: 0
 					});
 				});
 			}
 			else {
-				UserProgressionTrees.forEach(function(progressionTree) {
-					if (!ProgressionTreeLevels.find(function(progressionTreeLevel) {
+				UserProgressionTrees.forEach(function (progressionTree) {
+					if (!ProgressionTreeLevels.find(function (progressionTreeLevel) {
 						return progressionTreeLevel._id == progressionTree._id;
 					})) {
 						ProgressionTreeLevels.push({
@@ -182,28 +206,28 @@ class UserProfile extends React.Component {
 
 			return (
 				<div className="progressionTreeLevels">
-				  <ul>
-					  {
-						ProgressionTreeLevels.map(function(ProgTreeLevel, i) {
-							return (
-							  <li key={i}>
-								<span className="prog-tree-list-column">
-								   {ProgTreeLevel.name}
-								 </span>
-								 <span className="prog-tree-list-column">
-								   CurrentLevelXP: {ProgTreeLevel.currentLevelXP}
-								 </span>
-								 <span className="prog-tree-list-column">
-								   TotalXP: {ProgTreeLevel.totalXP}
-								 </span>
-								 <span className="prog-tree-list-column">
-								   Level: {ProgTreeLevel.level}
-								 </span>
-							  </li>
-							);
-						})
-					  }
-				  </ul>
+					<ul>
+						{
+							ProgressionTreeLevels.map(function (ProgTreeLevel, i) {
+								return (
+									<li key={i}>
+										<span className="prog-tree-list-column">
+											{ProgTreeLevel.name}
+										</span>
+										<span className="prog-tree-list-column">
+											CurrentLevelXP: {ProgTreeLevel.currentLevelXP}
+										</span>
+										<span className="prog-tree-list-column">
+											TotalXP: {ProgTreeLevel.totalXP}
+										</span>
+										<span className="prog-tree-list-column">
+											Level: {ProgTreeLevel.level}
+										</span>
+									</li>
+								);
+							})
+						}
+					</ul>
 				</div>
 			)
 		}
@@ -214,10 +238,10 @@ class UserProfile extends React.Component {
 	renderPromoCodeSection() {
 		return (
 			<div id="userprofile-promocode-section">
-			  <button id="userprofile-promocode-submit" type="button" className="btn-base btn-yellow" 
-                    onClick={() => this.handleRedeemCode()}>Redeem code</button>
-			  <input type="text" autoFocus={true} onKeyPress={(e) => this.handlePromoInputKeyPress(e)} maxLength={16}
-			    value={this.state.promoCode} onChange={(e) => this.handleInputPromoCode(e)}/>
+				<button id="userprofile-promocode-submit" type="button" className="btn-base btn-yellow"
+					onClick={() => this.handleRedeemCode()}>Redeem code</button>
+				<input type="text" autoFocus={true} onKeyPress={(e) => this.handlePromoInputKeyPress(e)} maxLength={16}
+					value={this.state.promoCode} onChange={(e) => this.handleInputPromoCode(e)} />
 
 				{
 					this.state.promocodesUsed.map((promocodeUsed, i) => {
@@ -239,7 +263,7 @@ class UserProfile extends React.Component {
 				<div className="col-md-11 col-sm-11">
 					<div className="new-userProf-wrap">
 						<div className="col-md-2 col-sm-12 new-user-padding">
-							<img className="new-userProf-img" src={this.props.userProfile.pictureURL 
+							<img className="new-userProf-img" src={this.props.userProfile.pictureURL
 								? this.props.userProfile.pictureURL : profilePic} />
 							<div className="new-userProf-dot new-userProf-green"></div>
 						</div>
@@ -249,12 +273,12 @@ class UserProfile extends React.Component {
 									<h4 className="new-user-name">{this.state.firstName} {this.state.lastName}</h4>
 									<p className="new-user-work">{this.state.work}</p>
 									<p className="new-user-text">{this.state.from}</p>
-									<br/>
-									<p className="new-user-text">{this.props.userProfile.email 
+									<br />
+									<p className="new-user-text">{this.props.userProfile.email
 										? this.props.userProfile.email : "mail@example.com"}</p>
-									<br/>
+									<br />
 									<p className="new-user-text">{this.state.url}</p>
-									<br/>
+									<br />
 									<p className="new-user-text">{this.state.tel}</p>
 								</div>
 							</div>
@@ -281,52 +305,57 @@ class UserProfile extends React.Component {
 									<img className="new-user-mentees" src={mentees} />
 									<p className="new-user-text-mentees-num">{this.state.mentees} <span className="new-user-text-mentees">mentees</span></p>
 									<div className="new-user-stars-wrap">
-										<span className="new-user-rating">Rating: {this.props.userProfile.rating 
-										? this.props.userProfile.rating : 0}</span>
-										<StarRatings rating={this.props.userProfile.rating 
-										? this.props.userProfile.rating/2 : 0} 
-											isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
+										<span className="new-user-rating">Rating: {this.props.userProfile.rating
+											? this.props.userProfile.rating : 0}</span>
+										<StarRatings rating={this.props.userProfile.rating
+											? this.props.userProfile.rating / 2 : 0}
+											isSelectable={false} isAggregateRating={true} numOfStars={5}
 											starWidthAndHeight={'35px'} starSpacing={'2px'}
 											starEmptyColor={"white"}
-											starRatedColor={"rgb(255, 204, 0)"}/>
+											starRatedColor={"rgb(255, 204, 0)"} />
 									</div>
 								</div>
 							</div>
 						</div>
 						<div className="row">
-						  <div className="col-lg-12">
-						    {this.renderLevels()}
-						  </div>
+							<div className="col-lg-12">
+								{this.renderLevels()}
+							</div>
 						</div>
 						<div className="row">
-						  <div className="col-lg-12">
-						    {this.renderCharacter()}
-						  </div>
+							<div className="col-lg-12">
+								{this.renderTransactions()}
+							</div>
 						</div>
 						<div className="row">
-						  <div className="col-lg-12">
-						    {this.renderPromoCodeSection()}
-						  </div>
+							<div className="col-lg-12">
+								{this.renderCharacter()}
+							</div>
+						</div>
+						<div className="row">
+							<div className="col-lg-12">
+								{this.renderPromoCodeSection()}
+							</div>
 						</div>
 						{this.state.blogs.map((item, index) => {
 							return (
 								<div className="row" key={index}>
 									<div className="col-md-11 col-sm-12 new-user-bottom-width">
-									<div className="new-user-bottom-tasks">
-										<div className="new-user-bottom-tasks-text">
-											<p className="new-user-work">{item.text}</p>
-										</div>
-										<div className="new-user-bottom-comment-date">
-											<div className="new-user-bottom-comment">
-												<p className="new-user-bottom-comment-text">Comment</p>
+										<div className="new-user-bottom-tasks">
+											<div className="new-user-bottom-tasks-text">
+												<p className="new-user-work">{item.text}</p>
 											</div>
-											<div className="new-user-bottom-date">
-												<p className="new-user-bottom-date-text">{item.date}</p>
+											<div className="new-user-bottom-comment-date">
+												<div className="new-user-bottom-comment">
+													<p className="new-user-bottom-comment-text">Comment</p>
+												</div>
+												<div className="new-user-bottom-date">
+													<p className="new-user-bottom-date-text">{item.date}</p>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 							)
 						})}
 					</div>
@@ -369,6 +398,7 @@ const mapStateToProps = state => ({
 	isFetchingCharacterTraits: state.characterCreation.isFetchingCharacterTraits,
 	listCharacters: state.characterCreation.listCharacters,
 	listCharacterTraits: state.characterCreation.listCharacterTraits,
+	accounting: state.accounting,
 })
 
 const mapDispatchToProps = dispatch => ({

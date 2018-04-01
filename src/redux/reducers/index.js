@@ -10,6 +10,7 @@ import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./p
 import { userFriends } from "./social"
 import { userFriendsActivities } from "./activities"
 import { characterCreation, characterCreationData } from "./characterCreation"
+import { accounting } from "./accounting"
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -38,4 +39,5 @@ export default combineReducers({
   isTasksUpdateInProgress,
   characterCreation,
   characterCreationData,
+  accounting,
 });

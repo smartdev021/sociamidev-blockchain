@@ -92,6 +92,7 @@ class ChatApp extends React.Component {
   }
 
   openChat(event, data) {
+    this.state.chatButtonToggle = true;
     this.tabChanges(data.user._id, `${data.user.firstName} ${data.user.lastName}`)
   }
   chatStartListener(event,data){

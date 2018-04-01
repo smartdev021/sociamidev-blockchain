@@ -102,9 +102,9 @@ class Main extends React.Component {
       return (
         <div className="wrapper">
           {RedirectTo}
-          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} 
+          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} logout={() => this.props.logout()}
             fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
-            isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile}/>
+            isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile} accounting={this.props.accounting}/>
           <div className="session-content">
             <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/>
             <div className="content-tokens">

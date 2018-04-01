@@ -30,10 +30,10 @@ const ProgressiontreesMyProgress = (props) => {
 									isSelectable={false} isAggregateRating={true} numOfStars={ 5 } 
 										starWidthAndHeight={'20px'} starSpacing={'2px'}
 										starEmptyColor={"white"}
-										starRatedColor={"rgb(180, 177, 3)"}/>
+										starRatedColor={"rgb(239, 206, 74)"}/>
 								</span>
 								<p className="progression-tree-my-descr">{roadmap.description}</p>
-								<ActionLink className="progression-tree-my-text tree-bin-wrap" onClick={()=> props.stopProgressionTree(roadmap._id)}>
+								<ActionLink className="tree-bin-wrap" onClick={()=> props.stopProgressionTree(roadmap._id)}>
 									<img src={wastBin} alt="waste_bin" />
 								</ActionLink>
 								<hr/>

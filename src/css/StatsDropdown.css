@@ -37,7 +37,7 @@ Dropdown Style
   .navbar-top-links > .stats-menu > .dropdown-menu {
     background-color: #31A6D2;
     position: absolute;
-    left: 0;
+    right: 0;
     margin-top: -6px;
   }
 }
