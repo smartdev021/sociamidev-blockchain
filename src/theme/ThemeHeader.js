@@ -19,9 +19,6 @@ import ConfigMain from '~/configs/main'
 
 import { ToastContainer, toast } from 'react-toastify';
 
-import { withCookies, Cookies } from 'react-cookie';
-import UserMenuDropdown from './components/UserMenuDropdown';
-
 import PubSub from 'pubsub-js';
 
 class ThemeHeader extends React.Component {
@@ -32,6 +29,16 @@ class ThemeHeader extends React.Component {
         this.state = {
             notificationsOpen: false,
         }
+    }
+
+    handleNotificationsOpen() {
+        if (this.props.userActivities.length > 0) {
+            this.setState({ notificationsOpen: true });
+        }
+    }
+
+    handleNotificationsClose() {
+        this.setState({ notificationsOpen: false });
     }
 
     componentWillMount() {
@@ -53,16 +60,6 @@ class ThemeHeader extends React.Component {
             PubSub.unsubscribe(this.token_server_event_accounting_update);
             this.token_server_event_accounting_update = undefined;
         }
-    }
-
-    handleNotificationsOpen() {
-        if (this.props.userActivities.length > 0) {
-            this.setState({ notificationsOpen: true });
-        }
-    }
-
-    handleNotificationsClose() {
-        this.setState({ notificationsOpen: false });
     }
 
     serverEventAccountingUpdated(msg, data) {
@@ -110,10 +107,8 @@ class ThemeHeader extends React.Component {
             return !activity.witnessIDs || !activity.witnessIDs.find(function (witnessID) { return witnessID == CurrentUserID; })
         }).length : 0;
 
-        const NumNotificationsString = NumNotifications > 0 ? `${NumNotifications}` : '';
+        const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
 
-        const labelNotif = NumNotifications > 0 ? <span className="label-notif">{NumNotificationsString}</span>  : ''
-        
         const OpenMenuClass = !this.props.isSidebarOpen ? "open-menu" : "open-menu";
         const CloseMenuClass = this.props.isSidebarOpen ? "close-menu" : "close-menu";
 
@@ -123,7 +118,7 @@ class ThemeHeader extends React.Component {
                 {this.state.notificationsOpen && <Notifications onClose={() => this.handleNotificationsClose()} userActivities={this.props.userActivities} />}
                 <div className="container-fluid">
                     <div className="row">
-                        <div id="nav-menu" className="nav-menu">
+                        <div className="col-md-3">
                             <div className="menu-hamburger">
                                 <ActionLink href="#" className={OpenMenuClass} style={{ dispay: "none" }} onClick={() => this.props.openSidebar(true)} style={{ display: !this.props.isSidebarOpen ? "block" : "none" }}>
                                     <span></span>
@@ -138,31 +133,11 @@ class ThemeHeader extends React.Component {
                             <h1 className="logo">
                                 <Link to='/'>
                                     <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt="" />
-                                    {/* <span style={{ color: 'white', fontSize: '14px', position: 'relative', bottom: '-16px', left: '-30px' }}>alpha</span> */}
+                                    <span style={{ color: 'white', fontSize: '14px', position: 'relative', bottom: '-16px', left: '-30px' }}>alpha</span>
                                 </Link>
                             </h1>
                         </div>
-
-                        <div id="nav-links" className="nav-links">
-                            <ul className="navbar-top-links">
-                                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
-                                <li className="notification">
-                                    <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
-                                        <Icon name="bell" aria-hidden="true"></Icon>
-                                        {/* {labelNotif} */}
-                                    </ActionLink>
-                                </li>
-                                <li className="register">
-                                    <Link href="#" to='/connectionsView'>
-                                        <Icon name="user-plus" aria-hidden="true"></Icon>
-                                    </Link>
-                                </li>
-                                <UserMenuDropdown userProfile={this.props.userProfile} 
-                                onSignOut={()=>this.onSignOut()}/>
-                            </ul>
-                        </div>
-
-                        <div id="nav-tasks" className="nav-tasks">
+                        <div className="col-md-6">
                             <div className="task-manager">
                                 {!ConfigMain.ChallengesScannerDisabled ? <Link to='/projectManagement' className="btn-base btn-yellow">Challenges Scanner</Link>
                                     :
@@ -183,6 +158,44 @@ class ThemeHeader extends React.Component {
                                 <Link to='/taskManagement' className="btn-base btn-yellow">Tasks Manager</Link>
                             </div>
                         </div>
+                        <div className="col-md-3">
+                            <ul className="navbar-top-links">
+                                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
+                                <li className="mail">
+                                    <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
+                                        <Icon name="envelope" aria-hidden="true"></Icon>
+                                    </ActionLink>{NumNotificationsString}
+                                </li>
+                                <li className="notification">
+                                    <a href="#">
+                                        <Icon name="bell" aria-hidden="true"></Icon>
+                                    </a>
+                                </li>
+                                <li className="register">
+                                    <Link href="#" to='/connectionsView'>
+                                        <Icon name="user-plus" aria-hidden="true"></Icon>
+                                    </Link>
+                                </li>
+
+                                <li className="account privacy">
+                                    <Link href="#" to='/privacy'>
+                                        <Icon name="gear" aria-hidden="true"></Icon>
+                                    </Link>
+                                </li>
+                                <li className="account profile">
+                                    <Link href="#" to='/userProfile'>
+                                        <Icon name="user-o" aria-hidden="true"></Icon>
+                                    </Link>
+                                </li>
+                                <li className="account-logout">
+                                    <ActionLink className="text-logout" href="#" onClick={() => this.onSignOut()}>
+                                        <span>Logout</span>
+                                        {/*<Icon name="user" aria-hidden="true">*/}
+                                        {/*</Icon>*/}
+                                    </ActionLink>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                 </div>
@@ -191,4 +204,4 @@ class ThemeHeader extends React.Component {
     }
 }
 
-export default withCookies(ThemeHeader);
+export default ThemeHeader;
