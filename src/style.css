@@ -1238,7 +1238,7 @@ html, body {
     .nav-tasks{
         position: fixed;
         margin-top: 60px;
-        margin-left: 25px;
+        margin-left: 3px;
     }
     .session-header{
         height: 120px;
@@ -1246,6 +1246,9 @@ html, body {
     .label-notif{
         top: 6px;
         right: 95px;
+    }
+    .btn-nav{
+        width:110px;
     }
 }
 @media screen and (min-width: 992px) {
@@ -1264,5 +1267,8 @@ html, body {
     .nav-tasks{
         float: left;
         margin-left: 20%;
+    }
+    .btn-nav{
+        width: 130px;
     }
 }

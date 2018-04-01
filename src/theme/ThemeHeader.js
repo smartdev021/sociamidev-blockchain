@@ -165,8 +165,12 @@ class ThemeHeader extends React.Component {
                             <div className="task-manager">
                                 {!ConfigMain.ChallengesScannerDisabled ? <Link to='/projectManagement' className="btn-base btn-yellow">Challenges Scanner</Link>
                                     :
-                                    <div className="btn-base btn-yellow disabled" style={{ cursor: "default", position: "relative" }}>
-                                        <span>Challenges Scanner</span>
+                                    <div className="btn-nav btn-base btn-yellow disabled" 
+                                    style={{ cursor: "default", position: "relative", marginLeft :"5px", marginRight:"5px" }}>
+                                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/challenges.png"
+                                        style={{'width':'20px'}} />
+                                        {/* <span>CHALLENGES</span> */}
+                                        CHALLENGES
                                         <div style={{
                                             fontSize: "10px",
                                             position: "absolute",
@@ -178,8 +182,14 @@ class ThemeHeader extends React.Component {
                                     </div>
                                 }
 
-                                <Link to='/progressionTrees' className="btn-base btn-yellow">Tree Scanner</Link>
-                                <Link to='/taskManagement' className="btn-base btn-yellow">Tasks Manager</Link>
+                                <Link to='/progressionTrees' className="btn-nav btn-base btn-yellow">
+                                <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/progressionskill.png" 
+                                style={{'width':'20px'}}/>
+                                PROGRESSIONS</Link>
+                                <Link to='/taskManagement' className="btn-nav btn-base btn-yellow">
+                                <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/task.png" 
+                                style={{'width':'20px'}}/>
+                                TASKS</Link>
                             </div>
                         </div>
                     </div>
