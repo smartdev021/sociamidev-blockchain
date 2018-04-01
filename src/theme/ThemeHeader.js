@@ -19,8 +19,9 @@ import ConfigMain from '~/configs/main'
 
 import { ToastContainer, toast } from 'react-toastify';
 
-import { withCookies, Cookies } from 'react-cookie';
 import UserMenuDropdown from './components/UserMenuDropdown';
+
+import PubSub from 'pubsub-js';
 
 class ThemeHeader extends React.Component {
 
@@ -42,32 +43,55 @@ class ThemeHeader extends React.Component {
         this.setState({ notificationsOpen: false });
     }
 
+    componentWillMount() {
+        this.PubsubEventsSubscribe();
+    }
+
+    componentWillUnmount() {
+        this.PubsubEventsUnSubscribe();
+    }
+
+    PubsubEventsSubscribe() {
+        if (!this.token_server_event_accounting_update) {
+            this.token_server_event_accounting_update = PubSub.subscribe("accounting_updated", this.serverEventAccountingUpdated.bind(this));
+        }
+    }
+
+    PubsubEventsUnSubscribe() {
+        if (this.token_server_event_accounting_update) {
+            PubSub.unsubscribe(this.token_server_event_accounting_update);
+            this.token_server_event_accounting_update = undefined;
+        }
+    }
+
+    serverEventAccountingUpdated(msg, data) {
+        if (data && data.numTokens) {
+            let source = "";
+
+            if (data.source) {
+                if (data.source.illuminate) {
+                    source = `for ${data.source.illuminate.name}`;
+                }
+                else if (data.source.deepdive) {
+                    source = `for ${data.source.deepdive.name}`;
+                }
+            }
+
+            this.showNotification(`Congratulations: You've earned ${data.numTokens} ${data.numTokens > 1 ? "tokens" : "token"} ${source}!!!`);
+        }
+    };
+
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.isAuthorized != this.props.isAuthorized) {
             if (this.props.isAuthorized) {
                 this.props.fetchUserActivities(this.props.currentUserID);
+                this.PubsubEventsUnSubscribe();
+                this.PubsubEventsSubscribe();
+            }
+            else {
+                this.PubsubEventsUnSubscribe();
             }
         }
-
-        if (prevProps.accounting.data.numTokens < this.props.accounting.data.numTokens) {
-
-            const { cookies } = this.props;
-            const numTokensFromCookies = cookies.get("tokens_total");
-
-            if (!numTokensFromCookies || this.props.accounting.data.numTokens > numTokensFromCookies) {
-                const amountEarned = this.props.accounting.data.numTokens - prevProps.accounting.data.numTokens;
-                this.showNotification(`Congratulations: You've earned ${amountEarned} ${amountEarned > 1 ? "tokens" : "token"}!!!`);
-
-                this.storeNumTokensInCookies(this.props.accounting.data.numTokens);
-            }
-        }
-    }
-
-    storeNumTokensInCookies(numTokens) {
-        const { cookies } = this.props;
-        let dateExpire = new Date();
-        dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
-        cookies.set("tokens_total", numTokens, { path: '/', expires: dateExpire });
     }
 
     showNotification(message) {
@@ -87,8 +111,8 @@ class ThemeHeader extends React.Component {
 
         const NumNotificationsString = NumNotifications > 0 ? `${NumNotifications}` : '';
 
-        const labelNotif = NumNotifications > 0 ? <span className="label-notif">{NumNotificationsString}</span>  : ''
-        
+        const labelNotif = NumNotifications > 0 ? <span className="label-notif">{NumNotificationsString}</span> : ''
+
         const OpenMenuClass = !this.props.isSidebarOpen ? "open-menu" : "open-menu";
         const CloseMenuClass = this.props.isSidebarOpen ? "close-menu" : "close-menu";
 
@@ -132,8 +156,8 @@ class ThemeHeader extends React.Component {
                                         <Icon name="user-plus" aria-hidden="true"></Icon>
                                     </Link>
                                 </li>
-                                <UserMenuDropdown userProfile={this.props.userProfile} 
-                                onSignOut={()=>this.onSignOut()}/>
+                                <UserMenuDropdown userProfile={this.props.userProfile}
+                                    onSignOut={() => this.onSignOut()} />
                             </ul>
                         </div>
 
@@ -166,4 +190,4 @@ class ThemeHeader extends React.Component {
     }
 }
 
-export default withCookies(ThemeHeader);
+export default ThemeHeader;
