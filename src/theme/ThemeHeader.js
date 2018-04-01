@@ -137,7 +137,7 @@ class ThemeHeader extends React.Component {
                             <h1 className="logo">
                                 <Link to='/'>
                                     <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png" alt="" />
-                                    {/* <span style={{ color: 'white', fontSize: '14px', position: 'relative', bottom: '-16px', left: '-30px' }}>alpha</span> */}
+                                    <span style={{ color: 'white', fontSize: '14px', position: 'relative', bottom: '-16px', left: '-30px' }}>alpha</span>
                                 </Link>
                             </h1>
                         </div>
