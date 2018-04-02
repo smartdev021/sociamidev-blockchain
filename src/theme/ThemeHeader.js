@@ -17,6 +17,12 @@ import StatsDropdown from '~/src/theme/components/StatsDropdown'
 
 import ConfigMain from '~/configs/main'
 
+import { ToastContainer, toast } from 'react-toastify';
+
+import UserMenuDropdown from './components/UserMenuDropdown';
+
+import PubSub from 'pubsub-js';
+
 class ThemeHeader extends React.Component {
 
     constructor(props) {
@@ -37,16 +43,63 @@ class ThemeHeader extends React.Component {
         this.setState({ notificationsOpen: false });
     }
 
+    componentWillMount() {
+        this.PubsubEventsSubscribe();
+    }
+
+    componentWillUnmount() {
+        this.PubsubEventsUnSubscribe();
+    }
+
+    PubsubEventsSubscribe() {
+        if (!this.token_server_event_accounting_update) {
+            this.token_server_event_accounting_update = PubSub.subscribe("accounting_updated", this.serverEventAccountingUpdated.bind(this));
+        }
+    }
+
+    PubsubEventsUnSubscribe() {
+        if (this.token_server_event_accounting_update) {
+            PubSub.unsubscribe(this.token_server_event_accounting_update);
+            this.token_server_event_accounting_update = undefined;
+        }
+    }
+
+    serverEventAccountingUpdated(msg, data) {
+        if (data && data.numTokens) {
+            let source = "";
+
+            if (data.source) {
+                if (data.source.illuminate) {
+                    source = `for ${data.source.illuminate.name}`;
+                }
+                else if (data.source.deepdive) {
+                    source = `for ${data.source.deepdive.name}`;
+                }
+            }
+
+            this.showNotification(`Congratulations: You've earned ${data.numTokens} ${data.numTokens > 1 ? "tokens" : "token"} ${source}!!!`);
+        }
+    };
+
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.isAuthorized != this.props.isAuthorized) {
             if (this.props.isAuthorized) {
                 this.props.fetchUserActivities(this.props.currentUserID);
+                this.PubsubEventsUnSubscribe();
+                this.PubsubEventsSubscribe();
+            }
+            else {
+                this.PubsubEventsUnSubscribe();
             }
         }
     }
 
+    showNotification(message) {
+        toast(message, { position: toast.POSITION.TOP_CENTER });
+    }
+
     onSignOut() {
-        window.location.reload();
+        this.props.logout();
     }
 
     render() {
@@ -56,17 +109,20 @@ class ThemeHeader extends React.Component {
             return !activity.witnessIDs || !activity.witnessIDs.find(function (witnessID) { return witnessID == CurrentUserID; })
         }).length : 0;
 
-        const NumNotificationsString = NumNotifications > 0 ? `(${NumNotifications})` : "";
+        const NumNotificationsString = NumNotifications > 0 ? `${NumNotifications}` : '';
+
+        const labelNotif = NumNotifications > 0 ? <span className="label-notif">{NumNotificationsString}</span> : ''
 
         const OpenMenuClass = !this.props.isSidebarOpen ? "open-menu" : "open-menu";
         const CloseMenuClass = this.props.isSidebarOpen ? "close-menu" : "close-menu";
 
         return (
             <div className="session-header" id="popup-root">
+                <ToastContainer />
                 {this.state.notificationsOpen && <Notifications onClose={() => this.handleNotificationsClose()} userActivities={this.props.userActivities} />}
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div id="nav-menu" className="nav-menu">
                             <div className="menu-hamburger">
                                 <ActionLink href="#" className={OpenMenuClass} style={{ dispay: "none" }} onClick={() => this.props.openSidebar(true)} style={{ display: !this.props.isSidebarOpen ? "block" : "none" }}>
                                     <span></span>
@@ -85,12 +141,36 @@ class ThemeHeader extends React.Component {
                                 </Link>
                             </h1>
                         </div>
-                        <div className="col-md-6">
+
+                        <div id="nav-links" className="nav-links">
+                            <ul className="navbar-top-links">
+                                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
+                                <li className="notification">
+                                    <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
+                                        <Icon name="bell" aria-hidden="true"></Icon>
+                                        {/* {labelNotif} */}
+                                    </ActionLink>
+                                </li>
+                                <li className="register">
+                                    <Link href="#" to='/connectionsView'>
+                                        <Icon name="user-plus" aria-hidden="true"></Icon>
+                                    </Link>
+                                </li>
+                                <UserMenuDropdown userProfile={this.props.userProfile}
+                                    onSignOut={() => this.onSignOut()} />
+                            </ul>
+                        </div>
+
+                        <div id="nav-tasks" className="nav-tasks">
                             <div className="task-manager">
                                 {!ConfigMain.ChallengesScannerDisabled ? <Link to='/projectManagement' className="btn-base btn-yellow">Challenges Scanner</Link>
                                     :
-                                    <div className="btn-base btn-yellow disabled" style={{ cursor: "default", position: "relative"}}>
-                                        <span>Challenges Scanner</span>
+                                    <div className="btn-nav btn-base btn-yellow disabled" 
+                                    style={{ cursor: "default", position: "relative", marginLeft :"5px", marginRight:"5px" }}>
+                                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/challenges.png"
+                                        style={{'width':'20px'}} />
+                                        {/* <span>CHALLENGES</span> */}
+                                        CHALLENGES
                                         <div style={{
                                             fontSize: "10px",
                                             position: "absolute",
@@ -102,47 +182,15 @@ class ThemeHeader extends React.Component {
                                     </div>
                                 }
 
-                                <Link to='/progressionTrees' className="btn-base btn-yellow">Tree Scanner</Link>
-                                <Link to='/taskManagement' className="btn-base btn-yellow">Tasks Manager</Link>
+                                <Link to='/progressionTrees' className="btn-nav btn-base btn-yellow">
+                                <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/progressionskill.png" 
+                                style={{'width':'20px'}}/>
+                                PROGRESSIONS</Link>
+                                <Link to='/taskManagement' className="btn-nav btn-base btn-yellow">
+                                <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/task.png" 
+                                style={{'width':'20px'}}/>
+                                TASKS</Link>
                             </div>
-                        </div>
-                        <div className="col-md-3">
-                            <ul className="navbar-top-links">
-                                <StatsDropdown userProfile={this.props.userProfile} />
-                                <li className="mail">
-                                    <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
-                                        <Icon name="envelope" aria-hidden="true"></Icon>
-                                    </ActionLink>{NumNotificationsString}
-                                </li>
-                                <li className="notification">
-                                    <a href="#">
-                                        <Icon name="bell" aria-hidden="true"></Icon>
-                                    </a>
-                                </li>
-                                <li className="register">
-                                    <Link href="#" to='/connectionsView'>
-                                        <Icon name="user-plus" aria-hidden="true"></Icon>
-                                    </Link>
-                                </li>
-
-                                <li className="account privacy">
-                                    <Link href="#" to='/privacy'>
-                                        <Icon name="gear" aria-hidden="true"></Icon>
-                                    </Link>
-                                </li>
-                                <li className="account profile">
-                                    <Link href="#" to='/userProfile'>
-                                        <Icon name="user-o" aria-hidden="true"></Icon>
-                                    </Link>
-                                </li>
-                                <li className="account-logout">
-                                    <ActionLink className="text-logout" href="#" onClick={() => this.onSignOut()}>
-                                        <span>Logout</span>
-                                        {/*<Icon name="user" aria-hidden="true">*/}
-                                        {/*</Icon>*/}
-                                    </ActionLink>
-                                </li>
-                            </ul>
                         </div>
                     </div>
 

@@ -1,0 +1,76 @@
+/* 
+Dropdown Style
+*/
+
+.navbar-top-links li.user a {
+    color: #ffffff;
+    font-size: 22px;
+    display: inline-block;
+  }
+  .stats-body {
+    margin-left: 0px !important;
+    display: list-item !important;
+    font-family: 'FjallaOne-Regular' !important;
+  }
+
+.navbar-top-links > .user-menu > .dropdown-menu {
+    background-color: rgba(238, 137, 47, 1) !important;
+    box-shadow: 0px 3px 5px 2px rgba(0,0,0,0.3);
+  }
+
+  .user-body {
+    margin-left: 0px !important;
+    display: list-item !important;
+    font-family: 'FjallaOne-Regular' !important;
+  }
+  
+  @media (max-width: 991px) {
+    .navbar-top-links > .dropdown > a {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      line-height: 20px;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .navbar-collapse.pull-left {
+      float: none !important;
+    }
+    .navbar-collapse.pull-left + .navbar-custom-menu {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 40px;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .navbar-top-links > .user-menu > .dropdown-menu {
+      position: absolute;
+      right: 0;
+      margin-top: -6px;
+    }
+  }
+.user-name-tag{
+  padding-left: 40px;
+  color: white;
+}
+.user-links{
+  padding-left: 40px;
+  color: white;
+  padding-right: 40px
+}
+.name-tag{
+  margin-top: 3px;
+  font-size: 16px;
+}
+.user-hr{
+  margin-bottom: 5px !important;
+  margin-top: 5px !important;
+  border-color: white !important;
+}
+.user-link-text{
+  font-size: 16px !important;
+  padding-left: 32px !important;
+  margin: 4px;
+}

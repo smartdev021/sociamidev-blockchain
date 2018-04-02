@@ -5,60 +5,59 @@ import React from 'react';
 
 import ActionLink from '~/src/components/common/ActionLink'
 import {Link} from 'react-router-dom'
+import moment from 'moment'
 import "~/src/theme/css/treebrowser.css"
-
-const ToDateInputString = (time) => { 
-  const DateFromTime = new Date(time);
-  const YearNow = DateFromTime.getFullYear();
-  const MonthNow = (DateFromTime.getMonth() + 1) >= 10 ? DateFromTime.getMonth() + 1 : ('0' + String(DateFromTime.getMonth() + 1));
-  const DayOfMonthNow = DateFromTime.getDate() >= 10 ? String(DateFromTime.getDate()) : ('0' + String(DateFromTime.getDate()));
-
-  return `${YearNow}-${MonthNow}-${DayOfMonthNow}`;
-}
 
 class HangoutSubmitForm extends React.Component {
 
   constructor(props) {
     super(props);
-    
-    const timeNow = Date.now();
-    const dateNow = new Date(timeNow);
 
-    this.yearNow = dateNow.getFullYear();
-    this.monthNow = (dateNow.getMonth() + 1) >= 10 ? dateNow.getMonth() + 1 : ('0' + String(dateNow.getMonth() + 1));
-    this.dayOfMonthNow = dateNow.getDate() >= 10 ? String(dateNow.getDate()) : ('0' + String(dateNow.getDate()));
+    const oneHourFromNow = moment().add(1, 'hour');
 
     this.state = {
      isToday: false,
      isLocationVirtual: false,
-     date: dateNow,
      location: '',
      IsDeepDiveCreated:'none',
      IsDisplayForm:'block',
-     dateInputValue: timeNow,
-     timeInputValue: `${dateNow.getHours() + 1}:${dateNow.getMinutes()}`,
+     dateSelected: oneHourFromNow,
+
+     timeInputValue: oneHourFromNow.format("HH:mm"),
     }
   }
 
   handleDateInputChange(e) {
     e.preventDefault();
 
-    this.setState({dateInputValue: e.target.valueAsNumber});
+    const TimeInputSplitted = this.state.timeInputValue.split(':');
 
-    console.log(e.target.value);
+    let newInputDate = moment(e.target.value);
+    newInputDate.hour(Number(TimeInputSplitted[0]));
+    newInputDate.minute(Number(TimeInputSplitted[1]));
+
+    if (newInputDate.isValid()) {
+      this.setState({dateSelected: newInputDate});
+    }
   }
 
   handleTimeInputChange(e) {
     e.preventDefault();
 
-    this.setState({timeInputValue: e.target.value});
-
-    console.log(e.target.value);
+    const TimeInputSplitted = e.target.value.split(':');
+    let newDate = moment(this.state.dateSelected);
+    newDate.hour(Number(TimeInputSplitted[0]));
+    newDate.minute(Number(TimeInputSplitted[1]));
+    this.setState({dateSelected: newDate, timeInputValue: e.target.value});
   }
 
   handleToggleToday(e) {
     if (!this.state.isToday) {
-      this.setState({isToday: e.target.checked, dateInputValue: ToDateInputString(Date.now())});
+      let dateNow = moment();
+      const TimeInputSplitted = this.state.timeInputValue.split(':');
+      dateNow.hour(Number(TimeInputSplitted[0]));
+      dateNow.minute(Number(TimeInputSplitted[1]));
+      this.setState({dateSelected: dateNow, isToday: e.target.checked});
     }
     else {
       this.setState({isToday: e.target.checked});
@@ -77,14 +76,7 @@ class HangoutSubmitForm extends React.Component {
   handleStartHangout(e) {
     e.preventDefault();
 
-    let date = new Date(this.state.isToday ? Date.now() : this.state.dateInputValue);
-
-    const TimeInputSplitted = this.state.timeInputValue.split(':');
-
-    date.setHours(TimeInputSplitted[0]);
-    date.setMinutes(TimeInputSplitted[1]);
-
-    this.props.onHandleStartHangout(date);
+    this.props.onHandleStartHangout(this.state.dateSelected.toDate());
     this.props.toogleTrenScan();
   }
 
@@ -102,14 +94,14 @@ class HangoutSubmitForm extends React.Component {
           <input type="checkBox" checked={this.state.isToday} className="hangout-form-input today" name="optradio" value="today" 
             onChange={(e)=>this.handleToggleToday(e)}/>Today
           <input type="date" className="validate-field required" data-validation-type="string" 
-            id="date" name="date" autoComplete="off" placeholder="Date" value={ToDateInputString(this.state.dateInputValue)}
+            id="date" name="date" autoComplete="off" placeholder="Date" value={moment(this.state.dateSelected).format("YYYY-MM-DD")}
               onChange={(e)=>this.handleDateInputChange(e)} disabled={this.state.isToday}/>
         </label>
           <label className="radio-inline">
             Time
           </label>
           <input type="time" className="validate-field required input-time" data-validation-type="string" 
-            id="time" name="date" autoComplete="off" placeholder="00-00 " defaultValue={this.state.timeInputValue}
+            id="time" name="date" autoComplete="off" placeholder="00-00 " value={this.state.timeInputValue}
               onChange={(e)=>this.handleTimeInputChange(e)}/>
         <div className="hangout-bottom-line-wrap">
           <label className="radio-inline">

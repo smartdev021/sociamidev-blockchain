@@ -468,7 +468,7 @@ class TaskManager extends React.Component {
         return (task.userID != currentUserId && (!task.assignees || !task.assignees.find(function(assignee) {
           return assignee._id == currentUserId;
         })) &&
-          (task.type != "hangout" || (task.status=="None" && task.metaData.participants.findIndex(function(participant) {
+          (task.type != "hangout" || ((task.status=="None" || task.status=="cancelled") && task.metaData.participants.findIndex(function(participant) {
             return participant.user._id == currentUserId;
           }) == -1)));
       });
@@ -513,7 +513,7 @@ class TaskManager extends React.Component {
     const ScannerColClass = this.state.isScannerExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
 
     return (
-      <div className="row">
+      <div className="row content-wrap">
         <div className={MyTasksColClass}>
         {this.state.isAnswerQuestionsOpen &&
             <AnswerQuestions currentTask={this.state.activeHangout}
@@ -538,7 +538,7 @@ class TaskManager extends React.Component {
             timeNow={this.state.timeNow}
             isAuthorized={this.props.isAuthorized}
             isCollapsed={this.state.isScannerExpanded}
-
+            userProfile={this.props.userProfile}
             currentUserID={this.props.userProfile._id}
 
             onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}

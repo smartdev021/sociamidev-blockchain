@@ -76,7 +76,7 @@ html, body {
     position: relative;
     margin: 0px auto;
     padding: 0px;
-    min-height: 1015px;
+    min-height:100vh;
     height: 100%;
     width: 100%;
 }
@@ -92,8 +92,9 @@ html, body {
     -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
-    position: relative;
+    position: fixed;
     z-index: 999999;
+    margin: 0;
 }
 
 .menu-hamburger{
@@ -275,8 +276,7 @@ html, body {
 
 .category-left{
     width: 250px;
-    /*height: 100%;*/
-    min-height: 100%;
+    height: 100%;
     -webkit-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
@@ -285,7 +285,6 @@ html, body {
     padding: 0px 10px;
     z-index: 9999;
     display: block;
-    height: 100%;
     position: absolute;
     transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -390,7 +389,7 @@ html, body {
 
 .head-deep{
     padding: 60px 0px 30px;
-    margin: 0px auto;
+    /* margin: 0px auto; */
     text-align: center;
     position: relative;
     width: 200px;
@@ -501,8 +500,9 @@ html, body {
     background: #fbdddc;
     width: 100%;
     height: 100%;
-    min-height: 1010px;
     padding: 10px;
+    min-height: 100%;
+    overflow-y: scroll
 }
 
 .side-right{
@@ -950,8 +950,6 @@ html, body {
 .scrollbar-inner {
     padding: 0 5px;
     overflow-y: scroll;
-    height: 100%;
-    max-height: 800px;
 }
 
 .scrollbar-inner > .scroll-element,
@@ -1089,7 +1087,7 @@ html, body {
 
     .expand-tokens{
         position: fixed;
-        top: 110px;
+        top: 160px;
         right: -300px;
         width: 300px;
         padding: 0px;
@@ -1198,8 +1196,79 @@ html, body {
     }
 }
 
-@media all and (max-width: 360px) {
-
+.content-wrap{
+    display: flex;   
+    min-height: 100vh;
 }
 
-/*font-family: 'Fjalla One', sans-serif;*/
+.nav-menu {
+    float: left;
+}
+
+.nav-links {
+    float: right;
+}
+
+.label-notif{
+    position: absolute;
+    top: 8px;
+    right: 76px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+    background-color: #d9534f;
+}
+
+@media all and (max-width: 990px) {
+    .category-left{
+        padding-top: 120px;
+    }
+    .content-tokens{
+        padding-top: 120px;
+    }
+    .nav-menu{
+        width: 50%;
+        padding-left: 10px;
+    }
+    .nav-links{
+        width: 50%;
+        padding-right: 10px;
+    }   
+    .nav-tasks{
+        position: fixed;
+        margin-top: 60px;
+        margin-left: 3px;
+    }
+    .session-header{
+        height: 120px;
+    }
+    .label-notif{
+        top: 6px;
+        right: 95px;
+    }
+    .btn-nav{
+        width:110px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .category-left{
+        padding-top: 60px !important;
+    }
+    .content-tokens{
+        padding-top: 60px !important;
+    }
+    .nav-menu{
+        padding-left: 10px;
+    }
+    .nav-links{
+        padding-right: 10px;
+    }
+    .nav-tasks{
+        float: left;
+        margin-left: 20%;
+    }
+    .btn-nav{
+        width: 130px;
+    }
+}
