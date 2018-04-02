@@ -97,7 +97,7 @@ class UserProfile extends React.Component {
 				}).catch(err => {
 
 				});
-		} else if (queryId === this.state.userID) {
+		} else if (queryId === this.props.userProfile._id) {
 			this.setState({
         firstName: _.get(this, 'props.userProfile.firstName'),
         lastName: _.get(this, 'props.userProfile.lastName'),
