@@ -419,100 +419,108 @@ class SkillBrowser extends React.Component {
       return <Redirect to='/taskManagement'/>;
     }
     return (
-      <div className="container-fluid progress-browser-wrap" id="skill-break-down">
-        <div className="col-md-1">
-          <div className="skill-breakdown-solidity" style={{display:this.state.IsDisplayForm}}>
-            Solidity
-          </div>
+      <div className="skill-break-down"> 
+        <div className="skill-browser-header row">
+          {this.state.skillInfo.skill ? <h3 className="my-progress-heading pull-left">{this.state.skillInfo.skill}</h3> : <span>Skill Breakdown</span> }
+          <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.handleClose()}}>
+            <span className="glyphicon glyphicon-arrow-left"></span>
+          </ActionLink>
         </div>
-        <div className="col-md-11" >
-        <div className="skillDescForm" style={{display:this.state.IsDisplayForm}}>
-          <div className="row">
-            <div className="content-2-columns-left-title text-align-center">
-              {this.state.skillInfo.skill ? <span>{this.state.skillInfo.skill}</span> : <span>Skill Breakdown</span> }
-              <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.handleClose()}}>
-                <span className="glyphicon glyphicon-arrow-left"></span>
-              </ActionLink>
-            </div>
-          </div>
-          {!this.state.skillInfo &&
-            <div className="row">
-              <div className="col-lg-12">
-                <h3>Skill not Found!!!</h3>
+        <div className="skill-browser-desc row">
+          <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
+        </div>
+        <br />
+        <div className="related-subskills-header row">
+          RELATED SUB-SKILLS
+        </div>
+        <div id="related-topics row">
+          {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
+          {
+            const skillNameTrimmed = skill.trim();
+            return (
+              <div className="row" key={i}>
+                <span className="fa fa-circle-o" style={{color:'red'}}></span>
+                <Link className="related-topic" key={i} to={{pathname:`/skillBrowser`, state: that.props.location.state, search:`?name=${skillNameTrimmed}`}}>{skillNameTrimmed}</Link>
               </div>
-            </div>
-          }
-          <div className="row">
-            <div className="col-lg-12 text-align-center">
-              <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <h4>Related Sub-Skills</h4>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <ul id="related-topics">
-                {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i)
-                {
-                  const skillNameTrimmed = skill.trim();
-                  return <li key={i}><Link key={i} to={{pathname:`/skillBrowser`, state: that.props.location.state, search:`?name=${skillNameTrimmed}`}}>{skillNameTrimmed}</Link></li>
-                })}
-              </ul>
-            </div>
-          </div>
-          {this.isTreeAdded() &&<div className="deep-dive-button-wrap">
-
-            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className={IlluminateButtonClass}
-              onClick={IsIlluminateAvailable ? ()=> this.toggleIlluminateForm() : () => {
-              }}>{IlluminateButtonText}</button>
-
-            <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
-                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
-                  }}>{DeepDiveButtonText}</button>
-          </div>}
-          <div className="row">
-            <Modal contentLabel="Illuminate" parentSelector={getPopupParentElement} 
-              style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
-              <ActionLink href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()}></ActionLink>
-              <div className="container-fluid popup-new-project">
-                <span>
-                  <div className="row">
-                      <div className="col-lg-12">
-                        <div className="header">
-                            <div>This will create a task in task manager!</div>
-                          </div>
+            )
+          })}
+        </div>
+        <br />
+        <div className="skill-browser-header row" style={{borderBottom:'1px solid #868686'}}>
+          <h3 className="my-progress-heading pull-left">MY PROGRESSION SKILLS</h3>
+        </div>
+        <div className="my-progression-skillset row">
+        <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                <div className="pskill-card">
+                    <div className="pskill-card-body">
+                        <h4 className="pskill-card-title">1</h4>
+                        <h4 className="pskill-card-subtitle">level</h4>
+                        <h3 className="pskill-card-heading">ILLUMINATE</h3>
+                        <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
+                        incorrupte. Ius modus oportere ea, et mollis eligendi</p>
+                        <p className="pskill-duration">Once a day</p>
+                        <p className="pskill-reward">Reward : SOQQ Token</p>
+                        <div className="row pskill-btn-group">
+                          <button className="pskill-start btn">START</button>
+                          <button className="pskill-view btn ">VIEW</button>
                         </div>
                     </div>
-                  </span>
-                  <hr/>
-                  <button onClick={(e)=> this.goToIlluminate(e) } className="btn-md btn-outline-inverse illuminate-btn-go">Go</button>
-              </div>
-            </Modal>
-          </div>
-          <br/>
-          </div>
-          <div className="row">
-            {this.state.isHangoutFormVisible && 
-              <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
-              onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()}  handleToggle={() => this.handleToggle()}/>}
-          </div>
-          <br/>
-        </div>
-          {this.state.TrendScannerComponentVisible && <div className="row">
-            <div className="col-lg-12">
-              <div id="skill-breakdown-trend-scanner">
-                <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
-                  resultsSelectedCategory={this.props.resultsSelectedCategory}
-                    isFetchInProgress={this.props.isFetchInProgress}
-                      searchResults={this.props.searchResults}/>
-              </div>
+                </div>
             </div>
-          </div>}
+            <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                <div className="pskill-card">
+                    <div className="pskill-card-body">
+                        <h4 className="pskill-card-title">1</h4>
+                        <h4 className="pskill-card-subtitle">level</h4>
+                        <h3 className="pskill-card-heading">DEEP DIVE</h3>
+                        <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
+                        incorrupte. Ius modus oportere ea, et mollis eligendi</p>
+                        <p className="pskill-duration">Once a day</p>
+                        <p className="pskill-reward">Reward : SOQQ Token</p>
+                        <div className="row pskill-btn-group">
+                          <button className="pskill-start btn">START</button>
+                          <button className="pskill-view btn ">VIEW</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                <div className="pskill-card">
+                    <div className="pskill-card-body">
+                        <h4 className="pskill-card-title">5</h4>
+                        <h4 className="pskill-card-subtitle">level</h4>
+                        <h3 className="pskill-card-heading">DECODE</h3>
+                        <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
+                        incorrupte. Ius modus oportere ea, et mollis eligendi</p>
+                        <p className="pskill-duration">Once a day</p>
+                        <p className="pskill-reward">Reward : SOQQ Token</p>
+                        <div className="row pskill-btn-group">
+                          <button className="pskill-start btn">START</button>
+                          <button className="pskill-view btn ">VIEW</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                <div className="pskill-card">
+                    <div className="pskill-card-body">
+                        <h4 className="pskill-card-title">6</h4>
+                        <h4 className="pskill-card-subtitle">level</h4>
+                        <h3 className="pskill-card-heading">BRAINSTORM</h3>
+                        <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
+                        incorrupte. Ius modus oportere ea, et mollis eligendi</p>
+                        <p className="pskill-duration">Once a day</p>
+                        <p className="pskill-reward">Reward : SOQQ Token</p>
+                        <div className="row pskill-btn-group">
+                          <button className="pskill-start btn">START</button>
+                          <button className="pskill-view btn ">VIEW</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
       </div>
-    );
+    )
   }
 }
 
