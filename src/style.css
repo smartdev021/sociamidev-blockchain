@@ -1300,14 +1300,14 @@ html, body {
     padding: 20px;
     background-color: white;
     height:230px;
-    box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.3);
 }
 .pskill-card-title{
     text-align: right;
     color: #FE3C3C;
     margin: 0;
     font-weight: 800;
-    font-size: 40px;
+    font-size: 30px;
     padding-right: 3px;
     line-height: .9;
 }
@@ -1319,19 +1319,20 @@ html, body {
 }
 .pskill-card-heading{
     font-weight: 800;
-    margin-top: -25px;
+    margin-top: -28px;
+    font-size: 28px;
 }
 .pskill-card-text{
     font-size: 12px;
 }
 .pskill-duration{
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     color: #25AEB8;
 }
 .pskill-reward{
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     color:#FE3C3C;
 }
 .pskill-start{
@@ -1347,11 +1348,11 @@ html, body {
 .pskill-view{
     text-align: center;
     float: right;
-    border: 1px solid#A7A6A3;
+    background-color: white;
     color: 	#A7A6A3;
     width: 45%;
     padding: 5px;
-    
+    border: 1px solid#A7A6A3;
 }
 /* .effect1{
     position:relative;
@@ -1360,5 +1361,6 @@ html, body {
             box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 } */
 .pskill-btn-group{
-    padding: 5px;
+    padding: 15px 0px 10px 0px;
+    overflow: auto;
 }

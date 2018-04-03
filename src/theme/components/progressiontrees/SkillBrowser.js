@@ -447,7 +447,7 @@ class SkillBrowser extends React.Component {
         </div>
         <br />
         <div className="skill-browser-header row" style={{borderBottom:'1px solid #868686'}}>
-          <h3 className="my-progress-heading pull-left">MY PROGRESSION SKILLS</h3>
+          <h3 className="my-progress-heading pull-left">MY PROGRESSION SKILL</h3>
         </div>
         <div className="my-progression-skillset row">
         <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
@@ -460,10 +460,10 @@ class SkillBrowser extends React.Component {
                         incorrupte. Ius modus oportere ea, et mollis eligendi</p>
                         <p className="pskill-duration">Once a day</p>
                         <p className="pskill-reward">Reward : SOQQ Token</p>
-                        <div className="row pskill-btn-group">
-                          <button className="pskill-start btn">START</button>
-                          <button className="pskill-view btn ">VIEW</button>
-                        </div>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-start">START</button>
+                      <button className="pskill-view ">VIEW</button>
                     </div>
                 </div>
             </div>
@@ -477,10 +477,10 @@ class SkillBrowser extends React.Component {
                         incorrupte. Ius modus oportere ea, et mollis eligendi</p>
                         <p className="pskill-duration">Once a day</p>
                         <p className="pskill-reward">Reward : SOQQ Token</p>
-                        <div className="row pskill-btn-group">
-                          <button className="pskill-start btn">START</button>
-                          <button className="pskill-view btn ">VIEW</button>
-                        </div>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-start btn">START</button>
+                      <button className="pskill-view ">VIEW</button>
                     </div>
                 </div>
             </div>
@@ -494,10 +494,10 @@ class SkillBrowser extends React.Component {
                         incorrupte. Ius modus oportere ea, et mollis eligendi</p>
                         <p className="pskill-duration">Once a day</p>
                         <p className="pskill-reward">Reward : SOQQ Token</p>
-                        <div className="row pskill-btn-group">
-                          <button className="pskill-start btn">START</button>
-                          <button className="pskill-view btn ">VIEW</button>
-                        </div>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-start btn">START</button>
+                      <button className="pskill-view ">VIEW</button>
                     </div>
                 </div>
             </div>
@@ -511,10 +511,27 @@ class SkillBrowser extends React.Component {
                         incorrupte. Ius modus oportere ea, et mollis eligendi</p>
                         <p className="pskill-duration">Once a day</p>
                         <p className="pskill-reward">Reward : SOQQ Token</p>
-                        <div className="row pskill-btn-group">
-                          <button className="pskill-start btn">START</button>
-                          <button className="pskill-view btn ">VIEW</button>
-                        </div>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-start btn">START</button>
+                      <button className="pskill-view ">VIEW</button>
+                    </div>
+                </div>
+            </div>
+            <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                <div className="pskill-card">
+                    <div className="pskill-card-body">
+                        <h4 className="pskill-card-title">5</h4>
+                        <h4 className="pskill-card-subtitle">level</h4>
+                        <h3 className="pskill-card-heading">DECODE</h3>
+                        <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
+                        incorrupte. Ius modus oportere ea, et mollis eligendi</p>
+                        <p className="pskill-duration">Once a day</p>
+                        <p className="pskill-reward">Reward : SOQQ Token</p>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-start btn">START</button>
+                      <button className="pskill-view ">VIEW</button>
                     </div>
                 </div>
             </div>
