@@ -4,26 +4,14 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: {
-    hotmiddleware: 'webpack-hot-middleware/client',
-    babelpolyfill: "babel-polyfill",
-    main: './src/index.js',
-    vendor: [
-      'bluebird',
-      'react',
-      'react-dom',
-      'react-cookie',
-      'lodash',
-      'redux',
-      'axios',
-      'moment',
-      'react-bootstrap',
-      'pubsub-js',
-    ]
-  },
+  entry: [
+    'webpack-hot-middleware/client',
+    "babel-polyfill",
+    './src/index'
+  ],
   output: {
     path: Path.join(__dirname, 'dist'),
-    filename: '[name].[hash].js',
+    filename: 'bundle.js',
   },
   plugins: [
     new Webpack.HotModuleReplacementPlugin(),
@@ -38,21 +26,17 @@ module.exports = {
       template: Path.join(__dirname, 'src/index.ejs'),
       title: 'Soqqle',
       inject: 'body',
-    }),
-    new Webpack.HashedModuleIdsPlugin(),
-    new Webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    }),
+    })
   ],
   module: {
-    loaders:
-      [
-        { test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader'], include: Path.join(__dirname, 'src') },
-        { test: /\.css$/, loader: "style-loader!css-loader" },
-        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: 'url-loader' },
-        //{ test: /\.(png|jpg)$/, loader: 'url-loader' },
-        { test: /\.(jpg|png|svg)$/, loader: 'file-loader', options: { name: '[path][name].[hash].[ext]', }, },
-      ]
+    loaders: 
+    [
+      { test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader'], include: Path.join(__dirname, 'src')},
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: 'url-loader'},
+      //{ test: /\.(png|jpg)$/, loader: 'url-loader' },
+      { test: /\.(jpg|png|svg)$/, loader: 'file-loader', options: {name: '[path][name].[hash].[ext]', }, },
+    ]
   },
   resolve: {
     alias: {
