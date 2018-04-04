@@ -24,6 +24,7 @@ import {
 } from '~/src/redux/actions/tasks'
 
 import "~/src/theme/css/treebrowser.css"
+import "~/src/theme/css/SkillBrowser.css"
 
 import {
   selectResultsCategory,
@@ -451,75 +452,25 @@ class SkillBrowser extends React.Component {
         </div>
         <div className="my-progression-skillset row">
           <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card">
+            <div className="pskill-flipper">
+                  <div className="pskill-card-front">
                       <div className="pskill-card-body">
                           <h4 className="pskill-card-title">1</h4>
                           <h4 className="pskill-card-subtitle">level</h4>
                           <h3 className="pskill-card-heading">ILLUMINATE</h3>
-                          <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
-                          incorrupte. Ius modus oportere ea, et mollis eligendi</p>
-                          <p className="pskill-duration">Once a day</p>
-                          <p className="pskill-reward">Rewards : SOQQ Token</p>
+                          <p className="pskill-card-text">A single player activity for you to research and 
+                          answer 3 questions posted by the system in 30 mins</p>
+                      </div>
+                      <div className="pskill-footer">
+                        <p className="pskill-duration">Once a day</p>
+                        <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
                       </div>
                       <div className="pskill-btn-group">
                         <button className="pskill-btn pskill-start">START</button>
                         <button className="pskill-btn pskill-view ">VIEW</button>
                       </div>
                   </div>
-              </div>
-              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card">
-                      <div className="pskill-card-body">
-                          <h4 className="pskill-card-title">1</h4>
-                          <h4 className="pskill-card-subtitle">level</h4>
-                          <h3 className="pskill-card-heading">DEEP DIVE</h3>
-                          <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
-                          incorrupte. Ius modus oportere ea, et mollis eligendi</p>
-                          <p className="pskill-duration">Once a day</p>
-                          <p className="pskill-reward">Rewards : SOQQ Token</p>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start btn">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
-                  </div>
-              </div>
-              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card">
-                      <div className="pskill-card-body">
-                          <h4 className="pskill-card-title">5</h4>
-                          <h4 className="pskill-card-subtitle">level</h4>
-                          <h3 className="pskill-card-heading">DECODE</h3>
-                          <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
-                          incorrupte. Ius modus oportere ea, et mollis eligendi</p>
-                          <p className="pskill-duration">Once a day</p>
-                          <p className="pskill-reward">Rewards : SOQQ Token</p>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start btn">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
-                  </div>
-              </div>
-              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card">
-                      <div className="pskill-card-body">
-                          <h4 className="pskill-card-title">6</h4>
-                          <h4 className="pskill-card-subtitle">level</h4>
-                          <h3 className="pskill-card-heading">BRAINSTORM</h3>
-                          <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
-                          incorrupte. Ius modus oportere ea, et mollis eligendi</p>
-                          <p className="pskill-duration">Once a day</p>
-                          <p className="pskill-reward">Rewards : SOQQ Token</p>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start btn">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
-                  </div>
-              </div>
-              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card bg-red">
+                  <div className="pskill-card-back">
                       <div className="pskill-card-body">
                           <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
                           <ul className="sample-question">
@@ -533,9 +484,131 @@ class SkillBrowser extends React.Component {
                         <button className="pskill-btn pskill-view ">VIEW</button>
                       </div>
                   </div>
+            </div>
+          </div>
+              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item"> 
+                  <div className="pskill-flipper">
+                      <div className="pskill-card-front">
+                          <div className="pskill-card-body">
+                              <h4 className="pskill-card-title">1</h4>
+                              <h4 className="pskill-card-subtitle">level</h4>
+                              <h3 className="pskill-card-heading">DEEP DIVE</h3>
+                              <p className="pskill-card-text">A 2 player activity for you and a friend to research and 
+                              answer 10 questions posted by the system in 30 mins</p>
+                          </div>
+                          <div className="pskill-footer">
+                              <p className="pskill-duration">Once a week</p>
+                              <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
+                          </div>
+                          <div className="pskill-btn-group">
+                            <button className="pskill-btn pskill-start btn">START</button>
+                            <button className="pskill-btn pskill-view ">VIEW</button>
+                          </div>
+                      </div>
+                      <div className="pskill-card-back">
+                          <div className="pskill-card-body">
+                              <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+                              <ul className="sample-question">
+                                  <li>Lorem ipsum dolor sit??</li>
+                                  <li>Lorem ipsum dolor sit??</li>
+                                  <li>Lorem ipsum dolor sit??</li>
+                              </ul>
+                          </div>
+                          <div className="pskill-btn-group">
+                            <button className="pskill-btn pskill-start">START</button>
+                            <button className="pskill-btn pskill-view ">VIEW</button>
+                          </div>
+                      </div>
+                  </div>
               </div>
               <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card bg-lock">
+                  <div className="pskill-flipper">
+                      <div className="pskill-card-front">
+                          <div className="pskill-card-body">
+                              <h4 className="pskill-card-title">5</h4>
+                              <h4 className="pskill-card-subtitle">level</h4>
+                              <h3 className="pskill-card-heading">DECODE</h3>
+                              <p className="pskill-card-text">A single player activity with pre-defined 
+                              answers to validate your understanding of a topic</p>
+                          </div>
+                          <div className="pskill-footer">
+                              <p className="pskill-duration">Once a week</p>
+                              <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
+                          </div>
+                          <div className="pskill-btn-group">
+                            <button className="pskill-btn pskill-start btn">START</button>
+                            <button className="pskill-btn pskill-view ">VIEW</button>
+                          </div>
+                      </div>
+                      <div className="pskill-card-back">
+                          <div className="pskill-card-body">
+                              <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+                              <ul className="sample-question">
+                                  <li>Lorem ipsum dolor sit??</li>
+                                  <li>Lorem ipsum dolor sit??</li>
+                                  <li>Lorem ipsum dolor sit??</li>
+                              </ul>
+                          </div>
+                          <div className="pskill-btn-group">
+                            <button className="pskill-btn pskill-start">START</button>
+                            <button className="pskill-btn pskill-view ">VIEW</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                  <div className="pskill-flipper">
+                      <div className="pskill-card-front">
+                          <div className="pskill-card-body">
+                              <h4 className="pskill-card-title">9</h4>
+                              <h4 className="pskill-card-subtitle">level</h4>
+                              <h3 className="pskill-card-heading">BRAINSTORM</h3>
+                              <p className="pskill-card-text">Group player activity to brainstorm 
+                              solutions for a specific use case</p>
+                          </div>
+                          <div className="pskill-footer">
+                              <p className="pskill-duration">Once a week</p>
+                              <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
+                          </div>
+                          <div className="pskill-btn-group">
+                            <button className="pskill-btn pskill-start btn">START</button>
+                            <button className="pskill-btn pskill-view ">VIEW</button>
+                          </div>
+                      </div>
+                      <div className="pskill-card-back">
+                          <div className="pskill-card-body">
+                              <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+                              <ul className="sample-question">
+                                  <li>Lorem ipsum dolor sit??</li>
+                                  <li>Lorem ipsum dolor sit??</li>
+                                  <li>Lorem ipsum dolor sit??</li>
+                              </ul>
+                          </div>
+                          <div className="pskill-btn-group">
+                            <button className="pskill-btn pskill-start">START</button>
+                            <button className="pskill-btn pskill-view ">VIEW</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              {/* <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                  <div className="pskill-card-back">
+                      <div className="pskill-card-body">
+                          <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+                          <ul className="sample-question">
+                              <li>Lorem ipsum dolor sit??</li>
+                              <li>Lorem ipsum dolor sit??</li>
+                              <li>Lorem ipsum dolor sit??</li>
+                          </ul>
+                      </div>
+                      <div className="pskill-btn-group">
+                        <button className="pskill-btn pskill-start">START</button>
+                        <button className="pskill-btn pskill-view ">VIEW</button>
+                      </div>
+                  </div>
+              </div> */}
+              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                  <div className="pskill-card-lock">
                       <div className="pskill-card-body">
                           <h4 className="pskill-card-title-lock">5</h4>
                           <h4 className="pskill-card-subtitle-lock">level</h4>
