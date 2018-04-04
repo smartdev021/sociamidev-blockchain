@@ -519,23 +519,6 @@ class SkillBrowser extends React.Component {
                   </div>
               </div>
               <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card">
-                      <div className="pskill-card-body">
-                          <h4 className="pskill-card-title">5</h4>
-                          <h4 className="pskill-card-subtitle">level</h4>
-                          <h3 className="pskill-card-heading">DECODE</h3>
-                          <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
-                          incorrupte. Ius modus oportere ea, et mollis eligendi</p>
-                          <p className="pskill-duration">Once a day</p>
-                          <p className="pskill-reward">Rewards : SOQQ Token</p>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
-                  </div>
-              </div>
-              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
                   <div className="pskill-card bg-red">
                       <div className="pskill-card-body">
                           <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
@@ -556,7 +539,7 @@ class SkillBrowser extends React.Component {
                       <div className="pskill-card-body">
                           <h4 className="pskill-card-title-lock">5</h4>
                           <h4 className="pskill-card-subtitle-lock">level</h4>
-                          <h3 className="pskill-card-heading">DECODE</h3>
+                          <h3 className="pskill-card-heading">LOCKED SKILL</h3>
                           <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
                           incorrupte. Ius modus oportere ea, et mollis eligendi</p>
                           <p className="pskill-duration" style={{color:'black'}}>Once a day</p>
