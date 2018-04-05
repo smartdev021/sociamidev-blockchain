@@ -41,7 +41,8 @@ import {
 } from '~/src/redux/actions/authorization'
 
 import {
-  fetchAllTasks
+  fetchAllTasks,
+  updateTask,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -163,6 +164,9 @@ class App extends Component {
     if (!this.token_server_event_tasks_update) {
       this.token_server_event_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
     }
+    if (!this.token_server_event_task_updated) {
+      this.token_server_event_task_updated = PubSub.subscribe("task_updated", this.serverEventTaskUpdated.bind(this));
+    }
     if (!this.token_server_event_accounting_update) {
       this.token_server_event_accounting_update = PubSub.subscribe("accounting_updated", this.serverEventAccountingUpdated.bind(this));
     }
@@ -174,6 +178,11 @@ class App extends Component {
       this.token_server_event_tasks_update = undefined;
     }
 
+    if (this.token_server_event_task_updated) {
+      PubSub.unsubscribe(this.token_server_event_task_updated);
+      this.token_server_event_task_updated = undefined;
+    }
+
     if (this.token_server_event_accounting_update) {
       PubSub.unsubscribe(this.token_server_event_accounting_update);
       this.token_server_event_accounting_update = undefined;
@@ -181,12 +190,25 @@ class App extends Component {
   }
 
   serverEventTasksUpdate(msg, data) {
-   /* console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
     console.dir(data);
 
     if (data.eventType == "tasks_update") {
       this.props.fetchAllTasks(true);
-    }*/
+    }
+  };
+
+  serverEventTaskUpdated(msg, data) {
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+
+    if (data.eventType == "task_updated") {
+      console.dir(data);
+      console.dir(data.task);
+      console.log(data.task._id);
+      if (data.task && data.task._id) {
+        this.props.updateTask(data.task._id, data.task);
+      }
+    }
   };
 
   serverEventAccountingUpdated(msg, data) {
@@ -527,6 +549,7 @@ App.propTypes = {
   fetchUserProfile: PropTypes.func.isRequired,
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
   setUserProfileCharacter: PropTypes.func.isRequired,
@@ -541,6 +564,7 @@ const mapDispatchToProps = dispatch => ({
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
+  updateTask: bindActionCreators(updateTask, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),
   fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
