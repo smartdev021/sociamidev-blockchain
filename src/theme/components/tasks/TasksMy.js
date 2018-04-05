@@ -503,7 +503,7 @@ const DayFromNumber = (dayNum)=> {
           <div className="item-deep">
             <div className="deep-content">
                 {RenderTaskTitle(task, props)}
-                <p>{SecondLine}</p>
+                <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
             </div>
             {RenderIlluminateActions(task, props)}
           </div>
