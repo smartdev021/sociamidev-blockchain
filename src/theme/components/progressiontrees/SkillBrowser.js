@@ -151,12 +151,12 @@ class SkillBrowser extends React.Component {
           );
         }
         
-        this.props.setSearchQuery(this.state.skillInfo.skill);
+       /* this.props.setSearchQuery(this.state.skillInfo.skill);
 
         this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
         this.props.fetchResults("events_eventbrite", this.state.skillInfo.skill);
         this.props.fetchResults("courses_udemy", this.state.skillInfo.skill);
-        this.props.fetchResults("gigs_freelancer", this.state.skillInfo.skill);
+        this.props.fetchResults("gigs_freelancer", this.state.skillInfo.skill);*/
       }
     }
 
@@ -172,6 +172,10 @@ class SkillBrowser extends React.Component {
           );
         }
       }
+    }
+
+    if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
+      this.setState({redirectToTaskManagement: true});
     }
   }
 
@@ -378,7 +382,8 @@ class SkillBrowser extends React.Component {
     if (illuminate.userName != "" && illuminate.name != "" && illuminate.description != "") {
       this.props.saveTask(illuminate);
     }
-    this.setState({redirectToTaskManagement: true});
+
+    this.setState({isIlluminateFormVisible: false});
   }
 
   render() {
@@ -691,6 +696,7 @@ const mapStateToProps = state => ({
   resultsSelectedCategory: state.resultsSelectedCategory,
   searchResults : state.searchResults,saveTask,
   isFetchInProgress : state.isFetchInProgress,
+  isTaskSaveInProgress: state.isTaskSaveInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({

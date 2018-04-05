@@ -181,12 +181,12 @@ class App extends Component {
   }
 
   serverEventTasksUpdate(msg, data) {
-    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+   /* console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
     console.dir(data);
 
     if (data.eventType == "tasks_update") {
       this.props.fetchAllTasks(true);
-    }
+    }*/
   };
 
   serverEventAccountingUpdated(msg, data) {
