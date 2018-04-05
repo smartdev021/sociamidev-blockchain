@@ -449,10 +449,7 @@ class TaskManager extends React.Component {
     if (tasks.length > 0) {
       //sort descending by date
       tasks.sort((task1, task2) => {
-        const task1CreationDate = task1.date ? task1.date : task1.metaData.time;
-        const task2CreationDate = task2.date ? task2.date : task2.metaData.time;
-
-        return task2CreationDate - task1CreationDate;
+        return task2.date - task1.date;
       });
     }
 

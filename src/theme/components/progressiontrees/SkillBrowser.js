@@ -376,6 +376,7 @@ class SkillBrowser extends React.Component {
           }
         ],
         ratings: [],
+        time: Date.now(),
         awardXP: RandomInt(30, 40),
       }
     };
