@@ -175,6 +175,7 @@ class SkillBrowser extends React.Component {
     }
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
+      if (this.props.lastSavedTask && this.props.lastSavedTask.type == TaskTypes.ILLUMINATE)
       this.setState({redirectToTaskManagement: true});
     }
   }
@@ -690,6 +691,7 @@ SkillBrowser.propTypes = {
   resultsSelectedCategory: PropTypes.string.isRequired,
   searchResults: PropTypes.object.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
+  lastSavedTask: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -697,6 +699,7 @@ const mapStateToProps = state => ({
   searchResults : state.searchResults,saveTask,
   isFetchInProgress : state.isFetchInProgress,
   isTaskSaveInProgress: state.isTaskSaveInProgress,
+  lastSavedTask: state.lastSavedTask,
 });
 
 const mapDispatchToProps = dispatch => ({
