@@ -209,3 +209,25 @@
     z-index: 999;
     float: right;
 }
+.pskill-timer-active{
+    opacity: .2;
+}
+.pskill-timer{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.pskill-timer-text{
+    width:100%;
+    text-align: center;
+}
+.illuminate-go-btn{
+    border: 0;
+    outline-style: none;
+    width: 97px;
+    height: 40px;
+    background-color: #f38162;
+    color: white;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+}
