@@ -100,16 +100,16 @@ class SkillBrowser extends React.Component {
       Modal.defaultStyles.content["marginLeft"] = "auto";
       Modal.defaultStyles.content["marginRight"] = "auto";
       Modal.defaultStyles.content["left"] = "0px";
-      Modal.defaultStyles.content["top"] = "100px";
+      Modal.defaultStyles.content["top"] = "150px";
       Modal.defaultStyles.content["right"] = "0px";
   }
 
   componentDidMount() {
-    this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 1000);
+    // this.timeNowUpdateInterval = setInterval(() => this.updateTimeNow(), 1000);
   }
 
   componentWillUnmount() {
-      clearInterval(this.timeNowUpdateInterval);
+      // clearInterval(this.timeNowUpdateInterval);
       Modal.defaultStyles = this.modalDefaultStyles;
   }
 
@@ -323,11 +323,11 @@ class SkillBrowser extends React.Component {
   }
 
   onCloseModal() {
-    this.setState({isIlluminateFormVisible: false});
+    this.setState({isIlluminateFormVisible: false,isHangoutFormVisible:false});
   }
 
-  goToIlluminate(e){
-    e.preventDefault();
+  goToIlluminate(){
+    // e.preventDefault();
     // TODO call hangout-ish
 
     const RandomInt = function RandomInt(min, max) {
@@ -381,6 +381,10 @@ class SkillBrowser extends React.Component {
     this.setState({redirectToTaskManagement: true});
   }
 
+  flipSkillCard(e){
+    e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hover")
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -423,7 +427,7 @@ class SkillBrowser extends React.Component {
       <div className="skill-break-down"> 
         <div className="skill-browser-header row">
           {this.state.skillInfo.skill ? <h3 className="my-progress-heading pull-left">{this.state.skillInfo.skill}</h3> : <span>Skill Breakdown</span> }
-          <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> {this.handleClose()}}>
+          <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={()=> this.handleClose()}>
             <span className="glyphicon glyphicon-arrow-left"></span>
           </ActionLink>
         </div>
@@ -451,41 +455,59 @@ class SkillBrowser extends React.Component {
           <h3 className="my-progress-heading pull-left">MY PROGRESSION SKILL</h3>
         </div>
         <div className="my-progression-skillset row">
-          <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-            <div className="pskill-flipper">
-                  <div className="pskill-card-front">
-                      <div className="pskill-card-body">
-                          <h4 className="pskill-card-title">1</h4>
-                          <h4 className="pskill-card-subtitle">level</h4>
-                          <h3 className="pskill-card-heading">ILLUMINATE</h3>
-                          <p className="pskill-card-text">A single player activity for you to research and 
-                          answer 3 questions posted by the system in 30 mins</p>
-                      </div>
-                      <div className="pskill-footer">
-                        <p className="pskill-duration">Once a day</p>
-                        <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
+        {(this.isTreeAdded() && IsIlluminateAvailable) ?
+        <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+        <div className="pskill-flipper">
+              <div className="pskill-card-front">
+                  <div className="pskill-card-body">
+                      <h4 className="pskill-card-title">1</h4>
+                      <h4 className="pskill-card-subtitle">level</h4>
+                      <h3 className="pskill-card-heading">ILLUMINATE</h3>
+                      <p className="pskill-card-text">A single player activity for you to research and 
+                      answer 3 questions posted by the system in 30 mins</p>
                   </div>
-                  <div className="pskill-card-back">
-                      <div className="pskill-card-body">
-                          <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
-                          <ul className="sample-question">
-                              <li>Lorem ipsum dolor sit??</li>
-                              <li>Lorem ipsum dolor sit??</li>
-                              <li>Lorem ipsum dolor sit??</li>
-                          </ul>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
+                  <div className="pskill-footer">
+                    <p className="pskill-duration">Once a day</p>
+                    <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
                   </div>
-            </div>
+                  <div className="pskill-btn-group">
+                    <button className="pskill-btn pskill-start" onClick={()=> this.toggleIlluminateForm()}>START</button>
+                    <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
+                  </div>
+              </div>
+              <div className="pskill-card-back">
+                  <div className="pskill-card-body">
+                      <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+                      <ul className="sample-question">
+                          <li>Lorem ipsum dolor sit??</li>
+                          <li>Lorem ipsum dolor sit??</li>
+                          <li>Lorem ipsum dolor sit??</li>
+                      </ul>
+                  </div>
+                  <div className="pskill-btn-group">
+                    <button className="pskill-btn pskill-start" onClick={()=> this.toggleIlluminateForm()}>START</button>
+                    <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>BACK</button>
+                  </div>
+              </div>
+        </div>
+      </div> :
+      <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+          <div className="pskill-card-lock">
+              <div className="pskill-card-body">
+                  <h4 className="pskill-card-title-lock">1</h4>
+                  <h4 className="pskill-card-subtitle-lock">level</h4>
+                  <h3 className="pskill-card-heading">ILLUMINATE</h3>
+                  <p className="pskill-card-text">A single player activity for you to research and 
+                      answer 3 questions posted by the system in 30 mins</p>
+                  <p className="pskill-duration" style={{color:'black'}}>Once a day</p>
+                  <p className="pskill-reward" style={{color:'black'}}>Rewards : 1 SOQQ Token</p>
+              </div>
           </div>
+      </div>
+        
+        }
+
+        {(this.isTreeAdded() && IsDeepdiveAbailable) ?
               <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item"> 
                   <div className="pskill-flipper">
                       <div className="pskill-card-front">
@@ -501,8 +523,8 @@ class SkillBrowser extends React.Component {
                               <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
                           </div>
                           <div className="pskill-btn-group">
-                            <button className="pskill-btn pskill-start btn">START</button>
-                            <button className="pskill-btn pskill-view ">VIEW</button>
+                            <button className="pskill-btn pskill-start btn" onClick={()=> this.toggleHangoutForm()}>START</button>
+                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
                           </div>
                       </div>
                       <div className="pskill-card-back">
@@ -515,12 +537,27 @@ class SkillBrowser extends React.Component {
                               </ul>
                           </div>
                           <div className="pskill-btn-group">
-                            <button className="pskill-btn pskill-start">START</button>
-                            <button className="pskill-btn pskill-view ">VIEW</button>
+                            <button className="pskill-btn pskill-start btn" onClick={()=> this.toggleHangoutForm()}>START</button>
+                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>BACK</button>
                           </div>
                       </div>
                   </div>
               </div>
+              :
+              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+                  <div className="pskill-card-lock">
+                      <div className="pskill-card-body">
+                          <h4 className="pskill-card-title-lock">1</h4>
+                          <h4 className="pskill-card-subtitle-lock">level</h4>
+                          <h3 className="pskill-card-heading">DEEP DIVE</h3>
+                          <p className="pskill-card-text">A 2 player activity for you and a friend to research and 
+                              answer 10 questions posted by the system in 30 mins</p>
+                          <p className="pskill-duration" style={{color:'black'}}>Once a week</p>
+                          <p className="pskill-reward" style={{color:'black'}}>Rewards : 10 SOQQ Token</p>
+                      </div>
+                  </div>
+              </div>
+        }
               <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
                   <div className="pskill-flipper">
                       <div className="pskill-card-front">
@@ -537,7 +574,7 @@ class SkillBrowser extends React.Component {
                           </div>
                           <div className="pskill-btn-group">
                             <button className="pskill-btn pskill-start btn">START</button>
-                            <button className="pskill-btn pskill-view ">VIEW</button>
+                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
                           </div>
                       </div>
                       <div className="pskill-card-back">
@@ -551,7 +588,7 @@ class SkillBrowser extends React.Component {
                           </div>
                           <div className="pskill-btn-group">
                             <button className="pskill-btn pskill-start">START</button>
-                            <button className="pskill-btn pskill-view ">VIEW</button>
+                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>BACK</button>
                           </div>
                       </div>
                   </div>
@@ -572,7 +609,7 @@ class SkillBrowser extends React.Component {
                           </div>
                           <div className="pskill-btn-group">
                             <button className="pskill-btn pskill-start btn">START</button>
-                            <button className="pskill-btn pskill-view ">VIEW</button>
+                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
                           </div>
                       </div>
                       <div className="pskill-card-back">
@@ -586,87 +623,53 @@ class SkillBrowser extends React.Component {
                           </div>
                           <div className="pskill-btn-group">
                             <button className="pskill-btn pskill-start">START</button>
-                            <button className="pskill-btn pskill-view ">VIEW</button>
+                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>BACK</button>
                           </div>
-                      </div>
-                  </div>
-              </div>
-              {/* <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card-back">
-                      <div className="pskill-card-body">
-                          <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
-                          <ul className="sample-question">
-                              <li>Lorem ipsum dolor sit??</li>
-                              <li>Lorem ipsum dolor sit??</li>
-                              <li>Lorem ipsum dolor sit??</li>
-                          </ul>
-                      </div>
-                      <div className="pskill-btn-group">
-                        <button className="pskill-btn pskill-start">START</button>
-                        <button className="pskill-btn pskill-view ">VIEW</button>
-                      </div>
-                  </div>
-              </div> */}
-              <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
-                  <div className="pskill-card-lock">
-                      <div className="pskill-card-body">
-                          <h4 className="pskill-card-title-lock">5</h4>
-                          <h4 className="pskill-card-subtitle-lock">level</h4>
-                          <h3 className="pskill-card-heading">LOCKED SKILL</h3>
-                          <p className="pskill-card-text">Lorem ipsum dolor sit amet, ut eos stet 
-                          incorrupte. Ius modus oportere ea, et mollis eligendi</p>
-                          <p className="pskill-duration" style={{color:'black'}}>Once a day</p>
-                          <p className="pskill-reward" style={{color:'black'}}>Rewards : SOQQ Token</p>
                       </div>
                   </div>
               </div>
           </div>
 
-          {this.isTreeAdded() &&<div className="deep-dive-button-wrap">
-
-            <button data-toggle="tooltip" title="A single player task to find out some basic questions around the topic!" type="button" className={IlluminateButtonClass}
-              onClick={IsIlluminateAvailable ? ()=> this.toggleIlluminateForm() : () => {
-              }}>{IlluminateButtonText}</button>
-
-            <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
-                  onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
-                  }}>{DeepDiveButtonText}</button>
-            </div>}
             <div className="row">
-            <Modal contentLabel="Illuminate" parentSelector={getPopupParentElement} 
-              style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} onRequestClose={() => this.onCloseModal()}>
-              <ActionLink href='#' className="glyphicon glyphicon-remove illuminate-popup-close-icon" onClick={() => this.onCloseModal()}></ActionLink>
-              <div className="container-fluid popup-new-project">
-                <span>
-                  <div className="row">
-                      <div className="col-lg-12">
-                        <div className="header">
-                            <div>This will create a task in task manager!</div>
-                          </div>
-                        </div>
+              <Modal style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} 
+                onRequestClose={() => this.onCloseModal()} >
+                  <ActionLink href='#' className="glyphicon glyphicon-remove modal-close-button" onClick={() => this.onCloseModal()}></ActionLink>
+
+                  <div className="modal-popup">
+                    <br/>
+                    <div className="row text-center">
+                      <i className="fa fa-3x fa-check-circle" style={{color:'green'}}></i>
+                      <br/>
                     </div>
-                  </span>
-                  <hr/>
-                  <button onClick={(e)=> this.goToIlluminate(e) } className="btn-md btn-outline-inverse illuminate-btn-go">Go</button>
-              </div>
-            </Modal>
+                    <p className="text-center">Your Task has been started (flexible)</p>
+                    <br />
+                    <div className="row text-center">
+                      <Countdown daysInHours={false} 
+                      date={Date.now() + 5000} 
+                      onComplete={()=> this.goToIlluminate()} />
+                    </div>
+                    
+                  </div>
 
-            <div className="row">
-              {this.state.isHangoutFormVisible && 
-                <HangoutSubmitForm skillInfo={this.state.skillInfo} onHandleStartHangout={(date) => this.handleStartHangout(date)}
-                onTimeChange={(e)=>handleTimeChange(e)} toogleTrenScan={() => this.toggleTrendScannerComponent()}  handleToggle={() => this.handleToggle()}/>}
-            </div>
+                </Modal>
 
-            {this.state.TrendScannerComponentVisible && <div className="row">
-            <div className="col-lg-12">
-              <div id="skill-breakdown-trend-scanner">
-                <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
-                  resultsSelectedCategory={this.props.resultsSelectedCategory}
-                    isFetchInProgress={this.props.isFetchInProgress}
-                      searchResults={this.props.searchResults}/>
-              </div>
-            </div>
-          </div>}
+                <div className="row">
+                    <HangoutSubmitForm isHangoutFormVisible={this.state.isHangoutFormVisible} skillInfo={this.state.skillInfo} 
+                    onHandleStartHangout={(date) => this.handleStartHangout(date)} onTimeChange={(e)=>handleTimeChange(e)} 
+                    toogleTrenScan={() => this.toggleTrendScannerComponent()}  handleToggle={() => this.handleToggle()}
+                    onCloseModal={()=>this.onCloseModal()}/>
+                </div>
+
+                {this.state.TrendScannerComponentVisible && <div className="row">
+                <div className="col-lg-12">
+                    <div id="skill-breakdown-trend-scanner">
+                      <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
+                        resultsSelectedCategory={this.props.resultsSelectedCategory}
+                          isFetchInProgress={this.props.isFetchInProgress}
+                            searchResults={this.props.searchResults}/>
+                    </div>
+                  </div>
+                </div>}
 
 
           </div>

@@ -5,6 +5,7 @@ import React from 'react';
 
 import ActionLink from '~/src/components/common/ActionLink'
 import {Link} from 'react-router-dom'
+import Modal from 'react-modal';
 import moment from 'moment'
 import "~/src/theme/css/treebrowser.css"
 
@@ -25,6 +26,29 @@ class HangoutSubmitForm extends React.Component {
 
      timeInputValue: oneHourFromNow.format("HH:mm"),
     }
+
+    this.modalDefaultStyles = {};
+
+  }
+
+  componentWillMount(){
+    this.modalDefaultStyles = Modal.defaultStyles;
+
+    Modal.defaultStyles.content.border = "none";
+    Modal.defaultStyles.content.background = "transparent";
+    Modal.defaultStyles.content.overflow = "visible";
+    Modal.defaultStyles.content.padding = "0";
+    Modal.defaultStyles.content["maxWidth"] = "600";
+    // Modal.defaultStyles.content["minHeight"] = "300px";
+    Modal.defaultStyles.content["marginLeft"] = "auto";
+    Modal.defaultStyles.content["marginRight"] = "auto";
+    Modal.defaultStyles.content["left"] = "0px";
+    Modal.defaultStyles.content["top"] = "150px";
+    Modal.defaultStyles.content["right"] = "0px";
+  }
+
+  componentWillUnmount(){
+    Modal.defaultStyles = this.modalDefaultStyles;
   }
 
   handleDateInputChange(e) {
@@ -119,36 +143,43 @@ class HangoutSubmitForm extends React.Component {
 
   render() {
     return (
-      <div id="hangout-submit-form" >
-      <div id = "DefaultModal" style={{display:this.state.IsDisplayForm}}>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-12">
-              <p>Great! You want to DeepDive into this topic!</p>
-            </div>
+      <Modal isOpen={this.props.isHangoutFormVisible} 
+        onRequestClose={() => this.props.onCloseModal()} >
+          <ActionLink href='#' className="glyphicon glyphicon-remove modal-close-button" 
+          onClick={() => this.props.onCloseModal()}></ActionLink>
+
+          <div className="modal-popup">
+            <div id = "DefaultModal" style={{display:this.state.IsDisplayForm}}>
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-lg-12">
+                    <p>Great! You want to DeepDive into this topic!</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <p>
+                      People work better in a team and can achieve more than when they are alone.
+                      Submit a request by providing us with the details below and you will get matches 
+                      to someone with the same interest to solve relevant questions and unlock Soqqle 
+                      Trend Scanner for you to browse other opportunities for this skill.
+                    </p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12">
+                    {this.renderForm()}
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div id="afterClickModal" style={{display:this.state.IsDeepDiveCreated}}>
+                <p>Your DeepDive has been created! Let's wait for a match!<br/>Find out more about what's happening around this topic below.</p>
+                <Link to='/taskManagement' ><button type="submit" className="btn-md btn-outline-inverse goto-task-manager-btn">Goto Task Manager Instead</button></Link>
+              </div>
           </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <p>
-                People work better in a team and can achieve more than when they are alone.
-                Submit a request by providing us with the details below and you will get matches 
-                to someone with the same interest to solve relevant questions and unlock Soqqle 
-                Trend Scanner for you to browse other opportunities for this skill.
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              {this.renderForm()}
-            </div>
-          </div>
-        </div>
-        </div>
-        <div id="afterClickModal" style={{display:this.state.IsDeepDiveCreated}}>
-          <p>Your DeepDive has been created! Let's wait for a match!<br/>Find out more about what's happening around this topic below.</p>
-          <Link to='/taskManagement' ><button type="submit" className="btn-md btn-outline-inverse goto-task-manager-btn">Goto Task Manager Instead</button></Link>
-        </div>
-      </div>
+
+        </Modal>
     );
   }
 }
