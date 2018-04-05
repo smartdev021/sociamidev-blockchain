@@ -29,6 +29,8 @@ import ActionLink from '~/src/components/common/ActionLink'
 
 import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
 
+import Loadable from 'react-loading-overlay'
+
 import {
   fetchUserProfile,
   logout,
@@ -503,28 +505,32 @@ class App extends Component {
     }
 
     return (
-      <div>
-        <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
-          onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
-          onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
-          onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
-          onHandleSignUpFacebook={() => this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
-          onFetchAllTasks={(publishedOnly) => this.props.fetchAllTasks(publishedOnly)}
-          pathname={this.props.history.location.pathname}
-          isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
-          openSignUpForm={this.props.openSignUpForm}
-          searchQuery={this.props.searchQuery}
-          onHandleQueryChange={this.props.setSearchQuery}
-          userProfile={this.props.userProfile}
-          isFetchInProgress={this.props.isFetchInProgress}
-          currentUserId={this.props.userProfile._id}
-          screenWidth={this.state.screenWidth}
-          screenHeight={this.state.screenHeight}
-          accounting={this.props.accounting}
-          logout={() => this.props.logout()} />
-        <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
-        {ChatAppLink}
-      </div>
+      <Loadable active={this.props.isTaskSaveInProgress || this.props.isTasksUpdateInProgress/* || this.props.isTasksFetchInProgress*/}
+         background="#ee892f" color="#30a7d2"
+        spinner text='Wait a moment...' animate={false} spinnerSize="96px" zIndex={10000}>
+        <div>
+          <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+            onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+            onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+            onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+            onHandleSignUpFacebook={() => this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
+            onFetchAllTasks={(publishedOnly) => this.props.fetchAllTasks(publishedOnly)}
+            pathname={this.props.history.location.pathname}
+            isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
+            openSignUpForm={this.props.openSignUpForm}
+            searchQuery={this.props.searchQuery}
+            onHandleQueryChange={this.props.setSearchQuery}
+            userProfile={this.props.userProfile}
+            isFetchInProgress={this.props.isFetchInProgress}
+            currentUserId={this.props.userProfile._id}
+            screenWidth={this.state.screenWidth}
+            screenHeight={this.state.screenHeight}
+            accounting={this.props.accounting}
+            logout={() => this.props.logout()} />
+          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
+          {ChatAppLink}
+        </div>
+      </Loadable>
     );
   }
 }
@@ -589,6 +595,10 @@ const mapStateToProps = state => ({
   characterCreationData: state.characterCreationData,
   listCharacterTraits: state.characterCreation.listCharacterTraits,
   listCharacters: state.characterCreation.listCharacters,
+
+  isTaskSaveInProgress: state.isTaskSaveInProgress,
+  isTasksFetchInProgress: state.isTasksFetchInProgress,
+  isTasksUpdateInProgress: state.isTasksUpdateInProgress,
 
   accounting: state.accounting,
 

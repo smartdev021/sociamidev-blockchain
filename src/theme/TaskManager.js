@@ -32,6 +32,7 @@ import {
   taskLeave,
   rateTaskPartner,
   taskAssign,
+  taskJoinStatusChange,
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -229,6 +230,11 @@ class TaskManager extends React.Component {
       this.fetchUserTasks();
       this.props.onFetchAllTasks(false);
     }
+
+    if (prevProps.isTaskUpdateInProgress && !this.props.isTaskUpdateInProgress) {
+      //temporary solution
+      this.fetchUserTasks();
+    }
     
     if (prevProps.userTasks.length != this.props.userTasks.length || prevProps.tasks.length != this.props.tasks.length
     || (prevProps.isTaskSaveInProgress != this.props.isTaskSaveInProgress 
@@ -339,27 +345,12 @@ class TaskManager extends React.Component {
     .catch((error) =>this.handleCloseCancelTaskDetailsPopup(error));
   }
 
-  handleRequestStatusChange(hangout, user, status) {
-    const that = this;
-
-    const body = { userId: user._id, hangoutID: hangout._id, status: status };
-
-    Axios.post(`${BackendURL}/hangoutJoinStatusChange`, body)
-      .then((response) => {
-        that.props.onFetchAllTasks(false);
-        that.fetchUserTasks();
-
-      }).catch(function(error) {
-        console.log(error);
-      });
-  }
-
   hangoutRequestAccept(hangout, user) {
-    this.handleRequestStatusChange(hangout, user, "accepted");
+    this.props.taskJoinStatusChange(hangout._id, "accepted", user);
   }
 
   hangoutRequestReject(hangout, user) {
-    this.handleRequestStatusChange(hangout, user, "rejected");
+    this.props.taskJoinStatusChange(hangout._id, "rejected", user);
   }
 
   getMyTasksAndHangouts() {
@@ -568,6 +559,7 @@ TaskManager.propTypes = {
   projects: PropTypes.array.isRequired,
   isTasksFetchInProgress: PropTypes.bool.isRequired,
   isTaskSaveInProgress: PropTypes.bool.isRequired,
+  isTaskUpdateInProgress: PropTypes.bool.isRequired,
 
   openSignUpForm: PropTypes.func.isRequired,
   hangoutJoin: PropTypes.func.isRequired,
@@ -596,6 +588,7 @@ const mapStateToProps = state => ({
   projects: state.projects,
   isTasksFetchInProgress: state.isTasksFetchInProgress,
   isTaskSaveInProgress: state.isTaskSaveInProgress,
+  isTaskUpdateInProgress: state.isTaskUpdateInProgress,
 
   lastStartedTask: state.lastStartedTask,
 });
@@ -611,6 +604,7 @@ const mapDispatchToProps = dispatch => ({
   rateTaskPartner: bindActionCreators(rateTaskPartner, dispatch),
   taskAssign: bindActionCreators(taskAssign, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
+  taskJoinStatusChange: bindActionCreators(taskJoinStatusChange, dispatch),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)((TaskManager)));

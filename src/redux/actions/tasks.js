@@ -240,7 +240,7 @@ export function hangoutJoin(hangoutId, user) {
 
 export function taskStatusChange(taskId, status) {
     return function (dispatch) {
-        dispatch(saveTaskInitiate());
+        dispatch(updateTaskInitiate());
 
         const url = `${ConfigMain.getBackendURL()}/taskStatusChange`;
 
@@ -255,10 +255,31 @@ export function taskStatusChange(taskId, status) {
                     if (response.data.status == "started") {
                         dispatch(setLastStartedTask(response.data));
                     }
-                    dispatch(saveTaskComplete());
+                    dispatch(updateTask(response.data));
+                    dispatch(updateTaskComplete());
                 })
                 .catch(function (error) {
-                    dispatch(saveTaskComplete());
+                    dispatch(updateTaskComplete());
+                }));
+    }
+}
+
+export function taskJoinStatusChange(taskId, status, user) {
+    return function (dispatch) {
+        dispatch(updateTaskInitiate());
+
+        const body = { userId: user._id, hangoutID: taskId, status: status };
+
+        return (
+            Axios.post(`${ConfigMain.getBackendURL()}/hangoutJoinStatusChange`, body)
+                .then((response) => {
+                    console.log("response.data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    console.dir(response.data);
+                    dispatch(updateTask(response.data));
+                    dispatch(updateTaskComplete());
+
+                }).catch(function (error) {
+                    dispatch(updateTaskComplete());
                 }));
     }
 }
