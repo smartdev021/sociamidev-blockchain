@@ -97,190 +97,208 @@ export function updateTaskComplete() {
 
 export function setTaskPublished(taskId, published) {
     return function (dispatch) {
-      dispatch(updateTaskInitiate());
-      
-      const url = `${ConfigMain.getBackendURL()}/taskSetPublished?id=${taskId}&isHidden=${published ? 0 : 1}`;
+        dispatch(updateTaskInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/taskSetPublished?id=${taskId}&isHidden=${published ? 0 : 1}`;
         return (
-        Axios.get(url)
-        .then(function(response) {
-            dispatch(updateTask(response.data._id, response.data));
-            dispatch(updateTaskComplete());
-        })
-        .catch(function(error) {
-            dispatch(updateTaskComplete({}));
-        }));
+            Axios.get(url)
+                .then(function (response) {
+                    dispatch(updateTask(response.data._id, response.data));
+                    dispatch(updateTaskComplete());
+                })
+                .catch(function (error) {
+                    dispatch(updateTaskComplete({}));
+                }));
     }
 }
 
 export function rateTaskPartner(taskId, fromUser, toUser, rate) {
     return function (dispatch) {
-      dispatch(updateTaskInitiate());
+        dispatch(updateTaskInitiate());
 
-      const url = `${ConfigMain.getBackendURL()}/hangoutRateParticipant`;
-      const body = {taskId: taskId, fromUser: fromUser, toUser: toUser, rate: rate}
+        const url = `${ConfigMain.getBackendURL()}/hangoutRateParticipant`;
+        const body = { taskId: taskId, fromUser: fromUser, toUser: toUser, rate: rate }
 
-      return (Axios.post(url, body)
-      .then(function(response) {
-        dispatch(updateTask(response.data._id, response.data));
-        dispatch(updateTaskComplete());
-      })
-      .catch((error) => {
-          console.log(error);
-          dispatch(updateTaskComplete({}));
-       }));
+        return (Axios.post(url, body)
+            .then(function (response) {
+                dispatch(updateTask(response.data._id, response.data));
+                dispatch(updateTaskComplete());
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(updateTaskComplete({}));
+            }));
     }
 }
 
 export function taskAssign(taskId, assignee) {
     return function (dispatch) {
-      dispatch(updateTaskInitiate());
+        dispatch(updateTaskInitiate());
 
-      const url = `${ConfigMain.getBackendURL()}/taskAssign`;
+        const url = `${ConfigMain.getBackendURL()}/taskAssign`;
 
-      const body = {
-        _id: taskId, 
-        assignee: assignee,
-      };
+        const body = {
+            _id: taskId,
+            assignee: assignee,
+        };
 
-      return (Axios.post(url, body)
-      .then(function(response) {
-        dispatch(updateTask(response.data._id, response.data));
-        dispatch(updateTaskComplete());
-      })
-      .catch((error) => {
-          console.log(error);
-          dispatch(updateTaskComplete({}));
-       }));
+        return (Axios.post(url, body)
+            .then(function (response) {
+                dispatch(updateTask(response.data._id, response.data));
+                dispatch(updateTaskComplete());
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(updateTaskComplete({}));
+            }));
     }
 }
 
 export function saveTask(task) {
     return function (dispatch) {
-        
-      //async action entry point
-      dispatch(saveTaskInitiate());
-      
-      const url = `${ConfigMain.getBackendURL()}/taskSavePost`;
+
+        //async action entry point
+        dispatch(saveTaskInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/taskSavePost`;
         return (
-        Axios.post(url, task)
-        .then(function(response) {
-            dispatch(setLastSavedTask(response.data));
-            dispatch(addTask(response.data));
-            dispatch(saveTaskComplete());
-        })
-        .catch(function(error) {
-            dispatch(saveTaskComplete());
-        }));
+            Axios.post(url, task)
+                .then(function (response) {
+                    dispatch(setLastSavedTask(response.data));
+                    dispatch(addTask(response.data));
+                    dispatch(saveTaskComplete());
+                })
+                .catch(function (error) {
+                    dispatch(saveTaskComplete());
+                }));
     }
 }
 
 export function deleteTask(taskId) {
     return function (dispatch) {
-        
-      //async action entry point
-      dispatch(saveTaskInitiate());
-      
-      const url = `${ConfigMain.getBackendURL()}/taskDelete?id=${taskId}`;
+
+        //async action entry point
+        dispatch(saveTaskInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/taskDelete?id=${taskId}`;
         return (
-        Axios.get(url)
-        .then(function(response) {
-            dispatch(removeTask(response.data._id));
-            dispatch(saveTaskComplete());
-        })
-        .catch(function(error) {
-            dispatch(saveTaskComplete());
-        }));
+            Axios.get(url)
+                .then(function (response) {
+                    dispatch(removeTask(response.data._id));
+                    dispatch(saveTaskComplete());
+                })
+                .catch(function (error) {
+                    dispatch(saveTaskComplete());
+                }));
     }
 }
 
 export function fetchAllTasks(publishedOnly) {
-console.log("publishedOnly: " + publishedOnly);
+    console.log("publishedOnly: " + publishedOnly);
     return function (dispatch) {
-      
-    //async action entry point
-    dispatch(fetchTasksInitiate());
-    
-    const url = `${ConfigMain.getBackendURL()}/tasksGet?publishedOnly=${publishedOnly ? 1 : 0}`;
-          return (
+
+        //async action entry point
+        dispatch(fetchTasksInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/tasksGet?publishedOnly=${publishedOnly ? 1 : 0}`;
+        return (
             Axios.get(url)
-            .then(function(response) {
-                dispatch(fetchTasksComplete(response.data));
-            })
-            .catch(function(error) {
-                dispatch(fetchTasksComplete([]));
-            }));
-        }
+                .then(function (response) {
+                    dispatch(fetchTasksComplete(response.data));
+                })
+                .catch(function (error) {
+                    dispatch(fetchTasksComplete([]));
+                }));
     }
+}
 
-    export function hangoutJoin(hangoutId, user) {
-        return function (dispatch) {
-          dispatch(saveTaskInitiate());
-          
-          const url = `${ConfigMain.getBackendURL()}/hangoutJoin`;
+export function hangoutJoin(hangoutId, user) {
+    return function (dispatch) {
+        dispatch(saveTaskInitiate());
 
-          const body = {
-            hangoutID : hangoutId,
-            
-            user : {
-                  _id : user._id,
-                  firstName : user.firstName,
-                  lastName : user.lastName,
-              },
-            };
-            return (
+        const url = `${ConfigMain.getBackendURL()}/hangoutJoin`;
+
+        const body = {
+            hangoutID: hangoutId,
+
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+            },
+        };
+        return (
             Axios.post(url, body)
-            .then(function(response) {
-                dispatch(saveTaskComplete());
-            })
-            .catch(function(error) {
-                dispatch(saveTaskComplete());
-            }));
-        }
+                .then(function (response) {
+                    dispatch(saveTaskComplete());
+                })
+                .catch(function (error) {
+                    dispatch(saveTaskComplete());
+                }));
     }
+}
 
-    export function taskStatusChange(taskId, status) {
-        return function (dispatch) {
-          dispatch(saveTaskInitiate());
-          
-          const url = `${ConfigMain.getBackendURL()}/taskStatusChange`;
+export function taskStatusChange(taskId, status) {
+    return function (dispatch) {
+        dispatch(saveTaskInitiate());
 
-          const body = {
-              id : taskId,
-              status: status,
-            };
+        const url = `${ConfigMain.getBackendURL()}/taskStatusChange`;
 
-            return (
+        const body = {
+            id: taskId,
+            status: status,
+        };
+
+        return (
             Axios.post(url, body)
-            .then(function(response) {
-                if (response.data.status == "started") {
-                    dispatch(setLastStartedTask(response.data));
+                .then(function (response) {
+                    if (response.data.status == "started") {
+                        dispatch(setLastStartedTask(response.data));
+                    }
+                    dispatch(saveTaskComplete());
+                })
+                .catch(function (error) {
+                    dispatch(saveTaskComplete());
+                }));
+    }
+}
+
+export function taskLeave(taskId, user) {
+    return function (dispatch) {
+        dispatch(saveTaskInitiate());
+
+        const url = `${ConfigMain.getBackendURL()}/hangoutLeave`;
+
+        const body = {
+            id: taskId,
+            user: user,
+        };
+
+        return (
+            Axios.post(url, body)
+                .then(function (response) {
+                    dispatch(saveTaskComplete());
+                })
+                .catch(function (error) {
+                    dispatch(saveTaskComplete());
+                }));
+    }
+}
+
+export function hangoutAnswersSave(body) {
+    return function (dispatch) {
+        dispatch(updateTaskInitiate());
+
+        return (Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
+            .then((response) => {
+                if (response.data && response.data._id) {
+                    dispatch(updateTask(response.data._id, response.data));
                 }
-                dispatch(saveTaskComplete());
+
+                dispatch(updateTaskComplete());
             })
-            .catch(function(error) {
-                dispatch(saveTaskComplete());
+            .catch(function (error) {
+                dispatch(updateTaskComplete());
             }));
-        }
     }
-
-    export function taskLeave(taskId, user) {
-        return function (dispatch) {
-          dispatch(saveTaskInitiate());
-          
-          const url = `${ConfigMain.getBackendURL()}/hangoutLeave`;
-
-          const body = {
-              id : taskId,
-              user: user,
-            };
-
-            return (
-            Axios.post(url, body)
-            .then(function(response) {
-                dispatch(saveTaskComplete());
-            })
-            .catch(function(error) {
-                dispatch(saveTaskComplete());
-            }));
-        }
-    }
+}

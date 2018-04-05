@@ -25,6 +25,7 @@ import "~/src/theme/css/taskBrowser.css"
 
 import {
   setLastStartedTask,
+  hangoutAnswersSave,
 } from '~/src/redux/actions/tasks'
 
 class AnswerQuestions extends React.Component {
@@ -47,8 +48,6 @@ class AnswerQuestions extends React.Component {
       isAnswersFetchFromCookiesInProgress: false,
 
       isLoading: false,
-
-      isSubmitInProgress: false,
     }
 
     this.getPartnerProfile = this.getPartnerProfile.bind(this);
@@ -73,24 +72,6 @@ class AnswerQuestions extends React.Component {
         this.setState({answersMy: answersMyCopy});
       }
     }
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-
-    const that = this;
-
-    const body = {
-      userId: this.props.userProfile._id,
-
-      taskId: this.state.currentTask._id,
-
-      answers: this.state.answersMy,
-    };
-
-    Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
-      .then((response)=>{that.setState({isSubmitInProgress: false});})
-      .catch((error)=>{console.log(error); that.setState({isSubmitInProgress: false});});
   }
 
   componentDidMount() {
@@ -124,12 +105,12 @@ class AnswerQuestions extends React.Component {
         || this.state.isTaskLoading != prevState.isTaskLoading 
           || prevState.isAnswersFetchFromCookiesInProgress != this.state.isAnswersFetchFromCookiesInProgress
             || prevState.isAnswersFetchFromServerInProgress != this.state.isAnswersFetchFromServerInProgress
-              || prevState.isSubmitInProgress != this.state.isSubmitInProgress) {
+              || prevProps.isTasksUpdateInProgress != this.props.isTasksUpdateInProgress) {
       this.setState({isLoading: (this.state.isQuestionsLoading 
         || this.state.isTaskLoading 
           || this.state.isAnswersFetchFromCookiesInProgress
             || this.state.isAnswersFetchFromServerInProgress
-              || this.state.isSubmitInProgress
+              || this.props.isTasksUpdateInProgress
       )});
     }
 
@@ -137,8 +118,8 @@ class AnswerQuestions extends React.Component {
       this.storeUserAnswersToCookies(this.state.answersMy);
     }
 
-    if (prevState.isSubmitInProgress != this.state.isSubmitInProgress) {
-      if (!this.state.isSubmitInProgress) {
+    if (prevProps.isTasksUpdateInProgress != this.props.isTasksUpdateInProgress) {
+      if (!this.props.isTasksUpdateInProgress) {
         this.props.onSubmitComplete();
       }
     }
@@ -244,7 +225,6 @@ class AnswerQuestions extends React.Component {
   }
 
   handlePopupSubmit(e) {
-    this.setState({isSubmitInProgress: true});
     e.preventDefault();
 
     const that = this;
@@ -257,9 +237,7 @@ class AnswerQuestions extends React.Component {
       answers: this.state.answersMy,
     };
 
-    Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
-      .then((response)=>{that.setState({isSubmitted: true, isSubmitInProgress: false});})
-      .catch((error)=>{that.setState({isSubmitted: true, isSubmitInProgress: false}); console.log(error)});
+    this.props.hangoutAnswersSave(body);
   }
 
   handlePopupClose() {
@@ -284,7 +262,7 @@ class AnswerQuestions extends React.Component {
         answersMy={this.state.answersMy}
         answersPartner={this.state.answersPartner}
         isLoading={this.state.isLoading}
-        isSubmitting={this.state.isSubmitInProgress}
+        isSubmitting={this.props.isTasksUpdateInProgress}
         onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}/>
     );
   }
@@ -294,15 +272,19 @@ AnswerQuestions.propTypes = {
   setLastStartedTask: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  hangoutAnswersSave: PropTypes.func.isRequired,
+  isTasksUpdateInProgress: PropTypes.bool,
 }
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
-  isAuthorized: state.userProfile.isAuthorized
+  isAuthorized: state.userProfile.isAuthorized,
+  isTasksUpdateInProgress: state.isTasksUpdateInProgress,
 })
 
 const mapDispatchToProps = dispatch => ({
   setLastStartedTask: bindActionCreators(setLastStartedTask, dispatch),
+  hangoutAnswersSave: bindActionCreators(hangoutAnswersSave, dispatch),
 })
 
 
