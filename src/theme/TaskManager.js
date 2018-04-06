@@ -575,7 +575,7 @@ TaskManager.propTypes = {
 const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
   isAuthorized: state.userProfile.isAuthorized,
-  tasks: state.tasks,
+  tasks: state.tasks.data,
 
   roadmapsAdmin: state.roadmapsAdmin,
 
@@ -586,9 +586,9 @@ const mapStateToProps = state => ({
   isUserTasksLoading: state.userProfile.tasks.isLoading,
 
   projects: state.projects,
-  isTasksFetchInProgress: state.isTasksFetchInProgress,
-  isTaskSaveInProgress: state.isTaskSaveInProgress,
-  isTaskUpdateInProgress: state.isTaskUpdateInProgress,
+  isTasksFetchInProgress: state.tasks.isFetchInProgress,
+  isTaskSaveInProgress: state.tasks.isSaveInProgress,
+  isTaskUpdateInProgress: state.tasks.isUpdateInProgress,
 
   lastStartedTask: state.lastStartedTask,
 });

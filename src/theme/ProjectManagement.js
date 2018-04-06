@@ -246,13 +246,13 @@ const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
   userFriends: state.userFriends,
   projects: state.projects,
-  tasks: state.tasks,
+  tasks: state.tasks.data,
   lastSavedTask: state.lastSavedTask,
   roadmapsDetailed: state.roadmapsDetailed,
   isProjectsFetchInProgress: state.isProjectsFetchInProgress,
   isProjectSaveInProgress: state.isProjectSaveInProgress,
-  isTaskSaveInProgress: state.isTaskSaveInProgress,
-  isTasksUpdateInProgress: state.isTasksUpdateInProgress,
+  isTaskSaveInProgress: state.tasks.isSaveInProgress,
+  isTasksUpdateInProgress: state.tasks.isUpdateInProgress,
 });
 
 const mapDispatchToProps = dispatch => ({

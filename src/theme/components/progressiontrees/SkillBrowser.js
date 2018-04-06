@@ -699,7 +699,7 @@ const mapStateToProps = state => ({
   resultsSelectedCategory: state.resultsSelectedCategory,
   searchResults : state.searchResults,saveTask,
   isFetchInProgress : state.isFetchInProgress,
-  isTaskSaveInProgress: state.isTaskSaveInProgress,
+  isTaskSaveInProgress: state.tasks.isSaveInProgress,
   lastSavedTask: state.lastSavedTask,
 });
 

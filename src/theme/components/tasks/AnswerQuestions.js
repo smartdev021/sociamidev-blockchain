@@ -279,7 +279,7 @@ AnswerQuestions.propTypes = {
 const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
   isAuthorized: state.userProfile.isAuthorized,
-  isTasksUpdateInProgress: state.isTasksUpdateInProgress,
+  isTasksUpdateInProgress: state.tasks.isUpdateInProgress,
 })
 
 const mapDispatchToProps = dispatch => ({

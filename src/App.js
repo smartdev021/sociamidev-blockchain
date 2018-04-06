@@ -596,9 +596,9 @@ const mapStateToProps = state => ({
   listCharacterTraits: state.characterCreation.listCharacterTraits,
   listCharacters: state.characterCreation.listCharacters,
 
-  isTaskSaveInProgress: state.isTaskSaveInProgress,
-  isTasksFetchInProgress: state.isTasksFetchInProgress,
-  isTasksUpdateInProgress: state.isTasksUpdateInProgress,
+  isTaskSaveInProgress: state.tasks.isSaveInProgress,
+  isTasksFetchInProgress: state.tasks.isFetchInProgress,
+  isTasksUpdateInProgress: state.tasks.isUpdateInProgress,
 
   accounting: state.accounting,
 

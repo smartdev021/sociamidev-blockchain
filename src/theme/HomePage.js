@@ -187,7 +187,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
-  tasks: state.tasks,
+  tasks: state.tasks.data,
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
