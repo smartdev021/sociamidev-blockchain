@@ -38,7 +38,7 @@ import {
   openSignUpForm,
   closeSignUpForm,
   fetchUserActivities,
-
+  fetchUserTasks,
   setUserProfileCharacter,
 } from '~/src/redux/actions/authorization'
 
@@ -204,11 +204,9 @@ class App extends Component {
     console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
 
     if (data.eventType == "task_updated") {
-      console.dir(data);
-      console.dir(data.task);
-      console.log(data.task._id);
       if (data.task && data.task._id) {
         this.props.updateTask(data.task);
+        this.props.fetchUserTasks(this.props.userProfile._id);
       }
     }
   };
@@ -555,6 +553,7 @@ App.propTypes = {
   fetchUserProfile: PropTypes.func.isRequired,
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
+  fetchUserTasks: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
@@ -578,6 +577,7 @@ const mapDispatchToProps = dispatch => ({
   setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
+  fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
 })
 
 const mapStateToProps = state => ({

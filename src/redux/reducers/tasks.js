@@ -20,7 +20,7 @@ export function tasks(state = tasksInitialState, action) {
   switch (action.type) {
     case TASK_REMOVE: {
       let findByID = function (task) {
-        return task._id == action.id;
+        return task._id == action._id;
       }
 
       const foundIndex = state.data.findIndex(findByID);
@@ -77,14 +77,13 @@ export function tasks(state = tasksInitialState, action) {
     }
     case TASK_UPDATE: {
       let findByID = function (task) {
-        return task._id == action.task.id;
+        return task._id == action.task._id;
       }
 
       const foundIndex = state.data.findIndex(findByID);
 
       if (foundIndex != -1) {
         let copyTasks = state.data.slice(0);
-
         copyTasks[foundIndex] = action.task;
 
         return { ...state, data: copyTasks };
