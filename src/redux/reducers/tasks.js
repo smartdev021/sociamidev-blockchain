@@ -20,23 +20,6 @@ export function tasks(state = tasksInitialState, action) {
   switch (action.type) {
     case FETCH_TASKS_COMPLETE:
       return { ...state, data: action.tasks };
-    case TASK_UPDATE: {
-      let findByID = function (task) {
-        return task._id == action.id;
-      }
-
-      const foundIndex = state.data.findIndex(findByID);
-
-      if (foundIndex != -1) {
-        let copyTasks = state.data.slice(0);
-
-        copyTasks[foundIndex] = action.task;
-
-        return { ...state, data: copyTasks };
-      }
-
-      return state;
-    }
     case TASK_ADD: {
       let copyTasks = state.data.slice(0);
 
@@ -71,8 +54,50 @@ export function tasks(state = tasksInitialState, action) {
       return { ...state, isSaveInProgress: false };
     case UPDATE_TASK_INITIATE:
       return { ...state, isUpdateInProgress: true };
-    case UPDATE_TASK_COMPLETE:
-      return { ...state, isUpdateInProgress: false };
+    case UPDATE_TASK_COMPLETE: {
+      let findByID = function (task) {
+        return task._id == action.task._id;
+      }
+
+      let nextState = state;
+
+      const foundIndex = state.data.findIndex(findByID);
+
+      if (foundIndex != -1) {
+        let copyTasks = state.data.slice(0);
+        if (action.remove) {
+          copyTasks.splice(foundIndex, 1);
+
+          nextState = { ...state, data: copyTasks };
+        }
+        else {
+          copyTasks[foundIndex] = action.task;
+
+          nextState = { ...state, data: copyTasks };
+        }
+      }
+
+      nextState = { ...nextState, isUpdateInProgress: false };
+
+      return nextState;
+    }
+    case TASK_UPDATE: {
+      let findByID = function (task) {
+        return task._id == action.task.id;
+      }
+
+      const foundIndex = state.data.findIndex(findByID);
+
+      if (foundIndex != -1) {
+        let copyTasks = state.data.slice(0);
+
+        copyTasks[foundIndex] = action.task;
+
+        return { ...state, data: copyTasks };
+      }
+
+      return state;
+    }
     default:
       return state;
   }

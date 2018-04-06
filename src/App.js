@@ -208,7 +208,7 @@ class App extends Component {
       console.dir(data.task);
       console.log(data.task._id);
       if (data.task && data.task._id) {
-        this.props.updateTask(data.task._id, data.task);
+        this.props.updateTask(data.task);
       }
     }
   };

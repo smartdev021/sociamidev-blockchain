@@ -36,11 +36,10 @@ export function removeTask(taskId) {
     }
 }
 
-export function updateTask(taskId, newTask) {
+export function updateTask(task) {
     return {
         type: TASK_UPDATE,
-        id: taskId,
-        task: newTask,
+        task: task,
     }
 }
 
@@ -77,9 +76,10 @@ export function saveTaskInitiate() {
     }
 }
 
-export function saveTaskComplete() {
+export function saveTaskComplete(task) {
     return {
         type: SAVE_TASK_COMPLETE,
+        tasl: task,
     }
 }
 
@@ -89,9 +89,11 @@ export function updateTaskInitiate() {
     }
 }
 
-export function updateTaskComplete() {
+export function updateTaskComplete(task, remove=false) {
     return {
         type: UPDATE_TASK_COMPLETE,
+        task: task,
+        remove: remove,
     }
 }
 
@@ -103,10 +105,10 @@ export function setTaskPublished(taskId, published) {
         return (
             Axios.get(url)
                 .then(function (response) {
-                    dispatch(updateTask(response.data._id, response.data));
-                    dispatch(updateTaskComplete());
+                    dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
+                    console.log("%cerror", error, "color:violet;background:orange;");
                     dispatch(updateTaskComplete({}));
                 }));
     }
@@ -121,12 +123,11 @@ export function rateTaskPartner(taskId, fromUser, toUser, rate) {
 
         return (Axios.post(url, body)
             .then(function (response) {
-                dispatch(updateTask(response.data._id, response.data));
-                dispatch(updateTaskComplete());
+                dispatch(updateTaskComplete(response.data));
             })
             .catch((error) => {
-                console.log(error);
-                dispatch(updateTaskComplete({}));
+                console.log("%cerror", error, "color:violet;background:orange;");
+                dispatch(updateTaskComplete());
             }));
     }
 }
@@ -144,12 +145,11 @@ export function taskAssign(taskId, assignee) {
 
         return (Axios.post(url, body)
             .then(function (response) {
-                dispatch(updateTask(response.data._id, response.data));
-                dispatch(updateTaskComplete());
+                dispatch(updateTaskComplete(response.data));
             })
             .catch((error) => {
-                console.log(error);
-                dispatch(updateTaskComplete({}));
+                console.log("%cerror", error, "color:violet;background:orange;");
+                dispatch(updateTaskComplete());
             }));
     }
 }
@@ -165,10 +165,10 @@ export function saveTask(task) {
             Axios.post(url, task)
                 .then(function (response) {
                     dispatch(setLastSavedTask(response.data));
-                    dispatch(addTask(response.data));
-                    dispatch(saveTaskComplete());
+                    dispatch(saveTaskComplete(response.data));
                 })
                 .catch(function (error) {
+                    console.log("%cerror", error, "color:violet;background:orange;");
                     dispatch(saveTaskComplete());
                 }));
     }
@@ -176,19 +176,17 @@ export function saveTask(task) {
 
 export function deleteTask(taskId) {
     return function (dispatch) {
-
-        //async action entry point
-        dispatch(saveTaskInitiate());
+        dispatch(updateTaskInitiate());
 
         const url = `${ConfigMain.getBackendURL()}/taskDelete?id=${taskId}`;
         return (
             Axios.get(url)
                 .then(function (response) {
-                    dispatch(removeTask(response.data._id));
-                    dispatch(saveTaskComplete());
+                    dispatch(updateTaskComplete(response.data, true));
                 })
                 .catch(function (error) {
-                    dispatch(saveTaskComplete());
+                    console.log("%cerror", error, "color:violet;background:orange;");
+                    dispatch(updateTaskComplete());
                 }));
     }
 }
@@ -207,6 +205,7 @@ export function fetchAllTasks(publishedOnly) {
                     dispatch(fetchTasksComplete(response.data));
                 })
                 .catch(function (error) {
+                    console.log("%cerror", error, "color:violet;background:orange;");
                     dispatch(fetchTasksComplete([]));
                 }));
     }
@@ -214,7 +213,7 @@ export function fetchAllTasks(publishedOnly) {
 
 export function hangoutJoin(hangoutId, user) {
     return function (dispatch) {
-        dispatch(saveTaskInitiate());
+        dispatch(updateTaskInitiate());
 
         const url = `${ConfigMain.getBackendURL()}/hangoutJoin`;
 
@@ -230,10 +229,11 @@ export function hangoutJoin(hangoutId, user) {
         return (
             Axios.post(url, body)
                 .then(function (response) {
-                    dispatch(saveTaskComplete());
+                    dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    dispatch(saveTaskComplete());
+                    console.log("%cerror", error, "color:violet;background:orange;");
+                    dispatch(updateTaskComplete());
                 }));
     }
 }
@@ -255,10 +255,10 @@ export function taskStatusChange(taskId, status) {
                     if (response.data.status == "started") {
                         dispatch(setLastStartedTask(response.data));
                     }
-                    dispatch(updateTask(response.data));
-                    dispatch(updateTaskComplete());
+                    dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
+                    console.log("%cerror", error, "color:violet;background:orange;");
                     dispatch(updateTaskComplete());
                 }));
     }
@@ -273,12 +273,10 @@ export function taskJoinStatusChange(taskId, status, user) {
         return (
             Axios.post(`${ConfigMain.getBackendURL()}/hangoutJoinStatusChange`, body)
                 .then((response) => {
-                    console.log("response.data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    console.dir(response.data);
-                    dispatch(updateTask(response.data));
-                    dispatch(updateTaskComplete());
+                    dispatch(updateTaskComplete(response.data));
 
                 }).catch(function (error) {
+                    console.log("%cerror", error, "color:violet;background:orange;");
                     dispatch(updateTaskComplete());
                 }));
     }
@@ -286,7 +284,7 @@ export function taskJoinStatusChange(taskId, status, user) {
 
 export function taskLeave(taskId, user) {
     return function (dispatch) {
-        dispatch(saveTaskInitiate());
+        dispatch(updateTaskInitiate());
 
         const url = `${ConfigMain.getBackendURL()}/hangoutLeave`;
 
@@ -298,10 +296,11 @@ export function taskLeave(taskId, user) {
         return (
             Axios.post(url, body)
                 .then(function (response) {
-                    dispatch(saveTaskComplete());
+                    dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    dispatch(saveTaskComplete());
+                    console.log("%cerror", error, "color:violet;background:orange;");
+                    dispatch(updateTaskComplete());
                 }));
     }
 }
@@ -312,13 +311,10 @@ export function hangoutAnswersSave(body) {
 
         return (Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
             .then((response) => {
-                if (response.data && response.data._id) {
-                    dispatch(updateTask(response.data._id, response.data));
-                }
-
-                dispatch(updateTaskComplete());
+                dispatch(updateTaskComplete(response.data));
             })
             .catch(function (error) {
+                console.log("%cerror", error, "color:violet;background:orange;");
                 dispatch(updateTaskComplete());
             }));
     }
