@@ -1,58 +1,161 @@
-#notificationTile {
+div#notificationTile {
   position: absolute;
-  left: 50%;
-  right: 50%;
-  z-index: 100;
-  min-width: 580px;
-  line-height: 1;
+  width: 400px;
+  right: 20px;
+  top: 48px;
+  border: none;
 }
 
-.notification-item, .notification-item-seen {
-background: #eaeaea;
+.notification-arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #2fa7d2;
+  position: absolute;
+  right: 58px;
+  top: -10px;
+  z-index: 200;
 }
 
-.notification-seen {
-background: #f2f2f2;
+.notifyTitle {
+  position: relative;
+  display: block;
+  background-color: #2fa7d2;
+  border: none;
+  text-align: center;
+  color: #fff;
+  font-size: 1.1em;
+  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.26);
 }
 
-.notification-item:focused, .notification-item-seen:focused, .notification-item:visited, .notification-item-seen:visited{
-padding: 5px;
-background: white;
-color: black;
+.notify-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.notification-item:hover, .notification-item-seen:hover {
-background: white
+.notify-hide {
+  display: flex;
+  justify-content: space-around;
 }
 
 .notifyIcon {
-float: left;
-padding-right: 10px;
+  border: 2px solid #a7daec;
+  border-radius: 100px;
+  padding: 2px;
+  margin-right: 10px;
 }
 
-.notifyDesc {
-padding-top: 5px;
-text-align: left;
-color: rgb(46,147,148) ;
+.notify-date {
+  color: #bababa;
 }
 
-.notificationRow {
-  padding-bottom: 25px;
+.notify-title {
+  color: #000;
 }
 
-.notifyTitle{
-text-align: left;
-color: black;
-background-color: #f2f2f2;
+.notify-name {
+  font-weight: bold;
+  color: #000;
+  font-size: 1.1em;
 }
 
+.notify-checked {
+  float: right;
+  background: #dd303a;
+  padding: 0px 10px;
+  border-radius: 20px;
+  color: #fff;
+  margin-top: 8px;
+  box-shadow: 0px 4px 10px 0px rgba(221, 48, 58, 0.33);
+}
+
+span.notification-item.list-group-item {
+  border: none;
+  border-radius: 0;
+}
 
 #notificationSection {
-  height: 352px;
-  overflow-y: auto;
-  background-color: #eaeaea;
+  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.26);
 }
 
-notificationSection a:focus, notificationSection a:hover {
+div#notificationSection a:hover {
   text-decoration: none;
+}
+
+span.notification-item.list-group-item {
+  transition: all 0.2s ease-in-out;
+}
+
+span.notification-item.list-group-item:hover {
+  transform: scale(1.05, 1.1);
+  z-index: 100;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15);
+}
+
+button.notify-btn-notification-check {
+  border: none;
+  outline: none;
+  background: #fdda2c;
+  color: #e7403f;
+  width: 150px;
+  padding: 6px;
+}
+
+button.notify-btn-notification-reschedule {
+  background: #fff;
+  border: 2px solid #c2c2c2;
+  border-radius: 3px;
+  width: 150px;
+  padding: 6px;
+  color: #c2c2c2;
+}
+
+.notify-hide {
+  display: none;
+  justify-content: space-around;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+span.notification-item.list-group-item:hover .notify-hide {
+  display: flex;
+}
+
+.notify-checked-true {
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 90px;
+  width: 30px;
+  padding: 5px;
+  text-align: center;
+  height: 28px;
+  color: #e74b49;
+  font-size: 1.3em;
+}
+
+.more-notifications {
+  background: #efefef;
+  text-align: center;
+  font-size: 1.3em;
+  padding: 10px;
+  font-weight: bold;
+  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.26);
+}
+
+@media (max-width: 480px) {
+  div#notificationTile {
+    position: absolute;
+    right: 0;
+    top: 120px;
+    z-index: 100;
+    width: 100%;
+    line-height: 1;
+    background: #fff;
+  }
+
+  .notifyTitle div {
+    text-align: left;
+    padding-left: 50px;
+  }
 }
