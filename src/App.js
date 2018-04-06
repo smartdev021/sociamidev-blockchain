@@ -158,8 +158,7 @@ class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
 
-    PubSub.unsubscribe(this.token_server_event_accounting_update);
-    PubSub.unsubscribe(this.token_server_event_tasks_update);
+    this.PubsubEventsUnSubscribe();
   }
 
   PubsubEventsSubscribe() {
