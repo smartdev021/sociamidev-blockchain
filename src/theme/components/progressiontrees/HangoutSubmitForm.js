@@ -38,7 +38,7 @@ class HangoutSubmitForm extends React.Component {
     Modal.defaultStyles.content.background = "transparent";
     Modal.defaultStyles.content.overflow = "visible";
     Modal.defaultStyles.content.padding = "0";
-    Modal.defaultStyles.content["maxWidth"] = "600";
+    Modal.defaultStyles.content["maxWidth"] = "600px";
     // Modal.defaultStyles.content["minHeight"] = "300px";
     Modal.defaultStyles.content["marginLeft"] = "auto";
     Modal.defaultStyles.content["marginRight"] = "auto";
@@ -143,7 +143,7 @@ class HangoutSubmitForm extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.isHangoutFormVisible} 
+      <Modal contentLabel="DeepDive" isOpen={this.props.isHangoutFormVisible} 
         onRequestClose={() => this.props.onCloseModal()} >
           <ActionLink href='#' className="glyphicon glyphicon-remove modal-close-button" 
           onClick={() => this.props.onCloseModal()}></ActionLink>

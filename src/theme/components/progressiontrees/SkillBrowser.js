@@ -62,6 +62,8 @@ class SkillBrowser extends React.Component {
      IsDisplayForm:'block',
      redirectToTaskManagement: false,
      timeNow: Date.now(),
+     HangoutPeriodLapsed:false,
+     IlluminatePeriodLapsed:false,
      isLoading: true,
      tree: this.props.location.state.tree
     }
@@ -71,7 +73,19 @@ class SkillBrowser extends React.Component {
   }
 
   updateTimeNow() {
-    this.setState({timeNow: Date.now()});
+    console.log('Executing updateTimeNow()')
+    const LatestHangoutDateJoined = this.lastHangoutDateJoined();
+    const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
+    const CurrentTree = this.state.tree;
+
+    const HangoutPeriodLapsed=!LatestHangoutDateJoined || Date.now()- LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
+    if(HangoutPeriodLapsed !== this.state.HangoutPeriodLapsed){
+      this.setState({HangoutPeriodLapsed:HangoutPeriodLapsed})
+    }
+    const IlluminatePeriodLapsed =!LatestIlluminateDateAnswered ||  Date.now()- LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
+    if(IlluminatePeriodLapsed!==this.state.IlluminatePeriodLapsed){
+      this.setState({IlluminatePeriodLapsed:IlluminatePeriodLapsed})
+    }
   }
 
   isTreeAdded() {
@@ -95,7 +109,7 @@ class SkillBrowser extends React.Component {
       Modal.defaultStyles.content.background = "transparent";
       Modal.defaultStyles.content.overflow = "visible";
       Modal.defaultStyles.content.padding = "0";
-      Modal.defaultStyles.content["maxWidth"] = "300px";
+      Modal.defaultStyles.content["maxWidth"] = "400px";
       Modal.defaultStyles.content["minHeight"] = "300px";
       Modal.defaultStyles.content["marginLeft"] = "auto";
       Modal.defaultStyles.content["marginRight"] = "auto";
@@ -326,7 +340,7 @@ class SkillBrowser extends React.Component {
     this.setState({isIlluminateFormVisible: false,isHangoutFormVisible:false});
   }
 
-  goToIlluminate(){
+  goToIlluminate(e){
     // e.preventDefault();
     // TODO call hangout-ish
 
@@ -404,35 +418,31 @@ class SkillBrowser extends React.Component {
     const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
     const CurrentTree = this.state.tree;
 
-    const IsDeepdiveAvailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
-    const IsIlluminateAvailable = !LatestIlluminateDateAnswered || this.state.timeNow - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
+    const IsDeepdiveAvailable = this.state.HangoutPeriodLapsed;
+    const IsIlluminateAvailable = this.state.IlluminatePeriodLapsed;
+
+    // const IsDeepdiveAvailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
+    // const IsIlluminateAvailable = !LatestIlluminateDateAnswered || this.state.timeNow - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
     const DeepDiveButtonText = !IsDeepdiveAvailable ? 
       <span><span>DeepDive </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span> 
       : <span>DeepDive</span>;
 
-      const IlluminateButtonText = !IsIlluminateAvailable ? 
-      <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit} /></span> 
-      : <span>Illuminate</span>;
+    const IlluminateButtonText = !IsIlluminateAvailable ? 
+    <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit} /></span> 
+    : <span>Illuminate</span>;
 
       const IlluminateTimerText = !IsIlluminateAvailable ? <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /> : null
       const DeepDiveTimerText = !IsDeepdiveAvailable ? <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /> : null
     
     const DeepdiveButtonClass = IsDeepdiveAvailable ? "btn-md btn-outline-inverse deep-dive-button" 
       : "btn-md btn-outline-inverse deep-dive-button-disabled";
-
+  
     const IlluminateButtonClass = IsIlluminateAvailable ? "btn-md btn-outline-inverse illuminate-button" 
       : "btn-md btn-outline-inverse illuminate-button-disabled";
 
     if (redirectToTaskManagement) {
       return <Redirect to='/taskManagement'/>;
     }
-
-    let custStyle = {
-      backgroundColor: 'black',
-      display: 'flex',
-      alignItems: 'center'
-    }
-
 
     let IlluminateFlipCard 
     let DeepDiveFlipCard
@@ -461,9 +471,9 @@ class SkillBrowser extends React.Component {
                   <div className="pskill-card-body">
                       <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
                       <ul className="sample-question">
-                          <li>Lorem ipsum dolor sit??</li>
-                          <li>Lorem ipsum dolor sit??</li>
-                          <li>Lorem ipsum dolor sit??</li>
+                            <li>What is digitisation?</li>
+                            <li>How is it used?</li>
+                            <li>Why should companies look into it?</li>
                       </ul>
                   </div>
                   <div className="pskill-btn-group">
@@ -495,10 +505,11 @@ class SkillBrowser extends React.Component {
                       <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
                     </div>
                 </div>
-                <div className={IlluminateButtonClass} style={custStyle}>
-                      <p className="pskill-timer-text">
-                      {IlluminateTimerText}
-                      </p>
+                <div id="loader-wrapper">
+                  <div id="loader"></div>
+                </div>
+                <div className="pskill-timer-text">
+                  <Countdown daysInHours={false} date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit} />
                 </div>
           </div>
         </div>
@@ -508,40 +519,40 @@ class SkillBrowser extends React.Component {
     if(IsDeepdiveAvailable){
       DeepDiveFlipCard = (
         <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item"> 
-                  <div className="pskill-flipper">
-                      <div className="pskill-card-front">
-                          <div className="pskill-card-body">
-                              <h4 className="pskill-card-title">1</h4>
-                              <h4 className="pskill-card-subtitle">level</h4>
-                              <h3 className="pskill-card-heading">DEEP DIVE</h3>
-                              <p className="pskill-card-text">A 2 player activity for you and a friend to research and 
-                              answer 10 questions posted by the system in 30 mins</p>
-                          </div>
-                          <div className="pskill-footer">
-                              <p className="pskill-duration">Once a week</p>
-                              <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
-                          </div>
-                          <div className="pskill-btn-group">
-                            <button className="pskill-btn pskill-start btn" onClick={()=> this.toggleHangoutForm()}>START</button>
-                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
-                          </div>
-                      </div>
-                      <div className="pskill-card-back">
-                          <div className="pskill-card-body">
-                              <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
-                              <ul className="sample-question">
-                                  <li>Lorem ipsum dolor sit??</li>
-                                  <li>Lorem ipsum dolor sit??</li>
-                                  <li>Lorem ipsum dolor sit??</li>
-                              </ul>
-                          </div>
-                          <div className="pskill-btn-group">
-                            <button className="pskill-btn pskill-start btn" onClick={()=> this.toggleHangoutForm()}>START</button>
-                            <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>BACK</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+            <div className="pskill-flipper">
+                <div className="pskill-card-front">
+                    <div className="pskill-card-body">
+                        <h4 className="pskill-card-title">1</h4>
+                        <h4 className="pskill-card-subtitle">level</h4>
+                        <h3 className="pskill-card-heading">DEEP DIVE</h3>
+                        <p className="pskill-card-text">A 2 player activity for you and a friend to research and 
+                        answer 10 questions posted by the system in 30 mins</p>
+                    </div>
+                    <div className="pskill-footer">
+                        <p className="pskill-duration">Once a week</p>
+                        <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-btn pskill-start btn" onClick={()=> this.toggleHangoutForm()}>START</button>
+                      <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
+                    </div>
+                </div>
+                <div className="pskill-card-back">
+                    <div className="pskill-card-body">
+                        <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+                        <ul className="sample-question">
+                            <li>What is digitisation?</li>
+                            <li>How is it used?</li>
+                            <li>Why should companies look into it?</li>
+                        </ul>
+                    </div>
+                    <div className="pskill-btn-group">
+                      <button className="pskill-btn pskill-start btn" onClick={()=> this.toggleHangoutForm()}>START</button>
+                      <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>BACK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
       )
     }else{
       DeepDiveFlipCard = (
@@ -564,10 +575,11 @@ class SkillBrowser extends React.Component {
                       <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
                     </div>
                 </div>
-                <div className={DeepdiveButtonClass} style={custStyle}>
-                      <p className="pskill-timer-text">
-                      {DeepDiveTimerText}
-                      </p>
+                <div id="loader-wrapper">
+                  <div id="loader"></div>
+                </div>
+                <div className="pskill-timer-text">
+                  <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} />
                 </div>
           </div>
         </div>
@@ -640,7 +652,7 @@ class SkillBrowser extends React.Component {
           </div>
 
             <div className="row">
-              <Modal style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} 
+              <Modal contentLabel="Illuminate" style={{width: '200px'}} isOpen={this.state.isIlluminateFormVisible} 
                 onRequestClose={() => this.onCloseModal()} >
                   <ActionLink href='#' className="glyphicon glyphicon-remove modal-close-button" onClick={() => this.onCloseModal()}></ActionLink>
 
@@ -652,15 +664,15 @@ class SkillBrowser extends React.Component {
                     </div>
                     <p className="text-center">Your Task has been started (flexible)</p>
                     <br />
-                    {/* <div className="row text-center">
+                    <div className="row text-center">
                       <Countdown daysInHours={false} 
                       date={Date.now() + 5000} 
-                      onComplete={()=> this.goToIlluminate()} />
-                    </div> */}
-                    <div className="row text-center">
+                      onComplete={(e)=> this.goToIlluminate(e)} />
+                    </div>
+                    {/* <div className="row text-center">
                         <button onClick={(e)=> this.goToIlluminate(e) } 
                         className="btn-md btn-outline-inverse illuminate-go-btn">Go To Task Manager</button>
-                    </div>
+                    </div> */}
                   </div>
 
                 </Modal>
