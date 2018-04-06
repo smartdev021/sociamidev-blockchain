@@ -1220,6 +1220,14 @@ html, body {
     background-color: #d9534f;
 }
 
+.logo-alpha{
+    color: white;
+    font-size: 14px;
+    position: relative;
+    bottom: -16px;
+    left: -30px;
+}
+
 @media all and (max-width: 990px) {
     .category-left{
         padding-top: 120px;
@@ -1239,9 +1247,14 @@ html, body {
         position: fixed;
         margin-top: 60px;
         margin-left: 3px;
+        /* zoom: 1.12 ;
+        -moz-transform: scale(1.12); */
     }
     .session-header{
         height: 120px;
+    }
+    .session-header-scroll{
+        height: 70px !important;
     }
     .label-notif{
         top: 6px;
@@ -1249,6 +1262,24 @@ html, body {
     }
     .btn-nav{
         width:110px;
+    }
+    .logo-scroll{
+        display: none;
+    }
+    .nav-tasks-scroll{
+        margin-left: 45px ;
+        margin-top: 15px ;
+        /* zoom:1 !important;
+        -moz-transform: scale(1) !important; */
+        zoom:.9 !important;
+        -moz-transform: scale(.9) !important;
+    }
+    .nav-links-scroll{
+        display: none;
+    }
+    .logo-alpha{
+        left: 100px;
+        top: -31px
     }
 }
 @media screen and (min-width: 992px) {
