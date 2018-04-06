@@ -18,15 +18,6 @@ const tasksInitialState = { data: [], isFetchInProgress: false, isSaveInProgress
 
 export function tasks(state = tasksInitialState, action) {
   switch (action.type) {
-    case FETCH_TASKS_COMPLETE:
-      return { ...state, data: action.tasks };
-    case TASK_ADD: {
-      let copyTasks = state.data.slice(0);
-
-      copyTasks.push(action.task);
-
-      return { ...state, data: copyTasks };
-    }
     case TASK_REMOVE: {
       let findByID = function (task) {
         return task._id == action.id;
@@ -47,11 +38,14 @@ export function tasks(state = tasksInitialState, action) {
     case FETCH_TASKS_INITIATE:
       return { ...state, isFetchInProgress: true };
     case FETCH_TASKS_COMPLETE:
-      return { ...state, isFetchInProgress: false };
+      return { ...state, data: action.tasks, isFetchInProgress: false };
     case SAVE_TASK_INITIATE:
       return { ...state, isSaveInProgress: true };
     case SAVE_TASK_COMPLETE:
-      return { ...state, isSaveInProgress: false };
+      let copyTasks = state.data.slice(0);
+      copyTasks.push(action.task);
+
+      return { ...state, data: copyTasks, isSaveInProgress: false };
     case UPDATE_TASK_INITIATE:
       return { ...state, isUpdateInProgress: true };
     case UPDATE_TASK_COMPLETE: {

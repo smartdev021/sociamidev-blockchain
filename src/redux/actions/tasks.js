@@ -4,7 +4,6 @@ import ConfigMain from '~/configs/main'
 
 import {
     TASK_UPDATE,
-    TASK_ADD,
     TASK_REMOVE,
 
     TASK_LASTSAVED_SET,
@@ -21,13 +20,6 @@ import {
     TASK_SET_PUBLISHED,
 
 } from './actionTypes';
-
-export function addTask(newTask) {
-    return {
-        type: TASK_ADD,
-        task: newTask
-    }
-}
 
 export function removeTask(taskId) {
     return {
@@ -79,7 +71,7 @@ export function saveTaskInitiate() {
 export function saveTaskComplete(task) {
     return {
         type: SAVE_TASK_COMPLETE,
-        tasl: task,
+        task: task,
     }
 }
 
