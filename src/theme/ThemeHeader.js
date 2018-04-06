@@ -33,6 +33,29 @@ class ThemeHeader extends React.Component {
         }
     }
 
+    componentDidMount(){
+        $(window).scroll(function () {
+            var distanceY = window.pageYOffset;
+            var breakpoint = 100; 
+            var soqqleLogo = $(".logo");
+            var navLinks = $("#nav-links")
+            var navTasks = $("#nav-tasks")
+            var sessionHeader = $(".session-header");
+            if (distanceY > breakpoint) {
+                soqqleLogo.addClass('logo-scroll');
+                navLinks.addClass('nav-links-scroll');
+                navTasks.addClass('nav-tasks-scroll');
+                sessionHeader.addClass('session-header-scroll')
+            }
+            else {
+                soqqleLogo.removeClass('logo-scroll');
+                navLinks.removeClass('nav-links-scroll');
+                navTasks.removeClass('nav-tasks-scroll');
+                sessionHeader.removeClass('session-header-scroll')
+            }
+        });
+    }
+
     handleNotificationsOpen() {
         if (this.props.userActivities.length > 0) {
             this.setState({ notificationsOpen: true });
