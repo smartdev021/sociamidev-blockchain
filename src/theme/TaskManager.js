@@ -230,11 +230,6 @@ class TaskManager extends React.Component {
       this.fetchUserTasks();
       this.props.onFetchAllTasks(false);
     }
-
-    if (prevProps.isTaskUpdateInProgress && !this.props.isTaskUpdateInProgress) {
-      //temporary solution
-      this.fetchUserTasks();
-    }
     
     if (prevProps.userTasks.length != this.props.userTasks.length || prevProps.tasks.length != this.props.tasks.length
     || (prevProps.isTaskSaveInProgress != this.props.isTaskSaveInProgress 
