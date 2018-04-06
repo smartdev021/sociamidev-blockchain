@@ -207,8 +207,8 @@ html, body {
 }
 
 .task-manager{
-    padding: 12px 0px;
-    text-align: right;
+    /* padding: 12px 0px; */
+    /* text-align: right; */
 }
 
 .task-manager a.btn-base{
@@ -1045,7 +1045,7 @@ html, body {
     }
 
     .task-manager{
-        padding: 0px 0px 10px;
+        /* padding: 0px 0px 10px; */
     }
 
     .task-manager a.btn-base{
@@ -1246,6 +1246,7 @@ html, body {
     .nav-tasks{
         position: fixed;
         margin-top: 60px;
+        width:100%;
         margin-left: 3px;
         /* zoom: 1.12 ;
         -moz-transform: scale(1.12); */
@@ -1267,12 +1268,10 @@ html, body {
         display: none;
     }
     .nav-tasks-scroll{
-        margin-left: 45px ;
-        margin-top: 15px ;
-        /* zoom:1 !important;
-        -moz-transform: scale(1) !important; */
-        zoom:.9 !important;
-        -moz-transform: scale(.9) !important;
+        margin-top: 8px;
+        font-size: 12px;
+        width: 90%;
+        margin-left: 40px;
     }
     .nav-links-scroll{
         display: none;
@@ -1280,6 +1279,14 @@ html, body {
     .logo-alpha{
         left: 100px;
         top: -31px
+    }
+    .challenges-coming-soon{
+        font-size: 10px;
+        position: absolute;
+        bottom: -12px;
+        color: white;
+        font-family: Berlin-Sans-FB-Regular, sans-serif;
+        left: 2px;
     }
 }
 @media screen and (min-width: 992px) {
@@ -1297,9 +1304,49 @@ html, body {
     }
     .nav-tasks{
         float: left;
+        width: 33%;
         margin-left: 20%;
+        margin-top: 10px;
     }
     .btn-nav{
         width: 130px;
     }
+    .challenges-coming-soon{
+        font-size: 10px;
+        position: absolute;
+        left: 435px;
+        bottom: -3px;
+        color: white;
+        font-family: Berlin-Sans-FB-Regular, sans-serif;
+    }
 }
+
+.btn-nav{
+    color: #e74b49;
+    background: #fdd823;
+    font-weight: 300;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 7px;
+    border-radius: 3px;
+    text-align: center;
+    font-family: 'FjallaOne-Regular';
+    width: 31%;
+    margin: 2px;
+}
+
+.btn-nav:hover,
+.btn-nav:focus,
+.btn-nav:active{
+    color: #e74b49;
+    background: #FDC914;
+    text-decoration: none;
+}
+
+.btn-nav.disabled,
+.btn-nav.disabled:hover,
+.btn-nav.disabled:focus,
+.btn-nav.disabled:active{
+    background: rgba(253, 202, 20, 0.5);
+}
+
