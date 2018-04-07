@@ -62,8 +62,8 @@ class SkillBrowser extends React.Component {
      IsDisplayForm:'block',
      redirectToTaskManagement: false,
      timeNow: Date.now(),
-     HangoutPeriodLapsed:false,
-     IlluminatePeriodLapsed:false,
+     HangoutPeriodLapsed:true,
+     IlluminatePeriodLapsed:true,
      isLoading: true,
      tree: this.props.location.state.tree
     }

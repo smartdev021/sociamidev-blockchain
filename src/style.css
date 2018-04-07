@@ -1248,8 +1248,8 @@ html, body {
         margin-top: 60px;
         width:100%;
         margin-left: 3px;
-        /* zoom: 1.12 ;
-        -moz-transform: scale(1.12); */
+        transition: .2s;
+        -webkit-transition: .2s;
     }
     .session-header{
         height: 120px;
@@ -1272,6 +1272,8 @@ html, body {
         font-size: 12px;
         width: 90%;
         margin-left: 40px;
+        transition: .2s;
+        -webkit-transition: .2s;
     }
     .nav-links-scroll{
         display: none;
