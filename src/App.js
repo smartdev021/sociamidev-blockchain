@@ -125,6 +125,7 @@ class App extends Component {
     });
 
     this.socket.on('EVENT', eventObj => {
+      console.log("Event Type - " + eventObj.eventType);
       PubSub.publish(eventObj.eventType, eventObj);
     });
 
