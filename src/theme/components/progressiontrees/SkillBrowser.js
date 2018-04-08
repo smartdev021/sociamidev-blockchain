@@ -349,6 +349,8 @@ class SkillBrowser extends React.Component {
     // e.preventDefault();
     // TODO call hangout-ish
 
+    // this.setState( { isIlluminateFormVisible: true } );
+
     const RandomInt = function RandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
@@ -398,12 +400,15 @@ class SkillBrowser extends React.Component {
     if (illuminate.userName != "" && illuminate.name != "" && illuminate.description != "") {
       this.props.saveTask(illuminate);
     }
-
-    this.setState({isIlluminateFormVisible: false});
+    
   }
 
   flipSkillCard(e){
     e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hover")
+  }
+
+  redirectToTaskMngt(){
+    this.setState({redirectToTaskManagement: true});
   }
 
   render() {
@@ -470,7 +475,7 @@ class SkillBrowser extends React.Component {
                     <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
                   </div>
                   <div className="pskill-btn-group">
-                    <button className="pskill-btn pskill-start" onClick={()=> this.toggleIlluminateForm()}>START</button>
+                    <button className="pskill-btn pskill-start" onClick={(e)=> this.goToIlluminate(e)}>START</button>
                     <button className="pskill-btn pskill-view" onClick={(e)=>this.flipSkillCard(e)}>VIEW</button>
                   </div>
               </div>
@@ -673,8 +678,8 @@ class SkillBrowser extends React.Component {
                     <br />
                     <div className="row text-center">
                       <Countdown daysInHours={false} 
-                      date={Date.now() + 5000} 
-                      onComplete={(e)=> this.goToIlluminate(e)} />
+                      date={Date.now() + 3000} 
+                      onComplete={()=> this.redirectToTaskMngt()} />
                     </div>
                     {/* <div className="row text-center">
                         <button onClick={(e)=> this.goToIlluminate(e) } 
