@@ -48,6 +48,7 @@ import UserInteractions from "~/src/common/UserInteractions"
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import Countdown from 'react-countdown-now';
+import _ from 'lodash';
 
 class SkillBrowser extends React.Component {
 
@@ -102,6 +103,7 @@ class SkillBrowser extends React.Component {
 
     if (name) {
       this.updateSkill(name);
+      this.updateIlluminateTimer();
     }
       this.modalDefaultStyles = Modal.defaultStyles;
 
@@ -139,6 +141,20 @@ class SkillBrowser extends React.Component {
     .catch(function(error) {
       that.setState( {skillInfo: undefined, isLoading: false} );
     });
+  }
+
+  updateIlluminateTimer() {
+    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Illuminate`;
+    Axios.get(url)
+      .then(timerResp => {
+        const timer = _.get(timerResp, 'data')
+        this.setState({timer})
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(timer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl)
+          .then(tracker => {
+            this.setState({tracker: _.get(tracker, 'data')})
+          })
+      })
   }
 
   componentDidUpdate(prevProps, prevState) {
