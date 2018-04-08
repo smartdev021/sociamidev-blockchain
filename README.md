@@ -14,7 +14,7 @@ Open/create file ~/.aws/config , add the following:
 [default]
 aws_access_key_id = AWS_ACCESS_KEY_ID
 aws_secret_access_key = AWS_SECRET_ACCESS_KEY
-region=AWS_REGION
+region=ap-southeast-1
 ```
 
 ## How to deploy from dev local machine
