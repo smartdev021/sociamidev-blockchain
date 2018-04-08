@@ -197,7 +197,7 @@ def main():
     print("Start uploading to S3...")
     result = False
     if environemnt == 'Production':
-        #result = upload_folder_to_s3_recursively(build_path, PRD_S3_BUCKET)
+        result = upload_folder_to_s3_recursively(build_path, PRD_S3_BUCKET)
         print("Production domain is being used for 'coming soon' page. Please deploy to staging environment instead.")
     else:
         result = upload_folder_to_s3_recursively(build_path, DEV_S3_BUCKET)
