@@ -48,6 +48,9 @@ import UserInteractions from "~/src/common/UserInteractions"
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 
 import Countdown from 'react-countdown-now';
+import _ from 'lodash';
+import Moment from 'moment';
+import Async from 'async'
 
 class SkillBrowser extends React.Component {
 
@@ -101,7 +104,14 @@ class SkillBrowser extends React.Component {
     const name = URLParams.get("name");
 
     if (name) {
-      this.updateSkill(name);
+      this.setState( {isLoading: true})
+      Async.parallel([
+        Async.apply(this.updateSkill.bind(this), name),
+        Async.apply(this.updateIlluminateTimer.bind(this)),
+        Async.apply(this.updateDeepdiveTimer.bind(this))
+      ], () => {
+        this.setState( {isLoading: false})
+      })
     }
       this.modalDefaultStyles = Modal.defaultStyles;
 
@@ -127,18 +137,56 @@ class SkillBrowser extends React.Component {
       Modal.defaultStyles = this.modalDefaultStyles;
   }
 
-  updateSkill(name) {
+  updateSkill(name, callback) {
     const url = `${ConfigMain.getBackendURL()}/skillGet?name=${name}`;
     const that = this;
     that.setState( {isLoading: true, isHangoutFormVisible: false} );
     
     Axios.get(url)
       .then(function(response) {
-        that.setState( {skillInfo: response.data, isLoading: false} );
+        that.setState( {skillInfo: response.data} );
+        callback()
     })
     .catch(function(error) {
-      that.setState( {skillInfo: undefined, isLoading: false} );
+      that.setState( {skillInfo: undefined} );
+      callback()
     });
+  }
+
+  updateIlluminateTimer(callback) {
+    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Illuminate`;
+    this.setState( {isLoading: true, isIlluminateFormVisible: false} );
+    Axios.get(url)
+      .then(timerResp => {
+        const illuminateTimer = _.get(timerResp, 'data')
+        this.setState({illuminateTimer})
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(illuminateTimer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl)
+          .then(tracker => {
+            this.setState({illuminateTracker: _.get(tracker, 'data')})
+            callback()
+          })
+      }).catch(err => {
+        callback()
+      })
+  }
+
+  updateDeepdiveTimer(callback) {
+    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Deepdive`;
+    this.setState( {isLoading: true, isHangoutFormVisible: false} );
+    Axios.get(url)
+      .then(timerResp => {
+        const deepdiveTimer = _.get(timerResp, 'data')
+        this.setState({deepdiveTimer})
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(deepdiveTimer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl)
+          .then(tracker => {
+            this.setState({deepdiveTracker: _.get(tracker, 'data')})
+            callback()
+          })
+      }).catch(err => {
+        callback()
+      })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -148,7 +196,14 @@ class SkillBrowser extends React.Component {
       const name = URLParams.get("name");
 
       if (name) {
-        this.updateSkill(name);
+        this.setState( {isLoading: true})
+        Async.parallel([
+          Async.apply(this.updateSkill.bind(this), name),
+          Async.apply(this.updateIlluminateTimer.bind(this)),
+          Async.apply(this.updateDeepdiveTimer.bind(this))
+        ], () => {
+          this.setState( {isLoading: false})
+        })
       }
     }
 
@@ -407,6 +462,26 @@ class SkillBrowser extends React.Component {
     e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hover")
   }
 
+  nextRefresh(type) {
+    const timer = _.get(this, `state.${_.lowerCase(type)}Timer`)
+    const sgOffset = Moment().utcOffset("+08:00").startOf('day');
+    let nextRefresh;
+    
+    switch(_.get(timer, 'refresh')) {
+      case 'Daily':
+        nextRefresh = sgOffset.add(1, 'day');
+        break;
+      case 'Weekly':
+        nextRefresh = sgOffset.day(8);
+        break;
+      case 'Monthly':
+        nextRefresh = sgOffset.startOf('month').add(1, 'month')
+        break;
+    }
+
+    return nextRefresh.toDate();
+  }
+
   redirectToTaskMngt(){
     this.setState({redirectToTaskManagement: true});
   }
@@ -430,8 +505,16 @@ class SkillBrowser extends React.Component {
     const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
     const CurrentTree = this.state.tree;
 
-    const IsDeepdiveAvailable = this.state.HangoutPeriodLapsed;
-    const IsIlluminateAvailable = this.state.IlluminatePeriodLapsed;
+    // const IsDeepdiveAvailable = this.state.HangoutPeriodLapsed;
+    // const IsIlluminateAvailable = this.state.IlluminatePeriodLapsed;
+
+    const deepdiveTrackerCount = _.get(this, 'state.deepdiveTracker.count', 0);
+    const deepdiveTimerQuota = _.get(this, 'state.deepdiveTimer.quota', 0);
+    const IsDeepdiveAvailable = !deepdiveTrackerCount || deepdiveTrackerCount < deepdiveTimerQuota;
+
+    const illuminateTrackerCount = _.get(this, 'state.illuminateTracker.count', 0);
+    const illuminateTimerQuota = _.get(this, 'state.illuminateTimer.quota', 0);
+    const IsIlluminateAvailable = !illuminateTrackerCount || illuminateTrackerCount < illuminateTimerQuota;
 
     // const IsDeepdiveAvailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
     // const IsIlluminateAvailable = !LatestIlluminateDateAnswered || this.state.timeNow - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
@@ -521,7 +604,7 @@ class SkillBrowser extends React.Component {
                   <div id="loader"></div>
                 </div>
                 <div className="pskill-timer-text">
-                  <Countdown daysInHours={false} date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit} />
+                  <Countdown daysInHours={false} date={this.nextRefresh('illuminate')} />
                 </div>
           </div>
         </div>
@@ -591,7 +674,7 @@ class SkillBrowser extends React.Component {
                   <div id="loader"></div>
                 </div>
                 <div className="pskill-timer-text">
-                  <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} />
+                  <Countdown daysInHours={false} date={this.nextRefresh('deepdive')} />
                 </div>
           </div>
         </div>
