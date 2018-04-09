@@ -20,7 +20,10 @@ region=ap-southeast-1
 ## How to deploy from dev local machine
 ### Run command to deploy to AWS
 ```
-python deploy.py Staging
+npm run publish:stg
+npm run publish:prod
+
+first command would deploy to staging environment, second one - into production
 ```
 Whatever inside folder `dist` will be deployed to the indicated environment.
 
