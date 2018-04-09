@@ -22,6 +22,7 @@ import PopupAnswers from '~/src/theme/components/tasks/PopupHangoutAnswers';
 import "~/src/theme/appearance.css"
 import "~/src/theme/layout.css"
 import "~/src/theme/css/taskBrowser.css"
+import _ from 'lodash'
 
 import {
   setLastStartedTask,
@@ -231,9 +232,8 @@ class AnswerQuestions extends React.Component {
 
     const body = {
       userId: this.props.userProfile._id,
-
       taskId: this.state.currentTask._id,
-
+      roadmapId: _.get(this, 'state.currentTask.metaData.subject.roadmap._id'),
       answers: this.state.answersMy,
     };
 
