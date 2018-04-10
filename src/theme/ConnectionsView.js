@@ -246,6 +246,7 @@ class ConnectionsView extends React.Component {
     }
 
     render() {
+        var fallbackImageSrc = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
         let divStyle = {overflow: 'auto'};
         const loaderMainClass = this.state.loader == 0 ? "loader-class-1" : "loader-class-2";
         const loaderMainClasses = `loading ${loaderMainClass}` ;
@@ -267,7 +268,7 @@ class ConnectionsView extends React.Component {
                                             <div className="imageContainer">
                                                 <img
                                                 src={friend.profilePic}
-                                                className="img-circle tmp"/>
+                                                className="img-circle tmp" onError={(e)=>{e.target.src=fallbackImageSrc}}/>
                                             </div>
                                             <div className="friendInfoContainer">
                                                 <div className="friendInfo">

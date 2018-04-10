@@ -22,6 +22,7 @@ class ChatUser extends React.Component {
     const classes = `${tabClass} box-comment` ;
     var fullname = this.props.firstName + " " + this.props.lastName;
     var imgSrc = "";
+    var fallbackImageSrc = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
 
     var showLastMessage = this.props.lastMessage;
     if(this.props.lastMessage.indexOf('<img') >= 0){
@@ -43,7 +44,7 @@ class ChatUser extends React.Component {
     return (
           <div data-id={`${this.props.tabKey}`} className="box-comment" style={{'cursor':'pointer'}}
           onClick={(event)=>this.onItemClick(event)}  id={`${this.props.userID}`} data-user={`${fullname}`}>
-            <img className="img-circle img-sm" src={imgSrc}
+            <img className="img-circle img-sm" src={imgSrc} onError={(e)=>{e.target.src=fallbackImageSrc}}
             alt="User Image"/>
 
             <div className="comment-text">
