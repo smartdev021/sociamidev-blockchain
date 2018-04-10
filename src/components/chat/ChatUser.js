@@ -29,14 +29,11 @@ class ChatUser extends React.Component {
     }
 
     const statusImgSrc = this.props.loggedinStatus == true || this.props.userType == "chatbot" ? "http://s3.amazonaws.com/gs.apps.icons/B_Bpusg8EeKT7hIxPR901Q_%2Fgreen+dot.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Location_dot_grey.svg/2000px-Location_dot_grey.svg.png";
-    if(this.props.userType == "facebook"){
-      imgSrc = "http://graph.facebook.com/" + this.props.username + "/picture?type=square";
-    }
-    else if(this.props.userType == "linkedin"){
-      imgSrc = "https://s3.amazonaws.com/FringeBucket/default-user.png";
-    }
-    else if(this.props.userType == "chatbot"){
+    if(this.props.userType == "chatbot"){
       imgSrc = "http://blog.newrelic.com/wp-content/uploads/chatbot-300x300.jpg";
+    }
+    else{
+      imgSrc = this.props.profilePic;
     }
 
     var unreadCountTag = "";

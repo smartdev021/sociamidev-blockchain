@@ -72,6 +72,7 @@ class ChatUsers extends React.Component {
           firstName = {user.firstName}
           lastName = {user.lastName}
           userType = {user.userType}
+          profilePic = {user.profileImage}
           loggedinStatus = {user.loggedinStatus}
           lastMessage = {tempLastMessage}
           lastMessageTimeStamp = {tempLastMessageTimeStamp}
