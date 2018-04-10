@@ -18,7 +18,10 @@ class ConnectionsView extends React.Component {
             sentList: [],
             facebookFriends: [],
             key: 1,
-            loader: 0
+            loader: 0,
+            soqqlersLoaded: 0,
+            hasMoreSoqqlers: true,
+            loadingSoqqlers: false,
         };
         this.handleSelect = this.handleSelect.bind(this);
 
@@ -48,6 +51,24 @@ class ConnectionsView extends React.Component {
         }
     }
 
+    componentDidMount() {
+        document.getElementById('allFriendList-pane-1').addEventListener('scroll', this.handleScroll.bind(this));
+      }
+    
+      componentWillUnmount() {
+        this.state.isLoadingMore = false;
+        document.getElementById('allFriendList-pane-1').removeEventListener('scroll', this.handleScroll.bind(this));
+      }
+
+    handleScroll(event) {
+        let scrollTop = document.getElementById('allFriendList-pane-1').scrollTop;
+        let scrollHeight = document.getElementById('allFriendList-pane-1').scrollHeight;
+        let clientHeight = document.getElementById('allFriendList-pane-1').clientHeight;
+        if(scrollTop + clientHeight == scrollHeight && this.state.hasMoreSoqqlers && this.state.loadingSoqqlers === false) {
+            this.getAllFriends();
+        }
+      }
+
     fetchFacebookFriendsForCurrentUser() {
         if (this.props.isAuthorized) {
             const self = this;
@@ -73,15 +94,27 @@ class ConnectionsView extends React.Component {
     }
 
     getAllFriends() {
+        this.state.loadingSoqqlers = true;
         const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
         var self = this;
         Axios.get(allFrndUrl, {
             params: {
-                currentUser: self.props.currentUserId
+                currentUser: self.props.currentUserId,
+                skip: self.state.soqqlersLoaded,
             }
         })
             .then(function (response) {
-                self.setState({allFriendList : response.data})
+                if(response.data.length){
+                    var tempAllFriendList = self.state.allFriendList;
+                    tempAllFriendList = tempAllFriendList.concat(response.data);
+                    var tempSoqqlersLoaded = self.state.soqqlersLoaded;
+                    tempSoqqlersLoaded = tempSoqqlersLoaded + response.data.length;
+                    self.setState({soqqlersLoaded: tempSoqqlersLoaded,allFriendList : tempAllFriendList});
+                }
+                else{
+                    self.state.hasMoreSoqqlers = false;
+                }
+                self.state.loadingSoqqlers = false;
             })
             .catch(function (error) {
                 console.log(error);
