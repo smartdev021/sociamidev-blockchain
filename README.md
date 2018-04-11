@@ -1,6 +1,6 @@
 ⚠️⚠️⚠️ PLEASE NOTE YOU ARE NOT ALLOWED TO COPY SOURCE CODE INTO OTHER GITHUBS! You are not allowed to disclose private, confidential information belonging to SOQQLE PTE LTD without authorization. SOQQLE PTE LTD reserves all rights including legal action. ⚠️⚠️⚠️
 
-### Pre-requisite:
+### Pre-requisite for your Development Setup:
 - Python is installed. If not, download and install from the following link https://www.python.org/downloads/
 - python-pip Python package manager is installed. If not, run the following command: ```apt-get install python-pip```
 - boto3 is installed. If not, run the following command: ```pip install boto3==1.3.0```. Use python3 and pip3 if you already have python2 configured on your system
