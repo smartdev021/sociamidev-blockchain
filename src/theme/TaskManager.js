@@ -487,6 +487,10 @@ class TaskManager extends React.Component {
     this.setState({isAnswerQuestionsOpen: false});
   }
 
+  handleBackToMyTasks() {
+    this.setState({isAnswerQuestionsOpen:false})
+  }
+
   render() {
     const myTasks = this.getMyTasksAndHangouts();
 
@@ -498,35 +502,40 @@ class TaskManager extends React.Component {
     return (
       <div className="row content-wrap">
         <div className={MyTasksColClass}>
-        {this.state.isAnswerQuestionsOpen &&
+        {
+          this.state.isAnswerQuestionsOpen ?
             <AnswerQuestions currentTask={this.state.activeHangout}
-            onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
-        }
-        <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
-            onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} 
-              item={this.state.detailsPopupItem} item="accept_confirmation"
-                task={this.state.detailsPopupItem}/> 
+            onSubmitComplete={()=>this.handleAnswersSubmitComplete()}
+            onBackToMyTasks={this.handleBackToMyTasks.bind(this)}/>
+          :
+          <div>
+            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
+              onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} 
+                item={this.state.detailsPopupItem} item="accept_confirmation"
+                  task={this.state.detailsPopupItem}/> 
 
-          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} 
-            onConfirm={(item)=>this.handleAcceptCancel(item)} 
-              onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} 
-                item={this.state.detailsPopupItem} item="cancel_confirmation" 
-                  task={this.state.detailsPopupItem}/>
-          <HeaderTaskManager filters={Filters} onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)} filterCurrent={this.state.filterCurrent}/>
-          <TasksMyComponent tasks={myTasks}
-            handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
-            onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
-            onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
-            assignedTasks={this.props.tasksAssignedToCurrentUser} currentUserID={this.props.userProfile._id}
-            timeNow={this.state.timeNow}
-            isAuthorized={this.props.isAuthorized}
-            isCollapsed={this.state.isScannerExpanded}
-            userProfile={this.props.userProfile}
-            currentUserID={this.props.userProfile._id}
+            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpenCancelTask} 
+              onConfirm={(item)=>this.handleAcceptCancel(item)} 
+                onCloseModal={()=>this.handleCloseCancelTaskDetailsPopup()} 
+                  item={this.state.detailsPopupItem} item="cancel_confirmation" 
+                    task={this.state.detailsPopupItem}/>
+            <HeaderTaskManager filters={Filters} onFilterChange={(newFilter)=>this.handleFilterChange(newFilter)} filterCurrent={this.state.filterCurrent}/>
+            <TasksMyComponent tasks={myTasks}
+              handleOpenCancelTaskDetailsPopup={(task)=>this.handleOpenCancelTaskDetailsPopup(task)}
+              onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
+              onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
+              assignedTasks={this.props.tasksAssignedToCurrentUser} currentUserID={this.props.userProfile._id}
+              timeNow={this.state.timeNow}
+              isAuthorized={this.props.isAuthorized}
+              isCollapsed={this.state.isScannerExpanded}
+              userProfile={this.props.userProfile}
+              currentUserID={this.props.userProfile._id}
 
-            onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
-            onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
-            />
+              onHangoutRequestAccept={(hangout, user)=>this.hangoutRequestAccept(hangout, user)}
+              onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
+              />
+            </div>
+          }
         </div>
         <div className={ScannerColClass}>
           <TaskScanner tasks={tasksScanner}

@@ -131,7 +131,7 @@ class PopupHangoutAnswers extends React.Component {
               <div className="col-lg-12">
                 <div className="popup-hangout-answers-button-container">
                   <button type="button" className="btn btn-sm btn-outline-inverse pull-right" 
-                    onClick={(e) => this.props.onSubmit(e)}>Submit</button>
+                    onClick={(e) => this.props.onSubmit(e)}>SubmitChange</button>
                 </div>
               </div>
             </div>
