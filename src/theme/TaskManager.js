@@ -502,14 +502,12 @@ class TaskManager extends React.Component {
     return (
       <div className="row content-wrap">
         <div className={MyTasksColClass}>
-        {
-          this.state.isAnswerQuestionsOpen ?
+        {this.state.isAnswerQuestionsOpen ?
             <AnswerQuestions currentTask={this.state.activeHangout}
-            onSubmitComplete={()=>this.handleAnswersSubmitComplete()}
-            onBackToMyTasks={this.handleBackToMyTasks.bind(this)}/>
-          :
-          <div>
-            <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
+            onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
+            onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
+        : <div>
+          <DetailsPopup modalIsOpen={this.state.isDetailsPopupOpen} onConfirm={(item)=>this.handleAcceptConfirm(item)} 
               onCloseModal={()=>this.handleCloseConfirmTaskDetailsPopup()} 
                 item={this.state.detailsPopupItem} item="accept_confirmation"
                   task={this.state.detailsPopupItem}/> 

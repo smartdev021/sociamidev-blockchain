@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Modal from 'react-modal';
+import {Icon} from 'react-fa'
+
 import '~/src/theme/css/question-answers-flow.css';
+import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 import answerPersonImg from '~/src/theme/images/answer-person.png';
 import avatar from '~/src/theme/images/avatar.png';
 import btnNextImg from '~/src/theme/images/btn-next.png';
@@ -15,10 +19,22 @@ import PropTypes from 'prop-types';
 class QuestionAnswersFlow extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      currentQuestion: 0,      
-    };
+      currentQuestion: 0
+    }
+    this.getAnswerMy = this.getAnswerMy.bind(this)
+    this.getAnswerPartner = this.getAnswerPartner.bind(this)
   }
+
+  getAnswerMy(questionId) {
+    return 
+  }
+
+  getAnswerPartner(questionId) {
+    return this.props.answersPartner && this.props.answersPartner[questionId] ? this.props.answersPartner[questionId].text : "";
+  }
+
   handleNextOrPrevious(action) {
     const { currentQuestion } = this.state;
     const {questions} = this.props;
@@ -35,21 +51,26 @@ class QuestionAnswersFlow extends React.Component {
     }
   }
 
-  getAnswerMy(questionId) {
-    return this.props.answersMy && this.props.answersMy[questionId] ? this.props.answersMy[questionId].text : "";
-  }
-
-  getAnswerPartner(questionId) {
-    return this.props.answersPartner && this.props.answersPartner[questionId] ? this.props.answersPartner[questionId].text : "";
-  }
-
   render() {
-    console.log(this.props)
-    const { currentQuestion } = this.state;
+
+    if (this.props.isLoading || this.props.isSubmitting || this.props.questions.length === 0) {
+      const LoadingText = this.props.isSubmitting ? "Submitting..." : "Loading...";
+      return (
+        <div className="row">
+              <div className="col-lg-12 text-center">
+                <h2 className="popup-questions-loading-text">{LoadingText}<Icon spin name="spinner" /></h2>
+            </div>
+            </div>
+      );
+    }
+
+    const {currentQuestion} = this.state;
+    const {questions} = this.props;
     const Partner = this.props.partner;
-    const question = this.props.questions[currentQuestion];
+    const question = questions[currentQuestion];
     const AnswerMy = this.getAnswerMy([question._id]);
     const AnswerPartner = this.getAnswerPartner([question._id]);
+    
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
@@ -107,13 +128,13 @@ class QuestionAnswersFlow extends React.Component {
         </div>
         <div className="QuestionAnswersFlow-textarea">
         <textarea id={`answer_your_${question._id}`} 
-                        className="form-control validate-field required question-text-area"
+                        className="validate-field required question-text-area"
                           name="answer_your" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerMy}/>
         {Partner &&
             <div className="col-lg-6">
               <div className="form-group">
                 <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
-                  className="form-control validate-field required question-text-area" placeholder={Partner.user.firstName}
+                  className="validate-field required question-text-area" placeholder={Partner.user.firstName}
                     name="answer_partner" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
               </div>
             </div>
@@ -141,7 +162,7 @@ class QuestionAnswersFlow extends React.Component {
           >
             <img src={btnSubmitImg} />
           </button>
-           : <button
+            : <button
             className="btn-next"
             onClick={this.handleNextOrPrevious.bind(this, 'next')}
           >
@@ -157,4 +178,4 @@ QuestionAnswersFlow.PropTypes = {
   onBackToMyTasks: PropTypes.func.isRequired
 };
 
-export default QuestionAnswersFlow;
+  export default require('react-click-outside')(QuestionAnswersFlow);
