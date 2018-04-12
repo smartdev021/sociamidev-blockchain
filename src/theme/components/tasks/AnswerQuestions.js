@@ -319,20 +319,21 @@ class AnswerQuestions extends React.Component {
         ? this.state.questions.slice(0, limit /*limit questions to 10*/)
         : [];
 
+        console.log(Questions)
     return (
       <div>
-      <QuestionAnswersFlow
-        onSubmit={e => this.handlePopupSubmit(e)}
-        onCloseModal={() => this.handlePopupClose()}
-        questions={Questions}
-        partner={Partner}
-        answersMy={this.state.answersMy}
-        answersPartner={this.state.answersPartner}
-        isLoading={this.state.isLoading}
-        isSubmitting={this.props.isTasksUpdateInProgress}
-        onHandleAnswerInput={e => this.handleAnswerInput(e)}
-        onBackToMyTasks={this.props.onBackToMyTasks}
-      />
+        <QuestionAnswersFlow
+          onSubmit={e => this.handlePopupSubmit(e)}
+          onCloseModal={() => this.handlePopupClose()}
+          questions={Questions}
+          partner={Partner}
+          answersMy={this.state.answersMy}
+          answersPartner={this.state.answersPartner}
+          isLoading={this.state.isLoading}
+          isSubmitting={this.props.isTasksUpdateInProgress}
+          onHandleAnswerInput={e => this.handleAnswerInput(e)}
+          onBackToMyTasks={this.props.onBackToMyTasks}
+        />
       </div>
     );
   }

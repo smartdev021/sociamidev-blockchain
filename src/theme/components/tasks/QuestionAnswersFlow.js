@@ -9,170 +9,19 @@ import linkedInImg from '~/src/theme/images/linkedIn.png';
 import backArrowImg from '~/src/theme/images/back-arrow.png';
 import leftArrowImg from '~/src/theme/images/left-arrow.png';
 import rightArrowImg from '~/src/theme/images/right-arrow.png';
-import checkedImg from '~/src/theme/images/checked.png';
-import uncheckedImg from '~/src/theme/images/unchecked.png';
-import radioCheckedImg from '~/src/theme/images/radio-checked.png';
-import radioUncheckedImg from '~/src/theme/images/radio-unchecked.png';
+import btnSubmitImg from '~/src/theme/images/submit.png';
 import PropTypes from 'prop-types';
-
-class RadioGroup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      answer: null
-    };
-  }
-  handleOnClick(answer) {
-    this.setState({ answer });
-    this.props.onChange(this.state.answer);
-  }
-  render() {
-    return (
-      <div>
-        <p>Your answer</p>
-        <span
-          style={{
-            display: 'inline-block',
-            padding: '5px 0',
-            width: 100,
-            alignItems: 'center',
-            cursor: 'default'
-          }}
-          onClick={this.handleOnClick.bind(this, 'TRUE')}
-        >
-          {this.state.answer === 'TRUE' ? (
-            <img src={radioCheckedImg} alt="checked" />
-          ) : (
-            <img src={radioUncheckedImg} alt="unchecked" />
-          )}
-          <span>&nbsp;&nbsp;&nbsp;True</span>
-        </span>
-        <span
-          style={{
-            display: 'inline-block',
-            padding: '5px 0',
-            width: 100,
-            alignItems: 'center',
-            cursor: 'default'
-          }}
-          onClick={this.handleOnClick.bind(this, 'FALSE')}
-        >
-          {this.state.answer === 'FALSE' ? (
-            <img src={radioCheckedImg} alt="checked" />
-          ) : (
-            <img src={radioUncheckedImg} alt="unchecked" />
-          )}
-          <span>&nbsp;&nbsp;&nbsp;False</span>
-        </span>
-      </div>
-    );
-  }
-}
-
-RadioGroup.propTypes = {
-  onChange: PropTypes.func.isRequired
-};
-
-class CheckboxGroup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: this.props.items.map(item => ({ ...item, selected: false }))
-    };
-  }
-  componentWillReceiveProps(newProps) {
-    this.setState({
-      items: newProps.items.map(item => ({ ...item, selected: false }))
-    });
-  }
-  handleOnClick(key) {
-    const newState = this.state.items.map(item => {
-      if (item.key === key) {
-        return { ...item, selected: !item.selected };
-      }
-      return item;
-    });
-    this.setState({ items: newState });
-    this.props.onChange(newState);
-  }
-  render() {
-    return (
-      <div>
-        {this.state.items.map(item => (
-          <div
-            key={item.key}
-            onClick={this.handleOnClick.bind(this, item.key)}
-            style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              padding: '5px 0px',
-              cursor: 'default'
-            }}
-          >
-            {item.selected ? (
-              <img src={checkedImg} alt="checked" />
-            ) : (
-              <img src={uncheckedImg} alt="unchecked" />
-            )}
-            <span style={{ paddingLeft: 10 }}>{item.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
-
-CheckboxGroup.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  onChange: PropTypes.func.isRequired
-};
 
 class QuestionAnswersFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentQuestion: 0,
-      questions: [
-        {
-          question:
-            'True or False. Chemical hazards include conditions such as mechanised equipment, loose materials, and access difficulty.',
-          type: 'TRUE_OR_FALSE'
-        },
-        {
-          question:
-            'What are the key elements of risk assessment for confined spaces?',
-          type: 'TEXT_ANSWER'
-        },
-        {
-          question: 'What is a confined space?',
-          type: 'OBJECTIVE_TYPE',
-          options: [
-            {
-              key: 'Option 1',
-              value: 'They often have far more parameters to train.'
-            },
-            {
-              key: 'Option 2',
-              value:
-                'Nonparametric methods seek to best fit the training data in constructing the mapping function, whilst maintaining some ability to generalize to unseen data.'
-            },
-            {
-              key: 'Option 3',
-              value:
-                'Nonparametric Machine Learning Algorithms are more flexible.'
-            }
-          ]
-        }
-      ]
+      currentQuestion: 0,      
     };
   }
   handleNextOrPrevious(action) {
-    const { currentQuestion, questions } = this.state;
+    const { currentQuestion } = this.state;
+    const {questions} = this.props;
     if (
       (currentQuestion === 0 && action === 'prev') ||
       (currentQuestion === questions.length - 1 && action === 'next')
@@ -185,8 +34,22 @@ class QuestionAnswersFlow extends React.Component {
       });
     }
   }
+
+  getAnswerMy(questionId) {
+    return this.props.answersMy && this.props.answersMy[questionId] ? this.props.answersMy[questionId].text : "";
+  }
+
+  getAnswerPartner(questionId) {
+    return this.props.answersPartner && this.props.answersPartner[questionId] ? this.props.answersPartner[questionId].text : "";
+  }
+
   render() {
-    const { currentQuestion, questions } = this.state;
+    console.log(this.props)
+    const { currentQuestion } = this.state;
+    const Partner = this.props.partner;
+    const question = this.props.questions[currentQuestion];
+    const AnswerMy = this.getAnswerMy([question._id]);
+    const AnswerPartner = this.getAnswerPartner([question._id]);
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
@@ -201,7 +64,7 @@ class QuestionAnswersFlow extends React.Component {
         </div>
         <div>
           <h3 className="QuestionAnswersFlow-main-question">
-            {questions[currentQuestion].question}
+            {question.question}
           </h3>
         </div>
         <div className="QuestionAnswersFlow-answer">
@@ -243,18 +106,18 @@ class QuestionAnswersFlow extends React.Component {
           </span>
         </div>
         <div className="QuestionAnswersFlow-textarea">
-          {questions[currentQuestion].type === 'TRUE_OR_FALSE' && (
-            <RadioGroup onChange={newValue => {}} />
-          )}
-          {questions[currentQuestion].type === 'TEXT_ANSWER' && (
-            <textarea>Type your answer here...</textarea>
-          )}
-          {questions[currentQuestion].type === 'OBJECTIVE_TYPE' && (
-            <CheckboxGroup
-              onChange={newValue => {}}
-              items={questions[currentQuestion].options}
-            />
-          )}
+        <textarea id={`answer_your_${question._id}`} 
+                        className="form-control validate-field required question-text-area"
+                          name="answer_your" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerMy}/>
+        {Partner &&
+            <div className="col-lg-6">
+              <div className="form-group">
+                <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
+                  className="form-control validate-field required question-text-area" placeholder={Partner.user.firstName}
+                    name="answer_partner" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
+              </div>
+            </div>
+        }
         </div>
         <div className="QuestionAnswersFlow-social-share">
           <span>World must know my answer</span>
@@ -272,12 +135,18 @@ class QuestionAnswersFlow extends React.Component {
           >
             <img src={btnPreviousImg} />
           </button>
-          <button
+          {currentQuestion === questions.length-1 ? <button
+            className="btn-next"
+            onClick={(e) => this.props.onSubmit(e)}
+          >
+            <img src={btnSubmitImg} />
+          </button>
+           : <button
             className="btn-next"
             onClick={this.handleNextOrPrevious.bind(this, 'next')}
           >
             <img src={btnNextImg} />
-          </button>
+          </button>}
         </div>
       </div>
     );
