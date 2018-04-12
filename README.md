@@ -7,6 +7,8 @@
 - Node Version 8.9.4 (Currently 8.8.1), 
 - Mongo Version 3.4.13 currently but please use 3.6. UAT has 3.6 unless we are facing issues in testing we will use 3.6.
 
+- DEVELOPMENT IS ALWAYS DONE IN STAGING. Once approved by Daniel, you can promote it to master for deployment into PRODUCTION.
+- You should code in your own branch.
 
 ### Configure AWS Credential
 Open/create file ~/.aws/config , add the following:
