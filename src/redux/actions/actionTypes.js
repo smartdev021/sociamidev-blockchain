@@ -7,6 +7,8 @@ export const OPEN_SEARCH_RESULTS_COMPLETE = "action_open_user_search_results_com
 export const FETCH_USER_PROFILE_INITIATE = "fetch_user_profile_initiate";
 export const FETCH_USER_PROFILE_COMPLETE = "fetch_user_profile_complete";
 
+export const USER_PROFIE_UPDATE_FREQUENTLY = "user_profile_update_frequently";
+
 export const FETCH_USER_PROFILE_TASKS_INITIATE = "fetch_user_profile_tasks_initiate";
 export const FETCH_USER_PROFILE_TASKS_COMPLETE = "fetch_user_profile_tasks_complete";
 

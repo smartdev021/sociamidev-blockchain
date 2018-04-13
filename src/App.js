@@ -33,6 +33,7 @@ import Loadable from 'react-loading-overlay'
 
 import {
   fetchUserProfile,
+  update_userProfile,
   logout,
   openUserProfile,
   openSignUpForm,
@@ -130,7 +131,7 @@ class App extends Component {
     });
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-
+    this.updateInfoFromDatabase = this.updateInfoFromDatabase.bind(this);
     ReactGA.initialize('UA-113317436-1');
   }
 
@@ -336,6 +337,17 @@ class App extends Component {
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID);
+      this.updateInfoFromDatabase();
+    }
+  }
+  updateInfoFromDatabase() {
+    if (this.props.isAuthorized && (this.state.faceBookID || this.state.linkedInID)) {
+      this.props.update_userProfile(this.state.faceBookID, this.state.linkedInID)
+      .then(this.updateInfoFromDatabase)
+      .catch(this.updateInfoFromDatabase);
+    }
+    else {
+      setTimeout(this.updateInfoFromDatabase, 1000);
     }
   }
 
@@ -551,6 +563,7 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
+  update_userProfile: PropTypes.func.isRequired,
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
@@ -568,6 +581,7 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
+  update_userProfile: bindActionCreators(update_userProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   updateTask: bindActionCreators(updateTask, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),

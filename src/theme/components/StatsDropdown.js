@@ -160,6 +160,10 @@ class StatsDropdown extends React.Component {
                   <p className="text-center desc">
                     E-XP
                   </p>
+                  <p style={{
+                    color: "white",
+                    fontSize: 10
+                  }}>coming soon...</p>
                 </div>
                 <div className="col-xs-6 text-center">
                 <span className="fa-stack fa-2x">
