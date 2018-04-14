@@ -347,7 +347,7 @@ class App extends Component {
       .catch(this.updateInfoFromDatabase);
     }
     else {
-      setTimeout(this.updateInfoFromDatabase, 1000);
+      //setTimeout(this.updateInfoFromDatabase, 1000);
     }
   }
 
