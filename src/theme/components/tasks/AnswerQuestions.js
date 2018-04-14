@@ -17,7 +17,7 @@ import ConfigMain from '~/configs/main'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
-import PopupAnswers from '~/src/theme/components/tasks/PopupHangoutAnswers';
+import QuestionAnswersFlow from '~/src/theme/components/tasks/QuestionAnswersFlow';
 
 import "~/src/theme/appearance.css"
 import "~/src/theme/layout.css"
@@ -256,13 +256,14 @@ class AnswerQuestions extends React.Component {
     const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
 
     return (
-      <PopupAnswers onSubmit={(e)=>this.handlePopupSubmit(e)} 
+      <QuestionAnswersFlow onSubmit={(e)=>this.handlePopupSubmit(e)} 
         onCloseModal={()=>this.handlePopupClose()}
         questions={Questions} partner={Partner}
         answersMy={this.state.answersMy}
         answersPartner={this.state.answersPartner}
         isLoading={this.state.isLoading}
         isSubmitting={this.props.isTasksUpdateInProgress}
+        onBackToMyTasks={this.props.onBackToMyTasks}
         onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}/>
     );
   }
