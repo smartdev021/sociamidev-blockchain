@@ -4,17 +4,17 @@ import {Icon} from 'react-fa'
 
 import '~/src/theme/css/question-answers-flow.css';
 import {getPopupParentElement} from "~/src/common/PopupUtils.js"
-import answerPersonImg from '~/src/theme/images/answer-person.png';
-import avatar from '~/src/theme/images/avatar.png';
-import btnNextImg from '~/src/theme/images/btn-next.png';
-import btnPreviousImg from '~/src/theme/images/btn-previous.png';
-import feacbookImg from '~/src/theme/images/facebook.png';
-import linkedInImg from '~/src/theme/images/linkedIn.png';
-import backArrowImg from '~/src/theme/images/back-arrow.png';
-import leftArrowImg from '~/src/theme/images/left-arrow.png';
-import rightArrowImg from '~/src/theme/images/right-arrow.png';
-import btnSubmitImg from '~/src/theme/images/submit.png';
 import PropTypes from 'prop-types';
+const answerPersonImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/answer-person.png';
+const avatar = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/avatar.png';
+const btnNextImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/btn-next.png';
+const btnPreviousImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/btn-previous.png';
+const feacbookImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/facebook.png';
+const linkedInImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/linkedIn.png';
+const backArrowImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/back-arrow.png';
+const leftArrowImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/left-arrow.png';
+const rightArrowImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/right-arrow.png';
+const btnSubmitImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/submit.png';
 
 class QuestionAnswersFlow extends React.Component {
   constructor(props) {
