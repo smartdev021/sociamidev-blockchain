@@ -75,7 +75,7 @@ class CharacterSelection extends React.Component {
 
     renderCharacters(characters, firstIndex, lastIndex) {
       return (
-        <div className="col-sm-4 col-xs-3 character-column">
+        <div className="col-sm-4 col-xs-5 character-column">
           {
             characters.map((character, i) => {
               if (i >= firstIndex && i <= lastIndex) {
