@@ -103,8 +103,8 @@
     cursor: pointer;
     background: #2fa7d2;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 105px;
+    height: 105px;
     margin: auto;
     opacity: 0.2;
     position: relative;
@@ -205,6 +205,7 @@
     padding-left: 0px;
     padding-right: 0px;
     padding-top: 15px;
+    padding-bottom: 10px;
 }
 .character-row{
     margin-right: 5%;
@@ -216,13 +217,15 @@
     text-align: center;
     margin: 0 auto;
     color: white;
-    font-size: 12px;
+    font-size: 14px;
     text-transform: uppercase;
-    height:40px;
+    height: 40px;
+    font-family: 'Berlin-Sans-FB-Regular', sans-serif;
+    opacity: .7;
 }
 .character-box{
-    margin-top: 10px;
-    margin-bottom: 10px
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
 }
 .choose-house-column{
     display: flex;
@@ -267,24 +270,59 @@
         text-align: center;
         margin: 0 auto;
         color: white;
-        font-size: 12px;
+        font-size: 14px;
         text-transform: uppercase;
         height:auto !important;
     }
     .character-header{
-        padding: 15px 0px 10px 0px !important
+        padding: 15px 0px 10px 0px !important;
+        zoom: .9;
+        -moz-transform: scale(0.9)
     }
     #character-name{
-        font-size: 40px;
+        font-size: 32px;
         font-family: "Fjalla One";
         color: rgb( 234, 59, 22 );
-        padding: 0 !important;
+        padding: 80px 0px 0px 0px !important;
     }
     #character-skills {
         padding-top: 0px !important;
         padding-bottom: 0px !important;
     }
     #character-select{
-        zoom:.8;
+        zoom:.7;
+        -moz-transform: scale(0.7)
+    }
+    .character-skill{
+        zoom: .8;
+        -moz-transform: scale(0.8)
+    }
+    .character-selection-button.character-order-0 img {
+        margin-left: -97px;
+        margin-top: -35px;
+    }
+    .character-selection-button.character-order-1 img {
+        margin-left: -39px;
+        margin-top: -38px;
+    }
+    .character-selection-button.character-order-2 img {
+        margin-left: -168px;
+        margin-top: -61px
+    }
+    .character-selection-button.character-order-3 img {
+        margin-left: -61px;
+        margin-top: -54px;
+    }
+    .character-selection-button.character-order-4 img {
+        margin-left: -84px;
+        margin-top: -46px;
+    }
+    .character-selection-button.character-order-5 img {
+        margin-left: -99px;
+        margin-top: -32px
+    }
+    #character-description {
+        font-family: "Myriad Pro";
+        font-size: 14px;
     }
 }
