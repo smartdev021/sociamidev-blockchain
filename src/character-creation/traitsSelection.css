@@ -16,7 +16,7 @@
     border: 3px solid rgb( 226, 226, 226 );
     border-radius: 20px;
     /* min-height: 200px; */
-    width: 320px;
+    width: 100%;
     min-height: 200px;
 
     padding: 5px 30px;
@@ -74,7 +74,9 @@
 
 #character-trait-select-confirm-button-container {
     width: 100%;
-    margin-bottom: 10px;
+    background-color: #FA893B;
+    bottom: 0px ;
+    position: absolute;
 }
 
 #character-selection-next {
@@ -88,5 +90,32 @@
 
 #character-traits-selection-container-inner {
     height: 100%;
+}
+
+.select-trait-container{
+    height: 69%;
     overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.select-trait-row{
+    /* padding-left: 25px;
+    padding-right: 25px; */
+    width: 100%;
+}
+
+.trait-header{
+    padding: 20px 0px 20px 0px !important;
+    border-bottom: 2px solid #DBE1DF;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+@media all and (max-width: 768px) {
+    /* .select-trait-container{
+        height: 70% !important;
+    } */
 }

@@ -10,7 +10,8 @@
 }
 #character-selection-container {
     height: 100%;
-    padding: 0 25px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 @media only screen and (max-width : 768px) {
     #character-selection-container {
@@ -30,8 +31,6 @@
     font-size: 48px;
     font-family: "Fjalla One";
     color: rgb( 234, 59, 22 );
-    padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 #character-description {
@@ -104,10 +103,9 @@
     cursor: pointer;
     background: #2fa7d2;
     border-radius: 50%;
-    width: 180px;
-    height: 180px;
+    width: 80px;
+    height: 80px;
     margin: auto;
-    margin-bottom: 20px;
     opacity: 0.2;
     position: relative;
     overflow: hidden;
@@ -121,24 +119,28 @@
 }
 
 .character-selection-button.character-order-0 img {
-    margin-left: -23px;
-    margin-top: -21px;
+    margin-left: -97px;
+    margin-top: -35px;
 }
 .character-selection-button.character-order-1 img {
-    margin-left: -119px;
-    margin-top: -40px;
+    margin-left: -39px;
+    margin-top: -38px;
 }
 .character-selection-button.character-order-2 img {
-    margin-left: -18px;
-    margin-top: -25px;
+    margin-left: -168px;
+    margin-top: -61px
 }
 .character-selection-button.character-order-3 img {
-    margin-left: -10px;
-    margin-top: -25px;
+    margin-left: -61px;
+    margin-top: -54px;
+}
+.character-selection-button.character-order-4 img {
+    margin-left: -84px;
+    margin-top: -46px;
 }
 .character-selection-button.character-order-5 img {
-    margin-left: -40px;
-    margin-top: -20px;
+    margin-left: -99px;
+    margin-top: -32px
 }
 
 #character-selection-image-big img {
@@ -180,20 +182,109 @@
 }
 
 .character-creation-progressbar-container {
-    padding: 10px 0px 10px;
+    padding: 15px 0px 15px 0px;
 }
 
 .character-creation-progressbar-container.character-selection-progressbar {
     position: relative;
-    bottom: 38px;
-    padding: 10px 0px 0px;
+    /* bottom: 38px; */
+    padding: 25px 0px 0px;
     height: 20px;
 }
 
 @media only screen and (max-width : 1089px) {
     .character-creation-progressbar-container.character-selection-progressbar {
-        margin-top: 20px;
+        /* margin-top: 20px; */
         height: 40px;
         bottom: 0px;
+    }
+}
+.character-column{
+    background: #e7403f url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-category.jpg) no-repeat bottom right;
+    border-radius: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 15px;
+}
+.character-row{
+    margin-right: 5%;
+    margin-left: 5%;
+    height: auto;
+    display: flex;
+}
+.character-text{
+    text-align: center;
+    margin: 0 auto;
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    height:40px;
+}
+.character-box{
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+.choose-house-column{
+    display: flex;
+    align-items: center;
+}
+.choose-house-header{
+    text-align: center;
+    color: 	#BBBBBB;
+}
+.choose-house-desc{
+    text-align: center;
+    color: 	#BBBBBB;
+}
+.choose-house-text{
+    width: 100%;
+}
+.select-character-button{
+    text-align: center;
+    zoom: .7;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+@media all and (max-width: 768px) {
+    .character-selection-button{
+        width:50px;
+        height:50px;
+    }
+    .character-creation-header{
+        padding: 10px 0px 10px 0px !important;
+    }
+    .progress-container{
+        text-align: center;
+        margin-top: -15px;
+    }
+    .character-box{
+        padding: 0 !important;
+        margin: 0 auto !important;
+    }
+    .character-text {
+        text-align: center;
+        margin: 0 auto;
+        color: white;
+        font-size: 12px;
+        text-transform: uppercase;
+        height:auto !important;
+    }
+    .character-header{
+        padding: 15px 0px 10px 0px !important
+    }
+    #character-name{
+        font-size: 40px;
+        font-family: "Fjalla One";
+        color: rgb( 234, 59, 22 );
+        padding: 0 !important;
+    }
+    #character-skills {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    #character-select{
+        zoom:.8;
     }
 }

@@ -37,7 +37,6 @@ class TraitsSelection extends React.Component {
       Modal.defaultStyles.content["marginRight"] = 'auto';
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
-      Modal.defaultStyles.content["padding"] = '0px 20px';
       Modal.defaultStyles.content["boxShadow"] = '0px 10px 62px -4px rgba(0,0,0,0.75)';
     }
       
@@ -68,7 +67,7 @@ class TraitsSelection extends React.Component {
             <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
                 name="times" aria-hidden="true"></Icon>
             <div id="character-traits-selection-container">
-              <div id="character-traits-selection-container-inner">
+              <div id="-inner">
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-lg-12">
@@ -86,43 +85,37 @@ class TraitsSelection extends React.Component {
             <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
                 name="times" aria-hidden="true"></Icon>
             <div id="character-traits-selection-container">
-              <div id="character-traits-selection-container-inner">
-                <div className="box-head">
-                   <h1 className="text-center text-uppercase text-heading heading-border heading-border-decorators-visible">
-                     <span>Select Your Traits</span>
-                   </h1>
+                <div className="box-head trait-header">
+                    <h1 className="create-character-heading">
+                      <span>Select Your Traits</span>
+                    </h1>
+                   <div className="character-creation-progressbar-container">
+                    <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                  </div>
                 </div>
-                <div className="container-fluid">
-                  <div className="row">
+                <div className="select-trait-container">
                     {
                       this.props.traitsList.map((trait, i) => {
                         return (
-                          <div className="col-cs" key={i}>
-                            <div onClick={()=>this.handleSelectTrait(i)} 
-                              className={`character-trait-container ${i == this.props.selectedIndex ? "character-trait-container-active" : ""}`}>
-                              <h3 className="charactet-trait-name">{trait.name}</h3>
-                              <p className="charactet-trait-description">{trait.description}</p>
+                          <div className="col-md-4 col-xs-12" key={i}>
+                            <div className="select-trait-row" key={i}>
+                              <div onClick={()=>this.handleSelectTrait(i)} 
+                                className={`character-trait-container ${i == this.props.selectedIndex ? "character-trait-container-active" : ""}`}>
+                                <h3 className="charactet-trait-name">{trait.name}</h3>
+                                <p className="charactet-trait-description">{trait.description}</p>
+                              </div>
                             </div>
-                          </div>
+                          </div>  
                         )
                       })
                     }
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div id="character-trait-select-confirm-button-container" className="text-center">
-                        <ActionLink href="#" onClick={()=>this.props.onNextStep()} id="character-selection-next"
-                           className="btn-base-landing btn-red-landing btn-login-landing text-uppercase">
-                             Next
-                        </ActionLink>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div className="character-creation-progressbar-container">
-                  <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                <div id="character-trait-select-confirm-button-container" className="text-center">
+                  <ActionLink href="#" onClick={()=>this.props.onNextStep()} id="character-selection-next"
+                      style={{'width':'250px'}} className="btn-base-landing btn-yellow-landing btn-login-landing text-uppercase">
+                        Next
+                  </ActionLink>
                 </div>
-              </div>
             </div>
           </Modal>
       )
