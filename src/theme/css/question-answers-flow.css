@@ -186,3 +186,12 @@
   outline: none;
   font-weight: bold;
 }
+
+@media only screen and (max-width: 600px) {
+  .QuestionAnswersFlow-main-question {
+    max-width: 300px;
+  }
+  .QuestionAnswersFlow-container {
+    padding: 10px 15px;
+  }
+}
