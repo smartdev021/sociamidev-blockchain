@@ -80,9 +80,9 @@ class CharacterSelection extends React.Component {
             characters.map((character, i) => {
               if (i >= firstIndex && i <= lastIndex) {
                 return (
-                  <div className="col-xs-12 col-sm-6 character-box">
+                  <div className="col-xs-12 col-sm-6 character-box" key={i}>
                     <div className={`character-selection-button character-order-${i} ${this.props.selectedIndex == i ? 
-                      'character-selected' : ""}`} key={i}
+                      'character-selected' : ""}`}
                       onClick={()=>this.handleChangeSelectedChatacter(i)} 
                       onMouseOver={()=>this.handleMouseOverCharacter(i)}
                       onMouseOut={()=>this.handleMouseOutCharacter()}

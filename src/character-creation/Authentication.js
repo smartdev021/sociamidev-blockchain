@@ -95,16 +95,19 @@ class Authentication extends React.Component {
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="text-center" id="character-creation-authorization-disclaimer">
-                      <p id="character-creation-paragraph-primary">
+                      <p className="character-creation-paragraph" id="character-creation-paragraph-primary">
                         <b>
                         By clicking on any of the above authentication methods, you agree to our t&c&apos;s <br/> and confirm that you have read our
-                        <Link to="/privacyPolicy" target="_blank"> Data Privacy</Link> {" (which includes our Cookie Use Plociy)."}</b>
+                        <Link to="/privacyPolicy" target="_blank"> Data Privacy</Link>{" (which includes our Cookie Use Plociy) and our "}<Link to="/termsOfUse" target="_blank"> Terms of Use</Link></b>
                       </p>
                       <hr></hr>
-                      <p id="character-creation-paragraph-secondary">
+                      <p className="character-creation-paragraph">
+                        &#42;The Soqqle Platform is currently on Alpha and subject to changes based on feasibility of features that may be introduced, revised, updated or otherwise changed from time to time. As a result, content and related achievements (eg levels and tokens) MAY be wiped out before our Go Live.
+                      </p>
+                      <p  className="character-creation-paragraph" id="character-creation-paragraph-secondary">
                         &#42;We currently do not support non Facebook/LinkedIn authentication methods but plan to do so in the near future.
                       </p>
-                      <p id="character-creation-paragraph-tertiary">
+                      <p  className="character-creation-paragraph" id="character-creation-paragraph-tertiary">
                         &#42;Soqqle is a platform to encourage personal growth by making learning fun.
                       </p>
                       <p>
