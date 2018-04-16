@@ -131,7 +131,6 @@ class App extends Component {
     });
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    this.updateInfoFromDatabase = this.updateInfoFromDatabase.bind(this);
     ReactGA.initialize('UA-113317436-1');
   }
 
@@ -337,17 +336,6 @@ class App extends Component {
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID);
-      this.updateInfoFromDatabase();
-    }
-  }
-  updateInfoFromDatabase() {
-    if (this.props.isAuthorized && (this.state.faceBookID || this.state.linkedInID)) {
-      this.props.update_userProfile(this.state.faceBookID, this.state.linkedInID)
-      .then(this.updateInfoFromDatabase)
-      .catch(this.updateInfoFromDatabase);
-    }
-    else {
-      //setTimeout(this.updateInfoFromDatabase, 1000);
     }
   }
 
