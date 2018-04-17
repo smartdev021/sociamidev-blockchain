@@ -241,3 +241,207 @@
 #userprofile-promocode-submit {
 	margin-right: 10px;
 }
+/*  */
+.profile-container{
+	overflow-x: hidden;
+}
+.user-profile-box{
+	padding: 30px;
+}
+.profile-img-container{
+	margin-top: -50px;
+}
+.profile-img{
+	border-radius: 50%;
+    width: 130px;
+	height: 130px;
+}
+.online-green{
+	background-color: #4dd14a;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    position: relative;
+    top: -30px;
+    right: -100px;
+}
+.profile-data{
+	
+}
+.profile-user-name {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Fjalla One';
+    margin: 0 auto;
+	color: #31A6D2;
+	font-size: 20px;
+}
+.profile-user-work {
+    font-weight: 600;
+    font-family: 'Fjalla One';
+    margin: 0 auto;
+    font-size: 14px;
+    color: rgb(244, 133, 67);
+}
+.profile-desc{
+
+}
+.prof-fa{
+	font-size: 14px;
+}
+.prof-tab-container{
+	padding: 0;
+	margin: 0 auto;
+}
+li.prof-tab {
+    width: 33.33333333333%;
+}
+.prof-tag{
+	text-align: center
+}
+.profile-details{
+	padding: 0px 0px 5px 5px;
+}
+.prof-marker{
+
+}
+.profile-stat{
+	line-height: 1;
+    height: auto;
+    font-family: 'Fjalla One';
+    padding: 0;
+	text-align: center;
+	width: fit-content;
+}
+.profile-stat-count{
+	font-size: 20px;
+    font-weight: 700;
+}
+.profile-stat-name{
+	font-size: 11px;
+	font-weight: 700;
+}
+a.prof-tag{
+	color:white;
+	font-size:17px;
+	border: 0 !important;
+}
+.profile-details-column{
+	border-left: 2px solid #2fa7d2 !important;
+    margin-top: -11%;
+}
+.profile-stat-column{
+	margin-top: -3%;
+}
+
+
+.nav-tabs>li.active>a.experience, .nav-tabs>li.active>a.experience:focus, .nav-tabs>li.active>a.experience:hover {
+    border-bottom: solid 3px #DC2F41 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+.nav-tabs>li.active>a.token-related, .nav-tabs>li.active>a.token-related:focus, .nav-tabs>li.active>a.token-related:hover {
+	border-bottom: solid 3px #286090 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+.nav-tabs>li.active>a.achievements, .nav-tabs>li.active>a.achievements:focus, .nav-tabs>li.active>a.achievements:hover {
+    border-bottom: solid 3px #F48543 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+/* not active */
+.nav-tabs>li>a.experience:focus, .nav-tabs>li>a.experience:hover {
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color:black !important;
+}
+.nav-tabs>li>a.token-related:focus, .nav-tabs>li>a.token-related:hover {
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+.nav-tabs>li>a.achievements:focus, .nav-tabs>li>a.achievements:hover {
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    color: black !important;
+}
+.detail-fa{
+	width: 20px;
+}
+.skill-bar{
+	padding: 0px 10px 0px 10px;
+}
+.fa-blue-stack{
+	color: white;
+	position: relative;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+	vertical-align: middle;
+	font-size: 25px;
+}
+.blue-fa{
+	color: #31A6D2;
+    text-shadow: 0px 3px 10px white;
+}
+.gold-fa{
+	color: #B9AE2B;
+    text-shadow: 0px 3px 10px white;
+}
+.level-column{
+    text-align: center;
+}
+.exp-progress {
+    margin-top: 10px;
+}
+.exp-title{
+	font-weight: 700;
+}
+.xp-column{
+	padding-left: 0px;
+}
+.stack-num-trophy{
+	top: -9px;
+	font-size: 18px;
+	color: white;
+}
+@media all and (max-width: 768px) {
+    .profile-img-container{
+		margin-top: -10px;
+	}
+	.profile-stat-column{
+		width: fit-content;
+		text-align: center;
+		margin-top: 0 !important;
+	}
+	.profile-stat{
+		line-height: 1;
+		height: auto;
+		font-family: 'Fjalla One';
+		text-align: center;
+		padding: 0px 0px 8px 0px;
+		width: auto;
+	}
+	.profile-details-column {
+		margin-top: 0 !important;
+	}
+	a.prof-tag{
+		font-size: 15px;
+	}
+	.profile-stat-name{
+		font-size:9px;
+	}
+}
+
