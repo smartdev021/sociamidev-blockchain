@@ -535,7 +535,7 @@ class TaskManager extends React.Component {
             </div>
           }
         </div>
-        <div className={ScannerColClass}>
+        <div className={[ScannerColClass, (myTasks.length > 0 ? 'show': 'hidden')].join(' ')}>
           <TaskScanner tasks={tasksScanner}
           scannerQuery={this.state.scannerQuery} 
           currentUserID={this.props.userProfile._id}
