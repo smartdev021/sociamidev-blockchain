@@ -201,20 +201,50 @@ class UserProfile extends React.Component {
 		}
 
 		return (
-			<div id="userprofile-page-transactions-log">
-				<h2>Transaction log</h2>
-				<ul>
-					{
-						this.props.accounting.data.userTransactions.map((transaction, i) => {
-							const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
-								: `"${transaction.source.illuminate.name}"`;
+			// <div id="userprofile-page-transactions-log">
+			// 	<h2>Transaction log</h2>
+			// 	<ul>
+			// 		{
+			// 			this.props.accounting.data.userTransactions.map((transaction, i) => {
+			// 				const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
+			// 					: `"${transaction.source.illuminate.name}"`;
 
-							return (
-								<li key={i}><span>{`Received: ${transaction.numTokens} ${transaction.numTokens > 1 ? "tokens" : "token"} for ${Source} `}</span></li>
-							)
-						})
-					}
-				</ul>
+			// 				return (
+			// 					<li key={i}><span>{`Received: ${transaction.numTokens} ${transaction.numTokens > 1 ? "tokens" : "token"} for ${Source} `}</span></li>
+			// 				)
+			// 			})
+			// 		}
+			// 	</ul>
+			// </div>
+			<div className="transaction-list">
+				{
+					this.props.accounting.data.userTransactions.map((transaction, i) => {
+						// const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
+						// 	: `"${transaction.source.illuminate.name}"`;
+						const Source = transaction.source.hangout ? transaction.source.hangout.name
+						: transaction.source.illuminate.name
+						let colorClass
+						if((i%2)==0){
+							colorClass = 'row token-grid-blue'
+						}else{
+							colorClass = 'row token-grid'
+						}
+
+						return (
+							<div className={colorClass}>
+								<div className="col-md-2 col-xs-4 token-number">+{transaction.numTokens} {transaction.numTokens > 1 ? "tokens" : "token"}</div>
+								<div className="col-md-10 col-xs-8 no-padding">	
+									<div className="col-md-8 col-xs-12">
+										{Source}
+									</div>
+									<div className="col-md-2 col-xs-6">Daniel Shen</div>
+									<div className="col-md-2 col-xs-6 pull-right">12/12/2017</div>
+								</div>
+							</div>
+						)
+					})
+				}
+			
 			</div>
 		)
 	}
@@ -425,7 +455,29 @@ class UserProfile extends React.Component {
 								{this.renderLevels()}
 							</div>
 							<div id="token-related" className="tab-pane fade">
-									Token related
+								<div className="wallet-header">
+									<h5 className="wallet-heading col-xs-12">my WALLET ADDRESS
+									<span className="wallet-c-soon">(coming soon...)</span>
+									</h5>
+									<div className="col-xs-10">
+										<p className="wallet-address">asdasd123123as9al10skd8aj2</p>
+									</div>
+									<div className="col-xs-2">
+										<a className="pull-right">Change</a>
+									</div>
+								</div>
+								<hr className="token-hr" />
+								<div className="transaction-header">
+									<div className="transaction-heading col-md-2 col-xs-4">TRANSACTIONS
+									</div>
+									<div className="col-md-10 col-xs-8 transaction-filter">
+										Tokens sort 
+										<select className="filter-transaction">
+											<option value="none">None</option>
+										</select>
+									</div>
+								</div>
+								{this.renderTransactions()}
 							</div>
 							<div id="achievements" className="tab-pane fade">
 									Achievements

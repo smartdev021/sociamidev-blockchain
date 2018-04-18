@@ -425,8 +425,79 @@ a.prof-tag{
 .c-soon{
 	font-size: 10px;
     margin-top: -16px;
-    margin-left: -2px;
-    margin-right: -2px;
+    margin-left: -4px;
+    margin-right: -4px;
+}
+.wallet-header{
+	padding: 20px;
+}
+.wallet-heading{
+	text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Fjalla One';
+    margin: 0 auto;
+    color: #31A6D2;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+.wallet-address{
+	font-size:17px
+}
+.wallet-c-soon{
+	font-size: 10px;
+    margin-left: 10px;
+    color: black;
+}
+.token-hr {
+    border-top: 2px solid #31A6D2 !important;
+    width: 93%;
+}
+.token-grid{
+	font-size: 14px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-right: 36px;
+    margin-left: 36px;
+}
+.token-grid-blue{
+	font-size: 14px;
+    background-color: aliceblue;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-right: 36px;
+    margin-left: 36px;
+}
+.token-number{
+	font-weight: 600;
+    font-size: 17px;
+}
+.transaction-header{
+	padding: 20px;
+}
+.transaction-heading{
+	text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Fjalla One';
+    margin: 0 auto;
+    color: #31A6D2;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+.transaction-filter{
+	font-size: 17px;
+    margin-top: -5px;
+}
+.filter-transaction{
+	border-radius: 6px!important;
+    width: auto!important;
+    font-family: monospace!important;
+    height: 33px!important;
+    font-size: 18px!important;
+    margin-left: 8px!important;
+    background-color: white!important;
+}
+.transaction-list{
+    padding-top: 20px;
 }
 @media all and (max-width: 768px) {
     .profile-img-container{
@@ -453,6 +524,10 @@ a.prof-tag{
 	}
 	.profile-stat-name{
 		font-size:9px;
+	}
+	.token-hr {
+		border-top: 2px solid #31A6D2 !important;
+		width: 84%;
 	}
 }
 
