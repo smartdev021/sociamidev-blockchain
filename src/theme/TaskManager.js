@@ -494,7 +494,7 @@ class TaskManager extends React.Component {
 
     const MyTasksColClass = this.state.isScannerExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
     const ScannerColClass = this.state.isScannerExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
-
+    
     return (
       <div className="row content-wrap">
         <div className={MyTasksColClass}>
@@ -528,7 +528,7 @@ class TaskManager extends React.Component {
             onHangoutRequestReject={(hangout, user)=>this.hangoutRequestReject(hangout, user)}
             />
         </div>
-        <div className={ScannerColClass}>
+        <div className={[ScannerColClass, (myTasks.length > 0 ? 'show': 'hidden')].join(' ')}>
           <TaskScanner tasks={tasksScanner}
           scannerQuery={this.state.scannerQuery} 
           currentUserID={this.props.userProfile._id}
