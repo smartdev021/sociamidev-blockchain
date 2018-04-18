@@ -245,30 +245,44 @@ class UserProfile extends React.Component {
 			}
 
 			return (
-				<div className="progressionTreeLevels">
-					<ul>
-						{
-							ProgressionTreeLevels.map(function (ProgTreeLevel, i) {
-								return (
-									<li key={i}>
-										<span className="prog-tree-list-column">
-											{ProgTreeLevel.name}
-										</span>
-										<span className="prog-tree-list-column">
-											CurrentLevelXP: {ProgTreeLevel.currentLevelXP}
-										</span>
-										<span className="prog-tree-list-column">
-											TotalXP: {ProgTreeLevel.totalXP}
-										</span>
-										<span className="prog-tree-list-column">
-											Level: {ProgTreeLevel.level}
-										</span>
-									</li>
-								);
-							})
-						}
-					</ul>
+				<div className="experience-list">
+					{
+					ProgressionTreeLevels.map(function (ProgTreeLevel, i) {
+						let widthPercent = ProgTreeLevel.currentLevelXP/ProgTreeLevel.totalXP * 100 
+						return(
+							<div className="row skill-bar">
+								<div className="col-md-1 col-xs-2 level-column">
+									<span className="fa-blue-stack">
+											<i className="fa fa-certificate fa-stack-2x blue-fa"></i>
+											<span className="fa fa-stack-1x">
+													<b>{ProgTreeLevel.level}</b>
+											</span>
+									</span>
+									<div className="profile-stat-name">LEVEL</div>
+								</div>
+								<div className="col-md-10 col-xs-8 exp-progress">
+									<div className="exp-title">{ProgTreeLevel.name}</div>
+									<div className="progress">
+										<div className="progress-length" style={{width:`${widthPercent}%`}}>
+										{ProgTreeLevel.currentLevelXP} XP
+										</div>
+									</div>
+								</div>
+								<div className="col-md-1 col-xs-2 xp-column">
+									<span className="fa-blue-stack" style={{'color':'#F48543'}}>
+											<i className="fa fa-trophy fa-stack-2x gold-fa"></i>
+											<span className="fa fa-stack-1x stack-num-trophy">
+													<b>{ProgTreeLevel.totalXP}</b>
+											</span>
+									</span>
+									<div className="profile-stat-name">TOTAL XP</div>
+								</div>
+							</div>
+							);
+						})
+					}
 				</div>
+						
 			)
 		}
 
@@ -325,10 +339,11 @@ class UserProfile extends React.Component {
 										<span className="fa-stack prof-fa">
 												<i className="fa fa-star fa-stack-2x header-fa"></i>
 												<span className="fa fa-stack-1x">
-														<b>35</b>
+														<b>0</b>
 												</span>
 										</span>
 										<p className="text-center">E-XP</p>
+										<div className="c-soon">coming soon..</div>
 								</div>
 								<div className="col-xs-6 text-center">
 										<span className="fa-stack prof-fa">
@@ -407,30 +422,7 @@ class UserProfile extends React.Component {
 
 					<div className="tab-content prof-tab-content">
 							<div id="experience" className="tab-pane fade in active">
-								<div className="row skill-bar">
-									<div className="col-md-1 col-xs-2 level-column">
-										<span className="fa-blue-stack">
-												<i className="fa fa-certificate fa-stack-2x blue-fa"></i>
-												<span className="fa fa-stack-1x">
-														<b>3</b>
-												</span>
-										</span>
-										<div className="profile-stat-name">LEVEL</div>
-									</div>
-									<div className="col-md-10 col-xs-8 exp-progress">
-										<div className="exp-title">CRYPTOGRAPHY ENGINEERING</div>
-										<div className="progress"></div>
-									</div>
-									<div className="col-md-1 col-xs-2 xp-column">
-										<span className="fa-blue-stack" style={{'color':'#F48543'}}>
-												<i className="fa fa-trophy fa-stack-2x gold-fa"></i>
-												<span className="fa fa-stack-1x stack-num-trophy">
-														<b>13</b>
-												</span>
-										</span>
-										<div className="profile-stat-name">TOTAL XP</div>
-									</div>
-								</div>
+								{this.renderLevels()}
 							</div>
 							<div id="token-related" className="tab-pane fade">
 									Token related

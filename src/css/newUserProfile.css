@@ -417,6 +417,17 @@ a.prof-tag{
 	font-size: 18px;
 	color: white;
 }
+.progress-length{
+	background: linear-gradient(to right,#2fa7d2, #ccac00);
+    color: white;
+    text-indent: 6px;
+}
+.c-soon{
+	font-size: 10px;
+    margin-top: -16px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
 @media all and (max-width: 768px) {
     .profile-img-container{
 		margin-top: -10px;
