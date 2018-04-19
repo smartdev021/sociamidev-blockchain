@@ -468,9 +468,9 @@ class UserProfile extends React.Component {
 								</div>
 								<hr className="token-hr" />
 								<div className="transaction-header">
-									<div className="transaction-heading col-md-2 col-xs-4">TRANSACTIONS
+									<div className="transaction-heading col-md-2 col-xs-5">TRANSACTIONS
 									</div>
-									<div className="col-md-10 col-xs-8 transaction-filter">
+									<div className="col-md-10 col-xs-7 transaction-filter">
 										Tokens sort 
 										<select className="filter-transaction">
 											<option value="none">None</option>
