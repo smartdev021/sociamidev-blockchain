@@ -543,7 +543,7 @@ class SkillBrowser extends React.Component {
     let DeepDiveFlipCard
     if(IsIlluminateAvailable){
       IlluminateFlipCard = (
-        <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+        <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-flipper">
               <div className="pskill-card-front">
                   <div className="pskill-card-body">
@@ -581,7 +581,7 @@ class SkillBrowser extends React.Component {
       )
     }else{
       IlluminateFlipCard = (
-          <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+          <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
             <div className="pskill-timer">
                 <div className="pskill-card-front pskill-timer-active">
                     <div className="pskill-card-body">
@@ -613,7 +613,7 @@ class SkillBrowser extends React.Component {
 
     if(IsDeepdiveAvailable){
       DeepDiveFlipCard = (
-        <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item"> 
+        <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item"> 
             <div className="pskill-flipper">
                 <div className="pskill-card-front">
                     <div className="pskill-card-body">
@@ -651,7 +651,7 @@ class SkillBrowser extends React.Component {
       )
     }else{
       DeepDiveFlipCard = (
-        <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+        <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
             <div className="pskill-timer">
                 <div className="pskill-card-front pskill-timer-active">
                     <div className="pskill-card-body">
@@ -717,7 +717,7 @@ class SkillBrowser extends React.Component {
 
             {(this.isTreeAdded() && DeepDiveFlipCard)}
 
-            <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
                 <div className="pskill-card-lock">
                     <div className="pskill-card-body">
                         <h4 className="pskill-card-title-lock">5</h4>
@@ -731,7 +731,7 @@ class SkillBrowser extends React.Component {
                 </div>
             </div>
 
-            <div className="col-md-3 col-sm-6 col-xs-12 pskill-card-item">
+            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
                 <div className="pskill-card-lock">
                     <div className="pskill-card-body">
                         <h4 className="pskill-card-title-lock">9</h4>
