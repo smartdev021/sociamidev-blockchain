@@ -491,10 +491,29 @@ class TaskManager extends React.Component {
     this.setState({isAnswerQuestionsOpen:false})
   }
 
+  filterTasksScanner(tasksScanner) {
+    let foundTasks = [];
+    const scannerQuery = this.state.scannerQuery.toLowerCase();
+    if (scannerQuery != "") {
+      foundTasks = tasksScanner.filter(function(task) {
+        return (this.props.userProfile._id == undefined || task.userID != this.props.userProfile._id) 
+          && task.name && task.name.toLowerCase().startsWith(scannerQuery);
+      });
+    }
+    else {
+      foundTasks = tasksScanner
+    }
+    return foundTasks.filter(task => {
+      return task.type == TaskTypes.HANGOUT
+    })
+  }
+
   render() {
     const myTasks = this.getMyTasksAndHangouts();
 
     const tasksScanner = this.getTaskScannerTasks();
+
+    const tasksScannerFiltered = this.filterTasksScanner(tasksScanner);
 
     const MyTasksColClass = this.state.isScannerExpanded ? "col-md-4 expand-deep" : "col-md-8 expand-deep";
     const ScannerColClass = this.state.isScannerExpanded ? "col-md-8 expand-tokens open-tokens-mobile" : "col-md-4 expand-tokens close-tokens-mobile";
@@ -535,7 +554,7 @@ class TaskManager extends React.Component {
             </div>
           }
         </div>
-        <div className={[ScannerColClass, (myTasks.length > 0 ? 'show': 'hidden')].join(' ')}>
+        <div className={[ScannerColClass, (tasksScannerFiltered.length > 0 ? 'show': 'hidden')].join(' ')}>
           <TaskScanner tasks={tasksScanner}
           scannerQuery={this.state.scannerQuery} 
           currentUserID={this.props.userProfile._id}
