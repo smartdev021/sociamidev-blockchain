@@ -42,7 +42,7 @@ class CharacterSelection extends React.Component {
       Modal.defaultStyles.content["marginRight"] = 'auto';
       Modal.defaultStyles.content["left"] = '0';
       Modal.defaultStyles.content["right"] = '0';
-      Modal.defaultStyles.content["padding"] = '0px 20px';
+      Modal.defaultStyles.content["padding"] = '0px 0px 0px 0px';
     }
       
     componentWillUnmount() {
@@ -75,12 +75,12 @@ class CharacterSelection extends React.Component {
 
     renderCharacters(characters, firstIndex, lastIndex) {
       return (
-        <div className="row">
+        <div className="col-sm-4 col-xs-5 character-column">
           {
             characters.map((character, i) => {
               if (i >= firstIndex && i <= lastIndex) {
                 return (
-                  <div className="character-piece" key={i}>
+                  <div className="col-xs-12 col-sm-6 character-box" key={i}>
                     <div className={`character-selection-button character-order-${i} ${this.props.selectedIndex == i ? 
                       'character-selected' : ""}`}
                       onClick={()=>this.handleChangeSelectedChatacter(i)} 
@@ -89,6 +89,9 @@ class CharacterSelection extends React.Component {
                       >
                       <img src={this.props.charactersList[i].imageURL}/>
                     </div>
+                    <p className="character-text">
+                      {this.props.charactersList[i].name}
+                    </p>
                   </div>
                 )
               }
@@ -99,6 +102,8 @@ class CharacterSelection extends React.Component {
     }
 
     render() {
+      console.log('this.props.charactersList')
+      console.log(this.props.charactersList)
       if (this.props.isFetchingCharacters) {
         return(
           <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
@@ -129,21 +134,32 @@ class CharacterSelection extends React.Component {
             <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
                 name="times" aria-hidden="true"></Icon>
             <div id="character-selection-container">
-              <div id="character-selection-container-inner">
-                <div className="box-head">
-                   <h1 className="text-center text-uppercase text-heading heading-border heading-border-decorators-visible">
-                     <span>Select Your Character</span>
+                <div className="box-head character-header">
+                   <h1 className="create-character-heading">
+                     <span>Select Your House</span>
                    </h1>
                 </div>
-                <div className="container-fluid">
-                  <div id="character-selection-image-big">
-                    <img src={SelectedCharacter.imageBigURL}/>
-                  </div>
-                  <div className="row">
-                    <div className="character-left">
-                      {this.renderCharacters(this.props.charactersList, 0, 2)}
+                <div className="row character-row">
+                  {this.renderCharacters(this.props.charactersList, 0, this.props.charactersList.length - 1)}
+                  {/* <div className="col-sm-8 col-xs-9 choose-house-column">
+                    <div className="choose-house-text">
+                      <h1 className="choose-house-header">
+                        CHOOSE HOUSE
+                      </h1>
+                      <h5 className="choose-house-desc">
+                        Team members will be suggested to you based on your house, including benefits that can aid you progressions.
+                      </h5>
+                      <div id="character-select-confirm-button-container" className="select-character-button">
+                        <ActionLink href="#" onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}
+                          className="btn-base-landing btn-red-landing btn-login-landing text-uppercase" 
+                           id="character-select">
+                          Select
+                        </ActionLink>
+                      </div>
                     </div>
-                    <div className="character-center">
+                  </div> */}
+
+                  <div className="character-center">
                       <div className="text-center" id="character-info">
                         <div id="character-name">
                           <div className="text-uppercase">{SelectedCharacter.name}</div>
@@ -168,15 +184,10 @@ class CharacterSelection extends React.Component {
                         </ActionLink>
                       </div>
                     </div>
-                    <div className="character-right">
-                      {this.renderCharacters(this.props.charactersList, 3, this.props.charactersList.length - 1)}
-                    </div>
-                    <div className="character-creation-progressbar-container character-selection-progressbar">
-                      <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
-                    </div>
-                  </div>
                 </div>
-              </div>
+                <div className="character-creation-progressbar-container character-selection-progressbar">
+                  <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+                </div>
             </div>
           </Modal>
       )

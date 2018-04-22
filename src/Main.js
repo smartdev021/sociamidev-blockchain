@@ -39,6 +39,9 @@ import UserProfile from '~/src/theme/UserProfile.js';
 
 import Privacy from '~/src/theme/Privacy.js';
 
+import PrivacyPolicy from "~/src/theme/new_ui/PrivacyPolicy"
+import TermsOfUse from "~/src/theme/new_ui/TermsOfUse"
+
 import {
     fetchAllTasks
   } from '~/src/redux/actions/tasks'
@@ -92,8 +95,10 @@ class Main extends React.Component {
             {!ConfigMain.ChallengesScannerDisabled && <Route path='/projectManagement' render={routeProps => <ProjectManager {...routeProps}{...this.props}/>}/>}
             <Route path='/projectBrowser' render={routeProps => <ProjectBrowser {...routeProps}{...this.props}/>}/>
             <Route exact path='/connectionsView' render={routeProps => <ConnectionsView {...routeProps}{...this.props}/>} />
-            <Route path='/privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>} />)}/>
-            <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>} />)}/>
+            <Route path='/privacy' render={routeProps => <Privacy {...routeProps}{...this.props}/>}/>
+            <Route exact path='/termsOfUse' render={routeProps => <TermsOfUse {...routeProps}{...this.props}/>}/>
+            <Route exact path='/privacyPolicy' render={routeProps => <PrivacyPolicy {...routeProps}{...this.props}/>}/>
+            <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>}/>
           </Switch>)
       }
 

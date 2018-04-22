@@ -1106,7 +1106,7 @@ html, body {
 
     .heading-border:before,
     .heading-border:after{
-        display: none !important;
+        /* display: none !important; */
     }
 
     .open-tokens-mobile{
@@ -1350,5 +1350,64 @@ html, body {
 .btn-nav.disabled:focus,
 .btn-nav.disabled:active{
     background: rgba(253, 202, 20, 0.5);
+}
+
+.create-character-heading{
+    font-family: 'Fjalla One';
+    padding-top: 0px;
+    margin-top: 0px;
+    text-transform: uppercase;
+    font-size: 24px;
+    color: #dd303a;
+    line-height: 42px;
+    display: block;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    margin: 0px auto;
+}
+.create-character-heading:before{
+    right: 100%;
+    margin-right: 19px;
+    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-l.png) no-repeat;
+}
+.create-character-heading:after{
+    left: 100%;
+    margin-left: 19px;
+    background: url(https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/arrow-r.png) no-repeat;
+    display: inline-block !important;
+}
+.create-character-heading:before,
+.create-character-heading:after{
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 42px;
+}
+.create-character-heading span:before{
+    right: 100%;
+    margin-right: 65px;
+}
+.create-character-heading span:after{
+    left: 100%;
+    margin-left: 65px
+}
+.create-character-heading span:before,
+.create-character-heading span:after {
+    content: "";
+    position: absolute;
+    border-bottom: 2px solid #e89859;
+    top: 18px;
+    width: 50%;
+}
+@media all and (max-width: 768px) {
+    .create-character-heading span:before,
+    .create-character-heading span:after {
+        content: "";
+        position: absolute;
+        border-bottom: 2px solid #e89859;
+        top: 18px;
+        width: 15%;
+    }   
 }
 

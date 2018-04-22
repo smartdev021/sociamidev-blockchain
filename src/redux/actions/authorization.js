@@ -11,6 +11,8 @@ import {
     FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
     FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
 
+    USER_PROFIE_UPDATE_FREQUENTLY,
+
     PROGRESSION_TREE_START_INITIATE,
     PROGRESSION_TREE_START_COMPLETE,
 
@@ -114,7 +116,7 @@ export function fetchUserActivitiesComplete(activities) {
 }
 
 export function fetchUserActivities(userId) {
-    
+
     return function (dispatch) {
 
         dispatch(fetchUserActivitiesInitiate());
@@ -236,6 +238,34 @@ export function fetchUserTasks(userId) {
             .catch(function(error) {
                 dispatch(fetchUserProfileTasksComplete([], []));
             }));
+    }
+}
+
+export function update_userProfile(userIdFacebook, userIdLinkedIn) {
+
+    return function(dispatch) {
+        const url = userIdFacebook ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
+        : `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdLinkedIn}`;
+
+        return (
+            Axios.get(url)
+            .then(function(response) {
+                const responseProfile = response.data.profile;
+                let newUserProfile = {
+                    _id: response.data._id,
+                    progressionTrees: response.data.progressionTrees,
+                    progressionTreeLevels: response.data.profile.progressionTreeLevels
+                };
+                //async action exit point
+                dispatch({
+                    type: USER_PROFIE_UPDATE_FREQUENTLY,
+                    profile: newUserProfile
+                });
+            })
+            .catch(function(error) {
+                // Fail? Ignore.
+            })
+        );    
     }
 }
 

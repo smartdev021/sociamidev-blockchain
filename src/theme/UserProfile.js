@@ -201,20 +201,50 @@ class UserProfile extends React.Component {
 		}
 
 		return (
-			<div id="userprofile-page-transactions-log">
-				<h2>Transaction log</h2>
-				<ul>
-					{
-						this.props.accounting.data.userTransactions.map((transaction, i) => {
-							const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
-								: `"${transaction.source.illuminate.name}"`;
+			// <div id="userprofile-page-transactions-log">
+			// 	<h2>Transaction log</h2>
+			// 	<ul>
+			// 		{
+			// 			this.props.accounting.data.userTransactions.map((transaction, i) => {
+			// 				const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
+			// 					: `"${transaction.source.illuminate.name}"`;
 
-							return (
-								<li key={i}><span>{`Received: ${transaction.numTokens} ${transaction.numTokens > 1 ? "tokens" : "token"} for ${Source} `}</span></li>
-							)
-						})
-					}
-				</ul>
+			// 				return (
+			// 					<li key={i}><span>{`Received: ${transaction.numTokens} ${transaction.numTokens > 1 ? "tokens" : "token"} for ${Source} `}</span></li>
+			// 				)
+			// 			})
+			// 		}
+			// 	</ul>
+			// </div>
+			<div className="transaction-list">
+				{
+					this.props.accounting.data.userTransactions.map((transaction, i) => {
+						// const Source = transaction.source.hangout ? `"${transaction.source.hangout.name}"`
+						// 	: `"${transaction.source.illuminate.name}"`;
+						const Source = transaction.source.hangout ? transaction.source.hangout.name
+						: transaction.source.illuminate.name
+						let colorClass
+						if((i%2)==0){
+							colorClass = 'row token-grid-blue'
+						}else{
+							colorClass = 'row token-grid'
+						}
+
+						return (
+							<div className={colorClass}>
+								<div className="col-md-2 col-xs-4 token-number">+{transaction.numTokens} {transaction.numTokens > 1 ? "tokens" : "token"}</div>
+								<div className="col-md-10 col-xs-8 no-padding">	
+									<div className="col-md-8 col-xs-12">
+										{Source}
+									</div>
+									<div className="col-md-2 col-xs-6">Daniel Shen</div>
+									<div className="col-md-2 col-xs-6 pull-right">12/12/2017</div>
+								</div>
+							</div>
+						)
+					})
+				}
+			
 			</div>
 		)
 	}
@@ -245,30 +275,44 @@ class UserProfile extends React.Component {
 			}
 
 			return (
-				<div className="progressionTreeLevels">
-					<ul>
-						{
-							ProgressionTreeLevels.map(function (ProgTreeLevel, i) {
-								return (
-									<li key={i}>
-										<span className="prog-tree-list-column">
-											{ProgTreeLevel.name}
-										</span>
-										<span className="prog-tree-list-column">
-											CurrentLevelXP: {ProgTreeLevel.currentLevelXP}
-										</span>
-										<span className="prog-tree-list-column">
-											TotalXP: {ProgTreeLevel.totalXP}
-										</span>
-										<span className="prog-tree-list-column">
-											Level: {ProgTreeLevel.level}
-										</span>
-									</li>
-								);
-							})
-						}
-					</ul>
+				<div className="experience-list">
+					{
+					ProgressionTreeLevels.map(function (ProgTreeLevel, i) {
+						let widthPercent = ProgTreeLevel.currentLevelXP/ProgTreeLevel.totalXP * 100 
+						return(
+							<div className="row skill-bar">
+								<div className="col-md-1 col-xs-2 level-column">
+									<span className="fa-blue-stack">
+											<i className="fa fa-certificate fa-stack-2x blue-fa"></i>
+											<span className="fa fa-stack-1x">
+													<b>{ProgTreeLevel.level}</b>
+											</span>
+									</span>
+									<div className="profile-stat-name">LEVEL</div>
+								</div>
+								<div className="col-md-10 col-xs-8 exp-progress">
+									<div className="exp-title">{ProgTreeLevel.name}</div>
+									<div className="progress">
+										<div className="progress-length" style={{width:`${widthPercent}%`}}>
+										{ProgTreeLevel.currentLevelXP} XP
+										</div>
+									</div>
+								</div>
+								<div className="col-md-1 col-xs-2 xp-column">
+									<span className="fa-blue-stack" style={{'color':'#F48543'}}>
+											<i className="fa fa-trophy fa-stack-2x gold-fa"></i>
+											<span className="fa fa-stack-1x stack-num-trophy">
+													<b>{ProgTreeLevel.totalXP}</b>
+											</span>
+									</span>
+									<div className="profile-stat-name">TOTAL XP</div>
+								</div>
+							</div>
+							);
+						})
+					}
 				</div>
+						
 			)
 		}
 
@@ -299,7 +343,7 @@ class UserProfile extends React.Component {
 	render() {
 		//Incorrect usage of bootstrap row col. @Michael?
 		return (
-      <div>
+      <div className="profile-container">
         {
           this.state.isProfileLoading &&  
           <div className="container-fluid progress-browser-wrap">
@@ -311,136 +355,136 @@ class UserProfile extends React.Component {
           </div>
         }
         { 
-          !this.state.isProfileLoading && 
-          <div className="row mt center">
-            <div className="col-md-11 col-sm-11">
-              <div className="new-userProf-wrap">
-                <div className="col-md-2 col-sm-12 new-user-padding">
-                  <img className="new-userProf-img" src={this.state.pictureURL 
-                  ? this.state.pictureURL : profilePic} />
-                  <div className="new-userProf-dot new-userProf-green"></div>
-                </div>
-                <div className="test-wrap">
-                  <div className="col-md-4 col-sm-12">
-                    <div className="new-userProf-textWrap">
-                      <h4 className="new-user-name">{this.state.firstName} {this.state.lastName}</h4>
-                      <p className="new-user-work">{this.state.work}</p>
-                      <p className="new-user-text">{this.state.from}</p>
-                      <br />
-                      <p className="new-user-text">{_.get(this, 'state.email', "mail@example.com")}</p>
-                      <br />
-                      <p className="new-user-text">{this.state.url}</p>
-                      <br />
-                      <p className="new-user-text">{this.state.tel}</p>
-                    </div>
-                  </div>
-                  <div className="col-md-1 col-sm-0 new-user-empty">
-                  </div>
-                  <div className="col-md-1 col-sm-12 new-user-padding">
-                    <div className="new-user-right-wrap-task">
-                      <img className="new-user-achiev" src={tasks} />
-                      <p className="new-user-text-right-block">Completed</p>
-                      <p className="new-user-text-tasks">{this.state.tasks}</p>
-                      <p className="new-user-text-right-block-line3">tasks</p>
-                    </div>
-                  </div>
-                  <div className="col-md-1 col-sm-12 new-user-padding">
-                    <div className="new-user-right-wrap-hang">
-                      <img className="new-user-achiev" src={hangout} />
-                      <p className="new-user-text-right-block new-user-text-hangout">Hangout</p>
-                      <p className="new-user-text-hangout-num">{this.state.hangout}</p>
-                      <p className="new-user-text-right-block-line3-hangout">time</p>
-                    </div>
-                  </div>
-                  <div className="col-md-1 col-sm-12 new-user-padding">
-                    <div className="new-user-right-wrap-mentees">
-                      <img className="new-user-mentees" src={mentees} />
-                      <p className="new-user-text-mentees-num">{this.state.mentees} <span className="new-user-text-mentees">mentees</span></p>
-                      <div className="new-user-stars-wrap">
-                        <span className="new-user-rating">Rating: {this.props.userProfile.rating
-                          ? this.props.userProfile.rating : 0}</span>
-                        <StarRatings rating={this.props.userProfile.rating
-                          ? this.props.userProfile.rating / 2 : 0}
-                          isSelectable={false} isAggregateRating={true} numOfStars={5}
-                          starWidthAndHeight={'35px'} starSpacing={'2px'}
-                          starEmptyColor={"white"}
-                          starRatedColor={"rgb(255, 204, 0)"} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    {this.renderLevels()}
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    {this.renderTransactions()}
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    {this.renderCharacter()}
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    {this.renderPromoCodeSection()}
-                  </div>
-                </div>
-                {this.state.blogs.map((item, index) => {
-                  return (
-                    <div className="row" key={index}>
-                      <div className="col-md-11 col-sm-12 new-user-bottom-width">
-                        <div className="new-user-bottom-tasks">
-                          <div className="new-user-bottom-tasks-text">
-                            <p className="new-user-work">{item.text}</p>
-                          </div>
-                          <div className="new-user-bottom-comment-date">
-                            <div className="new-user-bottom-comment">
-                              <p className="new-user-bottom-comment-text">Comment</p>
-                            </div>
-                            <div className="new-user-bottom-date">
-                              <p className="new-user-bottom-date-text">{item.date}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-            <div className="col-md-1 col-sm-12">
-              <div className="new-user-right-bar">
-                <div className="new-user-right-bar-first">
-                  <img className="new-user-right-bar-img-X" src={close} />
-                  <p>Return</p>
-                </div>
-                <div className="new-user-right-bar-next">
-                  <img className="new-user-right-bar-img" src={eyeglasses} />
-                  <p>Request Mentoring</p>
-                </div>
-                <div className="new-user-right-bar-next">
-                  <img className="new-user-right-bar-img" src={coffee} />
-                  <p>Request to Hangout</p>
-                </div>
-                <div className="new-user-right-bar-next">
-                  <img className="new-user-right-bar-img" src={question} />
-                  <p>What  is this?</p>
-                </div>
-                <div className="new-user-right-bar-next">
-                  <img className="new-user-right-bar-img" src={friend} />
-                  <p>Send a  friend request</p>
-                </div>
-                <div className="new-user-right-bar-next">
-                  <img className="new-user-right-bar-img" src={tag} />
-                  <p>Contact later</p>
-                </div>
-              </div>
-            </div>
-          </div>
+			(!this.state.isProfileLoading) && 
+			<div>
+				<div className="user-profile-box">
+					<div className="row">
+						<div className="col-md-offset-2 col-md-3 col-xs-7">
+									<h4 className="profile-user-name">{this.state.firstName} {this.state.lastName}</h4>
+									<p className="profile-user-work">{this.state.work}</p>
+						</div>
+						<div className="col-md-2 col-xs-5">
+							<div className="row">
+								<div className="col-xs-6 text-center">
+										<span className="fa-stack prof-fa">
+												<i className="fa fa-star fa-stack-2x header-fa"></i>
+												<span className="fa fa-stack-1x">
+														<b>0</b>
+												</span>
+										</span>
+										<p className="text-center">E-XP</p>
+										<div className="c-soon">coming soon..</div>
+								</div>
+								<div className="col-xs-6 text-center">
+										<span className="fa-stack prof-fa">
+												<i className="fa fa-database fa-stack-2x header-fa"></i>
+												<span className="fa fa-stack-1x"><b>72</b>
+												</span>
+										</span>
+										<p className="text-center">SOQQ</p>
+								</div>
+							</div>
+						</div>
+						<div className="col-md-5 col-sm-12">
+
+						</div>
+					</div>
+					<div className="row">
+						
+						<div className="profile-img-container col-md-2 col-xs-5">
+							<img className="profile-img" src={this.state.pictureURL 
+							? this.state.pictureURL : profilePic} />
+							<div className="online-green"></div>
+						</div>
+						<div className="profile-desc col-md-3 col-xs-7" style={{wordWrap:'break-word'}}>
+							<p>
+								"I prefer working theory and information,
+								thinking, organinsing and understanding"
+							</p>
+						</div>
+						<div className="col-md-7 col-xs-12">
+							
+						</div>
+						
+					</div>
+					<div className="row">
+						<div className="profile-stat-column col-md-offset-2 col-md-3 col-xs-3">
+							<div className="col-md-3 no-padding">
+								<div className="profile-stat" style={{'color':'#20A5D0'}}>
+									<div className="profile-stat-count">{this.state.tasks}</div>
+									<div className="profile-stat-name">TASKS</div>
+								</div>
+							</div>
+							<div className="col-md-3 no-padding">
+								<div className="profile-stat" style={{'color':'#F48543'}}>
+									<div className="profile-stat-count" >{this.state.mentees}</div>
+									<div className="profile-stat-name">HOURS</div>
+								</div>
+							</div>
+							<div className="col-md-3 no-padding">
+								<div className="profile-stat" style={{'color':'#DC2F41'}}>
+									<div className="profile-stat-count">{this.state.mentees}</div>
+									<div className="profile-stat-name">MENTEES</div>
+								</div>
+							</div>
+						</div>
+						<div className="profile-details-column col-md-7 col-xs-8">
+							<div className="profile-details"><i className="fa fa-map-marker detail-fa"></i> <span className="prof-marker">{this.state.from}</span></div>
+							<div className="profile-details"><i className="fa fa-envelope detail-fa"></i> <span className="prof-marker">{_.get(this, 'state.email', "mail@example.com")}</span></div>
+							<div className="profile-details"><i className="fa fa-globe detail-fa"></i> <span className="prof-marker">{this.state.url}</span></div>
+							<div className="profile-details"><i className="fa fa-phone detail-fa"></i> <span className="prof-marker">{this.state.tel}</span></div>
+						</div>
+					</div>
+				</div>
+				
+				<div className="prof-tab-container">
+					<ul className="nav nav-tabs">
+					<li className="active prof-tab">
+							<a className="prof-tag experience" data-toggle="tab" href="#experience" style={{'backgroundColor':'#DC2F41'}}>Experience</a>
+					</li>
+					<li className="prof-tab">
+							<a className="prof-tag token-related" data-toggle="tab" href="#token-related" style={{'backgroundColor':'#20A5D0'}}>Token Related</a>
+					</li>
+					<li className="prof-tab">
+							<a className="prof-tag achievements" data-toggle="tab" href="#achievements" style={{'backgroundColor':'#F48543'}}>Achievements</a>
+					</li>
+					</ul>
+
+					<div className="tab-content prof-tab-content">
+							<div id="experience" className="tab-pane fade in active">
+								{this.renderLevels()}
+							</div>
+							<div id="token-related" className="tab-pane fade">
+								<div className="wallet-header">
+									<h5 className="wallet-heading col-xs-12">my WALLET ADDRESS
+									<span className="wallet-c-soon">(coming soon...)</span>
+									</h5>
+									<div className="col-xs-10">
+										<p className="wallet-address">asdasd123123as9al10skd8aj2</p>
+									</div>
+									<div className="col-xs-2">
+										<a className="pull-right">Change</a>
+									</div>
+								</div>
+								<hr className="token-hr" />
+								<div className="transaction-header">
+									<div className="transaction-heading col-md-2 col-xs-6">TRANSACTIONS
+									</div>
+									<div className="col-md-10 col-xs-6 transaction-filter">
+										Sort 
+										<select className="filter-transaction">
+											<option value="none">None</option>
+										</select>
+									</div>
+								</div>
+								{this.renderTransactions()}
+							</div>
+							<div id="achievements" className="tab-pane fade">
+									Achievements
+							</div>
+					</div>
+				</div>
+			</div>	
         }
       </div>
 		);

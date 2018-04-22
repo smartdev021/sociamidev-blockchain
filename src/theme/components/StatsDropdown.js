@@ -6,7 +6,8 @@ require('~/src/css/StatsDropdown.css');
 import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 const NullProgTreeLevelItem = props => {
   const { item } = props
@@ -117,11 +118,22 @@ class StatsDropdown extends React.Component {
 
   render() {
 
-    const ProgressionTreeLevels = this.props.userProfile.progressionTreeLevels
-    
-    const listItems = ProgressionTreeLevels.map((item,index) => {
+    const myProgressions = this.props.progressionTrees;
+
+    const totalProgressions = this.props.progressionTreeLevels;
+
+    // Filter current Progressions from total Progressions.
+    let myProgressionsWithStats = totalProgressions.filter(p=>{
+      let found = false;
+      myProgressions.forEach(m=>{
+        if (m._id==p._id)
+          found=true;
+      });
+      return found;
+    })
+    const listItems = myProgressionsWithStats.map((item,index) => {
       if(item.totalXP){
-        return <ProgTreeLevelItem item={item} key={index}/>
+        return <ProgTreeLevelItem item={item} key={index}/> 
       }
       // else{
       //   return <NullProgTreeLevelItem item={item} key={index}/>
@@ -148,6 +160,10 @@ class StatsDropdown extends React.Component {
                   <p className="text-center desc">
                     E-XP
                   </p>
+                  <p style={{
+                    color: "white",
+                    fontSize: 10
+                  }}>coming soon...</p>
                 </div>
                 <div className="col-xs-6 text-center">
                 <span className="fa-stack fa-2x">
@@ -179,5 +195,11 @@ class StatsDropdown extends React.Component {
 
 // StatsDropdown.propTypes = {
 // }
+let mapStateToProps = (state)=>({
+  progressionTreeLevels: state.userProfile.profile.progressionTreeLevels,
+  progressionTrees: state.userProfile.profile.progressionTrees
+});
+
+StatsDropdown = withRouter(connect(mapStateToProps)(StatsDropdown));
 
 export default StatsDropdown

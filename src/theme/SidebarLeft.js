@@ -38,14 +38,14 @@ class SidebarLeft extends React.Component {
 
   componentWillMount() {
     if (this.props.isAuthorized && !this.props.userFriends.isFetching) {
-      this.props.fetchUserFriends(this.props.userProfile._id);
+      this.props.fetchUserFriends(this.props.userProfile_id);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.isAuthorized != this.props.isAuthorized) {
       if (this.props.isAuthorized) {
-        this.props.fetchUserFriends(this.props.userProfile._id);
+        this.props.fetchUserFriends(this.props.userProfile_id);
       }
     }
 
@@ -136,7 +136,7 @@ class SidebarLeft extends React.Component {
       {
         result = <span className="text-friends">{"Has started: "}
         <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
           {activity.activity.metadata.treeName}
         </Link></span>;
         
@@ -146,7 +146,7 @@ class SidebarLeft extends React.Component {
       {
         result = <span className="text-friends">{"Has created: "}
         <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
           {activity.activity.metadata.projectName}
         </Link></span>;
 
@@ -157,7 +157,7 @@ class SidebarLeft extends React.Component {
         result = <span className="text-friends">{"Has added: "} 
         <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
         : activity.activity.metadata.friend._id}`}
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
           {activity.activity.metadata.friend.firstName}
         </Link></span>;
 
@@ -205,7 +205,7 @@ class SidebarLeft extends React.Component {
       {
         result = <span className="text-friends">Has started: 
         <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
           {activity.activity.metadata.treeName}
         </Link></span>;
         
@@ -215,7 +215,7 @@ class SidebarLeft extends React.Component {
       {
         result = <span className="text-friends">Has created: 
         <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
           {activity.activity.metadata.projectName}
         </Link></span>;
 
@@ -226,7 +226,7 @@ class SidebarLeft extends React.Component {
         result = <span className="text-friends">Has added: 
         <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
         : activity.activity.metadata.friend._id}`}
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile._id)}>
+          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
           {activity.activity.metadata.friend.firstName}
         </Link></span>;
 
@@ -289,7 +289,7 @@ class SidebarLeft extends React.Component {
       CategoryClassName = `category-left ${this.props.isOpen ? " open-category" : " close-category"}`;
     }
 
-    const ProfileImage = this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL
+    const ProfileImage = this.props.userProfile_pictureURL ? this.props.userProfile_pictureURL
     : "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
 
     return (
@@ -303,7 +303,7 @@ class SidebarLeft extends React.Component {
                 </div>
                 <div className="col-xs-9 none-padding-right">
                     <div className="text-status">
-                        Good Morning {this.props.userProfile.firstName ? this.props.userProfile.firstName : "Dan"}, Update your status <a href="#">Here</a>
+                        Good Morning {this.props.userProfile_firstName ? this.props.userProfile_firstName : "Dan"}, Update your status <a href="#">Here</a>
                     </div>
                 </div>
             </div>
@@ -324,7 +324,9 @@ class SidebarLeft extends React.Component {
 
 SidebarLeft.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
-  userProfile: PropTypes.object.isRequired,
+  userProfile_id: PropTypes.string.isRequired,
+  userProfile_pictureURL: PropTypes.string.isRequired,
+  userProfile_firstName: PropTypes.string.isRequired,
   userFriends: PropTypes.object.isRequired,
   userFriendsActivities: PropTypes.object.isRequired,
   activitiesFetch: PropTypes.func.isRequired,
@@ -340,7 +342,11 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
-  userProfile: state.userProfile.profile,
+
+  userProfile_id: state.userProfile.profile._id,
+  userProfile_pictureURL: state.userProfile.profile.pictureURL,
+  userProfile_firstName: state.userProfile.profile.firstName,
+
   userFriends: state.userFriends,
   userFriendsActivities: state.userFriendsActivities,
 })

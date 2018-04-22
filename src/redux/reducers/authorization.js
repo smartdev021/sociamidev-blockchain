@@ -12,6 +12,7 @@ import {
 
     UPDATE_USER_PROFILE_INITIATE,
     UPDATE_USER_PROFILE_COMPLETE,
+    USER_PROFIE_UPDATE_FREQUENTLY,
 
     PROGRESSION_TREE_START_INITIATE,
     PROGRESSION_TREE_START_COMPLETE,
@@ -65,6 +66,8 @@ export function userProfile(state = userProfileInitialState, action) {
       return {...state, isLoading: true};
     case USER_LOG_OUT:
       return userProfileInitialState;
+    case USER_PROFIE_UPDATE_FREQUENTLY:
+      return {...state, profile: {...state.profile, ...action.profile}};
     case FETCH_USER_PROFILE_COMPLETE:
       return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
     case UPDATE_USER_PROFILE_INITIATE:
