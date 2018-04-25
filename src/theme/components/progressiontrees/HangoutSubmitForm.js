@@ -39,12 +39,12 @@ class HangoutSubmitForm extends React.Component {
     Modal.defaultStyles.content.background = "transparent";
     Modal.defaultStyles.content.overflow = "visible";
     Modal.defaultStyles.content.padding = "0";
-    Modal.defaultStyles.content["maxWidth"] = "600px";
+    Modal.defaultStyles.content["maxWidth"] = "550px";
     // Modal.defaultStyles.content["minHeight"] = "300px";
     Modal.defaultStyles.content["marginLeft"] = "auto";
     Modal.defaultStyles.content["marginRight"] = "auto";
     Modal.defaultStyles.content["left"] = "0px";
-    Modal.defaultStyles.content["top"] = "150px";
+    Modal.defaultStyles.content["top"] = "100px";
     Modal.defaultStyles.content["right"] = "0px";
   }
 
@@ -108,6 +108,13 @@ class HangoutSubmitForm extends React.Component {
   handleClick() {
     this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
     this.props.handleToggle();
+  }
+
+  onCreateTaskInSpecificTime() {
+    this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
+    this.props.handleToggle();
+    this.props.onHandleStartHangout(this.state.dateSelected.toDate());
+    this.props.toogleTrenScan();
   }
 
   onCreateTaskInFlexibleTime() {
@@ -184,22 +191,42 @@ class HangoutSubmitForm extends React.Component {
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-lg-12">
-                    <p>Great! You want to DeepDive into this topic!</p>
+                    <h3>PROPOSE A TIME</h3>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-lg-12">
                     <p>
-                      People work better in a team and can achieve more than when they are alone.
-                      Submit a request by providing us with the details below and you will get matches
-                      to someone with the same interest to solve relevant questions and unlock Soqqle
-                      Trend Scanner for you to browse other opportunities for this skill.
+                      A task will be created for your friend to match you.
                     </p>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12">
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <label for="txtDate">Date</label>
+                    <input type="date" className="form-control validate-field required" data-validation-type="string"
+                      id="txtDate" name="date" autoComplete="off" placeholder="Date" value={moment(this.state.dateSelected).format("YYYY-MM-DD")}
+                      onChange={(e) => this.handleDateInputChange(e)} disabled={this.state.isToday} />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label for="txtTime">Time</label>
+                    <input type="time" className=" form-control validate-field required" data-validation-type="string"
+                      id="txtTime" name="date" autoComplete="off" placeholder="00-00 " value={this.state.timeInputValue}
+                      onChange={(e) => this.handleTimeInputChange(e)} />
+                  </div>
+                </div>
+                  {/* <div className="col-lg-12">
                     {this.renderForm()}
+                  </div> */}
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <button className="btn-md btn-outline-inverse pull-right hangout-btn-ok" onClick={() => this.onCreateTaskInSpecificTime()}>OK</button>
+                    <button className="btn-md btn-outline-inverse pull-right hangout-btn-cancel" onClick={() => {
+                      this.props.onCloseModal()
+                      this.setState({isSpecificTime: false})
+                    }}>CANCEL</button>
                   </div>
                 </div>
               </div>
