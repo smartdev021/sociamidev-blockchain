@@ -536,7 +536,7 @@ a.prof-tag{
 	background-color: #f9f9f9;
 }
 .search-achievement-div{
-	padding: 10px 0px 10px 0px;
+	padding-top: 5px;
 }
 .search-query {
 	padding-right: 3px;
@@ -547,6 +547,7 @@ a.prof-tag{
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+	font-size: 20px;
 }
 
 .btn-search {
@@ -692,6 +693,9 @@ a.prof-tag{
 	}
 	.search-query{
 		width: 100%;
+	}
+	.search-achievement-div{
+		padding: 10px 0px 10px 0px;
 	}
 }
 

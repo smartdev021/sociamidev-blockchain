@@ -356,7 +356,7 @@ class UserProfile extends React.Component {
 
 		return (
 			<OverlayTrigger
-				trigger={['hover', 'focus', 'touch']}
+				trigger={['hover', 'click']}
 				placement="top"
 				overlay={popoverBottom} >
 				<p>QUIZ MONSTER</p>
@@ -529,11 +529,11 @@ class UserProfile extends React.Component {
 									<div className="search-achievement-div col-md-7 col-xs-12">
 										<div className="input-group search-box">
 											<span className="input-group-btn" style={{position:'absolute'}}>
-												<button className="btn btn-danger btn-search" type="button">
-													<span className="glyphicon glyphicon-search"></span>
+												<button className="btn btn-search" type="button">
+													<span className="glyphicon glyphicon-search" style={{top:'4px'}}></span>
 												</button>
 											</span>
-											<input type="text" className="search-query" placeholder="Search" />
+											<input type="text" className="search-query" placeholder="Type in to search" />
 										</div>
 									</div>
 								</div>
