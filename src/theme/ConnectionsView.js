@@ -94,6 +94,8 @@ class ConnectionsView extends React.Component {
     }
 
     getAllFriends() {
+        let copy = Object.assign({}, this.state, {loader: 1});
+        this.setState(copy);
         this.state.loadingSoqqlers = true;
         const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
         var self = this;
@@ -115,9 +117,13 @@ class ConnectionsView extends React.Component {
                     self.state.hasMoreSoqqlers = false;
                 }
                 self.state.loadingSoqqlers = false;
+                let copy = Object.assign({}, self.state, {loader: 0});
+                self.setState(copy);
             })
             .catch(function (error) {
                 console.log(error);
+                let copy = Object.assign({}, self.state, {loader: 0});
+                self.setState(copy);
             });
     }
 
