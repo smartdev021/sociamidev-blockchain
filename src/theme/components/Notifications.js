@@ -42,7 +42,6 @@ class Notifications extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('this component just received props...');
     console.log(newProps)
   }
 
@@ -64,7 +63,7 @@ class Notifications extends React.Component {
         isSeen: true,
         title:
           task.description,
-        name: task.creator.firstName,
+        name: task.creator.firstName + ' started',
         date: Math.round(Math.abs((new Date().getTime() - task.date)/(oneDay))) + ' days ago',
         status: task.status
       }
