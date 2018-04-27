@@ -8,12 +8,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { ListGroupItem, ListGroup } from 'react-bootstrap';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import ActivityTypes from '~/src/common/ActivityTypes';
 
 import ActionLink from '~/src/components/common/ActionLink';
 
 import '~/src/theme/css/notifications.css';
+import { fetchUserTasks } from '~/src/redux/actions/authorization'
+import { setActiveHangout } from '~/src/redux/actions/tasks'
 
 class Notifications extends React.Component {
   constructor(props) {
@@ -33,6 +37,20 @@ class Notifications extends React.Component {
     this.props.onClose();
   }
 
+  componentDidMount() {
+    this.setState({})
+    this.props.fetchUserTasks(this.props.userProfile._id);
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log(newProps)
+  }
+
+  handleStartClick(task) {
+    this.props.setActiveHangout(task);
+    this.props.onClose();
+  }
+
   renderNotifications() {
     const that = this;
     const TaskStartedActivities = this.props.userActivities
@@ -44,114 +62,95 @@ class Notifications extends React.Component {
         })
       : [];
 
-    const Notifications =
-      TaskStartedActivities.length > 0
-        ? TaskStartedActivities.map(function(activity, i) {
-            if (activity.subType == 'started') {
-              return {
-                title: `${
-                  activity.metadata.task.creator.firstName
-                } has started a Hangout on skill "${
-                  activity.metadata.task.metaData.subject.skill.name
-                }"`,
-                isSeen:
-                  activity.witnessIDs &&
-                  activity.witnessIDs.find(function(witnessID) {
-                    return witnessID == that.props.currentUserID;
-                  }),
-                _id: activity._id
-              };
-            } else if (activity.subType == 'cancelled') {
-              return {
-                title: `${
-                  activity.metadata.userActor.firstName
-                } has cancelled a Hangout on skill "${
-                  activity.metadata.task.metaData.subject.skill.name
-                }"`,
-                isSeen:
-                  activity.witnessIDs &&
-                  activity.witnessIDs.find(function(witnessID) {
-                    return witnessID == that.props.currentUserID;
-                  }),
-                _id: activity._id
-              };
-            } else if (activity.subType == 'leave') {
-              return {
-                title: `${
-                  activity.metadata.userActor.firstName
-                } has left your Hangout on skill "${
-                  activity.metadata.task.metaData.subject.skill.name
-                }"`,
-                isSeen:
-                  activity.witnessIDs &&
-                  activity.witnessIDs.find(function(witnessID) {
-                    return witnessID == that.props.currentUserID;
-                  }),
-                _id: activity._id
-              };
-            } else if (activity.subType == 'cancelled_automatically') {
-              return {
-                title: `Hangout on skill "${
-                  activity.metadata.task.metaData.subject.skill.name
-                } has been cancelled due to not enough participants!"`,
-                isSeen:
-                  activity.witnessIDs &&
-                  activity.witnessIDs.find(function(witnessID) {
-                    return witnessID == that.props.currentUserID;
-                  }),
-                _id: activity._id
-              };
-            } else {
-              return {
-                title: `Unsupported notification subType "${activity.subType}"`,
-                isSeen: false,
-                _id: activity._id
-              };
-            }
-          })
-        : [
-            {
-              isSeen: true,
-              title:
-                'has started a Hangout on a skill on a supervised learning',
-              name: 'Alisa',
-              date: '2 days ago'
-            },
-            {
-              isSeen: true,
-              title:
-                'has started a Hangout on a skill on a supervised learning',
-              name: 'Alisa',
-              date: '2 days ago'
-            },
-            {
-              isSeen: true,
-              title:
-                'has started a Hangout on a skill on a supervised learning',
-              name: 'Alisa',
-              date: '2 days ago'
-            },
-            {
-              isSeen: false,
-              title:
-                'has started a Hangout on a skill on a supervised learning',
-              name: 'Alisa',
-              date: '2 days ago'
-            },
-            {
-              isSeen: false,
-              title:
-                'has started a Hangout on a skill on a supervised learning',
-              name: 'Alisa',
-              date: '2 days ago'
-            }
-          ];
+    const oneDay = 24*60*60*1000;
+    const Notifications = this.props.userTasks.created ? this.props.userTasks.created.map(function(task) {
+      const days = Math.round(Math.abs((new Date().getTime() - task.date)/(oneDay)));
+      const daysText = days === 0 ? 'Today ' : days + ' days ago';
+      return {
+        _id: task._id,
+        isSeen: true,
+        title:
+          task.description,
+        name: 'You can start your ',
+        date: daysText,
+        status: task.status,
+        task
+      }
+    }).filter(task => task.status !== 'complete').slice(0,10).reverse() : [];
+
+    // const Notifications =
+    //   TaskStartedActivities.length > 0
+    //     ? TaskStartedActivities.map(function(activity, i) {
+    //         if (activity.subType == 'started') {
+    //           return {
+    //             title: `${
+    //               activity.metadata.task.creator.firstName
+    //             } has started a Hangout on skill "${
+    //               activity.metadata.task.metaData.subject.skill.name
+    //             }"`,
+    //             isSeen:
+    //               activity.witnessIDs &&
+    //               activity.witnessIDs.find(function(witnessID) {
+    //                 return witnessID == that.props.currentUserID;
+    //               }),
+    //             _id: activity._id
+    //           };
+    //         } else if (activity.subType == 'cancelled') {
+    //           return {
+    //             title: `${
+    //               activity.metadata.userActor.firstName
+    //             } has cancelled a Hangout on skill "${
+    //               activity.metadata.task.metaData.subject.skill.name
+    //             }"`,
+    //             isSeen:
+    //               activity.witnessIDs &&
+    //               activity.witnessIDs.find(function(witnessID) {
+    //                 return witnessID == that.props.currentUserID;
+    //               }),
+    //             _id: activity._id
+    //           };
+    //         } else if (activity.subType == 'leave') {
+    //           return {
+    //             title: `${
+    //               activity.metadata.userActor.firstName
+    //             } has left your Hangout on skill "${
+    //               activity.metadata.task.metaData.subject.skill.name
+    //             }"`,
+    //             isSeen:
+    //               activity.witnessIDs &&
+    //               activity.witnessIDs.find(function(witnessID) {
+    //                 return witnessID == that.props.currentUserID;
+    //               }),
+    //             _id: activity._id
+    //           };
+    //         } else if (activity.subType == 'cancelled_automatically') {
+    //           return {
+    //             title: `Hangout on skill "${
+    //               activity.metadata.task.metaData.subject.skill.name
+    //             } has been cancelled due to not enough participants!"`,
+    //             isSeen:
+    //               activity.witnessIDs &&
+    //               activity.witnessIDs.find(function(witnessID) {
+    //                 return witnessID == that.props.currentUserID;
+    //               }),
+    //             _id: activity._id
+    //           };
+    //         } else {
+    //           return {
+    //             title: `Unsupported notification subType "${activity.subType}"`,
+    //             isSeen: false,
+    //             _id: activity._id
+    //           };
+    //         }
+    //       })
+    //     : [];
     return (
       <ListGroup>
         <div className="notification-arrow-up" />
         <ListGroupItem className="notifyTitle">
           <div>Your Notifications {Notifications.length}</div>
         </ListGroupItem>
+        {this.props.userTasks.isLoading ? <h4 className="notifications-loading">Loading...</h4> : null}
         <div id="notificationSection">
           {Notifications.map(function(notification, i) {
             return (
@@ -163,9 +162,11 @@ class Notifications extends React.Component {
                     : 'notification-item'
                 }
               >
-                <Link
-                  to="/taskManagement"
-                  onClick={() => that.handleNotificationClick(notification)}
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    that.handleNotificationClick(notification)
+                  }}
                 >
                   <div className="notificationRow notify-grow">
                     <div className="notify-container">
@@ -192,15 +193,16 @@ class Notifications extends React.Component {
                       )}
                     </div>
                     <div className="notify-hide">
-                      <button className="notify-btn-notification-check">
+                      <Link to="/taskManagement" className="notify-btn-notification-check" 
+                      onClick={() => that.handleStartClick(notification.task)}>
                         <span aria-hidden="true" className="fa fa-check" />&nbsp;&nbsp;START
-                      </button>
+                      </Link>
                       <button className="notify-btn-notification-reschedule">
                         <span aria-hidden="true" className="fa fa-times" />&nbsp;&nbsp;RESCHEDULE
                       </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               </ListGroupItem>
             );
           })}
@@ -223,5 +225,15 @@ Notifications.PropTypes = {
   markActivitySeen: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+  userTasks: state.userProfile.tasks,
+  userProfile: state.userProfile.profile,
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  setActiveHangout: bindActionCreators(setActiveHangout, dispatch),
+})
+
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default require('react-click-outside')(Notifications);
+export default connect(mapStateToProps, mapDispatchToProps)(require('react-click-outside')(Notifications));
