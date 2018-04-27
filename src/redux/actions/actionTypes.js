@@ -119,3 +119,6 @@ export const USER_LOG_OUT = "user_log_out";
 
 export const USER_ACCOUNTING_FETCH_INITIATE = "user_accounting_fetch_initiate";
 export const USER_ACCOUNTING_FETCH_COMPLETE = "user_accounting_fetch_complete";
+
+export const SET_ACTIVE_HANGOUT = "SET_ACTIVE_HANGOUT"
+export const RESET_ACTIVE_HANGOUT = "RESET_ACTIVE_HANGOUT"

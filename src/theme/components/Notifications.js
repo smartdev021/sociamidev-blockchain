@@ -17,6 +17,7 @@ import ActionLink from '~/src/components/common/ActionLink';
 
 import '~/src/theme/css/notifications.css';
 import { fetchUserTasks } from '~/src/redux/actions/authorization'
+import { setActiveHangout } from '~/src/redux/actions/tasks'
 
 class Notifications extends React.Component {
   constructor(props) {
@@ -45,6 +46,11 @@ class Notifications extends React.Component {
     console.log(newProps)
   }
 
+  handleStartClick(task) {
+    this.props.setActiveHangout(task);
+    this.props.onClose();
+  }
+
   renderNotifications() {
     const that = this;
     const TaskStartedActivities = this.props.userActivities
@@ -63,11 +69,12 @@ class Notifications extends React.Component {
         isSeen: true,
         title:
           task.description,
-        name: task.creator.firstName + ' started',
+        name: 'You can start your ',
         date: Math.round(Math.abs((new Date().getTime() - task.date)/(oneDay))) + ' days ago',
-        status: task.status
+        status: task.status,
+        task
       }
-    }).filter(task => task.status !== 'complete').slice(0,10) : [];
+    }).filter(task => task.status !== 'complete').slice(0,10).reverse() : [];
 
     // const Notifications =
     //   TaskStartedActivities.length > 0
@@ -153,8 +160,7 @@ class Notifications extends React.Component {
                     : 'notification-item'
                 }
               >
-                <Link
-                  to="/taskManagement"
+                <div
                   onClick={(e) => {
                     e.preventDefault();
                     that.handleNotificationClick(notification)
@@ -185,15 +191,16 @@ class Notifications extends React.Component {
                       )}
                     </div>
                     <div className="notify-hide">
-                      <button className="notify-btn-notification-check">
+                      <Link to="/taskManagement" className="notify-btn-notification-check" 
+                      onClick={() => that.handleStartClick(notification.task)}>
                         <span aria-hidden="true" className="fa fa-check" />&nbsp;&nbsp;START
-                      </button>
+                      </Link>
                       <button className="notify-btn-notification-reschedule">
                         <span aria-hidden="true" className="fa fa-times" />&nbsp;&nbsp;RESCHEDULE
                       </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               </ListGroupItem>
             );
           })}
@@ -223,6 +230,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  setActiveHangout: bindActionCreators(setActiveHangout, dispatch),
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
