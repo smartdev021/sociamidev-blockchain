@@ -64,13 +64,15 @@ class Notifications extends React.Component {
 
     const oneDay = 24*60*60*1000;
     const Notifications = this.props.userTasks.created ? this.props.userTasks.created.map(function(task) {
+      const days = Math.round(Math.abs((new Date().getTime() - task.date)/(oneDay)));
+      const daysText = days === 0 ? 'Today ' : days + ' days ago';
       return {
         _id: task._id,
         isSeen: true,
         title:
           task.description,
         name: 'You can start your ',
-        date: Math.round(Math.abs((new Date().getTime() - task.date)/(oneDay))) + ' days ago',
+        date: daysText,
         status: task.status,
         task
       }
