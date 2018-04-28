@@ -19,6 +19,9 @@ import {
     SAVE_TASK_COMPLETE,
     TASK_SET_PUBLISHED,
 
+    SET_ACTIVE_HANGOUT,
+    RESET_ACTIVE_HANGOUT
+
 } from './actionTypes';
 
 export function removeTask(taskId) {
@@ -303,11 +306,24 @@ export function hangoutAnswersSave(body) {
 
         return (Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
             .then((response) => {
-                dispatch(updateTaskComplete(response.data));
+                dispatch(updateTaskComplete(response.data, true));
             })
             .catch(function (error) {
                 console.log("%cerror", error, "color:violet;background:orange;");
                 dispatch(updateTaskComplete());
             }));
+    }
+}
+
+export function setActiveHangout(hangout) {
+    return {
+        type: SET_ACTIVE_HANGOUT,
+        hangout
+    }
+}
+
+export function resetActiveHangout(hangout) {
+    return {
+        type: RESET_ACTIVE_HANGOUT
     }
 }

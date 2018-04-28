@@ -4,6 +4,9 @@ div#notificationTile {
   right: 20px;
   top: 48px;
   border: none;
+  height: 400px;
+  overflow: auto;
+  padding: 0 10px;
 }
 
 .notification-arrow-up {
@@ -94,13 +97,14 @@ span.notification-item.list-group-item:hover {
   box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15);
 }
 
-button.notify-btn-notification-check {
+a.notify-btn-notification-check {
   border: none;
   outline: none;
   background: #fdda2c;
   color: #e7403f;
   width: 150px;
   padding: 6px;
+  text-align: center;
 }
 
 button.notify-btn-notification-reschedule {
@@ -141,6 +145,10 @@ span.notification-item.list-group-item:hover .notify-hide {
   padding: 10px;
   font-weight: bold;
   box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.26);
+}
+
+.notifications-loading {
+  text-align: center;
 }
 
 @media (max-width: 480px) {
