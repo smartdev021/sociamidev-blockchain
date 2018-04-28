@@ -4,6 +4,7 @@
 */
 
 import React, { Component } from 'react';
+import { Button,Popover, OverlayTrigger, DropdownButton, MenuItem } from 'react-bootstrap' 
 import {Icon} from 'react-fa'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -340,6 +341,29 @@ class UserProfile extends React.Component {
 		);
 	}
 
+	showAchievementPopover(){
+
+		const popoverBottom = (
+			<Popover id="popover-skill" className="popover-skill">
+			  	<div className="token-count">25 of 50</div>
+					<div className="progress-custom">
+						<div className="progress-length-custom">
+						</div>
+					</div>
+			  	<div className="earned-token">Earned 50 tokens during 7 days</div>
+			</Popover>
+		)
+
+		return (
+			<OverlayTrigger
+				trigger={['hover', 'click']}
+				placement="top"
+				overlay={popoverBottom} >
+				<p>QUIZ MONSTER</p>
+			</OverlayTrigger>
+		)
+	}
+
 	render() {
 		//Incorrect usage of bootstrap row col. @Michael?
 		return (
@@ -480,7 +504,72 @@ class UserProfile extends React.Component {
 								{this.renderTransactions()}
 							</div>
 							<div id="achievements" className="tab-pane fade">
-									Achievements
+								<div className="row redeem-token">
+									<div className="redeem-grid col-md-3 col-xs-8">
+										<input className="redeem-code-input" placeholder="Fill in your code" />
+									</div>
+									<div className="redeem-grid col-md-2 col-xs-4">
+										<button className="btn btn-default btn-redeem">REDEEM</button>
+									</div>
+									<div className="redeem-grid col-md-7 col-xs-12">
+										<input className="redeem-code-input" placeholder="TBC 20 SOQQ TOKENS" />
+									</div>
+								</div>
+								<div className="row achievement-to-show">
+									<div className="achievement-text col-md-3 col-xs-8">
+										Achievements to show
+									</div>
+									<div className="sort-achievement-div col-md-2 col-xs-4">
+										<select className="sort-achievement">
+											<option value="none">None</option>
+											<option value="gucci">Gucci</option>
+											<option value="zara">Zara</option>
+										</select>
+									</div>
+									<div className="search-achievement-div col-md-7 col-xs-12">
+										<div className="input-group search-box">
+											<span className="input-group-btn" style={{position:'absolute'}}>
+												<button className="btn btn-search" type="button">
+													<span className="glyphicon glyphicon-search" style={{top:'4px'}}></span>
+												</button>
+											</span>
+											<input type="text" className="search-query" placeholder="Type in to search" />
+										</div>
+									</div>
+								</div>
+								<div className="row achievement-list">
+									<div className="achievement-header">
+										<div className="achievement-heading col-md-2 col-xs-2 no-padding">ZARA</div>
+										<div className="achievement-progress col-md-8 col-xs-6 no-padding">
+											<div className="achievement-count">10 of 15</div>
+											<div className="progress-custom">
+												<div className="progress-length-custom">
+												</div>
+											</div>
+										</div>
+										<div className="achievement-token col-md-2 col-xs-4 no-padding">
+											<p className="pull-right">+1000 SOQQ </p>
+										</div>
+									</div>
+									<div className="achievement-items">
+										<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
+											<div className="achievement-item">
+												
+											</div>
+											<div className="achievement-name">
+												{this.showAchievementPopover()}
+											</div>
+										</div>
+										<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
+											<div className="achievement-item">
+												
+											</div>
+											<div className="achievement-name">
+												{this.showAchievementPopover()}
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 					</div>
 				</div>

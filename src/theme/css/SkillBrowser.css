@@ -209,6 +209,11 @@
     z-index: 999;
     float: right;
 }
+.modal-ok-sign{
+    color: #58D68D;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
 .pskill-timer-active{
     opacity: .5;
     background-color: #4B4B4B

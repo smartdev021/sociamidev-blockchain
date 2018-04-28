@@ -499,6 +499,151 @@ a.prof-tag{
 .transaction-list{
     padding-top: 20px;
 }
+.redeem-grid{
+	padding: 5px;
+}
+.redeem-code-input{
+	width: 100%;
+	height: 35px;
+	padding: 10px;
+}
+.redeem-token{
+	padding: 10px 30px 10px 30px;
+    background: #FBDAC3;
+    margin-top: -20px;
+}
+.btn-redeem{
+	background-color: #F38D4C;
+    color: white;
+    width: 100%;
+}
+.achievement-to-show{
+	padding: 10px 60px 10px 60px
+}
+.achievement-text{
+	font-size: 18px;
+	padding: 10px 0px 10px 0px;
+}
+.sort-achievement-div{
+	padding: 5px 0px 5px 0px;
+}
+.sort-achievement{
+	border-radius: 0;
+    width: 100%;
+    font-family: monospace;
+    height: 33px;
+	font-size: 18px;
+	background-color: #f9f9f9;
+	border: 1px solid rgb(0,0,0,0.1);
+    font-family: 'Fjalla One',sans-serif;
+    font-weight: 200;
+    -webkit-appearance: menulist;
+}
+.search-achievement-div{
+	padding-top: 5px;
+}
+.search-query {
+	padding-right: 3px;
+	padding-left: 25px;
+	/* IE7-8 doesn't have border-radius, so don't indent the padding */
+	border:1px solid rgb(0,0,0,0.1);
+	margin-bottom: 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 20px;
+}
+
+.btn-search {
+	border: 0;
+	background: none;
+	/** belows styles are working good */
+	padding: 2px 5px;
+	margin-top: 2px;
+	position: relative;
+	left: 0px;
+	/* IE7-8 doesn't have border-radius, so don't indent the padding */
+	margin-bottom: 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	color:grey;
+	z-index: 10;
+}
+.achievement-list{
+	padding: 10px 60px 10px 60px;
+}
+.achievement-header{
+	border-bottom: 2px solid #F38D4C;
+    overflow: auto;
+	padding-top: 10px;
+	height: auto;
+}
+.achievement-heading{
+	font-size: 30px;
+	height: 100%;
+}
+.achievement-progress{
+    margin-bottom: 0 !important;
+	position: relative;
+	height: 100%;
+}
+.achievement-token{
+	color: #F38D4C;
+    margin-top: 11px;
+	font-size: 18px;
+	height: 100%;
+}
+.achievement-items{
+	padding-top: 20px;
+	overflow: auto;
+}
+.achievement-item{
+	cursor: pointer;
+    background: #2fa7d2;
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+.achievement-name{
+	font-weight: 600;
+    font-size: 16px;
+	text-align: center;
+	padding-top: 5px;
+}
+.achievement-count{
+	text-align: right;
+}
+.progress-custom{
+	height: 15px;
+	width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 1px solid #F38D4C;
+}
+.progress-length-custom{
+	width: 66%;
+    height: 100%;
+    background-color: #F38D4C;
+}
+.popover-skill{
+	border: 0px;
+	font-family: 'Fjalla One';
+    padding: 0px 10px 0px 10px;
+}
+.token-count{
+	text-align: center;
+    color: #F38D4C;
+    font-size: 19px;
+    font-weight: 800
+}
+.earned-token{
+	text-align: center;
+	width: auto;
+}
 @media all and (max-width: 768px) {
     .profile-img-container{
 		margin-top: -10px;
@@ -528,6 +673,33 @@ a.prof-tag{
 	.token-hr {
 		border-top: 2px solid #31A6D2 !important;
 		width: 84%;
+	}
+	.achievement-to-show{
+		padding: 10px 30px 10px 30px;
+	}
+	.achievement-list{
+		padding: 10px 30px 10px 30px;
+	}
+	.achievement-token{
+		margin-top: 3px;
+	}
+	.achievement-progress{
+		margin-bottom: 0 !important;
+		position: relative;
+		border-radius: 10px;
+		margin-top: -10px;
+	}
+	.achievement-heading {
+		font-size: 20px;
+	}
+	.search-box{
+		width: 100%;
+	}
+	.search-query{
+		width: 100%;
+	}
+	.search-achievement-div{
+		padding: 10px 0px 10px 0px;
 	}
 }
 

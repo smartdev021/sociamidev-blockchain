@@ -129,3 +129,26 @@
   .popup-new-project .milestones-container {
       min-height: 200px;
   }
+  .modal-popup .form-control{
+    line-height: 10px !important;
+    padding: 5px;
+  }
+  .modal-popup .form-control input {
+      width: 100% !important;
+  }
+  .hangout-btn-ok {
+    border: 0;
+    outline-style: none;
+    width: 97px;
+    height: 40px;
+    background-color: #fdd823;
+    color:#e74b49;
+    box-shadow: 1px 2px 3px 1px #b4b4b4;
+ }
+ .hangout-btn-cancel {
+    border: 0;
+    outline-style: none;
+    width: 97px;
+    height: 40px;
+    color: #a7a6a3;
+ }
