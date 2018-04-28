@@ -306,7 +306,7 @@ export function hangoutAnswersSave(body) {
 
         return (Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
             .then((response) => {
-                dispatch(updateTaskComplete(response.data));
+                dispatch(updateTaskComplete(response.data, true));
             })
             .catch(function (error) {
                 console.log("%cerror", error, "color:violet;background:orange;");
