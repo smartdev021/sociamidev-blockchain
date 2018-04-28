@@ -57,6 +57,9 @@ const RenderSingleTask = (task, i, props)=> {
     else {
       time = `${Hours} on ${DayFromNumber(date.getDay())} (${date.getDate()} ${MonthFromNumber(date.getMonth())})`; 
     }
+
+    if(date < new Date())
+        time = "mutually convenient time today";
     
     return (
     <div className="col-tokens col-sm-12" key={i}>
