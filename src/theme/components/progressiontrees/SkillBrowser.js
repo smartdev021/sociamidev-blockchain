@@ -50,7 +50,11 @@ import {getPopupParentElement} from "~/src/common/PopupUtils.js"
 import Countdown from 'react-countdown-now';
 import _ from 'lodash';
 import Moment from 'moment';
-import Async from 'async'
+import Async from 'async';
+
+const RandomInt = function RandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 class SkillBrowser extends React.Component {
 
@@ -244,7 +248,9 @@ class SkillBrowser extends React.Component {
     }
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
-      if (this.props.lastSavedTask && this.props.lastSavedTask.type == TaskTypes.ILLUMINATE)
+      if (this.props.lastSavedTask && 
+        (this.props.lastSavedTask.type == TaskTypes.ILLUMINATE 
+          || this.props.lastSavedTask.type == TaskTypes.DECODE))
       this.setState({redirectToTaskManagement: true});
     }
   }
@@ -269,16 +275,12 @@ class SkillBrowser extends React.Component {
   }
 
   handleStartHangout(date) {
-    const RandomInt = function RandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
     const CurrentTree = this.state.tree;
 
     const hangout = {
       name: `Hangout for roadmap "${CurrentTree.name}"`,
       description: "Hangout with John, and answer questions together",
-      type: TaskTypes.HANGOUT,
+      type: TaskTypes.DEEPDIVE,
       userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
       userID: this.props.userProfile._id,
       isHidden: 0,
@@ -401,15 +403,6 @@ class SkillBrowser extends React.Component {
   }
 
   goToIlluminate(e){
-    // e.preventDefault();
-    // TODO call hangout-ish
-
-    // this.setState( { isIlluminateFormVisible: true } );
-
-    const RandomInt = function RandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
     const CurrentTree = this.state.tree;
 
     const illuminate = {
@@ -458,6 +451,55 @@ class SkillBrowser extends React.Component {
     
   }
 
+  goToDecode(e){
+    const CurrentTree = this.state.tree;
+
+    const decode = {
+      name: `Decode roadmap "${CurrentTree.name}"`,
+      description: `Decode for roadmap "${CurrentTree.name}"`,
+      type: TaskTypes.DECODE,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
+      userID: this.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      },
+      metaData : {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: this.state.skillInfo._id,
+            name: this.state.skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: this.props.userProfile._id, 
+              firstName: this.props.userProfile.firstName,
+              lastName: this.props.userProfile.lastName,
+            },
+            status: "accepted",
+            isCreator: true,
+          }
+        ],
+        ratings: [],
+        time: Date.now(),
+        awardXP: RandomInt(30, 40),
+      }
+    };
+
+    if (decode.userName != "" && decode.name != "" && decode.description != "") {
+      this.props.saveTask(decode);
+    }
+    
+  }
+
   flipSkillCard(e){
     e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hover")
   }
@@ -484,6 +526,45 @@ class SkillBrowser extends React.Component {
 
   redirectToTaskMngt(){
     this.setState({redirectToTaskManagement: true});
+  }
+
+  RenderDecodeFlipcard() {
+    return (
+      <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
+        <div className="pskill-flipper">
+          <div className="pskill-card-front">
+            <div className="pskill-card-body">
+              <h4 className="pskill-card-title">1</h4>
+              <h4 className="pskill-card-subtitle">level</h4>
+              <h3 className="pskill-card-heading">DECODE</h3>
+              <p className="pskill-card-text">A single player activity with pre-defined
+                answers to validate your understanding of a topic</p>
+            </div>
+            <div className="pskill-footer">
+              <p className="pskill-duration">Once a day</p>
+              <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
+            </div>
+            <div className="pskill-btn-group">
+              <button className="pskill-btn pskill-start" onClick={(e) => this.goToDecode(e)}>START</button>
+              <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>VIEW</button>
+            </div>￼
+          </div>
+          <div className="pskill-card-back">
+            <div className="pskill-card-body">
+              <h4 className="sample-question-header">SAMPLE QUESTIONS</h4>
+              <ul className="sample-question">
+                <li>What is digitisation?</li>
+                <li>How is it used?</li>
+                <li>Why should companies look into it?</li>
+              </ul>
+            </div>
+            <div className="pskill-btn-group">
+              <button className="pskill-btn pskill-start" onClick={() => this.goToDecode()}>START</button>
+              <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>BACK</button>
+            </div>
+          </div>
+        </div>
+      </div>);
   }
 
   render() {
@@ -538,6 +619,8 @@ class SkillBrowser extends React.Component {
     if (redirectToTaskManagement) {
       return <Redirect to='/taskManagement'/>;
     }
+
+    const DecodeFlipCard = this.RenderDecodeFlipcard();
 
     let IlluminateFlipCard 
     let DeepDiveFlipCard
@@ -717,7 +800,9 @@ class SkillBrowser extends React.Component {
 
             {(this.isTreeAdded() && DeepDiveFlipCard)}
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
+            {(this.isTreeAdded() && DecodeFlipCard)}
+
+            {/*<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
                 <div className="pskill-card-lock">
                     <div className="pskill-card-body">
                         <h4 className="pskill-card-title-lock">5</h4>
@@ -729,7 +814,7 @@ class SkillBrowser extends React.Component {
                         <p className="pskill-reward" style={{color:'black'}}>Rewards : 5 SOQQ Token</p>
                     </div>
                 </div>
-            </div>
+        </div>*/}
 
             <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
                 <div className="pskill-card-lock">

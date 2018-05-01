@@ -17,6 +17,8 @@ import ConfigMain from '~/configs/main'
 
 import ActionLink from '~/src/components/common/ActionLink'
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 import QuestionAnswersFlow from '~/src/theme/components/tasks/QuestionAnswersFlow';
 
 import QuestionAnswersFlowDecode from '~/src/theme/components/tasks/decode/QuestionAnswersFlow';
@@ -111,19 +113,30 @@ class AnswerQuestions extends React.Component {
 
   componentDidMount() {
     const that = this;
-    if (this.state.currentTask && this.state.currentTask.type == "hangout") {
+    if (this.state.currentTask && this.state.currentTask.type === TaskTypes.DEEPDIVE) {
       that.setState({isQuestionsLoading: true});
-      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}`)
+      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}&type=${this.state.currentTask.type}`)
       .then((response)=>{that.setState({questions: response.data, isQuestionsLoading: false})})
       .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
 
       this.fetchUserAnswersFromCookies();
 
       this.fetchUserAnswersFromServerMy();
-    } else if (this.state.currentTask && this.state.currentTask.type == "illuminate") {
+    } else if (this.state.currentTask && this.state.currentTask.type === TaskTypes.ILLUMINATE) {
       that.setState({isQuestionsLoading: true});
 
-      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}`)
+      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}&type=${this.state.currentTask.type}`)
+      .then((response)=>{
+        that.setState({
+          questions: response.data,
+          isQuestionsLoading: false
+        })})
+      .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
+    }
+    else if (this.state.currentTask && this.state.currentTask.type == TaskTypes.DECODE) {
+      that.setState({isQuestionsLoading: true});
+
+      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}&type=${this.state.currentTask.type}`)
       .then((response)=>{
         that.setState({
           questions: response.data,
@@ -284,12 +297,12 @@ class AnswerQuestions extends React.Component {
     const Partner = this.getPartnerProfile();
 
     let limit = 10;
-    if (this.state.currentTask.type == "illuminate") {
+    if (this.state.currentTask.type === TaskTypes.ILLUMINATE) {
       limit = 3;
     }
     const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
 
-    if (this.state.currentTask.type === "decode") {
+    if (this.state.currentTask.type !== "decode") {
       return (
         <QuestionAnswersFlow onSubmit={(e)=>this.handlePopupSubmit(e)} 
           onCloseModal={()=>this.handlePopupClose()}
