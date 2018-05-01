@@ -323,7 +323,9 @@ class SkillBrowser extends React.Component {
           UserInteractions.Types.ACTION_EXECUTE, 
           UserInteractions.SubTypes.DEEPDIVE_START, 
           { 
+            roadmapId: CurrentTree._id,
             skillId: this.state.skillInfo._id,
+            deepdiveTime: date.getTime(),
           }
         );
       }
