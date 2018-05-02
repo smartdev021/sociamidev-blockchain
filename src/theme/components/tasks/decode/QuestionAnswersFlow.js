@@ -6,6 +6,8 @@ import '~/src/theme/css/question-answers-flow.css';
 import { getPopupParentElement } from "~/src/common/PopupUtils.js"
 import PropTypes from 'prop-types';
 
+import QuestionTypes from "~/src/common/QuestionTypes";
+
 import AnswerSimpleQuestion from '~/src/theme/components/tasks/common/AnswerMultipleVariants';
 import AnswerMultipleVariants from '~/src/theme/components/tasks/common/AnswerMultipleVariants';
 import AnswerTrueFalse from '~/src/theme/components/tasks/common/AnswerTrueFalse';
@@ -53,6 +55,45 @@ class QuestionAnswersFlow extends React.Component {
         currentQuestion:
           action === 'prev' ? currentQuestion - 1 : currentQuestion + 1
       });
+    }
+  }
+
+  renderAnswerInput() {
+    console.log("%crenderAnswerInput", "color: purple");
+    const { currentQuestion } = this.state;
+    const { questions } = this.props;
+    const Partner = this.props.partner;
+    const question = questions[currentQuestion];
+    const AnswerMy = this.getAnswerMy([question._id]);
+    const AnswerPartner = this.getAnswerPartner([question._id]);
+
+    if (question) {
+      switch (question.type) {
+        case QuestionTypes.TRUEFALSE: {
+          return (
+            <AnswerTrueFalse question={question} answerMy={AnswerMy}
+              answerPartner={AnswerPartner} partner={Partner}
+              onHandleAnswerTrueFalse={(e) => this.props.onHandleAnswerTrueFalse(e)} />
+          );
+        }
+        case QuestionTypes.MULTIPLECHOICE: {
+          return (
+            <AnswerMultipleVariants question={question} answerMy={AnswerMy}
+              answerPartner={AnswerPartner} partner={Partner}
+              onHandleAnswerCheckbox={(e) => this.props.onHandleAnswerCheckbox(e)} />
+          );
+        }
+        default: {
+          return (
+            <AnswerSimpleQuestion question={question} answerMy={AnswerMy}
+              answerPartner={AnswerPartner} partner={Partner}
+              onHandleAnswerCheckbox={(e) => this.props.onHandleAnswerInput(e)} />
+          );
+        }
+      }
+    }
+    else {
+      return null;
     }
   }
 
@@ -131,13 +172,7 @@ class QuestionAnswersFlow extends React.Component {
             </span>
           </span>
         </div>
-        <AnswerMultipleVariants question={question} answerMy={AnswerMy}
-          answerPartner={AnswerPartner} partner={Partner}
-          onHandleAnswerCheckbox={(e) => this.props.onHandleAnswerCheckbox(e)} />
-        {/*<AnswerTrueFalse question={question} answerMy={AnswerMy}
-          answerPartner={AnswerPartner} partner={Partner}
-    onHandleAnswerTrueFalse={(e) => this.props.onHandleAnswerTrueFalse(e)} />*/}
-
+        {this.renderAnswerInput()}
         <div className="QuestionAnswersFlow-social-share">
           <span>World must know my answer</span>
           <a href="#">
