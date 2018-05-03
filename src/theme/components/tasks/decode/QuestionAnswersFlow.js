@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import QuestionTypes from "~/src/common/QuestionTypes";
 
-import AnswerSimpleQuestion from '~/src/theme/components/tasks/common/AnswerMultipleVariants';
+import AnswerSimpleQuestion from '~/src/theme/components/tasks/common/AnswerSimpleQuestion';
 import AnswerMultipleVariants from '~/src/theme/components/tasks/common/AnswerMultipleVariants';
 import AnswerTrueFalse from '~/src/theme/components/tasks/common/AnswerTrueFalse';
 
@@ -58,8 +58,14 @@ class QuestionAnswersFlow extends React.Component {
     }
   }
 
+  handleCheckBox(e) {
+    console.log(e);
+    console.dir(e);
+  }
+
   renderAnswerInput() {
     console.log("%crenderAnswerInput", "color: purple");
+    console.dir(this.props);
     const { currentQuestion } = this.state;
     const { questions } = this.props;
     const Partner = this.props.partner;
@@ -80,14 +86,14 @@ class QuestionAnswersFlow extends React.Component {
           return (
             <AnswerMultipleVariants question={question} answerMy={AnswerMy}
               answerPartner={AnswerPartner} partner={Partner}
-              onHandleAnswerCheckbox={(e) => this.props.onHandleAnswerCheckbox(e)} />
+              onHandleAnswerCheckbox={(e) => {console.dir(e)}} />
           );
         }
         default: {
           return (
             <AnswerSimpleQuestion question={question} answerMy={AnswerMy}
               answerPartner={AnswerPartner} partner={Partner}
-              onHandleAnswerCheckbox={(e) => this.props.onHandleAnswerInput(e)} />
+              onHandleAnswerInput={(e) => this.props.onHandleAnswerInput(e)} />
           );
         }
       }

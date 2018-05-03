@@ -84,6 +84,9 @@ class AnswerQuestions extends React.Component {
     ? e.target.parentElement.id.replace('answer_your_', '')
      : undefined;
 
+     console.log("%handleAnswerCheckbox", "color: blue; background: orange;");
+      console.dir(answersMyCopy);
+
     if (questionId) {
       let answersMyCopy = Object.assign({}, this.state.answersMy);
 
@@ -93,6 +96,10 @@ class AnswerQuestions extends React.Component {
       optionsCopy[Number(e.target.id)] = e.target.checked;
 
       answersMyCopy[questionId] = { options: optionsCopy, timeChanged: Date.now()};
+
+
+      console.log("%handleAnswerCheckbox", "color: blue; background: orange;");
+      console.dir(answersMyCopy);
 
       this.setState({answersMy: answersMyCopy});
     }
@@ -163,6 +170,8 @@ class AnswerQuestions extends React.Component {
     }
 
     if (this.state.answersMy != prevState.answersMy) {
+      console.log("this.state.answersMy != prevState.answersMy");
+      console.dir(this.state.answersMy);
       this.storeUserAnswersToCookies(this.state.answersMy);
     }
 
@@ -283,6 +292,11 @@ class AnswerQuestions extends React.Component {
       roadmapId: _.get(this, 'state.currentTask.metaData.subject.roadmap._id'),
       answers: this.state.answersMy,
     };
+
+
+    console.log("%chandlePopupSubmit", "color:green;background:red;");
+
+    console.dir(body);
 
     this.props.hangoutAnswersSave(body);
   }
