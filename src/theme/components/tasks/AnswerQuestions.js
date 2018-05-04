@@ -80,12 +80,10 @@ class AnswerQuestions extends React.Component {
   }
 
   handleAnswerCheckbox(e) {
-    const questionId = (e.target.parentElement && e.target.parentElement.id) 
-    ? e.target.parentElement.id.replace('answer_your_', '')
+    const questionId = (e.target.parentElement && e.target.parentElement.parentElement 
+      && e.target.parentElement.parentElement.id) 
+    ? e.target.parentElement.parentElement.id.replace('answer_your_', '')
      : undefined;
-
-     console.log("%handleAnswerCheckbox", "color: blue; background: orange;");
-      console.dir(answersMyCopy);
 
     if (questionId) {
       let answersMyCopy = Object.assign({}, this.state.answersMy);
@@ -96,6 +94,15 @@ class AnswerQuestions extends React.Component {
       optionsCopy[Number(e.target.id)] = e.target.checked;
 
       answersMyCopy[questionId] = { options: optionsCopy, timeChanged: Date.now()};
+
+      //force check other options out
+      if (e.target.checked) {
+        for (let option in answersMyCopy[questionId].options) {
+          if (Number(option) !== Number(e.target.id)) {
+            answersMyCopy[questionId].options[option] = false;
+          }
+        }
+      }
 
 
       console.log("%handleAnswerCheckbox", "color: blue; background: orange;");
@@ -310,11 +317,12 @@ class AnswerQuestions extends React.Component {
 
     const Partner = this.getPartnerProfile();
 
-    let limit = 10;
+    let limit = 100;
     if (this.state.currentTask.type === TaskTypes.ILLUMINATE) {
       limit = 3;
     }
     const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
+
 
     if (this.state.currentTask.type !== "decode") {
       return (

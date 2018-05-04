@@ -1,19 +1,20 @@
 import React from 'react';
 
 const AnswerMultipleVariants = (props) => {
+    console.log("%AnswerMultipleVariants", "color: red; background: blue;");
+    console.dir(props);
     return (<div className="QuestionAnswersFlow-textarea" id={`answer_your_${props.question._id}`}>
-        <input id="0" type="checkbox"
-            className="validate-field required question-answer-checkbox"
-            name="answer_your" onChange={(e) => props.onHandleAnswerCheckbox(e)}
-            checked={props.answerMy && props.answerMy.options && props.answerMy.options[0]} />
-        <span>{`Sample answer for the given question ${props.question._id}`}</span><br></br>
-
-        <input id="1" type="checkbox"
-            className="validate-field required question-answer-checkbox"
-            name="answer_your" onChange={(e) => props.onHandleAnswerCheckbox(e)}
-            checked={props.answerMy && props.answerMy.options && props.answerMy.options[1]} />
-        <span>{`Sample answer for the given question ${props.question._id}`}</span>
-
+        {
+            props.question.answers.map((answer, i) => {
+                return (<div key={i}>
+                    <input id={i} type="checkbox"
+                        className="validate-field required question-answer-checkbox"
+                        name="answer_your" onChange={(e) => props.onHandleAnswerCheckbox(e)}
+                        checked={props.answerMy.options[i]} />
+                    <span>{answer}</span>
+                </div>)
+            })
+        }
         {props.partner &&
             <div className="col-lg-6">
                 <div className="form-group">

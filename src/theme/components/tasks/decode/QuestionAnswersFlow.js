@@ -35,7 +35,46 @@ class QuestionAnswersFlow extends React.Component {
   }
 
   getAnswerMy(questionId) {
-    return this.props.answersMy[questionId];
+    if (this.props.answersMy[questionId]) {
+      return this.props.answersMy[questionId];
+    }
+    else {
+      const { currentQuestion } = this.state;
+
+      if (currentQuestion) {
+        const { questions } = this.props;
+
+        const question = questions[currentQuestion];
+
+        if (question) {
+          switch (question.type) {
+            case QuestionTypes.SIMPLE: {
+              let result = {};
+              result[questionId] = { text: "" };
+              return result;
+            }
+            case QuestionTypes.MULTIPLECHOICE: {
+              let result = {};
+              result[questionId] = (question.correctAnswers && question.correctAnswers.length > 0) 
+              ? {options: question.correctAnswers.map(() => {
+                false;
+              })} 
+              : {options: []};
+              return result;
+            }
+            case QuestionTypes.TRUEFALSE: {
+              let result = {};
+              result[questionId] = {isTrue: false};
+              return result;
+            }
+            default:
+              break;
+          }
+        }
+      }
+
+      return undefined;
+    }
   }
 
   getAnswerPartner(questionId) {
@@ -58,14 +97,27 @@ class QuestionAnswersFlow extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+
+    if (this.props.questions !== prevProps.questions || this.state.currentQuestion !== prevState.currentQuestion) {
+      const { currentQuestion } = this.state;
+      if (currentQuestion) {
+        console.log("%cQuesionAnswersFlow", "color: red; background: blue;");
+        const { questions } = this.props;
+        const question = questions[currentQuestion];
+        const AnswerMy = this.getAnswerMy([question._id]);
+        console.dir(this.props);
+        console.dir(AnswerMy);
+      }
+    }
+  }
+
   handleCheckBox(e) {
     console.log(e);
     console.dir(e);
   }
 
   renderAnswerInput() {
-    console.log("%crenderAnswerInput", "color: purple");
-    console.dir(this.props);
     const { currentQuestion } = this.state;
     const { questions } = this.props;
     const Partner = this.props.partner;
@@ -86,7 +138,7 @@ class QuestionAnswersFlow extends React.Component {
           return (
             <AnswerMultipleVariants question={question} answerMy={AnswerMy}
               answerPartner={AnswerPartner} partner={Partner}
-              onHandleAnswerCheckbox={(e) => {console.dir(e)}} />
+              onHandleAnswerCheckbox={(e) => this.props.onHandleAnswerCheckbox(e)} />
           );
         }
         default: {
