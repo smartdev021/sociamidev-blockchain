@@ -21,8 +21,6 @@ import TaskTypes from "~/src/common/TaskTypes"
 
 import QuestionAnswersFlow from '~/src/theme/components/tasks/QuestionAnswersFlow';
 
-import QuestionAnswersFlowDecode from '~/src/theme/components/tasks/decode/QuestionAnswersFlow';
-
 import "~/src/theme/appearance.css"
 import "~/src/theme/layout.css"
 import "~/src/theme/css/taskBrowser.css"
@@ -324,34 +322,17 @@ class AnswerQuestions extends React.Component {
     const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
 
 
-    if (this.state.currentTask.type !== "decode") {
-      return (
-        <QuestionAnswersFlow onSubmit={(e)=>this.handlePopupSubmit(e)} 
-          onCloseModal={()=>this.handlePopupClose()}
-          questions={Questions} partner={Partner}
-          answersMy={this.state.answersMy}
-          answersPartner={this.state.answersPartner}
-          isLoading={this.state.isLoading}
-          isSubmitting={this.props.isTasksUpdateInProgress}
-          onBackToMyTasks={this.props.onBackToMyTasks}
-          onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}/>
-      );
-    }
-    else {
-      return (
-        <QuestionAnswersFlowDecode onSubmit={(e)=>this.handlePopupSubmit(e)} 
-          onCloseModal={()=>this.handlePopupClose()}
-          questions={Questions} partner={Partner}
-          answersMy={this.state.answersMy}
-          answersPartner={this.state.answersPartner}
-          isLoading={this.state.isLoading}
-          isSubmitting={this.props.isTasksUpdateInProgress}
-          onBackToMyTasks={this.props.onBackToMyTasks}
-          onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}
-          onHandleAnswerCheckbox={(e)=>this.handleAnswerCheckbox(e)}
-          onHandleAnswerTrueFalse={(e)=>this.handleAnswerTrueFalse(e)}/>
-      );
-    }
+    return (
+      <QuestionAnswersFlow onSubmit={(e)=>this.handlePopupSubmit(e)} 
+        onCloseModal={()=>this.handlePopupClose()}
+        questions={Questions} partner={Partner}
+        answersMy={this.state.answersMy}
+        answersPartner={this.state.answersPartner}
+        isLoading={this.state.isLoading}
+        isSubmitting={this.props.isTasksUpdateInProgress}
+        onBackToMyTasks={this.props.onBackToMyTasks}
+        onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}/>
+    );
   }
 }
 
