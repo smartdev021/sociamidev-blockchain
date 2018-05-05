@@ -35,36 +35,51 @@ class QuestionAnswersFlow extends React.Component {
   }
 
   getAnswerMy(questionId) {
+    console.log("%cgetAnswerMy", "color: red; background: orange;");
+
+    console.log("questionId: " + questionId);
+
+    console.dir(this.props);
+
     if (this.props.answersMy[questionId]) {
       return this.props.answersMy[questionId];
     }
     else {
       const { currentQuestion } = this.state;
 
-      if (currentQuestion) {
+      console.dir(this.state);
+      console.dir(currentQuestion);
+
+      if (currentQuestion !== undefined) {
+
+        console.log("%cif (currentQuestion", "color: red; background: orange;");
         const { questions } = this.props;
 
         const question = questions[currentQuestion];
+
+        console.dir(questions);
+
+        console.dir(question);
 
         if (question) {
           switch (question.type) {
             case QuestionTypes.SIMPLE: {
               let result = {};
-              result[questionId] = { text: "" };
+              result = { text: "" };
               return result;
             }
             case QuestionTypes.MULTIPLECHOICE: {
               let result = {};
-              result[questionId] = (question.correctAnswers && question.correctAnswers.length > 0) 
+              result = (question.correctAnswers && question.correctAnswers.length > 0) 
               ? {options: question.correctAnswers.map(() => {
-                false;
+                return false;
               })} 
               : {options: []};
               return result;
             }
             case QuestionTypes.TRUEFALSE: {
               let result = {};
-              result[questionId] = {isTrue: false};
+              result = {isTrue: false};
               return result;
             }
             default:
@@ -97,21 +112,6 @@ class QuestionAnswersFlow extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-
-    if (this.props.questions !== prevProps.questions || this.state.currentQuestion !== prevState.currentQuestion) {
-      const { currentQuestion } = this.state;
-      if (currentQuestion) {
-        console.log("%cQuesionAnswersFlow", "color: red; background: blue;");
-        const { questions } = this.props;
-        const question = questions[currentQuestion];
-        const AnswerMy = this.getAnswerMy([question._id]);
-        console.dir(this.props);
-        console.dir(AnswerMy);
-      }
-    }
-  }
-
   handleCheckBox(e) {
     console.log(e);
     console.dir(e);
@@ -122,7 +122,7 @@ class QuestionAnswersFlow extends React.Component {
     const { questions } = this.props;
     const Partner = this.props.partner;
     const question = questions[currentQuestion];
-    const AnswerMy = this.getAnswerMy([question._id]);
+    const AnswerMy = this.getAnswerMy(question._id);
     const AnswerPartner = this.getAnswerPartner([question._id]);
 
     if (question) {
@@ -172,7 +172,7 @@ class QuestionAnswersFlow extends React.Component {
     const { questions } = this.props;
     const Partner = this.props.partner;
     const question = questions[currentQuestion];
-    const AnswerMy = this.getAnswerMy([question._id]);
+    const AnswerMy = this.getAnswerMy(question._id);
     const AnswerPartner = this.getAnswerPartner([question._id]);
 
     return (
