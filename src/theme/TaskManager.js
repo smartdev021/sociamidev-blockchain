@@ -33,6 +33,8 @@ import {
   rateTaskPartner,
   taskAssign,
   taskJoinStatusChange,
+  setActiveHangout,
+  resetActiveHangout
 } from '~/src/redux/actions/tasks'
 
 import {
@@ -176,7 +178,7 @@ class TaskManager extends React.Component {
         break;
       }
       case "answer_questions": {
-        this.setState({isAnswerQuestionsOpen: true, activeHangout: hangout});
+        this.props.setActiveHangout(hangout);
         break;
       }
       default:
@@ -484,11 +486,11 @@ class TaskManager extends React.Component {
   }
 
   handleAnswersSubmitComplete() {
-    this.setState({isAnswerQuestionsOpen: false});
+    this.props.resetActiveHangout();
   }
 
   handleBackToMyTasks() {
-    this.setState({isAnswerQuestionsOpen:false})
+    this.props.resetActiveHangout();
   }
 
   filterTasksScanner(tasksScanner) {
@@ -521,8 +523,8 @@ class TaskManager extends React.Component {
     return (
       <div className="row content-wrap">
         <div className={MyTasksColClass}>
-        {this.state.isAnswerQuestionsOpen ?
-            <AnswerQuestions currentTask={this.state.activeHangout}
+        {this.props.activeHangout ?
+            <AnswerQuestions currentTask={this.props.activeHangout}
             onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
             onSubmitComplete={()=>this.handleAnswersSubmitComplete()}/>
         : <div>
@@ -605,12 +607,12 @@ const mapStateToProps = state => ({
   tasksCreatedCurrentUser: state.userProfile.tasks.created,
   tasksAssignedToCurrentUser: state.userProfile.tasks.assigned,
   isUserTasksLoading: state.userProfile.tasks.isLoading,
+  activeHangout: state.tasks.activeHangout,
 
   projects: state.projects,
   isTasksFetchInProgress: state.tasks.isFetchInProgress,
   isTaskSaveInProgress: state.tasks.isSaveInProgress,
   isTaskUpdateInProgress: state.tasks.isUpdateInProgress,
-
   lastStartedTask: state.lastStartedTask,
 });
 
@@ -622,6 +624,8 @@ const mapDispatchToProps = dispatch => ({
   fetchTasksInitiate: bindActionCreators(fetchTasksInitiate, dispatch),
   fetchTasksComplete: bindActionCreators(fetchTasksComplete, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  setActiveHangout: bindActionCreators(setActiveHangout, dispatch),
+  resetActiveHangout: bindActionCreators(resetActiveHangout, dispatch),
   rateTaskPartner: bindActionCreators(rateTaskPartner, dispatch),
   taskAssign: bindActionCreators(taskAssign, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),

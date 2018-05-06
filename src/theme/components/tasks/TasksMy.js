@@ -482,7 +482,9 @@ const DayFromNumber = (dayNum)=> {
       
   
       const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
-      const ThirdLine = `Time: ${GenerateDateString(taskTime, props)}`
+      let ThirdLine = `Time: ${GenerateDateString(taskTime, props)}`;
+      if(taskTime < new Date())
+        ThirdLine = "Start when both ready"
 
       return (
         <div className="col-deep col-sm-6" key={i}>

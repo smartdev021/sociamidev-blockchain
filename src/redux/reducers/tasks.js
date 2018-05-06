@@ -11,10 +11,11 @@ import {
   TASK_REMOVE,
   UPDATE_TASK_INITIATE,
   UPDATE_TASK_COMPLETE,
-
+  SET_ACTIVE_HANGOUT,
+  RESET_ACTIVE_HANGOUT
 } from '~/src/redux/actions/actionTypes';
 
-const tasksInitialState = { data: [], isFetchInProgress: false, isSaveInProgress: false, isUpdateInProgress: false };
+const tasksInitialState = { data: [], isFetchInProgress: false, isSaveInProgress: false, isUpdateInProgress: false, activeHangout: null };
 
 export function tasks(state = tasksInitialState, action) {
   switch (action.type) {
@@ -90,6 +91,18 @@ export function tasks(state = tasksInitialState, action) {
       }
 
       return state;
+    }
+    case SET_ACTIVE_HANGOUT: {
+      return {
+        ...state,
+        activeHangout: action.hangout
+      }
+    }
+    case RESET_ACTIVE_HANGOUT: {
+      return {
+        ...state,
+        activeHangout: null
+      }
     }
     default:
       return state;
