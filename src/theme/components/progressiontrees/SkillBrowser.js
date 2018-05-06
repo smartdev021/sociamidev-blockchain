@@ -528,13 +528,23 @@ class SkillBrowser extends React.Component {
     this.setState({redirectToTaskManagement: true});
   }
 
+  getTaskUnlockLevelRequirement(type) {
+    let level = 1;
+
+    if (this.props.taskActivityUnlockRequirements
+      && this.props.taskActivityUnlockRequirements[type]) {
+      level = this.props.taskActivityUnlockRequirements[type].minLevel;
+    }
+    return level;
+  }
+
   RenderDecodeFlipcard() {
     return (
       <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
         <div className="pskill-flipper">
           <div className="pskill-card-front">
             <div className="pskill-card-body">
-              <h4 className="pskill-card-title">1</h4>
+              <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("decode")}</h4>
               <h4 className="pskill-card-subtitle">level</h4>
               <h3 className="pskill-card-heading">DECODE</h3>
               <p className="pskill-card-text">A single player activity with pre-defined
@@ -630,7 +640,7 @@ class SkillBrowser extends React.Component {
           <div className="pskill-flipper">
               <div className="pskill-card-front">
                   <div className="pskill-card-body">
-                      <h4 className="pskill-card-title">1</h4>
+                      <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("illuminate")}</h4>
                       <h4 className="pskill-card-subtitle">level</h4>
                       <h3 className="pskill-card-heading">ILLUMINATE</h3>
                       <p className="pskill-card-text">A single player activity for you to research and 
@@ -668,7 +678,7 @@ class SkillBrowser extends React.Component {
             <div className="pskill-timer">
                 <div className="pskill-card-front pskill-timer-active">
                     <div className="pskill-card-body">
-                        <h4 className="pskill-card-title">1</h4>
+                        <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("illuminate")}</h4>
                         <h4 className="pskill-card-subtitle">level</h4>
                         <h3 className="pskill-card-heading">ILLUMINATE</h3>
                         <p className="pskill-card-text">A single player activity for you to research and 
@@ -700,7 +710,7 @@ class SkillBrowser extends React.Component {
             <div className="pskill-flipper">
                 <div className="pskill-card-front">
                     <div className="pskill-card-body">
-                        <h4 className="pskill-card-title">1</h4>
+                        <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("deepdive")}</h4>
                         <h4 className="pskill-card-subtitle">level</h4>
                         <h3 className="pskill-card-heading">DEEP DIVE</h3>
                         <p className="pskill-card-text">A 2 player activity for you and a friend to research and 
@@ -738,7 +748,7 @@ class SkillBrowser extends React.Component {
             <div className="pskill-timer">
                 <div className="pskill-card-front pskill-timer-active">
                     <div className="pskill-card-body">
-                        <h4 className="pskill-card-title">1</h4>
+                        <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("deepdive")}</h4>
                         <h4 className="pskill-card-subtitle">level</h4>
                         <h3 className="pskill-card-heading">DEEPDIVE</h3>
                         <p className="pskill-card-text">A 2 player activity for you and a friend to research and 
@@ -893,6 +903,7 @@ SkillBrowser.propTypes = {
   searchResults: PropTypes.object.isRequired,
   isFetchInProgress: PropTypes.bool.isRequired,
   lastSavedTask: PropTypes.object.isRequired,
+  taskActivityUnlockRequirements: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -901,6 +912,7 @@ const mapStateToProps = state => ({
   isFetchInProgress : state.isFetchInProgress,
   isTaskSaveInProgress: state.tasks.isSaveInProgress,
   lastSavedTask: state.lastSavedTask,
+  taskActivityUnlockRequirements: state.progression.taskActivityUnlockRequirements,
 });
 
 const mapDispatchToProps = dispatch => ({

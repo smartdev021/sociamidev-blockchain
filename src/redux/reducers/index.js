@@ -11,6 +11,7 @@ import { userFriends } from "./social"
 import { userFriendsActivities } from "./activities"
 import { characterCreation, characterCreationData } from "./characterCreation"
 import { accounting } from "./accounting"
+import { progression } from "./progression"
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -37,4 +38,5 @@ export default combineReducers({
   characterCreation,
   characterCreationData,
   accounting,
+  progression,
 });

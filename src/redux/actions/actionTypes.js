@@ -120,5 +120,8 @@ export const USER_LOG_OUT = "user_log_out";
 export const USER_ACCOUNTING_FETCH_INITIATE = "user_accounting_fetch_initiate";
 export const USER_ACCOUNTING_FETCH_COMPLETE = "user_accounting_fetch_complete";
 
-export const SET_ACTIVE_HANGOUT = "SET_ACTIVE_HANGOUT"
-export const RESET_ACTIVE_HANGOUT = "RESET_ACTIVE_HANGOUT"
+export const SET_ACTIVE_HANGOUT = "set_active_hangout";
+export const RESET_ACTIVE_HANGOUT = "reset_active_hangout";
+
+export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_INITIATE = "task_activity_unlock_requirements_fetch_initiate";
+export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE = "task_activity_unlock_requirements_fetch_complete";

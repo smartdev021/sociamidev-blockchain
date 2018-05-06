@@ -66,7 +66,9 @@ import {
   fetchUserAccounting
 } from '~/src/redux/actions/accounting'
 
-
+import {
+  fetchTaskActivityUnlockReqs,
+} from '~/src/redux/actions/progression'
 
 let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
 let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");
@@ -154,6 +156,8 @@ class App extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+
+    this.props.fetchTaskActivityUnlockReqs();
   }
 
   componentWillUnmount() {
@@ -559,6 +563,7 @@ App.propTypes = {
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
   setUserProfileCharacter: PropTypes.func.isRequired,
+  fetchTaskActivityUnlockReqs: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -580,6 +585,7 @@ const mapDispatchToProps = dispatch => ({
   logout: bindActionCreators(logout, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
+  fetchTaskActivityUnlockReqs: bindActionCreators(fetchTaskActivityUnlockReqs, dispatch),
 })
 
 const mapStateToProps = state => ({
