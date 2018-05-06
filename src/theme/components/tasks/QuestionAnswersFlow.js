@@ -35,31 +35,16 @@ class QuestionAnswersFlow extends React.Component {
   }
 
   getAnswerMy(questionId) {
-    console.log("%cgetAnswerMy", "color: red; background: orange;");
-
-    console.log("questionId: " + questionId);
-
-    console.dir(this.props);
-
     if (this.props.answersMy[questionId]) {
       return this.props.answersMy[questionId];
     }
     else {
       const { currentQuestion } = this.state;
 
-      console.dir(this.state);
-      console.dir(currentQuestion);
-
       if (currentQuestion !== undefined) {
-
-        console.log("%cif (currentQuestion", "color: red; background: orange;");
         const { questions } = this.props;
 
         const question = questions[currentQuestion];
-
-        console.dir(questions);
-
-        console.dir(question);
 
         if (question) {
           switch (question.type) {
@@ -110,11 +95,6 @@ class QuestionAnswersFlow extends React.Component {
           action === 'prev' ? currentQuestion - 1 : currentQuestion + 1
       });
     }
-  }
-
-  handleCheckBox(e) {
-    console.log(e);
-    console.dir(e);
   }
 
   renderAnswerInput() {
