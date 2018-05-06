@@ -524,7 +524,7 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
-            logout={() => this.props.logout()} />
+            logout={() => this.props.logout(this.state.userID)} />
           <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
           {ChatAppLink}
         </div>
