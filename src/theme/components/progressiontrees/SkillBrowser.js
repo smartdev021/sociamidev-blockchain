@@ -454,6 +454,10 @@ class SkillBrowser extends React.Component {
   goToDecode(e){
     const CurrentTree = this.state.tree;
 
+    if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
+      return;
+    }
+
     const decode = {
       name: `Decode roadmap "${CurrentTree.name}"`,
       description: `Decode for roadmap "${CurrentTree.name}"`,
@@ -536,6 +540,24 @@ class SkillBrowser extends React.Component {
       level = this.props.taskActivityUnlockRequirements[type].minLevel;
     }
     return level;
+  }
+
+  isActivityUnlocked(treeId, type) {
+    let isUnlocked = true;
+
+    const progressionForProgressionTree = this.props.progressionTreeLevels.find((treeLevel) => {
+      return treeLevel._id === treeId;
+    });
+
+    if (progressionForProgressionTree) {
+      isUnlocked = progressionForProgressionTree.level >= this.getTaskUnlockLevelRequirement(type);
+    }
+
+    console.log("%cisActivityUnlocked", "color:purple;background:orange;");
+    console.dir(this.props.progressionTreeLevels);
+    console.dir(this.props.taskActivityUnlockRequirements);
+
+    return isUnlocked;
   }
 
   RenderDecodeFlipcard() {
@@ -913,6 +935,7 @@ const mapStateToProps = state => ({
   isTaskSaveInProgress: state.tasks.isSaveInProgress,
   lastSavedTask: state.lastSavedTask,
   taskActivityUnlockRequirements: state.progression.taskActivityUnlockRequirements,
+  progressionTreeLevels: state.userProfile.profile.progressionTreeLevels,
 });
 
 const mapDispatchToProps = dispatch => ({
