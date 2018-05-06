@@ -321,11 +321,20 @@ class SkillBrowser extends React.Component {
       this.props.saveTask(hangout);
 
       if (this.props.userProfile && this.props.userProfile._id) {
+<<<<<<< HEAD
         this.props.userInteractionPush(this.props.userProfile._id,
           UserInteractions.Types.ACTION_EXECUTE,
           UserInteractions.SubTypes.DEEPDIVE_START,
           {
+=======
+        this.props.userInteractionPush(this.props.userProfile._id, 
+          UserInteractions.Types.ACTION_EXECUTE, 
+          UserInteractions.SubTypes.DEEPDIVE_START, 
+          { 
+            roadmapId: CurrentTree._id,
+>>>>>>> stg
             skillId: this.state.skillInfo._id,
+            deepdiveTime: date.getTime(),
           }
         );
       }
