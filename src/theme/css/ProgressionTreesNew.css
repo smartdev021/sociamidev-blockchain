@@ -184,6 +184,17 @@
 }
 .ptree-back{
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.ptree-chevron{
+    font-size: 8px;
+    font-weight: 600;
+}
+.ptree-back-text{
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 3px;
 }
 .ptree-hero-container{
     width: 30%;

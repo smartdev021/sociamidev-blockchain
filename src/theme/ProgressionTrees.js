@@ -205,7 +205,8 @@ class ProgressionTrees extends React.Component {
                     {/* <div className="ptree-card-front" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}> */}
                     <div className="ptree-card-back">
                       <div className="ptree-back" onClick={(e)=>this.flipSkillCardBack(e)}>
-                        <a className="fa fa-chevron-left"></a>BACK
+                        <span className="fa fa-chevron-left ptree-chevron" onClick={(e)=>this.flipSkillCard(e)}></span>
+                        <div className="ptree-back-text" onClick={(e)=>this.flipSkillCard(e)}>BACK</div>
                       </div>
                       <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT ONE SKILL TO IMPROVE IT</div>
 
@@ -243,8 +244,9 @@ class ProgressionTrees extends React.Component {
                         <a className="fa fa-chevron-left"></a>PREVIOUS SKILLS
                       </div> */}
 
-                      <div className="ptree-back text-center" onClick={(e)=>this.flipSkillCardBack(e)}>
-                        <a className="fa fa-chevron-left"></a>PREVIOUS SKILLS
+                      <div className="ptree-back" style={{justifyContent:'center'}} onClick={(e)=>this.flipSkillCardBack(e)}>
+                        <span className="fa fa-chevron-left ptree-chevron" onClick={(e)=>this.flipSkillCard(e)}></span>
+                        <div className="ptree-back-text" onClick={(e)=>this.flipSkillCard(e)}>PREVIOUS SKILLS</div>
                       </div>
 
                     </div>
