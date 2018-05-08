@@ -97,6 +97,195 @@
     padding: 10px;
     font-size: 22px
 }
+
+.skills-inprogress{
+
+}
+.timer-heading{
+    font-weight: 600;
+}
+.skill-in-progress{
+    margin: 0;
+}
+.show-more{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.ptree-card-item{
+    padding: 0;
+    padding-bottom: 20px;
+}
+.ptree-card{
+    height: 350px;
+    padding: 20px;
+    width: 85%;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.3);
+    /* background: linear-gradient(to left, #A4E6AD 0%, white 32%); */
+}
+.ptree-card-front{
+    height: 350px;
+    width: 100%;
+    padding: 20px;
+    /* background: linear-gradient(to left, #A4E6AD 0%, white 32%); */
+}
+.ptree-card-back{
+    height: 350px;
+    width: 100%;  
+    padding: 20px; 
+    /* background: linear-gradient(to left, #A4E6AD 0%, white 32%); */
+}
+.ptree-card-heading{
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 600;
+    /* color: #07AF3E; */
+}
+.ptree-card-body{
+    padding-top: 5px;
+}
+.ptree-card-text{
+    width: 70%;
+}
+.ptree-btn-group{
+    padding: 15px 5px 15px 0px;
+    position: absolute;
+    width: 90%;
+    bottom: 40px;
+}
+.ptree-btn{
+    text-align: center;
+    padding: 5px;
+    width: 40%;
+    margin: 0px 10px 0px 0px;
+    cursor: pointer;
+}
+.ptree-start{
+    color: white;
+    /* background-color: #07AF3E; */
+    border: none;
+}
+.ptree-view{
+    color: black;
+    background-color: white;
+    /* border: 2px solid #07AF3E; */
+}
+.ptree-back-header{
+    font-size: 14px;
+    font-weight: 600;
+}
+.pskill-banner {
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    box-shadow: 0px 0px 0.01px 0px rgba(0,0,0,0.3);
+}
+.pskill-name{
+    font-size: 15px;
+}
+.ptree-back{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.ptree-chevron{
+    font-size: 8px;
+    font-weight: 600;
+}
+.ptree-back-text{
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 3px;
+}
+.ptree-hero-container{
+    width: 30%;
+}
+.ptree-hero-img{
+    width: 180px;
+    margin-left: -20px;
+    margin-top: -10px;
+}
+
+/* ====================================== */
+/* entire container, keeps perspective */
+.ptree-card-item {
+	-webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    perspective: 1000;
+}
+/* flip the pane when hovered */
+/* .pskill-card-item:hover .pskill-flipper, .pskill-card-item.hover .pskill-flipper { */
+.ptree-card-item.hover .ptree-card {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+/* flip speed goes here */
+.ptree-card {
+	-webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.ptree-card-front, .ptree-card-back {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.ptree-card-front {
+	z-index: 2;
+	/* -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    transform: rotateY(0deg); */
+}
+
+/* back, initially hidden pane */
+.ptree-card-back {
+    z-index: 3;
+	-webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+@-webkit-keyframes spin {
+    0%   { 
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+@keyframes spin {
+    0%   { 
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
 @media (max-width: 480px){
     .expander a {
         display: none;
@@ -113,3 +302,4 @@
         left: -30px;
     }
 }
+
