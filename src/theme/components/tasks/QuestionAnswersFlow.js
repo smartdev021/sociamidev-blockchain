@@ -35,46 +35,7 @@ class QuestionAnswersFlow extends React.Component {
   }
 
   getAnswerMy(questionId) {
-    if (this.props.answersMy[questionId]) {
-      return this.props.answersMy[questionId];
-    }
-    else {
-      const { currentQuestion } = this.state;
-
-      if (currentQuestion !== undefined) {
-        const { questions } = this.props;
-
-        const question = questions[currentQuestion];
-
-        if (question) {
-          switch (question.type) {
-            case QuestionTypes.SIMPLE: {
-              let result = {};
-              result = { text: "" };
-              return result;
-            }
-            case QuestionTypes.MULTIPLECHOICE: {
-              let result = {};
-              result = (question.correctAnswers && question.correctAnswers.length > 0) 
-              ? {options: question.correctAnswers.map(() => {
-                return false;
-              })} 
-              : {options: []};
-              return result;
-            }
-            case QuestionTypes.TRUEFALSE: {
-              let result = {};
-              result = {isTrue: false};
-              return result;
-            }
-            default:
-              break;
-          }
-        }
-      }
-
-      return undefined;
-    }
+    return this.props.answersMy[questionId];
   }
 
   getAnswerPartner(questionId) {

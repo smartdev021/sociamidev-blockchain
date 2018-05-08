@@ -1,8 +1,6 @@
 import React from 'react';
 
 const AnswerMultipleVariants = (props) => {
-    console.log("%AnswerMultipleVariants", "color: red; background: blue;");
-    console.dir(props);
     return (<div className="QuestionAnswersFlow-textarea" id={`answer_your_${props.question._id}`}>
         {
             props.question.answers.map((answer, i) => {

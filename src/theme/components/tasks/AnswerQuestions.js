@@ -90,19 +90,16 @@ class AnswerQuestions extends React.Component {
 
 
       let optionsCopy = (answersMyCopy[questionId] && answersMyCopy[questionId].options)
-        ? Object.assign({}, answersMyCopy[questionId].options) : {};
+        ? answersMyCopy[questionId].options.splice(0) : [];
+
+      //force check other options out
+      for (let i = 0; i < optionsCopy.length; ++i) {
+        optionsCopy[i] = false;
+      }
+
       optionsCopy[Number(e.target.id)] = e.target.checked;
 
       answersMyCopy[questionId] = { options: optionsCopy, timeChanged: Date.now() };
-
-      //force check other options out
-      if (e.target.checked) {
-        for (let option in answersMyCopy[questionId].options) {
-          if (Number(option) !== Number(e.target.id)) {
-            answersMyCopy[questionId].options[option] = false;
-          }
-        }
-      }
 
       this.setState({ answersMy: answersMyCopy });
     }
@@ -128,9 +125,29 @@ class AnswerQuestions extends React.Component {
       return currentTaskType === TaskTypes.DECODE || question.type === QuestionTypes.SIMPLE;
     });
 
+    let answersMy = {};
+
+    questionsFiltered.forEach((question) => {
+      switch (question.type) {
+        case QuestionTypes.TRUEFALSE: {
+          answersMy[question._id] = { isTrue: false };
+          break;
+        }
+        case QuestionTypes.MULTIPLECHOICE: {
+          answersMy[question._id] = { options: question.answers.map(() => { return false; }) };
+          break;
+        }
+        default: {
+          answersMy[question._id] = { text: "" };
+          break;
+        }
+      }
+    })
+
     this.setState({
       questions: questionsFiltered,
-      isQuestionsLoading: false
+      answersMy: answersMy,
+      isQuestionsLoading: false,
     });
   }
 
@@ -323,7 +340,10 @@ class AnswerQuestions extends React.Component {
         isLoading={this.state.isLoading}
         isSubmitting={this.props.isTasksUpdateInProgress}
         onBackToMyTasks={this.props.onBackToMyTasks}
-        onHandleAnswerInput={(e) => this.handleAnswerInput(e)} />
+        onHandleAnswerInput={(e) => this.handleAnswerInput(e)}
+        onHandleAnswerCheckbox={(e) => this.handleAnswerCheckbox(e)}
+        onHandleAnswerTrueFalse={(e) => this.handleAnswerTrueFalse(e)}
+      />
     );
   }
 }
