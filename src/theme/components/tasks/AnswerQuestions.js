@@ -106,8 +106,8 @@ class AnswerQuestions extends React.Component {
   }
 
   handleAnswerTrueFalse(e) {
-    const questionId = (e.target.parentElement && e.target.parentElement.id)
-      ? e.target.parentElement.id.replace('answer_your_', '')
+    const questionId = (e.target.parentElement && e.target.parentElement.parentElement && e.target.parentElement.parentElement.id)
+      ? e.target.parentElement.parentElement.id.replace('answer_your_', '')
       : undefined;
 
     if (questionId) {

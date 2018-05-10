@@ -261,6 +261,75 @@
   border-color: orange;
 }
 
+/* The container-rb */
+.container-rb {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container-rb input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark-radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 50%;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+/* On mouse-over, add a grey background color */
+.container-rb:hover input ~ .checkmark-radio {
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container-rb input:checked ~ .checkmark-radio {
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark-radio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container-rb input:checked ~ .checkmark-radio:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container-rb .checkmark-radio:after {
+ top: 3px;
+ left: 3px;
+ width: 10px;
+ height: 10px;
+ border-radius: 50%;
+ background: orange;
+}
+
 @media only screen and (max-width: 600px) {
   .QuestionAnswersFlow-main-question {
     max-width: 300px;
