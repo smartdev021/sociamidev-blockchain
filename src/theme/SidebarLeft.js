@@ -308,10 +308,6 @@ class SidebarLeft extends React.Component {
                 </div>
             </div>
         </div>
-
-        <div className="specialized">
-            Android developer
-        </div>
           <div className="scrollbar-inner">
             <div className="block-account">
               {RenderDummyFriends ? this.renderFriendsDummy() : this.renderFriends()}
