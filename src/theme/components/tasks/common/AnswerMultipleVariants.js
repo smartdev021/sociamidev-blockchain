@@ -1,16 +1,15 @@
 import React from 'react';
 
 const AnswerMultipleVariants = (props) => {
-    return (<div className="QuestionAnswersFlow-textarea" id={`answer_your_${props.question._id}`}>
+    return (<div className="QuestionAnswersFlow-textarea question-answers-multiple-area" id={`answer_your_${props.question._id}`}>
         {
             props.question.answers.map((answer, i) => {
                 return (<div key={i} className="answer-multiple-input-wrapper">
-                    {/*<input id={i} type="checkbox"
-                        className="validate-field required question-answer-checkbox"
-                        name="answer_your" onChange={(e) => props.onHandleAnswerCheckbox(e)}
-                checked={props.answerMy.options[i]} />*/}
                     <label className="container-cb"><span>{answer}</span>
-                    <input type="checkbox" />
+                        <input id={i} type="checkbox"
+                            className="validate-field required question-answer-checkbox"
+                            name="answer_your" onChange={(e) => props.onHandleAnswerCheckbox(e)}
+                            checked={props.answerMy.options[i]} />
                         <span className="checkmark"></span>
                     </label>
                 </div>)
