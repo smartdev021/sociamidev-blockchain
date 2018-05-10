@@ -112,7 +112,8 @@ class SkillBrowser extends React.Component {
       Async.parallel([
         Async.apply(this.updateSkill.bind(this), name),
         Async.apply(this.updateIlluminateTimer.bind(this)),
-        Async.apply(this.updateDeepdiveTimer.bind(this))
+        Async.apply(this.updateDeepdiveTimer.bind(this)),
+        Async.apply(this.updateDecodeTimer.bind(this))
       ], () => {
         this.setState({ isLoading: false })
       })
@@ -168,6 +169,24 @@ class SkillBrowser extends React.Component {
         Axios.get(trackerUrl)
           .then(tracker => {
             this.setState({ illuminateTracker: _.get(tracker, 'data') })
+            callback()
+          })
+      }).catch(err => {
+        callback()
+      })
+  }
+
+  updateDecodeTimer(callback) {
+    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Decode`;
+    this.setState({ isLoading: true});
+    Axios.get(url)
+      .then(timerResp => {
+        const decodeTimer = _.get(timerResp, 'data')
+        this.setState({ decodeTimer })
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(decodeTimer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl)
+          .then(tracker => {
+            this.setState({ decodeTracker: _.get(tracker, 'data') })
             callback()
           })
       }).catch(err => {
@@ -321,10 +340,10 @@ class SkillBrowser extends React.Component {
       this.props.saveTask(hangout);
 
       if (this.props.userProfile && this.props.userProfile._id) {
-        this.props.userInteractionPush(this.props.userProfile._id, 
-          UserInteractions.Types.ACTION_EXECUTE, 
-          UserInteractions.SubTypes.DEEPDIVE_START, 
-          { 
+        this.props.userInteractionPush(this.props.userProfile._id,
+          UserInteractions.Types.ACTION_EXECUTE,
+          UserInteractions.SubTypes.DEEPDIVE_START,
+          {
             roadmapId: CurrentTree._id,
             skillId: this.state.skillInfo._id,
             deepdiveTime: date.getTime(),
@@ -565,6 +584,10 @@ class SkillBrowser extends React.Component {
   RenderDecodeFlipcard() {
     const CurrentTree = this.state.tree;
 
+    const decodeTrackerCount = _.get(this, 'state.decodeTracker.count', 0);
+    const decodeTimerQuota = _.get(this, 'state.decodeTimer.quota', 0);
+    const IsDecodeAvailable = !decodeTrackerCount || decodeTrackerCount < decodeTimerQuota;
+    
     if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
@@ -578,20 +601,51 @@ class SkillBrowser extends React.Component {
                 answers to validate your understanding of a topic</p>
               </div>
               <div className="pskill-footer">
-                <p className="pskill-duration">Once a day</p>
-                <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
+                <p className="pskill-duration">Once a week</p>
+                <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
               </div>
               <div className="pskill-btn-group">
                 <button disabled="disabled" className="pskill-btn pskill-start">START</button>
                 <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
               </div>
             </div>
-             {/*<div id="loader-wrapper">
+            <div id="loader-wrapper">
               <div id="loader"></div>
-            </div>*/}
-            {/*<div className="pskill-timer-text">
+            </div>
+            <div className="pskill-timer-text">
               <Countdown daysInHours={false} date={this.nextRefresh('decode')} />
-      </div>*/}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    else if (!IsDecodeAvailable) {
+      return (
+        <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
+          <div className="pskill-timer">
+            <div className="pskill-card-front pskill-timer-active">
+              <div className="pskill-card-body">
+                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("decode")}</h4>
+                <h4 className="pskill-card-subtitle">level</h4>
+                <h3 className="pskill-card-heading">DECODE</h3>
+                <p className="pskill-card-text">A single player activity with pre-defined
+                answers to validate your understanding of a topic</p>
+              </div>
+              <div className="pskill-footer">
+                <p className="pskill-duration">Once a week</p>
+                <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
+              </div>
+              <div className="pskill-btn-group">
+                <button disabled="disabled" className="pskill-btn pskill-start">START</button>
+                <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
+              </div>
+            </div>
+            <div id="loader-wrapper">
+              <div id="loader"></div>
+            </div>
+            <div className="pskill-timer-text">
+              <Countdown daysInHours={false} date={this.nextRefresh('decode')} />
+            </div>
           </div>
         </div>
       );
@@ -609,8 +663,8 @@ class SkillBrowser extends React.Component {
                 answers to validate your understanding of a topic</p>
             </div>
             <div className="pskill-footer">
-              <p className="pskill-duration">Once a day</p>
-              <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
+              <p className="pskill-duration">Once a week</p>
+              <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
             </div>
             <div className="pskill-btn-group">
               <button className="pskill-btn pskill-start" onClick={(e) => this.goToDecode(e)}>START</button>
