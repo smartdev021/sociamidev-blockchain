@@ -53,7 +53,9 @@ class ProgressionTrees extends React.Component {
 
       isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0,
       isTreeExpanded: false,
-      isSidebarExpanded: false
+      isSidebarExpanded: false,
+      isTaskSelected: {},
+      flipCardClass: {}
     }
 
     this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
@@ -180,78 +182,162 @@ class ProgressionTrees extends React.Component {
     e.target.parentNode.parentNode.parentNode.classList.toggle("hover")
   }
 
+  yoyoFn(skillId,stateItem){
+    let isBooleanJson = { ...this.state[stateItem],
+      [skillId] : !this.state[stateItem][skillId]
+    }
+    this.setState({ [stateItem] : isBooleanJson})
+  }
+
+  toggleTaskView(skillId){
+    let isTaskJson = { ...this.state.isTaskSelected ,
+      [skillId]: !this.state.isTaskSelected[skillId]
+    }
+    this.setState({isTaskSelected: isTaskJson});
+  }
+  
+  flipCardClassFn(skillId){
+    
+    let cardClass = { ...this.state.flipCardClass ,
+      [skillId]: !this.state.flipCardClass[skillId]
+    }
+    this.setState({flipCardClass: cardClass});
+  }
+
   renderUserProgressionTreesNew(){
-    const SkillCard = props => {
-      const { skillItem, customStyle } = props
-      return(
-            <div className="col-sm-6 col-xs-12 ptree-card-item">
-                  <div className="ptree-card">
-                    <div className="ptree-card-front" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                      <div className="ptree-hero-container pull-right">
-                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/hero1.png"
-                      className="ptree-hero-img" />
-                      </div>
-                      <div className="ptree-card-heading" style={{color:`${customStyle.color}`}}>{skillItem.name}</div>
-                      <div className="ptree-card-body">
-                          <p className="ptree-card-text">
-                          {skillItem.description}
-                          </p>
-                      </div>
-                      <div className="pskill-btn-group ptree-btn-group">
-                        <button className="ptree-btn ptree-start" style={{backgroundColor:`${customStyle.color}`}}>QUICKSTART</button>
-                        <button className="ptree-btn ptree-view" style={{border:`2px solid ${customStyle.color}`}} onClick={(e)=>this.flipSkillCard(e)}>VIEW TASKS</button>
-                      </div>
-                    </div>
-                    {/* <div className="ptree-card-front" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}> */}
-                    <div className="ptree-card-back">
-                      <div className="ptree-back" onClick={(e)=>this.flipSkillCardBack(e)}>
-                        <span className="fa fa-chevron-left ptree-chevron" onClick={(e)=>this.flipSkillCard(e)}></span>
-                        <div className="ptree-back-text" onClick={(e)=>this.flipSkillCard(e)}>BACK</div>
-                      </div>
-                      <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT ONE SKILL TO IMPROVE IT</div>
+    const TaskList = props => {
+      const { customStyle, skillItem} = props
+      return (
+              <div className="ptree-card-back ptree-task-list">
+                <div className="ptree-back" onClick={()=>this.flipCardClassFn(skillItem._id)} >
+                  <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.flipCardClassFn(skillItem._id)}></span>
+                  <div className="ptree-back-text" onClick={()=>this.flipCardClassFn(skillItem._id)}>BACK</div>
+                </div>
+                <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT TASK TO CONTINUE WITH THIS HERO</div>
 
-                      <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <a className="pskill-name">
-                          Classification
-                        </a>
-                      </div>
-                      
-                      <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <a className="pskill-name">
-                          Non Metric Methods
-                        </a>
-                      </div>
-
-                      <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <a className="pskill-name">
-                          Feature Extraction and Selection
-                        </a>
-                      </div>
-
-                      <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <a className="pskill-name">
-                          Unsupervised Learning
-                        </a>
-                      </div>
-
-                      <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <a className="pskill-name">
-                          Unsupervised Learning
-                        </a>    
-                      </div>
-
-                      {/* <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <a className="fa fa-chevron-left"></a>PREVIOUS SKILLS
-                      </div> */}
-
-                      <div className="ptree-back" style={{justifyContent:'center'}} onClick={(e)=>this.flipSkillCardBack(e)}>
-                        <span className="fa fa-chevron-left ptree-chevron" onClick={(e)=>this.flipSkillCard(e)}></span>
-                        <div className="ptree-back-text" onClick={(e)=>this.flipSkillCard(e)}>PREVIOUS SKILLS</div>
-                      </div>
-
-                    </div>
+                <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                  <div className="pskill-name">
+                    Illuminate
+                  </div>
+                  <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                    30 min 3 questions
                   </div>
                 </div>
+
+                <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                  <div className="pskill-name">
+                    Deepdive
+                  </div>
+                  <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                    30 min 10 questions
+                  </div>
+                </div>
+                
+                <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                  <div className="pskill-name">
+                    XXX
+                  </div>
+                  <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                    xxx
+                  </div>
+                </div>
+
+                <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                  <div className="pskill-name">
+                    Brainstorm
+                  </div>
+                  <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                    60 min 1 challenge
+                  </div>
+                </div>
+
+              </div>
+      )
+    }
+
+    const SkillList = props => {
+      const { customStyle,skillItem } = props
+      return(
+        <div className="ptree-card-back ptree-skill-list">
+            <div className="ptree-back" onClick={()=>this.flipCardClassFn(skillItem._id)}>
+              <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.flipCardClassFn(skillItem._id)}></span>
+              <div className="ptree-back-text" onClick={()=>this.flipCardClassFn(skillItem._id)}>BACK</div>
+            </div>
+            <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT ONE SKILL TO IMPROVE IT</div>
+
+            <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+              <div className="pskill-name">
+                Classification
+              </div>
+            </div>
+            
+            <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+              <div className="pskill-name">
+                Non Metric Methods
+              </div>
+            </div>
+
+            <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+              <div className="pskill-name">
+                Feature Extraction and Selection
+              </div>
+            </div>
+
+            <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+              <div className="pskill-name">
+                Unsupervised Learning
+              </div>
+            </div>
+
+            <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+              <div className="pskill-name">
+                Unsupervised Learning
+              </div>    
+            </div>
+
+            {/* <div className="pskill-banner" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+              <a className="fa fa-chevron-left"></a>PREVIOUS SKILLS
+            </div> */}
+
+            <div className="ptree-back" style={{justifyContent:'center'}} onClick={()=>this.toggleTaskView(skillItem._id)}>
+              <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.toggleTaskView(skillItem._id)}></span>
+              <div className="ptree-back-text" onClick={()=>this.toggleTaskView(skillItem._id)}>PREVIOUS SKILLS</div>
+            </div>
+
+          </div>
+      )
+    }
+    const SkillCard = props => {
+      const { skillItem, customStyle } = props
+      const flipClass = (this.state.flipCardClass[skillItem._id]) ? ' hover' : ''
+      return(
+            <div className={`col-sm-6 col-xs-12 ptree-card-item` + flipClass}
+            // onAnimationEnd={() => this.setState({fade: false})}
+            >
+                <div className="ptree-card">
+                  <div className="ptree-card-front" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                    <div className="ptree-hero-container pull-right">
+                      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/hero1.png"
+                    className="ptree-hero-img" />
+                    </div>
+                    <div className="ptree-card-heading" style={{color:`${customStyle.color}`}}>{skillItem.name}</div>
+                    <div className="ptree-card-body">
+                        <p className="ptree-card-text">
+                        {skillItem.description}
+                        </p>
+                    </div>
+                    <div className="pskill-btn-group ptree-btn-group">
+                      <button className="ptree-btn ptree-start" style={{backgroundColor:`${customStyle.color}`}}>QUICKSTART</button>
+                      <button className="ptree-btn ptree-view" style={{border:`2px solid ${customStyle.color}`}} onClick={() => this.flipCardClassFn(skillItem._id)} 
+                      onAnimationEnd={() => this.flipCardClassFn(skillItem._id)} 
+                      >VIEW TASKS</button>
+                    </div>
+                  </div>
+                  {/* <div className="ptree-card-front" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}> */}
+                  {(this.state.isTaskSelected[skillItem._id]) ?  <SkillList customStyle={customStyle} skillItem={skillItem}/> 
+                  : <TaskList customStyle={customStyle} skillItem={skillItem}/>}
+                </div>
+              </div>
       )
     }
     return (
