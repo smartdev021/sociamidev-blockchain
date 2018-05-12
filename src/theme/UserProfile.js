@@ -26,6 +26,8 @@ import {
 	fetchListCharacterTraits,
 } from '~/src/redux/actions/characterCreation'
 
+import { fetchAchievements } from '~/src/redux/actions/achievements';
+
 const tag = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarTag.png";
 const friend = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarAdd-friend.png";
 const question = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarQuestion.png";
@@ -69,6 +71,7 @@ class UserProfile extends React.Component {
 	componentWillMount() {
 		this.props.fetchListCharacterClasses();
 		this.props.fetchListCharacterTraits();
+		this.props.fetchAchievements();
 
     this.updatePromoCodesUsed();
     this.setUserProfile(qs.parse(this.props.location.search).id);
@@ -341,7 +344,7 @@ class UserProfile extends React.Component {
 		);
 	}
 
-	showAchievementPopover(){
+	showAchievementPopover(achievement){
 
 		const popoverBottom = (
 			<Popover id="popover-skill" className="popover-skill">
@@ -359,8 +362,76 @@ class UserProfile extends React.Component {
 				trigger={['hover', 'click']}
 				placement="top"
 				overlay={popoverBottom} >
-				<p>QUIZ MONSTER</p>
+				<p>{achievement.name}</p>
 			</OverlayTrigger>
+		)
+	}
+
+	renderAchievementsFilter() {
+		return (
+			<div className="row achievement-to-show">
+				<div className="achievement-text col-md-3 col-xs-8">
+					Achievements to show
+				</div>
+				<div className="sort-achievement-div col-md-2 col-xs-4">
+					<select className="sort-achievement">
+						<option value="none">None</option>
+						{ this.props.achievements.data
+						.map(achievement => {
+							return (	
+								<option value={achievement.name}>{achievement.name}</option>
+							);
+						}) }
+					</select>
+				</div>
+				<div className="search-achievement-div col-md-7 col-xs-12">
+					<div className="input-group search-box">
+						<span className="input-group-btn" style={{position:'absolute'}}>
+							<button className="btn btn-search" type="button">
+								<span className="glyphicon glyphicon-search" style={{top:'4px'}}></span>
+							</button>
+						</span>
+						<input type="text" className="search-query" placeholder="Type in to search" />
+					</div>
+				</div>
+			</div>
+		);
+	}
+	
+	renderAchievementsList() {
+		return (
+			<div className="row achievement-list">
+				<div className="achievement-header">
+					<div className="achievement-heading col-md-2 col-xs-2 no-padding">ZARA</div>
+					<div className="achievement-progress col-md-8 col-xs-6 no-padding">
+						<div className="achievement-count">10 of 15</div>
+						<div className="progress-custom">
+							<div className="progress-length-custom">
+							</div>
+						</div>
+					</div>
+					<div className="achievement-token col-md-2 col-xs-4 no-padding">
+						<p className="pull-right">+1000 SOQQ </p>
+					</div>
+				</div>
+				<div className="achievement-items">
+				{
+					this.props.achievements.data
+					.map(achievement => {
+						return (	
+							<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
+								<div className="achievement-item">
+									
+								</div>
+								<div className="achievement-name">
+									{this.showAchievementPopover(achievement)}
+								</div>
+							</div>
+						);
+					})
+				}
+				</div>
+			</div>
 		)
 	}
 
@@ -515,61 +586,8 @@ class UserProfile extends React.Component {
 										<input className="redeem-code-input" placeholder="TBC 20 SOQQ TOKENS" />
 									</div>
 								</div>
-								<div className="row achievement-to-show">
-									<div className="achievement-text col-md-3 col-xs-8">
-										Achievements to show
-									</div>
-									<div className="sort-achievement-div col-md-2 col-xs-4">
-										<select className="sort-achievement">
-											<option value="none">None</option>
-											<option value="gucci">Gucci</option>
-											<option value="zara">Zara</option>
-										</select>
-									</div>
-									<div className="search-achievement-div col-md-7 col-xs-12">
-										<div className="input-group search-box">
-											<span className="input-group-btn" style={{position:'absolute'}}>
-												<button className="btn btn-search" type="button">
-													<span className="glyphicon glyphicon-search" style={{top:'4px'}}></span>
-												</button>
-											</span>
-											<input type="text" className="search-query" placeholder="Type in to search" />
-										</div>
-									</div>
-								</div>
-								<div className="row achievement-list">
-									<div className="achievement-header">
-										<div className="achievement-heading col-md-2 col-xs-2 no-padding">ZARA</div>
-										<div className="achievement-progress col-md-8 col-xs-6 no-padding">
-											<div className="achievement-count">10 of 15</div>
-											<div className="progress-custom">
-												<div className="progress-length-custom">
-												</div>
-											</div>
-										</div>
-										<div className="achievement-token col-md-2 col-xs-4 no-padding">
-											<p className="pull-right">+1000 SOQQ </p>
-										</div>
-									</div>
-									<div className="achievement-items">
-										<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
-											<div className="achievement-item">
-												
-											</div>
-											<div className="achievement-name">
-												{this.showAchievementPopover()}
-											</div>
-										</div>
-										<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
-											<div className="achievement-item">
-												
-											</div>
-											<div className="achievement-name">
-												{this.showAchievementPopover()}
-											</div>
-										</div>
-									</div>
-								</div>
+								{this.renderAchievementsFilter()}
+								{this.renderAchievementsList()}
 							</div>
 					</div>
 				</div>
@@ -586,11 +604,13 @@ const mapStateToProps = state => ({
 	listCharacters: state.characterCreation.listCharacters,
 	listCharacterTraits: state.characterCreation.listCharacterTraits,
 	accounting: state.accounting,
+	achievements: state.achievements
 })
 
 const mapDispatchToProps = dispatch => ({
 	fetchListCharacterClasses: bindActionCreators(fetchListCharacterClasses, dispatch),
 	fetchListCharacterTraits: bindActionCreators(fetchListCharacterTraits, dispatch),
+	fetchAchievements: bindActionCreators(fetchAchievements, dispatch)
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
