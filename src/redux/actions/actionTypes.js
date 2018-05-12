@@ -125,3 +125,7 @@ export const RESET_ACTIVE_HANGOUT = "reset_active_hangout";
 
 export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_INITIATE = "task_activity_unlock_requirements_fetch_initiate";
 export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE = "task_activity_unlock_requirements_fetch_complete";
+
+// Achievements
+export const FETCH_ACHIEVEMENTS_INITIATE = "fetch_achievements_initiate";
+export const FETCH_ACHIEVEMENTS_COMPLETE = "fetch_achievements_complete";
