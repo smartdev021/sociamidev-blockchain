@@ -76,11 +76,6 @@ class SkillCard extends React.Component {
         }
         const listItems = skillParsed.map(function(skill, i) {
           return (
-        //   <div className="masonry-grid-item" key={i}>
-        //     <Link className="skill-item"
-        //     key={i} to={{pathname:`/skillBrowser`, state: {tree: that.state.tree}, 
-        //     search:`?name=${skill}`}}>{skill}</Link>  
-        //   </div>
             <div className="pskill-banner" key={i}
             style={{background:`linear-gradient(to left, ${style.background} 0%, white 45%)`}}>
                 <div className="pskill-name">
@@ -128,7 +123,7 @@ class SkillCard extends React.Component {
         const TaskList = props => {
             const { customStyle, skillItem} = props
             return (
-                    <div className="ptree-card-back ptree-task-list">
+                    <div className="ptree-task-list">
                       <div className="ptree-back" onClick={()=>this.flipCardClassFn(skillItem._id)} >
                         <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.flipCardClassFn(skillItem._id)}></span>
                         <div className="ptree-back-text" onClick={()=>this.flipCardClassFn(skillItem._id)}>BACK</div>
@@ -178,7 +173,7 @@ class SkillCard extends React.Component {
           const SkillList = props => {
             const { customStyle,skillItem } = props
             return(
-              <div className="ptree-card-back ptree-skill-list">
+              <div className="ptree-skill-list">
                   <div className="ptree-back" onClick={()=>this.toggleTaskView(skillItem._id)}>
                     <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.toggleTaskView(skillItem._id)}></span>
                     <div className="ptree-back-text" >BACK</div>
@@ -198,7 +193,7 @@ class SkillCard extends React.Component {
             )
           }
         return(
-            <div className={`col-sm-6 col-xs-12 ptree-card-item` + flipClass}
+            <div className={`col-md-4 col-sm-6 col-xs-12 ptree-card-item` + flipClass}
                     // onAnimationEnd={() => this.setState({fade: false})}
                     >
             <div className="ptree-card">
@@ -220,8 +215,10 @@ class SkillCard extends React.Component {
                   >VIEW TASKS</button>
                 </div>
               </div>
-              {(this.state.isTaskSelected[skillItem._id]) ?  <SkillList customStyle={customStyle} skillItem={skillItem}/> 
-              : <TaskList customStyle={customStyle} skillItem={skillItem} />}
+              <div className="ptree-card-back">
+                {(this.state.isTaskSelected[skillItem._id]) ?  <SkillList customStyle={customStyle} skillItem={skillItem}/> 
+                : <TaskList customStyle={customStyle} skillItem={skillItem} />}
+              </div>
             </div>
           </div>
         )

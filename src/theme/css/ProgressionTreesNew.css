@@ -97,7 +97,10 @@
     padding: 10px;
     font-size: 22px
 }
-
+.list-progression-trees{
+    width: 100%;
+    padding-left: 20px;
+}
 .skills-inprogress{
 
 }
@@ -133,6 +136,33 @@
     width: 100%;  
     padding: 20px; 
     /* background: linear-gradient(to left, #A4E6AD 0%, white 32%); */
+    position: relative;
+}
+.ptree-task-list{
+    /* position: absolute; */
+	top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.ptree-skill-list{
+    /* position: absolute; */
+	top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.skills-show{
+    
+}
+.skills-hide{
+    display: none;
+}
+.tasks-show{
+
+}
+.tasks-hide{
+    display: none;
 }
 .ptree-card-heading{
     margin: 0;

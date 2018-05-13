@@ -142,6 +142,8 @@ class ProgressionTrees extends React.Component {
   }
 
   renderUserProgressionTrees() {
+    console.log('this.props.userProfile')
+    console.log(this.props.userProfile)
     return (
       <div id="progression-trees-trees">
       {
@@ -206,10 +208,10 @@ class ProgressionTrees extends React.Component {
                   <a className="show-more">Show more</a>
                 </div>
               </div>
-              <div className="ptree-skill-list">
-              {this.props.userProfile.progressionTrees.length != 0 && 
+              <div className="ptree-roadmap-list">
+              {this.props.roadmapsAdmin.data.length != 0 && 
               
-              this.props.userProfile.progressionTrees.map((item,index) => {
+              this.props.roadmapsAdmin.data.map((item,index) => {
                 
                 let customStyle
                 if((index % 2) == 0){
@@ -329,58 +331,65 @@ class ProgressionTrees extends React.Component {
     
     return (
         <div className="row content-wrap">
-          {this.state.isAcceptProgressionTreePopupOpen 
-              && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
-              tree={this.state.selectedTree}
-              treeName={this.state.scannerSelectedTreeName}
-              modalIsOpen={this.state.isAcceptProgressionTreePopupOpen}
-                onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
-              />
-          }
-              {this.props.userProfile.progressionTrees.length != 0 &&
-                <div className={LeftColClass}>
-                  <div className="content-2-columns-left">
-                    {this.renderUserProgressionTrees()}
-                    {this.renderUserProgressionTreesNew()}
-                  </div>
-                </div>
-              }
-            
-            <div className={RightColClass}>
-              <div className="progression-tree-sidebar">
-
-                {this.props.userProfile.progressionTrees.length != 0 &&
-                  <div className="expander">
-                    {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
-                      onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
-                    : <ActionLink href="#" className="close-expanding"
-                      onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
-                </div>
-                }
-
-                {this.props.userProfile.progressionTrees.length != 0 &&
-                  <div className="expanding expanding-mobile">
-                    {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
-                      onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
-                    : <ActionLink href="#" className="close-expanding"
-                      onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
-                </div>
-                }
-                
-                <div className="progression-tree-header">
-                    Technology
-                </div>
-                <div className="progression-tree-container">
-                  <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
-                          openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
-                          ifProgressionTreesExist={ifProgressionTreesExist}  isExpanded={this.state.isSidebarExpanded}/>
-                </div>
-                
-                
-                </div>
+          {this.props.userProfile.progressionTrees.length != 0 &&
+              <div className="list-progression-trees">
+                  {this.renderUserProgressionTreesNew()}
               </div>
-              
+          }
         </div>
+        // <div className="row content-wrap">
+        //   {this.state.isAcceptProgressionTreePopupOpen 
+        //       && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
+        //       tree={this.state.selectedTree}
+        //       treeName={this.state.scannerSelectedTreeName}
+        //       modalIsOpen={this.state.isAcceptProgressionTreePopupOpen}
+        //         onConfirmationPopupClose={(option, treeId)=>this.onTreeAcceptConfirmationPopupClose(option, treeId)}
+        //       />
+        //   }
+        //       {this.props.userProfile.progressionTrees.length != 0 &&
+        //         <div className={LeftColClass}>
+        //           <div className="content-2-columns-left">
+        //             {this.renderUserProgressionTrees()}
+        //             {this.renderUserProgressionTreesNew()}
+        //           </div>
+        //         </div>
+        //       }
+            
+        //     <div className={RightColClass}>
+        //       <div className="progression-tree-sidebar">
+
+        //         {this.props.userProfile.progressionTrees.length != 0 &&
+        //           <div className="expander">
+        //             {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
+        //               onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        //             : <ActionLink href="#" className="close-expanding"
+        //               onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+        //         </div>
+        //         }
+
+        //         {this.props.userProfile.progressionTrees.length != 0 &&
+        //           <div className="expanding expanding-mobile">
+        //             {!this.state.isSidebarExpanded ? <ActionLink href="#" className="open-expanding"
+        //               onClick={() => this.handleExpandSidebar(true)}><Icon className="none-padding-left" name="chevron-left" aria-hidden="true"></Icon></ActionLink>
+        //             : <ActionLink href="#" className="close-expanding"
+        //               onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
+        //         </div>
+        //         }
+                
+        //         <div className="progression-tree-header">
+        //             Technology
+        //         </div>
+        //         <div className="progression-tree-container">
+        //           <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
+        //                   openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
+        //                   ifProgressionTreesExist={ifProgressionTreesExist}  isExpanded={this.state.isSidebarExpanded}/>
+        //         </div>
+                
+                
+        //         </div>
+        //       </div>
+              
+        // </div>
     );
   }
 }
