@@ -27,6 +27,7 @@ import {
 } from '~/src/redux/actions/characterCreation'
 
 import { fetchAchievements } from '~/src/redux/actions/achievements';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 const tag = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarTag.png";
 const friend = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/rightBarAdd-friend.png";
@@ -344,15 +345,45 @@ class UserProfile extends React.Component {
 		);
 	}
 
-	showAchievementPopover(achievement){
+	renderAchievementCount(achievement) {
+		return achievement.conditions.map(cond => {
+			let tokenCountLabel;
+			switch(cond.type) {
+				case 'Task':
+					tokenCountLabel = `Complete ${cond.count} ${cond.taskType} ${cond.count === 1 ? 'task' : 'tasks'}.`;
+					break;
+				case 'Progression':
+					// Find progression from this.state.progressionTrees using condition._roadmap field
+					let progressionObj = this.state.progressionTrees.find(e => e._id === cond._roadmap);
+					tokenCountLabel = `Complete ${cond.count} "${progressionObj.name}" ${cond.count === 1 ? 'task' : 'tasks'}.`;
+					break;
+				case 'Achievements':
+					// Find list of achievements from this.props.achievements using condition._achievements field which is an array
+					let achievementNames = this.props.achievements.data
+							.filter(ach => cond._achievements.indexOf(ach._id) !== -1)
+							.map(ach => ach.name);
+					tokenCountLabel = `Complete the ${achievementNames.length > 1 ? 'Achievements': 'Achievement'} "${achievementNames.join('", "')}".`;
+				break;
+				case 'Action':
+					if (cond.count > 1) {
+						tokenCountLabel = `Complete ${cond.count} "${cond.action}s".`;
+					} else {
+						tokenCountLabel = `Complete ${cond.count} "${cond.action}".`;
+					}					
+				break;
+			}
+			return <div className="token-count">{tokenCountLabel}</div>
+		});
+	}
 
+	showAchievementPopover(achievement){
 		const popoverBottom = (
 			<Popover id="popover-skill" className="popover-skill">
-			  	<div className="token-count">25 of 50</div>
-					<div className="progress-custom">
-						<div className="progress-length-custom">
-						</div>
+				{ this.renderAchievementCount(achievement) }
+				<div className="progress-custom">
+					<div className="progress-length-custom">
 					</div>
+				</div>
 			  	<div className="earned-token">Earned 50 tokens during 7 days</div>
 			</Popover>
 		)
