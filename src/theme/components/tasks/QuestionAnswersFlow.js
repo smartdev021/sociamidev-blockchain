@@ -25,14 +25,30 @@ class QuestionAnswersFlow extends React.Component {
     }
     this.getAnswerMy = this.getAnswerMy.bind(this)
     this.getAnswerPartner = this.getAnswerPartner.bind(this)
+    this.getAnswerOthers = this.getAnswerOthers.bind(this)
   }
 
   getAnswerMy(questionId) {
-    return 
+    if(this.props.answersMy)
+      return this.props.answersMy[questionId] ? this.props.answersMy[questionId].text : ""; 
+    else
+      return ""  
   }
 
   getAnswerPartner(questionId) {
-    return this.props.answersPartner && this.props.answersPartner[questionId] ? this.props.answersPartner[questionId].text : "";
+    if(this.props.answersPartner) 
+      return this.props.answersPartner[questionId] ? this.props.answersPartner[questionId].text : "";
+    else
+      return ""  
+  }
+
+  getAnswerOthers(questionId) {
+    if(this.props.answersOtherUsers){
+      const answersOtherUsers = this.props.answersOtherUsers.length>0 ? this.props.answersOtherUsers.filter(a => a.questionId === questionId) : []; 
+      return answersOtherUsers.slice(0,3);
+    }
+    else
+      return []  
   }
 
   handleNextOrPrevious(action) {
@@ -70,7 +86,15 @@ class QuestionAnswersFlow extends React.Component {
     const question = questions[currentQuestion];
     const AnswerMy = this.getAnswerMy([question._id]);
     const AnswerPartner = this.getAnswerPartner([question._id]);
-    
+    const AnswerOthers = this.getAnswerOthers(question._id);
+    const renderAnswerOthers = AnswerOthers.map(ans => {
+      return <span className="answer-avatar-container">
+              <img src={avatar} />
+              <span className="answer-text-text">
+                {ans.answer.text}
+              </span>
+            </span>
+    });
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
@@ -88,29 +112,29 @@ class QuestionAnswersFlow extends React.Component {
             {question.question}
           </h3>
         </div>
-        <div className="QuestionAnswersFlow-answer">
+        <div className={"QuestionAnswersFlow-answer" + " " +(this.props.currentTaskType !=='illuminate' && AnswerPartner !=='' ? 'show': 'hidden')}>
           <span>
             <img src={answerPersonImg} alt="answer-person-avatar" />
           </span>
           <span className="QuestionAnswersFlow-answer-text">
-            The reason that non-parametric classifiers are slower is because
-            they often have far more parameters to train...
-            <a href="#">&nbsp;&nbsp;Show more</a>
+            {AnswerPartner}
+            {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
           </span>
         </div>
-        <div className="QuestionAnswersFlow-other-players-answers">
+        <div className={"QuestionAnswersFlow-other-players-answers" + " " +(this.props.currentTaskType !=='illuminate' && renderAnswerOthers.length>0 ? 'show': 'hidden')}>
           <span className="QuestionAnswersFlow-other-players-answers-text">
             Other players' answers
           </span>
           <span className="QuestionAnswersFlow-other-players-answers-images">
-            <span className="answer-avatar-container">
+          {renderAnswerOthers}
+            {/* <span className="answer-avatar-container">
               <img src={avatar} />
               <span className="answer-text-text">
                 The reason that non-paramet- ric classifiers are slower is
                 because they often have far more parameters to train.
               </span>
-            </span>
-            <span className="answer-avatar-container">
+            </span> */}
+            {/* <span className="answer-avatar-container">
               <img src={avatar} />
               <span className="answer-text-text">
                 because they often have far more parameters to train. The reason
@@ -123,22 +147,22 @@ class QuestionAnswersFlow extends React.Component {
                 The reason that non-paramet- ric classifiers are slower is
                 because they often have far more parameters to train.
               </span>
-            </span>
+            </span> */}
           </span>
         </div>
         <div className="QuestionAnswersFlow-textarea">
         <textarea id={`answer_your_${question._id}`} 
                         className="validate-field required question-text-area"
-                          name="answer_your" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerMy}/>
-        {Partner &&
+                          name="answer_your" onChange={(e)=>this.props.onHandleAnswerInput(e)} value={AnswerMy}/>
+        {/* {Partner &&
             <div className="col-lg-6">
               <div className="form-group">
                 <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
                   className="validate-field required question-text-area" placeholder={Partner.user.firstName}
-                    name="answer_partner" onChange={(e)=>that.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
+                    name="answer_partner" onChange={(e)=>this.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
               </div>
             </div>
-        }
+        } */}
         </div>
         <div className="QuestionAnswersFlow-social-share">
           <span>World must know my answer</span>
@@ -178,4 +202,4 @@ QuestionAnswersFlow.PropTypes = {
   onBackToMyTasks: PropTypes.func.isRequired
 };
 
-  export default require('react-click-outside')(QuestionAnswersFlow);
+export default require('react-click-outside')(QuestionAnswersFlow);

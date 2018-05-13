@@ -13,6 +13,8 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import Axios from 'axios'
 
+import PubSub from 'pubsub-js';
+
 import ConfigMain from '~/configs/main'
 
 import ActionLink from '~/src/components/common/ActionLink'
@@ -41,6 +43,8 @@ class AnswerQuestions extends React.Component {
       answersMy: {},
 
       answersPartner: {},
+
+      answersOtherUsers: [],
 
       isTaskLoading: false,
       isQuestionsLoading: false,
@@ -75,12 +79,57 @@ class AnswerQuestions extends React.Component {
     }
   }
 
+  componentWillMount(){
+    if (!this.token_server_event_answer_updated) {
+      this.token_server_event_answer_updated = PubSub.subscribe("answer_updated", this.serverEventAnswerUpdated.bind(this));
+    }
+  }
+
+  serverEventAnswerUpdated(msg, data) {
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+    console.dir(data);
+    if (data.eventType == "answer_updated") {
+      if(this.state.questions.length > 0) {
+        const questionIds = this.state.questions.map(q => q._id).join(',');
+        if (questionIds) {
+          const Partner = this.getPartnerProfile();
+          Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersForQuestions?questionIds=${questionIds}&partnerId=${Partner.user._id}&myId=${this.props.userProfile._id}`)
+          .then((response) => {
+            this.setState({answersOtherUsers: response.data,
+              isAnswersFetchFromServerInProgress: false});
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+        }
+        const that = this;
+        Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswerGetForTask?taskId=${this.state.currentTask._id}`)
+        .then((response) =>this.fetchUserAnswersFromServerMySuccess(response, that))
+        .catch((error) => {
+          console.log(error)
+        });
+      }
+    }
+  };
+
+  componentWillUnmount(){
+    if (this.token_server_event_answer_updated) {
+      PubSub.unsubscribe(this.token_server_event_answer_updated);
+      this.token_server_event_answer_updated = undefined;
+    }
+  }
+
   componentDidMount() {
     const that = this;
     if (this.state.currentTask && this.state.currentTask.type == "hangout") {
       that.setState({isQuestionsLoading: true});
       Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}`)
-      .then((response)=>{that.setState({questions: response.data, isQuestionsLoading: false})})
+      .then((response)=>{
+        const questionIds = response.data.map(q => q._id).join(',');
+        that.setState({questions: response.data, isQuestionsLoading: false})
+        const Partner = that.getPartnerProfile();
+        that.fetchAnswersOtherUsersFromServer(questionIds, Partner.user._id,this.props.userProfile._id);
+      })
       .catch((error)=>{that.setState({isQuestionsLoading: false}); console.log(error)});
 
       this.fetchUserAnswersFromCookies();
@@ -190,6 +239,22 @@ class AnswerQuestions extends React.Component {
     });
   }
 
+  fetchAnswersOtherUsersFromServer(questionIds, partnerId, myId) {
+    if (questionIds) {
+      this.setState({isAnswersFetchFromServerInProgress: true});
+      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersForQuestions?questionIds=${questionIds}&partnerId=${partnerId}&myId=${myId}`)
+      .then((response) => {
+        this.setState({answersOtherUsers: response.data,
+          isAnswersFetchFromServerInProgress: false});
+      })
+      .catch((error) => {
+        this.setState({isAnswersFetchFromServerInProgress: false});
+        console.log(error)
+      });
+    }
+  }
+  
+
   storeUserAnswersToCookies(answersMy) {
     if (this.state.currentTask._id) {
       const { cookies } = this.props;
@@ -236,7 +301,7 @@ class AnswerQuestions extends React.Component {
       roadmapId: _.get(this, 'state.currentTask.metaData.subject.roadmap._id'),
       answers: this.state.answersMy,
     };
-
+    PubSub.publish('submitAnswerForTask', body.userId);
     this.props.hangoutAnswersSave(body);
   }
 
@@ -254,17 +319,18 @@ class AnswerQuestions extends React.Component {
       limit = 3;
     }
     const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
-
     return (
       <QuestionAnswersFlow onSubmit={(e)=>this.handlePopupSubmit(e)} 
         onCloseModal={()=>this.handlePopupClose()}
         questions={Questions} partner={Partner}
         answersMy={this.state.answersMy}
         answersPartner={this.state.answersPartner}
+        answersOtherUsers={this.state.answersOtherUsers}
         isLoading={this.state.isLoading}
         isSubmitting={this.props.isTasksUpdateInProgress}
         onBackToMyTasks={this.props.onBackToMyTasks}
-        onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}/>
+        onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}
+        currentTaskType={this.state.currentTask.type}/>
     );
   }
 }
