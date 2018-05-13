@@ -211,6 +211,12 @@
     cursor: pointer;
 }
 
+.ptree-skill-set{
+    overflow-y: scroll;
+    height: 325px;
+    padding: 2px;
+}
+
 /* ====================================== */
 /* entire container, keeps perspective */
 .ptree-card-item {
