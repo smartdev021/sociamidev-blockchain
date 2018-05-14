@@ -89,7 +89,7 @@ class SkillBreakdown extends React.Component {
     const hangout = {
       name: `Hangout for roadmap "${this.props.tree.name}"`,
       description: "Hangout with John, and answer questions together",
-      type: TaskTypes.HANGOUT,
+      type: TaskTypes.DEEPDIVE,
       userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`, 
       userID: this.props.userProfile._id,
       isHidden: 0,

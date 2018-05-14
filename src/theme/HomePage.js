@@ -14,9 +14,16 @@ import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
 
 import ProgressionTreesLanding from '~/src/theme/ProgressionTreesLanding';
 
+import SkillCard from "~/src/theme/components/progressiontrees/SkillCard"
+
 import {
   setSearchQuery,
 } from '~/src/redux/actions/fetchResults'
+
+import {
+  fetchRoadmaps,
+  fetchRoadmapsFromAdmin,
+} from '~/src/redux/actions/roadmaps'
 
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
@@ -34,6 +41,20 @@ class HomePage extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.props.onFetchAllTasks(false);
+    this.props.fetchRoadmaps();
+    this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isAuthorized != this.props.isAuthorized) {
+      if (this.props.isAuthorized) {
+        this.props.fetchRoadmapsFromAdmin(this.props.userProfile._id);
+      }
+    }
+  }
+
   handleCloseModal() {
     let copy = Object.assign({}, this.state, {isDetailsOpen: false});
     this.setState(copy);
@@ -42,10 +63,6 @@ class HomePage extends React.Component {
   handleOpenModal(task) {
     let copy = Object.assign({}, this.state, {isDetailsOpen: true, currentTask: task});
     this.setState(copy);
-  }
-
-  componentWillMount() {
-    this.props.onFetchAllTasks(false);
   }
 
   handleStartSearch(e) {
@@ -139,36 +156,87 @@ class HomePage extends React.Component {
     );
   }
 
+  renderUserProgressionTreesNew(){
+    return (
+      <div id="progression-trees-trees">
+        {
+            <div className="container-fluid">
+                <div className="row" style={{paddingBottom:'20px'}}>
+                  <div className="col-lg-12 skills-inprogress">
+                    <h3 className="timer-heading">
+                      TIMERS
+                    </h3>
+                    <p className="skill-in-progress">The Real Digital Nomad- Illuminate (00:25:59:34)</p>
+                    <p className="skill-in-progress">Innovation - Illuminate (00:25:59:34)</p>
+                    <a className="show-more">Show more</a>
+                  </div>
+                </div>
+                <div className="ptree-roadmap-list">
+                {this.props.roadmapsAdmin.data.length != 0 && 
+                
+                this.props.roadmapsAdmin.data.map((item,index) => {
+                  
+                  let customStyle
+                  if((index % 2) == 0){
+                    customStyle = {
+                      color : '#07AF3E',
+                      background : '#A4E6AD'
+                    }
+                  }else{
+                    customStyle = {
+                      color : '#F85655',
+                      background : '#F3A597'
+                    }
+                  }
+
+                  return <SkillCard skillItem={item} customStyle={customStyle} />
+                })
+                }
+              </div>  
+              </div>
+        }
+        </div>
+      )
+    }
+
   render() {
     //const SearchForm = this.renderSearhForm();
     const Tasks = this.renderTasks();
-
+    console.log('props in homepage')
+    console.log(this.props)
     return (
-      <div className="row">
-      <div className="col-lg-12">
-      <div id="main-content_1">
-        <div id="wrapper-home-page">
+      // <div className="row">
+      // <div className="col-lg-12">
+      // <div id="main-content_1">
+      //   <div id="wrapper-home-page">
         
-          {this.state.isDetailsOpen ? <DetailsPopup modalIsOpen={this.state.isDetailsOpen} 
-            onCloseModal={()=>this.handleCloseModal()} task={this.state.currentTask}/> : null}
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div>
-                     {this.props.isFetchInProgress ? <h1>Searching... <Icon spin name="spinner"/></h1> : <h1>What should I learn next</h1>}
-                    <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
-                  </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-6">
-                  <ProgressionTreesLanding />
-                </div>
-              </div>
+      //     {this.state.isDetailsOpen ? <DetailsPopup modalIsOpen={this.state.isDetailsOpen} 
+      //       onCloseModal={()=>this.handleCloseModal()} task={this.state.currentTask}/> : null}
+      //       <div className="container">
+      //         <div className="row">
+      //           <div className="col-lg-12">
+      //             <div>
+      //                {this.props.isFetchInProgress ? <h1>Searching... <Icon spin name="spinner"/></h1> : <h1>What should I learn next</h1>}
+      //               <p>Soqqle helps you develop your learning map, connect with friends and earn by sharing your knowledge and experience</p>
+      //             </div>
+      //         </div>
+      //         <div className="row">
+      //           <div className="col-lg-6">
+      //             {/* <ProgressionTreesLanding /> */}
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </div>
+      // </div>
+      // </div>
+      <div className="row content-wrap">
+        {this.props.roadmapsAdmin.data.length != 0 &&
+            <div className="list-progression-trees">
+                {this.renderUserProgressionTreesNew()}
             </div>
-          </div>
-        </div>
-      </div>
-      </div>
+        }
       </div>
     );
   }
@@ -177,17 +245,20 @@ class HomePage extends React.Component {
 HomePage.propTypes = {
   isFetchInProgress: PropTypes.bool.isRequired,
   tasks: PropTypes.array.isRequired,
-
   setSearchQuery: PropTypes.func.isRequired,
+  roadmapsAdmin: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
+  fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
+  fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
 })
 
 const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
   tasks: state.tasks.data,
+  roadmapsAdmin: state.roadmapsAdmin,
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

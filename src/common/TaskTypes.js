@@ -1,7 +1,8 @@
 const TaskTypes = {
     PROJECT_MILESTONE: "project_milestone",
-    HANGOUT: "hangout",
-    ILLUMINATE: "illuminate"
+    DEEPDIVE: "hangout",
+    ILLUMINATE: "illuminate",
+    DECODE: "decode",
 }
 
 export default TaskTypes;

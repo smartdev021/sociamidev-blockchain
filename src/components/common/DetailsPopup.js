@@ -215,7 +215,7 @@ class DetailsPopup extends React.Component {
       );
     }
     renderDetails() {
-      if(this.props.task && this.props.task.type == TaskTypes.HANGOUT) {
+      if(this.props.task && this.props.task.type == TaskTypes.DEEPDIVE) {
         return this.renderHangoutJoinConfirmation();
       }
       

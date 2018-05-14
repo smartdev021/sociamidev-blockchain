@@ -17,6 +17,7 @@ import PopupAcceptProgressionTree from "~/src/theme/components/PopupAcceptProgre
 import ProgressiontreesScanner from "~/src/theme/components/progressiontrees/ProgressiontreesScanner"
 import ProgressiontreesMyProgress from "~/src/theme/components/progressiontrees/ProgressiontreesMyProgress"
 import ProgressiontreeBrowser from "~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew"
+import SkillCard from "~/src/theme/components/progressiontrees/SkillCard"
 
 import {Icon} from 'react-fa'
 import ActionLink from '~/src/components/common/ActionLink'
@@ -53,7 +54,7 @@ class ProgressionTrees extends React.Component {
 
       isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0,
       isTreeExpanded: false,
-      isSidebarExpanded: false
+      isSidebarExpanded: false,
     }
 
     this.handleStopProgressionTree = this.handleStopProgressionTree.bind(this);
@@ -141,6 +142,8 @@ class ProgressionTrees extends React.Component {
   }
 
   renderUserProgressionTrees() {
+    // console.log('props in progression tree')
+    // console.log(this.props)
     return (
       <div id="progression-trees-trees">
       {
@@ -170,6 +173,72 @@ class ProgressionTrees extends React.Component {
         
       </div>
     );
+  }
+
+  treeFetchSuccess(response) {
+    let cardClass = { 
+      ...this.state.tree ,
+      [skillId]: !this.state.flipCardClass[skillId]
+    }
+    this.setState({flipCardClass: cardClass});
+    this.setState({isLoading: false, tree: response.data});
+  }
+
+  treeFetchFailed(error) {
+    console.log("Tree fetch error: " + error);
+    this.setState({isLoading: false});
+  }
+
+  renderUserProgressionTreesNew(){
+    return (
+      <div id="progression-trees-trees">
+      {
+        this.state.selectedTreeFromMyProgressIndex != -1 ?
+          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
+            onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask} progressionTreeFS={()=>this.progressionTreeFS()} progressionTreeSS={()=>this.progressionTreeSS()}/>
+          :
+            <div className="container-fluid">
+              <div className="row" style={{paddingBottom:'20px'}}>
+                <div className="col-lg-12 skills-inprogress">
+                  <h3 className="timer-heading">
+                    TIMERS
+                  </h3>
+                  <p className="skill-in-progress">The Real Digital Nomad- Illuminate (00:25:59:34)</p>
+                  <p className="skill-in-progress">Innovation - Illuminate (00:25:59:34)</p>
+                  <a className="show-more">Show more</a>
+                </div>
+              </div>
+              <div className="ptree-roadmap-list">
+              {this.props.roadmapsAdmin.data.length != 0 && 
+              
+              this.props.roadmapsAdmin.data.map((item,index) => {
+                
+                let customStyle
+                if((index % 2) == 0){
+                  customStyle = {
+                    color : '#07AF3E',
+                    background : '#A4E6AD'
+                  }
+                }else{
+                  customStyle = {
+                    color : '#F85655',
+                    background : '#F3A597'
+                  }
+                }
+
+                return <SkillCard skillItem={item} customStyle={customStyle} />
+              })
+                // <div>
+                //   <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} allTrees={this.props.roadmapsAdmin.data}
+                //     isAuthorized={this.props.isAuthorized} openSingleTree={(id)=>this.handleOpenSingleTree(id)}
+                //     stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
+                // </div>
+              }
+            </div>  
+            </div>
+      }
+      </div>
+    )
   }
 
   openTreeAcceptConfirmationPopup(treeId, treeName) {
@@ -261,6 +330,13 @@ class ProgressionTrees extends React.Component {
     }
     
     return (
+        // <div className="row content-wrap">
+        //   {this.props.userProfile.progressionTrees.length != 0 &&
+        //       <div className="list-progression-trees">
+        //           {this.renderUserProgressionTreesNew()}
+        //       </div>
+        //   }
+        // </div>
         <div className="row content-wrap">
           {this.state.isAcceptProgressionTreePopupOpen 
               && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
@@ -274,6 +350,7 @@ class ProgressionTrees extends React.Component {
                 <div className={LeftColClass}>
                   <div className="content-2-columns-left">
                     {this.renderUserProgressionTrees()}
+                    {/* {this.renderUserProgressionTreesNew()} */}
                   </div>
                 </div>
               }

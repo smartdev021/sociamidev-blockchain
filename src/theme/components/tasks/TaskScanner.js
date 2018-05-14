@@ -36,7 +36,7 @@ const RenderSingleTask = (task, i, props)=> {
       return null;
   }
 
-  if (task.type == TaskTypes.HANGOUT) {
+  if (task.type == TaskTypes.DEEPDIVE) {
     const date = new Date(task.metaData.time);
 
     const dateNow = new Date(Date.now());
