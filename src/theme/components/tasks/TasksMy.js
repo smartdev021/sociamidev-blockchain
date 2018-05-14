@@ -399,19 +399,19 @@ const DayFromNumber = (dayNum)=> {
         case "canceled":
         case "cancelled": {
           result = (
-            <h4>Your Deepdive has been cancelled</h4>
+            <h4>Your Deepdive {task._id} has been cancelled</h4>
             );
           break;
         }
         case "started": {
           result = (
-              <h4>Your Deepdive is in progress</h4>
+              <h4>Your Deepdive {task._id} is in progress</h4>
             );
           break;
         }
         case "finished": {
           result = (
-              <h4>Your Deepdive is finished</h4>
+              <h4>Your Deepdive {task._id} is finished</h4>
             );
           break;
         }
@@ -541,6 +541,9 @@ const DayFromNumber = (dayNum)=> {
   
     const TaskColClass = props.isCollapsed ? "col-lg-12" : "col-lg-4";
   
+    const createdDate = new Date(task.date);
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dateTimeString = createdDate.getDate() + ' ' + months[createdDate.getMonth()] + ' ' + createdDate.getFullYear();
     if (task.type === TaskTypes.DEEPDIVE) {
       const taskTime = task.status == "None" ? task.metaData.time : task.timeStatusChanged;
       
@@ -549,12 +552,14 @@ const DayFromNumber = (dayNum)=> {
       let ThirdLine = `Time: ${GenerateDateString(taskTime, props)}`;
       if(taskTime < new Date())
         ThirdLine = "Start when both ready"
-
+      
       return (
         <div className="col-deep col-sm-6" key={i}>
         <div className="item-deep">
         <div className="deep-content">
             {RenderTaskTitle(task, props)}
+            <p>TaskID: {task._id}</p>
+            <p>Date Created: {dateTimeString}</p>
             <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
             <p>{ThirdLine}</p>
         </div>
@@ -569,6 +574,8 @@ const DayFromNumber = (dayNum)=> {
           <div className="item-deep">
             <div className="deep-content">
                 {RenderTaskTitle(task, props)}
+                <p>TaskID: {task._id}</p>
+                <p>Date Created: {dateTimeString}</p>
                 <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
             </div>
             {RenderIlluminateActions(task, props)}
@@ -584,6 +591,8 @@ const DayFromNumber = (dayNum)=> {
           <div className="item-deep">
             <div className="deep-content">
                 {RenderTaskTitle(task, props)}
+                <p>TaskID: {task._id}</p>
+                <p>Date Created: {dateTimeString}</p>
                 <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
             </div>
             {RenderDecodeActions(task, props)}
