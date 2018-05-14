@@ -19,6 +19,8 @@ import TooltipUser from "~/src/theme/components/tasks/TooltipUser";
 
 import PubSub from 'pubsub-js';
 
+import TaskTypes from "~/src/common/TaskTypes"
+
 const RenderDummyFriends = false;
 
 /*Helper functions*/
@@ -128,6 +130,34 @@ const DayFromNumber = (dayNum)=> {
           <div className="deep-tools">
           </div>
         );
+      }
+    }
+
+  }
+
+  const RenderDecodeActions = (task, props) => {
+    switch (task.status) {
+      case "None": {
+        return (
+          <div className="deep-tools">
+            <ul>
+              <li>
+                <ActionLink href="#"
+                  onClick={()=>props.onHangoutActionPerform("answer_questions", task)} className="btn-base btn-red">
+                  Answer Questions
+                </ActionLink>
+              </li>
+            </ul>
+         </div>);
+      }
+      case "complete": {
+        return (
+          <div className="deep-tools">
+          </div>
+        );
+      }
+      default: {
+        return null;
       }
     }
 
@@ -330,6 +360,37 @@ const DayFromNumber = (dayNum)=> {
     return result;
   }
 
+  const DecodeTitleFromStatus = (task) => {
+    let result = <h4> <a href="#" className="link-black"></a> </h4>
+    switch (task.status) {
+      case "started":
+        result = (
+          <h4>Decode is in progress</h4>
+        )
+        break;
+      case "finished": {
+        result = (
+            <h4>Decode is finished</h4>
+          );
+        break;
+      }
+      case "complete": {
+        result = (
+          <h4>Decode is complete</h4>
+          );
+        break;
+      }
+      default: {
+        result = (
+          <h4>Decode is progress</h4>
+          );
+        break;
+      }
+    }
+
+    return result;
+  }
+
   const HangoutTitleFromStatus = (task, Partner, props) => {
     let result = <h4> <a href="#" className="link-black"></a> </h4>
   
@@ -338,19 +399,19 @@ const DayFromNumber = (dayNum)=> {
         case "canceled":
         case "cancelled": {
           result = (
-            <h4>Your Deepdive has been cancelled</h4>
+            <h4>Your Deepdive {task._id} has been cancelled</h4>
             );
           break;
         }
         case "started": {
           result = (
-              <h4>Your Deepdive is in progress</h4>
+              <h4>Your Deepdive {task._id} is in progress</h4>
             );
           break;
         }
         case "finished": {
           result = (
-              <h4>Your Deepdive is finished</h4>
+              <h4>Your Deepdive {task._id} is finished</h4>
             );
           break;
         }
@@ -410,7 +471,7 @@ const DayFromNumber = (dayNum)=> {
   const RenderTaskTitle = (task, props) => {
     let result = <h4><a href="#" className="link-black"></a></h4>
   
-    if (task.type == "hangout") {
+    if (task.type === TaskTypes.DEEPDIVE) {
       const Partner = GetHangoutPartner(task, props);
   
       //Current user has created this hangout
@@ -449,8 +510,11 @@ const DayFromNumber = (dayNum)=> {
         }
       }
     }
-    else if (task.type === "illuminate") {
+    else if (task.type === TaskTypes.ILLUMINATE) {
       result = IlluminateTitleFromStatus(task);
+    }
+    else if (task.type === TaskTypes.DECODE) {
+      result = DecodeTitleFromStatus(task);
     }
     else {
       result = <div id="title">{task.name}</div>;
@@ -477,25 +541,32 @@ const DayFromNumber = (dayNum)=> {
   
     const TaskColClass = props.isCollapsed ? "col-lg-12" : "col-lg-4";
   
-    if (task.type == "hangout") {
+    const createdDate = new Date(task.date);
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dateTimeString = createdDate.getDate() + ' ' + months[createdDate.getMonth()] + ' ' + createdDate.getFullYear();
+    if (task.type === TaskTypes.DEEPDIVE) {
       const taskTime = task.status == "None" ? task.metaData.time : task.timeStatusChanged;
       
   
       const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
-      const ThirdLine = `Time: ${GenerateDateString(taskTime, props)}`
-
+      let ThirdLine = `Time: ${GenerateDateString(taskTime, props)}`;
+      if(taskTime < new Date())
+        ThirdLine = "Start when both ready"
+      
       return (
         <div className="col-deep col-sm-6" key={i}>
         <div className="item-deep">
         <div className="deep-content">
             {RenderTaskTitle(task, props)}
+            <p>TaskID: {task._id}</p>
+            <p>Date Created: {dateTimeString}</p>
             <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
             <p>{ThirdLine}</p>
         </div>
         {RenderActions(task, props)}
     </div>
     </div>)
-    } else if (task.type === "illuminate"){
+    } else if (task.type === TaskTypes.ILLUMINATE){
       const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
 
       return (
@@ -503,9 +574,28 @@ const DayFromNumber = (dayNum)=> {
           <div className="item-deep">
             <div className="deep-content">
                 {RenderTaskTitle(task, props)}
+                <p>TaskID: {task._id}</p>
+                <p>Date Created: {dateTimeString}</p>
                 <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
             </div>
             {RenderIlluminateActions(task, props)}
+          </div>
+        </div>
+      );
+    }
+    else if (task.type === TaskTypes.DECODE){
+      const SecondLine = `Skill: ${task.metaData.subject.skill.name}`;
+
+      return (
+        <div className="col-deep col-sm-6" key={i}>
+          <div className="item-deep">
+            <div className="deep-content">
+                {RenderTaskTitle(task, props)}
+                <p>TaskID: {task._id}</p>
+                <p>Date Created: {dateTimeString}</p>
+                <p onClick={()=>DebugOutputClick(task)}>{SecondLine}</p>
+            </div>
+            {RenderDecodeActions(task, props)}
           </div>
         </div>
       );

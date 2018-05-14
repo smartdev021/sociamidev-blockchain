@@ -287,7 +287,7 @@ class TaskManager extends React.Component {
   }
 
   handleAcceptConfirm(item){
-    if (this.state.detailsPopupItem.type != TaskTypes.HANGOUT) {
+    if (this.state.detailsPopupItem.type != TaskTypes.DEEPDIVE) {
 
       const Assignee = {
         _id: this.props.userProfile._id,
@@ -506,7 +506,7 @@ class TaskManager extends React.Component {
       foundTasks = tasksScanner
     }
     return foundTasks.filter(task => {
-      return task.type == TaskTypes.HANGOUT
+      return task.type == TaskTypes.DEEPDIVE
     })
   }
 

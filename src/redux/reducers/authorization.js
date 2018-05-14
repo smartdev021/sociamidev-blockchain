@@ -46,6 +46,7 @@ const userProfileInitialState = {
     facebook: null,
     linkedin: null,
     progressionTrees: [],
+    progressionTreeLevels: [],
   },
   tasks: {
     assigned: [],

@@ -301,6 +301,8 @@ export function taskLeave(taskId, user) {
 }
 
 export function hangoutAnswersSave(body) {
+    console.log("%chanhoutAnswers", "color: green; background: purprple;");
+    console.dir(body);
     return function (dispatch) {
         dispatch(updateTaskInitiate());
 

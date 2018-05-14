@@ -111,10 +111,10 @@ class HangoutSubmitForm extends React.Component {
   }
 
   onCreateTaskInSpecificTime() {
-    this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
-    this.props.handleToggle();
     this.props.onHandleStartHangout(this.state.dateSelected.toDate());
     this.props.toogleTrenScan();
+    this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
+    this.props.handleToggle();
   }
 
   onCreateTaskInFlexibleTime() {
@@ -123,7 +123,7 @@ class HangoutSubmitForm extends React.Component {
     this.props.onHandleStartHangout(midnightToday);
     this.props.toogleTrenScan();
     this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
-    this.props.handleToggle();
+    // this.props.handleToggle();
   }
 
   renderForm() {
@@ -160,13 +160,17 @@ class HangoutSubmitForm extends React.Component {
   }
 
   render() {
+    console.log('this.props.isHangoutFormVisible',this.props.isHangoutFormVisible)
     return (
       ! this.state.isSpecificTime
         ?
         <Modal contentLabel="DeepDive" isOpen={this.props.isHangoutFormVisible}
-          onRequestClose={() => {}} >
+          onRequestClose={() => {this.props.onCloseModal()}} >
           <ActionLink href='#' className="glyphicon glyphicon-remove modal-close-button"
-            onClick={() => this.onCreateTaskInFlexibleTime()}></ActionLink>
+            onClick={() => {
+              this.onCreateTaskInFlexibleTime()
+              this.props.onCloseModal()
+            }}></ActionLink>
           <div className="modal-popup">
             <div className="container-fluid">
               <div className="row">

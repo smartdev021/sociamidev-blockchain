@@ -76,7 +76,18 @@ export function updateUserProfileComplete(userProfile) {
     }
 }
 
-export function logout() {
+export function logout(userID) {
+    const url = `${ConfigMain.getBackendURL()}/logout`;
+
+    const body = {userID: userID};
+
+    Axios.post(url, body)
+    .then(function(response) {
+        console.log("User logged out with User Id - " + userID);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
     return {
         type: USER_LOG_OUT,
     }

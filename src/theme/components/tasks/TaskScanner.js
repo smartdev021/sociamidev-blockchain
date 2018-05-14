@@ -36,7 +36,7 @@ const RenderSingleTask = (task, i, props)=> {
       return null;
   }
 
-  if (task.type == TaskTypes.HANGOUT) {
+  if (task.type == TaskTypes.DEEPDIVE) {
     const date = new Date(task.metaData.time);
 
     const dateNow = new Date(Date.now());
@@ -57,6 +57,9 @@ const RenderSingleTask = (task, i, props)=> {
     else {
       time = `${Hours} on ${DayFromNumber(date.getDay())} (${date.getDate()} ${MonthFromNumber(date.getMonth())})`; 
     }
+
+    if(date < new Date())
+        time = "mutually convenient time today";
     
     return (
     <div className="col-tokens col-sm-12" key={i}>
