@@ -163,7 +163,7 @@ class QuestionAnswersFlow extends React.Component {
             {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
           </span>
         </div>
-        <div className={"QuestionAnswersFlow-other-players-answers" + " " +(this.props.currentTaskType !=='illuminate' && renderAnswerOthers.length>0 ? 'show': 'hidden')}>
+        <div className={"QuestionAnswersFlow-other-players-answers" + " " +(renderAnswerOthers.length>0 ? 'show': 'hidden')}>
           <span className="QuestionAnswersFlow-other-players-answers-text">
             Other players' answers
           </span>

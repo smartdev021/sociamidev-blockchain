@@ -386,7 +386,6 @@ class AnswerQuestions extends React.Component {
   }
 
   render() {
-    console.log('this.state.answersMy',this.state.answersMy)
     const CurrentUserID = this.props.userProfile._id;
 
     const Partner = this.getPartnerProfile();
