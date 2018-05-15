@@ -130,39 +130,64 @@ class SkillCard extends React.Component {
                       </div>
                       <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT TASK TO CONTINUE WITH THIS HERO</div>
       
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          Illuminate
+                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} 
+                      style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                        <div className="ptask-left">
+                          <div className="pskill-name">
+                            Illuminate
+                          </div>
+                          <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                            30 min 3 questions
+                          </div>
                         </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          30 min 3 questions
-                        </div>
-                      </div>
-      
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          Deepdive
-                        </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          30 min 10 questions
-                        </div>
-                      </div>
-                      
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          XXX
-                        </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          xxx
+                        <div className="ptask-right" style={{marginRight:'12px'}}>
+                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single.png"
+                          className="ptask-img-single" />
                         </div>
                       </div>
       
                       <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          Brainstorm
+                        <div className="ptask-left">
+                          <div className="pskill-name">
+                            Deepdive
+                          </div>
+                          <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                            30 min 10 questions
+                          </div>
                         </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          60 min 1 challenge
+                        <div className="ptask-right">
+                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
+                          className="ptask-img-double" />
+                        </div>
+                      </div>
+
+                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                        <div className="ptask-left">
+                          <div className="pskill-name">
+                            XXX
+                          </div>
+                          <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                            xxx
+                          </div>
+                        </div>
+                        <div className="ptask-right">
+                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
+                          className="ptask-img-double" />
+                        </div>
+                      </div>
+
+                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
+                        <div className="ptask-left">
+                          <div className="pskill-name">
+                            Brainstorm
+                          </div>
+                          <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
+                            60 min 1 challenge
+                          </div>
+                        </div>
+                        <div className="ptask-right">
+                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Group.png"
+                          className="ptask-img-group" />
                         </div>
                       </div>
       
