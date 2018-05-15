@@ -372,12 +372,12 @@ class UserProfile extends React.Component {
 					}					
 				break;
 			}
-			return <div className="token-count">{tokenCountLabel}</div>
+			return <div  key={cond._id} className="token-count">{tokenCountLabel}</div>
 		});
 	}
 
-	showAchievementPopover(achievement){
-		const popoverBottom = (
+	achievementPopover(achievement) {
+		return (
 			<Popover id="popover-skill" className="popover-skill">
 				{ this.renderAchievementCount(achievement) }
 				<div className="progress-custom">
@@ -386,16 +386,7 @@ class UserProfile extends React.Component {
 				</div>
 			  	<div className="earned-token">Earned 50 tokens during 7 days</div>
 			</Popover>
-		)
-
-		return (
-			<OverlayTrigger
-				trigger={['hover', 'click']}
-				placement="top"
-				overlay={popoverBottom} >
-				<p>{achievement.name}</p>
-			</OverlayTrigger>
-		)
+		);
 	}
 
 	renderAchievementsFilter() {
@@ -450,13 +441,20 @@ class UserProfile extends React.Component {
 					this.props.achievements.data
 					.map(achievement => {
 						return (	
-							<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
-								<div className="achievement-item">
-									
-								</div>
-								<div className="achievement-name">
-									{this.showAchievementPopover(achievement)}
-								</div>
+							<div key={achievement._id} className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
+								<OverlayTrigger
+									trigger={['hover', 'click']}
+									placement="top"
+									rootClose
+									overlay={this.achievementPopover(achievement)} >
+									<div>
+										<div className="achievement-item">
+										</div>
+										<div className="achievement-name">
+											<p>{achievement.name}</p>
+										</div>
+									</div>
+								</OverlayTrigger>
 							</div>
 						);
 					})
