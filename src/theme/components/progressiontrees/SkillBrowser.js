@@ -587,6 +587,8 @@ class SkillBrowser extends React.Component {
     const decodeTrackerCount = _.get(this, 'state.decodeTracker.count', 0);
     const decodeTimerQuota = _.get(this, 'state.decodeTimer.quota', 0);
     const IsDecodeAvailable = !decodeTrackerCount || decodeTrackerCount < decodeTimerQuota;
+
+    console.log(`%cDecode Debug decodeTrackerCount: ${decodeTrackerCount} decodeTimerQuota: ${decodeTimerQuota} IsDecodeAvailable" ${IsDecodeAvailable}`, "color: white; background: red;");
     
     if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
       return (
