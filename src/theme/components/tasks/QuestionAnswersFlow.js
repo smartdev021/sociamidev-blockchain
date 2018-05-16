@@ -155,13 +155,21 @@ class QuestionAnswersFlow extends React.Component {
           </h3>
         </div>
         <div className={"QuestionAnswersFlow-answer" + " " +(this.props.currentTaskType !=='illuminate' && AnswerPartner !=='' ? 'show': 'hidden')}>
-          <span>
-            <img src={answerPersonImg} alt="answer-person-avatar" />
-          </span>
-          <span className="QuestionAnswersFlow-answer-text">
-            {AnswerPartner}
-            {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
-          </span>
+          <div className="row">
+            <div className="col-xs-1">
+              <span>
+                <img src={answerPersonImg} alt="answer-person-avatar" />
+              </span>
+            </div>
+            <div className="col-xs-11">
+              <div className="QuestionAnswersFlow-answer-text partner-answer-text">
+              {AnswerPartner}
+              {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
+              </div>
+            </div>
+          </div>
+          
+          
         </div>
         <div className={"QuestionAnswersFlow-other-players-answers" + " " +(renderAnswerOthers.length>0 ? 'show': 'hidden')}>
           <span className="QuestionAnswersFlow-other-players-answers-text">
