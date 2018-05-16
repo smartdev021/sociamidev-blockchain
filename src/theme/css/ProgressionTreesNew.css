@@ -208,6 +208,7 @@
     padding: 10px;
     margin: 10px 0px 10px 0px;
     box-shadow: 0px 0px 0.01px 0px rgba(0,0,0,0.3);
+    overflow: auto;
 }
 .pskill-name{
     font-size: 17px;
@@ -245,6 +246,22 @@
     overflow-y: scroll;
     height: 325px;
     padding: 2px;
+}
+.ptask-left{
+    width: 70%;
+    float: left;
+}
+.ptask-right{
+    float: right;
+}
+.ptask-img-single{
+    margin-top: 5px;
+}
+.ptask-img-double{
+    margin-top: 5px
+}
+.ptask-img-group{
+
 }
 
 /* ====================================== */
