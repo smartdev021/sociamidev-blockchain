@@ -142,18 +142,18 @@ class LandingPageContent extends React.Component {
               <h1>What is Soqqle?</h1>
               <div className="xs-col lg-row mt50">
                 <div className="card">
-                  <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/learning.png" />
+                  <img src={require("./img/learning.png")} />
                   <h5>Drive purposeful learning</h5>
                 </div>
                 <div className="row-seprator">&nbsp;</div>
                 <div className="card">
-                  <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/social.png" />
+                  <img src={require("./img/social.png")} />
                   <h5>Combine social andlearning goals</h5>
                 </div>
                 <div className="row-seprator">&nbsp;</div>
 
                 <div className="card">
-                  <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/identity.png" />
+                  <img src={require("./img/identity.png")} />
                   <h5>Helps identify networks to join the journey</h5>
                 </div>
               </div>
@@ -162,9 +162,9 @@ class LandingPageContent extends React.Component {
               <div className="row center mt100">
                 <div className="f1">
                   <div className="featured-image">
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-1.png" className="l1" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-1.png" className="l2" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-1.png" className="l3" />
+                    <img src={require("./img/featured-1.png")} className="l1" />
+                    <img src={require("./img/featured-1.png")} className="l2" />
+                    <img src={require("./img/featured-1.png")} className="l3" />
                   </div>
                 </div>
                 <div className="f2">
@@ -185,9 +185,9 @@ class LandingPageContent extends React.Component {
               <div className="row-rev center mt100">
                 <div className="f1">
                   <div className="featured-image">
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-2.png" className="l-1" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-2.png" className="l-2" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-2.png" className="l3" />
+                    <img src={require("./img/featured-2.png")} className="l-1" />
+                    <img src={require("./img/featured-2.png")} className="l-2" />
+                    <img src={require("./img/featured-2.png")} className="l3" />
                   </div>
                 </div>
                 <div className="f2">
@@ -206,9 +206,9 @@ class LandingPageContent extends React.Component {
               <div className="row center mt100">
                 <div className="f1">
                   <div className="featured-image">
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-3.png" className="l1" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-3.png" className="l2" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-3.png" className="l3" />
+                    <img src={require("./img/featured-3.png")} className="l1" />
+                    <img src={require("./img/featured-3.png")} className="l2" />
+                    <img src={require("./img/featured-3.png")} className="l3" />
                   </div>
                 </div>
                 <div className="f2">
@@ -228,9 +228,9 @@ class LandingPageContent extends React.Component {
               <div className="row-rev center mt100">
                 <div className="f1">
                   <div className="featured-image">
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-4.png" className="l-1" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-4.png" className="l-2" />
-                    <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/featured-4.png" className="l3" />
+                    <img src={require("./img/featured-4.png")} className="l-1" />
+                    <img src={require("./img/featured-4.png")} className="l-2" />
+                    <img src={require("./img/featured-4.png")} className="l3" />
                   </div>
                 </div>
                 <div className="f2">
