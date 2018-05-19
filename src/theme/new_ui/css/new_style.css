@@ -269,7 +269,7 @@ p {
   display: flex;
   align-self: center;
 }
-.container {
+.CONTAINER {
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -500,7 +500,7 @@ section.white {
   padding: 14px 80px;
 }
 
-.btn {
+.BTN {
   font-size: 1.6rem;
   font-weight: 400;
   display: block;
@@ -508,17 +508,17 @@ section.white {
   padding: 5px 20px;
 }
 
-.btn.btn-outline {
+.BTN.btn-outline {
   padding: 5px 40px;
   border: 2px solid #2c82df;
 }
 
-.btn.btn-solid-blue {
+.BTN.btn-solid-blue {
   padding: 5px 40px;
   background-color: #2c82df;
 }
 
-.btn.btn-solid-yellow {
+.BTN.btn-solid-yellow {
   padding: 10px 40px;
   background-color: #ffd400;
   color: #000;
@@ -527,7 +527,7 @@ section.white {
   box-shadow: rgba(0, 0, 0, 0.5) inset 3px 3px 8px 1px;
 }
 
-.btn.btn-solid-white {
+.BTN.btn-solid-white {
   padding: 10px 40px;
   background-color: #fff;
   color: #000;

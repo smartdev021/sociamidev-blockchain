@@ -63,27 +63,27 @@ class LandingPageContent extends React.Component {
               <div className="unskew">
                 <ul className="main-menu">
                   <li>
-                    <a href="#" className="btn">
+                    <a href="#" className="BTN">
                       The games
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="btn">
+                    <a href="#" className="BTN">
                       Forums
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="btn">
+                    <a href="#" className="BTN">
                       Markets
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="btn btn-outline skew">
+                    <a href="#" className="BTN btn-outline skew">
                       <span className="block unskew">Subscribe</span>
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="btn btn-solid-blue skew">
+                    <a href="#" className="BTN btn-solid-blue skew">
                       <span className="block unskew">Enterprise sign up</span>
                     </a>
                   </li>
@@ -101,13 +101,13 @@ class LandingPageContent extends React.Component {
                   </div>
                 </div>
                 <div className="row" style={{ marginTop: 10 + "px" }}>
-                  <a href="#" className="btn btn-solid-yellow f1 text-center">
+                  <a href="#" className="BTN btn-solid-yellow f1 text-center">
                     <span className="unskew" style={{ display: "block" }}>
                       Explore Soqqle
                     </span>
                   </a>
                   <span style={{ display: "inline-block", width: 10 + "px" }}>&nbsp;</span>
-                  <a href="#" className="btn btn-solid-white f1 text-center">
+                  <a href="#" className="BTN btn-solid-white f1 text-center">
                     <span className="unskew" style={{ display: "block" }}>
                       Sign In
                     </span>
@@ -119,7 +119,7 @@ class LandingPageContent extends React.Component {
           </div>
         </section>
         <section className="black notch-top-right-black notch-bottom-left-black">
-          <div className="container center">
+          <div className="CONTAINER center">
             <div className="lg-w60 text-center">
               <h1>
                 Available now on Alpha.
@@ -137,7 +137,7 @@ class LandingPageContent extends React.Component {
           </div>
         </section>
         <section className="white notch-bottom-left-white">
-          <div className="container center">
+          <div className="CONTAINER center">
             <div className="w60 text-center pv50">
               <h1>What is Soqqle?</h1>
               <div className="xs-col lg-row mt50">
@@ -248,13 +248,13 @@ class LandingPageContent extends React.Component {
           </div>
         </section>
         <section className="black">
-          <div className="container center">
+          <div className="CONTAINER center">
             <h1 className="mt50">Discover Soqqle</h1>
             <h4>Video Goes here</h4>
           </div>
         </section>
         <section className="white notch-bottom-left-white">
-          <div className="container">
+          <div className="CONTAINER">
             <h1 className="mt50 text-center">Our blog</h1>
             <div className="row">
               <div className="f1 col">
@@ -274,7 +274,7 @@ class LandingPageContent extends React.Component {
           </div>
         </section>
         <footer className="main-footer">
-          <div className="container center">
+          <div className="CONTAINER center">
             <div className="footer-logo-container text-center">
               <img src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_gamified/assets/img/logo.png" />
             </div>
