@@ -419,7 +419,7 @@ section.white {
 }
 
 .cover {
-  background-image: url("../images/bg.png");
+  background-image: url("../img/bg.png");
   background-size: cover;
   min-height: 700px;
   display: flex;
@@ -441,7 +441,7 @@ section.white {
 }
 
 .main-footer {
-  background-image: url("../images/footer-bg.png");
+  background-image: url("../img/footer-bg.png");
   background-size: cover;
   min-height: 500px;
   color: #fff;
