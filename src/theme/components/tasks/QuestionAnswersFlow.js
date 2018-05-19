@@ -155,57 +155,36 @@ class QuestionAnswersFlow extends React.Component {
           </h3>
         </div>
         <div className={"QuestionAnswersFlow-answer" + " " +(this.props.currentTaskType !=='illuminate' && AnswerPartner !=='' ? 'show': 'hidden')}>
-          <span>
-            <img src={answerPersonImg} alt="answer-person-avatar" />
-          </span>
-          <span className="QuestionAnswersFlow-answer-text">
-            {AnswerPartner}
-            {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
-          </span>
+          <div className="row">
+            <div className="col-xs-1">
+              <span>
+                <img src={answerPersonImg} alt="answer-person-avatar" />
+              </span>
+            </div>
+            <div className="col-xs-11">
+              <div className="QuestionAnswersFlow-answer-text partner-answer-text">
+              {AnswerPartner}
+              {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
+              </div>
+            </div>
+          </div>
+          
+          
         </div>
         <div className={"QuestionAnswersFlow-other-players-answers" + " " +(renderAnswerOthers.length>0 ? 'show': 'hidden')}>
           <span className="QuestionAnswersFlow-other-players-answers-text">
             Other players' answers
           </span>
           <span className="QuestionAnswersFlow-other-players-answers-images">
-          {renderAnswerOthers}
-            {/* <span className="answer-avatar-container">
-              <img src={avatar} />
-              <span className="answer-text-text">
-                The reason that non-paramet- ric classifiers are slower is
-                because they often have far more parameters to train.
-              </span>
-            </span> */}
-            {/* <span className="answer-avatar-container">
-              <img src={avatar} />
-              <span className="answer-text-text">
-                because they often have far more parameters to train. The reason
-                that non-paramet- ric classifiers are slower is
-              </span>
-            </span>
-            <span className="answer-avatar-container">
-              <img src={avatar} />
-              <span className="answer-text-text">
-                The reason that non-paramet- ric classifiers are slower is
-                because they often have far more parameters to train.
-              </span>
-            </span> */}
+            {renderAnswerOthers}
           </span>
         </div>
-        <div className="QuestionAnswersFlow-textarea">
+        {/* <div className="QuestionAnswersFlow-textarea">
         <textarea id={`answer_your_${question._id}`} 
                         className="validate-field required question-text-area"
                           name="answer_your" onChange={(e)=>this.props.onHandleAnswerInput(e)} value={AnswerMy ? AnswerMy.text : ""}/>
-        {/* {Partner &&
-            <div className="col-lg-6">
-              <div className="form-group">
-                <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${question._id}`} 
-                  className="validate-field required question-text-area" placeholder={Partner.user.firstName}
-                    name="answer_partner" onChange={(e)=>this.props.onHandleAnswerInput(e)} value={AnswerPartner}/>
-              </div>
-            </div>
-        } */}
-        </div>
+        </div> */}
+        {this.renderAnswerInput()}
         <div className="QuestionAnswersFlow-social-share">
           <span>World must know my answer</span>
           <a href="#">

@@ -209,6 +209,7 @@
     margin: 10px 0px 10px 0px;
     box-shadow: 0px 0px 0.01px 0px rgba(0,0,0,0.3);
     overflow: auto;
+    cursor: pointer;
 }
 .pskill-name{
     font-size: 17px;
@@ -253,6 +254,7 @@
 }
 .ptask-right{
     float: right;
+    cursor: pointer;
 }
 .ptask-img-single{
     margin-top: 5px;
