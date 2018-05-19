@@ -591,33 +591,20 @@ class SkillBrowser extends React.Component {
     console.log(`%cDecode Debug decodeTrackerCount: ${decodeTrackerCount} decodeTimerQuota: ${decodeTimerQuota} IsDecodeAvailable" ${IsDecodeAvailable}`, "color: white; background: red;");
     
     if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
+      console.log(`%cDecode Debug Decode is not level-unlocked yet for "${CurrentTree.name}"`, "color: white; background: red;");
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
-          <div className="pskill-timer">
-            <div className="pskill-card-front pskill-timer-active">
+          <div className="pskill-card-lock">
               <div className="pskill-card-body">
-                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("decode")}</h4>
-                <h4 className="pskill-card-subtitle">level</h4>
+                <h4 className="pskill-card-title-lock">{this.getTaskUnlockLevelRequirement("decode")}</h4>
+                <h4 className="pskill-card-subtitle-lock">level</h4>
                 <h3 className="pskill-card-heading">DECODE</h3>
                 <p className="pskill-card-text">A single player activity with pre-defined
                 answers to validate your understanding of a topic</p>
-              </div>
-              <div className="pskill-footer">
-                <p className="pskill-duration">Once a week</p>
-                <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
-              </div>
-              <div className="pskill-btn-group">
-                <button disabled="disabled" className="pskill-btn pskill-start">START</button>
-                <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
+                <p className="pskill-duration" style={{ color: 'black' }}>Once a week</p>
+                <p className="pskill-reward" style={{ color: 'black' }}>Rewards : 5 SOQQ Token</p>
               </div>
             </div>
-            <div id="loader-wrapper">
-              <div id="loader"></div>
-            </div>
-            <div className="pskill-timer-text">
-              <Countdown daysInHours={false} date={this.nextRefresh('decode')} />
-            </div>
-          </div>
         </div>
       );
     }
