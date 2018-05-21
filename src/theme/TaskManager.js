@@ -50,7 +50,7 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
-const TasksAll = {type: "all", label: "All"};
+const TasksAll = {type: "all", label: "Active"};
 const TasksConfirmed = {type: "confirmed", label: "Confirmed"};
 const TasksMy = {type: "takks_my", label: "Mine"};
 const TasksOthers = {type: "tasks_others", label: "Others"};
@@ -391,8 +391,8 @@ class TaskManager extends React.Component {
       if (task.status != "complete") {
         return false;
       }
-      
-      if (task.type == "hangout") {
+
+      if (task.type == TaskTypes.DEEPDIVE || task.type == TaskTypes.DECODE || task.type == TaskTypes.ILLUMINATE) {
         return (task.creator._id == CurrentUserID || task.metaData.participants.findIndex(function(participant) {
           return participant.user._id == CurrentUserID && participant.status == "accepted";
         }) != -1);
@@ -405,7 +405,7 @@ class TaskManager extends React.Component {
     }
 
     const filterAll = (task) => {
-      return filterMy(task) || filterOthers(task) || filterConfirmed(task) || filterSentRequests(task) || filterCompleted(task);
+      return !filterCompleted(task) && (filterMy(task) || filterOthers(task) || filterConfirmed(task) || filterSentRequests(task));
     }
 
     switch (this.state.filterCurrent.type) {
