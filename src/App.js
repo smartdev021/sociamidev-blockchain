@@ -8,28 +8,28 @@
 
 import React, { Component } from 'react';
 import WebFont from 'webfontloader';
-import { withRouter } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import io from 'socket.io-client';
 import PubSub from 'pubsub-js';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga'
 
-import LandingPage from '~/src/theme/new_ui/LandingPage';
+import LandingPage from '~/src/theme/new_ui/LandingPage'
 
 import Main from './Main';
 import ChatApp from '~/src/components/chat/ChatApp';
-import ConfigMain from '~/configs/main';
-import ActionLink from '~/src/components/common/ActionLink';
+import ConfigMain from '~/configs/main'
+import ActionLink from '~/src/components/common/ActionLink'
 
-import CharacterCreationFlow from '~/src/character-creation/CharacterCreationFlow';
+import CharacterCreationFlow from "~/src/character-creation/CharacterCreationFlow"
 
-import Loadable from 'react-loading-overlay';
+import Loadable from 'react-loading-overlay'
 
 import {
   fetchUserProfile,
@@ -41,33 +41,44 @@ import {
   fetchUserActivities,
   fetchUserTasks,
   setUserProfileCharacter,
-} from '~/src/redux/actions/authorization';
+} from '~/src/redux/actions/authorization'
 
-import { fetchAllTasks, updateTask } from '~/src/redux/actions/tasks';
+import {
+  fetchAllTasks,
+  updateTask,
+} from '~/src/redux/actions/tasks'
 
 import {
   fetchResultsInitiate,
   fetchResultsComplete,
   fetchResults,
   setSearchQuery,
+
   openSearchResults,
-} from '~/src/redux/actions/fetchResults';
+} from '~/src/redux/actions/fetchResults'
 
-import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
+import {
+  startCharacterCreation
 
-import { fetchUserAccounting } from '~/src/redux/actions/accounting';
+} from '~/src/redux/actions/characterCreation'
 
-import { fetchTaskActivityUnlockReqs } from '~/src/redux/actions/progression';
+import {
+  fetchUserAccounting
+} from '~/src/redux/actions/accounting'
 
-let DataProviderIndeed = require('~/src/data_providers/indeed/DataProvider');
-let DataProviderEventBrite = require('~/src/data_providers/event_brite/DataProvider');
-let DataProviderUdemy = require('~/src/data_providers/udemy/DataProvider');
-let DataProviderFreelancer = require('~/src/data_providers/freelancer/DataProvider');
+import {
+  fetchTaskActivityUnlockReqs,
+} from '~/src/redux/actions/progression'
+
+let DataProviderIndeed = require("~/src/data_providers/indeed/DataProvider");
+let DataProviderEventBrite = require("~/src/data_providers/event_brite/DataProvider");
+let DataProviderUdemy = require("~/src/data_providers/udemy/DataProvider");
+let DataProviderFreelancer = require("~/src/data_providers/freelancer/DataProvider");
 
 const BackendURL = ConfigMain.getBackendURL();
 var socketConn;
 
-const LOCAL_STORAGE_KEY = 'soqqleAuth';
+//test commit
 
 class App extends Component {
   constructor(props) {
@@ -75,10 +86,8 @@ class App extends Component {
     this.state = {
       faceBookID: null,
       linkedInID: null,
-      suspendRender: false,
       verfiedSocketConnection: false,
-      screenWidth: 0,
-      screenHeight: 0,
+      screenWidth: 0, screenHeight: 0,
     };
 
     var uuid = this.uuidv1();
@@ -89,72 +98,57 @@ class App extends Component {
     this.socket.on('newUser', user => {
       var chatObj = {
         eventType: 'newUser',
-        data: user,
-      };
+        data: user
+      }
       PubSub.publish('ChatStartPoint', chatObj);
     });
 
     this.socket.on('server:user', userObj => {
       var chatObj = {
         eventType: 'server:user',
-        data: userObj,
-      };
+        data: userObj
+      }
       PubSub.publish('ChatStartPoint', chatObj);
     });
 
     this.socket.on('server:message', message => {
       var chatObj = {
         eventType: 'server:message',
-        data: message,
-      };
+        data: message
+      }
       PubSub.publish('ChatStartPoint', chatObj);
     });
 
     this.socket.on('chatbotServer:message', message => {
       var chatObj = {
         eventType: 'chatbotServer:message',
-        data: message,
-      };
+        data: message
+      }
       PubSub.publish('ChatStartPoint', chatObj);
     });
 
     this.socket.on('EVENT', eventObj => {
-      console.log('Event Type - ' + eventObj.eventType);
+      console.log("Event Type - " + eventObj.eventType);
       PubSub.publish(eventObj.eventType, eventObj);
     });
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     ReactGA.initialize('UA-113317436-1');
-
-    // if user was logged before, prevent rendering landing page blinking
-    // unless we fetch data and launch main app
-    if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
-      this.state.suspendRender = true;
-    }
   }
 
   uuidv1() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-      (
-        c ^
-        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-      ).toString(16)
-    );
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
   }
 
   updateWindowDimensions() {
-    this.setState({
-      screenWidth: window.innerWidth,
-      screenHeight: window.innerHeight,
-    });
+    this.setState({ screenWidth: window.innerWidth, screenHeight: window.innerHeight });
   }
 
   componentWillMount() {
     this.props.cookies.getAll();
-    this.token_chat_token = PubSub.subscribe(
-      'ChatEndPoint',
-      this.chatEndListener.bind(this)
-    );
+    this.token_chat_token = PubSub.subscribe('ChatEndPoint', this.chatEndListener.bind(this));
 
     this.PubsubEventsSubscribe();
   }
@@ -164,7 +158,6 @@ class App extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
 
     this.props.fetchTaskActivityUnlockReqs();
-    this.restoreAuthFromLS();
   }
 
   componentWillUnmount() {
@@ -175,22 +168,13 @@ class App extends Component {
 
   PubsubEventsSubscribe() {
     if (!this.token_server_event_tasks_update) {
-      this.token_server_event_tasks_update = PubSub.subscribe(
-        'tasks_update',
-        this.serverEventTasksUpdate.bind(this)
-      );
+      this.token_server_event_tasks_update = PubSub.subscribe("tasks_update", this.serverEventTasksUpdate.bind(this));
     }
     if (!this.token_server_event_task_updated) {
-      this.token_server_event_task_updated = PubSub.subscribe(
-        'task_updated',
-        this.serverEventTaskUpdated.bind(this)
-      );
+      this.token_server_event_task_updated = PubSub.subscribe("task_updated", this.serverEventTaskUpdated.bind(this));
     }
     if (!this.token_server_event_accounting_update) {
-      this.token_server_event_accounting_update = PubSub.subscribe(
-        'accounting_updated',
-        this.serverEventAccountingUpdated.bind(this)
-      );
+      this.token_server_event_accounting_update = PubSub.subscribe("accounting_updated", this.serverEventAccountingUpdated.bind(this));
     }
   }
 
@@ -212,79 +196,66 @@ class App extends Component {
   }
 
   serverEventTasksUpdate(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
     console.dir(data);
 
-    if (data.eventType == 'tasks_update') {
+    if (data.eventType == "tasks_update") {
       this.props.fetchAllTasks(true);
     }
-  }
+  };
 
   serverEventTaskUpdated(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
 
-    if (data.eventType == 'task_updated') {
+    if (data.eventType == "task_updated") {
       if (data.task && data.task._id) {
         this.props.updateTask(data.task);
         this.props.fetchUserTasks(this.props.userProfile._id);
       }
     }
-  }
+  };
 
   serverEventAccountingUpdated(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
+    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
     console.dir(data);
 
-    if (data.eventType == 'accounting_updated') {
+    if (data.eventType == "accounting_updated") {
       this.fetchUserInfoFromDataBase(true);
       this.props.fetchUserAccounting(this.props.userProfile._id);
     }
-  }
+  };
 
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, { linkedInID: id });
     this.setState(copy);
-    console.log('handleAuthorizeLinked id: ' + id);
+    console.log("handleAuthorizeLinked id: " + id);
   }
 
   handleAuthorizeFaceBook(id) {
     let copy = Object.assign({}, this.state, { faceBookID: id });
     this.setState(copy);
-    console.log('handleAuthorizeFaceBook id: ' + id);
+    console.log("handleAuthorizeFaceBook id: " + id);
   }
 
   storeCurrentLocationInCookies() {
     const { cookies } = this.props;
 
     let dateExpire = new Date();
-    dateExpire.setTime(
-      dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()
-    );
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
 
     let options = { path: '/', expires: dateExpire };
 
     let lastLocation = Object.assign({}, this.props.history.location);
 
-    console.log('lastLocation: ' + lastLocation);
+    console.log("lastLocation: " + lastLocation);
 
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
-    if (
-      this.props.exactLocation &&
-      this.props.exactLocation == 'RoadmapsWidgetDetails'
-    ) {
+    if (this.props.exactLocation && this.props.exactLocation == "RoadmapsWidgetDetails") {
       lastLocation.pathname = '/taskManagement';
     }
 
-    console.log('lastLocation1: ' + lastLocation);
+
+    console.log("lastLocation1: " + lastLocation);
 
     cookies.set('lastLocation', lastLocation, options);
   }
@@ -292,17 +263,10 @@ class App extends Component {
   getCharacterCreationData() {
     let data = undefined;
 
-    if (
-      this.props.characterCreationData &&
-      this.props.characterCreationData.isInProgress
-    ) {
+    if (this.props.characterCreationData && this.props.characterCreationData.isInProgress) {
       data = {
-        characterName: this.props.listCharacters[
-          this.props.characterCreationData.selectedCharacterIndex
-        ].name,
-        traitsName: this.props.listCharacterTraits[
-          this.props.characterCreationData.selectedTraitsIndex
-        ].name,
+        characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex].name,
+        traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
         traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
         characterIndex: this.props.characterCreationData.selectedCharacterIndex,
       };
@@ -334,11 +298,11 @@ class App extends Component {
   }
 
   HandleSignUpFacebook() {
-    this.HandleSignUp('auth/facebook');
+    this.HandleSignUp("auth/facebook");
   }
 
   HandleSignUpLinkedIn() {
-    this.HandleSignUp('auth/linkedin');
+    this.HandleSignUp("auth/linkedin");
   }
 
   HandleSignUp(endpoint) {
@@ -346,9 +310,7 @@ class App extends Component {
 
     this.storeCurrentLocationInCookies();
 
-    window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join(
-      '&'
-    )}`;
+    window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
   }
 
   handleStartSearch() {
@@ -356,30 +318,23 @@ class App extends Component {
   }
 
   startNewSearch(searchQuery) {
-    if (!this.props.isFetchInProgress && searchQuery != '') {
+    if (!this.props.isFetchInProgress && searchQuery != "") {
       let dateExpire = new Date();
-      dateExpire.setTime(
-        dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()
-      );
+      dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
       let options = { path: '/', expires: dateExpire };
 
       this.props.cookies.set('searchQuery', searchQuery, options);
 
-      this.props.fetchResults('jobs_indeed', searchQuery);
-      this.props.fetchResults('events_eventbrite', searchQuery);
-      this.props.fetchResults('courses_udemy', searchQuery);
-      this.props.fetchResults('gigs_freelancer', searchQuery);
+      this.props.fetchResults("jobs_indeed", searchQuery);
+      this.props.fetchResults("events_eventbrite", searchQuery);
+      this.props.fetchResults("courses_udemy", searchQuery);
+      this.props.fetchResults("gigs_freelancer", searchQuery);
     }
   }
 
   resetAuthentication() {
-    let copy = Object.assign({}, this.state, {
-      linkedInID: '',
-      faceBookID: '',
-      profule: null,
-    });
+    let copy = Object.assign({}, this.state, { linkedInID: "", faceBookID: "", profule: null });
     this.setState(copy);
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
 
   fetchUserInfoFromDataBase() {
@@ -390,37 +345,25 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchResults != this.props.searchResults) {
-      const wasFetchingResults =
-        prevProps.searchResults.isFetchingJobs ||
-        prevProps.searchResults.isFetchingEvents ||
-        prevProps.searchResults.isFetchingCourses ||
-        prevProps.isFetchingGigs;
 
-      const isFetchingResults =
-        this.props.searchResults.isFetchingJobs ||
-        this.props.searchResults.isFetchingEvents ||
-        this.props.searchResults.isFetchingCourses ||
-        this.props.isFetchingGigs;
+      const wasFetchingResults = prevProps.searchResults.isFetchingJobs || prevProps.searchResults.isFetchingEvents
+        || prevProps.searchResults.isFetchingCourses || prevProps.isFetchingGigs;
+
+      const isFetchingResults = this.props.searchResults.isFetchingJobs || this.props.searchResults.isFetchingEvents
+        || this.props.searchResults.isFetchingCourses || this.props.isFetchingGigs;
 
       if (!isFetchingResults && wasFetchingResults) {
         this.props.fetchResultsComplete();
-      } else {
+      }
+      else {
         if (!wasFetchingResults && isFetchingResults) {
           this.props.fetchResultsInitiate();
         }
       }
     }
 
-    if (
-      prevState.linkedInID != this.state.linkedInID ||
-      prevState.faceBookID != this.state.faceBookID
-    ) {
-      console.log(
-        'componentDidUpdate this.state.linkedInID: ' +
-          this.state.linkedInID +
-          ' this.state.faceBookID: ' +
-          this.state.faceBookID
-      );
+    if (prevState.linkedInID != this.state.linkedInID || prevState.faceBookID != this.state.faceBookID) {
+      console.log("componentDidUpdate this.state.linkedInID: " + this.state.linkedInID + " this.state.faceBookID: " + this.state.faceBookID);
       if (this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
       }
@@ -432,8 +375,8 @@ class App extends Component {
         if (this.props.history.location.pathname != "/searchResults"
         && this.props.history.location.pathname != "/progressionTrees"
         && this.props.history.location.pathname != "/progressionTreeBrowser"
-        && this.props.history.location.pathname != "/progressionTreeBrowser/"
-          && this.props.history.location.pathname != "/skillBrowser"
+        && this.props.history.location.pathname != "/progressionTreeBrowser/" 
+          && this.props.history.location.pathname != "/skillBrowser" 
             && this.props.history.location.pathname != "/skillBrowser/") {
           console.log("this.props.history.location.pathname: " + this.props.history.location.pathname);
           console.log("opening search results");
@@ -443,39 +386,35 @@ class App extends Component {
     }
 
     if (prevProps.userProfile != this.props.userProfile) {
-      let copy = Object.assign({}, this.state, {
-        userID: this.props.userProfile._id,
-        firstName: this.props.userProfile.firstName,
-        lastName: this.props.userProfile.lastName,
-      });
+
+      let copy = Object.assign({}, this.state,
+        {
+          userID: this.props.userProfile._id,
+          firstName: this.props.userProfile.firstName,
+          lastName: this.props.userProfile.lastName,
+        });
 
       this.setState(copy);
     }
 
     if (prevProps != this.props) {
-      console.log('App props updated: ');
+      console.log("App props updated: ");
       console.dir(this.props);
     }
 
     if (this.props.cookies != prevProps.cookies) {
-      console.log('Cookies has been changed');
+      console.log("Cookies has been changed");
     }
 
     if (this.state.userID && this.state.verfiedSocketConnection == false) {
-      let copy = Object.assign({}, this.state, {
-        verfiedSocketConnection: true,
-      });
+      let copy = Object.assign({}, this.state, { verfiedSocketConnection: true });
       this.setState(copy);
     }
 
     if (prevProps.isAuthorized != this.props.isAuthorized) {
-      if (prevState.suspendRender) {
-        this.setState({ suspendRender: false });
-      }
       if (this.props.isAuthorized) {
         this.PubsubEventsUnSubscribe();
         this.PubsubEventsSubscribe();
-        this.saveAuthToLS();
 
         this.props.fetchUserActivities(this.props.userProfile._id);
 
@@ -484,31 +423,13 @@ class App extends Component {
         if (!this.props.userProfile.character) {
           this.props.startCharacterCreation();
         }
-      } else {
+      }
+      else {
         this.PubsubEventsUnSubscribe();
       }
     }
-  }
 
-  saveAuthToLS() {
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify({
-        faceBookID: this.state.faceBookID,
-        linkedInID: this.state.linkedInID,
-      })
-    );
-  }
 
-  restoreAuthFromLS() {
-    const jsonData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (jsonData) {
-      const authData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-      this.setState({
-        faceBookID: authData.faceBookID,
-        linkedInID: authData.linkedInID,
-      });
-    }
   }
 
   getRedirectLocation() {
@@ -517,7 +438,8 @@ class App extends Component {
       if (this.props.location.pathname != '/searchResults') {
         RedirectTo = <Redirect to="/searchResults" push />;
       }
-    } else if (this.props.isOpenProfilePending) {
+    }
+    else if (this.props.isOpenProfilePending) {
       if (this.props.location.pathname != '/userProfile') {
         RedirectTo = <Redirect to="/userProfile" push />;
       }
@@ -529,31 +451,18 @@ class App extends Component {
   renderProfileLink() {
     let ProfileLink = '';
     if (this.props.isAuthorized) {
-      ProfileLink = (
-        <Link
-          className="btn btn-lg btn-outline-inverse pull-right"
-          to="/userProfile">
-          Your account
-        </Link>
-      );
-    } else {
-      ProfileLink = (
-        <ActionLink
-          className="btn btn-lg btn-outline-inverse pull-right loginButton"
-          onClick={() => this.props.openSignUpForm()}>
-          Connect with...
-        </ActionLink>
-      );
+      ProfileLink = <Link className='btn btn-lg btn-outline-inverse pull-right' to='/userProfile'>Your account</Link>;
+    }
+    else {
+      ProfileLink = <ActionLink className="btn btn-lg btn-outline-inverse pull-right loginButton"
+        onClick={() => this.props.openSignUpForm()}>Connect with...</ActionLink>;
     }
 
     return ProfileLink;
   }
 
   handleCharacterDataSet() {
-    this.props.setUserProfileCharacter(
-      this.props.userProfile._id,
-      this.getCharacterCreationData()
-    );
+    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
   }
 
   chatEndListener(event, data) {
@@ -561,40 +470,30 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.suspendRender) {
-      return null;
-    }
     if (!this.props.isAuthorized) {
-      return (
-        <LandingPage
-          onCloseSignUpModal={() => this.props.closeSignUpForm()}
-          onHandleSignUpFacebook={() => this.HandleSignUpFacebook()}
-          onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
-          onAuthorizeLinkedIn={id => this.handleAuthorizeLinked(id)}
-          onAuthorizeFaceBook={id => this.handleAuthorizeFaceBook(id)}
-          isSignUpFormOpen={this.props.isSignUpFormOpen}
-          pathname={this.props.history.location.pathname}
-        />
+      return (<LandingPage onCloseSignUpModal={() => this.props.closeSignUpForm()}
+        onHandleSignUpFacebook={() => this.HandleSignUpFacebook()}
+        onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
+        onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)}
+        onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+        isSignUpFormOpen={this.props.isSignUpFormOpen}
+        pathname={this.props.history.location.pathname} />
       );
     }
     let RedirectTo = this.getRedirectLocation();
     let ChatAppLink = '';
-    var username = '';
-    var userType = '';
+    var username = "";
+    var userType = "";
     if (this.state.faceBookID) {
       username = this.state.faceBookID;
-      userType = 'facebook';
-    } else if (this.state.linkedInID) {
+      userType = "facebook";
+    }
+    else if (this.state.linkedInID) {
       username = this.state.linkedInID;
-      userType = 'linkedin';
+      userType = "linkedin";
     }
 
-    ChatAppLink = (
-      <ChatApp
-        loggedin={this.props.isAuthorized}
-        userProfile={this.props.userProfile}
-      />
-    );
+    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
 
     if (this.state.userID && this.state.verfiedSocketConnection == false) {
       var userData = {
@@ -602,40 +501,22 @@ class App extends Component {
         userType: userType,
         userID: this.state.userID,
         firstName: this.state.firstName,
-        lastName: this.state.lastName,
-      };
+        lastName: this.state.lastName
+      }
       socketConn.emit('UserLoggedIn', userData);
     }
 
     return (
-      <Loadable
-        active={
-          this.props.isTaskSaveInProgress ||
-          this.props
-            .isTasksUpdateInProgress /* || this.props.isTasksFetchInProgress*/
-        }
-        background="#ee892f"
-        color="#30a7d2"
-        spinner
-        text="Wait a moment..."
-        animate={false}
-        spinnerSize="96px"
-        zIndex={10000}>
+      <Loadable active={this.props.isTaskSaveInProgress || this.props.isTasksUpdateInProgress/* || this.props.isTasksFetchInProgress*/}
+         background="#ee892f" color="#30a7d2"
+        spinner text='Wait a moment...' animate={false} spinnerSize="96px" zIndex={10000}>
         <div>
-          <Main
-            onHandleStartSearch={() => this.handleStartSearch()}
-            onHandleChange={e => this.handleChange(e)}
-            onHandleSearchClicked={() => this.handleStartSearch()}
-            isFetchInProgress={this.props.isFetchInProgress}
-            onCloseSignUpModal={() => this.props.closeSignUpForm()}
-            isSignUpFormOpen={this.props.isSignUpFormOpen}
-            onAuthorizeLinkedIn={id => this.handleAuthorizeLinked(id)}
-            onAuthorizeFaceBook={id => this.handleAuthorizeFaceBook(id)}
-            onHandleSignUpFacebook={() => this.HandleSignUpFacebook()}
-            onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
-            onFetchAllTasks={publishedOnly =>
-              this.props.fetchAllTasks(publishedOnly)
-            }
+          <Main onHandleStartSearch={() => this.handleStartSearch()} onHandleChange={(e) => this.handleChange(e)}
+            onHandleSearchClicked={() => this.handleStartSearch()} isFetchInProgress={this.props.isFetchInProgress}
+            onCloseSignUpModal={() => this.props.closeSignUpForm()} isSignUpFormOpen={this.props.isSignUpFormOpen}
+            onAuthorizeLinkedIn={(id) => this.handleAuthorizeLinked(id)} onAuthorizeFaceBook={(id) => this.handleAuthorizeFaceBook(id)}
+            onHandleSignUpFacebook={() => this.HandleSignUpFacebook()} onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
+            onFetchAllTasks={(publishedOnly) => this.props.fetchAllTasks(publishedOnly)}
             pathname={this.props.history.location.pathname}
             isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
             openSignUpForm={this.props.openSignUpForm}
@@ -647,11 +528,8 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
-            logout={() => this.props.logout(this.state.userID)}
-          />
-          <CharacterCreationFlow
-            onHandleCharacterDataSet={() => this.handleCharacterDataSet()}
-          />
+            logout={() => this.props.logout(this.state.userID)} />
+          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
           {ChatAppLink}
         </div>
       </Loadable>
@@ -686,7 +564,7 @@ App.propTypes = {
   startCharacterCreation: PropTypes.func.isRequired,
   setUserProfileCharacter: PropTypes.func.isRequired,
   fetchTaskActivityUnlockReqs: PropTypes.func.isRequired,
-};
+}
 
 const mapDispatchToProps = dispatch => ({
   openUserProfile: bindActionCreators(openUserProfile, dispatch),
@@ -703,18 +581,12 @@ const mapDispatchToProps = dispatch => ({
   fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
-  setUserProfileCharacter: bindActionCreators(
-    setUserProfileCharacter,
-    dispatch
-  ),
+  setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
-  fetchTaskActivityUnlockReqs: bindActionCreators(
-    fetchTaskActivityUnlockReqs,
-    dispatch
-  ),
-});
+  fetchTaskActivityUnlockReqs: bindActionCreators(fetchTaskActivityUnlockReqs, dispatch),
+})
 
 const mapStateToProps = state => ({
   isOpenProfilePending: state.isOpenProfilePending,
@@ -740,9 +612,8 @@ const mapStateToProps = state => ({
 
   //TODO: entire store is not needed here, remove after more robust debugging approach is found
   store: state,
-});
+})
+
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(withCookies(App))
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withCookies(App)));
