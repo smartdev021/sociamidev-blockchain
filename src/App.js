@@ -382,6 +382,10 @@ class App extends Component {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
 
+  logout() {
+    this.props.logout(this.state.userID);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  }
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID);
@@ -647,7 +651,7 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
-            logout={() => this.props.logout(this.state.userID)}
+            logout={() => this.logout()}
           />
           <CharacterCreationFlow
             onHandleCharacterDataSet={() => this.handleCharacterDataSet()}
