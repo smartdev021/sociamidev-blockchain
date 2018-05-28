@@ -1,0 +1,110 @@
+.team-header{
+    text-align: center;
+    padding: 20px;
+}
+.my-teams-header{
+    font-size: 22px
+}
+.create-team-btn{
+    width: 200px;
+    display: inline-block;
+    background: yellow;
+    transform: skewX(-10deg);
+}
+.create-new-team{
+    box-shadow: rgba(0, 0, 0, 0.5) inset 1px 1px 1px 1px;
+    background-color: #ffd400;
+    color: #000;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.unskew-create-team{
+    transform: skew(10deg);
+    margin: 0;
+    font-weight: 500;
+}
+.team-container{
+    padding: 20px;
+    width: 300px;
+    display: inline-block;
+}
+.team-list{
+    background: #D7D7D7;
+    width: 100%;
+    padding: 15px 5px 15px 15px;
+}
+.team-title{
+    font-weight: 800;
+    font-size: 20px;
+}
+.team-date{
+    font-weight: 400;
+    font-size: 13px;
+    color: grey;
+}
+.team-email-container{
+    max-height: 350px;
+    overflow-y: scroll;
+    padding: 1px 5px 1px 1px;
+}
+.team-email-item{
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.3);
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    overflow: auto;
+}
+.team-email-item-accepted{
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.3);
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    overflow: auto;
+    background: white;
+    font-weight: 800;
+}
+.team-email{
+    float: left;
+}
+.team-email-checkbox{
+    float: right;
+    background: #00B071;
+    color: white;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 3px;
+}
+.team-add-email{
+    color: white;
+    background: #016AB4;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.team-add-email-link{
+    color: white;
+}
+.team-add-email-link:focus, a:hover {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.team-panels{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.team-email-container div:first-child {margin-top: 0;}
+.team-email-container div:last-child {margin-bottom: 0;}

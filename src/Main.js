@@ -36,6 +36,7 @@ import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
 import "~/src/theme/css/main.css";
 import UserProfile from '~/src/theme/UserProfile.js';
+import Teams from '~/src/theme/Teams.js';
 
 import Privacy from '~/src/theme/Privacy.js';
 
@@ -99,6 +100,7 @@ class Main extends React.Component {
             <Route exact path='/termsOfUse' render={routeProps => <TermsOfUse {...routeProps}{...this.props}/>}/>
             <Route exact path='/privacyPolicy' render={routeProps => <PrivacyPolicy {...routeProps}{...this.props}/>}/>
             <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>}/>
+            <Route path='/teams' render={routeProps => <Teams {...routeProps}{...this.props}/>}/>
           </Switch>)
       }
 
