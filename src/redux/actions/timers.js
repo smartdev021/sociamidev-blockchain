@@ -95,7 +95,7 @@ export function prepareTimers(roadMaps, userId) {
                         const timer = _.get(item, 'timer', {});
                         const count = _.get(item, 'tracker.count', 0);
                         const quota = _.get(timer, 'quota', 0);
-                        if( count && count < quota ) {
+                        if( count && count >= quota ) {
                             timers.push({
                                 name: results[roadmapId]['roadmap'].name + ' - ' + _.get(timer, 'type', ''),
                                 date: findRefreshTime(timer)
