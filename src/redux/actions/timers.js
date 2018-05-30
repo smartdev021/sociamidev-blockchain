@@ -24,58 +24,16 @@ export function timersCompleted(timers) {
     }
 }
 
-function fetchIlluminateTimer(roadmap, userId, callback) {
-    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${roadmap._id}&type=Illuminate`;
-    Axios.get(url)
-        .then(timerResp => {
-            var illuminateTimer = _.get(timerResp, 'data')
-            const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(illuminateTimer, '_id')}&userId=${userId}`;
-            Axios.get(trackerUrl)
-                .then(tracker => {
-                    const illuminateTracker = _.get(tracker, 'data');
-                    callback(null, {
-                        roadmap,
-                        timer: illuminateTimer,
-                        tracker: illuminateTracker
-                    })
-                })
-        }).catch(err => {
-        // TODO
-        });
+export function showAllTimers() {
+    return {
+        type: SHOW_ALL_TIMERS
+    }
 }
 
-function fetchDeepdiveTimer(roadmap, userId, callback) {
-    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${roadmap._id}&type=Deepdive`;
-    Axios.get(url)
-        .then(timerResp => {
-            var deepdiveTimer = _.get(timerResp, 'data')
-            const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(deepdiveTimer, '_id')}&userId=${userId}`;
-            Axios.get(trackerUrl)
-                .then(tracker => {
-                    callback(null, { roadmap, timer: deepdiveTimer, tracker: _.get(tracker, 'data') } );
-                })
-        }).catch(err => {
-            // TODO: 
-        });
-}
-
-function fetchDecodeTimer(roadmap, userId, callback) {
-    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${roadmap._id}&type=Decode`;
-    Axios.get(url)
-        .then(timerResp => {
-            var decodeTimer = _.get(timerResp, 'data')
-            const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(decodeTimer, '_id')}&userId=${userId}`;
-            Axios.get(trackerUrl)
-            .then(tracker => {
-                callback(null, {
-                    roadmap,
-                    timer: decodeTimer,
-                    tracker: _.get(tracker, 'data')
-                })
-            })
-        }).catch(err => {
-            //TODO
-        })
+export function showTopTimers() {
+    return {
+        type: SHOW_TOP_TIMERS
+    }
 }
 
 function findRefreshTime(timer) {
@@ -98,14 +56,16 @@ function findRefreshTime(timer) {
   }
 
 function fetchTimer(roadmap, userId, callback) { 
-    Async.parallel( {
-        'Illuminate': Async.apply(fetchIlluminateTimer, roadmap, userId),
-        'Deepdive': Async.apply(fetchDeepdiveTimer, roadmap, userId),
-        'Decode': Async.apply(fetchDecodeTimer, roadmap, userId)   
-    }, (error, results) => {
-      // TODO: Return the timer information for Illuminate, Deepdive and Decode for each roadmap
-      callback(null, results);
-    })
+    const url = `${ConfigMain.getBackendURL()}/timersAggregated?roadmapId=${roadmap._id}&userId=${userId}`;
+    Axios.get(url)
+        .then(timerResp => {
+            callback(null, {
+                roadmap,
+                timerTracker: _.get(timerResp, 'data')
+            })
+        }).catch(err => {
+            //TODO
+        })
 }
 
 function fetchTimers(roadMaps, userId, callback) {
@@ -128,13 +88,15 @@ export function prepareTimers(roadMaps, userId) {
             fetchTimers(roadMaps, userId, (error, results) => {
                 let timers = [];
                 Object.getOwnPropertyNames(results).forEach( roadmapId => {
-                    Object.getOwnPropertyNames(results[roadmapId]).forEach(timerType => {
-                        const count = _.get(results[roadmapId][timerType], 'tracker.count', 0);
-                        const quota = _.get(results[roadmapId][timerType], 'timer.quota', 0);
-                        if( !count || count < quota ) {
+                    results[roadmapId]['timerTracker']
+                    .forEach(item => {
+                        const timer = _.get(item, 'timer', {});
+                        const count = _.get(item, 'tracker.count', 0);
+                        const quota = _.get(timer, 'quota', 0);
+                        if( count && count < quota ) {
                             timers.push({
-                                name: results[roadmapId][timerType]['roadmap'].name + ' - ' + timerType,
-                                date: findRefreshTime(results[roadmapId][timerType]['timer'])
+                                name: results[roadmapId]['roadmap'].name + ' - ' + _.get(timer, 'type', ''),
+                                date: findRefreshTime(timer)
                             });
                         }
                     });

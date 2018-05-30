@@ -130,6 +130,8 @@ export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE = "task_activity_unlock_re
 export const FETCH_ACHIEVEMENTS_INITIATE = "fetch_achievements_initiate";
 export const FETCH_ACHIEVEMENTS_COMPLETE = "fetch_achievements_complete";
 
-//Timers
+//Timers on Home page
 export const PREPARE_TIMERS_IN_PROGRESS = 'prepare_timers_in_progress';
 export const PREPARE_TIMERS_COMPLETE = 'prepare_timers_complete';
+export const SHOW_ALL_TIMERS = 'show_all_timers';
+export const SHOW_TOP_TIMERS = 'show_top_timers';

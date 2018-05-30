@@ -29,6 +29,8 @@ import {
 
 import {
   prepareTimers,
+  showAllTimers,
+  showTopTimers
 } from '~/src/redux/actions/timers'
 
 const MAX_LATEST_TASKS = 3;
@@ -51,6 +53,7 @@ class HomePage extends React.Component {
     this.props.onFetchAllTasks(false);
     this.props.fetchRoadmaps();
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
+    this.props.prepareTimers(this.props.userProfile.progressionTrees, this.props.userProfile._id);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -164,27 +167,35 @@ class HomePage extends React.Component {
 
   renderTimers() {
     if (this.props.timers.isTimersInProgress === false) {
-      return (
-        <div>
-          { 
-            this.props.timers.data.length > 0 && 
-            this.props.timers.data.map((item,index) => {
-              return <p className="skill-in-progress">
-                        <span>{item.name}</span>
-                        (<Countdown daysInHours={false} date={item.date} />)
-                      </p>    
-            })
-          }
-          <a className="show-more">Show more</a>
-        </div>
-      );
-    } else {
-      if (this.props.timers.isTimersInProgress === undefined) {
-        this.props.prepareTimers(this.props.roadmapsAdmin.data, this.props.userProfile._id);
+      let timersCount = _.get(this.props.timers,'data.length', 0);
+      if ( timersCount > 0 ){
+        let showFilter = undefined;
+        if( this.props.timers.showMoreFilter ) {
+          showFilter = this.props.timers.displayAll ?  
+          <a onClick={()=> this.props.showTopTimers()} className="show-more">Show less</a> 
+          :  <a onClick={()=> this.props.showAllTimers()} className="show-more">Show more</a>
+        }        
+        return (
+          <div>
+            { 
+              this.props.userProfile.progressionTrees.length > 0 && 
+              this.props.timers.data.slice(0,this.props.timers.showIndex).map((item,index) => {
+                return <p className="skill-in-progress">
+                          <span>{item.name}</span>
+                          (<Countdown daysInHours={false} date={item.date} />)
+                        </p>    
+              })
+            }
+            { showFilter }
+          </div>
+        );
+      } else {
+        return <span>No Active Timers</span>;
       }
+    } else {
       return (
         <div>
-          Preparing Timers...<Icon spin name="spinner" />
+          Loading Timers...<Icon spin name="spinner" />
         </div>
       );
     }
@@ -285,7 +296,9 @@ const mapDispatchToProps = dispatch => ({
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
-  prepareTimers: bindActionCreators(prepareTimers, dispatch)
+  prepareTimers: bindActionCreators(prepareTimers, dispatch),
+  showAllTimers: bindActionCreators(showAllTimers, dispatch),
+  showTopTimers: bindActionCreators(showTopTimers, dispatch)
 })
 
 const mapStateToProps = state => ({
