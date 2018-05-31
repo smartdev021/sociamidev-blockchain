@@ -180,7 +180,7 @@ class HomePage extends React.Component {
             { 
               this.props.userProfile.progressionTrees.length > 0 && 
               this.props.timers.data.slice(0,this.props.timers.showIndex).map((item,index) => {
-                return <p className="skill-in-progress">
+                return <p key={index} className="skill-in-progress">
                           <span>{item.name}</span>
                           (<Countdown daysInHours={false} date={item.date} />)
                         </p>    

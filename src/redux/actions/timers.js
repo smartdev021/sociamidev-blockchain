@@ -7,7 +7,9 @@ import ConfigMain from '~/configs/main'
 
 import {
     PREPARE_TIMERS_IN_PROGRESS,
-    PREPARE_TIMERS_COMPLETE
+    PREPARE_TIMERS_COMPLETE,
+    SHOW_ALL_TIMERS,
+    SHOW_TOP_TIMERS
 } from './actionTypes';
 
 
