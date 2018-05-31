@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Icon} from 'react-fa'
+import Async from 'async';
+import Countdown from 'react-countdown-now';
 
 import ActionLink from '~/src/components/common/ActionLink'
 import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
@@ -25,6 +27,12 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
+import {
+  prepareTimers,
+  showAllTimers,
+  showTopTimers
+} from '~/src/redux/actions/timers'
+
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
 
@@ -37,7 +45,7 @@ class HomePage extends React.Component {
 
     this.state = {
       isDetailsOpen: false,
-      currentTask: {},
+      currentTask: {}
     }
   }
 
@@ -45,6 +53,7 @@ class HomePage extends React.Component {
     this.props.onFetchAllTasks(false);
     this.props.fetchRoadmaps();
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
+    this.props.prepareTimers(this.props.userProfile.progressionTrees, this.props.userProfile._id);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -156,6 +165,42 @@ class HomePage extends React.Component {
     );
   }
 
+  renderTimers() {
+    if (this.props.timers.isTimersInProgress === false) {
+      let timersCount = _.get(this.props.timers,'data.length', 0);
+      if ( timersCount > 0 ){
+        let showFilter = undefined;
+        if( this.props.timers.showMoreFilter ) {
+          showFilter = this.props.timers.displayAll ?  
+          <a onClick={()=> this.props.showTopTimers()} className="show-more">Show less</a> 
+          :  <a onClick={()=> this.props.showAllTimers()} className="show-more">Show more</a>
+        }        
+        return (
+          <div>
+            { 
+              this.props.userProfile.progressionTrees.length > 0 && 
+              this.props.timers.data.slice(0,this.props.timers.showIndex).map((item,index) => {
+                return <p className="skill-in-progress">
+                          <span>{item.name}</span>
+                          (<Countdown daysInHours={false} date={item.date} />)
+                        </p>    
+              })
+            }
+            { showFilter }
+          </div>
+        );
+      } else {
+        return <span>No Active Timers</span>;
+      }
+    } else {
+      return (
+        <div>
+          Loading Timers...<Icon spin name="spinner" />
+        </div>
+      );
+    }
+  }
+
   renderUserProgressionTreesNew(){
     return (
       <div id="progression-trees-trees">
@@ -166,9 +211,7 @@ class HomePage extends React.Component {
                     <h3 className="timer-heading">
                       TIMERS
                     </h3>
-                    <p className="skill-in-progress">The Real Digital Nomad- Illuminate (00:25:59:34)</p>
-                    <p className="skill-in-progress">Innovation - Illuminate (00:25:59:34)</p>
-                    <a className="show-more">Show more</a>
+                    {this.renderTimers()}
                   </div>
                 </div>
                 <div className="ptree-roadmap-list">
@@ -253,12 +296,16 @@ const mapDispatchToProps = dispatch => ({
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
+  prepareTimers: bindActionCreators(prepareTimers, dispatch),
+  showAllTimers: bindActionCreators(showAllTimers, dispatch),
+  showTopTimers: bindActionCreators(showTopTimers, dispatch)
 })
 
 const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
   tasks: state.tasks.data,
   roadmapsAdmin: state.roadmapsAdmin,
+  timers: state.timers
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
