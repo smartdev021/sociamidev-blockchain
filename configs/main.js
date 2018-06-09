@@ -21,7 +21,7 @@ var ConfigMain = {
         return (10 * 365 * 24 * 60 * 60 * 1000);
     },
 
-    ChallengesScannerDisabled: true,
+    ChallengesScannerDisabled: false,
 
     S3BucketURL: 'https://sociamibucket.s3.amazonaws.com'
 }
