@@ -2,14 +2,16 @@
     author: Anna Kuzii
 */
 
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { withCookies } from 'react-cookie';
-import {bindActionCreators} from "redux";
-import {openSignUpForm} from '~/src/redux/actions/authorization'
+import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom' //temporarily here, remove it!!!!!!!
+import { openSignUpForm } from '~/src/redux/actions/authorization'
 import SignUpFormPopup from  '~/src/authentication/SignUpForm';
+import Authorize from '~/src/authentication/Authorize';
 import '~/src/theme/css/landingPage.css';
-import PropTypes from "prop-types";
 
 const AboutComponent = () => {
     return (
@@ -427,10 +429,18 @@ class LandingPage extends Component {
         );
     };
 
+    renderRoutes() {
+        return (
+            <Switch>
+                <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
+            </Switch>)
+    }
+
     render() {
         return (
             <div className="landing-page-wrapper">
                 {this.renderSignUpForm()}
+                {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
                 <header>
                     <Logo/>
                     <Header openMenu={this.toggle}/>
