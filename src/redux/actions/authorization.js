@@ -55,11 +55,12 @@ export function openUserProfileComplete() {
     }
 }
 
-export function fetchUserProfileComplete(userProfile, authorized) {
+export function fetchUserProfileComplete(userProfile, authorized, adminUser) {
     return {
         type: FETCH_USER_PROFILE_COMPLETE,
         profile: userProfile,
         isAuthorized: authorized,
+        isAdmin: adminUser
     }
 }
 
@@ -305,12 +306,21 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
 
             newUserProfile = Object.assign({}, newUserProfile, {...responseProfile});
 
-            //async action exit point
-            dispatch(fetchUserProfileComplete(newUserProfile, true));
+            Axios.get(`${ConfigMain.getBackendURL()}/fetchUserCompany?emailId=${responseProfile.email}`)
+            .then(function(response) {
+                //async action exit point
+                if(response.data && response.data._id) {
+                    dispatch(fetchUserProfileComplete(newUserProfile, true, true));
+                } else {
+                    dispatch(fetchUserProfileComplete(newUserProfile, true, false));
+                }
+            }).catch(function(error){
+                dispatch(fetchUserProfileComplete(newUserProfile, true, false));
+            })
         })
         .catch(function(error) {
             //async action exit point
-            dispatch(fetchUserProfileComplete({}, false));
+            dispatch(fetchUserProfileComplete({}, false, false));
         }));
     }
 }

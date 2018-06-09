@@ -179,7 +179,7 @@ class ThemeHeader extends React.Component {
                                         <Icon name="user-plus" aria-hidden="true"></Icon>
                                     </Link>
                                 </li>
-                                <UserMenuDropdown userProfile={this.props.userProfile}
+                                <UserMenuDropdown isAdmin={this.props.isAdmin} userProfile={this.props.userProfile}
                                     onSignOut={() => this.onSignOut()} />
                             </ul>
                         </div>
