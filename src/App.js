@@ -20,7 +20,7 @@ import io from 'socket.io-client';
 import PubSub from 'pubsub-js';
 import ReactGA from 'react-ga'
 
-import LandingPage from '~/src/theme/new_ui/LandingPage'
+import LandingPage from '~/src/theme/components/landingPage/LandingPage'
 
 import Main from './Main';
 import ChatApp from '~/src/components/chat/ChatApp';
