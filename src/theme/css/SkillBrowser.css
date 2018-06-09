@@ -97,12 +97,12 @@
     color: 	#A7A6A3;
     border: 2px solid#A7A6A3;
 }
-.pskill-btn-group{
+/* .pskill-btn-group{
     padding: 15px 5px 15px 0px;
     position: absolute;
     width: 90%;
     bottom: 0;
-}
+} */
 .pskill-footer{
     position: absolute;
     bottom: 55px;

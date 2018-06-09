@@ -201,52 +201,22 @@ class HomePage extends React.Component {
     }
   }
 
-  renderUserProgressionTreesNew(){
+  renderUserProgressionTrees(){
     return (
-      <div id="progression-trees-trees">
-        {
-            <div className="container-fluid">
-                <div className="row" style={{paddingBottom:'20px'}}>
-                  <div className="col-lg-12 skills-inprogress">
-                    <h3 className="timer-heading">
-                      TIMERS
-                    </h3>
-                    {this.renderTimers()}
-                  </div>
-                </div>
-                <div className="ptree-roadmap-list">
-                {this.props.roadmapsAdmin.data.length != 0 && 
-                
+        <div className="progression-tree-skill-list">
+              { 
+                this.props.roadmapsAdmin.data.length != 0 && 
                 this.props.roadmapsAdmin.data.map((item,index) => {
-                  
-                  let customStyle
-                  if((index % 2) == 0){
-                    customStyle = {
-                      color : '#07AF3E',
-                      background : '#A4E6AD'
-                    }
-                  }else{
-                    customStyle = {
-                      color : '#F85655',
-                      background : '#F3A597'
-                    }
-                  }
-
-                  return <SkillCard skillItem={item} customStyle={customStyle} />
+                  return <SkillCard key={index} skillItem={item} />
                 })
-                }
-              </div>  
-              </div>
-        }
-        </div>
+              }
+      </div>
       )
     }
 
   render() {
     //const SearchForm = this.renderSearhForm();
     const Tasks = this.renderTasks();
-    console.log('props in homepage')
-    console.log(this.props)
     return (
       // <div className="row">
       // <div className="col-lg-12">
@@ -274,13 +244,18 @@ class HomePage extends React.Component {
       // </div>
       // </div>
       // </div>
-      <div className="row content-wrap">
-        {this.props.roadmapsAdmin.data.length != 0 &&
-            <div className="list-progression-trees">
-                {this.renderUserProgressionTreesNew()}
+      <div className="progressiontree-container">
+            <div className="row progression-tree-header-box">
+                <div className="progressiontree-header"><b>My progression Trees</b></div>
+                <div className="progression-tree-timers">
+                  <div className="progression-tree-clock">Innovation - Illuminate (00:25:12:59)</div>
+                </div>
+                <a className="show-more-option">show more</a>
             </div>
-        }
-      </div>
+            <div className="progression-tree-panels row">
+                {this.renderUserProgressionTrees()}    
+            </div>
+        </div>
     );
   }
 }
