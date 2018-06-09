@@ -1,0 +1,387 @@
+.progression-tree-skill-card{
+    padding: 0;
+    padding-right: 20px;
+}
+.ptree-yellow-bar{
+    display: inline-block;
+    width: 100px;
+    height: 3px;
+    background: #ffd400;
+    margin-left: -50px;
+}
+.progression-tree-skill-container{
+    /* overflow: auto; */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.progression-tree-skill-content{
+    
+}
+
+
+
+.progression-tree-skill-list{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.progression-tree-skill-item{
+    background: black;
+    border: 4px solid #8BBCD9;
+    margin: 20px;
+    height: 250px;
+}
+.progression-tree-hero-container{
+    text-align: center;
+    margin-top: -70px;
+}
+.progression-tree-hero-img {
+    width: 250px;
+}
+
+
+.ptree-card-item{
+    /* height: 250px; */
+    margin-top: 30px;
+}
+.ptree-card{
+    height: 260px;
+    padding: 20px;
+    /* width: 85%; */
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.3);
+}
+.ptree-card-front{
+    height: 100%;
+    width: 100%;
+    /* padding: 20px; */
+    background: #EBEFF2;
+}
+.ptree-card-back{
+    height: 100%;
+    width: 100%;  
+    /* padding: 20px;  */
+    background: #EBEFF2;
+}
+.ptree-card-body{
+    overflow: scroll;
+    height: 38%;
+    padding: 0px 20px 0px 20px;
+}
+.ptree-btn{
+    width: 48%;
+    justify-content: center;
+    height: 30px;
+}
+.ptree-start{
+    float: left;
+    background: #FFD149;
+}
+.ptree-view{
+    float: right;
+    border: 1px solid #FFD149;
+    background: transparent;
+}
+
+.ptree-card-heading{
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 30px 20px 0px 20px;
+}
+.ptree-btn-group{
+    /* padding-top: 10px; */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0px 20px 20px 20px;
+    background: #EBEFF2
+}
+.ptree-task-list{
+    padding: 0px 20px 0px 20px;
+}
+.ptree-back-header{
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px 20px 0px 20px;
+}
+.pskill-banner {
+    padding: 5px;
+    box-shadow: 0px 0px 0.01px 0px rgba(0,0,0,0.3);
+    overflow: auto;
+    background: white;
+    margin: 5px 0px 5px 0px;
+    cursor:pointer;
+}
+.pskill-banner.active{
+    background:#006BB9;
+    color: white;
+}
+.pskill-name{
+    font-size: 14px;
+    cursor: pointer;
+    float: left;
+    width: 90%;
+}
+.ptask-banner {
+    padding: 5px;
+    box-shadow: 0px 0px 0.01px 0px rgba(0,0,0,0.3);
+    overflow: auto;
+    background: white;
+    margin: 5px 0px 5px 0px;
+    cursor: pointer;
+}
+.ptask-banner.active{
+    background:#006BB9;
+    color: white;
+}
+.ptask-banner.active div{
+    color:white;
+}
+.ptask-name{
+    font-size: 14px;
+    cursor: pointer;
+}
+.ptask-desc{
+    color: #FFD149;
+    cursor: pointer;
+    font-size: 12px;
+}
+.ptree-back{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.ptree-chevron{
+    font-size: 8px;
+    font-weight: 600;
+}
+.ptree-back-text{
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 3px;
+}
+.ptree-hero-img{
+    width: 180px;
+    margin-left: -20px;
+    margin-top: -10px;
+}
+.ptask-left{
+    line-height: .95;
+    float: left;
+}
+.ptask-right{
+    float: right;
+}
+.ptask-img-single{
+    width:11px;
+}
+.ptask-img-double{
+    width:30px;
+}
+.ptask-img-group{
+    width:30px;
+}
+.view-video{
+
+}
+.ptree-skill-set{
+    height: 125px;
+    overflow: auto;
+    margin-right: 0px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.ptree-skill-set-btn-group{
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-box-shadow: 0 0 5px#888;
+    box-shadow: 0px 0px 5px #888;
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 20px;
+}
+.progression-tree-timers{
+ 
+}
+.ptree-back{
+    float: left;
+    /* border: 1px solid #FFD149; */
+    background: transparent;
+    border:0;
+}
+.ptree-next{
+    float: right;
+    /* border: 1px solid #FFD149; */
+    background: transparent;
+    border:0;
+}
+.ptree-back:active{
+    border:1px solid #FFD149
+}
+.ptree-next:active{
+    border:1px solid #FFD149
+}
+.ptree-checkmark-div{
+    float: right;
+    padding-right: 10px;
+}
+
+.ptree-checkmark{
+    display:inline-block;
+    color: white;
+}
+
+.ptree-checkmark:after{
+    content: '';
+    display: block;
+
+    /*Make it a small rectangle so the border will create an L-shape*/
+    width: 6px;
+    height: 10px;
+
+    /*Add a white border on the bottom and left, creating that 'L' */
+    border: solid white;
+    border-width: 0 2px 2px 0;
+
+    /*Rotate the L 45 degrees to turn it into a checkmark*/
+    transform: rotate(45deg);
+}
+
+.ptree-video-lightbox{
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    display: block;
+}
+.ptree-video-container{
+    top: 30%;
+    position: relative;
+}
+
+@media (max-width: 768px){
+    .progression-tree-panels {
+        padding-top: 50px;
+    }
+    .progression-tree-skill-container{
+        height: 570px;
+    }
+    .progression-tree-skill-list {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+    .progression-tree-skill-list{
+        height: 400px;
+    }
+    .progression-tree-skill-card {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+    .progression-tree-skill-item{
+        height: 420px;
+        margin:0;
+    }
+    .ptree-card{
+        height: 280px;
+    }
+    .ptree-card-item {
+        margin-top: -30px;
+    }
+    .ptree-card-body{
+        height: 40%;
+    }
+    .pskill-banner{
+        padding: 8px;
+    }
+    .ptask-banner{
+        padding: 8px;
+    }
+    .ptree-skill-set{
+        height: 145px;
+    }
+}
+
+/* ====================================== */
+/* entire container, keeps perspective */
+.ptree-card-item {
+	-webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    perspective: 1000;
+}
+/* flip the pane when hovered */
+/* .pskill-card-item:hover .pskill-flipper, .pskill-card-item.hover .pskill-flipper { */
+.ptree-card-item.hover .ptree-card {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+/* flip speed goes here */
+.ptree-card {
+	-webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.ptree-card-front, .ptree-card-back {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.ptree-card-front {
+	z-index: 2;
+	/* -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    transform: rotateY(0deg); */
+}
+
+/* back, initially hidden pane */
+.ptree-card-back {
+    z-index: 3;
+	-webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+@-webkit-keyframes spin {
+    0%   { 
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+@keyframes spin {
+    0%   { 
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}

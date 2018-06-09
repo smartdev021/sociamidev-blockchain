@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import {Icon} from 'react-fa'
 
 import ThemeHeader from '~/src/theme/ThemeHeader';
-import SidebarLeft from '~/src/theme/SidebarLeft';
+// import SidebarLeft from '~/src/theme/SidebarLeft';
 
 import ConfigMain from '~/configs/main'
 
@@ -113,7 +113,7 @@ class Main extends React.Component {
             fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
             isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile} accounting={this.props.accounting}/>
           <div className="session-content">
-            <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/>
+            {/* <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/> */}
             <div className="content-tokens">
               {this.renderRoutes()}
             </div>

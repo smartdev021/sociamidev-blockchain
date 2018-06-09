@@ -1,21 +1,53 @@
 .latest-task-tile {
-    max-height: 300px;
-    min-height: 300px;
-    display: block;
-    padding: 4px;
-    margin-bottom: 20px;
-    line-height: 1.42857143;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-  }
-  
-  .latest-task-tile:hover {
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-    background-color: rgba(255, 255, 255, 0.8);
-  }
+  max-height: 300px;
+  min-height: 300px;
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.latest-task-tile:hover {
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.progressiontree-container{
+  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/progression_trees_background.jpg);
+  overflow: auto;
+  background-size: cover;
+  min-height: 100vh;
+  font-family: "Myriad Pro";
+}
+.progression-tree-header-box{
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+.progressiontree-header{
+  font-size: 22px
+}
+.progression-tree-clock{
+  border: 2px solid #8BBCD9;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: auto;
+}
+.show-more-option{
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.progression-tree-panels{
+
+}
