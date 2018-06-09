@@ -1,0 +1,1786 @@
+@font-face {
+    font-family: 'MyriadPro Bold';
+    src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Bold.woff") format("woff"),
+    url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Bold.otf") format("otf"),
+    url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'MyriadPro Regular';
+    src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Regular.woff") format("woff"),
+    url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Regular.otf") format("otf"),
+    url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'MyriadPro Semibold';
+    src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Semibold.woff") format("woff"),
+    url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Semibold.otf") format("otf"),
+    url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Semibold.ttf") format("truetype");
+}
+
+button {
+    outline: 0;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+.clearfix::before {
+    display: table;
+    content: ' ';
+}
+
+.clearfix::after {
+    display: table;
+    clear: both;
+    content: ' ';
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+body.vertical-hidden,
+html.vertical-hidden {
+    overflow-y: hidden;
+}
+
+.landing-page-wrapper header {
+    position: relative;
+    margin: 0;
+}
+
+.landing-page-wrapper main {
+    position: relative;
+    padding: 52px 0 165px;
+    margin: 0;
+    background: #ebebeb;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper main {
+        padding: 52px 0 9px;
+    }
+}
+
+.landing-page-wrapper .rectangle {
+    position: absolute;
+    bottom: -54px;
+    left: -20px;
+    display: inline-block;
+    width: 100%;
+    height: 55px;
+    max-width: 910px;
+    background: #ebebeb;
+    transform: skew(-38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .rectangle {
+        bottom: -34px;
+        left: -49px;
+        width: 100%;
+        height: 35px;
+        max-width: 268px;
+    }
+}
+
+.landing-page-wrapper .about-wrapper {
+    position: relative;
+    padding: 62px 0;
+    color: #fff;
+    text-align: center;
+    background: #000;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper {
+        padding: 36px 0 37px;
+    }
+}
+
+.landing-page-wrapper .about-wrapper br {
+    display: none;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper br {
+        display: block;
+    }
+}
+
+.landing-page-wrapper .about-wrapper span {
+    color: #ffd400;
+}
+
+.landing-page-wrapper .about-wrapper span.blue-rectangle {
+    display: inline-block;
+    width: 60px;
+    height: 3px;
+    background: #2080e5;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper span.blue-rectangle {
+        width: 44px;
+        height: 3px;
+    }
+}
+
+.landing-page-wrapper .about-wrapper div {
+    position: absolute;
+    z-index: 3;
+    width: 542px;
+    height: 52px;
+    background: #000;
+    transform: skew(-38deg);
+}
+
+.landing-page-wrapper .about-wrapper div.top-rectangle {
+    top: -52px;
+    right: -20px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper div.top-rectangle {
+        top: -30px;
+        right: -30px;
+        width: 191px;
+        height: 31px;
+    }
+}
+
+.landing-page-wrapper .about-wrapper div.bottom-rectangle {
+    bottom: -51px;
+    left: -245px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper div.bottom-rectangle {
+        display: none;
+    }
+}
+
+.landing-page-wrapper .about-wrapper p {
+    max-width: 820px;
+    margin: 1em auto;
+    font: normal 18px "MyriadPro Regular";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper p {
+        max-width: 255px;
+        margin: 6px auto;
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .about-wrapper h3 {
+    max-width: 820px;
+    margin: 1em auto;
+    font: normal 18px "MyriadPro Regular";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper h3 {
+        max-width: 296px;
+        margin: 15px auto 20px;
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .about-wrapper h2 {
+    font: normal 40px "MyriadPro Semibold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .about-wrapper h2 {
+        font-size: 20px;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper {
+    position: relative;
+    margin-bottom: -4px;
+    color: #fff;
+}
+
+.landing-page-wrapper .banner-wrapper div {
+    position: absolute;
+    top: 50%;
+    left: 300px;
+    transform: translateY(-50%) skew(-37deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper div {
+        top: 155px;
+        left: 50%;
+        width: 234px;
+        margin-left: 0;
+        transform: translateX(-50%) skew(-32deg);
+    }
+}
+
+.landing-page-wrapper .banner-wrapper section {
+    width: 527px;
+    padding: 0 0 17px;
+    margin: 70px 0 15px;
+    background: #000;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper section {
+        width: 100%;
+        padding: 0 0 7px;
+        margin: 0 0 5px;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper section h2,
+.landing-page-wrapper .banner-wrapper section p {
+    text-align: center;
+    transform: skew(38deg);
+}
+
+.landing-page-wrapper .banner-wrapper section h2 {
+    padding: 11px 0 0;
+    font: normal 40px "MyriadPro Semibold";
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper section h2 {
+        padding: 9px 0 2px;
+        font-size: 20px;
+        transform: skew(32deg);
+    }
+}
+
+.landing-page-wrapper .banner-wrapper section p {
+    margin: 5px 0;
+    font: normal 20px "MyriadPro Regular";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper section p {
+        width: 215px;
+        padding: 0;
+        margin: 0 auto;
+        font-size: 13px;
+        transform: skew(32deg);
+    }
+
+    .landing-page-wrapper .banner-wrapper section p br {
+        display: none;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper img {
+    width: 100%;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper img {
+        min-height: 432px;
+        object-fit: cover;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper button {
+    display: inline-block;
+    font: normal 20px "MyriadPro Semibold";
+    color: #000;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper button {
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper button.explore-button {
+    padding: 5px 60px;
+    margin: 0 20px 0 5px;
+    background: #ffd400;
+    border: 1px solid rgba(94, 59, 3, 0.71);
+    box-shadow: inset 0 0 7px 1px rgba(94, 59, 3, 0.71);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper button.explore-button {
+        padding: 7px 14px 4px;
+        margin: 0 5px 0 0;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper button.sign-in-button {
+    padding: 5px 96px;
+    background: #fff;
+    border: 1px solid rgba(148, 148, 148, 0.67);
+    box-shadow: inset 0 0 7px 1px rgba(148, 148, 148, 0.67);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper button.sign-in-button {
+        padding: 7px 37px 4px;
+        margin: 0;
+    }
+}
+
+.landing-page-wrapper .banner-wrapper button p {
+    margin: 0;
+    transform: skew(38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .banner-wrapper button p {
+        transform: skew(32deg);
+    }
+}
+
+.landing-page-wrapper .footer {
+    padding: 109px 0 51px;
+    color: #fff;
+    text-align: center;
+    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/footer.png") no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer {
+        padding: 65px 0 30px;
+    }
+}
+
+.landing-page-wrapper .footer > img {
+    height: 47px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer > img {
+        height: 27px;
+    }
+}
+
+.landing-page-wrapper .footer h3 {
+    margin: 33px 0 15px;
+    font: normal 22px "MyriadPro Semibold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer h3 {
+        margin: 15px 0 7px;
+        font-size: 15px;
+    }
+}
+
+.landing-page-wrapper .footer h4 {
+    margin: 0 0 9px;
+    font: normal 16px "MyriadPro Semibold";
+    color: #777777;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer h4 {
+        max-width: 250px;
+        margin: 0 auto 5px;
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .footer > div {
+    display: inline-block;
+    padding: 5px 15px;
+    border: 2px solid #2c82df;
+    transform: skew(-38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer > div {
+        padding: 2px 10px;
+    }
+}
+
+.landing-page-wrapper .footer button {
+    padding: 9px 45px 8px;
+    margin-left: -4px;
+    font: normal 16px "MyriadPro Semibold";
+    color: #fff;
+    background: #2c82df;
+    border: 0;
+    outline: 0;
+    transform: skew(-38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer button {
+        padding: 7px 22px 6px;
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .footer input {
+    margin: 0;
+    font: normal 16px "MyriadPro Regular";
+    color: #777777;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer input {
+        max-width: 100px;
+        font-size: 12px;
+    }
+}
+
+.landing-page-wrapper .footer p {
+    margin: 0;
+    transform: skew(38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer p {
+        margin: 2px 0 -1px;
+        font-size: 12px;
+    }
+}
+
+.landing-page-wrapper .footer ul {
+    margin: 48px 0 36px -49px;
+    list-style: none;
+}
+
+.landing-page-wrapper .footer li {
+    display: inline-block;
+    font: normal 20px "MyriadPro Semibold";
+}
+
+.landing-page-wrapper .footer li:not(:last-of-type)::after {
+    display: inline-block;
+    margin: 0 26px;
+    color: #fff;
+    content: '|';
+}
+
+.landing-page-wrapper .footer .privacy-list {
+    margin: 0 0 0 -47px;
+    font-size: 16px;
+    text-transform: uppercase;
+    list-style: none;
+}
+
+.landing-page-wrapper .footer .privacy-list li::after {
+    margin: 0 2px 0 6px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer .privacy-list li {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .footer .info-list {
+        padding: 0;
+        margin: 25px auto;
+    }
+
+    .landing-page-wrapper .footer .info-list li {
+        display: block;
+        width: 100%;
+        max-width: 90px;
+        padding: 11px 0;
+        margin: 0 auto;
+        font-size: 16px;
+        line-height: 10.25px;
+        border-bottom: 1px solid #fff;
+    }
+
+    .landing-page-wrapper .footer .info-list li:first-of-type {
+        padding: 0 0 14px;
+    }
+
+    .landing-page-wrapper .footer .info-list li:last-of-type {
+        padding: 17px 0 0;
+        border: 0;
+    }
+
+    .landing-page-wrapper .footer .info-list li::after {
+        display: none;
+    }
+}
+
+.landing-page-wrapper .header {
+    position: absolute;
+    top: 0;
+    right: -25px;
+    z-index: 2;
+    padding: 0 89px 0 43px;
+    background: #000;
+    transform: skew(-37deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .header {
+        right: -31px;
+        padding: 0;
+    }
+}
+
+.landing-page-wrapper .header .burger {
+    display: none;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .header .burger {
+        display: inline-block;
+        padding: 12px 52px 12px 19px;
+        margin: 0;
+        transform: skew(37deg);
+    }
+}
+
+.landing-page-wrapper .header .burger span {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #fff;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .header .burger span {
+        width: 18px;
+    }
+}
+
+.landing-page-wrapper .header .burger span:nth-of-type(2) {
+    margin: 9px 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .header .burger span:nth-of-type(2) {
+        margin: 3px 0;
+    }
+}
+
+.landing-page-wrapper .header button {
+    margin: 15px 6px;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(8deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .header button {
+        display: none;
+    }
+}
+
+.landing-page-wrapper .header button.subscribe-button {
+    padding: 5px 52px;
+    margin-left: 33px;
+    font-family: "MyriadPro Semibold";
+    border: 2px solid #2c82df;
+}
+
+.landing-page-wrapper .header button.sign-up-button {
+    padding: 7px 25px;
+    margin-left: 9px;
+    font-family: "MyriadPro Semibold";
+    background: #2c82df;
+}
+
+.landing-page-wrapper .header button p {
+    margin: 0;
+    transform: skew(29deg);
+}
+
+.landing-page-wrapper .logo {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    z-index: 2;
+    padding: 15px 55px 10px 80px;
+    margin: 0;
+    background: #000;
+    transform: skewX(-35deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .logo {
+        padding: 7px 35px 4px 42px;
+    }
+}
+
+.landing-page-wrapper .logo img {
+    width: 100%;
+    max-width: 84px;
+    transform: skew(35deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .logo img {
+        width: 58px;
+    }
+}
+
+.landing-page-wrapper .mobile-menu {
+    display: none;
+    background: #000;
+}
+
+.landing-page-wrapper .mobile-menu.open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.landing-page-wrapper .mobile-menu .close-menu {
+    float: right;
+    padding: 7px 14px;
+    margin: 0 0 18px;
+    background: none;
+    border: 0;
+}
+
+.landing-page-wrapper .mobile-menu span {
+    position: relative;
+    display: inline-block;
+    width: 33px;
+    height: 23px;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+.landing-page-wrapper .mobile-menu span::before,
+.landing-page-wrapper .mobile-menu span::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    margin-top: -1px;
+    background: #fff;
+    content: '';
+}
+
+.landing-page-wrapper .mobile-menu span::before {
+    transform: rotate(45deg);
+}
+
+.landing-page-wrapper .mobile-menu span::after {
+    transform: rotate(-45deg);
+}
+
+.landing-page-wrapper .mobile-menu img {
+    display: block;
+    width: 120px;
+    margin: 0 auto;
+    clear: both;
+}
+
+.landing-page-wrapper .mobile-menu ul {
+    max-width: 276px;
+    padding: 6px 0 0 23px;
+    margin: 0 auto;
+    font: normal 15px "MyriadPro Semibold";
+    color: #fff;
+    list-style: none;
+}
+
+.landing-page-wrapper .mobile-menu li {
+    padding: 9px 0 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.46);
+}
+
+.landing-page-wrapper .mobile-menu li::after {
+    float: right;
+    content: '\003E';
+}
+
+.landing-page-wrapper .mobile-menu .subscribe-button,
+.landing-page-wrapper .mobile-menu .sign-up-button {
+    margin: 15px 6px;
+    font: normal 12px "MyriadPro Regular";
+    color: #fff;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(-38deg);
+}
+
+.landing-page-wrapper .mobile-menu .subscribe-button {
+    padding: 5px 33px;
+    margin: 27px 5px 27px -6px;
+    font-family: "MyriadPro Semibold";
+    border: 2px solid #2c82df;
+}
+
+.landing-page-wrapper .mobile-menu .sign-up-button {
+    padding: 7px 12px;
+    margin: 0;
+    font-family: "MyriadPro Semibold";
+    background: #2c82df;
+}
+
+.landing-page-wrapper .mobile-menu p {
+    margin: 0;
+    transform: skew(38deg);
+}
+
+.landing-page-wrapper .mobile-menu footer {
+    text-align: center;
+}
+
+.landing-page-wrapper .our-blog {
+    color: #fff;
+    text-align: center;
+}
+
+.landing-page-wrapper .our-blog h2 {
+    margin: 57px 0 39px;
+    font: normal 40px "MyriadPro Semibold";
+    color: #333333;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog h2 {
+        margin: 8px 0 14px;
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.landing-page-wrapper .our-blog .one-news,
+.landing-page-wrapper .our-blog .top-news,
+.landing-page-wrapper .our-blog .bottom-news {
+    position: relative;
+}
+
+.landing-page-wrapper .our-blog .one-news,
+.landing-page-wrapper .our-blog .two-news {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+}
+
+.landing-page-wrapper .our-blog article {
+    position: absolute;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .one-news {
+        width: 100%;
+        height: 246px;
+        max-width: 275px;
+        overflow: hidden;
+        text-align: center;
+    }
+}
+
+.landing-page-wrapper .our-blog .one-news h3 {
+    margin: 7px 0;
+    font: normal 28px "MyriadPro Bold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .one-news h3 {
+        margin: 3px 0;
+        font-size: 16px;
+    }
+}
+
+.landing-page-wrapper .our-blog .one-news article {
+    bottom: 27px;
+    left: 31px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .one-news article {
+        bottom: 15px;
+        left: 17px;
+        text-align: left;
+    }
+}
+
+.landing-page-wrapper .our-blog .two-news {
+    margin-left: 6px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .two-news {
+        width: 100%;
+        margin: 21px 0 0;
+    }
+}
+
+.landing-page-wrapper .our-blog .two-news article {
+    bottom: 24px;
+    left: 20px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .two-news article {
+        bottom: 18px;
+        left: 20px;
+        max-width: 220px;
+    }
+
+    .landing-page-wrapper .our-blog .two-news article br {
+        display: none;
+    }
+}
+
+.landing-page-wrapper .our-blog .two-news h3 {
+    margin: 5px 0;
+    font: normal 24px "MyriadPro Bold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .two-news h3 {
+        margin: 3px 0;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .top-news,
+    .landing-page-wrapper .our-blog .bottom-news {
+        width: 100%;
+        height: 165px;
+        max-width: 275px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+}
+
+.landing-page-wrapper .our-blog .bottom-news {
+    margin-top: 7px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .bottom-news {
+        margin-top: 22px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .bottom-news article {
+        bottom: 13px;
+        max-width: 250px;
+    }
+}
+
+.landing-page-wrapper .our-blog p {
+    margin: 0;
+    font: normal 18px "MyriadPro Semibold";
+}
+
+.landing-page-wrapper .our-blog p.date {
+    font-family: "MyriadPro Regular";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog p {
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .our-blog .all-news-button {
+    display: block;
+    padding: 5px 57px;
+    margin: 30px auto 5px;
+    font: normal 20px "MyriadPro Semibold";
+    color: #000;
+    background: #ffd400;
+    border: 1px solid rgba(223, 188, 16, 0.71);
+    transform: skew(-37deg);
+    box-shadow: inset 0 0 7px 4px rgba(223, 188, 16, 0.71);
+}
+
+.landing-page-wrapper .our-blog .all-news-button p {
+    transform: skew(37deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .our-blog .all-news-button {
+        padding: 6px 17px;
+        margin: 20px auto 10px;
+    }
+}
+
+.landing-page-wrapper .soqqle-info {
+    margin: 87px 0;
+    text-align: center;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info {
+        margin: 12px 3% 71px;
+    }
+}
+
+.landing-page-wrapper .soqqle-info section {
+    display: inline-block;
+    width: 285px;
+    height: 242px;
+    padding: 35px 40px;
+    margin: 0 20px;
+    vertical-align: top;
+    background: #fff;
+    box-shadow: -5px 6px 13px -2px rgba(148, 148, 148, 0.4);
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info section {
+        display: block;
+        width: 100%;
+        height: 150px;
+        max-width: 275px;
+        padding: 4px;
+        margin: 0 auto 20px;
+    }
+}
+
+.landing-page-wrapper .soqqle-info h2 {
+    margin: 0 0 45px;
+    font: normal 40px "MyriadPro Semibold";
+    color: #333333;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info h2 {
+        margin: 0 0 20px;
+        font-size: 20px;
+    }
+}
+
+.landing-page-wrapper .soqqle-info p {
+    margin: 0;
+    font: normal 20px "MyriadPro Semibold";
+    color: #333333;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info p {
+        font-size: 16px;
+    }
+}
+
+.landing-page-wrapper .soqqle-info img {
+    margin-bottom: 18px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info img {
+        height: 71px;
+        margin: 19px 0 7px;
+    }
+}
+
+.landing-page-wrapper .soqqle-info img.jorney {
+    margin-top: 13px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info img.jorney {
+        height: 61px;
+        margin: 28px 0 5px;
+    }
+
+    .landing-page-wrapper .soqqle-info img.jorney + p {
+        max-width: 210px;
+        margin: 0 auto;
+    }
+}
+
+.landing-page-wrapper .soqqle-info img.learning-course {
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info img.learning-course {
+        height: 70px;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .soqqle-info img.goals + p {
+        font-size: 14.5px;
+    }
+}
+
+.landing-page-wrapper .video {
+    position: relative;
+    padding-bottom: 55px;
+    text-align: center;
+    background: #000;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video {
+        padding: 0 0 30px;
+    }
+}
+
+.landing-page-wrapper .video .top-rectangle {
+    position: absolute;
+    top: -52px;
+    right: -20px;
+    width: 458px;
+    height: 52px;
+    background: #000;
+    transform: skew(-38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video .top-rectangle {
+        top: -33px;
+        right: -12px;
+        width: 100%;
+        height: 34px;
+        max-width: 137px;
+    }
+}
+
+.landing-page-wrapper .video .all-videos-button {
+    display: block;
+    padding: 5px 57px;
+    margin: 30px auto 5px;
+    color: #000;
+    background: #ffd400;
+    border: 1px solid rgba(94, 59, 3, 0.71);
+    transform: skew(-37deg);
+    box-shadow: inset 0 0 7px 1px rgba(94, 59, 3, 0.71);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video .all-videos-button {
+        padding: 6px 11px;
+        margin: 19px auto 0;
+        transform: skew(-32deg);
+    }
+}
+
+.landing-page-wrapper .video h1 {
+    padding: 40px 0;
+    font: normal 40px "MyriadPro Semibold";
+    color: #fff;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video h1 {
+        padding: 37px 0 24px;
+        font-size: 20px;
+    }
+}
+
+.landing-page-wrapper .video p {
+    margin: 0;
+    font: normal 18px "MyriadPro Semibold";
+    transform: skew(38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video p {
+        font-size: 13px;
+        transform: skew(32deg);
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video video {
+        width: 100%;
+        height: 212px;
+        max-width: 278px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us {
+    position: relative;
+    margin: 50px auto;
+    color: #333333;
+    text-align: center;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us {
+        max-width: 320px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us section {
+    max-width: 600px;
+    padding: 30px 10px 70px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 12px -1px #45769a;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section {
+        max-width: 205px;
+        padding-bottom: 24px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us section > div {
+    display: inline-block;
+    margin: 15px 30px 0 0;
+    vertical-align: top;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section > div {
+        display: block;
+        margin: 0;
+    }
+}
+
+.landing-page-wrapper .talk-about-us section.main-section {
+    position: relative;
+    z-index: 3;
+}
+
+.landing-page-wrapper .talk-about-us section.background-section-1,
+.landing-page-wrapper .talk-about-us section.background-section-2 {
+    position: absolute;
+    top: 130px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-1 h3,
+    .landing-page-wrapper .talk-about-us section.background-section-2 h3 {
+        margin: 10px auto 4px;
+        font-size: 12px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us section.background-section-1 p,
+.landing-page-wrapper .talk-about-us section.background-section-2 p {
+    font-size: 13.73px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-1 p,
+    .landing-page-wrapper .talk-about-us section.background-section-2 p {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-1 .avatar,
+    .landing-page-wrapper .talk-about-us section.background-section-2 .avatar {
+        width: 33px;
+        margin: 4px auto 13px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-1 article,
+    .landing-page-wrapper .talk-about-us section.background-section-2 article {
+        height: 115px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-1 .twitter-mobile,
+    .landing-page-wrapper .talk-about-us section.background-section-2 .twitter-mobile {
+        width: 25px;
+        margin: 11px auto 0;
+    }
+}
+
+.landing-page-wrapper .talk-about-us section.background-section-1 {
+    left: 215px;
+    padding: 15px 30px 53px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-1 {
+        top: 83px;
+        left: -130px;
+        padding-bottom: 19px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us section.background-section-1 .twitter {
+    width: 30px;
+    margin-top: 10px;
+}
+
+.landing-page-wrapper .talk-about-us section.background-section-2 {
+    right: 209px;
+    padding: 5px 29px 46px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us section.background-section-2 {
+        top: 83px;
+        right: -130px;
+        padding: 15px 30px 19px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us article {
+    display: inline-block;
+    max-width: 360px;
+    text-align: left;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us article {
+        display: block;
+        height: 155px;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+
+.landing-page-wrapper .talk-about-us h2 {
+    margin: 108px 0 48px;
+    font: normal 40px "MyriadPro Semibold";
+    color: #333333;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us h2 {
+        margin: 55px 0 21px;
+        font-size: 20px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us h3 {
+    margin: 28px 0 11px;
+    font: normal 24px "MyriadPro Bold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us h3 {
+        margin: 15px 0 4px;
+        font-size: 16px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us p {
+    margin: 0;
+    font: normal 18px "MyriadPro Regular";
+    color: #777777;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us p {
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us img {
+    display: block;
+    margin: 0 auto;
+}
+
+.landing-page-wrapper .talk-about-us img.avatar {
+    padding: 5px;
+    margin: 10px 10px 0;
+    border: 4px solid #2080e5;
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us img.avatar {
+        display: block;
+        width: 55px;
+        margin: -9px auto 0;
+    }
+}
+
+.landing-page-wrapper .talk-about-us .twitter {
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us .twitter {
+        display: none;
+    }
+}
+
+.landing-page-wrapper .talk-about-us .twitter-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us .twitter-mobile {
+        display: block;
+        width: 100%;
+        max-width: 33px;
+        margin: 8px auto 0;
+    }
+}
+
+.landing-page-wrapper .talk-about-us .opacity-layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.landing-page-wrapper .talk-about-us footer {
+    margin: 22px 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us footer {
+        margin: 26px 0;
+    }
+}
+
+.landing-page-wrapper .talk-about-us footer button {
+    display: inline-block;
+    padding: 0 18px;
+    color: #000;
+    background: #ffd400;
+    border: 1px solid rgba(223, 188, 16, 0.71);
+    transform: skew(-37deg);
+    box-shadow: inset 0 0 7px 4px rgba(223, 188, 16, 0.71);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us footer button {
+        padding: 0 11px;
+    }
+}
+
+.landing-page-wrapper .talk-about-us footer button p {
+    font: normal 28px "MyriadPro Semibold";
+    transform: skew(38deg);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us footer button p {
+        font-size: 25.6px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .talk-about-us .left-arrow {
+        margin-right: 6px;
+    }
+}
+
+.landing-page-wrapper .work-explanation {
+    max-width: 1366px;
+    padding: 23px 0;
+    margin: 0 auto;
+    color: #000000;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation {
+        padding: 0;
+    }
+}
+
+.landing-page-wrapper .work-explanation section {
+    padding: 142px 0 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation section {
+        max-width: 320px;
+        padding: 62px 0 0;
+        margin: 0 auto;
+    }
+}
+
+.landing-page-wrapper .work-explanation .blue-rectangle {
+    display: inline-block;
+    width: 60px;
+    height: 3px;
+    background: #ffd400;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .blue-rectangle {
+        width: 40px;
+        height: 3px;
+        margin-left: 22px;
+    }
+}
+
+.landing-page-wrapper .work-explanation a {
+    font-family: "MyriadPro Semibold";
+    color: #2774c7;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation a {
+        display: block;
+        margin: 8px 0 0 22px;
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .images-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.landing-page-wrapper .work-explanation .background-img-1,
+.landing-page-wrapper .work-explanation .background-img-2 {
+    position: absolute;
+}
+
+.landing-page-wrapper .work-explanation img {
+    display: inline-block;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation img {
+        width: 100%;
+        max-width: 215px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .description {
+    position: relative;
+    display: inline-block;
+    max-width: 330px;
+}
+
+.landing-page-wrapper .work-explanation h1 {
+    position: absolute;
+    top: -115px;
+    font: normal 300px "MyriadPro Bold";
+    color: rgba(173, 108, 146, 0.12);
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation h1 {
+        font-size: 192px;
+    }
+}
+
+.landing-page-wrapper .work-explanation h2 {
+    font: normal 40px "MyriadPro Semibold";
+    text-align: center;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation h2 {
+        font-size: 20px;
+    }
+}
+
+.landing-page-wrapper .work-explanation h3 {
+    margin: 23px 0 21px;
+    font: normal 24px "MyriadPro Semibold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation h3 {
+        margin: 8px 0 0 22px;
+        font-size: 16px;
+    }
+}
+
+.landing-page-wrapper .work-explanation p {
+    margin: 22px 0 5px;
+    font: normal 18px "MyriadPro Semibold";
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation p {
+        margin: 7px 0 10px 22px;
+        font-size: 13px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house .description,
+.landing-page-wrapper .work-explanation .select-house .images-wrapper,
+.landing-page-wrapper .work-explanation .get-reward .description,
+.landing-page-wrapper .work-explanation .get-reward .images-wrapper {
+    float: left;
+    margin: 0 0 0 193px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house .description,
+    .landing-page-wrapper .work-explanation .select-house .images-wrapper,
+    .landing-page-wrapper .work-explanation .get-reward .description,
+    .landing-page-wrapper .work-explanation .get-reward .images-wrapper {
+        display: block;
+        float: none;
+        max-width: 320px;
+        padding: 0 17px 0 0;
+        margin: 0;
+        text-align: right;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house .description,
+.landing-page-wrapper .work-explanation .get-reward .description {
+    margin: 68px 0 0 165px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house .description,
+    .landing-page-wrapper .work-explanation .get-reward .description {
+        width: 100%;
+        max-width: 228px;
+        padding: 0;
+        margin: 43px auto 0;
+        text-align: left;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house .background-img-1,
+.landing-page-wrapper .work-explanation .get-reward .background-img-1 {
+    top: -85px;
+    left: -58px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house .background-img-1,
+    .landing-page-wrapper .work-explanation .get-reward .background-img-1 {
+        top: -40px;
+        left: 50%;
+        width: 100%;
+        max-width: 202px;
+        transform: translateX(-50%);
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house .background-img-2,
+.landing-page-wrapper .work-explanation .get-reward .background-img-2 {
+    bottom: -35px;
+    left: -141px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house .background-img-2,
+    .landing-page-wrapper .work-explanation .get-reward .background-img-2 {
+        bottom: -14px;
+        left: 37%;
+        width: 100%;
+        max-width: 202px;
+        transform: translateX(-50%);
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house h1,
+.landing-page-wrapper .work-explanation .get-reward h1 {
+    left: -90px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house h1,
+    .landing-page-wrapper .work-explanation .get-reward h1 {
+        top: -43px;
+        left: -38px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .description,
+.landing-page-wrapper .work-explanation .select-hero .images-wrapper,
+.landing-page-wrapper .work-explanation .use-rewards .description,
+.landing-page-wrapper .work-explanation .use-rewards .images-wrapper {
+    float: right;
+    margin: 0 197px 0 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .description,
+    .landing-page-wrapper .work-explanation .select-hero .images-wrapper,
+    .landing-page-wrapper .work-explanation .use-rewards .description,
+    .landing-page-wrapper .work-explanation .use-rewards .images-wrapper {
+        float: none;
+        max-width: 320px;
+        padding: 0 0 0 12px;
+        margin: 0;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .description,
+.landing-page-wrapper .work-explanation .use-rewards .description {
+    margin: 0 47px 0 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .description,
+    .landing-page-wrapper .work-explanation .use-rewards .description {
+        width: 100%;
+        max-width: 228px;
+        padding: 0;
+        margin: 43px auto 0;
+        text-align: left;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .background-img-1,
+.landing-page-wrapper .work-explanation .use-rewards .background-img-1 {
+    top: -90px;
+    right: -78px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .background-img-1,
+    .landing-page-wrapper .work-explanation .use-rewards .background-img-1 {
+        top: -44px;
+        right: -37px;
+        width: 320px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .background-img-2,
+.landing-page-wrapper .work-explanation .use-rewards .background-img-2 {
+    top: 72px;
+    right: -152px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .background-img-2,
+    .landing-page-wrapper .work-explanation .use-rewards .background-img-2 {
+        top: 32px;
+        right: 0;
+        left: 98px;
+        width: 200px;
+        margin: 0;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero {
+    padding-top: 110px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero {
+        padding-top: 92px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .description {
+    margin-top: 60px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .description {
+        display: block;
+        width: 100%;
+        max-width: 228px;
+        padding: 0;
+        margin: 43px auto 0;
+        text-align: left;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero p {
+    margin-bottom: 4px;
+}
+
+.landing-page-wrapper .work-explanation .select-hero h1 {
+    left: -110px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero h1 {
+        top: -43px;
+        left: -38px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .get-reward {
+    padding-top: 122px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .get-reward {
+        padding-top: 91px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .get-reward .description {
+    margin-top: 9px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .get-reward .description {
+        max-width: 242px;
+        margin-top: 54px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .get-reward h1 {
+    top: -95px;
+    left: -108px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .get-reward h1 {
+        top: -51px;
+        left: -31px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .use-rewards {
+    padding-top: 112px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .use-rewards {
+        padding-top: 90px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .use-rewards .description {
+    margin-top: 3px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .use-rewards .description {
+        display: block;
+        max-width: 256px;
+        margin: 38px auto 75px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .use-rewards h1 {
+    top: -81px;
+    left: -102px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .use-rewards h1 {
+        top: -39px;
+        left: -14px;
+    }
+}
+
+/*# sourceMappingURL=style.css.map */
