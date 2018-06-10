@@ -33,7 +33,7 @@ const Banner = ({openSignUpForm}) => {
     return (
         <div className="banner-wrapper">
             <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.webp"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg"
                 alt="banner"/>
             <div>
                 <section>
@@ -83,9 +83,9 @@ const Header = ({openMenu}) => {
                 <span> </span>
                 <span> </span>
             </button>
-            <button type="button"><p>The games</p></button>
+            <button type="button"><p>The Game</p></button>
             <button type="button"><p>Forums</p></button>
-            <button type="button"><p>Markers</p></button>
+            <button type="button"><p>Markets</p></button>
             <button type="button" className="subscribe-button"><p>Subscribe</p></button>
             <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
         </div>
