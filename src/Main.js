@@ -100,7 +100,7 @@ class Main extends React.Component {
             <Route exact path='/termsOfUse' render={routeProps => <TermsOfUse {...routeProps}{...this.props}/>}/>
             <Route exact path='/privacyPolicy' render={routeProps => <PrivacyPolicy {...routeProps}{...this.props}/>}/>
             <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>}/>
-            <Route path='/teams' render={routeProps => <Teams {...routeProps}{...this.props}/>}/>
+            {this.props.isAdmin && <Route path='/teams' render={routeProps => <Teams {...routeProps}{...this.props}/>}/> }
           </Switch>)
       }
 
@@ -109,7 +109,7 @@ class Main extends React.Component {
       return (
         <div className="wrapper">
           {RedirectTo}
-          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} logout={() => this.props.logout()}
+          <ThemeHeader isAdmin={this.props.isAdmin} isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} logout={() => this.props.logout()}
             fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
             isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile} accounting={this.props.accounting}/>
           <div className="session-content">
@@ -125,6 +125,7 @@ class Main extends React.Component {
 
 Main.propTypes = {
     isAuthorized: PropTypes.bool.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
     onFetchAllTasks: PropTypes.func.isRequired,
     userActivities: PropTypes.array.isRequired,
     markActivitySeen: PropTypes.func.isRequired,
@@ -139,6 +140,7 @@ Main.propTypes = {
     currentUserID: state.userProfile.profile._id,
     isAuthorized: state.userProfile.isAuthorized,
     userActivities: state.userProfile.activities.data,
+    isAdmin: state.userProfile.isAdmin
   });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
