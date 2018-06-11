@@ -29,6 +29,7 @@ PRD_S3_BUCKET           = 'soqqle.com'
 DEV_S3_BUCKET           = 'stg.soqqle.com'
 AWS_ACCESS_KEY_ID = 'AKIAJQTXVEWBQJYDATVQ'
 AWS_SECRET_ACCESS_KEY = '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'
+AWS_DEFAULT_REGION = 'ap-southeast-1'
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
 BUCKET_KEY = APPLICATION_NAME + '/' + VERSION_LABEL + \
     '-bitbucket_builds.zip'
@@ -44,7 +45,8 @@ def upload_to_s3(artifact):
         client = boto3.client(
             's3',
             aws_access_key_id=AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region=AWS_DEFAULT_REGION
         )
     except ClientError as err:
         print("Failed to create boto3 client.\n" + str(err))
