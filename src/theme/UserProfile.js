@@ -16,6 +16,7 @@ import Axios from 'axios';
 import StarRatings from 'react-star-ratings';
 import qs from 'query-string';
 import _ from 'lodash';
+import Img from 'react-image'
 
 import ConfigMain from '~/configs/main';
 import { openUserProfileComplete } from '~/src/redux/actions/authorization';
@@ -453,6 +454,7 @@ class UserProfile extends React.Component {
 													overlay={this.achievementPopover(_achievement)} >
 													<div>
 														<div className="achievement-item">
+															<Img src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${_achievement._id}?date=${new Date().toISOString()}`} />
 														</div>
 														<div className="achievement-name">
 															<p>{_achievement.name}</p>
