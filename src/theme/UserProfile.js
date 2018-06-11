@@ -355,7 +355,7 @@ class UserProfile extends React.Component {
 				case 'Progression':
 					// Find progression from this.state.progressionTrees using condition._roadmap field
 					let progressionObj = this.state.progressionTrees.find(e => e._id === cond._roadmap);
-					tokenCountLabel = `Complete ${cond.count} "${progressionObj.name}" ${cond.count === 1 ? 'task' : 'tasks'}.`;
+					tokenCountLabel = `Complete ${cond.count} "${_.get(progressionObj, 'name')}" ${cond.count === 1 ? 'task' : 'tasks'}.`;
 					break;
 				case 'Achievements':
 					// Find list of achievements from this.props.achievements using condition._achievements field which is an array
