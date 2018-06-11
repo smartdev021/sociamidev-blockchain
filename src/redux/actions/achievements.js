@@ -25,7 +25,7 @@ export function fetchAchievements() {
     return function (dispatch) {
       dispatch(fetchAchievementsInitiate());
       
-      const url = `${ConfigMain.getBackendURL()}/achievements`;
+      const url = `${ConfigMain.getBackendURL()}/achievement/group`;
         return (
         Axios.get(url)
         .then(function(response) {

@@ -422,44 +422,51 @@ class UserProfile extends React.Component {
 	
 	renderAchievementsList() {
 		return (
-			<div className="row achievement-list">
-				<div className="achievement-header">
-					<div className="achievement-heading col-md-2 col-xs-2 no-padding">ZARA</div>
-					<div className="achievement-progress col-md-8 col-xs-6 no-padding">
-						<div className="achievement-count">10 of 15</div>
-						<div className="progress-custom">
-							<div className="progress-length-custom">
-							</div>
-						</div>
-					</div>
-					<div className="achievement-token col-md-2 col-xs-4 no-padding">
-						<p className="pull-right">+1000 SOQQ </p>
-					</div>
-				</div>
-				<div className="achievement-items">
+			<div class="achievementList">
 				{
-					this.props.achievements.data
-					.map(achievement => {
-						return (	
-							<div key={achievement._id} className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
-								<OverlayTrigger
-									trigger={['hover', 'click']}
-									placement="top"
-									rootClose
-									overlay={this.achievementPopover(achievement)} >
-									<div>
-										<div className="achievement-item">
-										</div>
-										<div className="achievement-name">
-											<p>{achievement.name}</p>
+					this.props.achievements.data.map(achievement => {
+						return (
+							<div className="row achievement-list">
+								<div className="achievement-header">
+									<div className="achievement-heading col-md-2 col-xs-2 no-padding">{_.get(achievement, '_company.name')}</div>
+									<div className="achievement-progress col-md-8 col-xs-6 no-padding">
+										<div className="achievement-count">10 of 15</div>
+										<div className="progress-custom">
+											<div className="progress-length-custom">
+											</div>
 										</div>
 									</div>
-								</OverlayTrigger>
+									<div className="achievement-token col-md-2 col-xs-4 no-padding">
+										<p className="pull-right">+1000 SOQQ </p>
+									</div>
+								</div>
+
+								{
+									achievement._achievements
+									.map(_achievement => {
+										return (	
+											<div key={_achievement._id} className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
+												<OverlayTrigger
+													trigger={['hover', 'click']}
+													placement="top"
+													rootClose
+													overlay={this.achievementPopover(_achievement)} >
+													<div>
+														<div className="achievement-item">
+														</div>
+														<div className="achievement-name">
+															<p>{_achievement.name}</p>
+														</div>
+													</div>
+												</OverlayTrigger>
+											</div>
+										);
+									})
+								}
 							</div>
-						);
+						)
 					})
 				}
-				</div>
 			</div>
 		)
 	}
