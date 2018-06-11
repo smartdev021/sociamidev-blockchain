@@ -29,6 +29,7 @@ first command would deploy to staging environment, second one - into production
 ```
 Whatever inside folder `dist` will be deployed to the indicated environment.
 
+Note: Added automatic deployment when push in staging and master branch
 
 >## A Big Update Is Coming
 
