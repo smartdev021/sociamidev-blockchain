@@ -33,25 +33,37 @@
 }
 
 .QuestionAnswersFlow-answer-text {
-  position: relative;
   background-color: #fff4e9;
-  padding: 10px;
-  margin-left: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 6px #B2B2B2;
+    display: inline-block;
+    padding: 10px 18px;
+    position: relative;
+    vertical-align: top;
+}
+.QuestionAnswersFlow-answer-text::before {
+  background-color: #fff4e9;
+  content: "\00a0";
+  display: block;
+  height: 16px;
+  position: absolute;
+  top: 11px;
+  transform:             rotate( 29deg ) skew( -35deg );
+      -moz-transform:    rotate( 29deg ) skew( -35deg );
+      -ms-transform:     rotate( 29deg ) skew( -35deg );
+      -o-transform:      rotate( 29deg ) skew( -35deg );
+      -webkit-transform: rotate( 29deg ) skew( -35deg );
+  width:  20px;
 }
 
-.QuestionAnswersFlow-answer-text:after {
-  right: 100%;
-  top: 50%;
-  border: solid transparent;
-  content: ' ';
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(255, 244, 233, 0);
-  border-right-color: #fff4e9;
-  border-width: 13px;
-  margin-top: -25px;
+.partner-answer-text {
+  float: left;   
+  margin: 5px 5px 5px 20px;         
+}
+
+.partner-answer-text::before {
+  box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+  left: -9px;           
 }
 
 .QuestionAnswersFlow-other-players-answers {
@@ -62,11 +74,13 @@
 .QuestionAnswersFlow-other-players-answers {
   text-align: right;
 }
+
 .QuestionAnswersFlow-other-players-answers-text {
   width: 150px;
   line-height: 32px;
   padding-right: 20px;
 }
+
 .QuestionAnswersFlow-other-players-answers-images {
   height: 32px;
   display: inline-block;

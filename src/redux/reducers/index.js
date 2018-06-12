@@ -13,6 +13,7 @@ import { characterCreation, characterCreationData } from "./characterCreation"
 import { accounting } from "./accounting"
 import { progression } from "./progression"
 import { achievements } from "./achievements"
+import { timers } from './timers';
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -40,5 +41,6 @@ export default combineReducers({
   characterCreationData,
   accounting,
   progression,
-  achievements
+  achievements,
+  timers
 });

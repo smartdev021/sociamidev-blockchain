@@ -16,6 +16,7 @@ import Axios from 'axios';
 import StarRatings from 'react-star-ratings';
 import qs from 'query-string';
 import _ from 'lodash';
+import Img from 'react-image'
 
 import ConfigMain from '~/configs/main';
 import { openUserProfileComplete } from '~/src/redux/actions/authorization';
@@ -355,7 +356,7 @@ class UserProfile extends React.Component {
 				case 'Progression':
 					// Find progression from this.state.progressionTrees using condition._roadmap field
 					let progressionObj = this.state.progressionTrees.find(e => e._id === cond._roadmap);
-					tokenCountLabel = `Complete ${cond.count} "${progressionObj.name}" ${cond.count === 1 ? 'task' : 'tasks'}.`;
+					tokenCountLabel = `Complete ${cond.count} "${_.get(progressionObj, 'name')}" ${cond.count === 1 ? 'task' : 'tasks'}.`;
 					break;
 				case 'Achievements':
 					// Find list of achievements from this.props.achievements using condition._achievements field which is an array
@@ -372,12 +373,12 @@ class UserProfile extends React.Component {
 					}					
 				break;
 			}
-			return <div className="token-count">{tokenCountLabel}</div>
+			return <div  key={cond._id} className="token-count">{tokenCountLabel}</div>
 		});
 	}
 
-	showAchievementPopover(achievement){
-		const popoverBottom = (
+	achievementPopover(achievement) {
+		return (
 			<Popover id="popover-skill" className="popover-skill">
 				{ this.renderAchievementCount(achievement) }
 				<div className="progress-custom">
@@ -386,16 +387,7 @@ class UserProfile extends React.Component {
 				</div>
 			  	<div className="earned-token">Earned 50 tokens during 7 days</div>
 			</Popover>
-		)
-
-		return (
-			<OverlayTrigger
-				trigger={['hover', 'click']}
-				placement="top"
-				overlay={popoverBottom} >
-				<p>{achievement.name}</p>
-			</OverlayTrigger>
-		)
+		);
 	}
 
 	renderAchievementsFilter() {
@@ -431,37 +423,52 @@ class UserProfile extends React.Component {
 	
 	renderAchievementsList() {
 		return (
-			<div className="row achievement-list">
-				<div className="achievement-header">
-					<div className="achievement-heading col-md-2 col-xs-2 no-padding">ZARA</div>
-					<div className="achievement-progress col-md-8 col-xs-6 no-padding">
-						<div className="achievement-count">10 of 15</div>
-						<div className="progress-custom">
-							<div className="progress-length-custom">
-							</div>
-						</div>
-					</div>
-					<div className="achievement-token col-md-2 col-xs-4 no-padding">
-						<p className="pull-right">+1000 SOQQ </p>
-					</div>
-				</div>
-				<div className="achievement-items">
+			<div class="achievementList">
 				{
-					this.props.achievements.data
-					.map(achievement => {
-						return (	
-							<div className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
-								<div className="achievement-item">
-									
+					this.props.achievements.data.map(achievement => {
+						return (
+							<div className="row achievement-list">
+								<div className="achievement-header">
+									<div className="achievement-heading col-md-2 col-xs-2 no-padding">{_.get(achievement, '_company.name')}</div>
+									<div className="achievement-progress col-md-8 col-xs-6 no-padding">
+										<div className="achievement-count">10 of 15</div>
+										<div className="progress-custom">
+											<div className="progress-length-custom">
+											</div>
+										</div>
+									</div>
+									<div className="achievement-token col-md-2 col-xs-4 no-padding">
+										<p className="pull-right">+1000 SOQQ </p>
+									</div>
 								</div>
-								<div className="achievement-name">
-									{this.showAchievementPopover(achievement)}
-								</div>
+
+								{
+									achievement._achievements
+									.map(_achievement => {
+										return (	
+											<div key={_achievement._id} className="achievement-box col-lg-2 col-md-3 col-sm-2 col-xs-6">
+												<OverlayTrigger
+													trigger={['hover', 'click']}
+													placement="top"
+													rootClose
+													overlay={this.achievementPopover(_achievement)} >
+													<div>
+														<div className="achievement-item">
+															<Img src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${_achievement._id}?date=${new Date().toISOString()}`} />
+														</div>
+														<div className="achievement-name">
+															<p>{_achievement.name}</p>
+														</div>
+													</div>
+												</OverlayTrigger>
+											</div>
+										);
+									})
+								}
 							</div>
-						);
+						)
 					})
 				}
-				</div>
 			</div>
 		)
 	}

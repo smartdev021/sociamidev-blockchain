@@ -59,6 +59,7 @@ const userProfileInitialState = {
   },
   isAuthorized: false,
   isLoading: false,
+  isAdmin: false
 };
   
 export function userProfile(state = userProfileInitialState, action) {
@@ -70,7 +71,7 @@ export function userProfile(state = userProfileInitialState, action) {
     case USER_PROFIE_UPDATE_FREQUENTLY:
       return {...state, profile: {...state.profile, ...action.profile}};
     case FETCH_USER_PROFILE_COMPLETE:
-      return {...state, profile: action.profile, isAuthorized: action.isAuthorized, isLoading: false};
+      return {...state, profile: action.profile, isAdmin: action.isAdmin, isAuthorized: action.isAuthorized, isLoading: false};
     case UPDATE_USER_PROFILE_INITIATE:
       return {...state, isLoading: true};
     case UPDATE_USER_PROFILE_COMPLETE:

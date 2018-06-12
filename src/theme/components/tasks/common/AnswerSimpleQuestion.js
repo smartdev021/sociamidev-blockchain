@@ -5,7 +5,7 @@ const AnswerSimpleQuestion = (props) => {
         <textarea id={`answer_your_${props.question._id}`}
             className="validate-field required question-text-area"
             name="answer_your" onChange={(e) => props.onHandleAnswerInput(e)} value={props.answerMy.text} />
-        {props.partner &&
+        {/* {props.partner &&
             <div className="col-lg-6">
                 <div className="form-group">
                     <textarea readOnly={true} tabIndex="-1" id={`answer_partner_${props.question._id}`}
@@ -13,7 +13,7 @@ const AnswerSimpleQuestion = (props) => {
                         name="answer_partner" onChange={(e) => props.onHandleAnswerInput(e)} value={props.answerPartner} />
                 </div>
             </div>
-        }
+        } */}
     </div>)
 }
 

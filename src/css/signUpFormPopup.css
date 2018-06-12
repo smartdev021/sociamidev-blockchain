@@ -5,3 +5,7 @@
     background-color: black;
     border: 5px solid grey; 
 }
+
+.ReactModal__Overlay--after-open {
+    z-index: 100;
+}

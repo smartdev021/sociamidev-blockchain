@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Icon} from 'react-fa'
+import Async from 'async';
+import Countdown from 'react-countdown-now';
 
 import ActionLink from '~/src/components/common/ActionLink'
 import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
@@ -25,6 +27,12 @@ import {
   fetchRoadmapsFromAdmin,
 } from '~/src/redux/actions/roadmaps'
 
+import {
+  prepareTimers,
+  showAllTimers,
+  showTopTimers
+} from '~/src/redux/actions/timers'
+
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = {find_mentor: "Find Mentor",};
 
@@ -37,7 +45,7 @@ class HomePage extends React.Component {
 
     this.state = {
       isDetailsOpen: false,
-      currentTask: {},
+      currentTask: {}
     }
   }
 
@@ -45,6 +53,7 @@ class HomePage extends React.Component {
     this.props.onFetchAllTasks(false);
     this.props.fetchRoadmaps();
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
+    this.props.prepareTimers(this.props.userProfile.progressionTrees, this.props.userProfile._id);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -156,54 +165,58 @@ class HomePage extends React.Component {
     );
   }
 
-  renderUserProgressionTreesNew(){
-    return (
-      <div id="progression-trees-trees">
-        {
-            <div className="container-fluid">
-                <div className="row" style={{paddingBottom:'20px'}}>
-                  <div className="col-lg-12 skills-inprogress">
-                    <h3 className="timer-heading">
-                      TIMERS
-                    </h3>
-                    <p className="skill-in-progress">The Real Digital Nomad- Illuminate (00:25:59:34)</p>
-                    <p className="skill-in-progress">Innovation - Illuminate (00:25:59:34)</p>
-                    <a className="show-more">Show more</a>
-                  </div>
-                </div>
-                <div className="ptree-roadmap-list">
-                {this.props.roadmapsAdmin.data.length != 0 && 
-                
-                this.props.roadmapsAdmin.data.map((item,index) => {
-                  
-                  let customStyle
-                  if((index % 2) == 0){
-                    customStyle = {
-                      color : '#07AF3E',
-                      background : '#A4E6AD'
-                    }
-                  }else{
-                    customStyle = {
-                      color : '#F85655',
-                      background : '#F3A597'
-                    }
-                  }
-
-                  return <SkillCard skillItem={item} customStyle={customStyle} />
-                })
-                }
-              </div>  
-              </div>
-        }
+  renderTimers() {
+    if (this.props.timers.isTimersInProgress === false) {
+      let timersCount = _.get(this.props.timers,'data.length', 0);
+      if ( timersCount > 0 ){
+        let showFilter = undefined;
+        if( this.props.timers.showMoreFilter ) {
+          showFilter = this.props.timers.displayAll ?  
+          <a onClick={()=> this.props.showTopTimers()} className="show-more">Show less</a> 
+          :  <a onClick={()=> this.props.showAllTimers()} className="show-more">Show more</a>
+        }        
+        return (
+          <div>
+            { 
+              this.props.userProfile.progressionTrees.length > 0 && 
+              this.props.timers.data.slice(0,this.props.timers.showIndex).map((item,index) => {
+                return <p key={index} className="skill-in-progress">
+                          <span>{item.name}</span>
+                          (<Countdown daysInHours={false} date={item.date} />)
+                        </p>    
+              })
+            }
+            { showFilter }
+          </div>
+        );
+      } else {
+        return <span>No Active Timers</span>;
+      }
+    } else {
+      return (
+        <div>
+          Loading Timers...<Icon spin name="spinner" />
         </div>
+      );
+    }
+  }
+
+  renderUserProgressionTrees(){
+    return (
+        <div className="progression-tree-skill-list">
+              { 
+                this.props.roadmapsAdmin.data.length != 0 && 
+                this.props.roadmapsAdmin.data.map((item,index) => {
+                  return <SkillCard key={index} skillItem={item} />
+                })
+              }
+      </div>
       )
     }
 
   render() {
     //const SearchForm = this.renderSearhForm();
     const Tasks = this.renderTasks();
-    console.log('props in homepage')
-    console.log(this.props)
     return (
       // <div className="row">
       // <div className="col-lg-12">
@@ -231,13 +244,18 @@ class HomePage extends React.Component {
       // </div>
       // </div>
       // </div>
-      <div className="row content-wrap">
-        {this.props.roadmapsAdmin.data.length != 0 &&
-            <div className="list-progression-trees">
-                {this.renderUserProgressionTreesNew()}
+      <div className="progressiontree-container">
+            <div className="row progression-tree-header-box">
+                <div className="progressiontree-header"><b>My progression skills</b></div>
+                <div className="progression-tree-timers">
+                  <div className="progression-tree-clock">Innovation - Illuminate (00:25:12:59)</div>
+                </div>
+                <a className="show-more-option">show more</a>
             </div>
-        }
-      </div>
+            <div className="progression-tree-panels row">
+                {this.renderUserProgressionTrees()}    
+            </div>
+        </div>
     );
   }
 }
@@ -253,12 +271,16 @@ const mapDispatchToProps = dispatch => ({
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
+  prepareTimers: bindActionCreators(prepareTimers, dispatch),
+  showAllTimers: bindActionCreators(showAllTimers, dispatch),
+  showTopTimers: bindActionCreators(showTopTimers, dispatch)
 })
 
 const mapStateToProps = state => ({
   isFetchInProgress: state.isFetchInProgress,
   tasks: state.tasks.data,
   roadmapsAdmin: state.roadmapsAdmin,
+  timers: state.timers
 })
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

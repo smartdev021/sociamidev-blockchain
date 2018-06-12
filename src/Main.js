@@ -15,14 +15,14 @@ import PropTypes from 'prop-types';
 import {Icon} from 'react-fa'
 
 import ThemeHeader from '~/src/theme/ThemeHeader';
-import SidebarLeft from '~/src/theme/SidebarLeft';
+// import SidebarLeft from '~/src/theme/SidebarLeft';
 
 import ConfigMain from '~/configs/main'
 
 //routes
 import Authorize from '~/src/authentication/Authorize';
 
-import HomePage from '~/src/theme/HomePage.js';
+import HomePage from '~/src/theme/components/homepage/HomePage.js';
 import TaskManager from '~/src/theme/TaskManager';
 import TrendScanner from '~/src/theme/TrendScanner.js';
 import ProjectManager from '~/src/theme/ProjectManagement';
@@ -36,6 +36,7 @@ import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
 import "~/src/theme/css/main.css";
 import UserProfile from '~/src/theme/UserProfile.js';
+import Teams from '~/src/theme/components/teams/Teams.js';
 
 import Privacy from '~/src/theme/Privacy.js';
 
@@ -99,6 +100,7 @@ class Main extends React.Component {
             <Route exact path='/termsOfUse' render={routeProps => <TermsOfUse {...routeProps}{...this.props}/>}/>
             <Route exact path='/privacyPolicy' render={routeProps => <PrivacyPolicy {...routeProps}{...this.props}/>}/>
             <Route path='/userProfile' render={routeProps => <UserProfile {...routeProps}{...this.props}/>}/>
+            {this.props.isAdmin && <Route path='/teams' render={routeProps => <Teams {...routeProps}{...this.props}/>}/> }
           </Switch>)
       }
 
@@ -107,11 +109,11 @@ class Main extends React.Component {
       return (
         <div className="wrapper">
           {RedirectTo}
-          <ThemeHeader isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} logout={() => this.props.logout()}
+          <ThemeHeader isAdmin={this.props.isAdmin} isAuthorized={this.props.isAuthorized} userActivities={this.props.userActivities} logout={() => this.props.logout()}
             fetchUserActivities={() => this.props.fetchUserActivities()} openSidebar={(open) => this.handleSidebarOpen(open)} 
             isSidebarOpen={this.state.isSidebarOpen} userProfile={this.props.userProfile} accounting={this.props.accounting}/>
           <div className="session-content">
-            <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/>
+            {/* <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/> */}
             <div className="content-tokens">
               {this.renderRoutes()}
             </div>
@@ -123,6 +125,7 @@ class Main extends React.Component {
 
 Main.propTypes = {
     isAuthorized: PropTypes.bool.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
     onFetchAllTasks: PropTypes.func.isRequired,
     userActivities: PropTypes.array.isRequired,
     markActivitySeen: PropTypes.func.isRequired,
@@ -137,6 +140,7 @@ Main.propTypes = {
     currentUserID: state.userProfile.profile._id,
     isAuthorized: state.userProfile.isAuthorized,
     userActivities: state.userProfile.activities.data,
+    isAdmin: state.userProfile.isAdmin
   });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

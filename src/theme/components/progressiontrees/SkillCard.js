@@ -2,17 +2,9 @@
     author: Akshay Menon
 */
 
-import React, { Component } from 'react';
-
-import PropTypes from 'prop-types';
-// import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
-
-import "~/src/theme/css/common.css"
-import "~/src/theme/css/progressionTrees.css"
-import "~/src/theme/css/ProgressionTreesNew.css"
 
 import {
   fetchRoadmaps,
@@ -30,17 +22,18 @@ import {
 
 import ConfigMain from '~/configs/main'
 
+import "~/src/theme/css/SkillCard.css"
+
 
 class SkillCard extends React.Component {
 
     constructor(props) {
-      super(props);
-  
+      super(props)
       this.state = {
-
           isLoading:false,
-          isTaskSelected: {},
-          flipCardClass: {},
+          isTaskSelected: false,
+          flipCardClass: false,
+          openVideo:false,
           tree : undefined
       }
     }
@@ -67,162 +60,209 @@ class SkillCard extends React.Component {
         this.setState({isLoading: false});
     }
 
-    renderSkills(skills,style) {
-        const that = this;
-        //TODO: Fix incorrect database structure
-        let skillParsed = skills.length > 1 ? skills : skills[0].split(',');
-        for (let i = 0; i < skillParsed.length; ++i) {
-          skillParsed[i] = skillParsed[i].trim();
-        }
-        const listItems = skillParsed.map(function(skill, i) {
-          return (
-            <div className="pskill-banner" key={i}
-            style={{background:`linear-gradient(to left, ${style.background} 0%, white 45%)`}}>
-                <div className="pskill-name">
-                    {skill}
-                </div>
-            </div>
-          );
-        })
-        return listItems
+    toggleTaskView(){
+        this.setState({isTaskSelected: !this.state.isTaskSelected});
+    }
+    
+    flipCard(){
+        this.setState({flipCardClass: !this.state.flipCardClass});
+    }
+
+    selectSkill(e){
+      $(".pskill-banner").removeClass("active");
+      $(e.target).closest('div.pskill-banner').addClass('active')
+    }
+
+    selectTask(e){
+      $(".ptask-banner").removeClass("active");
+      $(e.target).closest('div.ptask-banner').addClass('active')
+    }
+
+    onPlayVideo(){
+      this.setState({ openVideo: !this.state.openVideo });
+    }
+
+    renderVideo(){
+      return(
+        <div className="ptree-video-lightbox" onClick={()=>this.onPlayVideo()}>
+          <div className="ptree-video-container">
+            <iframe className="ptree-video" width="420" height="345" id="intro-video" src="https://www.youtube.com/embed/i8PJgSclIf0"></iframe>
+            <a className="fa fa-2x fa-times" style={{color:'white',verticalAlign:'top'}} onClick={()=>this.onPlayVideo()}></a>
+          </div>
+        </div>
+      )
+    }
+
+    renderSkills(skills) {
+      const that = this
+      //TODO: Fix incorrect database structure
+      let skillParsed = skills.length > 1 ? skills : skills[0].split(',');
+      for (let i = 0; i < skillParsed.length; ++i) {
+        skillParsed[i] = skillParsed[i].trim();
       }
+      const listItems = skillParsed.map(function(skill, i){
+        return (
+          <div className="pskill-banner" onClick={(e)=>that.selectSkill(e)} key={i}>
+              <div className="pskill-name">
+                  {skill}
+              </div>
+              <div className="ptree-checkmark-div">
+                <div className="ptree-checkmark"></div>
+              </div>
+          </div>
+        )
+      })
+      return listItems
+    }
 
-    flipSkillCard(e){
-        e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hover")
+    renderTaskCard(skillItem){
+      return (
+        <div>
+            <div className="ptree-back-header">Select task to continue.</div>
+              <div className="ptree-task-list">
+                <div className="ptask-banner" onClick={(e)=>this.selectTask(e)} >
+                  <div className="ptask-left">
+                    <div className="ptask-name">
+                      Illuminate
+                    </div>
+                    <div className="ptask-desc" >
+                      30 min 3 questions
+                    </div>
+                  </div>
+                  <div className="ptask-right">
+                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single.png"
+                    className="ptask-img-single" />
+                  </div>
+                </div>
+
+                <div className="ptask-banner" onClick={(e)=>this.selectTask(e)} >
+                  <div className="ptask-left">
+                    <div className="ptask-name">
+                      Deepdive
+                    </div>
+                    <div className="ptask-desc" >
+                      30 min 10 questions
+                    </div>
+                  </div>
+                  <div className="ptask-right">
+                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
+                    className="ptask-img-double" />
+                  </div>
+                </div>
+
+                <div className="ptask-banner" onClick={(e)=>this.selectTask(e)} >
+                  <div className="ptask-left">
+                    <div className="ptask-name">
+                      XXX
+                    </div>
+                    <div className="ptask-desc" >
+                      xxx
+                    </div>
+                  </div>
+                  <div className="ptask-right">
+                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
+                    className="ptask-img-double" />
+                  </div>
+                </div>
+
+                <div className="ptask-banner" onClick={(e)=>this.selectTask(e)} >
+                  <div className="ptask-left">
+                    <div className="ptask-name">
+                      Brainstorm
+                    </div>
+                    <div className="ptask-desc" >
+                      60 min 1 challenge
+                    </div>
+                  </div>
+                  <div className="ptask-right">
+                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Group.png"
+                    className="ptask-img-group" />
+                  </div>
+                </div>
+              </div>
+              <div className="pskill-btn-group ptree-btn-group">
+                  <button className="ptree-btn ptree-back" onClick={()=>this.flipCard()} >Back</button>
+                  <button className="ptree-btn ptree-next" onClick={()=>this.toggleTaskView()} >Next</button>
+                </div>
+              </div>
+      )
+    }
+
+    renderSkillCard(){
+      return(
+          <div className="ptree-skill-list">
+            <div className="ptree-back-header">
+              <div>
+              Select one skill to improve it.
+              </div>
+              <a className="view-video" onClick={()=>this.onPlayVideo()}>View the video ></a>
+            </div>
+
+            <div className="ptree-skill-set">
+              {this.renderSkills(this.state.tree.weightage1)}
+            </div>
+
+            <div className="ptree-skill-set-btn-group">
+              <button className="ptree-btn ptree-back" onClick={()=>this.toggleTaskView()}>Back</button>
+              <button className="ptree-btn ptree-next" onClick={() => this.flipCard()}>Next</button>
+            </div>
+          </div>
+      )
     }
     
-    flipSkillCardBack(e){
-        e.target.parentNode.parentNode.parentNode.classList.toggle("hover")
-    }
-
-    yoyoFn(skillId,stateItem){
-        let isBooleanJson = { ...this.state[stateItem],
-            [skillId] : !this.state[stateItem][skillId]
-        }
-        this.setState({ [stateItem] : isBooleanJson})
-    }
-
-    toggleTaskView(skillId){
-        let isTaskJson = { ...this.state.isTaskSelected ,
-            [skillId]: !this.state.isTaskSelected[skillId]
-        }
-        this.setState({isTaskSelected: isTaskJson});
-    }
-    
-    flipCardClassFn(skillId){
-        let cardClass = { ...this.state.flipCardClass ,
-            [skillId]: !this.state.flipCardClass[skillId]
-        }
-        this.setState({flipCardClass: cardClass});
+    getImgUrl(img){
+      let imgUrl
+      if(img == 'Miner'){
+        imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png'
+      }else if(img == 'Nomad'){
+        imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png'
+      }else if(img == 'Innovator'){
+        imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png'
+      }else{
+        imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png'
+      }
+      return imgUrl
     }
 
     render(){
-        const { skillItem, customStyle } = this.props
-        const flipClass = (this.state.flipCardClass[skillItem._id]) ? ' hover' : ''
-
-        const TaskList = props => {
-            const { customStyle, skillItem} = props
-            return (
-                    <div className="ptree-task-list">
-                      <div className="ptree-back" onClick={()=>this.flipCardClassFn(skillItem._id)} >
-                        <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.flipCardClassFn(skillItem._id)}></span>
-                        <div className="ptree-back-text" onClick={()=>this.flipCardClassFn(skillItem._id)}>BACK</div>
-                      </div>
-                      <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT TASK TO CONTINUE WITH THIS HERO</div>
-      
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          Illuminate
-                        </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          30 min 3 questions
-                        </div>
-                      </div>
-      
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          Deepdive
-                        </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          30 min 10 questions
-                        </div>
-                      </div>
-                      
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          XXX
-                        </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          xxx
-                        </div>
-                      </div>
-      
-                      <div className="pskill-banner" onClick={()=>this.toggleTaskView(skillItem._id)} style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                        <div className="pskill-name">
-                          Brainstorm
-                        </div>
-                        <div className="pskill-desc" style={{color:`${customStyle.color}`}}>
-                          60 min 1 challenge
-                        </div>
-                      </div>
-      
-                    </div>
-            )
-          }
-      
-          const SkillList = props => {
-            const { customStyle,skillItem } = props
-            return(
-              <div className="ptree-skill-list">
-                  <div className="ptree-back" onClick={()=>this.toggleTaskView(skillItem._id)}>
-                    <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.toggleTaskView(skillItem._id)}></span>
-                    <div className="ptree-back-text" >BACK</div>
-                  </div>
-                  <div className="ptree-back-header" style={{color:`${customStyle.color}`}}>SELECT ONE SKILL TO IMPROVE IT</div>
-
-                  <div className="ptree-skill-set">
-                    {this.renderSkills(this.state.tree.weightage1,customStyle)}
-                  </div>
-
-                  {/* <div className="ptree-back" style={{justifyContent:'center'}} onClick={()=>this.toggleTaskView(skillItem._id)}>
-                    <span className="fa fa-chevron-left ptree-chevron" onClick={()=>this.toggleTaskView(skillItem._id)}></span>
-                    <div className="ptree-back-text" onClick={()=>this.toggleTaskView(skillItem._id)}>PREVIOUS SKILLS</div>
-                  </div> */}
-      
-                </div>
-            )
-          }
-        return(
-            <div className={`col-md-4 col-sm-6 col-xs-12 ptree-card-item` + flipClass}
-                    // onAnimationEnd={() => this.setState({fade: false})}
-                    >
-            <div className="ptree-card">
-              <div className="ptree-card-front" style={{background:`linear-gradient(to left, ${customStyle.background} 0%, white 45%)`}}>
-                <div className="ptree-hero-container pull-right">
-                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/hero1.png"
-                className="ptree-hero-img" />
-                </div>
-                <div className="ptree-card-heading" style={{color:`${customStyle.color}`}}>{skillItem.name}</div>
-                <div className="ptree-card-body">
-                    <p className="ptree-card-text">
-                    {skillItem.description}
-                    </p>
-                </div>
-                <div className="pskill-btn-group ptree-btn-group">
-                  <button className="ptree-btn ptree-start" style={{backgroundColor:`${customStyle.color}`}}>QUICKSTART</button>
-                  <button className="ptree-btn ptree-view" style={{border:`2px solid ${customStyle.color}`}} onClick={() => this.flipCardClassFn(skillItem._id)} 
-                  onAnimationEnd={() => this.flipCardClassFn(skillItem._id)} 
-                  >VIEW TASKS</button>
-                </div>
+      const { skillItem } = this.props
+      const flipClass = (this.state.flipCardClass) ? ' hover' : ''
+      const CardPanel = (this.state.isTaskSelected) ? this.renderSkillCard(skillItem) : this.renderTaskCard(skillItem)
+      const VideoPanel = (this.state.openVideo) ? this.renderVideo() : null
+      const imgUrl = this.getImgUrl(skillItem.heroimg)
+      return(
+        <div className="col-md-6 col-sm-12 progression-tree-skill-container">
+        {VideoPanel}
+          <div className="progression-tree-skill-content">
+            <div className="progression-tree-skill-item">
+              <div className="progression-tree-hero-container col-md-6 col-sm-12">
+                <img src={imgUrl} className="progression-tree-hero-img" />
               </div>
-              <div className="ptree-card-back">
-                {(this.state.isTaskSelected[skillItem._id]) ?  <SkillList customStyle={customStyle} skillItem={skillItem}/> 
-                : <TaskList customStyle={customStyle} skillItem={skillItem} />}
+              <div className="progression-tree-skill-card col-md-6 col-sm-12">
+                <div className={`ptree-card-item` + flipClass} >
+                    <div className="ptree-card">
+                      <div className="ptree-card-front">
+                        <div className="ptree-card-heading" >{skillItem.name}</div>
+                        <span className="ptree-yellow-bar"></span>
+                        <div className="ptree-card-body">
+                          {skillItem.description}
+                        </div>
+                        <div className="pskill-btn-group ptree-btn-group">
+                          <button className="ptree-btn ptree-start">Quick start</button>
+                          <button className="ptree-btn ptree-view" onClick={() => this.flipCard()}>View tasks</button>
+                        </div>
+                      </div>
+                      <div className="ptree-card-back">
+                        {CardPanel}
+                      </div>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
-        )
-    }
+        </div>
+      )
+  }
 }
 
 export default SkillCard
