@@ -10,9 +10,10 @@
     height: 3px;
 }
 .progression-tree-skill-container{
-    /* overflow: auto; */
     padding-top: 20px;
     padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .progression-tree-skill-content{
     font-family: "MyriadPro Semibold";
@@ -291,6 +292,8 @@
         height: 570px;
         margin-bottom: 20px;
         margin-top: 20px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .progression-tree-skill-list {
         padding-right: 10px;
