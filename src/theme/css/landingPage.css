@@ -50,10 +50,6 @@ html.vertical-hidden {
     overflow-y: hidden;
 }
 
-.landing-page-wrapper{
-    -webkit-overflow-scrolling: touch;
-}
-
 .landing-page-wrapper header {
     position: relative;
     margin: 0;
@@ -69,6 +65,10 @@ html.vertical-hidden {
 @media screen and (max-width: 750px) {
     .landing-page-wrapper main {
         padding: 52px 0 9px;
+    }
+    .landing-page-wrapper{
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
