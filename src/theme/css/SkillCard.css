@@ -154,7 +154,7 @@
 .ptask-name{
     cursor: pointer;
     font: normal 14px "MyriadPro Bold";
-    line-height: .6;
+    line-height: .6 !important;
 }
 .ptask-desc{
     color: #FFD149;
