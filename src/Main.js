@@ -78,7 +78,7 @@ class Main extends React.Component {
           }
         }
     
-        console.log("RedirectTo: " + RedirectTo);
+        
     
         return RedirectTo;
       }

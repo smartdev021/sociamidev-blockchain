@@ -17,7 +17,7 @@ class SignupForm extends React.Component {
     }
 
     componentWillMount() {
-      console.log("componentWillMount");
+      
       if (this.props.isAuthorized) {
         this.props.onCloseModal()
       }
@@ -37,7 +37,7 @@ class SignupForm extends React.Component {
     }
 
     componentWillUnmount() {
-      console.log("componentWillUnmount");
+      
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 
@@ -67,7 +67,7 @@ class SignupForm extends React.Component {
     }
 
     handleRequestClose() {
-      console.log("handleClickOutside");
+      
       if (!this.isSignupRequired()) {
         this.props.onCloseModal();
       }

@@ -55,7 +55,7 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   treeFetchFailed(error) {
-    console.log("Tree fetch error: " + error);
+    
     this.setState({isLoading: false});
   }
 
@@ -68,13 +68,13 @@ class ProgressiontreeBrowser extends React.Component {
   componentDidMount() {
     const URLParams = new URLSearchParams(this.props.location.search);
 
-    console.log("this.props.location");
-    console.dir(this.props.location);
+    
+    
 
     const treeId = URLParams.get("id");
 
-    console.log("URLParams");
-    console.dir(URLParams);
+    
+    
 
     if (treeId) {
       this.setState({isLoading: true});

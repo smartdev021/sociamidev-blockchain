@@ -133,7 +133,7 @@ class TooltipUser extends Component {
       connectionStatus: 0,
     });
 
-    console.log("friendRequest: ", action);
+    
 
     const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
     Axios.post(url, {
@@ -142,7 +142,7 @@ class TooltipUser extends Component {
       connectAction: action
     })
       .then((response) => {
-        console.log("friendRequest:", response);
+        
         if (response.data === 'success') {
           this.getMyFriendsFilter();
         } else {

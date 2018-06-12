@@ -95,7 +95,7 @@ class ProgressionTrees extends React.Component {
       }
     }
 
-    if (prevProps.isAuthorized != this.props.isAuthorized 
+    if (prevProps.isAuthorized != this.props.isAuthorized
       || prevProps.userProfile.progressionTrees.length != this.props.userProfile.progressionTrees.length) {
         this.setState({isScannerExpanded: !this.props.isAuthorized || this.props.userProfile.progressionTrees.length == 0});
       }
@@ -137,18 +137,16 @@ class ProgressionTrees extends React.Component {
   }
 
   handleExpandSidebar(expand) {
-      console.log(`handleExpandScanner expanded: ${expand}`);
+
       this.setState({isSidebarExpanded: expand});
   }
 
   renderUserProgressionTrees() {
-    // console.log('props in progression tree')
-    // console.log(this.props)
     return (
       <div id="progression-trees-trees">
       {
         this.state.selectedTreeFromMyProgressIndex != -1 ?
-          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
+          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]}
             onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask} progressionTreeFS={()=>this.progressionTreeFS()} progressionTreeSS={()=>this.progressionTreeSS()}/>
           :
             <div className="container-fluid">
@@ -160,7 +158,7 @@ class ProgressionTrees extends React.Component {
                   <hr id="progress-underline" style={{'width':'130px'}}/>
                 </div>
               </div>
-              
+
               {this.props.userProfile.progressionTrees.length != 0 &&
                 <div>
                   <ProgressiontreesMyProgress trees={this.props.userProfile.progressionTrees} allTrees={this.props.roadmapsAdmin.data}
@@ -170,13 +168,13 @@ class ProgressionTrees extends React.Component {
               }
             </div>
       }
-        
+
       </div>
     );
   }
 
   treeFetchSuccess(response) {
-    let cardClass = { 
+    let cardClass = {
       ...this.state.tree ,
       [skillId]: !this.state.flipCardClass[skillId]
     }
@@ -185,7 +183,7 @@ class ProgressionTrees extends React.Component {
   }
 
   treeFetchFailed(error) {
-    console.log("Tree fetch error: " + error);
+
     this.setState({isLoading: false});
   }
 
@@ -194,7 +192,7 @@ class ProgressionTrees extends React.Component {
       <div id="progression-trees-trees">
       {
         this.state.selectedTreeFromMyProgressIndex != -1 ?
-          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]} 
+          <ProgressiontreeBrowser tree={this.props.roadmapsAdmin.data[this.state.selectedTreeFromMyProgressIndex]}
             onCloseSingleTree={()=>this.handleCloseSingleTree()} userProfile={this.props.userProfile} saveTask={this.props.saveTask} progressionTreeFS={()=>this.progressionTreeFS()} progressionTreeSS={()=>this.progressionTreeSS()}/>
           :
             <div className="container-fluid">
@@ -209,10 +207,10 @@ class ProgressionTrees extends React.Component {
                 </div>
               </div>
               <div className="ptree-roadmap-list">
-              {this.props.roadmapsAdmin.data.length != 0 && 
-              
+              {this.props.roadmapsAdmin.data.length != 0 &&
+
               this.props.roadmapsAdmin.data.map((item,index) => {
-                
+
                 let customStyle
                 if((index % 2) == 0){
                   customStyle = {
@@ -234,7 +232,7 @@ class ProgressionTrees extends React.Component {
                 //     stopProgressionTree={(id)=>this.handleStopProgressionTree(id)}/>
                 // </div>
               }
-            </div>  
+            </div>
             </div>
       }
       </div>
@@ -249,9 +247,9 @@ class ProgressionTrees extends React.Component {
       }
 
       let foundRoadmaps = [];
-      
+
       const scannerQuery = this.state.scannerQuery.toLowerCase();
-          
+
       if (scannerQuery != "") {
         foundRoadmaps = this.props.roadmapsAdmin.data.filter(function(roadmap) {
           return roadmap.name && roadmap.name.toLowerCase().startsWith(scannerQuery);
@@ -263,20 +261,20 @@ class ProgressionTrees extends React.Component {
 
       const foundTree = foundRoadmaps.find(findById);
 
-      this.setState({selectedTree: foundTree, scannerSelectedTreeId: treeId, 
+      this.setState({selectedTree: foundTree, scannerSelectedTreeId: treeId,
         scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
     }
   }
 
   onTreeAcceptConfirmationPopupClose(option, treeId) {
-    this.setState({selectedTree: undefined, scannerSelectedTreeId: undefined, 
+    this.setState({selectedTree: undefined, scannerSelectedTreeId: undefined,
         scannerSelectedTreeName: "", isAcceptProgressionTreePopupOpen: false});
 
     if (option === true && treeId) {
       let foundRoadmaps = [];
-      
+
       const scannerQuery = this.state.scannerQuery.toLowerCase();
-          
+
       if (scannerQuery != "") {
         foundRoadmaps = this.props.roadmapsAdmin.data.filter(function(roadmap) {
           return roadmap.name && roadmap.name.toLowerCase().startsWith(scannerQuery);
@@ -315,7 +313,7 @@ class ProgressionTrees extends React.Component {
       rightSideClassName = this.props.userProfile.progressionTrees.length == 0 ? "col-lg-12" : "col-lg-1 hide";
       leftSideClassName = "col-lg-12";
     }
-    
+
     let LeftColClass
     let RightColClass
     let ifProgressionTreesExist
@@ -328,7 +326,7 @@ class ProgressionTrees extends React.Component {
       RightColClass = "col-md-12";
       ifProgressionTreesExist = false
     }
-    
+
     return (
         // <div className="row content-wrap">
         //   {this.props.userProfile.progressionTrees.length != 0 &&
@@ -338,7 +336,7 @@ class ProgressionTrees extends React.Component {
         //   }
         // </div>
         <div className="row content-wrap">
-          {this.state.isAcceptProgressionTreePopupOpen 
+          {this.state.isAcceptProgressionTreePopupOpen
               && <PopupAcceptProgressionTree treeId={this.state.scannerSelectedTreeId}
               tree={this.state.selectedTree}
               treeName={this.state.scannerSelectedTreeName}
@@ -354,7 +352,7 @@ class ProgressionTrees extends React.Component {
                   </div>
                 </div>
               }
-            
+
             <div className={RightColClass}>
               <div className="progression-tree-sidebar">
 
@@ -375,20 +373,20 @@ class ProgressionTrees extends React.Component {
                       onClick={() => this.handleExpandSidebar(false)}><Icon className="none-padding-left" name="chevron-right" aria-hidden="true"></Icon></ActionLink>}
                 </div>
                 }
-                
+
                 <div className="progression-tree-header">
                     Technology
                 </div>
                 <div className="progression-tree-container">
-                  <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner} 
+                  <ProgressiontreesScanner scannerQuery={this.state.scannerQuery} trees={treesScanner}
                           openTreeAcceptConfirmationPopup={(treeId, treeName)=>this.openTreeAcceptConfirmationPopup(treeId, treeName)}
                           ifProgressionTreesExist={ifProgressionTreesExist}  isExpanded={this.state.isSidebarExpanded}/>
                 </div>
-                
-                
+
+
                 </div>
               </div>
-              
+
         </div>
     );
   }

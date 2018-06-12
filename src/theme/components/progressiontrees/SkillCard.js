@@ -56,7 +56,7 @@ class SkillCard extends React.Component {
     }
 
     treeFetchFailed(error) {
-        console.log("Tree fetch error: " + error);
+        
         this.setState({isLoading: false});
     }
 

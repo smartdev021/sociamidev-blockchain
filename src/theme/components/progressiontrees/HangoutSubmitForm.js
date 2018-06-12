@@ -160,7 +160,6 @@ class HangoutSubmitForm extends React.Component {
   }
 
   render() {
-    console.log('this.props.isHangoutFormVisible',this.props.isHangoutFormVisible)
     return (
       ! this.state.isSpecificTime
         ?

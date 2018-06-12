@@ -84,10 +84,10 @@ export function logout(userID) {
 
     Axios.post(url, body)
     .then(function(response) {
-        console.log("User logged out with User Id - " + userID);
+        
     })
     .catch(function(error) {
-        console.log(error);
+        
     });
     return {
         type: USER_LOG_OUT,
@@ -138,8 +138,8 @@ export function fetchUserActivities(userId) {
         return (
           Axios.get(url)
           .then(function(response) {
-              console.log("%cfetchUserActivities: ", "color: red; background: grey;");
-              console.dir(response.data);
+              
+              
             dispatch(fetchUserActivitiesComplete(response.data[0].activities.map(function(userActivityData, i) {
                 return userActivityData.activity;
             })));
@@ -338,8 +338,8 @@ export function setUserProfileCharacter(profileId, characterData) {
           characterData: characterData,
       };
 
-      console.log("body");
-      console.dir(body);
+      
+      
 
       return (
         Axios.post(url, body)

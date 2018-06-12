@@ -124,7 +124,7 @@ class UserProfile extends React.Component {
 				this.setState({ promocodesUsed: results.data });
 			})
 			.catch((error) => {
-				console.log(error);
+				
 			});
 	}
 
@@ -145,9 +145,9 @@ class UserProfile extends React.Component {
 				}
 			};
 
-			console.log("Redeeming the code");
-			console.dir(this.props.userProfile);
-			console.dir(body);
+			
+			
+			
 
 			Axios.post(`${ConfigMain.getBackendURL()}/couponRedeem`, body)
 				.then((result) => {

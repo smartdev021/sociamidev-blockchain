@@ -137,7 +137,7 @@ class ChatApp extends React.Component {
 
   newServerMessage(message){
     if(message.sender == "chatbot"){
-      console.log(message.message);
+      
       if(message.message.startsWith("ERROR:")){
         return;
       }
@@ -351,7 +351,7 @@ class ChatApp extends React.Component {
             }
           })
           .catch(function(error) {
-            console.log(error);
+            
           })
        }
        active = this.state.activeUserFullName;

@@ -483,7 +483,7 @@ const DayFromNumber = (dayNum)=> {
   
         //Why is this possible???
         if (!CurrentUserAsParticipant) {
-          console.log("%c!CurrentUserAsParticipant", "color:red;background:green;");
+          
           result = <h4><a href="#" className="link-black"></a></h4>
         }
         else {
@@ -525,7 +525,7 @@ const DayFromNumber = (dayNum)=> {
   
   const RenderTask = (task, i, props) => {
     const DebugOutputClick = (task) => {
-      console.log("Clicked task: ");
+      
   
       let taskCopy = Object.assign({}, task);
       if (taskCopy.metaData.time) {
@@ -536,7 +536,7 @@ const DayFromNumber = (dayNum)=> {
         taskCopy.dateHangoutStatusChanged = new Date(taskCopy.timeStatusChanged);
       }
   
-      console.dir(taskCopy);
+      
     };
   
     const TaskColClass = props.isCollapsed ? "col-lg-12" : "col-lg-4";

@@ -16,7 +16,7 @@ class DetailsPopup extends React.Component {
     }
 
     componentWillMount() {
-      console.log("DetailsPopup::componentWillMount");
+      
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
@@ -34,7 +34,7 @@ class DetailsPopup extends React.Component {
     }
 
     componentWillUnmount() {
-      console.log("DetailsPopup::componentWillUnmount");
+      
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 

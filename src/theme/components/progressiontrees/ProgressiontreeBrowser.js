@@ -57,8 +57,8 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   render() {
-    console.log("%cBrowsing Single Tree", "background: purple; color: white;");
-    console.dir(this.props.tree);
+    
+    
 
     if (!this.state.selectedSkill) {
       return this.renderTree();
@@ -79,8 +79,8 @@ class ProgressiontreeBrowser extends React.Component {
   }
 
   renderSkills(skills) {
-    console.log("%c renderSkills: ", "color: green; background: red");
-    console.dir(skills);
+    
+    
     const that = this;
     //TODO: Fix incorrect database structure
     let skillParsed = skills.length > 1 ? skills : skills[0].split(',');

@@ -28,12 +28,12 @@ class CharacterSelection extends React.Component {
 
       Modal.defaultStyles.content.background = "white";
       Modal.defaultStyles.content.color = 'initial';
-      
+
       Modal.defaultStyles.content["height"] = "auto";
       // Modal.defaultStyles.content["width"] = '75%';
 
       Modal.defaultStyles.content["width"] = '1093px';
-      
+
       Modal.defaultStyles.content["minWidth"] = 'initial';
       Modal.defaultStyles.content["maxWidth"] = 'initial';
       Modal.defaultStyles.content["overflowX"] = "hidden";
@@ -44,7 +44,7 @@ class CharacterSelection extends React.Component {
       Modal.defaultStyles.content["right"] = '0';
       Modal.defaultStyles.content["padding"] = '0px 0px 0px 0px';
     }
-      
+
     componentWillUnmount() {
       Modal.defaultStyles = this.modalDefaultStyles;
     }
@@ -81,9 +81,9 @@ class CharacterSelection extends React.Component {
               if (i >= firstIndex && i <= lastIndex) {
                 return (
                   <div className="col-xs-12 col-sm-6 character-box" key={i}>
-                    <div className={`character-selection-button character-order-${i} ${this.props.selectedIndex == i ? 
+                    <div className={`character-selection-button character-order-${i} ${this.props.selectedIndex == i ?
                       'character-selected' : ""}`}
-                      onClick={()=>this.handleChangeSelectedChatacter(i)} 
+                      onClick={()=>this.handleChangeSelectedChatacter(i)}
                       onMouseOver={()=>this.handleMouseOverCharacter(i)}
                       onMouseOut={()=>this.handleMouseOutCharacter()}
                       >
@@ -102,13 +102,11 @@ class CharacterSelection extends React.Component {
     }
 
     render() {
-      console.log('this.props.charactersList')
-      console.log(this.props.charactersList)
       if (this.props.isFetchingCharacters) {
         return(
-          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
+          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"}
             parentSelector={getPopupParentElement}>
-            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
+            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon"
                 name="times" aria-hidden="true"></Icon>
             <div id="character-selection-container">
               <div id="character-selection-container-inner">
@@ -124,14 +122,14 @@ class CharacterSelection extends React.Component {
           </Modal>
         );
       }
-        const SelectedCharacter = this.state.mouseOveredIndex ? this.props.charactersList[this.state.mouseOveredIndex] 
+        const SelectedCharacter = this.state.mouseOveredIndex ? this.props.charactersList[this.state.mouseOveredIndex]
         : this.props.charactersList[this.props.selectedIndex];
-        console.log("SelectedCharacter");
-        console.dir(SelectedCharacter);
+
+        
         return (
-          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"} 
+          <Modal isOpen={true} onRequestClose={() => {}} contentLabel={"Character Selection"}
             parentSelector={getPopupParentElement}>
-            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon" 
+            <Icon onClick={()=>this.handleClose()} className="character-creation-popup-close-icon"
                 name="times" aria-hidden="true"></Icon>
             <div id="character-selection-container">
                 <div className="box-head character-header">
@@ -151,7 +149,7 @@ class CharacterSelection extends React.Component {
                       </h5>
                       <div id="character-select-confirm-button-container" className="select-character-button">
                         <ActionLink href="#" onClick={()=>this.props.onNextStep({characterTraitsIndex: this.props.selectedIndex})}
-                          className="btn-base-landing btn-red-landing btn-login-landing text-uppercase" 
+                          className="btn-base-landing btn-red-landing btn-login-landing text-uppercase"
                            id="character-select">
                           Select
                         </ActionLink>
@@ -196,5 +194,5 @@ class CharacterSelection extends React.Component {
 
   CharacterSelection.propTypes = {
   }
- 
+
   export default require('react-click-outside')(CharacterSelection);

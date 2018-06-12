@@ -23,7 +23,7 @@ const OnlyActiveProjects = true;
     .then(  
       function(response) {  
         if (response.status !== 200) {  
-          console.log('Looks like there was a problem. Status Code: ' +  response.status);
+          
             listener();
           return;  
         }
@@ -72,7 +72,7 @@ const OnlyActiveProjects = true;
       }  
     )  
     .catch(function(err) {  
-      console.log('Fetch Error :-S', err);
+      
       listener([]);
     });
   }

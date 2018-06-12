@@ -103,7 +103,7 @@ export function setTaskPublished(taskId, published) {
                     dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(updateTaskComplete({}));
                 }));
     }
@@ -121,7 +121,7 @@ export function rateTaskPartner(taskId, fromUser, toUser, rate) {
                 dispatch(updateTaskComplete(response.data));
             })
             .catch((error) => {
-                console.log("%cerror", error, "color:violet;background:orange;");
+                
                 dispatch(updateTaskComplete());
             }));
     }
@@ -143,7 +143,7 @@ export function taskAssign(taskId, assignee) {
                 dispatch(updateTaskComplete(response.data));
             })
             .catch((error) => {
-                console.log("%cerror", error, "color:violet;background:orange;");
+                
                 dispatch(updateTaskComplete());
             }));
     }
@@ -163,7 +163,7 @@ export function saveTask(task) {
                     dispatch(saveTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(saveTaskComplete());
                 }));
     }
@@ -180,14 +180,14 @@ export function deleteTask(taskId) {
                     dispatch(updateTaskComplete(response.data, true));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(updateTaskComplete());
                 }));
     }
 }
 
 export function fetchAllTasks(publishedOnly) {
-    console.log("publishedOnly: " + publishedOnly);
+    
     return function (dispatch) {
 
         //async action entry point
@@ -200,7 +200,7 @@ export function fetchAllTasks(publishedOnly) {
                     dispatch(fetchTasksComplete(response.data));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(fetchTasksComplete([]));
                 }));
     }
@@ -227,7 +227,7 @@ export function hangoutJoin(hangoutId, user) {
                     dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(updateTaskComplete());
                 }));
     }
@@ -253,7 +253,7 @@ export function taskStatusChange(taskId, status) {
                     dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(updateTaskComplete());
                 }));
     }
@@ -271,7 +271,7 @@ export function taskJoinStatusChange(taskId, status, user) {
                     dispatch(updateTaskComplete(response.data));
 
                 }).catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(updateTaskComplete());
                 }));
     }
@@ -294,15 +294,15 @@ export function taskLeave(taskId, user) {
                     dispatch(updateTaskComplete(response.data));
                 })
                 .catch(function (error) {
-                    console.log("%cerror", error, "color:violet;background:orange;");
+                    
                     dispatch(updateTaskComplete());
                 }));
     }
 }
 
 export function hangoutAnswersSave(body) {
-    console.log("%chanhoutAnswers", "color: green; background: purprple;");
-    console.dir(body);
+    
+    
     return function (dispatch) {
         dispatch(updateTaskInitiate());
 
@@ -311,7 +311,7 @@ export function hangoutAnswersSave(body) {
                 dispatch(updateTaskComplete(response.data, true));
             })
             .catch(function (error) {
-                console.log("%cerror", error, "color:violet;background:orange;");
+                
                 dispatch(updateTaskComplete());
             }));
     }

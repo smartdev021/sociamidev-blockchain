@@ -80,7 +80,6 @@ class SkillBrowser extends React.Component {
   }
 
   updateTimeNow() {
-    console.log('Executing updateTimeNow()')
     const LatestHangoutDateJoined = this.lastHangoutDateJoined();
     const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
     const CurrentTree = this.state.tree;
@@ -244,7 +243,7 @@ class SkillBrowser extends React.Component {
         }
 
         /* this.props.setSearchQuery(this.state.skillInfo.skill);
- 
+
          this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
          this.props.fetchResults("events_eventbrite", this.state.skillInfo.skill);
          this.props.fetchResults("courses_udemy", this.state.skillInfo.skill);
@@ -574,9 +573,9 @@ class SkillBrowser extends React.Component {
       isUnlocked = progressionForProgressionTree.level >= this.getTaskUnlockLevelRequirement(type);
     }
 
-    console.log("%cisActivityUnlocked", "color:purple;background:orange;");
-    console.dir(this.props.progressionTreeLevels);
-    console.dir(this.props.taskActivityUnlockRequirements);
+
+    
+    
 
     return isUnlocked;
   }
@@ -588,10 +587,10 @@ class SkillBrowser extends React.Component {
     const decodeTimerQuota = _.get(this, 'state.decodeTimer.quota', 0);
     const IsDecodeAvailable = !decodeTrackerCount || decodeTrackerCount < decodeTimerQuota;
 
-    console.log(`%cDecode Debug decodeTrackerCount: ${decodeTrackerCount} decodeTimerQuota: ${decodeTimerQuota} IsDecodeAvailable" ${IsDecodeAvailable}`, "color: white; background: red;");
-    
+
+
     if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
-      console.log(`%cDecode Debug Decode is not level-unlocked yet for "${CurrentTree.name}"`, "color: white; background: red;");
+
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-card-lock">
@@ -918,7 +917,7 @@ class SkillBrowser extends React.Component {
                         <h4 className="pskill-card-title-lock">5</h4>
                         <h4 className="pskill-card-subtitle-lock">level</h4>
                         <h3 className="pskill-card-heading">DECODE</h3>
-                        <p className="pskill-card-text">A single player activity with pre-defined 
+                        <p className="pskill-card-text">A single player activity with pre-defined
                                   answers to validate your understanding of a topic</p>
                         <p className="pskill-duration" style={{color:'black'}}>Once a week</p>
                         <p className="pskill-reward" style={{color:'black'}}>Rewards : 5 SOQQ Token</p>
@@ -960,7 +959,7 @@ class SkillBrowser extends React.Component {
                   onComplete={() => this.redirectToTaskMngt()} />
               </div>
               {/* <div className="row text-center">
-                        <button onClick={(e)=> this.goToIlluminate(e) } 
+                        <button onClick={(e)=> this.goToIlluminate(e) }
                         className="btn-md btn-outline-inverse illuminate-go-btn">Go To Task Manager</button>
                     </div> */}
             </div>

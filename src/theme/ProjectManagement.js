@@ -82,7 +82,7 @@ class ProjectManager extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("ProjectManager::componentDidUpdate!!! this.props.isProjectSaveInProgress: " + this.props.isProjectSaveInProgress);
+    
     if (prevProps.isAuthorized != this.props.isAuthorized && this.props.isAuthorized) {
       this.fetchAllProjects();
     }
@@ -110,7 +110,7 @@ class ProjectManager extends React.Component {
   }
 
   closeModal(project) {
-    console.log("closeModal");
+    
     if (project) {
       let copy = Object.assign({}, this.state, {modalIsOpen: false});
       this.setState(copy);
@@ -173,8 +173,8 @@ class ProjectManager extends React.Component {
     let selectedProject = (MyProjects.length > 0 && this.state.selectedProjectIndex >= 0) 
     ? MyProjects[this.state.selectedProjectIndex] : undefined;
 
-    console.log("selectedProject: ");
-    console.dir(selectedProject);
+    
+    
 
   return (
     <div className="row">

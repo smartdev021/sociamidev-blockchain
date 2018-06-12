@@ -42,10 +42,6 @@ class Notifications extends React.Component {
     this.props.fetchUserTasks(this.props.userProfile._id);
   }
 
-  componentWillReceiveProps(newProps) {
-    console.log(newProps)
-  }
-
   handleStartClick(task) {
     this.props.setActiveHangout(task);
     this.props.onClose();
@@ -193,7 +189,7 @@ class Notifications extends React.Component {
                       )}
                     </div>
                     <div className="notify-hide">
-                      <Link to="/taskManagement" className="notify-btn-notification-check" 
+                      <Link to="/taskManagement" className="notify-btn-notification-check"
                       onClick={() => that.handleStartClick(notification.task)}>
                         <span aria-hidden="true" className="fa fa-check" />&nbsp;&nbsp;START
                       </Link>

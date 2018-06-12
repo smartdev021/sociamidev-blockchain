@@ -14,7 +14,7 @@ class DetailsPopupLatestTask extends React.Component {
     }
 
     componentWillMount() {
-      console.log("DetailsPopupLatestTask::componentWillMount");
+      
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid grey";
@@ -34,7 +34,7 @@ class DetailsPopupLatestTask extends React.Component {
     }
 
     componentWillUnmount() {
-      console.log("DetailsPopupLatestTask::componentWillUnmount");
+      
         Modal.defaultStyles = this.modalDefaultStyles;
     }
 

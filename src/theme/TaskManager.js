@@ -263,7 +263,7 @@ class TaskManager extends React.Component {
   }
 
   handleSaveNewTaskError(error) {
-    console.log(error);
+    
     this.props.fetchTasksComplete();
     this.props.onFetchAllTasks(false);
   }
@@ -277,7 +277,7 @@ class TaskManager extends React.Component {
 
   handleExpandScanner(expand) {
     if (this.props.isAuthorized) {
-      console.log(`handleExpandScanner expanded: ${expand}`);
+      
       this.setState({isScannerExpanded: expand});
     }
   }

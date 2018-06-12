@@ -67,7 +67,7 @@ class ProgressionTrees extends React.Component {
   }
 
   openTreeAcceptConfirmationPopup(treeId, treeName) {
-    console.log(`treeId: ${treeId}, treeName: ${treeName}`);
+    
     if (this.props.isAuthorized) {
       if (this.props.userProfile.progressionTrees.findIndex(function(tree) {return tree._id == treeId;}) == -1) {
         this.setState({scannerSelectedTreeId: treeId, scannerSelectedTreeName: treeName, isAcceptProgressionTreePopupOpen: true});
@@ -77,7 +77,7 @@ class ProgressionTrees extends React.Component {
 
   onTreeAcceptConfirmationPopupClose(option, treeId) {
     this.setState({scannerSelectedTreeId: undefined, scannerSelectedTreeName: "", isAcceptProgressionTreePopupOpen: false});
-    console.log(`Confirmation popup option: ${option} treeId: ${treeId}`);
+    
 
     if (option === true && treeId) {
       const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStart`;
@@ -112,12 +112,12 @@ class ProgressionTrees extends React.Component {
   }
 
   progressionTreeStartSuccess(response) {
-    console.log("progressionTreeStartSuccess response: ");
-    console.dir(response.data);
+    
+    
   }
 
   progressionTreeStartFailed(error) {
-    console.log("progressionTreeStartFailed error: " + error);
+    
   }
 
   render() {

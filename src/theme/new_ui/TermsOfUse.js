@@ -23,7 +23,7 @@ class TermsOfUse extends React.Component {
       this.setState({data: result.data});
     })
     .catch((error) => {
-      console.log(error);
+      
     });
   }
 

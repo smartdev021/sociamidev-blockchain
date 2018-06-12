@@ -27,7 +27,7 @@ class HangoutSubmitForm extends React.Component {
 
     this.setState({dateInputValue: e.target.valueAsNumber});
 
-    console.log(e.target.value);
+    
   }
 
   handleTimeInputChange(e) {
@@ -35,7 +35,7 @@ class HangoutSubmitForm extends React.Component {
 
     this.setState({timeInputValue: e.target.value});
 
-    console.log(e.target.value);
+    
   }
 
   handleOptionChange(e) {

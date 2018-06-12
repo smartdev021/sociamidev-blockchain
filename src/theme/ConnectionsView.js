@@ -88,7 +88,7 @@ class ConnectionsView extends React.Component {
                 self.setState({facebookFriends : response.data.data})
             })
             .catch(function (error) {
-                console.log(error);
+                
             });
         }
     }
@@ -121,7 +121,7 @@ class ConnectionsView extends React.Component {
                 self.setState(copy);
             })
             .catch(function (error) {
-                console.log(error);
+                
                 let copy = Object.assign({}, self.state, {loader: 0});
                 self.setState(copy);
             });
@@ -154,7 +154,7 @@ class ConnectionsView extends React.Component {
                 });
             })
             .catch(function (error) {
-                console.log(error);
+                
             });
     }
 
@@ -165,10 +165,10 @@ class ConnectionsView extends React.Component {
         let copy = Object.assign({}, this.state, {loader: 1});
         this.setState(copy);
         var self = this;
-        console.log("handleFriendRequest: ", user);
-        console.log("self.props.userProfile: ", self.props.userProfile);
-        console.log("currentUser:", JSON.stringify(self.props.userProfile));
-        console.log("otherUser:", JSON.stringify(user));
+        
+        
+        
+        
 
         const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
         Axios.post(url, {
@@ -183,12 +183,12 @@ class ConnectionsView extends React.Component {
                 }
                 copy = Object.assign({}, self.state, {loader: 0});
                 self.setState(copy);
-                console.log(response);
+                
             })
             .catch(function (error) {
                 copy = Object.assign({}, self.state, {loader: 0});
                 self.setState(copy);
-                console.log(error);
+                
             });
     }
 
@@ -209,12 +209,12 @@ class ConnectionsView extends React.Component {
                 }
                 copy = Object.assign({}, self.state, {loader: 0});
                 self.setState(copy);
-                console.log(response);
+                
             })
             .catch(function (error) {
                 copy = Object.assign({}, self.state, {loader: 0});
                 self.setState(copy);
-                console.log(error);
+                
             });
     }
 

@@ -66,7 +66,7 @@ class SkillBreakdown extends React.Component {
   componentWillMount() {
     this.updateSkill(this.props.skillName);
 
-     console.log("DetailsPopup::componentWillMount");
+     
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "none";
@@ -87,7 +87,7 @@ class SkillBreakdown extends React.Component {
   }
 
   componentWillUnmount() {
-      console.log("DetailsPopup::componentWillUnmount");
+      
       clearInterval(this.timeNowUpdateInterval);
       Modal.defaultStyles = this.modalDefaultStyles;
   }
@@ -98,11 +98,11 @@ class SkillBreakdown extends React.Component {
     Axios.get(url)
       .then(function(response) {
         that.setState( {skillInfo: response.data} );
-        console.log(response.data);
+        
     })
     .catch(function(error) {
       that.setState( {skillInfo: undefined} );
-      console.log(error);
+      
     });
   }
 
@@ -229,7 +229,7 @@ class SkillBreakdown extends React.Component {
 
   handleTimeChange(e) {
     e.preventDefault();
-    console.log(e.currentTarget.value);
+    
   }
 
   handleClose() {
@@ -263,8 +263,8 @@ class SkillBreakdown extends React.Component {
           return a.dateJoined - b.dateJoined;
         });
 
-        console.log("%changoutsForCurrentTree: ", "background:purpe;color:white;font-size:15px");
-        console.dir(hangoutsForCurrentTree);
+        
+        
 
         LatestHangoutDateJoined = hangoutsForCurrentTree[hangoutsForCurrentTree.length - 1].dateJoined;
       }
@@ -351,7 +351,7 @@ class SkillBreakdown extends React.Component {
 
             <button type="button" title="A 2 player task to combine forces to solve mutiple questions around this topic. Initiate one now! [1 per day]" className={DeepdiveButtonClass} 
                   onClick={IsDeepdiveAbailable ? ()=> this.toggleHangoutForm() : () => {
-                    console.log(`this.state.timeNow: ${this.state.timeNow} LatestHangoutDateJoined: ${LatestHangoutDateJoined} this.props.tree.deepDiveIntervalLimit: ${this.props.tree.deepDiveIntervalLimit} his.state.timeNow - LatestHangoutDateJoined: ${this.state.timeNow - LatestHangoutDateJoined}`);
+                    
                   }}>{DeepDiveButtonText}</button>
           </div>
           <div className="row">

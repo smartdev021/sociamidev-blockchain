@@ -15,8 +15,8 @@ const MyProjects = (props) => {
     return null;
   }
 
-  console.log("renderProjects props.projects: ");
-  console.dir(props.projects);
+  
+  
 
   const DummyImages = [
     "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/medium.png",

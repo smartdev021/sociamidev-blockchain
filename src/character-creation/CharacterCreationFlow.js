@@ -179,11 +179,11 @@ class CharacterCreationFlow extends React.Component {
   restoreCharacterCreation() {
     /*const { cookies } = this.props;
 
-    console.log("restoreCharacterCreation");
-    console.dir(cookies);
+    
+    
 
     if (cookies) {
-        console.dir(cookies.get("characterCreation"));
+        
     }
 
     if (cookies) {

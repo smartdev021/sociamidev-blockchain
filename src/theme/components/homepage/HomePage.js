@@ -134,7 +134,7 @@ class HomePage extends React.Component {
   }
 
   renderTasks() {
-    console.log("renderTasks this.props.tasks: " + this.props.tasks.length);
+    
     if (this.props.tasks.length > 0) {
       const LatestTasks = this.renderLatestTasks();
       return (

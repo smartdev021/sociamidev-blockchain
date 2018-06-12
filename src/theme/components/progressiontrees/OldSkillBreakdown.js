@@ -50,19 +50,19 @@ class SkillBreakdown extends React.Component {
     Axios.get(url)
       .then(function(response) {
         that.setState( {skillInfo: response.data} );
-        console.log(response.data);
+        
     })
     .catch(function(error) {
       that.setState( {skillInfo: undefined} );
-      console.log(error);
+      
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
-        console.log("this.state.skillInfo: ");
-        console.dir(this.state.skillInfo);
+        
+        
         this.props.setSearchQuery(this.state.skillInfo.skill);
 
         this.props.fetchResults("jobs_indeed", this.state.skillInfo.skill);
@@ -135,7 +135,7 @@ class SkillBreakdown extends React.Component {
 
   handleTimeChange(e) {
     e.preventDefault();
-    console.log(e.currentTarget.value);
+    
   }
 
   render() {

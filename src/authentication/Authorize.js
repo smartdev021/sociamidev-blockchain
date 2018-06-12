@@ -21,7 +21,7 @@ class Authorize extends React.Component {
   }
 
   componentWillMount () {
-    console.log("%ccomponentWillMount", "color:purple;background:yellow");
+    
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
 
@@ -46,7 +46,7 @@ class Authorize extends React.Component {
   render() {
     let RedirectTo = null;
 
-    console.log("Rendering the Authorize component!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    
 
     if (!this.props.isAuthorized) {
         return null;

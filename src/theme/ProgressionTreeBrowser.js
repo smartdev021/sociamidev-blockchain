@@ -31,7 +31,7 @@ class ProgressionTreeBrowser extends React.Component {
 
     const CurrentProgressionTreeId = URLParams.get("id");
 
-    console.log("currentprogressionTreeId: " + CurrentProgressionTreeId);
+    
 
     const url = `${ConfigMain.getBackendURL()}/roadmapGet?id=${CurrentProgressionTreeId}`;
     Axios.get(url)
@@ -40,13 +40,13 @@ class ProgressionTreeBrowser extends React.Component {
   }
 
   progressionTreeFetchSuccess(response) {
-    console.log("progressionTree fetch success: ");
-    console.dir(response.data);
+    
+    
     this.setState({progressionTree: response.data});
   }
 
   progressionTreeFetchFailed(error) {
-    console.log("progressionTree fetch error: " + error);
+    
     this.setState({progressionTree: {}});
   }
 

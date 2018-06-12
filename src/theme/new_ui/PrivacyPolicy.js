@@ -23,7 +23,7 @@ class PrivacyPolicy extends React.Component {
       this.setState({privacyPolicyData: result.data});
     })
     .catch((error) => {
-      console.log(error);
+      
     });
   }
 

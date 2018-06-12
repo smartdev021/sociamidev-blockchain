@@ -15,7 +15,7 @@ class PopupHangoutAnswers extends React.Component {
     }
 
     componentDidMount() {
-      console.log("PopupHangoutAnswers::componentWillMount");
+      
       this.modalDefaultStyles = Modal.defaultStyles;
 
       Modal.defaultStyles.content.border = "7px solid white";
@@ -43,7 +43,7 @@ class PopupHangoutAnswers extends React.Component {
     }
 
     componentWillUnmount() {
-      console.log("PopupHangoutAnswers::componentWillUnmount");
+      
       Modal.defaultStyles = this.modalDefaultStyles;
     }
 

@@ -11,7 +11,7 @@ export function userInteractionPush(userID, type, subType, data = null) {
       .then(function(response) {
       })
       .catch((error) => {
-          console.log(error);
+          
        }));
     }
 }

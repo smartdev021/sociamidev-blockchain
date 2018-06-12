@@ -43,7 +43,7 @@ class ProjectBrowser extends React.Component {
   }
 
   projectFetchFailed(error) {
-    console.log("Project fetch error: " + error);
+    
     this.setState({project: {}});
   }
   

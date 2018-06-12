@@ -20,12 +20,12 @@ class Sample extends Component {
   }
 
   componentWillMount() {
-    console.log("compinentWillMount");
+    
     this.fetchPdfDocument();
   }
 
   fetchPdfDocument() {
-    console.log("fetchPdfDocument");
+    
 
     Axios({
       method:'get',
@@ -39,15 +39,15 @@ class Sample extends Component {
   handleFetchPdfDocument(response) {
     const data = response.data;
     //this.setState({file: data});
-    console.dir(data);
+    
   }
     
   handleFetchPdfDocumentError(error) {
-    console.log("handleFetchPdfDocumentError: " + error);
+    
   }
 
   onFileChange(event) {
-    console.dir(event.target.files[0]);
+    
     this.setState({
       file: event.target.files[0],
     });
