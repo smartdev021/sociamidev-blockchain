@@ -3,7 +3,7 @@
     overflow: auto;
     background-size: cover;
     min-height: 100vh;
-    font-family: "Myriad Pro"
+    font-family: "MyriadPro Semibold";
 }
 .team-header{
     text-align: center;
@@ -41,19 +41,21 @@
     vertical-align: top;
 }
 .team-list{
-    background: #E9EEF2;
     width: 100%;
     padding: 10px 10px 0px 10px;
     max-height: 450px;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 0px 8px 23px 0px rgba(11, 21, 29, 0.16), 0px 8px 23px 0px rgba(11, 21, 29, 0.52);
 }
 .team-title{
-    font-weight: 800;
-    font-size: 17px;
+    font-size: 22px;
+    font-family: "MyriadPro Bold";
+    line-height: 1.2;
 }
 .team-date{
-    font-size: 13px;
-    font-weight: 300;
-    color: rgba(0,0,0,.3);
+    font-size: 16px;
+    color: rgb(119, 119, 119);
+    line-height: 1.2;
 }
 .team-email-container{
     margin-top: 50px;
@@ -66,45 +68,73 @@
     margin-right: -10px;
 }
 .team-email-item{
-    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.3);
     padding: 8px;
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
-    overflow: auto;
-    background: #F5F5F5;
-    height: 36px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 3px 6px 0px rgba(19, 19, 19, 0.1);
+    width: 100%;
+    height: 35px;
 }
 .team-email-item-accepted{
-    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.3);
     padding: 8px;
-    margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
-    overflow: auto;
     background: white;
-    height: 36px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 3px 6px 0px rgba(19, 19, 19, 0.1);
+    height: 35px;
 }
 .team-email{
     float: left;
-    color: #827F80;
+    color: rgb(119, 119, 119);
 }
 .team-email-accepted{
     float: left;
     color: black;
     font-weight: 600;
 }
-.team-email-item-accepted .team-email-checkbox{
-    display: block;
+/* .team-checkmark-div{
     float: right;
-    background: #00B071;
-    color: white;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    border-radius: 3px;
+    padding-left: 7px;
+    border-radius: 2px;
+    background-color: rgb(0, 173, 106);
+    width: 19px;
+    height: 19px;
 }
-.team-email-item-accepted:hover .team-email-checkbox{
+
+.team-checkmark{
+    display:inline-block;
+    color: white;
+} */
+
+.team-checkmark:after{
+    content: '';
+    display: block;
+
+    /*Make it a small rectangle so the border will create an L-shape*/
+    width: 6px;
+    height: 10px;
+
+    /*Add a white border on the bottom and left, creating that 'L' */
+    border: solid white;
+    border-width: 0 2px 2px 0;
+
+    /*Rotate the L 45 degrees to turn it into a checkmark*/
+    transform: rotate(45deg);
+}
+.team-email-item-accepted .team-checkmark-div{
+    float: right;
+    border-radius: 2px;
+    background-color: rgb(0, 173, 106);
+    width: 19px;
+    height: 19px;
+    color: white;
+    padding-left: 7px;
+    padding-top: 3px;
+}
+.team-email-item-accepted:hover .team-checkmark-div{
     display: none;
     float: right;
     background: #00B071;

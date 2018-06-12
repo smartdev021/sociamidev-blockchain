@@ -24,30 +24,50 @@
   overflow: auto;
   background-size: cover;
   min-height: 100vh;
-  font-family: "Myriad Pro";
+  font-family: "MyriadPro Regular";
+  
 }
 .progression-tree-header-box{
   text-align: center;
-  padding: 20px;
   color: white;
+  font-size: 34px;
+  line-height: 0.75;
+  font-family: "MyriadPro Semibold";
 }
 .progressiontree-header{
-  font-size: 22px
+  font-size: 34px;
+  line-height: 1.6;
 }
 .progression-tree-clock{
-  border: 2px solid #8BBCD9;
+  border-width: 1px;
+  border-color: rgb(137, 203, 253);
+  border-style: solid;
+  background-color: rgb(1, 1, 1);
+  box-shadow: 0px 0px 6px 0px rgba(197, 232, 255, 0.44);
   width: fit-content;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   margin: auto;
+  line-height: 1.286;
+  font-size: 14px;
 }
 .show-more-option{
   color: white;
   text-decoration: underline;
   cursor: pointer;
+  font-size: 16px;
+  line-height: 1.25;
+  
 }
 .progression-tree-panels{
 
+}
+
+
+@media (max-width: 768px){
+  .progressiontree-header{
+    font-size: 27px;
+  }
 }

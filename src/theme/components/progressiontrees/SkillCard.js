@@ -230,8 +230,6 @@ class SkillCard extends React.Component {
       const CardPanel = (this.state.isTaskSelected) ? this.renderSkillCard(skillItem) : this.renderTaskCard(skillItem)
       const VideoPanel = (this.state.openVideo) ? this.renderVideo() : null
       const imgUrl = this.getImgUrl(skillItem.heroimg)
-      console.log('Url variable')
-      console.log(imgUrl)
       return(
         <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}

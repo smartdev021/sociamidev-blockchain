@@ -246,7 +246,7 @@ class HomePage extends React.Component {
       // </div>
       <div className="progressiontree-container">
             <div className="row progression-tree-header-box">
-                <div className="progressiontree-header"><b>My progression Trees</b></div>
+                <div className="progressiontree-header"><b>My progression skills</b></div>
                 <div className="progression-tree-timers">
                   <div className="progression-tree-clock">Innovation - Illuminate (00:25:12:59)</div>
                 </div>

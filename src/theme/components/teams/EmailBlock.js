@@ -59,8 +59,8 @@ class EmailBlock extends React.Component {
                     <div className="team-email-item-accepted" key={index}>
                         <div>
                             <div className="team-email-accepted">{this.state.email.email}</div>
-                            <div className="team-email-checkbox">
-                                <i className="fa fa-check"></i>
+                            <div className="team-checkmark-div">
+                                <div className="team-checkmark"></div>
                             </div>
                             <a className="fa fa-pencil edit-team-email-checkbox" onClick={()=>this.editEmailAddress()}>
                             </a>

@@ -22,7 +22,7 @@ import ConfigMain from '~/configs/main'
 //routes
 import Authorize from '~/src/authentication/Authorize';
 
-import HomePage from '~/src/theme/HomePage.js';
+import HomePage from '~/src/theme/components/homepage/HomePage.js';
 import TaskManager from '~/src/theme/TaskManager';
 import TrendScanner from '~/src/theme/TrendScanner.js';
 import ProjectManager from '~/src/theme/ProjectManagement';

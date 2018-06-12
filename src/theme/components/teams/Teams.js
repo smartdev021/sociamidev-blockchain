@@ -102,7 +102,7 @@ class Teams extends React.Component {
         return(
             <div className="my-teams-container">
                 <div className="row team-header">
-                    <div className="my-teams-header"><b>My Teams</b></div>
+                    <div className="my-teams-header"><b>My teams</b></div>
                     <h5>Some dummy text here</h5>
                     <div className="create-new-team-btn">
                         <a href="#" className="create-team-btn create-new-team">
