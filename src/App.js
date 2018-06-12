@@ -119,7 +119,6 @@ class App extends Component {
     });
 
     this.socket.on('EVENT', eventObj => {
-      console.log('Event Type - ' + eventObj.eventType);
       PubSub.publish(eventObj.eventType, eventObj);
     });
 
@@ -212,23 +211,12 @@ class App extends Component {
   }
 
   serverEventTasksUpdate(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
-    console.dir(data);
-
     if (data.eventType == 'tasks_update') {
       this.props.fetchAllTasks(true);
     }
   }
 
   serverEventTaskUpdated(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
-
     if (data.eventType == 'task_updated') {
       if (data.task && data.task._id) {
         this.props.updateTask(data.task);
@@ -238,12 +226,6 @@ class App extends Component {
   }
 
   serverEventAccountingUpdated(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
-    console.dir(data);
-
     if (data.eventType == 'accounting_updated') {
       this.fetchUserInfoFromDataBase(true);
       this.props.fetchUserAccounting(this.props.userProfile._id);
@@ -253,13 +235,11 @@ class App extends Component {
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, { linkedInID: id });
     this.setState(copy);
-    console.log('handleAuthorizeLinked id: ' + id);
   }
 
   handleAuthorizeFaceBook(id) {
     let copy = Object.assign({}, this.state, { faceBookID: id });
     this.setState(copy);
-    console.log('handleAuthorizeFaceBook id: ' + id);
   }
 
   storeCurrentLocationInCookies() {
@@ -274,8 +254,6 @@ class App extends Component {
 
     let lastLocation = Object.assign({}, this.props.history.location);
 
-    console.log('lastLocation: ' + lastLocation);
-
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
     if (
       this.props.exactLocation &&
@@ -283,8 +261,6 @@ class App extends Component {
     ) {
       lastLocation.pathname = '/taskManagement';
     }
-
-    console.log('lastLocation1: ' + lastLocation);
 
     cookies.set('lastLocation', lastLocation, options);
   }
@@ -419,12 +395,6 @@ class App extends Component {
       prevState.linkedInID != this.state.linkedInID ||
       prevState.faceBookID != this.state.faceBookID
     ) {
-      console.log(
-        'componentDidUpdate this.state.linkedInID: ' +
-          this.state.linkedInID +
-          ' this.state.faceBookID: ' +
-          this.state.faceBookID
-      );
       if (this.state.linkedInID || this.state.faceBookID) {
         this.fetchUserInfoFromDataBase();
       }
@@ -439,8 +409,6 @@ class App extends Component {
         && this.props.history.location.pathname != "/progressionTreeBrowser/"
           && this.props.history.location.pathname != "/skillBrowser"
             && this.props.history.location.pathname != "/skillBrowser/") {
-          console.log("this.props.history.location.pathname: " + this.props.history.location.pathname);
-          console.log("opening search results");
           this.props.openSearchResults();
         }
       }*/
@@ -454,15 +422,6 @@ class App extends Component {
       });
 
       this.setState(copy);
-    }
-
-    if (prevProps != this.props) {
-      console.log('App props updated: ');
-      console.dir(this.props);
-    }
-
-    if (this.props.cookies != prevProps.cookies) {
-      console.log('Cookies has been changed');
     }
 
     if (this.state.userID && this.state.verfiedSocketConnection == false) {
@@ -749,5 +708,8 @@ const mapStateToProps = state => ({
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(withCookies(App))
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withCookies(App))
 );

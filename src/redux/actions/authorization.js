@@ -1,366 +1,335 @@
-import Axios from 'axios'
+import Axios from 'axios';
 
 import {
-    OPEN_USER_PROFILE, 
-    OPEN_USER_PROFILE_COMPLETE,
-    FETCH_USER_PROFILE_INITIATE,
-    FETCH_USER_PROFILE_COMPLETE,
-    FETCH_USER_PROFILE_TASKS_INITIATE,
-    FETCH_USER_PROFILE_TASKS_COMPLETE,
-
-    FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
-    FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
-
-    USER_PROFIE_UPDATE_FREQUENTLY,
-
-    PROGRESSION_TREE_START_INITIATE,
-    PROGRESSION_TREE_START_COMPLETE,
-
-    PROGRESSION_TREE_STOP_INITIATE,
-    PROGRESSION_TREE_STOP_COMPLETE,
-
-    SIGNUP_FORM_OPEN,
-    SIGNUP_FORM_CLOSE,
-
-    UPDATE_USER_PROFILE_COMPLETE,
-    UPDATE_USER_PROFILE_INITIATE,
-
-    USER_LOG_OUT,
-
+  OPEN_USER_PROFILE,
+  OPEN_USER_PROFILE_COMPLETE,
+  FETCH_USER_PROFILE_INITIATE,
+  FETCH_USER_PROFILE_COMPLETE,
+  FETCH_USER_PROFILE_TASKS_INITIATE,
+  FETCH_USER_PROFILE_TASKS_COMPLETE,
+  FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
+  FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
+  USER_PROFIE_UPDATE_FREQUENTLY,
+  PROGRESSION_TREE_START_INITIATE,
+  PROGRESSION_TREE_START_COMPLETE,
+  PROGRESSION_TREE_STOP_INITIATE,
+  PROGRESSION_TREE_STOP_COMPLETE,
+  SIGNUP_FORM_OPEN,
+  SIGNUP_FORM_CLOSE,
+  UPDATE_USER_PROFILE_COMPLETE,
+  UPDATE_USER_PROFILE_INITIATE,
+  USER_LOG_OUT,
 } from './actionTypes';
 
-import ConfigMain from '~/configs/main'
+import ConfigMain from '~/configs/main';
 
 export function openSignUpForm() {
-    return {
-        type: SIGNUP_FORM_OPEN,
-    }
+  return {
+    type: SIGNUP_FORM_OPEN,
+  };
 }
 
 export function closeSignUpForm() {
-    return {
-        type: SIGNUP_FORM_CLOSE,
-    }
+  return {
+    type: SIGNUP_FORM_CLOSE,
+  };
 }
 
 export function openUserProfile() {
-    return {
-        type: OPEN_USER_PROFILE,
-    }
+  return {
+    type: OPEN_USER_PROFILE,
+  };
 }
 
 export function openUserProfileComplete() {
-    return {
-        type: OPEN_USER_PROFILE_COMPLETE,
-    }
+  return {
+    type: OPEN_USER_PROFILE_COMPLETE,
+  };
 }
 
 export function fetchUserProfileComplete(userProfile, authorized, adminUser) {
-    return {
-        type: FETCH_USER_PROFILE_COMPLETE,
-        profile: userProfile,
-        isAuthorized: authorized,
-        isAdmin: adminUser
-    }
+  return {
+    type: FETCH_USER_PROFILE_COMPLETE,
+    profile: userProfile,
+    isAuthorized: authorized,
+    isAdmin: adminUser,
+  };
 }
 
 export function updateUserProfileInitiate() {
-    return {
-        type: UPDATE_USER_PROFILE_INITIATE,
-    }
+  return {
+    type: UPDATE_USER_PROFILE_INITIATE,
+  };
 }
 
 export function updateUserProfileComplete(userProfile) {
-    return {
-        type: UPDATE_USER_PROFILE_COMPLETE,
-        profile: userProfile,
-    }
+  return {
+    type: UPDATE_USER_PROFILE_COMPLETE,
+    profile: userProfile,
+  };
 }
 
 export function logout(userID) {
-    const url = `${ConfigMain.getBackendURL()}/logout`;
+  const url = `${ConfigMain.getBackendURL()}/logout`;
 
-    const body = {userID: userID};
+  const body = { userID: userID };
 
-    Axios.post(url, body)
-    .then(function(response) {
-        console.log("User logged out with User Id - " + userID);
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-    return {
-        type: USER_LOG_OUT,
-    }
+  Axios.post(url, body)
+    .then(function(response) {})
+    .catch(function(error) {});
+  return {
+    type: USER_LOG_OUT,
+  };
 }
 
 export function fetchUserProfileInitiate() {
-    return {
-        type: FETCH_USER_PROFILE_INITIATE,
-    }
+  return {
+    type: FETCH_USER_PROFILE_INITIATE,
+  };
 }
 
 export function fetchUserProfileTasksInitiate() {
-    return {
-        type: FETCH_USER_PROFILE_TASKS_INITIATE,
-    }
+  return {
+    type: FETCH_USER_PROFILE_TASKS_INITIATE,
+  };
 }
 
 export function fetchUserProfileTasksComplete(assignedTasks, createdTasks) {
-    return {
-        type: FETCH_USER_PROFILE_TASKS_COMPLETE,
-        tasksAssigned: assignedTasks,
-        tasksCreated: createdTasks,
-    }
+  return {
+    type: FETCH_USER_PROFILE_TASKS_COMPLETE,
+    tasksAssigned: assignedTasks,
+    tasksCreated: createdTasks,
+  };
 }
 
 export function fetchUserActivitiesInitiate() {
-    return {
-        type: FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
-    }
+  return {
+    type: FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
+  };
 }
 
 export function fetchUserActivitiesComplete(activities) {
-    return {
-        type: FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
-        activities: activities,
-    }
+  return {
+    type: FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
+    activities: activities,
+  };
 }
 
 export function fetchUserActivities(userId) {
+  return function(dispatch) {
+    dispatch(fetchUserActivitiesInitiate());
 
-    return function (dispatch) {
+    const url = `${ConfigMain.getBackendURL()}/userActivitiesGet?id=${userId}&doNotTransform=1`;
 
-        dispatch(fetchUserActivitiesInitiate());
-
-        const url = `${ConfigMain.getBackendURL()}/userActivitiesGet?id=${userId}&doNotTransform=1`;
-    
-        return (
-          Axios.get(url)
-          .then(function(response) {
-              console.log("%cfetchUserActivities: ", "color: red; background: grey;");
-              console.dir(response.data);
-            dispatch(fetchUserActivitiesComplete(response.data[0].activities.map(function(userActivityData, i) {
-                return userActivityData.activity;
-            })));
-          })
-          .catch(function(error) {
-            dispatch(fetchUserActivitiesComplete([]));
-        }));
-    }
+    return Axios.get(url)
+      .then(function(response) {
+        dispatch(
+          fetchUserActivitiesComplete(
+            response.data[0].activities.map(function(userActivityData, i) {
+              return userActivityData.activity;
+            }),
+          ),
+        );
+      })
+      .catch(function(error) {
+        dispatch(fetchUserActivitiesComplete([]));
+      });
+  };
 }
 
 export function startProgressionTreeInitiate() {
-    return {
-        type: PROGRESSION_TREE_START_INITIATE,
-    }
+  return {
+    type: PROGRESSION_TREE_START_INITIATE,
+  };
 }
 
 export function startProgressionTreeComplete(tree) {
-    return {
-        type: PROGRESSION_TREE_START_COMPLETE,
-        tree: tree,
-    }
+  return {
+    type: PROGRESSION_TREE_START_COMPLETE,
+    tree: tree,
+  };
 }
 
 export function stopProgressionTreeInitiate(tree) {
-    return {
-        type: PROGRESSION_TREE_STOP_INITIATE,
-    }
+  return {
+    type: PROGRESSION_TREE_STOP_INITIATE,
+  };
 }
 
 export function stopProgressionTreeComplete(tree) {
-    return {
-        type: PROGRESSION_TREE_STOP_COMPLETE,
-        tree: tree,
-    }
+  return {
+    type: PROGRESSION_TREE_STOP_COMPLETE,
+    tree: tree,
+  };
 }
 
 export function startProgressionTree(userId, progressionTree) {
-    
-    return function (dispatch) {
+  return function(dispatch) {
+    dispatch(startProgressionTreeInitiate());
 
-        dispatch(startProgressionTreeInitiate());
+    const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStart`;
 
-        const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStart`;
+    const body = { userId: userId, progTree: progressionTree };
 
-        const body = {userId: userId, progTree: progressionTree};
-    
-        return (
-          Axios.post(url, body)
-            .then(function(response) {
-                dispatch(startProgressionTreeComplete(response.data));
-            })
-            .catch(function(error) {
-                dispatch(startProgressionTreeComplete([]));
-            }));
-    }
+    return Axios.post(url, body)
+      .then(function(response) {
+        dispatch(startProgressionTreeComplete(response.data));
+      })
+      .catch(function(error) {
+        dispatch(startProgressionTreeComplete([]));
+      });
+  };
 }
 
 export function stopProgressionTree(userId, progressionTree) {
-    
-    return function (dispatch) {
+  return function(dispatch) {
+    dispatch(startProgressionTreeInitiate());
 
-        dispatch(startProgressionTreeInitiate());
+    const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStop`;
 
-        const url = `${ConfigMain.getBackendURL()}/userProgressionTreeStop`;
+    const body = { userId: userId, progTree: progressionTree };
 
-        const body = {userId: userId, progTree: progressionTree};
-    
-        return (
-          Axios.post(url, body)
-            .then(function(response) {
-                dispatch(stopProgressionTreeComplete(response.data));
-            })
-            .catch(function(error) {
-                dispatch(stopProgressionTreeComplete([]));
-            }));
-    }
+    return Axios.post(url, body)
+      .then(function(response) {
+        dispatch(stopProgressionTreeComplete(response.data));
+      })
+      .catch(function(error) {
+        dispatch(stopProgressionTreeComplete([]));
+      });
+  };
 }
 
-
 export function fetchUserTasks(userId) {
-    
-    return function (dispatch) {
+  return function(dispatch) {
+    dispatch(fetchUserProfileTasksInitiate());
 
-        dispatch(fetchUserProfileTasksInitiate());
+    const url = `${ConfigMain.getBackendURL()}/tasksGetForUser?userId=${userId}&assigneeId=${userId}`;
 
-        const url = `${ConfigMain.getBackendURL()}/tasksGetForUser?userId=${userId}&assigneeId=${userId}`;
-    
-        return (
-          Axios.get(url)
-            .then(function(response) {
+    return Axios.get(url)
+      .then(function(response) {
+        let tasksAssigned = [];
+        let tasksCreated = [];
 
-                let tasksAssigned = [];
-                let tasksCreated = [];
-
-                for (let i = 0; i < response.data.length; ++i) {
-                    if (response.data[i].assignees && response.data[i].assignees.find(function(assignee) {
-                        return assignee._id == userId;
-                    })) {
-                        tasksAssigned.push(response.data[i]);
-                    }
-                    else if (response.data[i].userID == userId) {
-                        tasksCreated.push(response.data[i]);
-                    }
-                }
-
-                dispatch(fetchUserProfileTasksComplete(tasksAssigned, tasksCreated));
+        for (let i = 0; i < response.data.length; ++i) {
+          if (
+            response.data[i].assignees &&
+            response.data[i].assignees.find(function(assignee) {
+              return assignee._id == userId;
             })
-            .catch(function(error) {
-                dispatch(fetchUserProfileTasksComplete([], []));
-            }));
-    }
+          ) {
+            tasksAssigned.push(response.data[i]);
+          } else if (response.data[i].userID == userId) {
+            tasksCreated.push(response.data[i]);
+          }
+        }
+
+        dispatch(fetchUserProfileTasksComplete(tasksAssigned, tasksCreated));
+      })
+      .catch(function(error) {
+        dispatch(fetchUserProfileTasksComplete([], []));
+      });
+  };
 }
 
 export function update_userProfile(userIdFacebook, userIdLinkedIn) {
+  return function(dispatch) {
+    const url = userIdFacebook
+      ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
+      : `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdLinkedIn}`;
 
-    return function(dispatch) {
-        const url = userIdFacebook ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
-        : `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdLinkedIn}`;
-
-        return (
-            Axios.get(url)
-            .then(function(response) {
-                const responseProfile = response.data.profile;
-                let newUserProfile = {
-                    _id: response.data._id,
-                    progressionTrees: response.data.progressionTrees,
-                    progressionTreeLevels: response.data.profile.progressionTreeLevels
-                };
-                //async action exit point
-                dispatch({
-                    type: USER_PROFIE_UPDATE_FREQUENTLY,
-                    profile: newUserProfile
-                });
-            })
-            .catch(function(error) {
-                // Fail? Ignore.
-            })
-        );    
-    }
+    return Axios.get(url)
+      .then(function(response) {
+        const responseProfile = response.data.profile;
+        let newUserProfile = {
+          _id: response.data._id,
+          progressionTrees: response.data.progressionTrees,
+          progressionTreeLevels: response.data.profile.progressionTreeLevels,
+        };
+        //async action exit point
+        dispatch({
+          type: USER_PROFIE_UPDATE_FREQUENTLY,
+          profile: newUserProfile,
+        });
+      })
+      .catch(function(error) {
+        // Fail? Ignore.
+      });
+  };
 }
 
 export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
+  return function(dispatch) {
+    //async action entry point
+    dispatch(fetchUserProfileInitiate());
 
-    return function (dispatch) {
-  
-        //async action entry point
-      dispatch(fetchUserProfileInitiate());
-
-      const url = userIdFacebook ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
+    const url = userIdFacebook
+      ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
       : `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdLinkedIn}`;
 
-      return (
-        Axios.get(url)
-        .then(function(response) {
-            const responseProfile = response.data.profile;
-            let newUserProfile = {
-              _id: response.data._id,
-              hangouts: response.data.hangouts,
-              illuminates: response.data.illuminates,
-              roadmaps: response.data.roadmaps,
-              progressionTrees: response.data.progressionTrees,
-              facebook: response.data.facebook,
-            }
+    return Axios.get(url)
+      .then(function(response) {
+        const responseProfile = response.data.profile;
+        let newUserProfile = {
+          _id: response.data._id,
+          hangouts: response.data.hangouts,
+          illuminates: response.data.illuminates,
+          roadmaps: response.data.roadmaps,
+          progressionTrees: response.data.progressionTrees,
+          facebook: response.data.facebook,
+        };
 
-            newUserProfile = Object.assign({}, newUserProfile, {...responseProfile});
+        newUserProfile = Object.assign({}, newUserProfile, { ...responseProfile });
 
-            Axios.get(`${ConfigMain.getBackendURL()}/fetchUserCompany?emailId=${responseProfile.email}`)
-            .then(function(response) {
-                //async action exit point
-                if(response.data && response.data._id) {
-                    dispatch(fetchUserProfileComplete(newUserProfile, true, true));
-                } else {
-                    dispatch(fetchUserProfileComplete(newUserProfile, true, false));
-                }
-            }).catch(function(error){
-                dispatch(fetchUserProfileComplete(newUserProfile, true, false));
-            })
-        })
-        .catch(function(error) {
+        Axios.get(`${ConfigMain.getBackendURL()}/fetchUserCompany?emailId=${responseProfile.email}`)
+          .then(function(response) {
             //async action exit point
-            dispatch(fetchUserProfileComplete({}, false, false));
-        }));
-    }
+            if (response.data && response.data._id) {
+              dispatch(fetchUserProfileComplete(newUserProfile, true, true));
+            } else {
+              dispatch(fetchUserProfileComplete(newUserProfile, true, false));
+            }
+          })
+          .catch(function(error) {
+            dispatch(fetchUserProfileComplete(newUserProfile, true, false));
+          });
+      })
+      .catch(function(error) {
+        //async action exit point
+        dispatch(fetchUserProfileComplete({}, false, false));
+      });
+  };
 }
 
 export function setUserProfileCharacter(profileId, characterData) {
+  return function(dispatch) {
+    //async action entry point
+    dispatch(updateUserProfileInitiate());
 
-    return function (dispatch) {
-  
-        //async action entry point
-      dispatch(updateUserProfileInitiate());
+    const url = `${ConfigMain.getBackendURL()}/userProfileCharacterSet`;
+    const body = {
+      id: profileId,
+      characterData: characterData,
+    };
 
-      const url = `${ConfigMain.getBackendURL()}/userProfileCharacterSet`;
-      const body = {
-          id: profileId,
-          characterData: characterData,
-      };
+    return Axios.post(url, body)
+      .then(function(response) {
+        const responseProfile = response.data.profile;
+        let newUserProfile = {
+          _id: response.data._id,
+          hangouts: response.data.hangouts,
+          roadmaps: response.data.roadmaps,
+          progressionTrees: response.data.progressionTrees,
+          facebook: response.data.facebook,
+        };
 
-      console.log("body");
-      console.dir(body);
+        newUserProfile = Object.assign({}, newUserProfile, { ...responseProfile });
 
-      return (
-        Axios.post(url, body)
-        .then(function(response) {
-            const responseProfile = response.data.profile;
-            let newUserProfile = {
-              _id: response.data._id,
-              hangouts: response.data.hangouts,
-              roadmaps: response.data.roadmaps,
-              progressionTrees: response.data.progressionTrees,
-              facebook: response.data.facebook,
-            }
-
-            newUserProfile = Object.assign({}, newUserProfile, {...responseProfile});
-
-            //async action exit point
-            dispatch(updateUserProfileComplete(newUserProfile));
-        })
-        .catch(function(error) {
-            //async action exit point
-            dispatch(updateUserProfileComplete({}));
-        }));
-    }
+        //async action exit point
+        dispatch(updateUserProfileComplete(newUserProfile));
+      })
+      .catch(function(error) {
+        //async action exit point
+        dispatch(updateUserProfileComplete({}));
+      });
+  };
 }

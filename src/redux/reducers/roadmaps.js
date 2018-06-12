@@ -1,9 +1,7 @@
-
-
-import { 
-  ROADMAP_ADD, 
-  ROADMAP_REMOVE, 
-  ROADMAP_REMOVE_ALL, 
+import {
+  ROADMAP_ADD,
+  ROADMAP_REMOVE,
+  ROADMAP_REMOVE_ALL,
   ROADMAPS_SET,
   ROADMAPS_FETCH,
   ROADMAPS_FETCH_INITIATE,
@@ -16,13 +14,13 @@ import {
   ROADMAPS_ADMIN_FETCH_COMPLETE,
 } from '~/src/redux/actions/actionTypes';
 
-const roadmapsInitialState = {isFetching: false, data: []};
+const roadmapsInitialState = { isFetching: false, data: [] };
 export function roadmaps(state = roadmapsInitialState, action) {
   switch (action.type) {
     case ROADMAPS_FETCH_INITIATE:
-      return {...state, isFetching: true}
+      return { ...state, isFetching: true };
     case ROADMAPS_FETCH_COMPLETE:
-      return {...state, isFetching: false, data: action.roadmaps};
+      return { ...state, isFetching: false, data: action.roadmaps };
     default:
       return state;
   }
@@ -42,9 +40,9 @@ export function roadmapsDetailed(state = [], action) {
 export function roadmapsAdmin(state = roadmapsInitialState, action) {
   switch (action.type) {
     case ROADMAPS_ADMIN_FETCH_INITIATE:
-      return {...state, isFetching: true}
+      return { ...state, isFetching: true };
     case ROADMAPS_ADMIN_FETCH_COMPLETE:
-      return {...state, isFetching: false, data: action.roadmaps};
+      return { ...state, isFetching: false, data: action.roadmaps };
     default:
       return state;
   }

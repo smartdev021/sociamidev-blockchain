@@ -5,27 +5,21 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import {Link} from 'react-router-dom'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 
-import {Icon} from 'react-fa'
+import { Icon } from 'react-fa';
 
-import ActivityTypes from "~/src/common/ActivityTypes"
+import ActivityTypes from '~/src/common/ActivityTypes';
 
-import {
-  fetchUserFriends
-} from '~/src/redux/actions/social'
+import { fetchUserFriends } from '~/src/redux/actions/social';
 
-import {
-  activitiesFetch,
-  markActivitySeen,
-} from '~/src/redux/actions/activities'
+import { activitiesFetch, markActivitySeen } from '~/src/redux/actions/activities';
 
 const RenderDummyFriends = false;
 
 class SidebarLeft extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -33,7 +27,7 @@ class SidebarLeft extends React.Component {
       toggleFriendsUpdate: false,
       intervalId: undefined,
       isMobileView: this.props.screenWidth < 990,
-    }
+    };
   }
 
   componentWillMount() {
@@ -51,7 +45,7 @@ class SidebarLeft extends React.Component {
 
     if (prevProps.userFriends.friends.length != this.props.userFriends.friends.length) {
       if (this.props.userFriends.friends.length > 0) {
-        const UserFriendIDs = this.props.userFriends.friends.map(function(friend, i){
+        const UserFriendIDs = this.props.userFriends.friends.map(function(friend, i) {
           return friend.id;
         });
         this.props.activitiesFetch(UserFriendIDs);
@@ -59,22 +53,22 @@ class SidebarLeft extends React.Component {
     }
 
     if (prevProps.screenWidth != this.props.screenWidth) {
-      this.setState({isMobileView: this.props.screenWidth < 990});
+      this.setState({ isMobileView: this.props.screenWidth < 990 });
     }
   }
 
   //Temporary solution to update user activities once per... time
   componentDidMount() {
-    var intervalId = setInterval(()=>this.timer(), 5000);
-    this.setState({intervalId: intervalId});
+    var intervalId = setInterval(() => this.timer(), 5000);
+    this.setState({ intervalId: intervalId });
   }
- 
+
   componentWillUnmount() {
     clearInterval(this.state.intervalId);
   }
- 
+
   timer() {
-    this.setState({ toggleFriendsUpdate: !this.state.toggleFriendsUpdate});
+    this.setState({ toggleFriendsUpdate: !this.state.toggleFriendsUpdate });
   }
   //---------------------------------------------------------------------
 
@@ -82,10 +76,10 @@ class SidebarLeft extends React.Component {
     // const DummyFriendImages = [
     //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/annalisaicon.png",
     //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/johnicon.png",
-    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Joshicon.png", 
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Joshicon.png",
     //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/marciaicon.png",
     //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Mathildaicon.png",
-    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/matthewicon.png", 
+    //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/matthewicon.png",
     //   "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Thomasicon.png",
     // ];
 
@@ -107,9 +101,11 @@ class SidebarLeft extends React.Component {
 
   attachActivitiesToFriends(listOfFriends = []) {
     const UserFriendsActivities = this.props.userFriendsActivities.activities;
-    if ((Object.keys(UserFriendsActivities).length === 0 && UserFriendsActivities.constructor === Object) 
-      || listOfFriends.length == 0
-        || !listOfFriends[0].id) {
+    if (
+      (Object.keys(UserFriendsActivities).length === 0 && UserFriendsActivities.constructor === Object) ||
+      listOfFriends.length == 0 ||
+      !listOfFriends[0].id
+    ) {
       return listOfFriends;
     }
 
@@ -121,7 +117,8 @@ class SidebarLeft extends React.Component {
       newListOfFriends.push(currentFriend);
 
       if (UserFriendsActivities[currentFriend.id]) {
-        newListOfFriends[newListOfFriends.length - 1].activities = UserFriendsActivities[currentFriend.id].activities; 
+        newListOfFriends[newListOfFriends.length - 1].activities =
+          UserFriendsActivities[currentFriend.id].activities;
       }
     }
 
@@ -129,37 +126,61 @@ class SidebarLeft extends React.Component {
   }
 
   renderActivity(activity) {
-    let result = <span className="text-friends"></span>;
+    let result = <span className="text-friends" />;
 
-    switch(activity.activity.type) {
-      case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
-      {
-        result = <span className="text-friends">{"Has started: "}
-        <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
-          {activity.activity.metadata.treeName}
-        </Link></span>;
-        
-        break;
-      }
-      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
-      {
-        result = <span className="text-friends">{"Has created: "}
-        <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
-          {activity.activity.metadata.projectName}
-        </Link></span>;
+    switch (activity.activity.type) {
+      case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED: {
+        result = (
+          <span className="text-friends">
+            {'Has started: '}
+            <Link
+              to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`}
+              onClick={() =>
+                this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)
+              }
+            >
+              {activity.activity.metadata.treeName}
+            </Link>
+          </span>
+        );
 
         break;
       }
-      case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
-      {
-        result = <span className="text-friends">{"Has added: "} 
-        <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
-        : activity.activity.metadata.friend._id}`}
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
-          {activity.activity.metadata.friend.firstName}
-        </Link></span>;
+      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED: {
+        result = (
+          <span className="text-friends">
+            {'Has created: '}
+            <Link
+              to={`/projectBrowser?id=${activity.activity.metadata.projectID}`}
+              onClick={() =>
+                this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)
+              }
+            >
+              {activity.activity.metadata.projectName}
+            </Link>
+          </span>
+        );
+
+        break;
+      }
+      case ActivityTypes.FRIEND_NEW_FRIEND_ADDED: {
+        result = (
+          <span className="text-friends">
+            {'Has added: '}
+            <Link
+              to={`/userProfile?id=${
+                activity.activity.metadata.friend.id
+                  ? activity.activity.metadata.friend.id
+                  : activity.activity.metadata.friend._id
+              }`}
+              onClick={() =>
+                this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)
+              }
+            >
+              {activity.activity.metadata.friend.firstName}
+            </Link>
+          </span>
+        );
 
         break;
       }
@@ -171,64 +192,92 @@ class SidebarLeft extends React.Component {
   }
 
   renderFriendsDummy() {
-
     let dummyFriends = [];
 
     for (let i = 0; i < 20; ++i) {
-        dummyFriends.push(
-          <div className="item-account clearfix" key={i}>
-        <div className="row">
+      dummyFriends.push(
+        <div className="item-account clearfix" key={i}>
+          <div className="row">
             <div className="col-xs-3">
-                <div className="avatar">
-                    <img src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png" alt="" />
-                </div>
+              <div className="avatar">
+                <img
+                  src="http://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/avatar2.png"
+                  alt=""
+                />
+              </div>
             </div>
             <div className="col-xs-9 none-padding-right">
-                <div className="text-job">
-                    <span className="text-name">John</span>
-                    <span className="text-desc">needs a Java programmer <a href="#">Contact John</a></span>
-                </div>
+              <div className="text-job">
+                <span className="text-name">John</span>
+                <span className="text-desc">
+                  needs a Java programmer <a href="#">Contact John</a>
+                </span>
+              </div>
             </div>
-        </div>
-    </div>
-        );
+          </div>
+        </div>,
+      );
     }
 
     return dummyFriends;
   }
 
   renderActivity(activity) {
-    let result = <span className="text-friends"></span>;
+    let result = <span className="text-friends" />;
 
-    switch(activity.activity.type) {
-      case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED:
-      {
-        result = <span className="text-friends">Has started: 
-        <Link to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
-          {activity.activity.metadata.treeName}
-        </Link></span>;
-        
-        break;
-      }
-      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED:
-      {
-        result = <span className="text-friends">Has created: 
-        <Link to={`/projectBrowser?id=${activity.activity.metadata.projectID}`} 
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
-          {activity.activity.metadata.projectName}
-        </Link></span>;
+    switch (activity.activity.type) {
+      case ActivityTypes.FRIEND_PROGRESSIONTREE_STARTED: {
+        result = (
+          <span className="text-friends">
+            Has started:
+            <Link
+              to={`/progressionTreeBrowser?id=${activity.activity.metadata.treeId}`}
+              onClick={() =>
+                this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)
+              }
+            >
+              {activity.activity.metadata.treeName}
+            </Link>
+          </span>
+        );
 
         break;
       }
-      case ActivityTypes.FRIEND_NEW_FRIEND_ADDED:
-      {
-        result = <span className="text-friends">Has added: 
-        <Link to={`/userProfile?id=${activity.activity.metadata.friend.id ? activity.activity.metadata.friend.id 
-        : activity.activity.metadata.friend._id}`}
-          onClick={()=>this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)}>
-          {activity.activity.metadata.friend.firstName}
-        </Link></span>;
+      case ActivityTypes.FRIEND_NEW_PROJECT_CREATED: {
+        result = (
+          <span className="text-friends">
+            Has created:
+            <Link
+              to={`/projectBrowser?id=${activity.activity.metadata.projectID}`}
+              onClick={() =>
+                this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)
+              }
+            >
+              {activity.activity.metadata.projectName}
+            </Link>
+          </span>
+        );
+
+        break;
+      }
+      case ActivityTypes.FRIEND_NEW_FRIEND_ADDED: {
+        result = (
+          <span className="text-friends">
+            Has added:
+            <Link
+              to={`/userProfile?id=${
+                activity.activity.metadata.friend.id
+                  ? activity.activity.metadata.friend.id
+                  : activity.activity.metadata.friend._id
+              }`}
+              onClick={() =>
+                this.props.markActivitySeen(activity.activity._id, activity.userID, this.props.userProfile_id)
+              }
+            >
+              {activity.activity.metadata.friend.firstName}
+            </Link>
+          </span>
+        );
 
         break;
       }
@@ -241,79 +290,84 @@ class SidebarLeft extends React.Component {
 
   renderFriends() {
     const ListOfFriends = this.attachActivitiesToFriends(this.getListOfFriends());
-    
+
     const that = this;
 
     if (this.props.userFriends.isFetching) {
-        return (
-          <div id="list-friends">
-            <p>Fetching friends... <Icon spin name="spinner"/></p>
-          </div>
-        );
-      } 
+      return (
+        <div id="list-friends">
+          <p>
+            Fetching friends... <Icon spin name="spinner" />
+          </p>
+        </div>
+      );
+    }
 
     if (ListOfFriends.length == 0) {
-        return null;
+      return null;
     }
 
     return ListOfFriends.map(function(friend, i) {
-        return (
-            <div key={i} className="item-account clearfix">
-            <div className="row">
-                <div className="col-xs-3">
-                    <div className="avatar">
-                        <img src={friend.profilePic} alt="" />
-                    </div>
-                </div>
-                <div className="col-xs-9 none-padding-right">
-                    <div className="text-job">
-                        <span className="text-name">{friend.firstName}</span>
-                        {/*<span className="text-desc">connected with 15 people at Yale </span>*/}
-                        {/*<span className="text-friends">35 mutal friends</span>*/}
-                        {(friend.activities && friend.activities.length > 0) 
-                              ? that.renderActivity(friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0])
-                              : friend.userText
-                            }
-                    </div>
-                </div>
+      return (
+        <div key={i} className="item-account clearfix">
+          <div className="row">
+            <div className="col-xs-3">
+              <div className="avatar">
+                <img src={friend.profilePic} alt="" />
+              </div>
             </div>
+            <div className="col-xs-9 none-padding-right">
+              <div className="text-job">
+                <span className="text-name">{friend.firstName}</span>
+                {/*<span className="text-desc">connected with 15 people at Yale </span>*/}
+                {/*<span className="text-friends">35 mutal friends</span>*/}
+                {friend.activities && friend.activities.length > 0
+                  ? that.renderActivity(
+                      friend.activities[Math.floor(Math.random() * (friend.activities.length - 0)) + 0],
+                    )
+                  : friend.userText}
+              </div>
+            </div>
+          </div>
         </div>
-        )
-      })
+      );
+    });
   }
 
   render() {
-    let CategoryClassName = "category-left";
+    let CategoryClassName = 'category-left';
 
     if (this.state.isMobileView) {
-      CategoryClassName = `category-left ${this.props.isOpen ? " open-category" : " close-category"}`;
+      CategoryClassName = `category-left ${this.props.isOpen ? ' open-category' : ' close-category'}`;
     }
 
-    const ProfileImage = this.props.userProfile_pictureURL ? this.props.userProfile_pictureURL
-    : "http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png";
+    const ProfileImage = this.props.userProfile_pictureURL
+      ? this.props.userProfile_pictureURL
+      : 'http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png';
 
     return (
-        <div className={CategoryClassName}>
+      <div className={CategoryClassName}>
         <div className="item-account line-bottom clearfix">
-            <div className="row">
-                <div className="col-xs-3">
-                    <div className="avatar">
-                        <img src={ProfileImage} alt="" />
-                    </div>
-                </div>
-                <div className="col-xs-9 none-padding-right">
-                    <div className="text-status">
-                        Good Morning {this.props.userProfile_firstName ? this.props.userProfile_firstName : "Dan"}, Update your status <a href="#">Here</a>
-                    </div>
-                </div>
+          <div className="row">
+            <div className="col-xs-3">
+              <div className="avatar">
+                <img src={ProfileImage} alt="" />
+              </div>
             </div>
-        </div>
-          <div className="scrollbar-inner">
-            <div className="block-account">
-              {RenderDummyFriends ? this.renderFriendsDummy() : this.renderFriends()}
+            <div className="col-xs-9 none-padding-right">
+              <div className="text-status">
+                Good Morning {this.props.userProfile_firstName ? this.props.userProfile_firstName : 'Dan'},
+                Update your status <a href="#">Here</a>
+              </div>
             </div>
           </div>
-    </div>
+        </div>
+        <div className="scrollbar-inner">
+          <div className="block-account">
+            {RenderDummyFriends ? this.renderFriendsDummy() : this.renderFriends()}
+          </div>
+        </div>
+      </div>
     );
   }
 }
@@ -328,13 +382,13 @@ SidebarLeft.propTypes = {
   activitiesFetch: PropTypes.func.isRequired,
   fetchUserFriends: PropTypes.func.isRequired,
   markActivitySeen: PropTypes.func.isRequired,
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   fetchUserFriends: bindActionCreators(fetchUserFriends, dispatch),
   activitiesFetch: bindActionCreators(activitiesFetch, dispatch),
   markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
-})
+});
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
@@ -345,6 +399,9 @@ const mapStateToProps = state => ({
 
   userFriends: state.userFriends,
   userFriendsActivities: state.userFriendsActivities,
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarLeft);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SidebarLeft);
