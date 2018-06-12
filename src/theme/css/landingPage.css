@@ -50,6 +50,10 @@ html.vertical-hidden {
     overflow-y: hidden;
 }
 
+.landing-page-wrapper{
+    -webkit-overflow-scrolling: touch;
+}
+
 .landing-page-wrapper header {
     position: relative;
     margin: 0;
