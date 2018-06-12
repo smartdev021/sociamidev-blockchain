@@ -6,7 +6,7 @@ const Webpack = require('webpack');
 module.exports = merge(common, build, {
   plugins: [
     new Webpack.EnvironmentPlugin({
-      NODE_ENV: 'prod'
-    })
+      NODE_ENV: 'prod',
+    }),
   ],
 });

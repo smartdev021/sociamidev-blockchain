@@ -5,47 +5,38 @@ import React from 'react';
 import 'url-search-params-polyfill';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Modal from 'react-modal';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import { Icon } from 'react-fa'
+import { Icon } from 'react-fa';
 
-import ActionLink from '~/src/components/common/ActionLink'
+import ActionLink from '~/src/components/common/ActionLink';
 
-import Axios from 'axios'
-import ConfigMain from '~/configs/main'
+import Axios from 'axios';
+import ConfigMain from '~/configs/main';
 
-import {
-  saveTask,
-} from '~/src/redux/actions/tasks'
+import { saveTask } from '~/src/redux/actions/tasks';
 
-import "~/src/theme/css/treebrowser.css"
-import "~/src/theme/css/SkillBrowser.css"
+import '~/src/theme/css/treebrowser.css';
+import '~/src/theme/css/SkillBrowser.css';
 
-import {
-  selectResultsCategory,
-} from '~/src/redux/actions/fetchResults'
+import { selectResultsCategory } from '~/src/redux/actions/fetchResults';
 
-import {
-  fetchResults,
-  setSearchQuery,
-} from '~/src/redux/actions/fetchResults'
+import { fetchResults, setSearchQuery } from '~/src/redux/actions/fetchResults';
 
-import {
-  userInteractionPush,
-} from '~/src/redux/actions/userInteractions'
+import { userInteractionPush } from '~/src/redux/actions/userInteractions';
 
 import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
 import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
-import TaskTypes from "~/src/common/TaskTypes"
+import TaskTypes from '~/src/common/TaskTypes';
 
-import UserInteractions from "~/src/common/UserInteractions"
+import UserInteractions from '~/src/common/UserInteractions';
 
-import { getPopupParentElement } from "~/src/common/PopupUtils.js"
+import { getPopupParentElement } from '~/src/common/PopupUtils.js';
 
 import Countdown from 'react-countdown-now';
 import _ from 'lodash';
@@ -54,10 +45,9 @@ import Async from 'async';
 
 const RandomInt = function RandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 class SkillBrowser extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -72,8 +62,8 @@ class SkillBrowser extends React.Component {
       HangoutPeriodLapsed: true,
       IlluminatePeriodLapsed: true,
       isLoading: true,
-      tree: this.props.location.state.tree
-    }
+      tree: this.props.location.state.tree,
+    };
     this.modalDefaultStyles = {};
 
     this.timeNowUpdateInterval = undefined;
@@ -84,52 +74,58 @@ class SkillBrowser extends React.Component {
     const LatestIlluminateDateAnswered = this.lastIlluminateDateAnswered();
     const CurrentTree = this.state.tree;
 
-    const HangoutPeriodLapsed = !LatestHangoutDateJoined || Date.now() - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
+    const HangoutPeriodLapsed =
+      !LatestHangoutDateJoined || Date.now() - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
     if (HangoutPeriodLapsed !== this.state.HangoutPeriodLapsed) {
-      this.setState({ HangoutPeriodLapsed: HangoutPeriodLapsed })
+      this.setState({ HangoutPeriodLapsed: HangoutPeriodLapsed });
     }
-    const IlluminatePeriodLapsed = !LatestIlluminateDateAnswered || Date.now() - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
+    const IlluminatePeriodLapsed =
+      !LatestIlluminateDateAnswered ||
+      Date.now() - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
     if (IlluminatePeriodLapsed !== this.state.IlluminatePeriodLapsed) {
-      this.setState({ IlluminatePeriodLapsed: IlluminatePeriodLapsed })
+      this.setState({ IlluminatePeriodLapsed: IlluminatePeriodLapsed });
     }
   }
 
   isTreeAdded() {
     const CurrentTree = this.state.tree;
 
-    return this.props.userProfile.progressionTrees.find((tree) => {
+    return this.props.userProfile.progressionTrees.find(tree => {
       return tree._id == CurrentTree._id;
     });
   }
 
   componentWillMount() {
     const URLParams = new URLSearchParams(this.props.location.search);
-    const name = URLParams.get("name");
+    const name = URLParams.get('name');
 
     if (name) {
-      this.setState({ isLoading: true })
-      Async.parallel([
-        Async.apply(this.updateSkill.bind(this), name),
-        Async.apply(this.updateIlluminateTimer.bind(this)),
-        Async.apply(this.updateDeepdiveTimer.bind(this)),
-        Async.apply(this.updateDecodeTimer.bind(this))
-      ], () => {
-        this.setState({ isLoading: false })
-      })
+      this.setState({ isLoading: true });
+      Async.parallel(
+        [
+          Async.apply(this.updateSkill.bind(this), name),
+          Async.apply(this.updateIlluminateTimer.bind(this)),
+          Async.apply(this.updateDeepdiveTimer.bind(this)),
+          Async.apply(this.updateDecodeTimer.bind(this)),
+        ],
+        () => {
+          this.setState({ isLoading: false });
+        },
+      );
     }
     this.modalDefaultStyles = Modal.defaultStyles;
 
-    Modal.defaultStyles.content.border = "none";
-    Modal.defaultStyles.content.background = "transparent";
-    Modal.defaultStyles.content.overflow = "visible";
-    Modal.defaultStyles.content.padding = "0";
-    Modal.defaultStyles.content["maxWidth"] = "400px";
-    Modal.defaultStyles.content["minHeight"] = "300px";
-    Modal.defaultStyles.content["marginLeft"] = "auto";
-    Modal.defaultStyles.content["marginRight"] = "auto";
-    Modal.defaultStyles.content["left"] = "0px";
-    Modal.defaultStyles.content["top"] = "150px";
-    Modal.defaultStyles.content["right"] = "0px";
+    Modal.defaultStyles.content.border = 'none';
+    Modal.defaultStyles.content.background = 'transparent';
+    Modal.defaultStyles.content.overflow = 'visible';
+    Modal.defaultStyles.content.padding = '0';
+    Modal.defaultStyles.content['maxWidth'] = '400px';
+    Modal.defaultStyles.content['minHeight'] = '300px';
+    Modal.defaultStyles.content['marginLeft'] = 'auto';
+    Modal.defaultStyles.content['marginRight'] = 'auto';
+    Modal.defaultStyles.content['left'] = '0px';
+    Modal.defaultStyles.content['top'] = '150px';
+    Modal.defaultStyles.content['right'] = '0px';
   }
 
   componentDidMount() {
@@ -147,98 +143,115 @@ class SkillBrowser extends React.Component {
     that.setState({ isLoading: true, isHangoutFormVisible: false });
 
     Axios.get(url)
-      .then(function (response) {
+      .then(function(response) {
         that.setState({ skillInfo: response.data });
-        callback()
+        callback();
       })
-      .catch(function (error) {
+      .catch(function(error) {
         that.setState({ skillInfo: undefined });
-        callback()
+        callback();
       });
   }
 
   updateIlluminateTimer(callback) {
-    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Illuminate`;
+    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(
+      this,
+      'state.tree._id',
+    )}&type=Illuminate`;
     this.setState({ isLoading: true, isIlluminateFormVisible: false });
     Axios.get(url)
       .then(timerResp => {
-        const illuminateTimer = _.get(timerResp, 'data')
-        this.setState({ illuminateTimer })
-        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(illuminateTimer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
-        Axios.get(trackerUrl)
-          .then(tracker => {
-            this.setState({ illuminateTracker: _.get(tracker, 'data') })
-            callback()
-          })
-      }).catch(err => {
-        callback()
+        const illuminateTimer = _.get(timerResp, 'data');
+        this.setState({ illuminateTimer });
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(
+          illuminateTimer,
+          '_id',
+        )}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl).then(tracker => {
+          this.setState({ illuminateTracker: _.get(tracker, 'data') });
+          callback();
+        });
       })
+      .catch(err => {
+        callback();
+      });
   }
 
   updateDecodeTimer(callback) {
     const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Decode`;
-    this.setState({ isLoading: true});
+    this.setState({ isLoading: true });
     Axios.get(url)
       .then(timerResp => {
-        const decodeTimer = _.get(timerResp, 'data')
-        this.setState({ decodeTimer })
-        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(decodeTimer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
-        Axios.get(trackerUrl)
-          .then(tracker => {
-            this.setState({ decodeTracker: _.get(tracker, 'data') })
-            callback()
-          })
-      }).catch(err => {
-        callback()
+        const decodeTimer = _.get(timerResp, 'data');
+        this.setState({ decodeTimer });
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(
+          decodeTimer,
+          '_id',
+        )}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl).then(tracker => {
+          this.setState({ decodeTracker: _.get(tracker, 'data') });
+          callback();
+        });
       })
+      .catch(err => {
+        callback();
+      });
   }
 
   updateDeepdiveTimer(callback) {
-    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(this, 'state.tree._id')}&type=Deepdive`;
+    const url = `${ConfigMain.getBackendURL()}/timer?roadmapId=${_.get(
+      this,
+      'state.tree._id',
+    )}&type=Deepdive`;
     this.setState({ isLoading: true, isHangoutFormVisible: false });
     Axios.get(url)
       .then(timerResp => {
-        const deepdiveTimer = _.get(timerResp, 'data')
-        this.setState({ deepdiveTimer })
-        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(deepdiveTimer, '_id')}&userId=${_.get(this, 'props.userProfile._id')}`;
-        Axios.get(trackerUrl)
-          .then(tracker => {
-            this.setState({ deepdiveTracker: _.get(tracker, 'data') })
-            callback()
-          })
-      }).catch(err => {
-        callback()
+        const deepdiveTimer = _.get(timerResp, 'data');
+        this.setState({ deepdiveTimer });
+        const trackerUrl = `${ConfigMain.getBackendURL()}/timers/track?timerId=${_.get(
+          deepdiveTimer,
+          '_id',
+        )}&userId=${_.get(this, 'props.userProfile._id')}`;
+        Axios.get(trackerUrl).then(tracker => {
+          this.setState({ deepdiveTracker: _.get(tracker, 'data') });
+          callback();
+        });
       })
+      .catch(err => {
+        callback();
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
-
     if (prevProps.location.search != this.props.location.search) {
       const URLParams = new URLSearchParams(this.props.location.search);
-      const name = URLParams.get("name");
+      const name = URLParams.get('name');
 
       if (name) {
-        this.setState({ isLoading: true })
-        Async.parallel([
-          Async.apply(this.updateSkill.bind(this), name),
-          Async.apply(this.updateIlluminateTimer.bind(this)),
-          Async.apply(this.updateDeepdiveTimer.bind(this))
-        ], () => {
-          this.setState({ isLoading: false })
-        })
+        this.setState({ isLoading: true });
+        Async.parallel(
+          [
+            Async.apply(this.updateSkill.bind(this), name),
+            Async.apply(this.updateIlluminateTimer.bind(this)),
+            Async.apply(this.updateDeepdiveTimer.bind(this)),
+          ],
+          () => {
+            this.setState({ isLoading: false });
+          },
+        );
       }
     }
 
     if (prevState.skillInfo != this.state.skillInfo) {
       if (this.state.skillInfo) {
-
         if (this.props.userProfile && this.props.userProfile._id) {
-          this.props.userInteractionPush(this.props.userProfile._id,
+          this.props.userInteractionPush(
+            this.props.userProfile._id,
             UserInteractions.Types.PAGE_OPEN,
             UserInteractions.SubTypes.SKILL_VIEW,
             {
               skillId: this.state.skillInfo._id,
-            }
+            },
           );
         }
 
@@ -254,21 +267,24 @@ class SkillBrowser extends React.Component {
     if (prevState.isHangoutFormVisible != this.state.isHangoutFormVisible) {
       if (this.state.isHangoutFormVisible) {
         if (this.props.userProfile && this.props.userProfile._id) {
-          this.props.userInteractionPush(this.props.userProfile._id,
+          this.props.userInteractionPush(
+            this.props.userProfile._id,
             UserInteractions.Types.ACTION_EXECUTE,
             UserInteractions.SubTypes.DEEPDIVE_PREPARE,
             {
               skillId: this.state.skillInfo._id,
-            }
+            },
           );
         }
       }
     }
 
     if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
-      if (this.props.lastSavedTask &&
-        (this.props.lastSavedTask.type == TaskTypes.ILLUMINATE
-          || this.props.lastSavedTask.type == TaskTypes.DECODE))
+      if (
+        this.props.lastSavedTask &&
+        (this.props.lastSavedTask.type == TaskTypes.ILLUMINATE ||
+          this.props.lastSavedTask.type == TaskTypes.DECODE)
+      )
         this.setState({ redirectToTaskManagement: true });
     }
   }
@@ -284,7 +300,7 @@ class SkillBrowser extends React.Component {
   toggleTrendScannerComponent() {
     this.setState({
       TrendScannerComponentVisible: true,
-      isHangoutFormVisible: true
+      isHangoutFormVisible: true,
     });
   }
 
@@ -297,7 +313,7 @@ class SkillBrowser extends React.Component {
 
     const hangout = {
       name: `Hangout for roadmap "${CurrentTree.name}"`,
-      description: "Hangout with John, and answer questions together",
+      description: 'Hangout with John, and answer questions together',
       type: TaskTypes.DEEPDIVE,
       userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`,
       userID: this.props.userProfile._id,
@@ -325,9 +341,9 @@ class SkillBrowser extends React.Component {
               firstName: this.props.userProfile.firstName,
               lastName: this.props.userProfile.lastName,
             },
-            status: "accepted",
+            status: 'accepted',
             isCreator: true,
-          }
+          },
         ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
         ratings: [],
         time: date.getTime(),
@@ -335,18 +351,19 @@ class SkillBrowser extends React.Component {
       },
     };
 
-    if (hangout.userName != "" && hangout.name != "" && hangout.description != "") {
+    if (hangout.userName != '' && hangout.name != '' && hangout.description != '') {
       this.props.saveTask(hangout);
 
       if (this.props.userProfile && this.props.userProfile._id) {
-        this.props.userInteractionPush(this.props.userProfile._id,
+        this.props.userInteractionPush(
+          this.props.userProfile._id,
           UserInteractions.Types.ACTION_EXECUTE,
           UserInteractions.SubTypes.DEEPDIVE_START,
           {
             roadmapId: CurrentTree._id,
             skillId: this.state.skillInfo._id,
             deepdiveTime: date.getTime(),
-          }
+          },
         );
       }
     }
@@ -360,12 +377,13 @@ class SkillBrowser extends React.Component {
 
   handleClose() {
     if (this.props.userProfile && this.props.userProfile._id && this.state.skillInfo) {
-      this.props.userInteractionPush(this.props.userProfile._id,
+      this.props.userInteractionPush(
+        this.props.userProfile._id,
         UserInteractions.Types.PAGE_CLOSE,
         UserInteractions.SubTypes.SKILL_VIEW,
         {
           skillId: this.state.skillInfo._id,
-        }
+        },
       );
     }
 
@@ -381,7 +399,7 @@ class SkillBrowser extends React.Component {
 
     if (this.props.userProfile.illuminates && this.props.userProfile.illuminates.length > 0) {
       const CurrentTree = this.state.tree;
-      let illuminatessForCurrentTree = this.props.userProfile.illuminates.filter((illuminate) => {
+      let illuminatessForCurrentTree = this.props.userProfile.illuminates.filter(illuminate => {
         return illuminate.treeId == CurrentTree._id;
       });
 
@@ -390,7 +408,8 @@ class SkillBrowser extends React.Component {
           return a.dateJoined - b.dateJoined;
         });
 
-        LatestIlluminateDateAnswered = illuminatessForCurrentTree[illuminatessForCurrentTree.length - 1].dateJoined;
+        LatestIlluminateDateAnswered =
+          illuminatessForCurrentTree[illuminatessForCurrentTree.length - 1].dateJoined;
       }
     }
 
@@ -402,7 +421,7 @@ class SkillBrowser extends React.Component {
 
     if (this.props.userProfile.hangouts && this.props.userProfile.hangouts.length > 0) {
       const CurrentTree = this.state.tree;
-      let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter((hangout) => {
+      let hangoutsForCurrentTree = this.props.userProfile.hangouts.filter(hangout => {
         return hangout.treeId == CurrentTree._id;
       });
 
@@ -455,26 +474,25 @@ class SkillBrowser extends React.Component {
               firstName: this.props.userProfile.firstName,
               lastName: this.props.userProfile.lastName,
             },
-            status: "accepted",
+            status: 'accepted',
             isCreator: true,
-          }
+          },
         ],
         ratings: [],
         time: Date.now(),
         awardXP: RandomInt(30, 40),
-      }
+      },
     };
 
-    if (illuminate.userName != "" && illuminate.name != "" && illuminate.description != "") {
+    if (illuminate.userName != '' && illuminate.name != '' && illuminate.description != '') {
       this.props.saveTask(illuminate);
     }
-
   }
 
   goToDecode(e) {
     const CurrentTree = this.state.tree;
 
-    if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
+    if (!this.isActivityUnlocked(CurrentTree._id, 'decode')) {
       return;
     }
 
@@ -508,29 +526,30 @@ class SkillBrowser extends React.Component {
               firstName: this.props.userProfile.firstName,
               lastName: this.props.userProfile.lastName,
             },
-            status: "accepted",
+            status: 'accepted',
             isCreator: true,
-          }
+          },
         ],
         ratings: [],
         time: Date.now(),
         awardXP: RandomInt(30, 40),
-      }
+      },
     };
 
-    if (decode.userName != "" && decode.name != "" && decode.description != "") {
+    if (decode.userName != '' && decode.name != '' && decode.description != '') {
       this.props.saveTask(decode);
     }
-
   }
 
   flipSkillCard(e) {
-    e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hover")
+    e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle('hover');
   }
 
   nextRefresh(type) {
-    const timer = _.get(this, `state.${_.lowerCase(type)}Timer`)
-    const sgOffset = Moment().utcOffset("+08:00").startOf('day');
+    const timer = _.get(this, `state.${_.lowerCase(type)}Timer`);
+    const sgOffset = Moment()
+      .utcOffset('+08:00')
+      .startOf('day');
     let nextRefresh;
 
     switch (_.get(timer, 'refresh')) {
@@ -541,7 +560,7 @@ class SkillBrowser extends React.Component {
         nextRefresh = sgOffset.day(8);
         break;
       case 'Monthly':
-        nextRefresh = sgOffset.startOf('month').add(1, 'month')
+        nextRefresh = sgOffset.startOf('month').add(1, 'month');
         break;
     }
 
@@ -555,8 +574,7 @@ class SkillBrowser extends React.Component {
   getTaskUnlockLevelRequirement(type) {
     let level = 1;
 
-    if (this.props.taskActivityUnlockRequirements
-      && this.props.taskActivityUnlockRequirements[type]) {
+    if (this.props.taskActivityUnlockRequirements && this.props.taskActivityUnlockRequirements[type]) {
       level = this.props.taskActivityUnlockRequirements[type].minLevel;
     }
     return level;
@@ -565,17 +583,13 @@ class SkillBrowser extends React.Component {
   isActivityUnlocked(treeId, type) {
     let isUnlocked = true;
 
-    const progressionForProgressionTree = this.props.progressionTreeLevels.find((treeLevel) => {
+    const progressionForProgressionTree = this.props.progressionTreeLevels.find(treeLevel => {
       return treeLevel._id === treeId;
     });
 
     if (progressionForProgressionTree) {
       isUnlocked = progressionForProgressionTree.level >= this.getTaskUnlockLevelRequirement(type);
     }
-
-
-    
-    
 
     return isUnlocked;
   }
@@ -587,49 +601,55 @@ class SkillBrowser extends React.Component {
     const decodeTimerQuota = _.get(this, 'state.decodeTimer.quota', 0);
     const IsDecodeAvailable = !decodeTrackerCount || decodeTrackerCount < decodeTimerQuota;
 
-
-
-    if (!this.isActivityUnlocked(CurrentTree._id, "decode")) {
-
+    if (!this.isActivityUnlocked(CurrentTree._id, 'decode')) {
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-card-lock">
-              <div className="pskill-card-body">
-                <h4 className="pskill-card-title-lock">{this.getTaskUnlockLevelRequirement("decode")}</h4>
-                <h4 className="pskill-card-subtitle-lock">level</h4>
-                <h3 className="pskill-card-heading">DECODE</h3>
-                <p className="pskill-card-text">A single player activity with pre-defined
-                answers to validate your understanding of a topic</p>
-                <p className="pskill-duration" style={{ color: 'black' }}>Once a week</p>
-                <p className="pskill-reward" style={{ color: 'black' }}>Rewards : 5 SOQQ Token</p>
-              </div>
+            <div className="pskill-card-body">
+              <h4 className="pskill-card-title-lock">{this.getTaskUnlockLevelRequirement('decode')}</h4>
+              <h4 className="pskill-card-subtitle-lock">level</h4>
+              <h3 className="pskill-card-heading">DECODE</h3>
+              <p className="pskill-card-text">
+                A single player activity with pre-defined answers to validate your understanding of a topic
+              </p>
+              <p className="pskill-duration" style={{ color: 'black' }}>
+                Once a week
+              </p>
+              <p className="pskill-reward" style={{ color: 'black' }}>
+                Rewards : 5 SOQQ Token
+              </p>
             </div>
+          </div>
         </div>
       );
-    }
-    else if (!IsDecodeAvailable) {
+    } else if (!IsDecodeAvailable) {
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-timer">
             <div className="pskill-card-front pskill-timer-active">
               <div className="pskill-card-body">
-                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("decode")}</h4>
+                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement('decode')}</h4>
                 <h4 className="pskill-card-subtitle">level</h4>
                 <h3 className="pskill-card-heading">DECODE</h3>
-                <p className="pskill-card-text">A single player activity with pre-defined
-                answers to validate your understanding of a topic</p>
+                <p className="pskill-card-text">
+                  A single player activity with pre-defined answers to validate your understanding of a topic
+                </p>
               </div>
               <div className="pskill-footer">
                 <p className="pskill-duration">Once a week</p>
                 <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
               </div>
               <div className="pskill-btn-group">
-                <button disabled="disabled" className="pskill-btn pskill-start">START</button>
-                <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
+                <button disabled="disabled" className="pskill-btn pskill-start">
+                  START
+                </button>
+                <button disabled="disabled" className="pskill-btn pskill-view">
+                  VIEW
+                </button>
               </div>
             </div>
             <div id="loader-wrapper">
-              <div id="loader"></div>
+              <div id="loader" />
             </div>
             <div className="pskill-timer-text">
               <Countdown daysInHours={false} date={this.nextRefresh('decode')} />
@@ -644,19 +664,24 @@ class SkillBrowser extends React.Component {
         <div className="pskill-flipper">
           <div className="pskill-card-front">
             <div className="pskill-card-body">
-              <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("decode")}</h4>
+              <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement('decode')}</h4>
               <h4 className="pskill-card-subtitle">level</h4>
               <h3 className="pskill-card-heading">DECODE</h3>
-              <p className="pskill-card-text">A single player activity with pre-defined
-                answers to validate your understanding of a topic</p>
+              <p className="pskill-card-text">
+                A single player activity with pre-defined answers to validate your understanding of a topic
+              </p>
             </div>
             <div className="pskill-footer">
               <p className="pskill-duration">Once a week</p>
               <p className="pskill-reward">Rewards : 5 SOQQ Token</p>
             </div>
             <div className="pskill-btn-group">
-              <button className="pskill-btn pskill-start" onClick={(e) => this.goToDecode(e)}>START</button>
-              <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>VIEW</button>
+              <button className="pskill-btn pskill-start" onClick={e => this.goToDecode(e)}>
+                START
+              </button>
+              <button className="pskill-btn pskill-view" onClick={e => this.flipSkillCard(e)}>
+                VIEW
+              </button>
             </div>￼
           </div>
           <div className="pskill-card-back">
@@ -669,12 +694,17 @@ class SkillBrowser extends React.Component {
               </ul>
             </div>
             <div className="pskill-btn-group">
-              <button className="pskill-btn pskill-start" onClick={() => this.goToDecode()}>START</button>
-              <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>BACK</button>
+              <button className="pskill-btn pskill-start" onClick={() => this.goToDecode()}>
+                START
+              </button>
+              <button className="pskill-btn pskill-view" onClick={e => this.flipSkillCard(e)}>
+                BACK
+              </button>
             </div>
           </div>
         </div>
-      </div>);
+      </div>
+    );
   }
 
   render() {
@@ -686,7 +716,8 @@ class SkillBrowser extends React.Component {
               Loading...<Icon spin name="spinner" />
             </div>
           </div>
-        </div>);
+        </div>
+      );
     }
 
     const that = this;
@@ -709,50 +740,75 @@ class SkillBrowser extends React.Component {
 
     // const IsDeepdiveAvailable = !LatestHangoutDateJoined || this.state.timeNow - LatestHangoutDateJoined >= CurrentTree.deepDiveIntervalLimit;
     // const IsIlluminateAvailable = !LatestIlluminateDateAnswered || this.state.timeNow - LatestIlluminateDateAnswered >= CurrentTree.deepDiveIntervalLimit;
-    const DeepDiveButtonText = !IsDeepdiveAvailable ?
-      <span><span>DeepDive </span><Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /></span>
-      : <span>DeepDive</span>;
+    const DeepDiveButtonText = !IsDeepdiveAvailable ? (
+      <span>
+        <span>DeepDive </span>
+        <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} />
+      </span>
+    ) : (
+      <span>DeepDive</span>
+    );
 
-    const IlluminateButtonText = !IsIlluminateAvailable ?
-      <span><span>Illuminate </span><Countdown daysInHours={false} date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit} /></span>
-      : <span>Illuminate</span>;
+    const IlluminateButtonText = !IsIlluminateAvailable ? (
+      <span>
+        <span>Illuminate </span>
+        <Countdown
+          daysInHours={false}
+          date={LatestIlluminateDateAnswered + CurrentTree.deepDiveIntervalLimit}
+        />
+      </span>
+    ) : (
+      <span>Illuminate</span>
+    );
 
-    const IlluminateTimerText = !IsIlluminateAvailable ? <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /> : null
-    const DeepDiveTimerText = !IsDeepdiveAvailable ? <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} /> : null
+    const IlluminateTimerText = !IsIlluminateAvailable ? (
+      <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} />
+    ) : null;
+    const DeepDiveTimerText = !IsDeepdiveAvailable ? (
+      <Countdown daysInHours={false} date={LatestHangoutDateJoined + CurrentTree.deepDiveIntervalLimit} />
+    ) : null;
 
-    const DeepdiveButtonClass = IsDeepdiveAvailable ? "btn-md btn-outline-inverse deep-dive-button"
-      : "btn-md btn-outline-inverse deep-dive-button-disabled";
+    const DeepdiveButtonClass = IsDeepdiveAvailable
+      ? 'btn-md btn-outline-inverse deep-dive-button'
+      : 'btn-md btn-outline-inverse deep-dive-button-disabled';
 
-    const IlluminateButtonClass = IsIlluminateAvailable ? "btn-md btn-outline-inverse illuminate-button"
-      : "btn-md btn-outline-inverse illuminate-button-disabled";
+    const IlluminateButtonClass = IsIlluminateAvailable
+      ? 'btn-md btn-outline-inverse illuminate-button'
+      : 'btn-md btn-outline-inverse illuminate-button-disabled';
 
     if (redirectToTaskManagement) {
-      return <Redirect to='/taskManagement' />;
+      return <Redirect to="/taskManagement" />;
     }
 
     const DecodeFlipCard = this.RenderDecodeFlipcard();
 
-    let IlluminateFlipCard
-    let DeepDiveFlipCard
+    let IlluminateFlipCard;
+    let DeepDiveFlipCard;
     if (IsIlluminateAvailable) {
       IlluminateFlipCard = (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-flipper">
             <div className="pskill-card-front">
               <div className="pskill-card-body">
-                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("illuminate")}</h4>
+                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement('illuminate')}</h4>
                 <h4 className="pskill-card-subtitle">level</h4>
                 <h3 className="pskill-card-heading">ILLUMINATE</h3>
-                <p className="pskill-card-text">A single player activity for you to research and
-                      answer 3 questions posted by the system in 30 mins</p>
+                <p className="pskill-card-text">
+                  A single player activity for you to research and answer 3 questions posted by the system in
+                  30 mins
+                </p>
               </div>
               <div className="pskill-footer">
                 <p className="pskill-duration">Once a day</p>
                 <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
               </div>
               <div className="pskill-btn-group">
-                <button className="pskill-btn pskill-start" onClick={(e) => this.goToIlluminate(e)}>START</button>
-                <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>VIEW</button>
+                <button className="pskill-btn pskill-start" onClick={e => this.goToIlluminate(e)}>
+                  START
+                </button>
+                <button className="pskill-btn pskill-view" onClick={e => this.flipSkillCard(e)}>
+                  VIEW
+                </button>
               </div>
             </div>
             <div className="pskill-card-back">
@@ -765,43 +821,53 @@ class SkillBrowser extends React.Component {
                 </ul>
               </div>
               <div className="pskill-btn-group">
-                <button className="pskill-btn pskill-start" onClick={() => this.toggleIlluminateForm()}>START</button>
-                <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>BACK</button>
+                <button className="pskill-btn pskill-start" onClick={() => this.toggleIlluminateForm()}>
+                  START
+                </button>
+                <button className="pskill-btn pskill-view" onClick={e => this.flipSkillCard(e)}>
+                  BACK
+                </button>
               </div>
             </div>
           </div>
         </div>
-      )
+      );
     } else {
       IlluminateFlipCard = (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-timer">
             <div className="pskill-card-front pskill-timer-active">
               <div className="pskill-card-body">
-                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("illuminate")}</h4>
+                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement('illuminate')}</h4>
                 <h4 className="pskill-card-subtitle">level</h4>
                 <h3 className="pskill-card-heading">ILLUMINATE</h3>
-                <p className="pskill-card-text">A single player activity for you to research and
-                        answer 3 questions posted by the system in 30 mins</p>
+                <p className="pskill-card-text">
+                  A single player activity for you to research and answer 3 questions posted by the system in
+                  30 mins
+                </p>
               </div>
               <div className="pskill-footer">
                 <p className="pskill-duration">Once a day</p>
                 <p className="pskill-reward">Rewards : 1 SOQQ Token</p>
               </div>
               <div className="pskill-btn-group">
-                <button disabled="disabled" className="pskill-btn pskill-start">START</button>
-                <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
+                <button disabled="disabled" className="pskill-btn pskill-start">
+                  START
+                </button>
+                <button disabled="disabled" className="pskill-btn pskill-view">
+                  VIEW
+                </button>
               </div>
             </div>
             <div id="loader-wrapper">
-              <div id="loader"></div>
+              <div id="loader" />
             </div>
             <div className="pskill-timer-text">
               <Countdown daysInHours={false} date={this.nextRefresh('illuminate')} />
             </div>
           </div>
         </div>
-      )
+      );
     }
 
     if (IsDeepdiveAvailable) {
@@ -810,19 +876,25 @@ class SkillBrowser extends React.Component {
           <div className="pskill-flipper">
             <div className="pskill-card-front">
               <div className="pskill-card-body">
-                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("deepdive")}</h4>
+                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement('deepdive')}</h4>
                 <h4 className="pskill-card-subtitle">level</h4>
                 <h3 className="pskill-card-heading">DEEP DIVE</h3>
-                <p className="pskill-card-text">A 2 player activity for you and a friend to research and
-                        answer 10 questions posted by the system in 30 mins</p>
+                <p className="pskill-card-text">
+                  A 2 player activity for you and a friend to research and answer 10 questions posted by the
+                  system in 30 mins
+                </p>
               </div>
               <div className="pskill-footer">
                 <p className="pskill-duration">Once a week</p>
                 <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
               </div>
               <div className="pskill-btn-group">
-                <button className="pskill-btn pskill-start btn" onClick={() => this.toggleHangoutForm()}>START</button>
-                <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>VIEW</button>
+                <button className="pskill-btn pskill-start btn" onClick={() => this.toggleHangoutForm()}>
+                  START
+                </button>
+                <button className="pskill-btn pskill-view" onClick={e => this.flipSkillCard(e)}>
+                  VIEW
+                </button>
               </div>
             </div>
             <div className="pskill-card-back">
@@ -835,81 +907,108 @@ class SkillBrowser extends React.Component {
                 </ul>
               </div>
               <div className="pskill-btn-group">
-                <button className="pskill-btn pskill-start btn" onClick={() => this.toggleHangoutForm()}>START</button>
-                <button className="pskill-btn pskill-view" onClick={(e) => this.flipSkillCard(e)}>BACK</button>
+                <button className="pskill-btn pskill-start btn" onClick={() => this.toggleHangoutForm()}>
+                  START
+                </button>
+                <button className="pskill-btn pskill-view" onClick={e => this.flipSkillCard(e)}>
+                  BACK
+                </button>
               </div>
             </div>
           </div>
         </div>
-      )
+      );
     } else {
       DeepDiveFlipCard = (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
           <div className="pskill-timer">
             <div className="pskill-card-front pskill-timer-active">
               <div className="pskill-card-body">
-                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement("deepdive")}</h4>
+                <h4 className="pskill-card-title">{this.getTaskUnlockLevelRequirement('deepdive')}</h4>
                 <h4 className="pskill-card-subtitle">level</h4>
                 <h3 className="pskill-card-heading">DEEPDIVE</h3>
-                <p className="pskill-card-text">A 2 player activity for you and a friend to research and
-                              answer 10 questions posted by the system in 30 mins</p>
+                <p className="pskill-card-text">
+                  A 2 player activity for you and a friend to research and answer 10 questions posted by the
+                  system in 30 mins
+                </p>
               </div>
               <div className="pskill-footer">
                 <p className="pskill-duration">Once a week</p>
                 <p className="pskill-reward">Rewards : 10 SOQQ Token</p>
               </div>
               <div className="pskill-btn-group">
-                <button disabled="disabled" className="pskill-btn pskill-start">START</button>
-                <button disabled="disabled" className="pskill-btn pskill-view">VIEW</button>
+                <button disabled="disabled" className="pskill-btn pskill-start">
+                  START
+                </button>
+                <button disabled="disabled" className="pskill-btn pskill-view">
+                  VIEW
+                </button>
               </div>
             </div>
             <div id="loader-wrapper">
-              <div id="loader"></div>
+              <div id="loader" />
             </div>
             <div className="pskill-timer-text">
               <Countdown daysInHours={false} date={this.nextRefresh('deepdive')} />
             </div>
           </div>
         </div>
-      )
+      );
     }
 
     return (
       <div className="skill-break-down">
         <div className="skill-browser-header row">
-          {this.state.skillInfo.skill ? <h3 className="my-progress-heading pull-left">{this.state.skillInfo.skill}</h3> : <span>Skill Breakdown</span>}
-          <ActionLink className="skill-breakdown-control pull-right" id="button-arrow-back" onClick={() => this.handleClose()}>
-            <span className="glyphicon glyphicon-arrow-left"></span>
+          {this.state.skillInfo.skill ? (
+            <h3 className="my-progress-heading pull-left">{this.state.skillInfo.skill}</h3>
+          ) : (
+            <span>Skill Breakdown</span>
+          )}
+          <ActionLink
+            className="skill-breakdown-control pull-right"
+            id="button-arrow-back"
+            onClick={() => this.handleClose()}
+          >
+            <span className="glyphicon glyphicon-arrow-left" />
           </ActionLink>
         </div>
         <div className="skill-browser-desc row">
           <p>{this.state.skillInfo && this.state.skillInfo.description}</p>
         </div>
         <br />
-        <div className="related-subskills-header row">
-          RELATED SUB-SKILLS
-        </div>
+        <div className="related-subskills-header row">RELATED SUB-SKILLS</div>
         <div id="related-topics row">
-          {this.state.skillInfo && this.state.skillInfo.relatedTopics[0].split(',').map(function (skill, i) {
-            const skillNameTrimmed = skill.trim();
-            return (
-              <div className="row" key={i}>
-                <span className="fa fa-circle-o" style={{ color: 'red' }}></span>
-                <Link className="related-topic" key={i} to={{ pathname: `/skillBrowser`, state: that.props.location.state, search: `?name=${skillNameTrimmed}` }}>{skillNameTrimmed}</Link>
-              </div>
-            )
-          })}
+          {this.state.skillInfo &&
+            this.state.skillInfo.relatedTopics[0].split(',').map(function(skill, i) {
+              const skillNameTrimmed = skill.trim();
+              return (
+                <div className="row" key={i}>
+                  <span className="fa fa-circle-o" style={{ color: 'red' }} />
+                  <Link
+                    className="related-topic"
+                    key={i}
+                    to={{
+                      pathname: `/skillBrowser`,
+                      state: that.props.location.state,
+                      search: `?name=${skillNameTrimmed}`,
+                    }}
+                  >
+                    {skillNameTrimmed}
+                  </Link>
+                </div>
+              );
+            })}
         </div>
         <br />
         <div className="skill-browser-header row" style={{ borderBottom: '1px solid #868686' }}>
           <h3 className="my-progress-heading pull-left">MY PROGRESSION SKILL</h3>
         </div>
         <div className="my-progression-skillset row">
-          {(this.isTreeAdded() && IlluminateFlipCard)}
+          {this.isTreeAdded() && IlluminateFlipCard}
 
-          {(this.isTreeAdded() && DeepDiveFlipCard)}
+          {this.isTreeAdded() && DeepDiveFlipCard}
 
-          {(this.isTreeAdded() && DecodeFlipCard)}
+          {this.isTreeAdded() && DecodeFlipCard}
 
           {/*<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pskill-card-item">
                 <div className="pskill-card-lock">
@@ -931,64 +1030,84 @@ class SkillBrowser extends React.Component {
                 <h4 className="pskill-card-title-lock">9</h4>
                 <h4 className="pskill-card-subtitle-lock">level</h4>
                 <h3 className="pskill-card-heading">BRAINSTORM</h3>
-                <p className="pskill-card-text">Group player activity to brainstorm
-                                  solutions for a specific use case</p>
-                <p className="pskill-duration" style={{ color: 'black' }}>Once a week</p>
-                <p className="pskill-reward" style={{ color: 'black' }}>Rewards : 10 SOQQ Token</p>
+                <p className="pskill-card-text">
+                  Group player activity to brainstorm solutions for a specific use case
+                </p>
+                <p className="pskill-duration" style={{ color: 'black' }}>
+                  Once a week
+                </p>
+                <p className="pskill-reward" style={{ color: 'black' }}>
+                  Rewards : 10 SOQQ Token
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="row">
-          <Modal contentLabel="Illuminate" style={{ width: '200px' }} isOpen={this.state.isIlluminateFormVisible}
-            onRequestClose={() => this.onCloseModal()} >
-            <ActionLink href='#' className="glyphicon glyphicon-remove modal-close-button" onClick={() => this.onCloseModal()}></ActionLink>
+          <Modal
+            contentLabel="Illuminate"
+            style={{ width: '200px' }}
+            isOpen={this.state.isIlluminateFormVisible}
+            onRequestClose={() => this.onCloseModal()}
+          >
+            <ActionLink
+              href="#"
+              className="glyphicon glyphicon-remove modal-close-button"
+              onClick={() => this.onCloseModal()}
+            />
 
             <div className="modal-popup">
               <br />
               <div className="row text-center">
-                <i className="fa fa-3x fa-check-circle" style={{ color: 'green' }}></i>
+                <i className="fa fa-3x fa-check-circle" style={{ color: 'green' }} />
                 <br />
               </div>
               <p className="text-center">Your Task has been started (flexible)</p>
               <br />
               <div className="row text-center">
-                <Countdown daysInHours={false}
+                <Countdown
+                  daysInHours={false}
                   date={Date.now() + 3000}
-                  onComplete={() => this.redirectToTaskMngt()} />
+                  onComplete={() => this.redirectToTaskMngt()}
+                />
               </div>
               {/* <div className="row text-center">
                         <button onClick={(e)=> this.goToIlluminate(e) }
                         className="btn-md btn-outline-inverse illuminate-go-btn">Go To Task Manager</button>
                     </div> */}
             </div>
-
           </Modal>
 
           <div className="row">
-            <HangoutSubmitForm isHangoutFormVisible={this.state.isHangoutFormVisible} skillInfo={this.state.skillInfo}
-              onHandleStartHangout={(date) => this.handleStartHangout(date)} onTimeChange={(e) => handleTimeChange(e)}
-              toogleTrenScan={() => this.toggleTrendScannerComponent()} handleToggle={() => this.handleToggle()}
-              onCloseModal={() => this.onCloseModal()} />
+            <HangoutSubmitForm
+              isHangoutFormVisible={this.state.isHangoutFormVisible}
+              skillInfo={this.state.skillInfo}
+              onHandleStartHangout={date => this.handleStartHangout(date)}
+              onTimeChange={e => handleTimeChange(e)}
+              toogleTrenScan={() => this.toggleTrendScannerComponent()}
+              handleToggle={() => this.handleToggle()}
+              onCloseModal={() => this.onCloseModal()}
+            />
           </div>
 
-          {this.state.TrendScannerComponentVisible && <div className="row">
-            <div className="col-lg-12">
-              <div id="skill-breakdown-trend-scanner">
-                <TrendScannerComponent onHandleSelectCategory={(e) => this.handleSelectCategory(e)}
-                  resultsSelectedCategory={this.props.resultsSelectedCategory}
-                  isFetchInProgress={this.props.isFetchInProgress}
-                  searchResults={this.props.searchResults} />
+          {this.state.TrendScannerComponentVisible && (
+            <div className="row">
+              <div className="col-lg-12">
+                <div id="skill-breakdown-trend-scanner">
+                  <TrendScannerComponent
+                    onHandleSelectCategory={e => this.handleSelectCategory(e)}
+                    resultsSelectedCategory={this.props.resultsSelectedCategory}
+                    isFetchInProgress={this.props.isFetchInProgress}
+                    searchResults={this.props.searchResults}
+                  />
+                </div>
               </div>
             </div>
-          </div>}
-
-
+          )}
         </div>
-
       </div>
-    )
+    );
   }
 }
 
@@ -1007,7 +1126,8 @@ SkillBrowser.propTypes = {
 
 const mapStateToProps = state => ({
   resultsSelectedCategory: state.resultsSelectedCategory,
-  searchResults: state.searchResults, saveTask,
+  searchResults: state.searchResults,
+  saveTask,
   isFetchInProgress: state.isFetchInProgress,
   isTaskSaveInProgress: state.tasks.isSaveInProgress,
   lastSavedTask: state.lastSavedTask,
@@ -1023,4 +1143,7 @@ const mapDispatchToProps = dispatch => ({
   saveTask: bindActionCreators(saveTask, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SkillBrowser);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SkillBrowser);

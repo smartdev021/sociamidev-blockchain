@@ -14,11 +14,13 @@ if (fs.existsSync(configFile)) {
 let app = express();
 let compiler = webpack(config);
 
-let port = env == "Staging"? 8080: 3000;
+let port = env == 'Staging' ? 8080 : 3000;
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath
-}));
+app.use(
+  require('webpack-dev-middleware')(compiler, {
+    publicPath: config.output.publicPath,
+  }),
+);
 
 app.use(require('webpack-hot-middleware')(compiler));
 
@@ -31,5 +33,5 @@ app.listen(port, function(err) {
     return console.error(err);
   }
 
-  console.log('Listening at http://localhost:'+port+'/');
+  console.log('Listening at http://localhost:' + port + '/');
 });

@@ -105,10 +105,7 @@ class PopupNewProject extends React.Component {
       this.handleNewMilestoneAdded();
     }
 
-    if (
-      prevProps.isTasksUpdateInProgress &&
-      !this.props.isTasksUpdateInProgress
-    ) {
+    if (prevProps.isTasksUpdateInProgress && !this.props.isTasksUpdateInProgress) {
       this.updateMilestones();
     } else {
       if (prevProps.isTaskSaveInProgress && !this.props.isTaskSaveInProgress) {
@@ -122,9 +119,7 @@ class PopupNewProject extends React.Component {
 
     let lastSavedTask = this.props.lastSavedTask;
 
-    let foundIndex = projectCopy.milestones.findIndex(function(
-      currentMilestone
-    ) {
+    let foundIndex = projectCopy.milestones.findIndex(function(currentMilestone) {
       return currentMilestone._id == lastSavedTask._id;
     });
 
@@ -139,16 +134,11 @@ class PopupNewProject extends React.Component {
   handleMilestoneDeleted() {
     let projectCopy = Object.assign({}, this.state.project);
 
-    const milestonesToRemove = arrayDifference(
-      this.state.project.milestones,
-      this.props.tasks
-    );
+    const milestonesToRemove = arrayDifference(this.state.project.milestones, this.props.tasks);
 
     if (milestonesToRemove && milestonesToRemove.length > 0) {
       for (let i = 0; i < milestonesToRemove.length; ++i) {
-        let foundIndex = projectCopy.milestones.findIndex(function(
-          currentMilestone
-        ) {
+        let foundIndex = projectCopy.milestones.findIndex(function(currentMilestone) {
           return currentMilestone._id == milestonesToRemove[i]._id;
         });
 
@@ -247,9 +237,7 @@ class PopupNewProject extends React.Component {
 
     const milestone = Object.assign({}, this.state.milestoneTemp, {
       type: TaskTypes.PROJECT_MILESTONE,
-      userName: `${this.props.userProfile.firstName} ${
-        this.props.userProfile.lastName
-      }`,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`,
       userID: this.props.userProfile._id,
       isHidden: 1,
       creator: {
@@ -259,11 +247,7 @@ class PopupNewProject extends React.Component {
       },
     });
 
-    if (
-      milestone.userName != '' &&
-      milestone.name != '' &&
-      milestone.description != ''
-    ) {
+    if (milestone.userName != '' && milestone.name != '' && milestone.description != '') {
       this.props.saveTask(milestone);
     }
   }
@@ -285,8 +269,7 @@ class PopupNewProject extends React.Component {
 
     if (this.state.project.milestones.length > milestoneIndex) {
       const milestoneId = this.state.project.milestones[milestoneIndex]._id;
-      const isPublished = !this.state.project.milestones[milestoneIndex]
-        .isHidden;
+      const isPublished = !this.state.project.milestones[milestoneIndex].isHidden;
 
       if (isPublished) {
         this.taskUnpublishWithConfirmation(milestoneId);
@@ -304,14 +287,8 @@ class PopupNewProject extends React.Component {
 
     Axios.get(url)
       .then(function(response) {
-        if (
-          response.data.assignees &&
-          response.data.assignees[0] &&
-          response.data.assignees[0]._id
-        ) {
-          const Assignee = `${response.data.assignees[0].firstName} ${
-            response.data.assignees[0].lastName
-          }`;
+        if (response.data.assignees && response.data.assignees[0] && response.data.assignees[0]._id) {
+          const Assignee = `${response.data.assignees[0].firstName} ${response.data.assignees[0].lastName}`;
 
           that.setState({
             assigneeNameToConfirm: Assignee,
@@ -334,9 +311,7 @@ class PopupNewProject extends React.Component {
       <PopupConfirmWithdraw
         modalIsOpen={this.state.confirmWithdrawPopupOpen}
         assigneeName={this.state.assigneeNameToConfirm}
-        onConfirmationPopupClose={confirm =>
-          this.handleConfirmationWithdrawPopupClose(confirm)
-        }
+        onConfirmationPopupClose={confirm => this.handleConfirmationWithdrawPopupClose(confirm)}
       />
     );
   }
@@ -373,21 +348,18 @@ class PopupNewProject extends React.Component {
         isOpen={this.props.modalIsOpen}
         onRequestClose={() => this.handleClose()}
         contentLabel={'>Add a new Project'}
-        parentSelector={getPopupParentElement}>
+        parentSelector={getPopupParentElement}
+      >
         <NewProjectForm
           milestoneTemp={this.state.milestoneTemp}
           isTaskSaveInProgress={this.props.isTaskSaveInProgress}
           isTasksUpdateInProgress={this.props.isTasksUpdateInProgress}
-          isWithdrawConfirmationInProgress={
-            this.state.isWithdrawConfirmationInProgress
-          }
+          isWithdrawConfirmationInProgress={this.state.isWithdrawConfirmationInProgress}
           handleChangeProject={e => this.handleChangeProject(e)}
           handleChangeMilestone={e => this.handleChangeMilestone(e)}
           handleMilestoneAdd={e => this.handleMilestoneAdd(e)}
           handleMilestoneDelete={e => this.handleMilestoneDelete(e)}
-          toggleMilestoneAddToTaskManager={e =>
-            this.toggleMilestoneAddToTaskManager(e)
-          }
+          toggleMilestoneAddToTaskManager={e => this.toggleMilestoneAddToTaskManager(e)}
           handleCloseAndSave={() => this.handleCloseAndSave()}
           roadmapsDetailed={this.props.roadmapsDetailed}
           project={this.state.project}

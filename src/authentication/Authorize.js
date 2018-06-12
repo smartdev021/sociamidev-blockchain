@@ -3,10 +3,10 @@
 */
 
 import React, { Component } from 'react';
-import { Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import PropTypes from 'prop-types';
 import { instanceOf } from 'prop-types';
@@ -20,24 +20,22 @@ class Authorize extends React.Component {
     this.redirectRequired = false;
   }
 
-  componentWillMount () {
-    
+  componentWillMount() {
     const search = this.props.location.search;
     const params = new URLSearchParams(search);
 
     let query = {
-        linkedInID: '',
-        facebookID: ''
+      linkedInID: '',
+      facebookID: '',
     };
 
     query.linkedInID = params.get('linkedInID');
     query.facebookID = params.get('facebookID');
 
     if (query.linkedInID) {
-        this.props.onAuthorizeLinkedIn(query.linkedInID);
-    }
-    else if(query.facebookID) {
-        this.props.onAuthorizeFaceBook(query.facebookID);
+      this.props.onAuthorizeLinkedIn(query.linkedInID);
+    } else if (query.facebookID) {
+      this.props.onAuthorizeFaceBook(query.facebookID);
     }
 
     this.redirectRequired = true;
@@ -46,32 +44,28 @@ class Authorize extends React.Component {
   render() {
     let RedirectTo = null;
 
-    
-
     if (!this.props.isAuthorized) {
-        return null;
+      return null;
     }
-    
+
     if (this.redirectRequired) {
-        this.redirectRequired = false;
+      this.redirectRequired = false;
 
-        const { cookies } = this.props;
+      const { cookies } = this.props;
 
-        const lastLocationSaved = cookies.get('lastLocation');
+      const lastLocationSaved = cookies.get('lastLocation');
 
-        if (lastLocationSaved) {
+      if (lastLocationSaved) {
+        let redirectLocation = lastLocationSaved.pathname;
 
-            let redirectLocation = lastLocationSaved.pathname;
-
-            if (lastLocationSaved.search) {
-                redirectLocation += lastLocationSaved.search;
-            }
-
-            RedirectTo = <Redirect to={redirectLocation} push />;
+        if (lastLocationSaved.search) {
+          redirectLocation += lastLocationSaved.search;
         }
-        else {
-            RedirectTo = <Redirect to="/" push />;
-        }
+
+        RedirectTo = <Redirect to={redirectLocation} push />;
+      } else {
+        RedirectTo = <Redirect to="/" push />;
+      }
     }
 
     //force redirect to /progressionTrees
@@ -80,20 +74,21 @@ class Authorize extends React.Component {
 
     return RedirectTo;
   }
-
 }
 
 Authorize.propTypes = {
-    cookies: instanceOf(Cookies).isRequired,
-    isAuthorized: PropTypes.bool.isRequired,
-}
+  cookies: instanceOf(Cookies).isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+};
 
-const mapDispatchToProps = dispatch => ({
-});
-  
+const mapDispatchToProps = dispatch => ({});
+
 const mapStateToProps = state => ({
-    isAuthorized: state.userProfile.isAuthorized,
+  isAuthorized: state.userProfile.isAuthorized,
 });
-  
+
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(withCookies(Authorize));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withCookies(Authorize));

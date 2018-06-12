@@ -9,13 +9,9 @@ class ActionLink extends React.Component {
     const className = this.props.className ? this.props.className : '';
     const styleTag = this.props.style ? this.props.style : {};
     const tagId = this.props.id ? this.props.id : '';
-    const tagAriaControls = this.props['aria-controls']
-      ? this.props['aria-controls']
-      : '';
+    const tagAriaControls = this.props['aria-controls'] ? this.props['aria-controls'] : '';
     const tagRole = this.props.role ? this.props.role : '';
-    const tagDataToggle = this.props['data-toggle']
-      ? this.props['data-toggle']
-      : '';
+    const tagDataToggle = this.props['data-toggle'] ? this.props['data-toggle'] : '';
     const tagHref = this.props.href ? this.props.href : '';
 
     return <a {...this.props}>{this.props.children}</a>;

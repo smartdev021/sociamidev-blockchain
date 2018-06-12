@@ -9,11 +9,9 @@ class ChatMessage extends React.Component {
     const timeStampClass = this.props.fromMe ? 'timeStampMe' : 'timeStampYou';
     return (
       <div>
-        <div className={`bubble ${fromMe}`}>
-          { ReactHtmlParser(this.props.message)}
-        </div>
+        <div className={`bubble ${fromMe}`}>{ReactHtmlParser(this.props.message)}</div>
         <div className={`${timeStampClass}`}>
-        <TimeAgo date={this.props.time} minPeriod={60}/>
+          <TimeAgo date={this.props.time} minPeriod={60} />
         </div>
       </div>
     );
@@ -23,7 +21,7 @@ class ChatMessage extends React.Component {
 ChatMessage.defaultProps = {
   message: '',
   username: '',
-  fromMe: false
+  fromMe: false,
 };
 
 export default ChatMessage;
