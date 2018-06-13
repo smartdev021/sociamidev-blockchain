@@ -66,10 +66,6 @@ html.vertical-hidden {
     .landing-page-wrapper main {
         padding: 52px 0 9px;
     }
-    .landing-page-wrapper{
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
-    }
 }
 
 .landing-page-wrapper .rectangle {
