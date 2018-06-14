@@ -4,7 +4,7 @@ let express = require('express');
 let fs = require('fs');
 let config = require('./webpack.local');
 
-const env = process.env.NODE_ENV;
+const env = process.env.SOQQLE_ENV || 'development';
 
 const configFile = `./webpack.${env}.js`;
 if (fs.existsSync(configFile)) {
@@ -14,7 +14,7 @@ if (fs.existsSync(configFile)) {
 let app = express();
 let compiler = webpack(config);
 
-let port = env == 'Staging' ? 8080 : 3000;
+let port = env == 'staging' ? 8080 : 3000;
 
 app.use(
   require('webpack-dev-middleware')(compiler, {

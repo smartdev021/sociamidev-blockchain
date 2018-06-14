@@ -1,11 +1,11 @@
 const merge = require('webpack-merge');
-const common = require('./webpack.common');
+const development = require('./webpack.development');
 const Webpack = require('webpack');
 
-module.exports = merge(common, {
+module.exports = merge(development, {
   plugins: [
     new Webpack.EnvironmentPlugin({
-      dev_env: 'local',
+      SOQQLE_ENV: 'local',
     }),
   ],
 });
