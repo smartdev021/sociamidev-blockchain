@@ -19,6 +19,7 @@ import {
   UPDATE_USER_PROFILE_COMPLETE,
   UPDATE_USER_PROFILE_INITIATE,
   USER_LOG_OUT,
+  USER_SIGN_UP,
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main';
@@ -333,3 +334,13 @@ export function setUserProfileCharacter(profileId, characterData) {
       });
   };
 }
+
+export const signUp = data => {
+  return {
+    type: USER_SIGN_UP,
+    profile: {
+      ...data.profile,
+      character: { characterIndex: 1, traitsIndex: 'executives' },
+    },
+  };
+};

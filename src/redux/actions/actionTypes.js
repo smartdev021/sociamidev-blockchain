@@ -115,8 +115,6 @@ export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = 'fetch_list_character_traits
 export const UPDATE_USER_PROFILE_INITIATE = 'update_user_profile_initiate';
 export const UPDATE_USER_PROFILE_COMPLETE = 'update_user_profile_complete';
 
-export const USER_LOG_OUT = 'user_log_out';
-
 export const USER_ACCOUNTING_FETCH_INITIATE = 'user_accounting_fetch_initiate';
 export const USER_ACCOUNTING_FETCH_COMPLETE = 'user_accounting_fetch_complete';
 
@@ -135,3 +133,9 @@ export const PREPARE_TIMERS_IN_PROGRESS = 'prepare_timers_in_progress';
 export const PREPARE_TIMERS_COMPLETE = 'prepare_timers_complete';
 export const SHOW_ALL_TIMERS = 'show_all_timers';
 export const SHOW_TOP_TIMERS = 'show_top_timers';
+
+// User password Sign-up and sign-in
+export const USER_SIGN_UP = 'user_sign_up';
+export const USER_LOGIN = 'user_login'; // TODO not used
+
+export const USER_LOG_OUT = 'user_log_out';
