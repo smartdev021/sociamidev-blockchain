@@ -3,7 +3,6 @@ const Webpack = require('webpack');
 
 module.exports = {
   entry: {
-    hotmiddleware: 'webpack-hot-middleware/client',
     babelpolyfill: 'babel-polyfill',
     main: './src/index.js',
     vendor: [

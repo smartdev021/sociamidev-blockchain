@@ -4,19 +4,12 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: ['webpack-hot-middleware/client', 'babel-polyfill', './src/index'],
+  entry: ['babel-polyfill', './src/index'],
   output: {
     path: Path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   plugins: [
-    new Webpack.HotModuleReplacementPlugin(),
-    new Webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      },
-      sourceMap: true,
-    }),
     new HtmlWebpackPlugin({
       template: Path.join(__dirname, 'src/index.ejs'),
       title: 'Soqqle',
