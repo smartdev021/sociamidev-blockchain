@@ -76,8 +76,6 @@ export function userProfile(state = userProfileInitialState, action) {
       };
     case UPDATE_USER_PROFILE_INITIATE:
       return { ...state, isLoading: true };
-    case USER_SIGN_UP:
-      return { ...state, isAuthorized: true, isLoading: false, profile: action.profile };
     case UPDATE_USER_PROFILE_COMPLETE:
       return { ...state, isAuthorized: true, isLoading: false, profile: action.profile };
     case FETCH_USER_PROFILE_TASKS_INITIATE: {

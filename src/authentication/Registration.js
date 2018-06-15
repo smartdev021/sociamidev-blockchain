@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import { connect, mapStateToProps } from 'react-redux';
-import { signUp } from '../redux/actions/authorization';
+import { signUp, closeSignUpForm } from '../redux/actions/authorization';
 
 /*
   It's just simple mock form to test out local password authorization
@@ -33,13 +33,14 @@ class Registration extends Component {
       password: this.state.password,
     })
       .then(response => {
+        this.props.closeSignUpForm();
         this.props.signUp(response.data);
       })
       .catch(err => {
         if (err.response.status === 403) {
           this.setState({ message: 'Email address already registred. Password incorrect.' });
         } else {
-          this.setState({ message: 'Unknown error occurs' });
+          this.setState({ message: 'Unknown server error occurs' });
         }
       });
   }
@@ -105,5 +106,5 @@ const styles = {
 
 export default connect(
   null,
-  { signUp },
+  { signUp, closeSignUpForm },
 )(Registration);

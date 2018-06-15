@@ -258,14 +258,18 @@ export function update_userProfile(userIdFacebook, userIdLinkedIn) {
   };
 }
 
-export function fetchUserProfile(userIdFacebook, userIdLinkedIn) {
+export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
   return function(dispatch) {
     //async action entry point
     dispatch(fetchUserProfileInitiate());
 
-    const url = userIdFacebook
+    let url = userIdFacebook
       ? `${ConfigMain.getBackendURL()}/fetchUserProfile?faceBookID=${userIdFacebook}`
       : `${ConfigMain.getBackendURL()}/fetchUserProfile?linkedInID=${userIdLinkedIn}`;
+
+    if (id) {
+      url = `${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${id}`;
+    }
 
     return Axios.get(url)
       .then(function(response) {
@@ -336,11 +340,11 @@ export function setUserProfileCharacter(profileId, characterData) {
 }
 
 export const signUp = data => {
-  return {
-    type: USER_SIGN_UP,
-    profile: {
-      ...data.profile,
-      character: { characterIndex: 1, traitsIndex: 'executives' },
-    },
+  return dispatch => {
+    dispatch({
+      type: USER_SIGN_UP,
+      payload: data._id,
+    });
+    return dispatch(fetchUserProfile(null, null, data._id));
   };
 };
