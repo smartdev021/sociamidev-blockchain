@@ -329,17 +329,17 @@ class App extends Component {
 
   resetAuthentication() {
     let copy = Object.assign({}, this.state, {
-      linkedInID: '',
-      faceBookID: '',
-      profile: null,
+      linkedInID: null,
+      faceBookID: null,
+      userID: null,
     });
     this.setState(copy);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
 
   logout() {
+    this.resetAuthentication();
     this.props.logout(this.state.userID);
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID || this.state.userID) {
