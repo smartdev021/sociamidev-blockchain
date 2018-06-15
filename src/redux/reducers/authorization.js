@@ -17,6 +17,7 @@ import {
   PROGRESSION_TREE_STOP_INITIATE,
   PROGRESSION_TREE_STOP_COMPLETE,
   USER_LOG_OUT,
+  USER_SIGN_UP,
 } from '~/src/redux/actions/actionTypes';
 
 export function isOpenProfilePending(state = false, action) {
