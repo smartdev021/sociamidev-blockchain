@@ -110,7 +110,7 @@ class ConnectionsView extends React.Component {
       },
     })
       .then(function(response) {
-        if (response.data.length) {
+        if (response.data.length) {          
           var tempAllFriendList = self.state.allFriendList;
           tempAllFriendList = tempAllFriendList.concat(response.data);
           var tempSoqqlersLoaded = self.state.soqqlersLoaded;
@@ -196,9 +196,17 @@ class ConnectionsView extends React.Component {
       uid2: userid,
       reqStatus: 2,
     })
-      .then(function(response) {
-        if (response.data === 'success') {
-          self.getAllFriends();
+      .then(function(response) {        
+        if (response.data === 'success') {                  
+          var tempAllFriendList = self.state.allFriendList;          
+          var removeIndex = tempAllFriendList.findIndex(function(user){            
+            return user.id === userid
+          })          
+          if(removeIndex !== -1){
+            tempAllFriendList.splice(removeIndex, 1);
+            copy = Object.assign({}, self.state, { allFriendList: tempAllFriendList });
+            self.setState(copy);
+          }
           self.getAllConnections();
         }
         copy = Object.assign({}, self.state, { loader: 0 });
