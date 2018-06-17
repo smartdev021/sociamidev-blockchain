@@ -583,8 +583,63 @@ html.vertical-hidden {
     transform: skew(8deg);
 }
 
+/*Subscribe email input*/
+.landing-page-wrapper .header .landing-email-input-container {
+    height: 33px;
+    display: inline-block;
+    transform: skew(8deg);
+    border: 2px solid #2c82df;
+    width: 200px;
+}
+
+.landing-page-wrapper .header .landing-email-input-container input[type="email"] {
+    height: 100%;
+    outline: 0;
+    border: none;
+    box-shadow:none;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    transform: skew(29deg);
+    padding: 0 10px 0 10px;
+}
+
+.landing-page-wrapper .header .landing-email-input-container input[type=email]:focus{
+    border: none;
+    outline: 0;
+    box-shadow:none;
+  }
+
+.landing-page-wrapper .header button[type="submit"] {
+    margin-left: -10px;
+    height: 33px;
+    width: 50px;
+    background: #2c82df;
+    color: #fff;
+    font-family: "MyriadPro Semibold";
+    border: 0;
+    transform: skew(8deg);
+    -webkit-appearance: none;
+}
+
+.landing-page-wrapper .header .landing-email-input-container input[type="email"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 1; /* Firefox */
+}
+
+.landing-page-wrapper .header .landing-email-input-container input[type="email"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #fff;
+}
+
+.landing-page-wrapper .header .landing-email-input-container input[type="email"]::-ms-input-placeholder { /* Microsoft Edge */
+    color: #fff;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .header button {
+        display: none;
+    }
+
+    .landing-page-wrapper .header .landing-email-input-container {
         display: none;
     }
 }
@@ -594,6 +649,10 @@ html.vertical-hidden {
     margin-left: 33px;
     font-family: "MyriadPro Semibold";
     border: 2px solid #2c82df;
+}
+
+.landing-page-wrapper .header button:hover.subscribe-button {
+    background: #2c82df;
 }
 
 .landing-page-wrapper .header button.sign-up-button {

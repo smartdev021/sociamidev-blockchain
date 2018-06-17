@@ -15,13 +15,31 @@ import LandingPageContent from "~/src/theme/components/landingPage/LandingPageCo
 import Houses from "~/src/theme/components/houses/Houses";
 import '~/src/theme/css/landingPage.css';
 
+const EmailInput = ({onEmailInputHide, onEmailInputSubmit, onEmailInput, email}) => {
+  return (
+    <span>
+      <span className="landing-email-input-container" key={"landing-email-input-container"}>
+        <input value={email} 
+        onChange={onEmailInput}
+        onKeyPress={(event) => {
+          if (event.key === 'Enter') {
+            onEmailInputSubmit(event)
+          }
+        }}
+        type="email" placeholder="email@example.com" autoFocus={true} />
+      </span>,
+    <button key={"landing-email-input-container_button"} type="submit" onClick={onEmailInputSubmit}><p>Send</p></button>
+    </span>
+  )
+}
+
 const Footer = () => {
   return (
     <footer className="footer">
       <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"/>
+        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" />
       <h3>Subscribe to our Newsletter</h3>
-      <div><input type="email" className="mail" value="Mail"/></div>
+      <div><input type="email" className="mail" value="Mail" /></div>
       <button type="button" className="subscribe"><p>Subscribe</p></button>
       <ul className="info-list">
         <li>About</li>
@@ -29,7 +47,7 @@ const Footer = () => {
         <li>Contact</li>
         <li>Press</li>
       </ul>
-      <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br/>
+      <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
         All trademarks referenced herein are the properties of their respective owners.</h4>
       <ul className="privacy-list">
         <li>Privacy</li>
@@ -39,7 +57,7 @@ const Footer = () => {
   );
 };
 
-const Header = ({ openMenu }) => {
+const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email}) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -56,9 +74,11 @@ const Header = ({ openMenu }) => {
       <button type="button">
         <p>Markets</p>
       </button>
-      <button type="button" className="subscribe-button">
+      {!isEmailInputVisible ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
         <p>Subscribe</p>
       </button>
+        :
+        <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email}/>}
       <button type="button" className="sign-up-button">
         <p>Enterprise sign up</p>
       </button>
@@ -77,7 +97,7 @@ const Logo = () => {
   );
 };
 
-const MobileMenu = ({ isOpen, closeMenu }) => {
+const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
   const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
   return (
@@ -102,7 +122,7 @@ const MobileMenu = ({ isOpen, closeMenu }) => {
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {isOpen: false};
+    this.state = { isOpen: false, isEmailInputVisible: false, email: ""};
 
     this.toggle = this.toggle.bind(this);
   }
@@ -111,6 +131,21 @@ class LandingPage extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+
+  handleEmailInputShow(show) {
+    this.setState({ isEmailInputVisible: show });
+  }
+
+  handleEmailInputSubmit(event) {
+    event.preventDefault();
+    console.log('handleEmailInputSubmit');
+    this.setState({email: "", isEmailInputVisible: false});
+  }
+
+  handleEmailInput(event) {
+    console.log('handleEmailInput');
+    this.setState({email: event.target.value});
   }
 
   renderSignUpForm() {
@@ -129,10 +164,10 @@ class LandingPage extends Component {
   renderRoutes() {
     return (
       <Switch>
-        <Route exact path='/' render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
-        <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
-        <Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props}/>}/>
-        <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
+        <Route exact path='/' render={routeProps => <LandingPageContent {...routeProps}{...this.props} />} />
+        <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props} />} />
+        <Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props} />} />
+        <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props} />} />
       </Switch>
     );
   }
@@ -142,12 +177,24 @@ class LandingPage extends Component {
       <div className="landing-page-wrapper">
         {this.renderSignUpForm()}
         <header>
-          <Logo/>
-          <Header openMenu={this.toggle}/>
+          <Logo />
+          <Header openMenu={this.toggle}
+            onEmailInputShow={() => this.handleEmailInputShow(true)}
+            onEmailInputHide={() => this.handleEmailInputShow(false)}
+            onEmailInputSubmit={(event) => {this.handleEmailInputSubmit(event)}}
+            onEmailInput={(event) => {this.handleEmailInput(event)}}
+            isEmailInputVisible={this.state.isEmailInputVisible}
+            email={this.state.email}/>
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <Footer/>
-        <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle}/>
+        <Footer />
+        <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle} 
+            onEmailInputShow={() => this.handleEmailInputShow(true)}
+            onEmailInputHide={() => this.handleEmailInputShow(false)}
+            onEmailInputSubmit={(event) => {this.handleEmailInputSubmit(event)}}
+            onEmailInput={(event) => {this.handleEmailInput(event)}}
+            isEmailInputVisible={this.state.isEmailInputVisible}
+            email={this.state.email}/>
       </div>
     );
   }
