@@ -4,43 +4,30 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    "babel-polyfill",
-    './src/index'
-  ],
+  entry: ['babel-polyfill', './src/index'],
   output: {
     path: Path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   plugins: [
-    new Webpack.HotModuleReplacementPlugin(),
-    new Webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-      , sourceMap: true
-    })
-    ,
     new HtmlWebpackPlugin({
       template: Path.join(__dirname, 'src/index.ejs'),
       title: 'Soqqle',
       inject: 'body',
-    })
+    }),
   ],
   module: {
-    loaders: 
-    [
-      { test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader'], include: Path.join(__dirname, 'src')},
-      { test: /\.css$/, loader: "style-loader!css-loader" },
-      { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: 'url-loader'},
+    loaders: [
+      { test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader'], include: Path.join(__dirname, 'src') },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: 'url-loader' },
       //{ test: /\.(png|jpg)$/, loader: 'url-loader' },
-      { test: /\.(jpg|png|svg)$/, loader: 'file-loader', options: {name: '[path][name].[hash].[ext]', }, },
-    ]
+      { test: /\.(jpg|png|svg)$/, loader: 'file-loader', options: { name: '[path][name].[hash].[ext]' } },
+    ],
   },
   resolve: {
     alias: {
-      ['~']: Path.resolve(__dirname)
-    }
+      ['~']: Path.resolve(__dirname),
+    },
   },
 };

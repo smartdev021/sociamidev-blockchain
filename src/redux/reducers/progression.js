@@ -13,12 +13,12 @@ export function progression(state = initialState, action) {
       let activityUnlockRequirements = {};
 
       if (action.reqList && action.reqList.length > 0) {
-        action.reqList.forEach((requirement) => {
+        action.reqList.forEach(requirement => {
           activityUnlockRequirements[requirement.type] = requirement.requirements;
         });
       }
 
-      return {...state, taskActivityUnlockRequirements: activityUnlockRequirements, isLoading: false};
+      return { ...state, taskActivityUnlockRequirements: activityUnlockRequirements, isLoading: false };
     }
 
     default:

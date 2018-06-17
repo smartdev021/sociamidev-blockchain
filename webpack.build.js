@@ -3,8 +3,7 @@ const Webpack = require('webpack');
 
 module.exports = {
   entry: {
-    hotmiddleware: 'webpack-hot-middleware/client',
-    babelpolyfill: "babel-polyfill",
+    babelpolyfill: 'babel-polyfill',
     main: './src/index.js',
     vendor: [
       'bluebird',
@@ -17,7 +16,7 @@ module.exports = {
       'moment',
       'react-bootstrap',
       'pubsub-js',
-    ]
+    ],
   },
   output: {
     path: Path.join(__dirname, 'dist'),
@@ -26,7 +25,7 @@ module.exports = {
   plugins: [
     new Webpack.HashedModuleIdsPlugin(),
     new Webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
+      name: 'vendor',
     }),
   ],
 };

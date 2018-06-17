@@ -8,16 +8,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { ListGroupItem, ListGroup } from 'react-bootstrap';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import ActivityTypes from '~/src/common/ActivityTypes';
 
 import ActionLink from '~/src/components/common/ActionLink';
 
 import '~/src/theme/css/notifications.css';
-import { fetchUserTasks } from '~/src/redux/actions/authorization'
-import { setActiveHangout } from '~/src/redux/actions/tasks'
+import { fetchUserTasks } from '~/src/redux/actions/authorization';
+import { setActiveHangout } from '~/src/redux/actions/tasks';
 
 class Notifications extends React.Component {
   constructor(props) {
@@ -29,21 +29,13 @@ class Notifications extends React.Component {
   }
 
   handleNotificationClick(notification) {
-    this.props.markActivitySeen(
-      notification._id,
-      this.props.currentUserID,
-      this.props.currentUserID
-    );
+    this.props.markActivitySeen(notification._id, this.props.currentUserID, this.props.currentUserID);
     this.props.onClose();
   }
 
   componentDidMount() {
-    this.setState({})
+    this.setState({});
     this.props.fetchUserTasks(this.props.userProfile._id);
-  }
-
-  componentWillReceiveProps(newProps) {
-    console.log(newProps)
   }
 
   handleStartClick(task) {
@@ -62,21 +54,26 @@ class Notifications extends React.Component {
         })
       : [];
 
-    const oneDay = 24*60*60*1000;
-    const Notifications = this.props.userTasks.created ? this.props.userTasks.created.map(function(task) {
-      const days = Math.round(Math.abs((new Date().getTime() - task.date)/(oneDay)));
-      const daysText = days === 0 ? 'Today ' : days + ' days ago';
-      return {
-        _id: task._id,
-        isSeen: true,
-        title:
-          task.description,
-        name: 'You can start your ',
-        date: daysText,
-        status: task.status,
-        task
-      }
-    }).filter(task => task.status !== 'complete').slice(0,10).reverse() : [];
+    const oneDay = 24 * 60 * 60 * 1000;
+    const Notifications = this.props.userTasks.created
+      ? this.props.userTasks.created
+          .map(function(task) {
+            const days = Math.round(Math.abs((new Date().getTime() - task.date) / oneDay));
+            const daysText = days === 0 ? 'Today ' : days + ' days ago';
+            return {
+              _id: task._id,
+              isSeen: true,
+              title: task.description,
+              name: 'You can start your ',
+              date: daysText,
+              status: task.status,
+              task,
+            };
+          })
+          .filter(task => task.status !== 'complete')
+          .slice(0, 10)
+          .reverse()
+      : [];
 
     // const Notifications =
     //   TaskStartedActivities.length > 0
@@ -157,15 +154,13 @@ class Notifications extends React.Component {
               <ListGroupItem
                 key={i}
                 className={
-                  notification.isSeen
-                    ? 'notification-item-seen notification-item'
-                    : 'notification-item'
+                  notification.isSeen ? 'notification-item-seen notification-item' : 'notification-item'
                 }
               >
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
-                    that.handleNotificationClick(notification)
+                    that.handleNotificationClick(notification);
                   }}
                 >
                   <div className="notificationRow notify-grow">
@@ -175,12 +170,8 @@ class Notifications extends React.Component {
                       </div>
                       <div className="notify-text-detail">
                         <div className="notifyDesc">
-                          <span className="notify-name">
-                            {notification.name}&nbsp;&nbsp;
-                          </span>
-                          <span className="notify-title">
-                            {notification.title}
-                          </span>
+                          <span className="notify-name">{notification.name}&nbsp;&nbsp;</span>
+                          <span className="notify-title">{notification.title}</span>
                         </div>
                         <div className="notify-date">{notification.date}</div>
                       </div>
@@ -193,8 +184,11 @@ class Notifications extends React.Component {
                       )}
                     </div>
                     <div className="notify-hide">
-                      <Link to="/taskManagement" className="notify-btn-notification-check" 
-                      onClick={() => that.handleStartClick(notification.task)}>
+                      <Link
+                        to="/taskManagement"
+                        className="notify-btn-notification-check"
+                        onClick={() => that.handleStartClick(notification.task)}
+                      >
                         <span aria-hidden="true" className="fa fa-check" />&nbsp;&nbsp;START
                       </Link>
                       <button className="notify-btn-notification-reschedule">
@@ -222,7 +216,7 @@ class Notifications extends React.Component {
 Notifications.PropTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   userActivities: PropTypes.array.isRequired,
-  markActivitySeen: PropTypes.func.isRequired
+  markActivitySeen: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -233,7 +227,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
   setActiveHangout: bindActionCreators(setActiveHangout, dispatch),
-})
+});
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(require('react-click-outside')(Notifications));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(require('react-click-outside')(Notifications));

@@ -4,8 +4,8 @@
   "description": "Soqqle",
   "scripts": {
     "start": "node server.js",
-    "start:local_back_end": "node server_local_backend.js",
-    "startLocal": "cross-env dev_env=local node server.js",
+    "start:local_back_end": "cross-env SOQQLE_ENV=local_backend node server.js",
+    "startLocal": "cross-env SOQQLE_ENV=local node server.js",
     "lint": "eslint src",
     "compile": "webpack -p",
     "compile-stg": "webpack -p --config webpack.staging.js",

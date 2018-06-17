@@ -3,13 +3,13 @@
 */
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom'; //temporarily here, remove it!!!!!!!
 import { openSignUpForm } from '~/src/redux/actions/authorization';
-import SignUpFormPopup from  '~/src/authentication/SignUpForm';
+import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
 import Houses from "~/src/theme/components/houses/Houses";
@@ -39,7 +39,7 @@ const Footer = () => {
   );
 };
 
-const Header = ({openMenu}) => {
+const Header = ({ openMenu }) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -47,11 +47,21 @@ const Header = ({openMenu}) => {
         <span> </span>
         <span> </span>
       </button>
-      <button type="button"><p>The Game</p></button>
-      <button type="button"><p>Forums</p></button>
-      <button type="button"><p>Markets</p></button>
-      <button type="button" className="subscribe-button"><p>Subscribe</p></button>
-      <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
+      <button type="button">
+        <p>The Game</p>
+      </button>
+      <button type="button">
+        <p>Forums</p>
+      </button>
+      <button type="button">
+        <p>Markets</p>
+      </button>
+      <button type="button" className="subscribe-button">
+        <p>Subscribe</p>
+      </button>
+      <button type="button" className="sign-up-button">
+        <p>Enterprise sign up</p>
+      </button>
     </div>
   );
 };
@@ -61,21 +71,21 @@ const Logo = () => {
     <div className="logo">
       <img
         src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-        alt="logo"/>
+        alt="logo"
+      />
     </div>
   );
 };
 
-const MobileMenu = ({isOpen, closeMenu}) => {
-  const mobileClass = isOpen ? "mobile-menu open" : "mobile-menu close";
+const MobileMenu = ({ isOpen, closeMenu }) => {
+  const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
   return (
     <div className={mobileClass}>
       <button type="button" className="close-menu" onClick={closeMenu}>
         <span>x</span>
       </button>
-      <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"/>
+      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" />
       <ul>
         <li>The games</li>
         <li>Forums</li>
@@ -104,16 +114,17 @@ class LandingPage extends Component {
   }
 
   renderSignUpForm() {
-    return (this.props.isSignUpFormOpen ?
-      <SignUpFormPopup modalIsOpen={this.props.isSignUpFormOpen}
-                       isAuthorized={this.props.isAuthorized}
-                       onCloseModal={() => this.props.onCloseSignUpModal()}
-                       onHandleSignUpFacebook={() => this.props.onHandleSignUpFacebook()}
-                       onHandleSignUpLinkedIn={() => this.props.onHandleSignUpLinkedIn()}
-                       pathname={this.props.pathname}/>
-      : null
-    );
-  };
+    return this.props.isSignUpFormOpen ? (
+      <SignUpFormPopup
+        modalIsOpen={this.props.isSignUpFormOpen}
+        isAuthorized={this.props.isAuthorized}
+        onCloseModal={() => this.props.onCloseSignUpModal()}
+        onHandleSignUpFacebook={() => this.props.onHandleSignUpFacebook()}
+        onHandleSignUpLinkedIn={() => this.props.onHandleSignUpLinkedIn()}
+        pathname={this.props.pathname}
+      />
+    ) : null;
+  }
 
   renderRoutes() {
     return (
@@ -151,9 +162,11 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
 });
 
-
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withCookies(LandingPage));
