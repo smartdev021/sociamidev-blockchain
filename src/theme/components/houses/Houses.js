@@ -15,7 +15,7 @@ class Houses extends Component {
     return (
       <div className="houses-wrapper">
         <div className="container">
-          <h1 className="heading-primery mt-46">Houses</h1>
+          <h1 className="heading-primery pt-46">Houses</h1>
           <div className="row card_box valign-wrapper">
             <div className="col s12 m6">
               <div className="card">

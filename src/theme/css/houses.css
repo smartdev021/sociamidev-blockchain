@@ -36,8 +36,8 @@
 	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/body-bg.jpg) right top repeat-y;
   background-size: 100%;
 }
-.mt-46 {
-	margin-top: 4.6rem !important;
+.pt-46 {
+	padding-top: 4.6rem;
 }
 nav {
 	background: transparent;
@@ -97,7 +97,7 @@ nav ul.menu-top li a i {
 nav ul.menu-top li a:hover {color: #ffd400; background:#0069ba;}
 nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
 .card_box {color: #000; margin-bottom: 3.81rem;}
-.card_box .box-wp {font-weight: normal; color: #000; background: #fff; padding: 30px; min-height: 197px; box-shadow: 15px 0 22px #020202;}
+.card_box .box-wp {font-weight: normal; color: #000; background: #fff; padding: 30px; min-height: 197px; box-shadow: 15px 6px 22px #020202;}
 .card_box .card-image {
   border: 4px solid #89cbfd;
   box-shadow: 0 0 15px #89cbfd;
@@ -269,6 +269,7 @@ ul:not(.browser-default) {
 /*----------mobile--------*/
 @media (max-width:767px) {
 	.heading-primery {margin: 2rem 0; font-size: 22px;}
+	.pt-46 {padding-top: 31px;}
 	.card_box {margin-bottom: 30px;  display: inline-block;}
 	.card_box:nth-child(even) .col:first-child, .card_box:nth-child(odd) .col:last-child {right: 0;}
 	.card_box:nth-child(even) .col:last-child, .card_box:nth-child(odd) .col:first-child {left: 0;}
