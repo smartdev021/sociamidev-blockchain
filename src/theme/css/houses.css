@@ -1,0 +1,287 @@
+@font-face {
+	font-family: 'MyriadPro';
+	src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Regular.woff") format("woff"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Regular.otf") format("otf"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'MyriadPro';
+	src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Light.woff") format("woff"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Light.otf") format("otf"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Light.svg") format('svg');
+	font-weight: 200;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'MyriadPro';
+	src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Semibold.woff") format("woff"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Semibold.otf") format("otf"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Semibold.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'MyriadPro';
+	src: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Bold.woff") format("woff"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Bold.otf") format("otf"),
+	url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/fonts/MyriadPro-Bold.ttf") format("truetype");
+	font-weight: bold;
+	font-style: normal;
+}
+
+.houses-wrapper {
+	font-family: 'MyriadPro';
+	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/body-bg.jpg) right top repeat-y;
+  background-size: 100%;
+}
+.mt-46 {
+	margin-top: 4.6rem !important;
+}
+nav {
+	background: transparent;
+	box-shadow: none;
+}
+.heading-primery {
+  margin: 3.3rem 0 3.12rem;
+  color: #fff;
+  text-align: center;
+  font-size: 3.33rem;
+  font-weight: 400;
+}
+nav ul.menu-top li {
+  margin: 0 16px;
+  background: #0069ba;
+  height: 32px;
+  line-height: 32px;
+  position: relative;
+  min-width: 127px;
+  text-align: center;
+}
+nav ul.menu-top li:before {
+	position: absolute;
+	top: 0;
+	left: -15px;
+	content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 32px 15px;
+  border-color: transparent transparent #0069ba transparent;
+}
+nav ul.right-icon {margin-left: 35px}
+nav ul.right-icon li {margin: 0 10px}
+nav ul.right-icon li a {font-size: 22px; padding: 0;}
+nav ul.right-icon li a:hover {color:#0069ba;}
+nav ul.right-icon li.active a {color:#0069ba;}
+nav ul.right-icon li a i {height: auto; line-height: inherit;}
+nav ul.menu-top li:after {
+	position: absolute;
+	top: 0;
+	right: -15px;
+	content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 32px 15px 0 0;
+  border-color: #0069ba transparent transparent transparent;
+}
+nav ul.menu-top li a i {
+	height: 32px;
+  line-height: 32px;
+  margin-right: 5px;
+}
+nav ul.menu-top li a:hover {color: #ffd400; background:#0069ba;}
+nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
+.card_box {color: #000; margin-bottom: 3.81rem;}
+.card_box .box-wp {font-weight: normal; color: #000; background: #fff; padding: 30px;  min-height: 197px;}
+.card_box .card-image {
+  border: 5px solid #89cbfd;
+  box-shadow: 0 0 20px #89cbfd;
+}
+.card_box .card {margin: 0;}
+.card_box .col {padding: 0}
+.card_box .card-image img {border-radius: 0}
+.card_box .box-wp h2 {
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: bold;
+}
+.card_box:nth-child(odd) {
+	display: -webkit-flex; /* Safari */
+  -webkit-flex-direction: row-reverse; /* Safari 6.1+ */
+  display: flex;
+  flex-direction: row-reverse;
+}
+.card_box:nth-child(even) .col:last-child {
+  left: -1.68rem;
+	z-index: 99;
+	position: relative;
+}
+.card_box:nth-child(even) .col:first-child {
+  position: relative;
+	right: -1.68rem;
+}
+.card_box:nth-child(odd) .col:last-child {
+  right:-1.68rem;
+  z-index: 99;
+  position: relative;
+}
+.card_box:nth-child(odd) .col:first-child {
+  left: -1.68rem;
+  z-index: 99;
+  position: relative;
+}
+.card_box .box-wp ul li {
+  font-size: 1.1rem;
+  color: #ffd400;
+  font-weight: 400;
+  display: inline-block;
+  margin-right: 1rem;
+  position: relative;
+  padding-left: 8px;
+}
+.card_box .box-wp ul li:last-child {margin-right: 0}
+.card_box .box-wp ul li:after {
+	content: '';
+	width: 5px;
+	height: 5px;
+	background: #ffd400;
+	left: 0;
+	top: 7px;
+	position: absolute;
+	border-radius: 50%;
+}
+.card_box .box-wp p {
+	margin: 3px 0 0 0;
+  font-weight: 200;
+  line-height: 20px;
+}
+.more-video-btn {
+  background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/video-bg.png);
+  min-width: 190px;
+  display: inline-block;
+  text-align: center;
+  height: 35px;
+  line-height: 35px;
+  color: #000;
+  font-weight: 400;
+  font-size: 1.5rem;
+  position: relative;
+  margin: auto;
+}
+.more-video-btn:before {
+  background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/video-left-bg.png);
+  position: absolute;
+  top: 0;
+  left: -28px;
+  content: '';
+  width: 28px;
+  height: 35px;
+}
+.more-video-btn:after {
+  background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/video-right-bg.png);
+  position: absolute;
+  top: 0;
+  right: -28px;
+  content: '';
+  width: 28px;
+  height: 35px;
+}
+.video-warp {
+	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/before-footerbg.png) left bottom no-repeat;
+  background-size: 100%;
+  position: relative;
+  width: 100%;
+  left: 0;
+  bottom: -54px;
+  padding-bottom: 8rem;
+}
+.video-warp .video-box {
+  margin: 0 0 50px;
+  border: 5px solid #0069ba;
+  box-sizing: border-box;
+  width: 100%;
+  float: left;
+  position: relative;
+}
+.video-warp .video-box .icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	width: 89px;
+	height: 89px;
+	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/play-icon.png);
+}
+.video-warp .video-box img {width: 100%; float: left;}
+element.style {
+  transform: translateX(0%);
+}
+ul:not(.browser-default) {
+  padding-left: 0;
+  list-style-type: none;
+}
+.sidenav {width: 235px; background-color: rgba(0,0,0,0.9);}
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+  float: left;
+  height: 33px;
+  line-height: 33px;
+  margin: 0 5px 0 0;
+  width: 24px;
+  color: #fff;
+}
+.sidenav li > a {
+  font-weight: 200;
+  height: 33px;
+  line-height: 33px;
+  padding: 0 25px;
+  margin-top: 15px;
+  color: #fff;
+}
+
+@media (max-width: 992px) {
+	nav .brand-logo {left: 0px; -webkit-transform: translateX(0%); transform: translateX(0%);}
+	nav .sidenav-trigger {
+	  float: right;
+	  margin: 2px 15px 2px 0;
+	  background: #1a1a1a;
+	  height: 30px !important;
+	  width: 30px !important;
+	  text-align: center;
+	  border-radius: 2px;
+	  position: absolute;
+		right: 0;
+	}
+	nav .sidenav-trigger i {height: 30px !important; line-height: 30px !important;}
+}
+@media (max-width: 992px) and (min-width:768px) {
+	nav .sidenav-trigger {top: 12px}
+}
+
+/*----------mobile--------*/
+@media (max-width:767px) {
+	.heading-primery {margin: 2rem 0; font-size: 22px;}
+	.card_box {margin-bottom: 30px;  display: inline-block;}
+	.card_box:nth-child(even) .col:first-child, .card_box:nth-child(odd) .col:last-child {right: 0;}
+	.card_box:nth-child(even) .col:last-child, .card_box:nth-child(odd) .col:first-child {left: 0;}
+	.card_box:nth-child(odd) {display: inline-block;}
+	.card_box .box-wp {padding: 16px;}
+	.card_box .box-wp ul li {font-size: 14px;}
+	.card_box .box-wp h2 {font-size: 20px;}
+	.more-video-btn {min-width: 90px; font-size: 14px;}
+	.video-warp .video-box {margin: 0 0 25px;}
+	.video-warp {background-size: 100% 50%;  bottom: -35px;}
+	.video-warp .video-box .icon {width: 45px; height: 45px; background-size: 100%;}
+	.card_box:last-child {margin-bottom: 0}
+	nav {line-height: 33px;}
+	nav {height: 33px; line-height: 33px;}
+	nav ul.right-icon {margin-left: -10px;}
+	nav ul.right-icon li {margin: 0 5px;}
+	nav ul.right-icon li a {font-size: 16px; padding: 0;}
+}
