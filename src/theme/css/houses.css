@@ -275,8 +275,12 @@ ul:not(.browser-default) {
 	.card_box:nth-child(even) .col:last-child, .card_box:nth-child(odd) .col:first-child {left: 0;}
 	.card_box:nth-child(odd) {display: inline-block;}
 	.card_box .box-wp {padding: 16px;}
-	.card_box .box-wp ul li {font-size: 14px;}
-	.card_box .box-wp h2 {font-size: 20px;}
+	.houses-wrapper .container{width:98%}
+	.card_box .card-image{border-radius: 0;}
+	.card_box .box-wp ul li, .card_box .box-wp p {font-size: 13px;}
+	.card_box .box-wp ul li{ font-weight: 200}
+	.card_box .box-wp ul li:after {top: 6px;}
+	.card_box .box-wp h2 {font-size: 18px;}
 	.more-video-btn {min-width: 90px; font-size: 14px;}
 	.video-warp .video-box {margin: 0 0 25px;}
 	.video-warp {background-size: 100% 50%;  bottom: -35px;}
