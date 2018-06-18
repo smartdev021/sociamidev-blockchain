@@ -31,7 +31,7 @@
 	font-style: normal;
 }
 
-.houses-wrapper {
+.materialize-warper.houses-wrapper {
 	font-family: 'MyriadPro';
 	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/body-bg.jpg) right top repeat-y;
   background-size: 100%;
@@ -39,63 +39,14 @@
 .pt-46 {
 	padding-top: 4.6rem;
 }
-nav {
-	background: transparent;
-	box-shadow: none;
-}
 .heading-primery {
-  margin: 3.3rem 0 3.12rem;
+  margin: 3.3rem 0 3.12rem !important;
   color: #fff;
   text-align: center;
-  font-size: 3.33rem;
+  font-size: 3.33rem !important;
   font-weight: 400;
 }
-nav ul.menu-top li {
-  margin: 0 16px;
-  background: #0069ba;
-  height: 32px;
-  line-height: 32px;
-  position: relative;
-  min-width: 127px;
-  text-align: center;
-}
-nav ul.menu-top li:before {
-	position: absolute;
-	top: 0;
-	left: -15px;
-	content: '';
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 0 32px 15px;
-  border-color: transparent transparent #0069ba transparent;
-}
-nav ul.right-icon {margin-left: 35px}
-nav ul.right-icon li {margin: 0 10px}
-nav ul.right-icon li a {font-size: 22px; padding: 0;}
-nav ul.right-icon li a:hover {color:#0069ba;}
-nav ul.right-icon li.active a {color:#0069ba;}
-nav ul.right-icon li a i {height: auto; line-height: inherit;}
-nav ul.menu-top li:after {
-	position: absolute;
-	top: 0;
-	right: -15px;
-	content: '';
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 32px 15px 0 0;
-  border-color: #0069ba transparent transparent transparent;
-}
-nav ul.menu-top li a i {
-	height: 32px;
-  line-height: 32px;
-  margin-right: 5px;
-}
-nav ul.menu-top li a:hover {color: #ffd400; background:#0069ba;}
-nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
+
 .card_box {color: #000; margin-bottom: 3.81rem;}
 .card_box .box-wp {font-weight: normal; color: #000; background: #fff; padding: 30px; min-height: 197px; box-shadow: 15px 6px 22px #020202;}
 .card_box .card-image {
@@ -171,7 +122,7 @@ nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
   line-height: 35px;
   color: #000;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   position: relative;
   margin: auto;
 }
@@ -193,6 +144,9 @@ nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
   width: 28px;
   height: 35px;
 }
+.more-video-btn:hover {
+	color: #000;
+}
 .video-warp {
 	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/before-footerbg.png) left bottom no-repeat;
   background-size: 100%;
@@ -204,7 +158,7 @@ nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
 }
 .video-warp .video-box {
   margin: 0 0 50px;
-  border: 5px solid #0069ba;
+  border: 4px solid #0069ba;
   box-sizing: border-box;
   width: 100%;
   float: left;
@@ -222,60 +176,24 @@ nav {background: transparent;box-shadow: none; height: 60px; line-height: 60px;}
 	background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/play-icon.png);
 }
 .video-warp .video-box img {width: 100%; float: left;}
-element.style {
+.materialize-warper element.style {
   transform: translateX(0%);
 }
-ul:not(.browser-default) {
+.materialize-warper ul:not(.browser-default) {
   padding-left: 0;
   list-style-type: none;
-}
-.sidenav {width: 235px; background-color: rgba(0,0,0,0.9);}
-.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
-  float: left;
-  height: 33px;
-  line-height: 33px;
-  margin: 0 5px 0 0;
-  width: 24px;
-  color: #fff;
-}
-.sidenav li > a {
-  font-weight: 200;
-  height: 33px;
-  line-height: 33px;
-  padding: 0 25px;
-  margin-top: 15px;
-  color: #fff;
-}
-
-@media (max-width: 992px) {
-	nav .brand-logo {left: 0px; -webkit-transform: translateX(0%); transform: translateX(0%);}
-	nav .sidenav-trigger {
-	  float: right;
-	  margin: 2px 15px 2px 0;
-	  background: #1a1a1a;
-	  height: 30px !important;
-	  width: 30px !important;
-	  text-align: center;
-	  border-radius: 2px;
-	  position: absolute;
-		right: 0;
-	}
-	nav .sidenav-trigger i {height: 30px !important; line-height: 30px !important;}
-}
-@media (max-width: 992px) and (min-width:768px) {
-	nav .sidenav-trigger {top: 12px}
 }
 
 /*----------mobile--------*/
 @media (max-width:767px) {
-	.heading-primery {margin: 2rem 0; font-size: 22px;}
+	.heading-primery {margin: 2rem 0 !important; font-size: 22px !important;}
 	.pt-46 {padding-top: 31px;}
 	.card_box {margin-bottom: 30px;  display: inline-block;}
 	.card_box:nth-child(even) .col:first-child, .card_box:nth-child(odd) .col:last-child {right: 0;}
 	.card_box:nth-child(even) .col:last-child, .card_box:nth-child(odd) .col:first-child {left: 0;}
 	.card_box:nth-child(odd) {display: inline-block;}
 	.card_box .box-wp {padding: 16px;}
-	.houses-wrapper .container{width:98%}
+	.materialize-warper.houses-wrapper .container{width:98%}
 	.card_box .card-image{border-radius: 0;}
 	.card_box .box-wp ul li, .card_box .box-wp p {font-size: 13px;}
 	.card_box .box-wp ul li{ font-weight: 200}
@@ -286,9 +204,4 @@ ul:not(.browser-default) {
 	.video-warp {background-size: 100% 50%;  bottom: -35px;}
 	.video-warp .video-box .icon {width: 45px; height: 45px; background-size: 100%;}
 	.card_box:last-child {margin-bottom: 0}
-	nav {line-height: 33px;}
-	nav {height: 33px; line-height: 33px;}
-	nav ul.right-icon {margin-left: -10px;}
-	nav ul.right-icon li {margin: 0 5px;}
-	nav ul.right-icon li a {font-size: 16px; padding: 0;}
 }

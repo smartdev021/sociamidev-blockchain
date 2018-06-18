@@ -13,7 +13,7 @@ class Houses extends Component {
 
   render() {
     return (
-      <div className="houses-wrapper">
+      <div className="materialize-warper houses-wrapper">
         <div className="container">
           <h1 className="heading-primery pt-46">Houses</h1>
           <div className="row card_box valign-wrapper">
