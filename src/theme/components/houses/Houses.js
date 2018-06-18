@@ -135,12 +135,16 @@ class Houses extends Component {
         </div>
         <div className="video-warp">
           <div className="container">
-            <h2 className="heading-primery">Discover Soqqle</h2>
-            <div className="video-box">
-              <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/videobg.jpg" alt=""/>
-              <a href="#"><div className="icon"></div></a>
+            <div className="row">
+              <div className="col s12">
+                <h2 className="heading-primery">Discover Soqqle</h2>
+                <div className="video-box">
+                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/videobg.jpg" alt=""/>
+                  <a href="#"><div className="icon"></div></a>
+                </div>
+                <div className="center"><a href="#" className="more-video-btn">See all videos</a></div>
+              </div>
             </div>
-            <div className="center"><a href="#" className="more-video-btn">See all videos</a></div>
           </div>
         </div>
       </div>
