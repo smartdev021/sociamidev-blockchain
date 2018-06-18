@@ -12,7 +12,7 @@ import { openSignUpForm } from '~/src/redux/actions/authorization';
 import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
-import Houses from "~/src/theme/components/houses/Houses";
+//import Houses from "~/src/theme/components/houses/Houses";
 import '~/src/theme/css/landingPage.css';
 
 const Footer = () => {
@@ -131,7 +131,7 @@ class LandingPage extends Component {
       <Switch>
         <Route exact path='/' render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
-        <Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props}/>}/>
+        //<Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props}/>}/>
         <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
       </Switch>
     );
