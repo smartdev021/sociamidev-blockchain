@@ -201,7 +201,7 @@
 	.card_box .box-wp h2 {font-size: 18px;}
 	.more-video-btn {min-width: 90px; font-size: 14px;}
 	.video-warp .video-box {margin: 0 0 25px;}
-	.video-warp {background-size: 100% 50%;  bottom: -35px;}
+	.video-warp {background-size: 100% 50%;  bottom: -35px; padding-bottom: 6rem;}
 	.video-warp .video-box .icon {width: 45px; height: 45px; background-size: 100%;}
 	.card_box:last-child {margin-bottom: 0}
 }
