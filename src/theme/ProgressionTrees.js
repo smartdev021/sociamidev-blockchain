@@ -416,8 +416,8 @@ class ProgressionTrees extends React.Component {
               </div>
             )}
 
-            <div className="progression-tree-header">Technology</div>
-            <div className="progression-tree-container">
+            <div className="progressiontree-header">Technology</div>
+            <div className="progressiontree-container">
               <ProgressiontreesScanner
                 scannerQuery={this.state.scannerQuery}
                 trees={treesScanner}

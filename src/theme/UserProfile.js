@@ -562,7 +562,7 @@ class UserProfile extends React.Component {
   render() {
     //Incorrect usage of bootstrap row col. @Michael?
     return (
-      <div className="profile-container">
+      <div className=" soqqle-content-container profile-container">
         {this.state.isProfileLoading && (
           <div className="container-fluid progress-browser-wrap">
             <div className="row">

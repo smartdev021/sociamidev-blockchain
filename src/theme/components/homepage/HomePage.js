@@ -236,13 +236,15 @@ class HomePage extends React.Component {
       // </div>
       // </div>
       // </div>
-      <div className="progressiontree-container">
+      <div className="progression-tree-container soqqle-content-container">
         <div className="row progression-tree-header-box">
-          <div className="progressiontree-header">
+          <div className="progression-tree-header">
             <b>My progression skills</b>
           </div>
           <div className="progression-tree-timers">
-            <div className="progression-tree-clock">Innovation - Illuminate (00:25:12:59)</div>
+            <div className="progression-tree-clock">
+            {this.renderTimers()}
+            </div>
           </div>
           <a className="show-more-option">show more</a>
         </div>

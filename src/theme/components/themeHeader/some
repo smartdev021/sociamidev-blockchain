@@ -1,0 +1,109 @@
+<div className="container-fluid">
+          <div className="row">
+            <div id="nav-menu" className="nav-menu">
+              <div className="menu-hamburger">
+                <ActionLink
+                  href="#"
+                  className={OpenMenuClass}
+                  style={{ dispay: 'none' }}
+                  onClick={() => this.props.openSidebar(true)}
+                  style={{ display: !this.props.isSidebarOpen ? 'block' : 'none' }}
+                >
+                  <span />
+                  <span />
+                  <span />
+                </ActionLink>
+
+                <ActionLink
+                  href="#"
+                  className={CloseMenuClass}
+                  onClick={() => this.props.openSidebar(false)}
+                  style={{ display: this.props.isSidebarOpen ? 'block' : 'none' }}
+                >
+                  <Icon name="times" aria-hidden="true" />
+                </ActionLink>
+              </div>
+              <h1 className="logo">
+                <Link to="/">
+                  <img
+                    src="https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/logo.png"
+                    alt=""
+                  />
+                  <span className="logo-alpha">alpha</span>
+                </Link>
+              </h1>
+            </div>
+
+            <div id="nav-links" className="nav-links">
+              <ul className="navbar-top-links">
+                <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
+                <li className="notification">
+                  <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
+                    <Icon name="bell" aria-hidden="true" />
+                    {/* {labelNotif} */}
+                  </ActionLink>
+                </li>
+                <li className="register">
+                  <Link href="#" to="/connectionsView">
+                    <Icon name="user-plus" aria-hidden="true" />
+                  </Link>
+                </li>
+                <UserMenuDropdown
+                  isAdmin={this.props.isAdmin}
+                  userProfile={this.props.userProfile}
+                  onSignOut={() => this.onSignOut()}
+                />
+              </ul>
+            </div>
+
+            <div id="nav-tasks" className="nav-tasks">
+              <div className="task-manager">
+                {!ConfigMain.ChallengesScannerDisabled ? (
+                  <Link to="/projectManagement" className="btn-base btn-yellow">
+                    Challenges Scanner
+                  </Link>
+                ) : (
+                  <div
+                    className="btn-nav disabled"
+                    style={{ cursor: 'default', position: 'relative', marginLeft: '5px', marginRight: '5px' }}
+                  >
+                    <img
+                      src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/challenges.png"
+                      style={{ width: '20px' }}
+                    />
+                    <span>CHALLENGES</span>
+                    CHALLENGES
+                    <div
+                      className="challenges-coming-soon"
+                      style={{
+                        fontSize: '10px',
+                        position: 'absolute',
+                        left: '0px',
+                        bottom: '-15px',
+                        color: 'white',
+                        fontFamily: "'Berlin-Sans-FB-Regular', sans-serif",
+                      }}
+                    >
+                      coming soon
+                    </div>
+                  </div>
+                )}
+
+                <Link to="/progressionTrees" className="btn-nav">
+                  <img
+                    src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/progressionskill.png"
+                    style={{ width: '20px' }}
+                  />
+                  PROGRESSIONS
+                </Link>
+                <Link to="/taskManagement" className="btn-nav">
+                  <img
+                    src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/task.png"
+                    style={{ width: '20px' }}
+                  />
+                  TASKS
+                </Link>
+              </div>
+            </div>
+          </div>
+          </div>

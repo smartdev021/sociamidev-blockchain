@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 
 import { Icon } from 'react-fa';
 
-import ThemeHeader from '~/src/theme/ThemeHeader';
+import ThemeHeader from '~/src/theme/components/themeHeader/ThemeHeader';
 // import SidebarLeft from '~/src/theme/SidebarLeft';
 
 import ConfigMain from '~/configs/main';
@@ -133,7 +133,7 @@ class Main extends React.Component {
   render() {
     const RedirectTo = this.getRedirectLocation();
     return (
-      <div className="wrapper">
+      <div className="soqqle-page-wrapper">
         {RedirectTo}
         <ThemeHeader
           isAdmin={this.props.isAdmin}
@@ -146,10 +146,10 @@ class Main extends React.Component {
           userProfile={this.props.userProfile}
           accounting={this.props.accounting}
         />
-        <div className="session-content">
+        {/* <div className="session-content"> */}
           {/* <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/> */}
-          <div className="content-tokens">{this.renderRoutes()}</div>
-        </div>
+          <div className="soqqle-page-content">{this.renderRoutes()}</div>
+        {/* </div> */}
       </div>
     );
   }

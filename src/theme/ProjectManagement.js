@@ -177,7 +177,7 @@ class ProjectManager extends React.Component {
         : undefined;
 
     return (
-      <div className="row">
+      <div className="row soqqle-content-container">
         {this.state.modalIsOpen ? (
           <PopupNewProject
             modalIsOpen={this.state.modalIsOpen}
