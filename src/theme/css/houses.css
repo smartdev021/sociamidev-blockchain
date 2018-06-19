@@ -54,6 +54,7 @@
   box-shadow: 0 0 15px #89cbfd;
   border-radius: 3px;
 }
+.materialize-warper .card .card-image img {border-radius: 0;}
 .card_box .card {margin: 0; border-radius: 3px;}
 .card_box .col {padding: 0}
 .card_box .card-image img {border-radius: 0}

@@ -18,8 +18,12 @@ import '~/src/theme/css/landingPage.css';
 const Footer = () => {
   return (
     <footer className="footer">
-      <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"/>
+      <a href="/" className="footer-logo">
+        <img
+          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          alt="logo"
+        />
+      </a>
       <h3>Subscribe to our Newsletter</h3>
       <div><input type="email" className="mail" value="Mail"/></div>
       <button type="button" className="subscribe"><p>Subscribe</p></button>
@@ -69,10 +73,12 @@ const Header = ({ openMenu }) => {
 const Logo = () => {
   return (
     <div className="logo">
-      <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-        alt="logo"
-      />
+      <a href="/">
+        <img
+          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          alt="logo"
+        />
+      </a>
     </div>
   );
 };
@@ -85,7 +91,14 @@ const MobileMenu = ({ isOpen, closeMenu }) => {
       <button type="button" className="close-menu" onClick={closeMenu}>
         <span>x</span>
       </button>
-      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" />
+      <div className="mobile-logo">
+        <a href="/">
+          <img
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+            alt="logo"
+          />
+        </a>
+      </div>
       <ul>
         <li>The games</li>
         <li>Forums</li>

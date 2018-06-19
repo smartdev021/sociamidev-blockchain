@@ -358,12 +358,12 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .footer > img {
+.landing-page-wrapper .footer > img, .landing-page-wrapper .footer .footer-logo img {
     height: 47px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .footer > img {
+    .landing-page-wrapper .footer > img, .landing-page-wrapper .footer .footer-logo img {
         height: 27px;
     }
 }
@@ -687,6 +687,16 @@ html.vertical-hidden {
 
 .landing-page-wrapper .mobile-menu span::after {
     transform: rotate(-45deg);
+}
+
+.landing-page-wrapper .mobile-menu .mobile-logo {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.landing-page-wrapper .mobile-menu .mobile-logo a {
+  display: inline-block;
 }
 
 .landing-page-wrapper .mobile-menu img {
