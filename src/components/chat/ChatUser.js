@@ -24,7 +24,7 @@ class ChatUser extends React.Component {
     const tabClass =
       String(this.props.userID) === String(this.props.selectedUser) ? 'personSelected' : 'person';
     const classes = `${tabClass} box-comment`;
-    var fullname = this.props.firstName + ' ' + this.props.lastName;
+    var fullname = (this.props.firstName || '') + ' ' + (this.props.lastName || '');
     var imgSrc = '';
     var fallbackImageSrc =
       'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
@@ -74,12 +74,12 @@ class ChatUser extends React.Component {
               <TimeAgo date={this.props.lastMessageTimeStamp} minPeriod={60} />
             </span>
           </span>
-          <p className="chat-text">
+          <div className="chat-text">
             {ReactHtmlParser(showLastMessage)}
             <div className={messageCountContainerClasses}>
               <span className="messageCount">{unreadCountTag}</span>
             </div>
-          </p>
+          </div>
         </div>
       </div>
     );
