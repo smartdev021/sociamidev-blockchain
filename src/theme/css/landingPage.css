@@ -603,7 +603,7 @@ html.vertical-hidden {
     padding: 0 10px 0 10px;
 }
 
-.landing-page-wrapper .header .landing-email-input-textfield-container input[type=email]:focus{
+.landing-page-wrapper input[type=email]:focus{
     border: none;
     outline: 0;
     box-shadow:none;
@@ -621,16 +621,16 @@ html.vertical-hidden {
     -webkit-appearance: none;
 }
 
-.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.landing-page-wrapper input[type="email"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #fff;
     opacity: 1; /* Firefox */
 }
 
-.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.landing-page-wrapper input[type="email"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #fff;
 }
 
-.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]::-ms-input-placeholder { /* Microsoft Edge */
+.landing-page-wrapper input[type="email"]::-ms-input-placeholder { /* Microsoft Edge */
     color: #fff;
 }
 
@@ -643,6 +643,34 @@ html.vertical-hidden {
         display: none;
     }
 }
+
+/*mobile subscribe*/
+.mobile-menu-email-subscribe-container {
+    width: 250px;
+    margin: 0 auto;
+}
+
+.mobile-menu-email-subscribe-container input {
+    width: 100%;
+}
+
+.mobile-menu-email-subscribe-container .landing-email-input-textfield-container {
+    transform: skew(-38deg);
+    border: 2px solid #2c82df;
+
+    padding: 0 10px 0 20px;
+}
+
+.mobile-menu-email-subscribe-container .landing-email-input-textfield-container input {
+    transform: skew(38deg);
+    height: auto;
+    outline: 0;
+    border: none;
+    box-shadow:none;
+    font: normal 12px "MyriadPro Semibold";
+    color: #fff;
+}
+/*****************/
 
 .landing-page-wrapper .header button.subscribe-button {
     padding: 5px 52px;
