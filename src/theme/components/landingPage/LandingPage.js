@@ -17,7 +17,7 @@ import '~/src/theme/css/landingPage.css';
 
 const EmailInput = ({onEmailInputHide, onEmailInputSubmit, onEmailInput, email}) => {
   return (
-    <span>
+    <span onMouseLeave={onEmailInputHide}>
       <span className="landing-email-input-container" key={"landing-email-input-container"}>
         <input value={email} 
         onChange={onEmailInput}

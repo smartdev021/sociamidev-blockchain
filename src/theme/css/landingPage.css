@@ -589,7 +589,7 @@ html.vertical-hidden {
     display: inline-block;
     transform: skew(8deg);
     border: 2px solid #2c82df;
-    width: 200px;
+    width: 195px;
 }
 
 .landing-page-wrapper .header .landing-email-input-container input[type="email"] {
