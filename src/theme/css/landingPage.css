@@ -673,6 +673,26 @@ html.vertical-hidden {
 }
 /*****************/
 
+.modal-thank-you-subscribtion {
+    background: transparent;
+}
+
+.modal-thank-you-subscribtion .modal-content,
+.modal-thank-you-subscribtion .modal-footer {
+    background: black;
+    color: white;
+}
+
+.modal-thank-you-subscribtion .modal-footer button {
+    font-size: 16px;
+    font-family: "MyriadPro Semibold";
+    background: #2c82df;
+}
+
+.modal-thank-you-subscribtion .modal-content {
+    border: 2px solid #2c82df;
+}
+
 .landing-page-wrapper .header button.subscribe-button {
     padding: 5px 52px;
     margin-left: 33px;

@@ -14,6 +14,9 @@ import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
 import Houses from "~/src/theme/components/houses/Houses";
 import '~/src/theme/css/landingPage.css';
+import Axios from 'axios';
+import ConfigMain from '~/configs/main';
+import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -135,7 +138,7 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
           <div className="landing-email-input-textfield-container">
             <input value={email}
               onChange={onEmailInput}
-              type="email" placeholder="email@example.com" autoFocus={true} required={true}/>
+              type="email" placeholder="email@example.com" autoFocus={true} required={true} />
           </div>
         </div>
         <button type="button" className="subscribe-button" onClick={handleInputSubmit}><p>Subscribe</p></button>
@@ -148,7 +151,7 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: false, isEmailInputVisible: false, email: "" };
+    this.state = { isOpen: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
 
     this.toggle = this.toggle.bind(this);
   }
@@ -164,14 +167,24 @@ class LandingPage extends Component {
   }
 
   handleEmailInputSubmit(value) {
-    console.log('handleEmailInputSubmit');
-    console.log(value);
-    this.setState({ email: "", isEmailInputVisible: false });
+    if (value) {
+      const body = { groupId: 9716454, name: "n/a", email: value };
+      Axios.post(`${ConfigMain.getBackendURL()}/addSubscriberToGroup`, body)
+        .then((response) => {
+        })
+        .catch(error => {
+        });
+      this.setState({ email: "", isEmailInputVisible: false, isSubscriptionModalVisible: true });
+    }
   }
 
   handleEmailInput(event) {
     console.log('handleEmailInput');
     this.setState({ email: event.target.value });
+  }
+
+  handleCloseSubscribeThankYouModal() {
+    this.setState({ isSubscriptionModalVisible: false });
   }
 
   renderSignUpForm() {
@@ -203,6 +216,8 @@ class LandingPage extends Component {
       <div className="landing-page-wrapper">
         {this.renderSignUpForm()}
         <header>
+          <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
+            closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <Logo />
           <Header openMenu={this.toggle}
             onEmailInputShow={() => this.handleEmailInputShow(true)}
