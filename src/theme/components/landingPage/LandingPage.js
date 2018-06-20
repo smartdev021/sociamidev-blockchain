@@ -15,20 +15,32 @@ import LandingPageContent from "~/src/theme/components/landingPage/LandingPageCo
 import Houses from "~/src/theme/components/houses/Houses";
 import '~/src/theme/css/landingPage.css';
 
+const validateEmail = (email) => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email }) => {
+  const handleInputSubmit = (event) => {
+    event.preventDefault();
+    if (validateEmail(email)) {
+      onEmailInputSubmit(email);
+    }
+  }
+
   return (
-    <span onMouseLeave={onEmailInputHide}>
+    <span>
       <span className="landing-email-input-textfield-container">
         <input value={email}
           onChange={onEmailInput}
           onKeyPress={(event) => {
             if (event.key === 'Enter') {
-              onEmailInputSubmit(event)
+              handleInputSubmit(event)
             }
           }}
           type="email" placeholder="email@example.com" autoFocus={true} />
       </span>,
-    <button type="submit" onClick={onEmailInputSubmit}><p>Send</p></button>
+    <button type="submit" onClick={handleInputSubmit}><p>Send</p></button>
     </span>
   )
 }
@@ -59,7 +71,7 @@ const Footer = () => {
 
 const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
   return (
-    <div className="header">
+    <div className="header" onMouseLeave={onEmailInputHide}>
       <button className="burger" onClick={openMenu}>
         <span> </span>
         <span> </span>
@@ -100,6 +112,13 @@ const Logo = () => {
 const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
   const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
+  const handleInputSubmit = (event) => {
+    event.preventDefault();
+    if (validateEmail(email)) {
+      onEmailInputSubmit(email);
+    }
+  }
+
   return (
     <div className={mobileClass}>
       <button type="button" className="close-menu" onClick={closeMenu}>
@@ -112,20 +131,15 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
         <li>Markets</li>
       </ul>
       <footer>
-        <button type="button" className="subscribe-button"><p>Subscribe</p></button>
-        <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
         <div className="mobile-menu-email-subscribe-container">
           <div className="landing-email-input-textfield-container">
             <input value={email}
               onChange={onEmailInput}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter') {
-                  onEmailInputSubmit(event)
-                }
-              }}
-              type="email" placeholder="email@example.com" autoFocus={true} />
+              type="email" placeholder="email@example.com" autoFocus={true} required={true}/>
           </div>
         </div>
+        <button type="button" className="subscribe-button" onClick={handleInputSubmit}><p>Subscribe</p></button>
+        <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
       </footer>
     </div>
   );
@@ -149,9 +163,9 @@ class LandingPage extends Component {
     this.setState({ isEmailInputVisible: show });
   }
 
-  handleEmailInputSubmit(event) {
-    event.preventDefault();
+  handleEmailInputSubmit(value) {
     console.log('handleEmailInputSubmit');
+    console.log(value);
     this.setState({ email: "", isEmailInputVisible: false });
   }
 
@@ -193,7 +207,7 @@ class LandingPage extends Component {
           <Header openMenu={this.toggle}
             onEmailInputShow={() => this.handleEmailInputShow(true)}
             onEmailInputHide={() => this.handleEmailInputShow(false)}
-            onEmailInputSubmit={(event) => { this.handleEmailInputSubmit(event) }}
+            onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
             onEmailInput={(event) => { this.handleEmailInput(event) }}
             isEmailInputVisible={this.state.isEmailInputVisible}
             email={this.state.email} />
