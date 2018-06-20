@@ -584,7 +584,7 @@ html.vertical-hidden {
 }
 
 /*Subscribe email input*/
-.landing-page-wrapper .header .landing-email-input-container {
+.landing-page-wrapper .header .landing-email-input-textfield-container {
     height: 33px;
     display: inline-block;
     transform: skew(8deg);
@@ -592,7 +592,7 @@ html.vertical-hidden {
     width: 195px;
 }
 
-.landing-page-wrapper .header .landing-email-input-container input[type="email"] {
+.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"] {
     height: 100%;
     outline: 0;
     border: none;
@@ -603,7 +603,7 @@ html.vertical-hidden {
     padding: 0 10px 0 10px;
 }
 
-.landing-page-wrapper .header .landing-email-input-container input[type=email]:focus{
+.landing-page-wrapper .header .landing-email-input-textfield-container input[type=email]:focus{
     border: none;
     outline: 0;
     box-shadow:none;
@@ -621,16 +621,16 @@ html.vertical-hidden {
     -webkit-appearance: none;
 }
 
-.landing-page-wrapper .header .landing-email-input-container input[type="email"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #fff;
     opacity: 1; /* Firefox */
 }
 
-.landing-page-wrapper .header .landing-email-input-container input[type="email"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #fff;
 }
 
-.landing-page-wrapper .header .landing-email-input-container input[type="email"]::-ms-input-placeholder { /* Microsoft Edge */
+.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]::-ms-input-placeholder { /* Microsoft Edge */
     color: #fff;
 }
 
@@ -639,7 +639,7 @@ html.vertical-hidden {
         display: none;
     }
 
-    .landing-page-wrapper .header .landing-email-input-container {
+    .landing-page-wrapper .header .landing-email-input-textfield-container {
         display: none;
     }
 }
@@ -719,7 +719,7 @@ html.vertical-hidden {
     border: 0;
 }
 
-.landing-page-wrapper .mobile-menu span {
+.landing-page-wrapper .mobile-menu .close-menu span {
     position: relative;
     display: inline-block;
     width: 33px;
@@ -728,8 +728,8 @@ html.vertical-hidden {
     text-indent: -9999px;
 }
 
-.landing-page-wrapper .mobile-menu span::before,
-.landing-page-wrapper .mobile-menu span::after {
+.landing-page-wrapper .mobile-menu .close-menu span::before,
+.landing-page-wrapper .mobile-menu .close-menu span::after {
     position: absolute;
     top: 50%;
     left: 0;
@@ -740,11 +740,11 @@ html.vertical-hidden {
     content: '';
 }
 
-.landing-page-wrapper .mobile-menu span::before {
+.landing-page-wrapper .mobile-menu .close-menu span::before {
     transform: rotate(45deg);
 }
 
-.landing-page-wrapper .mobile-menu span::after {
+.landing-page-wrapper .mobile-menu .close-menu span::after {
     transform: rotate(-45deg);
 }
 

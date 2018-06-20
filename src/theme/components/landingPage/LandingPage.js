@@ -18,7 +18,7 @@ import '~/src/theme/css/landingPage.css';
 const EmailInput = ({onEmailInputHide, onEmailInputSubmit, onEmailInput, email}) => {
   return (
     <span onMouseLeave={onEmailInputHide}>
-      <span className="landing-email-input-container" key={"landing-email-input-container"}>
+      <span className="landing-email-input-textfield-container">
         <input value={email} 
         onChange={onEmailInput}
         onKeyPress={(event) => {
@@ -28,7 +28,7 @@ const EmailInput = ({onEmailInputHide, onEmailInputSubmit, onEmailInput, email})
         }}
         type="email" placeholder="email@example.com" autoFocus={true} />
       </span>,
-    <button key={"landing-email-input-container_button"} type="submit" onClick={onEmailInputSubmit}><p>Send</p></button>
+    <button type="submit" onClick={onEmailInputSubmit}><p>Send</p></button>
     </span>
   )
 }
