@@ -9,10 +9,10 @@ const ThankYouModal = (props) => {
                 <Modal.Title>Subscribe</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Thank You for Subscribing!</h4>
+                <h5>Thank You for Subscribing!</h5>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => props.closeSubscribeThankYouModal()}>OK</Button>
+                <Button onClick={() => props.closeSubscribeThankYouModal()} autoFocus={true}>OK</Button>
             </Modal.Footer>
         </Modal>
     );

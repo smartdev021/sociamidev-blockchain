@@ -358,12 +358,12 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .footer > img {
+.landing-page-wrapper .footer > img, .landing-page-wrapper .footer .footer-logo img {
     height: 47px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .footer > img {
+    .landing-page-wrapper .footer > img, .landing-page-wrapper .footer .footer-logo img {
         height: 27px;
     }
 }
@@ -584,6 +584,10 @@ html.vertical-hidden {
 }
 
 /*Subscribe email input*/
+.landing-page-wrapper input[type="email"] {
+    background: transparent;
+}
+
 .landing-page-wrapper .header .landing-email-input-textfield-container {
     height: 33px;
     display: inline-block;
@@ -671,27 +675,62 @@ html.vertical-hidden {
     font: normal 12px "MyriadPro Semibold";
     color: #fff;
 }
-/*****************/
 
 .modal-thank-you-subscribtion {
     background: transparent;
 }
 
+.modal-thank-you-subscribtion .modal-header button.close {
+    display: none !important;
+}
+
+.modal-thank-you-subscribtion .modal-content {
+    /*transform: skew(-37deg);*/
+}
+
 .modal-thank-you-subscribtion .modal-content,
-.modal-thank-you-subscribtion .modal-footer {
+.modal-thank-you-subscribtion .modal-footer,
+.modal-thank-you-subscribtion .modal-header {
     background: black;
     color: white;
+    font-family: "MyriadPro Regular";
+    border: none;
+    padding: 0;
+    text-align: center;
+}
+
+.modal-thank-you-subscribtion .modal-header {
+    padding-top: 10px;
+}
+
+.modal-thank-you-subscribtion .modal-footer {
+    padding-bottom: 20px;
+}
+
+.modal-thank-you-subscribtion .modal-footer button,
+.modal-thank-you-subscribtion .modal-header h4,
+.modal-thank-you-subscribtion .modal-body h5{
+    /*transform: skew(37deg);*/
 }
 
 .modal-thank-you-subscribtion .modal-footer button {
-    font-size: 16px;
-    font-family: "MyriadPro Semibold";
+    font-family: "MyriadPro Regular";
+    background: black;
+    border: 2px solid #2c82df;
+    color: white;
+    outline: none;
+}
+
+.modal-thank-you-subscribtion .modal-footer button:hover,
+.modal-thank-you-subscribtion .modal-footer button:focus {
     background: #2c82df;
+    outline: none;
 }
 
 .modal-thank-you-subscribtion .modal-content {
     border: 2px solid #2c82df;
 }
+/*****************/
 
 .landing-page-wrapper .header button.subscribe-button {
     padding: 5px 52px;
@@ -795,6 +834,16 @@ html.vertical-hidden {
 
 .landing-page-wrapper .mobile-menu .close-menu span::after {
     transform: rotate(-45deg);
+}
+
+.landing-page-wrapper .mobile-menu .mobile-logo {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.landing-page-wrapper .mobile-menu .mobile-logo a {
+  display: inline-block;
 }
 
 .landing-page-wrapper .mobile-menu img {
@@ -1638,6 +1687,11 @@ html.vertical-hidden {
 .landing-page-wrapper .work-explanation .get-reward .images-wrapper {
     float: left;
     margin: 0 0 0 193px;
+}
+
+.landing-page-wrapper .work-explanation .select-house .explore-house {
+  position: relative;
+  z-index: 99;
 }
 
 @media screen and (max-width: 750px) {

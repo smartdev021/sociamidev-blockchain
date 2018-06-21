@@ -92,11 +92,20 @@ class UserProfile extends React.Component {
 
     this.updatePromoCodesUsed();
     this.setUserProfile(qs.parse(this.props.location.search).id);
+    this.setUserAchievement(qs.parse(this.props.location.search).id)
   }
 
   componentWillReceiveProps(nextProps) {
     const queryId = qs.parse(nextProps.location.search).id;
     this.setUserProfile(queryId);
+  }
+
+  setUserAchievement(queryId) {
+    const id = queryId && this.state.userID != queryId ? queryId : this.props.userProfile._id;
+    Axios(`${ConfigMain.getBackendURL()}/userAchievement/${id}`)
+      .then(response => {
+        this.setState({userAchievement: response.data})
+      }).catch(err => {});
   }
 
   setUserProfile(queryId) {
@@ -433,11 +442,42 @@ class UserProfile extends React.Component {
       <Popover id="popover-skill" className="popover-skill">
         {this.renderAchievementCount(achievement)}
         <div className="progress-custom">
-          <div className="progress-length-custom" />
+          {/* {this.getTotalAchievementCount(achievement._id)} */}
+          {this.renderProgressLength(achievement._id)}
         </div>
         <div className="earned-token">Earned 50 tokens during 7 days</div>
       </Popover>
     );
+  }
+
+  renderProgressLength(achievementId) {
+    const total = this.getTotalAchievementCount(achievementId)
+    const style = {
+      width: `${(total.totalCtr/total.totalCount) * 100}%`
+    }
+    return (
+      <div className="progress-length-custom" style={style}/>
+    )
+  }
+
+  getTotalAchievementCount(achievementId) {
+    const achievements = _.get(this, 'state.userAchievement.achievements', [])
+    const achievementById = _.find(achievements, {achievementId})
+    let total = {
+      totalCtr: 0,
+      totalCount: 0
+    };
+    if (achievementById) {
+      _.each(achievementById.conditions, condition => {
+        total.totalCtr += condition.counter
+        total.totalCount += condition.count
+      })
+    } else {
+      // set totalCount to 1 so that counter will not be divided to zero
+      total.totalCount = 1;
+    }
+
+    return total;
   }
 
   renderAchievementsFilter() {
@@ -522,7 +562,7 @@ class UserProfile extends React.Component {
   render() {
     //Incorrect usage of bootstrap row col. @Michael?
     return (
-      <div className="profile-container">
+      <div className=" soqqle-content-container profile-container">
         {this.state.isProfileLoading && (
           <div className="container-fluid progress-browser-wrap">
             <div className="row">

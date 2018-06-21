@@ -28,6 +28,7 @@ class EmailBlock extends React.Component {
 
   saveEmailAddress() {
     this.setState({ isEditing: !this.state.isEditing });
+    this.props.onSave(this.state.email.email);
   }
 
   render() {

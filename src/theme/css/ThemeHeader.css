@@ -1,0 +1,344 @@
+.soqqle-header{
+    position: fixed;
+    width: 100%;
+    z-index: 100000;
+}
+
+.navbar-wrapper header {
+    position: relative;
+    margin: 0;
+}
+
+.navbar-wrapper main {
+    position: relative;
+    padding: 52px 0 165px;
+    margin: 0;
+    background: #ebebeb;
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper main {
+        padding: 52px 0 9px;
+    }
+}
+
+.navbar-wrapper .header {
+    position: absolute;
+    top: 0;
+    right: -75px;
+    z-index: 2;
+    padding: 0 89px 0 43px;
+    background: #000;
+    transform: skew(-37deg);
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .header {
+        right: -31px;
+        padding: 0 0px 0 10px;
+    }
+}
+
+.navbar-wrapper .header .burger {
+    display: none;
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .header .burger {
+      display: inline-block;
+      padding: 10px 50px 0px 4px;
+      transform: skew(37deg);
+      margin: 2px;
+    }
+}
+
+.navbar-wrapper .header .burger span {
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: #fff;
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .header .burger span {
+        width: 20px;
+    }
+}
+
+.navbar-wrapper .header .burger span:nth-of-type(2) {
+    margin: 9px 0;
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .header .burger span:nth-of-type(2) {
+        margin: 3px 0;
+    }
+}
+
+.navbar-wrapper .header button {
+    margin: 15px 6px;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(8deg);
+}
+
+.navbar-wrapper .header .navbar-button {
+    margin: 15px 6px;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(8deg);
+    display: inline-block;
+    text-align: center;
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .header button {
+        display: none;
+    }
+    .navbar-wrapper .header .navbar-button {
+        display: none;
+    }
+}
+
+.navbar-wrapper .header a.navbar-button {
+    padding: 7px 25px;
+    margin-left: 9px;
+    font-family: "MyriadPro Semibold";
+    background-color: rgb(0, 105, 186);
+    box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);
+    width: 172px;
+    height: 32px;
+}
+
+.navbar-wrapper .navbar-button .navbar-btn-name{
+    display: inline-block;
+    transform: skew(33deg);
+    color: white;
+}
+
+.navbar-wrapper .navbar-button .navbar-btn-img{
+    display: inline-block;
+    transform: skew(33deg);
+    margin-right: 8px;
+}
+
+/* .navbar-wrapper .header button p {
+    margin: 0;
+    transform: skew(33deg);
+} */
+
+.navbar-wrapper .logo {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    z-index: 2;
+    padding: 15px 55px 10px 80px;
+    margin: 0;
+    background: #000;
+    transform: skewX(-35deg);
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .logo {
+        padding: 9px 35px 8px 42px; 
+    }
+}
+
+.navbar-wrapper .logo img {
+    width: 100%;
+    max-width: 84px;
+    transform: skew(35deg);
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .logo img {
+        width: 58px;
+    }
+}
+
+.navbar-wrapper .mobile-menu {
+    display: none;
+    background: #000;
+}
+
+.navbar-wrapper .mobile-menu.open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.navbar-wrapper .mobile-menu .close-menu {
+    float: right;
+    padding: 7px 14px;
+    margin: 0 0 18px;
+    background: none;
+    border: 0;
+}
+
+.navbar-wrapper .mobile-menu span {
+    position: relative;
+    display: inline-block;
+    width: 33px;
+    height: 23px;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+.navbar-wrapper .mobile-menu span::before,
+.navbar-wrapper .mobile-menu span::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    margin-top: -1px;
+    background: #fff;
+    content: '';
+}
+
+.navbar-wrapper .mobile-menu span::before {
+    transform: rotate(45deg);
+}
+
+.navbar-wrapper .mobile-menu span::after {
+    transform: rotate(-45deg);
+}
+
+.navbar-wrapper .mobile-menu img {
+    display: block;
+    width: 120px;
+    margin: 0 auto;
+    clear: both;
+}
+
+.navbar-wrapper .mobile-menu ul {
+    max-width: 276px;
+    padding: 6px 0 0 23px;
+    margin: 0 auto;
+    font: normal 15px "MyriadPro Semibold";
+    color: #fff;
+    list-style: none;
+}
+
+.navbar-wrapper .mobile-menu li {
+    padding: 9px 0 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.46);
+}
+
+.navbar-wrapper .mobile-menu li::after {
+    float: right;
+    content: '\003E';
+}
+
+.navbar-wrapper .mobile-menu .navbar-button {
+    margin: 8px 10px;
+    font: normal 20px "MyriadPro Semibold";
+    color: #fff;
+    padding: 7px 9px;
+    background-color: rgb(0, 105, 186);
+    box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);
+    width: 155px;
+    display: inline-block;
+}
+
+.navbar-wrapper .mobile-menu .navbar-button .navbar-btn-name{
+    display: inline-block;
+    transform: skew(38deg);
+    color: white;
+}
+
+.navbar-wrapper .mobile-menu .navbar-button .navbar-btn-img{
+    display: inline-block;
+    transform: skew(38deg);
+    margin-right: 8px;
+}
+.navbar-wrapper .mobile-menu p {
+    margin: 0;
+    transform: skew(38deg);
+}
+
+.navbar-wrapper .mobile-menu footer {
+    text-align: center;
+    display: list-item;
+}
+
+.navbar-wrapper .mobile-menu footer .navbar-btn-row{
+    transform: skew(-38deg);
+}
+
+.navbar-wrapper .header .navbar-options{
+    float: right;
+    padding: 7px 25px;
+    margin: 8px 6px;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(37deg);
+}
+
+.navbar-wrapper .header .navbar-options li{
+    display: inline;
+    padding: 10px;
+}
+
+.navbar-wrapper .header .navbar-options li a i,
+.navbar-wrapper .header .navbar-options li a span{
+    color: white;
+    font-size: 25px;
+}
+
+@media screen and (max-width: 750px) {
+    .navbar-wrapper .header .navbar-options{
+        float: left;
+        padding: 0px;
+        margin: 8px 6px;
+        font: normal 16px "MyriadPro Regular";
+        color: #fff;
+        background: none;
+        border: 0;
+        outline: 0;
+        transform: skew(37deg);
+    }
+    .navbar-wrapper .header .navbar-options li{
+        padding: 6px;
+    }
+    .navbar-wrapper .header .navbar-options li a i,
+    .navbar-wrapper .header .navbar-options li a span{
+        font-size: 18px;
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options {
+        padding: 20px;
+        list-style-type: none;
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options a.navbar-option {
+        display: list-item;
+        color: white;
+        font: normal 20px "MyriadPro Semibold";
+        padding: 8px;
+        border-bottom: 1px solid rgb(128, 128, 128);
+        overflow: auto;
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options a.navbar-option .navbar-option-name {
+        float: left;
+        display: flex;
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options a.navbar-option i {
+        float: right;
+    }
+    .navbar-option-icon{
+        width: 20px !important;
+        margin-right: 10px !important;    
+    }  
+}

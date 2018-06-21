@@ -76,7 +76,7 @@ class App extends Component {
       faceBookID: null,
       linkedInID: null,
       suspendRender: false,
-      verfiedSocketConnection: false,
+      chatInitialized: false,
       screenWidth: 0,
       screenHeight: 0,
     };
@@ -221,7 +221,7 @@ class App extends Component {
 
   serverEventAccountingUpdated(msg, data) {
     if (data.eventType == 'accounting_updated') {
-      this.fetchUserInfoFromDataBase(true);
+      this.fetchUserInfoFromDataBase();
       this.props.fetchUserAccounting(this.props.userProfile._id);
     }
   }
@@ -341,6 +341,7 @@ class App extends Component {
     this.resetAuthentication();
     this.props.logout(this.state.userID);
   }
+
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID || this.state.userID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID, this.state.userID);
@@ -403,13 +404,6 @@ class App extends Component {
       this.setState(copy, () => this.saveAuthToLS());
     }
 
-    if (this.state.userID && this.state.verfiedSocketConnection == false) {
-      let copy = Object.assign({}, this.state, {
-        verfiedSocketConnection: true,
-      });
-      this.setState(copy);
-    }
-
     if (prevProps.isAuthorized != this.props.isAuthorized) {
       if (prevState.suspendRender) {
         this.setState({ suspendRender: false });
@@ -418,6 +412,7 @@ class App extends Component {
         this.PubsubEventsUnSubscribe();
         this.PubsubEventsSubscribe();
         this.saveAuthToLS();
+        this.chatLogIn();
 
         this.props.fetchUserActivities(this.props.userProfile._id);
 
@@ -506,6 +501,36 @@ class App extends Component {
     socketConn.emit(data.eventType, data.data);
   }
 
+  chatLogIn() {
+    if (this.state.userID && this.state.chatInitialized == false) {
+      let username = '';
+      let userType = '';
+
+      if (this.state.faceBookID) {
+        username = this.state.faceBookID;
+        userType = 'facebook';
+      } else if (this.state.linkedInID) {
+        username = this.state.linkedInID;
+        userType = 'linkedin';
+      } else {
+        userType = 'email';
+        username = this.state.userID;
+      }
+
+      let userData = {
+        username: username,
+        userType: userType,
+        userID: this.state.userID,
+        firstName: this.props.userProfile.firstName || '',
+        lastName: this.props.userProfile.lastName || '',
+      };
+
+      this.setState({ chatInitialized: true }, () => {
+        socketConn.emit('UserLoggedIn', userData);
+      });
+    }
+  }
+
   render() {
     if (this.state.suspendRender) {
       return null;
@@ -524,29 +549,8 @@ class App extends Component {
       );
     }
     let RedirectTo = this.getRedirectLocation();
-    let ChatAppLink = '';
-    var username = '';
-    var userType = '';
-    if (this.state.faceBookID) {
-      username = this.state.faceBookID;
-      userType = 'facebook';
-    } else if (this.state.linkedInID) {
-      username = this.state.linkedInID;
-      userType = 'linkedin';
-    }
 
-    ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
-
-    if (this.state.userID && this.state.verfiedSocketConnection == false) {
-      var userData = {
-        username: username,
-        userType: userType,
-        userID: this.state.userID,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-      };
-      socketConn.emit('UserLoggedIn', userData);
-    }
+    let ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
 
     return (
       <Loadable

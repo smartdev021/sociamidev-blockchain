@@ -288,9 +288,9 @@
 }
 
 @media (max-width: 768px){
-    .progression-tree-panels {
+    /* .progression-tree-panels {
         padding-top: 50px;
-    }
+    } */
     .progression-tree-skill-container{
         height: 570px;
         margin-bottom: 20px;

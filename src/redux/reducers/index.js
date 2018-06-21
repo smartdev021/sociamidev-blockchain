@@ -20,6 +20,7 @@ import { accounting } from './accounting';
 import { progression } from './progression';
 import { achievements } from './achievements';
 import { timers } from './timers';
+import { teams } from './teams';
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -49,4 +50,5 @@ export default combineReducers({
   progression,
   achievements,
   timers,
+  teams
 });

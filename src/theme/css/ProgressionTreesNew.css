@@ -3,18 +3,18 @@
     text-transform: uppercase;
     font-family: 'FjallaOne-Regular';
 }
-.progression-tree-container{
+.progressiontree-container{
     overflow-y: scroll;
     height: 100%;
 }
 @media (max-width: 480px){
-    .progression-tree-container{
+    .progressiontree-container{
         overflow-y: scroll;
         height: 500px;
     }
 }
 @media (max-width: 768px){
-    .progression-tree-container{
+    .progressiontree-container{
         overflow-y: scroll;
         height: 65vh;
     }
@@ -27,7 +27,7 @@
     padding: 10px;
     overflow-y: scroll;
 }
-.progression-tree-header{
+.progressiontree-header{
     position: relative;
     color: #FFFFFF;
     background-color: #E52A41;
@@ -37,7 +37,7 @@
     margin-left:22%;
     margin-bottom: 12px;
 }
-.progression-tree-header:after{
+.progressiontree-header:after{
     content: "";
     position: absolute;
     left: 100%;
@@ -45,7 +45,7 @@
     border-left: 12px solid #E52A41;
     border-bottom: 20px solid transparent
 }
-.progression-tree-header:before{
+.progressiontree-header:before{
     content: "";
     position: absolute;
     right: 100%;

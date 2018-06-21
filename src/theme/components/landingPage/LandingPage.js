@@ -14,6 +14,8 @@ import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
 import Houses from "~/src/theme/components/houses/Houses";
 import '~/src/theme/css/landingPage.css';
+
+//mailerlite subscribe
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
@@ -23,6 +25,7 @@ const validateEmail = (email) => {
   return re.test(String(email).toLowerCase());
 }
 
+//this one is for desktop only, for mobile, there is simple input element
 const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email }) => {
   const handleInputSubmit = (event) => {
     event.preventDefault();
@@ -48,11 +51,17 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
+//
+
 const Footer = () => {
   return (
     <footer className="footer">
-      <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" />
+      <a href="/" className="footer-logo">
+        <img
+          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          alt="logo"
+        />
+      </a>
       <h3>Subscribe to our Newsletter</h3>
       <div><input type="email" className="mail" value="Mail" /></div>
       <button type="button" className="subscribe"><p>Subscribe</p></button>
@@ -89,11 +98,11 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
       <button type="button">
         <p>Markets</p>
       </button>
-      {!isEmailInputVisible ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
-        <p>Subscribe</p>
-      </button>
-        :
-        <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />}
+      {!isEmailInputVisible
+        ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
+          <p>Subscribe</p>
+        </button>
+        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />}
       <button type="button" className="sign-up-button">
         <p>Enterprise sign up</p>
       </button>
@@ -104,10 +113,12 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
 const Logo = () => {
   return (
     <div className="logo">
-      <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-        alt="logo"
-      />
+      <a href="/">
+        <img
+          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          alt="logo"
+        />
+      </a>
     </div>
   );
 };
@@ -127,7 +138,14 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
       <button type="button" className="close-menu" onClick={closeMenu}>
         <span>x</span>
       </button>
-      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" />
+      <div className="mobile-logo">
+        <a href="/">
+          <img
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+            alt="logo"
+          />
+        </a>
+      </div>
       <ul>
         <li>The games</li>
         <li>Forums</li>
@@ -137,6 +155,12 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
         <div className="mobile-menu-email-subscribe-container">
           <div className="landing-email-input-textfield-container">
             <input value={email}
+              onKeyPress={(event) => {
+                //doesn't make sense for mobile, but her for consistency
+                if (event.key === 'Enter') {
+                  handleInputSubmit(event)
+                }
+              }}
               onChange={onEmailInput}
               type="email" placeholder="email@example.com" autoFocus={true} required={true} />
           </div>
@@ -162,6 +186,7 @@ class LandingPage extends Component {
     });
   }
 
+  //mailerlite subscribe
   handleEmailInputShow(show) {
     this.setState({ isEmailInputVisible: show });
   }
@@ -179,13 +204,13 @@ class LandingPage extends Component {
   }
 
   handleEmailInput(event) {
-    console.log('handleEmailInput');
     this.setState({ email: event.target.value });
   }
 
   handleCloseSubscribeThankYouModal() {
     this.setState({ isSubscriptionModalVisible: false });
   }
+  //
 
   renderSignUpForm() {
     return this.props.isSignUpFormOpen ? (

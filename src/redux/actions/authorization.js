@@ -48,12 +48,13 @@ export function openUserProfileComplete() {
   };
 }
 
-export function fetchUserProfileComplete(userProfile, authorized, adminUser) {
+export function fetchUserProfileComplete(userProfile, authorized, adminUser, company) {
   return {
     type: FETCH_USER_PROFILE_COMPLETE,
     profile: userProfile,
     isAuthorized: authorized,
     isAdmin: adminUser,
+    company
   };
 }
 
@@ -289,7 +290,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
           .then(function(response) {
             //async action exit point
             if (response.data && response.data._id) {
-              dispatch(fetchUserProfileComplete(newUserProfile, true, true));
+              dispatch(fetchUserProfileComplete(newUserProfile, true, true, response.data));
             } else {
               dispatch(fetchUserProfileComplete(newUserProfile, true, false));
             }

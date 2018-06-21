@@ -59,7 +59,7 @@ class Privacy extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="soqqle-content-container">
         <div>
           <button className="tablink" onClick={this.toggleAccountOption}>
             Account

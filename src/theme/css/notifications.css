@@ -2,7 +2,7 @@ div#notificationTile {
   position: absolute;
   width: 400px;
   right: 20px;
-  top: 48px;
+  top: 64px;
   border: none;
   height: 400px;
   overflow: auto;
@@ -155,7 +155,7 @@ span.notification-item.list-group-item:hover .notify-hide {
   div#notificationTile {
     position: absolute;
     right: 0;
-    top: 120px;
+    top: 40px;
     z-index: 100;
     width: 100%;
     line-height: 1;

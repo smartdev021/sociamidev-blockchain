@@ -149,7 +149,7 @@ class StatsDropdown extends React.Component {
       <li className="dropdown stats stats-menu">
         <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
           <i className="fa fa-trophy" />
-          <span className="label label-danger">5</span>
+          {/* <span className="label label-danger">5</span> */}
         </a>
         <ul className="dropdown-menu pull-right">
           <li className="stats-body">
