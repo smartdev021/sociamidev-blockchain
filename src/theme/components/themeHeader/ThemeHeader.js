@@ -22,52 +22,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import PubSub from 'pubsub-js';
 
 import '~/src/theme/css/ThemeHeader.css';
-
-// const Header = ({ openMenu }) => {
-//     return (
-//       <div className="header">
-//         <button className="burger" onClick={openMenu}>
-//           <span> </span>
-//           <span> </span>
-//           <span> </span>
-//         </button>
-//         <button type="button" className="navbar-button">
-//           <div className="navbar-btn-img">
-//             <img
-//             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/challenges.png"
-//             style={{ width: '20px' }}
-//             />
-//           </div>
-//           <div className="navbar-btn-name">
-//             Challenges
-//           </div>
-//         </button>
-//         <button type="button" className="navbar-button">
-//           <div className="navbar-btn-img">
-//             <img
-//             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/challenges.png"
-//             style={{ width: '20px' }}
-//             />
-//           </div>
-//           <div className="navbar-btn-name">
-//             Progression
-//           </div>
-//         </button>
-//         <button type="button" className="navbar-button">
-//           <div className="navbar-btn-img">
-//             <img
-//             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/challenges.png"
-//             style={{ width: '20px' }}
-//             />
-//           </div>
-//           <div className="navbar-btn-name">
-//             Tasks
-//           </div>
-//         </button>
-//         <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
-//       </div>
-//     );
-//   };
   
   const Logo = () => {
     return (
@@ -90,44 +44,90 @@ import '~/src/theme/css/ThemeHeader.css';
         <button type="button" className="close-menu" onClick={closeMenu}>
           <span>x</span>
         </button>
-        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" />
+        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" 
+        style={{paddingBottom: '20px'}}
+        />
         <footer>
-          <div className="row">
-            <button type="button" className="navbar-button">
+          <div className="navbar-btn-row">
+            <Link to="/projectManagement" className="navbar-button"> 
               <div className="navbar-btn-img">
                 <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
-                style={{ width: '20px' }}
+                style={{ width: '18px' }}
                 />
               </div>
-              <Link to="/projectManagement" className="navbar-btn-name">
+              <div className="navbar-btn-name">
                 Challenges
-              </Link>
-            </button>
-            <button type="button" className="navbar-button">
+              </div>
+            </Link>
+          
+          
+            <Link to="/projectManagement" className="navbar-button">
               <div className="navbar-btn-img">
                 <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
-                style={{ width: '20px' }}
+                style={{ width: '18px' }}
                 />
               </div>
-              <Link to="/progressionTrees" className="navbar-btn-name">
+              <div className="navbar-btn-name">
                 Progression
-              </Link>
-            </button>
+              </div>
+            </Link>
           </div>
-          <div className="row">
-            <button type="button" className="navbar-button">
+          <div className="navbar-btn-row">
+            <Link to="/taskManagement" className="navbar-button">
               <div className="navbar-btn-img">
                 <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
-                style={{ width: '20px' }}
+                style={{ width: '18px' }}
                 />
               </div>
-              <Link to="/taskManagement" className="navbar-btn-name">
+              <div className="navbar-btn-name">
                 Tasks
-              </Link>
-            </button>
+              </div>
+            </Link>
+          </div>
+          <div className="navbar-mobile-options">
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">
+              <img className="navbar-option-icon"
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"
+              />
+              States</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">
+              <img className="navbar-option-icon"
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"
+              />
+              Notification</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">
+              <img className="navbar-option-icon"
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
+              />
+              Add Soqqler</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">Your Profile</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">Settings</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">Team Setup</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
+            <Link to="" className="navbar-option">
+              <div className="navbar-option-name">Logout</div>
+              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+            </Link>
           </div>
         </footer>
       </div>
@@ -290,42 +290,44 @@ class ThemeHeader extends React.Component {
                     <span> </span>
                     <span> </span>
                   </button>
-                  <button type="button" className="navbar-button">
+                  
+                  <Link to="/projectManagement" className="navbar-button"> 
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
-                      style={{ width: '20px' }}
+                      style={{ width: '18px' }}
                       />
                     </div>
-                    {/* <div className="navbar-btn-name">
+                    <div className="navbar-btn-name">
                       Challenges
-                    </div> */}
-                    <Link to="/projectManagement" className="navbar-btn-name">
-                      Challenges
-                    </Link>
-                  </button>
-                  <button type="button" className="navbar-button">
+                    </div>
+                  </Link>
+                
+                
+                  <Link to="/projectManagement" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
-                      style={{ width: '20px' }}
+                      style={{ width: '18px' }}
                       />
                     </div>
-                    <Link to="/progressionTrees" className="navbar-btn-name">
+                    <div className="navbar-btn-name">
                       Progression
-                    </Link>
-                  </button>
-                  <button type="button" className="navbar-button">
+                    </div>
+                  </Link>
+                
+                  <Link to="/taskManagement" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
-                      style={{ width: '20px' }}
+                      style={{ width: '18px' }}
                       />
                     </div>
-                    <Link to="/taskManagement" className="navbar-btn-name">
+                    <div className="navbar-btn-name">
                       Tasks
-                    </Link>
-                  </button>
+                    </div>
+                  </Link>
+
                   <div className="navbar-options">
                     <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
                     <li className="notification">

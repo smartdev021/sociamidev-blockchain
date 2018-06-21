@@ -1,7 +1,3 @@
-/* .soqqle-page-content div:first-of-type{
-    padding-top: 50px;
-} */
-
 .soqqle-header{
     position: fixed;
     width: 100%;
@@ -49,23 +45,23 @@
 
 @media screen and (max-width: 750px) {
     .navbar-wrapper .header .burger {
-        display: inline-block;
-        padding: 12px 50px 12px 19px;
-        transform: skew(37deg);
-        margin: 2px;
+      display: inline-block;
+      padding: 10px 50px 0px 4px;
+      transform: skew(37deg);
+      margin: 2px;
     }
 }
 
 .navbar-wrapper .header .burger span {
     display: block;
     width: 40px;
-    height: 1px;
+    height: 2px;
     background: #fff;
 }
 
 @media screen and (max-width: 750px) {
     .navbar-wrapper .header .burger span {
-        width: 18px;
+        width: 20px;
     }
 }
 
@@ -89,35 +85,53 @@
     transform: skew(8deg);
 }
 
+.navbar-wrapper .header .navbar-button {
+    margin: 15px 6px;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    background: none;
+    border: 0;
+    outline: 0;
+    transform: skew(8deg);
+    display: inline-block;
+    text-align: center;
+}
+
 @media screen and (max-width: 750px) {
     .navbar-wrapper .header button {
         display: none;
     }
+    .navbar-wrapper .header .navbar-button {
+        display: none;
+    }
 }
 
-.navbar-wrapper .header button.navbar-button {
+.navbar-wrapper .header a.navbar-button {
     padding: 7px 25px;
     margin-left: 9px;
     font-family: "MyriadPro Semibold";
-    background: #2c82df;
+    background-color: rgb(0, 105, 186);
+    box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);
+    width: 172px;
+    height: 32px;
 }
 
 .navbar-wrapper .navbar-button .navbar-btn-name{
     display: inline-block;
-    transform: skew(29deg);
+    transform: skew(33deg);
     color: white;
 }
 
 .navbar-wrapper .navbar-button .navbar-btn-img{
     display: inline-block;
-    transform: skew(29deg);
+    transform: skew(33deg);
     margin-right: 8px;
 }
 
-.navbar-wrapper .header button p {
+/* .navbar-wrapper .header button p {
     margin: 0;
-    transform: skew(29deg);
-}
+    transform: skew(33deg);
+} */
 
 .navbar-wrapper .logo {
     position: absolute;
@@ -227,16 +241,14 @@
 }
 
 .navbar-wrapper .mobile-menu .navbar-button {
-    margin: 15px 6px;
-    font: normal 20px "MyriadPro Regular";
+    margin: 8px 10px;
+    font: normal 20px "MyriadPro Semibold";
     color: #fff;
-    border: 0;
-    outline: 0;
-    transform: skew(-38deg);
-    padding: 7px 12px;
-    font-family: "MyriadPro Semibold";
-    background: #2c82df;
+    padding: 7px 9px;
+    background-color: rgb(0, 105, 186);
+    box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);
     width: 155px;
+    display: inline-block;
 }
 
 .navbar-wrapper .mobile-menu .navbar-button .navbar-btn-name{
@@ -260,6 +272,10 @@
     display: list-item;
 }
 
+.navbar-wrapper .mobile-menu footer .navbar-btn-row{
+    transform: skew(-38deg);
+}
+
 .navbar-wrapper .header .navbar-options{
     float: right;
     padding: 7px 25px;
@@ -280,7 +296,7 @@
 .navbar-wrapper .header .navbar-options li a i,
 .navbar-wrapper .header .navbar-options li a span{
     color: white;
-    font-size: 26px;
+    font-size: 25px;
 }
 
 @media screen and (max-width: 750px) {
@@ -302,4 +318,25 @@
     .navbar-wrapper .header .navbar-options li a span{
         font-size: 18px;
     }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options {
+        padding: 20px;
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options a.navbar-option {
+        display: flow-root;
+        color: white;
+        font: normal 20px "MyriadPro Semibold";
+        padding: 8px;
+        border-bottom: 1px solid rgb(128, 128, 128);
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options a.navbar-option .navbar-option-name {
+        float: left;
+        display: flex;
+    }
+    .navbar-wrapper .mobile-menu footer .navbar-mobile-options a.navbar-option i {
+        float: right;
+    }
+    .navbar-option-icon{
+        width: 20px !important;
+        margin-right: 10px !important;    
+    }  
 }
