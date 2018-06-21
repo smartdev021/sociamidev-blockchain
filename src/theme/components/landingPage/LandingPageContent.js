@@ -246,7 +246,7 @@ const WorkExplanation = () => {
             tasks.
             Develop together the same way.</p>
           <p>There are 6 houses available in BETA.</p>
-          <a href="">Explore house &#62;</a>
+          <a href="/houses" className="explore-house">Explore house &#62;</a>
         </div>
       </section>
       <section className="select-hero clearfix">
