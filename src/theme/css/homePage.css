@@ -20,7 +20,7 @@
   background-color: rgba(255, 255, 255, 0.8);
 }
 .progression-tree-container{
-  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/progression_trees_background.jpg);
+  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/homepage_background.jpg);
   overflow: auto;
   background-size: cover;
   min-height: 100vh;
