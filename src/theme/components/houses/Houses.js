@@ -48,7 +48,7 @@ class Houses extends Component {
               <div className="box-wp">
                 <h2>Bot Tinkerer</h2>
                 <ul>
-                  <li>Data Scienc</li>
+                  <li>Data Science</li>
                   <li>Robotics</li>
                 </ul>
                 <p>The Bot Tinkerers started early by infusing both physical and mental automation in the form of robots. They have been able to work very closely with the App Ninjas in the latest of Robotics to create robots that harness the full power of automation. </p>
