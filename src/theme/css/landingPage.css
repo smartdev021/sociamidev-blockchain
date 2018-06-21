@@ -1542,6 +1542,11 @@ html.vertical-hidden {
     margin: 0 0 0 193px;
 }
 
+.landing-page-wrapper .work-explanation .select-house .explore-house {
+  position: relative;
+  z-index: 99;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation .select-house .description,
     .landing-page-wrapper .work-explanation .select-house .images-wrapper,
