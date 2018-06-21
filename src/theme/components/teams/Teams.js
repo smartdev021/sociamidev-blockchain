@@ -74,7 +74,7 @@ class Teams extends React.Component {
       <div className="my-teams-container">
         <div className="row team-header">
           <div className="my-teams-header">
-            <b>My teams</b>
+            <b>{this.props.company.name || 'My teams'}</b>
           </div>
           <h5>Some dummy text here</h5>
           <div className="create-new-team-btn">
