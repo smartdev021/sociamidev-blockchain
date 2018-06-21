@@ -23,116 +23,116 @@ import PubSub from 'pubsub-js';
 
 import '~/src/theme/css/ThemeHeader.css';
   
-  const Logo = () => {
-    return (
-      <div className="logo">
-        <Link to="/">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-            alt="logo"
-          />
-        </Link>
-      </div>
-    );
-  };
-  
-  const MobileMenu = ({ isOpen, closeMenu }) => {
-    const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
-  
-    return (
-      <div className={mobileClass}>
-        <button type="button" className="close-menu" onClick={closeMenu}>
-          <span>x</span>
-        </button>
-        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" 
-        style={{paddingBottom: '20px'}}
+const Logo = () => {
+  return (
+    <div className="logo">
+      <Link to="/">
+        <img
+          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          alt="logo"
         />
-        <footer>
-          <div className="navbar-btn-row">
-            <Link to="/projectManagement" className="navbar-button"> 
-              <div className="navbar-btn-img">
-                <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
-                style={{ width: '18px' }}
-                />
-              </div>
-              <div className="navbar-btn-name">
-                Challenges
-              </div>
-            </Link>
-          
-          
-            <Link to="/progressionTrees" className="navbar-button">
-              <div className="navbar-btn-img">
-                <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
-                style={{ width: '18px' }}
-                />
-              </div>
-              <div className="navbar-btn-name">
-                Progression
-              </div>
-            </Link>
-          </div>
-          <div className="navbar-btn-row">
-            <Link to="/taskManagement" className="navbar-button">
-              <div className="navbar-btn-img">
-                <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
-                style={{ width: '18px' }}
-                />
-              </div>
-              <div className="navbar-btn-name">
-                Tasks
-              </div>
-            </Link>
-          </div>
-          <div className="navbar-mobile-options">
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">
-              <img className="navbar-option-icon"
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"
+      </Link>
+    </div>
+  );
+};
+  
+const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
+  const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
+
+  return (
+    <div className={mobileClass}>
+      <button type="button" className="close-menu" onClick={closeMenu}>
+        <span>x</span>
+      </button>
+      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" 
+      style={{paddingBottom: '20px'}}
+      />
+      <footer>
+        <div className="navbar-btn-row">
+          <Link to="/projectManagement" className="navbar-button"> 
+            <div className="navbar-btn-img">
+              <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
+              style={{ width: '18px' }}
               />
-              States</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">
-              <img className="navbar-option-icon"
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"
+            </div>
+            <div className="navbar-btn-name">
+              Challenges
+            </div>
+          </Link>
+        
+        
+          <Link to="/progressionTrees" className="navbar-button">
+            <div className="navbar-btn-img">
+              <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
+              style={{ width: '18px' }}
               />
-              Notification</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">
-              <img className="navbar-option-icon"
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
+            </div>
+            <div className="navbar-btn-name">
+              Progression
+            </div>
+          </Link>
+        </div>
+        <div className="navbar-btn-row">
+          <Link to="/taskManagement" className="navbar-button">
+            <div className="navbar-btn-img">
+              <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
+              style={{ width: '18px' }}
               />
-              Add Soqqler</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">Your Profile</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">Settings</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">Team Setup</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-            <Link to="" className="navbar-option">
-              <div className="navbar-option-name">Logout</div>
-              <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-            </Link>
-          </div>
-        </footer>
-      </div>
-    );
-  };
+            </div>
+            <div className="navbar-btn-name">
+              Tasks
+            </div>
+          </Link>
+        </div>
+        <div className="navbar-mobile-options">
+          <Link to="" className="navbar-option">
+            <div className="navbar-option-name">
+            <img className="navbar-option-icon"
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"
+            />
+            States</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </Link>
+          <Link to="" className="navbar-option">
+            <div className="navbar-option-name">
+            <img className="navbar-option-icon"
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"
+            />
+            Notification</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </Link>
+          <Link to="/connectionsView" className="navbar-option">
+            <div className="navbar-option-name">
+            <img className="navbar-option-icon"
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
+            />
+            Add Soqqler</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </Link>
+          <Link to="/userProfile" className="navbar-option">
+            <div className="navbar-option-name">Your Profile</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </Link>
+          <Link to="" className="navbar-option">
+            <div className="navbar-option-name">Settings</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </Link>
+          <Link to="/teams" className="navbar-option">
+            <div className="navbar-option-name">Team Setup</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </Link>
+          <ActionLink className="navbar-option" href="#" onClick={onSignOut}>
+            <div className="navbar-option-name">Logout</div>
+            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
+          </ActionLink>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
 class ThemeHeader extends React.Component {
   constructor(props) {
@@ -144,28 +144,29 @@ class ThemeHeader extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.onSignOut = this.onSignOut.bind(this);
   }
 
   componentDidMount() {
-    $(window).scroll(function() {
-      var distanceY = window.pageYOffset;
-      var breakpoint = 100;
-      var soqqleLogo = $('.logo');
-      var navLinks = $('#nav-links');
-      var navTasks = $('#nav-tasks');
-      var sessionHeader = $('.session-header');
-      if (distanceY > breakpoint) {
-        soqqleLogo.addClass('logo-scroll');
-        navLinks.addClass('nav-links-scroll');
-        navTasks.addClass('nav-tasks-scroll');
-        sessionHeader.addClass('session-header-scroll');
-      } else {
-        soqqleLogo.removeClass('logo-scroll');
-        navLinks.removeClass('nav-links-scroll');
-        navTasks.removeClass('nav-tasks-scroll');
-        sessionHeader.removeClass('session-header-scroll');
-      }
-    });
+    // $(window).scroll(function() {
+    //   var distanceY = window.pageYOffset;
+    //   var breakpoint = 100;
+    //   var soqqleLogo = $('.logo');
+    //   var navLinks = $('#nav-links');
+    //   var navTasks = $('#nav-tasks');
+    //   var sessionHeader = $('.session-header');
+    //   if (distanceY > breakpoint) {
+    //     soqqleLogo.addClass('logo-scroll');
+    //     navLinks.addClass('nav-links-scroll');
+    //     navTasks.addClass('nav-tasks-scroll');
+    //     sessionHeader.addClass('session-header-scroll');
+    //   } else {
+    //     soqqleLogo.removeClass('logo-scroll');
+    //     navLinks.removeClass('nav-links-scroll');
+    //     navTasks.removeClass('nav-tasks-scroll');
+    //     sessionHeader.removeClass('session-header-scroll');
+    //   }
+    // });
   }
 
   handleNotificationsOpen() {
@@ -349,7 +350,7 @@ class ThemeHeader extends React.Component {
                   </div>
                 </div>
             </header>
-            <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle}/>
+            <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle} onSignOut={this.onSignOut}/>
         </div>
       </div>
     );
