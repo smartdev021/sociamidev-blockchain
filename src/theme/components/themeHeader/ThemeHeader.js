@@ -62,7 +62,7 @@ import '~/src/theme/css/ThemeHeader.css';
             </Link>
           
           
-            <Link to="/projectManagement" className="navbar-button">
+            <Link to="/progressionTrees" className="navbar-button">
               <div className="navbar-btn-img">
                 <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
@@ -304,7 +304,7 @@ class ThemeHeader extends React.Component {
                   </Link>
                 
                 
-                  <Link to="/projectManagement" className="navbar-button">
+                  <Link to="/progressionTrees" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
