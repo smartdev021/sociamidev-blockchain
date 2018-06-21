@@ -173,6 +173,7 @@ const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
   userActivities: state.userProfile.activities.data,
   isAdmin: state.userProfile.isAdmin,
+  company: state.userProfile.company
 });
 
 export default withRouter(

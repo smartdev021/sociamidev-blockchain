@@ -56,6 +56,7 @@ const userProfileInitialState = {
   isAuthorized: false,
   isLoading: false,
   isAdmin: false,
+  company: {}
 };
 
 export function userProfile(state = userProfileInitialState, action) {
@@ -73,6 +74,7 @@ export function userProfile(state = userProfileInitialState, action) {
         isAdmin: action.isAdmin,
         isAuthorized: action.isAuthorized,
         isLoading: false,
+        company: action.company || {}
       };
     case UPDATE_USER_PROFILE_INITIATE:
       return { ...state, isLoading: true };
