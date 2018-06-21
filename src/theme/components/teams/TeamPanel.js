@@ -10,7 +10,15 @@ class TeamPanel extends React.Component {
     this.state = {
       addEmailBoolean: false,
       deleteModal: false,
+      renameTitle: !props.team._id
     };
+    this.updateTeamName = this.updateTeamName.bind(this);
+    this.toggleEmailAdd = this.toggleEmailAdd.bind(this);
+    this.toggleEditTitle = this.toggleEditTitle.bind(this);
+    this.addEmail = this.addEmail.bind(this);
+    this.handleDeleteTeam = this.handleDeleteTeam.bind(this);
+    this.cancelRename = this.cancelRename.bind(this);
+    this.handleUpdateEmail = this.handleUpdateEmail.bind(this);
   }
 
   componentWillMount() {
@@ -36,38 +44,141 @@ class TeamPanel extends React.Component {
     Modal.defaultStyles.content['boxShadow'] = '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.team._id !== prevProps.team._id || this.props.team.name !== prevProps.team.name) {
+      this.setState({renameTitle: !this.props.team._id});
+    }
+    if (this.props.team.emails.length !== prevProps.team.emails.length) {
+      this.setState({addEmailBoolean: false});
+    }
+  }
+
   addEmailToTeam() {
     this.setState({ addEmailBoolean: !this.state.addEmailBoolean });
+  }
+
+  cancelEmail(){
+    this.setState({ addEmailBoolean: !this.state.addEmailBoolean });
+    this.props.onCancel(this.props.team);
   }
 
   deleteTeam() {
     this.setState({ deleteModal: !this.state.deleteModal });
   }
 
+  toggleEmailAdd(){
+    this.setState(prevState => ({addEmailBoolean : !prevState.addEmailBoolean}))
+  }
+  
+  updateTeamName() {
+    let team = Object.assign({}, this.props.team);
+    team['name'] = this.teamNameInupt.value;
+    this.props.onSave(team);
+  }
+
+  toggleEditTitle(){
+    this.setState(prevState => ({renameTitle: !prevState.renameTitle}));
+  }
+
+  cancelRename(){
+    this.setState(prevState => ({renameTitle: !prevState.renameTitle}));
+    this.props.onCancel(this.props.team);
+  }
+
+  handleUpdateEmail(emailIndex,emailObj,newEmail) {
+    this.props.onUpdateEmail(emailIndex, emailObj.email, newEmail, this.props.team);
+  }
+
   renderEmails(emails) {
     let listItems = emails.map((item, index) => {
-      return <EmailBlock email={item} index={index} />;
+      return <EmailBlock email={item} onSave={(val) => this.handleUpdateEmail(index,item,val)} key={index} index={index} />;
     });
 
     return listItems;
   }
 
+  addEmail() {
+    this.props.onAddEmail(this.addEmailInupt.value, this.props.team);
+  }
+
+  handleDeleteTeam() {
+    this.props.onDeleteTeam(this.props.team._id);
+  }
+
   render() {
     const { team, index } = this.props;
 
+    let header;
+    if (this.state.renameTitle) {
+        header = (
+            <div className="team-headers">
+                <div className="team-titles">
+                    <div className="team-title">
+                        <div className="team-email-item-editing">
+                            <div className="team-email-edit-box">
+                                <input className="team-email-edit-input" defaultValue={team.name} ref={input=>{ this.teamNameInupt = input }} />
+                                <div className="team-email-edit-options">
+                                    <a className="pull-left team-email-edit-button team-email-cancel-btn" onClick={this.cancelRename}>Cancel</a>
+                                    <a className="pull-right team-email-edit-button  team-email-save-btn" onClick={this.updateTeamName}>Save</a>
+                                </div>
+                            </div>
+
+                            <div className="email-edit-lightbox">
+
+                            </div>              
+                            
+                        </div>
+                    </div>
+                    <div className="team-date">{team.date}</div>
+                </div>
+            </div>
+        );
+    } else {
+        header = (
+            <div className="team-headers">
+            <div className="team-titles">
+              <div className="team-title">{team.name}</div>
+              <div className="team-date">{team.date}</div>
+            </div>
+            <div className="btn-group team-menu-group">
+              <button
+                type="button"
+                id="team-menu"
+                className="team-menu dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i className="fa fa-bars" />
+              </button>
+              <ul
+                className="dropdown-menu team-dropdown-menu"
+                style={{ right: '0', left: 'auto', minWidth: '70px' }}
+              >
+                <li>
+                  <a href="#" onClick={this.toggleEditTitle}>Rename</a>
+                </li>
+                <li>
+                  <a onClick={() => this.deleteTeam()}>Delete</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
+    }
     let footer;
     if (this.state.addEmailBoolean) {
       footer = (
         <div className="team-add-email-input">
           <div className="">
-            <input className="team-email-input" type="text" />
+            <input className="team-email-input" type="text" ref={input=>{ this.addEmailInupt = input }} />
           </div>
 
           <div className="team-email-options">
-            <a className="pull-left" onClick={() => this.addEmailToTeam()}>
+            <a className="pull-left" onClick={() => this.cancelEmail()}>
               Cancel
             </a>
-            <a className="pull-right">Add</a>
+            <a className="pull-right" onClick={this.addEmail}>Add</a>
           </div>
         </div>
       );
@@ -98,7 +209,7 @@ class TeamPanel extends React.Component {
               Do you want to delete <strong>{this.props.team.name}</strong> ?
             </p>
             <div className="delete-team-btn-group">
-              <button className="btn delete-team-btn-yes">Yes</button>
+              <button className="btn delete-team-btn-yes" onClick={this.handleDeleteTeam}>Yes</button>
               <button className="btn  delete-team-btn-no" onClick={() => this.deleteTeam()}>
                 No
               </button>
@@ -112,35 +223,7 @@ class TeamPanel extends React.Component {
       <div className="team-container" key={index}>
         {deleteModalPopup}
         <div className="team-list">
-          <div className="team-headers">
-            <div className="team-titles">
-              <div className="team-title">{team.name}</div>
-              <div className="team-date">{team.date}</div>
-            </div>
-            <div className="btn-group team-menu-group">
-              <button
-                type="button"
-                id="team-menu"
-                className="team-menu dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i className="fa fa-bars" />
-              </button>
-              <ul
-                className="dropdown-menu team-dropdown-menu"
-                style={{ right: '0', left: 'auto', minWidth: '70px' }}
-              >
-                <li>
-                  <a href="#">Rename</a>
-                </li>
-                <li>
-                  <a onClick={() => this.deleteTeam()}>Delete</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          {header}
           <div className="team-email-container">{this.renderEmails(team.emails)}</div>
         </div>
 

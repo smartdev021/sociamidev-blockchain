@@ -139,3 +139,16 @@ export const USER_SIGN_UP = 'user_sign_up';
 export const USER_LOGIN = 'user_login'; // TODO not used
 
 export const USER_LOG_OUT = 'user_log_out';
+// Teams
+export const FETCH_TEAMS_INITIATE = 'fetch_teams_initiate';
+export const FETCH_TEAMS_COMPLETE = 'fetch_teams_complete';
+export const ADD_NEW_TEAM = 'add_new_team';
+export const SAVE_TEAM_INITIATE = 'save_team_initiate';
+export const SAVE_TEAM_COMPLETE = 'save_team_complete';
+export const ADD_EMAIL_INITIATE = 'add_email_initiate';
+export const ADD_EMAIL_COMPLETE = 'add_email_complete';
+export const UPDATE_EMAIL_INITIATE = 'update_email_initiate';
+export const UPDATE_EMAIL_COMPLETE = 'update_email_complete';
+export const DELETE_TEAM_INITIATE = 'delete_team_initiate';
+export const DELETE_TEAM_COMPLETE = 'delete_team_complete';
+
