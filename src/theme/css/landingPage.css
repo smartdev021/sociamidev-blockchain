@@ -40,7 +40,7 @@ h3 {
     content: ' ';
 }
 
-body,
+/* body,
 html {
     overflow-x: hidden;
 }
@@ -48,13 +48,13 @@ html {
 body.vertical-hidden,
 html.vertical-hidden {
     overflow-y: hidden;
-}
+} */
 
 .landing-page-container{
     height: 100%;
     min-height: 100vh;
     display: block;
-    overflow: auto;
+    overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
