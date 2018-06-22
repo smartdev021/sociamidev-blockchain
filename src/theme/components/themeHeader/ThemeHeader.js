@@ -49,7 +49,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
       />
       <footer>
         <div className="navbar-btn-row">
-          <Link to="/projectManagement" className="navbar-button"> 
+          <Link to="/projectManagement" className="navbar-button" onClick={closeMenu}>
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
@@ -62,7 +62,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
           </Link>
         
         
-          <Link to="/progressionTrees" className="navbar-button">
+          <Link to="/progressionTrees" className="navbar-button" onClick={closeMenu}>
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
@@ -75,7 +75,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
           </Link>
         </div>
         <div className="navbar-btn-row">
-          <Link to="/taskManagement" className="navbar-button">
+          <Link to="/taskManagement" className="navbar-button" onClick={closeMenu}>
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
@@ -88,7 +88,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
           </Link>
         </div>
         <div className="navbar-mobile-options">
-          <Link to="" className="navbar-option">
+          <Link to="" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">
             <img className="navbar-option-icon"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"
@@ -96,7 +96,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
             States</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
-          <Link to="" className="navbar-option">
+          <Link to="" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">
             <img className="navbar-option-icon"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"
@@ -104,7 +104,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
             Notification</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
-          <Link to="/connectionsView" className="navbar-option">
+          <Link to="/connectionsView" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">
             <img className="navbar-option-icon"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
@@ -112,15 +112,15 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
             Add Soqqler</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
-          <Link to="/userProfile" className="navbar-option">
+          <Link to="/userProfile" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">Your Profile</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
-          <Link to="" className="navbar-option">
+          <Link to="" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">Settings</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
-          <Link to="/teams" className="navbar-option">
+          <Link to="/teams" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">Team Setup</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
