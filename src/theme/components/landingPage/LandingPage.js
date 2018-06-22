@@ -83,7 +83,7 @@ const Footer = () => {
 
 const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
   return (
-    <div className="header" onMouseLeave={onEmailInputHide}>
+    <div className="header">
       <button className="burger" onClick={openMenu}>
         <span> </span>
         <span> </span>
