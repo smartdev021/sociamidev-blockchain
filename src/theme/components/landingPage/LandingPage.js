@@ -152,7 +152,7 @@ class LandingPage extends Component {
 
   render() {
     return (
-      <div className="landing-page-wrapper">
+      <div className="landing-page-wrapper landing-page-container">
         {this.renderSignUpForm()}
         <header>
           <Logo/>

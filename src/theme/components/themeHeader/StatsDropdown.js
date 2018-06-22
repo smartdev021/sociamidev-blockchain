@@ -1,13 +1,13 @@
 /*
     author: Akshay Menon
 */
-require('~/src/css/StatsDropdown.css');
-
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import '~/src/theme/css/StatsDropdown.css';
 
 const NullProgTreeLevelItem = props => {
   const { item } = props;
