@@ -13,7 +13,10 @@ import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
 import Houses from "~/src/theme/components/houses/Houses";
+import Heroes from "~/src/theme/components/heroes/Heroes";
 import '~/src/theme/css/landingPage.css';
+import '~/src/theme/css/materialize.css';
+import '~/src/theme/css/materializeCommon.css';
 
 const Footer = () => {
   return (
@@ -145,6 +148,7 @@ class LandingPage extends Component {
         <Route exact path='/' render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
         <Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props}/>}/>
+        <Route exact path='/heroes' render={routeProps => <Heroes {...routeProps}{...this.props}/>}/>
         <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
       </Switch>
     );
