@@ -12,11 +12,11 @@ import { openSignUpForm } from '~/src/redux/actions/authorization';
 import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
-import Houses from "~/src/theme/components/houses/Houses";
-import Heroes from "~/src/theme/components/heroes/Heroes";
 import '~/src/theme/css/landingPage.css';
 import '~/src/theme/css/materialize.css';
 import '~/src/theme/css/materializeCommon.css';
+import Houses from "~/src/theme/components/houses/Houses";
+import Heroes from "~/src/theme/components/heroes/Heroes";
 
 const Footer = () => {
   return (
