@@ -246,7 +246,7 @@ const WorkExplanation = () => {
             tasks.
             Develop together the same way.</p>
           <p>There are 6 houses available in BETA.</p>
-          <a href="/houses" className="explore-house">Explore house &#62;</a>
+          <a href="/houses" className="explore-page">Explore Houses &#62;</a>
         </div>
       </section>
       <section className="select-hero clearfix">
@@ -271,7 +271,7 @@ const WorkExplanation = () => {
             challenges
             individually or with your friends.</p>
           <p>There are 4 heros available in BETA.</p>
-          <a href="">Explore Heroes &#62;</a>
+          <a href="/heroes" className="explore-page">Explore Heroes &#62;</a>
         </div>
       </section>
       <section className="get-reward clearfix">

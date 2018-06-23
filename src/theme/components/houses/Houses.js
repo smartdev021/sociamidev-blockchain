@@ -3,7 +3,6 @@
 */
 
 import React, { Component } from 'react';
-import '~/src/theme/css/materialize.css';
 import '~/src/theme/css/houses.css';
 
 class Houses extends Component {
@@ -13,7 +12,7 @@ class Houses extends Component {
 
   render() {
     return (
-      <div className="materialize-warper houses-wrapper">
+      <div className="materialize-warper common-mat-wrapper houses-wrapper">
         <div className="container">
           <h1 className="heading-primery pt-46">Houses</h1>
           <div className="row card_box valign-wrapper">
