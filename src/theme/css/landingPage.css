@@ -592,17 +592,164 @@ html.vertical-hidden {
     transform: skew(8deg);
 }
 
+/*Subscribe email input*/
+.landing-page-wrapper input[type="email"] {
+    background: transparent;
+}
+
+.landing-page-wrapper .header .landing-email-input-textfield-container {
+    height: 33px;
+    display: inline-block;
+    transform: skew(8deg);
+    border: 2px solid #2c82df;
+    width: 195px;
+}
+
+.landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"] {
+    height: 100%;
+    outline: 0;
+    border: none;
+    box-shadow:none;
+    font: normal 16px "MyriadPro Regular";
+    color: #fff;
+    transform: skew(29deg);
+    padding: 0 10px 0 10px;
+}
+
+.landing-page-wrapper input[type=email]:focus{
+    outline: 0 !important;
+    border: none !important;
+    box-shadow:none !important;
+  }
+
+.landing-page-wrapper .header button[type="submit"] {
+    margin-left: -10px;
+    height: 33px;
+    width: 50px;
+    background: #2c82df;
+    color: #fff;
+    font-family: "MyriadPro Semibold";
+    border: 0;
+    transform: skew(8deg);
+    -webkit-appearance: none;
+}
+
+.landing-page-wrapper input[type="email"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 1; /* Firefox */
+}
+
+.landing-page-wrapper input[type="email"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #fff;
+}
+
+.landing-page-wrapper input[type="email"]::-ms-input-placeholder { /* Microsoft Edge */
+    color: #fff;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .header button {
         display: none;
     }
+
+    .landing-page-wrapper .header .landing-email-input-textfield-container {
+        display: none;
+    }
 }
+
+/*mobile subscribe*/
+.mobile-menu-email-subscribe-container {
+    width: 250px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.mobile-menu-email-subscribe-container input {
+    width: 100%;
+}
+
+.mobile-menu-email-subscribe-container .landing-email-input-textfield-container {
+    transform: skew(-38deg);
+    border: 2px solid #2c82df;
+
+    padding: 0 10px 0 20px;
+}
+
+.mobile-menu-email-subscribe-container .landing-email-input-textfield-container input {
+    transform: skew(38deg);
+    height: auto;
+    outline: 0 !important;
+    border: none !important;
+    box-shadow:none !important;
+    font: normal 12px "MyriadPro Semibold";
+    color: #fff;
+}
+
+.modal-thank-you-subscribtion {
+    background: transparent;
+}
+
+.modal-thank-you-subscribtion .modal-header button.close {
+    display: none !important;
+}
+
+.modal-thank-you-subscribtion .modal-content {
+    /*transform: skew(-37deg);*/
+}
+
+.modal-thank-you-subscribtion .modal-content,
+.modal-thank-you-subscribtion .modal-footer,
+.modal-thank-you-subscribtion .modal-header {
+    background: black;
+    color: white;
+    font-family: "MyriadPro Regular";
+    border: none;
+    padding: 0;
+    text-align: center;
+}
+
+.modal-thank-you-subscribtion .modal-header {
+    padding-top: 10px;
+}
+
+.modal-thank-you-subscribtion .modal-footer {
+    padding-bottom: 20px;
+}
+
+.modal-thank-you-subscribtion .modal-footer button,
+.modal-thank-you-subscribtion .modal-header h4,
+.modal-thank-you-subscribtion .modal-body h5{
+    /*transform: skew(37deg);*/
+}
+
+.modal-thank-you-subscribtion .modal-footer button {
+    font-family: "MyriadPro Regular";
+    background: black;
+    border: 2px solid #2c82df;
+    color: white;
+    outline: none;
+}
+
+.modal-thank-you-subscribtion .modal-footer button:hover,
+.modal-thank-you-subscribtion .modal-footer button:focus {
+    background: #2c82df;
+    outline: none;
+}
+
+.modal-thank-you-subscribtion .modal-content {
+    border: 2px solid #2c82df;
+}
+/*****************/
 
 .landing-page-wrapper .header button.subscribe-button {
     padding: 5px 52px;
     margin-left: 33px;
     font-family: "MyriadPro Semibold";
     border: 2px solid #2c82df;
+}
+
+.landing-page-wrapper button:hover.subscribe-button {
+    background: #2c82df;
 }
 
 .landing-page-wrapper .header button.sign-up-button {
@@ -669,7 +816,7 @@ html.vertical-hidden {
     border: 0;
 }
 
-.landing-page-wrapper .mobile-menu span {
+.landing-page-wrapper .mobile-menu .close-menu span {
     position: relative;
     display: inline-block;
     width: 33px;
@@ -678,8 +825,8 @@ html.vertical-hidden {
     text-indent: -9999px;
 }
 
-.landing-page-wrapper .mobile-menu span::before,
-.landing-page-wrapper .mobile-menu span::after {
+.landing-page-wrapper .mobile-menu .close-menu span::before,
+.landing-page-wrapper .mobile-menu .close-menu span::after {
     position: absolute;
     top: 50%;
     left: 0;
@@ -690,11 +837,11 @@ html.vertical-hidden {
     content: '';
 }
 
-.landing-page-wrapper .mobile-menu span::before {
+.landing-page-wrapper .mobile-menu .close-menu span::before {
     transform: rotate(45deg);
 }
 
-.landing-page-wrapper .mobile-menu span::after {
+.landing-page-wrapper .mobile-menu .close-menu span::after {
     transform: rotate(-45deg);
 }
 
