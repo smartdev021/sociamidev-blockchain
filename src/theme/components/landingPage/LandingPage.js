@@ -17,7 +17,8 @@ import '~/src/theme/css/materialize.css';
 import '~/src/theme/css/materializeCommon.css';
 import Houses from "~/src/theme/components/houses/Houses";
 import Heroes from "~/src/theme/components/heroes/Heroes";
-
+import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
+import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
 //mailerlite subscribe
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
@@ -77,8 +78,8 @@ const Footer = () => {
       <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
         All trademarks referenced herein are the properties of their respective owners.</h4>
       <ul className="privacy-list">
-        <li>Privacy</li>
-        <li> Terms</li>
+        <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
+        <li><a href="/termsOfUse" target="_blank">Terms</a></li>
       </ul>
     </footer>
   );
@@ -235,6 +236,8 @@ class LandingPage extends Component {
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
         <Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props}/>}/>
         <Route exact path='/heroes' render={routeProps => <Heroes {...routeProps}{...this.props}/>}/>
+        <Route exact path="/privacyPolicy" render={routeProps => <PrivacyPolicy {...routeProps} {...this.props} />}/>
+        <Route exact path="/termsOfUse" render={routeProps => <TermsOfUse {...routeProps} {...this.props} />}/>
         <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
       </Switch>
     );
