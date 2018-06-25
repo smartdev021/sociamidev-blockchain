@@ -12,17 +12,23 @@ import {
   UPDATE_TASK_INITIATE,
   UPDATE_TASK_COMPLETE,
   SET_ACTIVE_HANGOUT,
-  RESET_ACTIVE_HANGOUT
+  RESET_ACTIVE_HANGOUT,
 } from '~/src/redux/actions/actionTypes';
 
-const tasksInitialState = { data: [], isFetchInProgress: false, isSaveInProgress: false, isUpdateInProgress: false, activeHangout: null };
+const tasksInitialState = {
+  data: [],
+  isFetchInProgress: false,
+  isSaveInProgress: false,
+  isUpdateInProgress: false,
+  activeHangout: null,
+};
 
 export function tasks(state = tasksInitialState, action) {
   switch (action.type) {
     case TASK_REMOVE: {
-      let findByID = function (task) {
+      let findByID = function(task) {
         return task._id == action._id;
-      }
+      };
 
       const foundIndex = state.data.findIndex(findByID);
 
@@ -50,9 +56,9 @@ export function tasks(state = tasksInitialState, action) {
     case UPDATE_TASK_INITIATE:
       return { ...state, isUpdateInProgress: true };
     case UPDATE_TASK_COMPLETE: {
-      let findByID = function (task) {
+      let findByID = function(task) {
         return task._id == action.task._id;
-      }
+      };
 
       let nextState = state;
 
@@ -64,8 +70,7 @@ export function tasks(state = tasksInitialState, action) {
           copyTasks.splice(foundIndex, 1);
 
           nextState = { ...state, data: copyTasks };
-        }
-        else {
+        } else {
           copyTasks[foundIndex] = action.task;
 
           nextState = { ...state, data: copyTasks };
@@ -77,9 +82,9 @@ export function tasks(state = tasksInitialState, action) {
       return nextState;
     }
     case TASK_UPDATE: {
-      let findByID = function (task) {
+      let findByID = function(task) {
         return task._id == action.task._id;
-      }
+      };
 
       const foundIndex = state.data.findIndex(findByID);
 
@@ -95,14 +100,14 @@ export function tasks(state = tasksInitialState, action) {
     case SET_ACTIVE_HANGOUT: {
       return {
         ...state,
-        activeHangout: action.hangout
-      }
+        activeHangout: action.hangout,
+      };
     }
     case RESET_ACTIVE_HANGOUT: {
       return {
         ...state,
-        activeHangout: null
-      }
+        activeHangout: null,
+      };
     }
     default:
       return state;
@@ -112,8 +117,7 @@ export function tasks(state = tasksInitialState, action) {
 export function lastSavedTask(state = {}, action) {
   if (action.type == TASK_LASTSAVED_SET) {
     return action.task;
-  }
-  else {
+  } else {
     return state;
   }
 }
@@ -121,8 +125,7 @@ export function lastSavedTask(state = {}, action) {
 export function lastStartedTask(state = {}, action) {
   if (action.type == TASK_LASTSTARTED_SET) {
     return action.task;
-  }
-  else {
+  } else {
     return state;
   }
 }

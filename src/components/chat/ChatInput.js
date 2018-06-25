@@ -11,34 +11,35 @@ class ChatInput extends React.Component {
     event.preventDefault();
 
     // Clear the input box
-    let copy = Object.assign({}, this.state, {chatInput: ''});
+    let copy = Object.assign({}, this.state, { chatInput: '' });
     this.setState(copy);
-  
+
     // Call the onSend callback with the chatInput message
     this.props.onSend(this.state.chatInput);
   }
 
-  textChangeHandler(event)  {
-    let copy = Object.assign({}, this.state, {chatInput: event.target.value});
+  textChangeHandler(event) {
+    let copy = Object.assign({}, this.state, { chatInput: event.target.value });
     this.setState(copy);
   }
 
   render() {
     return (
-      <form className="write" onSubmit={(event)=>this.submitHandler(event)}>
-        <a href="javascript:;" className="write-link attach"></a>
-        <input type="text"
-          onChange={(event)=>this.textChangeHandler(event)}
+      <form className="write" onSubmit={event => this.submitHandler(event)}>
+        <a href="javascript:;" className="write-link attach" />
+        <input
+          type="text"
+          onChange={event => this.textChangeHandler(event)}
           value={this.state.chatInput}
-          required />
-        <a href="javascript:;" className="write-link smiley"></a>
-        <a href="javascript:;" className="write-link send"></a>
+          required
+        />
+        <a href="javascript:;" className="write-link smiley" />
+        <a href="javascript:;" className="write-link send" />
       </form>
     );
   }
 }
 
-ChatInput.defaultProps = {
-};
+ChatInput.defaultProps = {};
 
 export default ChatInput;

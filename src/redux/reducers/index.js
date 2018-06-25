@@ -1,19 +1,26 @@
-import { combineReducers } from "redux"
+import { combineReducers } from 'redux';
 
-import { exactLocation } from "./miscReducers"
-import { bookmarks } from "./bookmarks"
-import { isFetchInProgress, searchResults, isOpenSearchResultsPending, searchQuery, resultsSelectedCategory } from "./fetchResults"
-import { roadmaps, roadmapsDetailed, roadmapsAdmin } from "./roadmaps"
-import { tasks, lastSavedTask, lastStartedTask } from "./tasks"
-import { isOpenProfilePending, userProfile, isSignUpFormOpen } from "./authorization"
-import { projects, isProjectSaveInProgress, isProjectsFetchInProgress} from "./projects"
-import { userFriends } from "./social"
-import { userFriendsActivities } from "./activities"
-import { characterCreation, characterCreationData } from "./characterCreation"
-import { accounting } from "./accounting"
-import { progression } from "./progression"
-import { achievements } from "./achievements"
+import { exactLocation } from './miscReducers';
+import { bookmarks } from './bookmarks';
+import {
+  isFetchInProgress,
+  searchResults,
+  isOpenSearchResultsPending,
+  searchQuery,
+  resultsSelectedCategory,
+} from './fetchResults';
+import { roadmaps, roadmapsDetailed, roadmapsAdmin } from './roadmaps';
+import { tasks, lastSavedTask, lastStartedTask } from './tasks';
+import { isOpenProfilePending, userProfile, isSignUpFormOpen } from './authorization';
+import { projects, isProjectSaveInProgress, isProjectsFetchInProgress } from './projects';
+import { userFriends } from './social';
+import { userFriendsActivities } from './activities';
+import { characterCreation, characterCreationData } from './characterCreation';
+import { accounting } from './accounting';
+import { progression } from './progression';
+import { achievements } from './achievements';
 import { timers } from './timers';
+import { teams } from './teams';
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -42,5 +49,6 @@ export default combineReducers({
   accounting,
   progression,
   achievements,
-  timers
+  timers,
+  teams
 });

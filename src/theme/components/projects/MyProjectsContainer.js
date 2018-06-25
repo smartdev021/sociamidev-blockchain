@@ -3,10 +3,10 @@
 */
 import React from 'react';
 
-import MyProjects from './MyProjects'
-import ActionLink from '~/src/components/common/ActionLink'
+import MyProjects from './MyProjects';
+import ActionLink from '~/src/components/common/ActionLink';
 
-const MyProjectsContainer = (props) => {
+const MyProjectsContainer = props => {
   return (
     <div id="project-manager-projects-container">
       <div className="container-fluid">
@@ -19,15 +19,15 @@ const MyProjectsContainer = (props) => {
           <div className="col-lg-12">
             <div id="project-manager-projects-bg">
               <div id="projects-list-container">
-                <MyProjects 
-                  projects={props.projects} 
-                  isAuthorized={props.isAuthorized} 
+                <MyProjects
+                  projects={props.projects}
+                  isAuthorized={props.isAuthorized}
                   isProjectsFetchInProgress={props.isProjectsFetchInProgress}
                   isProjectSaveInProgress={props.isProjectSaveInProgress}
-                  openModalWithProject={(index)=>props.openModalWithProject(index)}
+                  openModalWithProject={index => props.openModalWithProject(index)}
                 />
-                <ActionLink href='#' onClick={()=>props.openModal()}>
-                  <span className="glyphicon glyphicon-plus-sign" id="project-manager-add-project-btn"></span>
+                <ActionLink href="#" onClick={() => props.openModal()}>
+                  <span className="glyphicon glyphicon-plus-sign" id="project-manager-add-project-btn" />
                 </ActionLink>
               </div>
             </div>
@@ -36,6 +36,6 @@ const MyProjectsContainer = (props) => {
       </div>
     </div>
   );
-}
+};
 
 export default MyProjectsContainer;

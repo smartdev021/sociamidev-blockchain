@@ -76,7 +76,7 @@ class App extends Component {
       faceBookID: null,
       linkedInID: null,
       suspendRender: false,
-      verfiedSocketConnection: false,
+      chatInitialized: false,
       screenWidth: 0,
       screenHeight: 0,
     };
@@ -119,7 +119,6 @@ class App extends Component {
     });
 
     this.socket.on('EVENT', eventObj => {
-      console.log('Event Type - ' + eventObj.eventType);
       PubSub.publish(eventObj.eventType, eventObj);
     });
 
@@ -135,10 +134,7 @@ class App extends Component {
 
   uuidv1() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-      (
-        c ^
-        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-      ).toString(16)
+      (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16),
     );
   }
 
@@ -151,10 +147,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.cookies.getAll();
-    this.token_chat_token = PubSub.subscribe(
-      'ChatEndPoint',
-      this.chatEndListener.bind(this)
-    );
+    this.token_chat_token = PubSub.subscribe('ChatEndPoint', this.chatEndListener.bind(this));
 
     this.PubsubEventsSubscribe();
   }
@@ -177,19 +170,19 @@ class App extends Component {
     if (!this.token_server_event_tasks_update) {
       this.token_server_event_tasks_update = PubSub.subscribe(
         'tasks_update',
-        this.serverEventTasksUpdate.bind(this)
+        this.serverEventTasksUpdate.bind(this),
       );
     }
     if (!this.token_server_event_task_updated) {
       this.token_server_event_task_updated = PubSub.subscribe(
         'task_updated',
-        this.serverEventTaskUpdated.bind(this)
+        this.serverEventTaskUpdated.bind(this),
       );
     }
     if (!this.token_server_event_accounting_update) {
       this.token_server_event_accounting_update = PubSub.subscribe(
         'accounting_updated',
-        this.serverEventAccountingUpdated.bind(this)
+        this.serverEventAccountingUpdated.bind(this),
       );
     }
   }
@@ -212,23 +205,12 @@ class App extends Component {
   }
 
   serverEventTasksUpdate(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
-    console.dir(data);
-
     if (data.eventType == 'tasks_update') {
       this.props.fetchAllTasks(true);
     }
   }
 
   serverEventTaskUpdated(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
-
     if (data.eventType == 'task_updated') {
       if (data.task && data.task._id) {
         this.props.updateTask(data.task);
@@ -238,14 +220,8 @@ class App extends Component {
   }
 
   serverEventAccountingUpdated(msg, data) {
-    console.log(
-      `%cServer Event Received: ${msg}`,
-      'color:green;background:grey;'
-    );
-    console.dir(data);
-
     if (data.eventType == 'accounting_updated') {
-      this.fetchUserInfoFromDataBase(true);
+      this.fetchUserInfoFromDataBase();
       this.props.fetchUserAccounting(this.props.userProfile._id);
     }
   }
@@ -253,38 +229,27 @@ class App extends Component {
   handleAuthorizeLinked(id) {
     let copy = Object.assign({}, this.state, { linkedInID: id });
     this.setState(copy);
-    console.log('handleAuthorizeLinked id: ' + id);
   }
 
   handleAuthorizeFaceBook(id) {
     let copy = Object.assign({}, this.state, { faceBookID: id });
     this.setState(copy);
-    console.log('handleAuthorizeFaceBook id: ' + id);
   }
 
   storeCurrentLocationInCookies() {
     const { cookies } = this.props;
 
     let dateExpire = new Date();
-    dateExpire.setTime(
-      dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()
-    );
+    dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
 
     let options = { path: '/', expires: dateExpire };
 
     let lastLocation = Object.assign({}, this.props.history.location);
 
-    console.log('lastLocation: ' + lastLocation);
-
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
-    if (
-      this.props.exactLocation &&
-      this.props.exactLocation == 'RoadmapsWidgetDetails'
-    ) {
+    if (this.props.exactLocation && this.props.exactLocation == 'RoadmapsWidgetDetails') {
       lastLocation.pathname = '/taskManagement';
     }
-
-    console.log('lastLocation1: ' + lastLocation);
 
     cookies.set('lastLocation', lastLocation, options);
   }
@@ -292,17 +257,11 @@ class App extends Component {
   getCharacterCreationData() {
     let data = undefined;
 
-    if (
-      this.props.characterCreationData &&
-      this.props.characterCreationData.isInProgress
-    ) {
+    if (this.props.characterCreationData && this.props.characterCreationData.isInProgress) {
       data = {
-        characterName: this.props.listCharacters[
-          this.props.characterCreationData.selectedCharacterIndex
-        ].name,
-        traitsName: this.props.listCharacterTraits[
-          this.props.characterCreationData.selectedTraitsIndex
-        ].name,
+        characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]
+          .name,
+        traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
         traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
         characterIndex: this.props.characterCreationData.selectedCharacterIndex,
       };
@@ -346,9 +305,7 @@ class App extends Component {
 
     this.storeCurrentLocationInCookies();
 
-    window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join(
-      '&'
-    )}`;
+    window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
   }
 
   handleStartSearch() {
@@ -358,9 +315,7 @@ class App extends Component {
   startNewSearch(searchQuery) {
     if (!this.props.isFetchInProgress && searchQuery != '') {
       let dateExpire = new Date();
-      dateExpire.setTime(
-        dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod()
-      );
+      dateExpire.setTime(dateExpire.getTime() + ConfigMain.getCookiesExpirationPeriod());
       let options = { path: '/', expires: dateExpire };
 
       this.props.cookies.set('searchQuery', searchQuery, options);
@@ -374,21 +329,22 @@ class App extends Component {
 
   resetAuthentication() {
     let copy = Object.assign({}, this.state, {
-      linkedInID: '',
-      faceBookID: '',
-      profule: null,
+      linkedInID: null,
+      faceBookID: null,
+      userID: null,
     });
     this.setState(copy);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
 
   logout() {
+    this.resetAuthentication();
     this.props.logout(this.state.userID);
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
   }
+
   fetchUserInfoFromDataBase() {
-    if (this.state.faceBookID || this.state.linkedInID) {
-      this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID);
+    if (this.state.faceBookID || this.state.linkedInID || this.state.userID) {
+      this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID, this.state.userID);
     }
   }
 
@@ -417,15 +373,10 @@ class App extends Component {
 
     if (
       prevState.linkedInID != this.state.linkedInID ||
-      prevState.faceBookID != this.state.faceBookID
+      prevState.faceBookID != this.state.faceBookID ||
+      prevState.userID != this.state.userID
     ) {
-      console.log(
-        'componentDidUpdate this.state.linkedInID: ' +
-          this.state.linkedInID +
-          ' this.state.faceBookID: ' +
-          this.state.faceBookID
-      );
-      if (this.state.linkedInID || this.state.faceBookID) {
+      if (this.state.linkedInID || this.state.faceBookID || this.state.userID) {
         this.fetchUserInfoFromDataBase();
       }
     }
@@ -439,8 +390,6 @@ class App extends Component {
         && this.props.history.location.pathname != "/progressionTreeBrowser/"
           && this.props.history.location.pathname != "/skillBrowser"
             && this.props.history.location.pathname != "/skillBrowser/") {
-          console.log("this.props.history.location.pathname: " + this.props.history.location.pathname);
-          console.log("opening search results");
           this.props.openSearchResults();
         }
       }*/
@@ -452,24 +401,7 @@ class App extends Component {
         firstName: this.props.userProfile.firstName,
         lastName: this.props.userProfile.lastName,
       });
-
-      this.setState(copy);
-    }
-
-    if (prevProps != this.props) {
-      console.log('App props updated: ');
-      console.dir(this.props);
-    }
-
-    if (this.props.cookies != prevProps.cookies) {
-      console.log('Cookies has been changed');
-    }
-
-    if (this.state.userID && this.state.verfiedSocketConnection == false) {
-      let copy = Object.assign({}, this.state, {
-        verfiedSocketConnection: true,
-      });
-      this.setState(copy);
+      this.setState(copy, () => this.saveAuthToLS());
     }
 
     if (prevProps.isAuthorized != this.props.isAuthorized) {
@@ -480,6 +412,7 @@ class App extends Component {
         this.PubsubEventsUnSubscribe();
         this.PubsubEventsSubscribe();
         this.saveAuthToLS();
+        this.chatLogIn();
 
         this.props.fetchUserActivities(this.props.userProfile._id);
 
@@ -500,7 +433,8 @@ class App extends Component {
       JSON.stringify({
         faceBookID: this.state.faceBookID,
         linkedInID: this.state.linkedInID,
-      })
+        userID: this.state.userID,
+      }),
     );
   }
 
@@ -508,10 +442,17 @@ class App extends Component {
     const jsonData = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (jsonData) {
       const authData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-      this.setState({
-        faceBookID: authData.faceBookID,
-        linkedInID: authData.linkedInID,
-      });
+      // we have valid credential?
+      if (authData.faceBookID || authData.linkedInID || authData.userID) {
+        this.setState({
+          faceBookID: authData.faceBookID,
+          linkedInID: authData.linkedInID,
+          userID: authData.userID,
+        });
+      } else {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        this.setState({ suspendRender: false });
+      }
     }
   }
 
@@ -534,9 +475,7 @@ class App extends Component {
     let ProfileLink = '';
     if (this.props.isAuthorized) {
       ProfileLink = (
-        <Link
-          className="btn btn-lg btn-outline-inverse pull-right"
-          to="/userProfile">
+        <Link className="btn btn-lg btn-outline-inverse pull-right" to="/userProfile">
           Your account
         </Link>
       );
@@ -544,7 +483,8 @@ class App extends Component {
       ProfileLink = (
         <ActionLink
           className="btn btn-lg btn-outline-inverse pull-right loginButton"
-          onClick={() => this.props.openSignUpForm()}>
+          onClick={() => this.props.openSignUpForm()}
+        >
           Connect with...
         </ActionLink>
       );
@@ -554,14 +494,41 @@ class App extends Component {
   }
 
   handleCharacterDataSet() {
-    this.props.setUserProfileCharacter(
-      this.props.userProfile._id,
-      this.getCharacterCreationData()
-    );
+    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
   }
 
   chatEndListener(event, data) {
     socketConn.emit(data.eventType, data.data);
+  }
+
+  chatLogIn() {
+    if (this.state.userID && this.state.chatInitialized == false) {
+      let username = '';
+      let userType = '';
+
+      if (this.state.faceBookID) {
+        username = this.state.faceBookID;
+        userType = 'facebook';
+      } else if (this.state.linkedInID) {
+        username = this.state.linkedInID;
+        userType = 'linkedin';
+      } else {
+        userType = 'email';
+        username = this.state.userID;
+      }
+
+      let userData = {
+        username: username,
+        userType: userType,
+        userID: this.state.userID,
+        firstName: this.props.userProfile.firstName || '',
+        lastName: this.props.userProfile.lastName || '',
+      };
+
+      this.setState({ chatInitialized: true }, () => {
+        socketConn.emit('UserLoggedIn', userData);
+      });
+    }
   }
 
   render() {
@@ -582,41 +549,14 @@ class App extends Component {
       );
     }
     let RedirectTo = this.getRedirectLocation();
-    let ChatAppLink = '';
-    var username = '';
-    var userType = '';
-    if (this.state.faceBookID) {
-      username = this.state.faceBookID;
-      userType = 'facebook';
-    } else if (this.state.linkedInID) {
-      username = this.state.linkedInID;
-      userType = 'linkedin';
-    }
 
-    ChatAppLink = (
-      <ChatApp
-        loggedin={this.props.isAuthorized}
-        userProfile={this.props.userProfile}
-      />
-    );
-
-    if (this.state.userID && this.state.verfiedSocketConnection == false) {
-      var userData = {
-        username: username,
-        userType: userType,
-        userID: this.state.userID,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-      };
-      socketConn.emit('UserLoggedIn', userData);
-    }
+    let ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
 
     return (
       <Loadable
         active={
           this.props.isTaskSaveInProgress ||
-          this.props
-            .isTasksUpdateInProgress /* || this.props.isTasksFetchInProgress*/
+          this.props.isTasksUpdateInProgress /* || this.props.isTasksFetchInProgress*/
         }
         background="#ee892f"
         color="#30a7d2"
@@ -624,7 +564,8 @@ class App extends Component {
         text="Wait a moment..."
         animate={false}
         spinnerSize="96px"
-        zIndex={10000}>
+        zIndex={10000}
+      >
         <div>
           <Main
             onHandleStartSearch={() => this.handleStartSearch()}
@@ -637,9 +578,7 @@ class App extends Component {
             onAuthorizeFaceBook={id => this.handleAuthorizeFaceBook(id)}
             onHandleSignUpFacebook={() => this.HandleSignUpFacebook()}
             onHandleSignUpLinkedIn={() => this.HandleSignUpLinkedIn()}
-            onFetchAllTasks={publishedOnly =>
-              this.props.fetchAllTasks(publishedOnly)
-            }
+            onFetchAllTasks={publishedOnly => this.props.fetchAllTasks(publishedOnly)}
             pathname={this.props.history.location.pathname}
             isOpenSearchResultsPending={this.props.isOpenSearchResultsPending}
             openSignUpForm={this.props.openSignUpForm}
@@ -653,9 +592,7 @@ class App extends Component {
             accounting={this.props.accounting}
             logout={() => this.logout()}
           />
-          <CharacterCreationFlow
-            onHandleCharacterDataSet={() => this.handleCharacterDataSet()}
-          />
+          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
           {ChatAppLink}
         </div>
       </Loadable>
@@ -707,17 +644,11 @@ const mapDispatchToProps = dispatch => ({
   fetchUserActivities: bindActionCreators(fetchUserActivities, dispatch),
   setSearchQuery: bindActionCreators(setSearchQuery, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
-  setUserProfileCharacter: bindActionCreators(
-    setUserProfileCharacter,
-    dispatch
-  ),
+  setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
-  fetchTaskActivityUnlockReqs: bindActionCreators(
-    fetchTaskActivityUnlockReqs,
-    dispatch
-  ),
+  fetchTaskActivityUnlockReqs: bindActionCreators(fetchTaskActivityUnlockReqs, dispatch),
 });
 
 const mapStateToProps = state => ({
@@ -749,5 +680,8 @@ const mapStateToProps = state => ({
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(withCookies(App))
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(withCookies(App)),
 );

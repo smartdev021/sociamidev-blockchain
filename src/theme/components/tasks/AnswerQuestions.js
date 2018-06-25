@@ -5,38 +5,34 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Icon } from 'react-fa'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Icon } from 'react-fa';
 
 import { withCookies, Cookies } from 'react-cookie';
 
-import Axios from 'axios'
+import Axios from 'axios';
 
 import PubSub from 'pubsub-js';
 
-import ConfigMain from '~/configs/main'
+import ConfigMain from '~/configs/main';
 
-import ActionLink from '~/src/components/common/ActionLink'
+import ActionLink from '~/src/components/common/ActionLink';
 
-import TaskTypes from "~/src/common/TaskTypes"
+import TaskTypes from '~/src/common/TaskTypes';
 
-import QuestionTypes from "~/src/common/QuestionTypes";
+import QuestionTypes from '~/src/common/QuestionTypes';
 
 import QuestionAnswersFlow from '~/src/theme/components/tasks/QuestionAnswersFlow';
 
-import "~/src/theme/appearance.css"
-import "~/src/theme/layout.css"
-import "~/src/theme/css/taskBrowser.css"
-import _ from 'lodash'
+import '~/src/theme/appearance.css';
+import '~/src/theme/layout.css';
+import '~/src/theme/css/taskBrowser.css';
+import _ from 'lodash';
 
-import {
-  setLastStartedTask,
-  hangoutAnswersSave,
-} from '~/src/redux/actions/tasks'
+import { setLastStartedTask, hangoutAnswersSave } from '~/src/redux/actions/tasks';
 
 class AnswerQuestions extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -57,17 +53,21 @@ class AnswerQuestions extends React.Component {
       isAnswersFetchFromCookiesInProgress: false,
 
       isLoading: false,
-    }
+    };
 
     this.getPartnerProfile = this.getPartnerProfile.bind(this);
   }
 
   getAnswerMy(questionId) {
-    return this.state.answersMy && this.state.answersMy[questionId] ? this.state.answersMy[questionId].text : "";
+    return this.state.answersMy && this.state.answersMy[questionId]
+      ? this.state.answersMy[questionId].text
+      : '';
   }
 
   getAnswerPartner(questionId) {
-    return this.state.answersPartner && this.state.answersPartner[questionId] ? this.state.answersPartner[questionId].text : "";
+    return this.state.answersPartner && this.state.answersPartner[questionId]
+      ? this.state.answersPartner[questionId].text
+      : '';
   }
 
   handleAnswerInput(e) {
@@ -84,18 +84,21 @@ class AnswerQuestions extends React.Component {
   }
 
   handleAnswerCheckbox(e) {
-    const questionId = (e.target.parentElement && e.target.parentElement.parentElement 
-      && e.target.parentElement.parentElement.parentElement
-      && e.target.parentElement.parentElement.parentElement.id)
-      ? e.target.parentElement.parentElement.parentElement.id.replace('answer_your_', '')
-      : undefined;
+    const questionId =
+      e.target.parentElement &&
+      e.target.parentElement.parentElement &&
+      e.target.parentElement.parentElement.parentElement &&
+      e.target.parentElement.parentElement.parentElement.id
+        ? e.target.parentElement.parentElement.parentElement.id.replace('answer_your_', '')
+        : undefined;
 
     if (questionId) {
       let answersMyCopy = Object.assign({}, this.state.answersMy);
 
-
-      let optionsCopy = (answersMyCopy[questionId] && answersMyCopy[questionId].options)
-        ? answersMyCopy[questionId].options.splice(0) : [];
+      let optionsCopy =
+        answersMyCopy[questionId] && answersMyCopy[questionId].options
+          ? answersMyCopy[questionId].options.splice(0)
+          : [];
 
       //force check other options out
       for (let i = 0; i < optionsCopy.length; ++i) {
@@ -111,13 +114,19 @@ class AnswerQuestions extends React.Component {
   }
 
   handleAnswerTrueFalse(e) {
-    const questionId = (e.target.parentElement && e.target.parentElement.parentElement && e.target.parentElement.parentElement.id)
-      ? e.target.parentElement.parentElement.id.replace('answer_your_', '')
-      : undefined;
+    const questionId =
+      e.target.parentElement &&
+      e.target.parentElement.parentElement &&
+      e.target.parentElement.parentElement.id
+        ? e.target.parentElement.parentElement.id.replace('answer_your_', '')
+        : undefined;
 
     if (questionId) {
       let answersMyCopy = Object.assign({}, this.state.answersMy);
-      answersMyCopy[questionId] = { isTrue: (e.target.value === "true" && e.target.checked), timeChanged: Date.now() };
+      answersMyCopy[questionId] = {
+        isTrue: e.target.value === 'true' && e.target.checked,
+        timeChanged: Date.now(),
+      };
 
       this.setState({ answersMy: answersMyCopy });
     }
@@ -126,28 +135,32 @@ class AnswerQuestions extends React.Component {
   handleQuestionsGetComplete(questions) {
     const currentTaskType = this.state.currentTask.type;
 
-    const questionsFiltered = questions.filter((question) => {
+    const questionsFiltered = questions.filter(question => {
       return currentTaskType === TaskTypes.DECODE || question.type === QuestionTypes.SIMPLE;
     });
 
     let answersMy = {};
 
-    questionsFiltered.forEach((question) => {
+    questionsFiltered.forEach(question => {
       switch (question.type) {
         case QuestionTypes.TRUEFALSE: {
           answersMy[question._id] = { isTrue: false };
           break;
         }
         case QuestionTypes.MULTIPLECHOICE: {
-          answersMy[question._id] = { options: question.answers.map(() => { return false; }) };
+          answersMy[question._id] = {
+            options: question.answers.map(() => {
+              return false;
+            }),
+          };
           break;
         }
         default: {
-          answersMy[question._id] = { text: "" };
+          answersMy[question._id] = { text: '' };
           break;
         }
       }
-    })
+    });
 
     this.setState({
       questions: questionsFiltered,
@@ -157,42 +170,53 @@ class AnswerQuestions extends React.Component {
   }
 
   serverEventAnswerUpdated(msg, data) {
-    console.log(`%cServer Event Received: ${msg}`, "color:green;background:grey;");
+    console.log(`%cServer Event Received: ${msg}`, 'color:green;background:grey;');
     console.dir(data);
-    if (data.eventType == "answer_updated") {
-      if(this.state.questions.length > 0) {
+    if (data.eventType == 'answer_updated') {
+      if (this.state.questions.length > 0) {
         const questionIds = this.state.questions.map(q => q._id).join(',');
         if (questionIds) {
           const Partner = this.getPartnerProfile();
-          Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersForQuestions?questionIds=${questionIds}&partnerId=${Partner.user._id}&myId=${this.props.userProfile._id}`)
-          .then((response) => {
-            this.setState({answersOtherUsers: response.data,
-              isAnswersFetchFromServerInProgress: false});
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+          Axios.get(
+            `${ConfigMain.getBackendURL()}/hangoutAnswersForQuestions?questionIds=${questionIds}&partnerId=${
+              Partner.user._id
+            }&myId=${this.props.userProfile._id}`,
+          )
+            .then(response => {
+              this.setState({
+                answersOtherUsers: response.data,
+                isAnswersFetchFromServerInProgress: false,
+              });
+            })
+            .catch(error => {
+              console.log(error);
+            });
         }
         const that = this;
-        Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswerGetForTask?taskId=${this.state.currentTask._id}`)
-        .then((response) =>this.fetchUserAnswersFromServerMySuccess(response, that))
-        .catch((error) => {
-          console.log(error)
-        });
+        Axios.get(
+          `${ConfigMain.getBackendURL()}/hangoutAnswerGetForTask?taskId=${this.state.currentTask._id}`,
+        )
+          .then(response => this.fetchUserAnswersFromServerMySuccess(response, that))
+          .catch(error => {
+            console.log(error);
+          });
       }
     }
-  };
+  }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     if (this.token_server_event_answer_updated) {
       PubSub.unsubscribe(this.token_server_event_answer_updated);
       this.token_server_event_answer_updated = undefined;
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     if (!this.token_server_event_answer_updated) {
-      this.token_server_event_answer_updated = PubSub.subscribe("answer_updated", this.serverEventAnswerUpdated.bind(this));
+      this.token_server_event_answer_updated = PubSub.subscribe(
+        'answer_updated',
+        this.serverEventAnswerUpdated.bind(this),
+      );
     }
   }
 
@@ -200,43 +224,60 @@ class AnswerQuestions extends React.Component {
     const that = this;
     if (this.state.currentTask && this.state.currentTask.type === TaskTypes.DEEPDIVE) {
       that.setState({ isQuestionsLoading: true });
-      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}&type=${this.state.currentTask.type}`)
-        .then((response) => { 
+      Axios.get(
+        `${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${
+          this.state.currentTask.metaData.subject.skill.name
+        }&type=${this.state.currentTask.type}`,
+      )
+        .then(response => {
           that.handleQuestionsGetComplete(response.data);
           const questionIds = response.data.map(q => q._id).join(',');
           const Partner = that.getPartnerProfile();
-          that.fetchAnswersOtherUsersFromServer(questionIds, Partner.user._id,this.props.userProfile._id); 
+          that.fetchAnswersOtherUsersFromServer(questionIds, Partner.user._id, this.props.userProfile._id);
         })
-        .catch((error) => { that.setState({ isQuestionsLoading: false }); console.log(error) });
+        .catch(error => {
+          that.setState({ isQuestionsLoading: false });
+          console.log(error);
+        });
 
       this.fetchUserAnswersFromCookies();
 
       this.fetchUserAnswersFromServerMy();
-    }
-    else {
+    } else {
       that.setState({ isQuestionsLoading: true });
 
-      Axios.get(`${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${this.state.currentTask.metaData.subject.skill.name}&type=${this.state.currentTask.type}`)
-        .then((response) => { that.handleQuestionsGetComplete(response.data) })
-        .catch((error) => { that.setState({ isQuestionsLoading: false }); console.log(error) });
+      Axios.get(
+        `${ConfigMain.getBackendURL()}/questionsGet?roadmapSkill=${
+          this.state.currentTask.metaData.subject.skill.name
+        }&type=${this.state.currentTask.type}`,
+      )
+        .then(response => {
+          that.handleQuestionsGetComplete(response.data);
+        })
+        .catch(error => {
+          that.setState({ isQuestionsLoading: false });
+          console.log(error);
+        });
     }
 
     this.props.setLastStartedTask({});
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isQuestionsLoading != prevState.isQuestionsLoading
-      || this.state.isTaskLoading != prevState.isTaskLoading
-      || prevState.isAnswersFetchFromCookiesInProgress != this.state.isAnswersFetchFromCookiesInProgress
-      || prevState.isAnswersFetchFromServerInProgress != this.state.isAnswersFetchFromServerInProgress
-      || prevProps.isTasksUpdateInProgress != this.props.isTasksUpdateInProgress) {
+    if (
+      this.state.isQuestionsLoading != prevState.isQuestionsLoading ||
+      this.state.isTaskLoading != prevState.isTaskLoading ||
+      prevState.isAnswersFetchFromCookiesInProgress != this.state.isAnswersFetchFromCookiesInProgress ||
+      prevState.isAnswersFetchFromServerInProgress != this.state.isAnswersFetchFromServerInProgress ||
+      prevProps.isTasksUpdateInProgress != this.props.isTasksUpdateInProgress
+    ) {
       this.setState({
-        isLoading: (this.state.isQuestionsLoading
-          || this.state.isTaskLoading
-          || this.state.isAnswersFetchFromCookiesInProgress
-          || this.state.isAnswersFetchFromServerInProgress
-          || this.props.isTasksUpdateInProgress
-        )
+        isLoading:
+          this.state.isQuestionsLoading ||
+          this.state.isTaskLoading ||
+          this.state.isAnswersFetchFromCookiesInProgress ||
+          this.state.isAnswersFetchFromServerInProgress ||
+          this.props.isTasksUpdateInProgress,
       });
     }
 
@@ -261,10 +302,10 @@ class AnswerQuestions extends React.Component {
       const that = this;
 
       Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswerGetForTask?taskId=${this.state.currentTask._id}`)
-        .then((response) => this.fetchUserAnswersFromServerMySuccess(response, that))
-        .catch((error) => {
+        .then(response => this.fetchUserAnswersFromServerMySuccess(response, that))
+        .catch(error => {
           that.setState({ isAnswersFetchFromServerInProgress: false });
-          console.log(error)
+          console.log(error);
         });
     }
   }
@@ -272,7 +313,7 @@ class AnswerQuestions extends React.Component {
   getPartnerProfile() {
     const CurrentUserID = this.props.userProfile._id;
 
-    const Partner = this.state.currentTask.metaData.participants.find(function (participant) {
+    const Partner = this.state.currentTask.metaData.participants.find(function(participant) {
       return participant.user._id != CurrentUserID;
     });
 
@@ -286,11 +327,11 @@ class AnswerQuestions extends React.Component {
 
     const Partner = that.getPartnerProfile();
 
-    const foundAnswersForUser = answers.userAnswers.find(function (userAnswer) {
+    const foundAnswersForUser = answers.userAnswers.find(function(userAnswer) {
       return userAnswer._id == CurrentUserID;
     });
 
-    const foundAnswersForPartner = answers.userAnswers.find(function (userAnswer) {
+    const foundAnswersForPartner = answers.userAnswers.find(function(userAnswer) {
       return Partner && userAnswer._id == Partner.user._id;
     });
 
@@ -311,25 +352,28 @@ class AnswerQuestions extends React.Component {
     that.setState({
       answersMy: newAnswersMy,
       answersPartner: newAnswersPartner,
-      isAnswersFetchFromServerInProgress: false
+      isAnswersFetchFromServerInProgress: false,
     });
   }
 
   fetchAnswersOtherUsersFromServer(questionIds, partnerId, myId) {
     if (questionIds) {
-      this.setState({isAnswersFetchFromServerInProgress: true});
-      Axios.get(`${ConfigMain.getBackendURL()}/hangoutAnswersForQuestions?questionIds=${questionIds}&partnerId=${partnerId}&myId=${myId}`)
-      .then((response) => {
-        this.setState({answersOtherUsers: response.data,
-          isAnswersFetchFromServerInProgress: false});
-      })
-      .catch((error) => {
-        this.setState({isAnswersFetchFromServerInProgress: false});
-        console.log(error)
-      });
+      this.setState({ isAnswersFetchFromServerInProgress: true });
+      Axios.get(
+        `${ConfigMain.getBackendURL()}/hangoutAnswersForQuestions?questionIds=${questionIds}&partnerId=${partnerId}&myId=${myId}`,
+      )
+        .then(response => {
+          this.setState({
+            answersOtherUsers: response.data,
+            isAnswersFetchFromServerInProgress: false,
+          });
+        })
+        .catch(error => {
+          this.setState({ isAnswersFetchFromServerInProgress: false });
+          console.log(error);
+        });
     }
   }
-  
 
   storeUserAnswersToCookies(answersMy) {
     if (this.state.currentTask._id) {
@@ -358,9 +402,11 @@ class AnswerQuestions extends React.Component {
       const answersForTask = cookies.get(`answers_for_task_${this.state.currentTask._id}`);
 
       if (answersForTask && answersForTask[this.props.userProfile._id]) {
-        this.setState({ answersMy: answersForTask[this.props.userProfile._id], isAnswersFetchFromCookiesInProgress: false });
-      }
-      else {
+        this.setState({
+          answersMy: answersForTask[this.props.userProfile._id],
+          isAnswersFetchFromCookiesInProgress: false,
+        });
+      } else {
         this.setState({ isAnswersFetchFromCookiesInProgress: false });
       }
     }
@@ -394,21 +440,24 @@ class AnswerQuestions extends React.Component {
     if (this.state.currentTask.type === TaskTypes.ILLUMINATE) {
       limit = 3;
     }
-    const Questions = this.state.questions.length > 0 ? this.state.questions.slice(0, limit/*limit questions to 10*/) : [];
+    const Questions =
+      this.state.questions.length > 0 ? this.state.questions.slice(0, limit /*limit questions to 10*/) : [];
     return (
-      <QuestionAnswersFlow onSubmit={(e) => this.handlePopupSubmit(e)}
+      <QuestionAnswersFlow
+        onSubmit={e => this.handlePopupSubmit(e)}
         onCloseModal={() => this.handlePopupClose()}
-        questions={Questions} partner={Partner}
+        questions={Questions}
+        partner={Partner}
         answersMy={this.state.answersMy}
         answersPartner={this.state.answersPartner}
         answersOtherUsers={this.state.answersOtherUsers}
         isLoading={this.state.isLoading}
         isSubmitting={this.props.isTasksUpdateInProgress}
         onBackToMyTasks={this.props.onBackToMyTasks}
-        onHandleAnswerInput={(e)=>this.handleAnswerInput(e)}
+        onHandleAnswerInput={e => this.handleAnswerInput(e)}
         currentTaskType={this.state.currentTask.type}
-        onHandleAnswerCheckbox={(e) => this.handleAnswerCheckbox(e)}
-        onHandleAnswerTrueFalse={(e) => this.handleAnswerTrueFalse(e)}
+        onHandleAnswerCheckbox={e => this.handleAnswerCheckbox(e)}
+        onHandleAnswerTrueFalse={e => this.handleAnswerTrueFalse(e)}
       />
     );
   }
@@ -420,19 +469,21 @@ AnswerQuestions.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   hangoutAnswersSave: PropTypes.func.isRequired,
   isTasksUpdateInProgress: PropTypes.bool,
-}
+};
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile.profile,
   isAuthorized: state.userProfile.isAuthorized,
   isTasksUpdateInProgress: state.tasks.isUpdateInProgress,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   setLastStartedTask: bindActionCreators(setLastStartedTask, dispatch),
   hangoutAnswersSave: bindActionCreators(hangoutAnswersSave, dispatch),
-})
-
+});
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux
-export default connect(mapStateToProps, mapDispatchToProps)(withCookies(AnswerQuestions));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withCookies(AnswerQuestions));

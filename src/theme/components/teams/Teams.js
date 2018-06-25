@@ -1,124 +1,111 @@
-import React from 'react'
+import React from 'react';
 
-import TeamPanel from './TeamPanel'
-import "~/src/theme/css/teams.css"
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 
-let emailSet = [
-    {
-        id:1,
-        email:'anna.atonyan@gmail.com',
-        accepted: true
-    },
-    {
-        id:2,
-        email:'anna.atonyan@gmail.com',
-        accepted: true
-    },
-    {
-        id:3,
-        email:'anna.atonyan@gmail.com',
-        accepted: false
-    },
-    {
-        id:4,
-        email:'anna.atonyan@gmail.com',
-        accepted: true
-    },
-    {
-        id:5,
-        email:'anna.atonyan@gmail.com',
-        accepted: false
-    },
-    {
-        id:6,
-        email:'anna.atonyan@gmail.com',
-        accepted: true
-    },
-    {
-        id:7,
-        email:'anna.atonyan@gmail.com',
-        accepted: false
-    },
-    {
-        id:8,
-        email:'anna.atonyan@gmail.com',
-        accepted: true
-    },
-    {
-        id:9,
-        email:'anna.atonyan@gmail.com',
-        accepted: true
-    }
-]
+import TeamPanel from './TeamPanel';
+import '~/src/theme/css/teams.css';
 
-let teams = [
-    {
-        _id:1,
-        name: 'Team 1',
-        emails: emailSet,
-        date: '11.05.2017'
-    },
-    {
-        _id:2,
-        name: 'Team 2',
-        emails: emailSet,
-        date: '12.06.2017'
-    },
-    {
-        _id:3,
-        name: 'Team 3',
-        emails: emailSet,
-        date: '11.05.2017'
-    },
-    {
-        _id:4,
-        name: 'Team 4',
-        emails: emailSet,
-        date: '11.05.2017'
-    }
-]
+import { 
+  fetchTeams,
+  addNewTeam,
+  saveTeam,
+  addTeamEmail,
+  updateTeamEmail,
+  deleteTeam,
+  cancelTeam
+} from '~/src/redux/actions/teams';
 
 class Teams extends React.Component {
-    
-    constructor(props){
-        super(props)
-        this.state = {
-            teams: teams,
-            addToTeam : {}
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      addToTeam: {},
+    };
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleTeamSave = this.handleTeamSave.bind(this);
+    this.handleEmailAdd = this.handleEmailAdd.bind(this);
+    this.handleTeamDelete = this.handleTeamDelete.bind(this);
+    this.handleEmailUpdate = this.handleEmailUpdate.bind(this);
+  }
 
-    renderTeamPanels(team){
+  componentWillMount() {
+    this.props.fetchTeams();
+  }
 
-        let listItems = team.map((item,index)=>{
-            return(
-                <TeamPanel team={item} index={index} />
-            )
-        })
-        return listItems
-    }
+  handleCancel(index, team) {
+    this.props.cancelTeam(index, team);
+  }
 
-    render(){
-        return(
-            <div className="my-teams-container">
-                <div className="row team-header">
-                    <div className="my-teams-header"><b>My teams</b></div>
-                    <h5>Some dummy text here</h5>
-                    <div className="create-new-team-btn">
-                        <a href="#" className="create-team-btn create-new-team">
-                            <p className="unskew-create-team">Create New Team</p>
-                        </a>
-                    </div>
-                </div>
-                <div >
-                    <div className="team-panels">
-                        {this.renderTeamPanels(this.state.teams)}
-                        {this.renderTeamPanels(this.state.teams)}
-                    </div>
-                </div>
-            </div>
-        )
-    }
+  handleTeamSave(index, team) {
+    this.props.saveTeam(index, team);
+  }
+
+  handleEmailAdd(index, email, team) {
+    this.props.addTeamEmail(index, email, team);
+  }
+
+  handleEmailUpdate(emailIndex, prevEmail, newEmail, team) {
+    this.props.updateTeamEmail(emailIndex, prevEmail, newEmail, team);
+  }
+
+  handleTeamDelete(index, _id) {
+    this.props.deleteTeam(index, _id);
+  }
+
+  renderTeamPanels(team) {
+    let listItems = team.map((item, index) => {
+      return <TeamPanel 
+        team={item}
+        onCancel={(val) => this.handleCancel(index,val)}
+        onSave={(val) => this.handleTeamSave(index, val)}
+        onAddEmail={(email,team) => this.handleEmailAdd(index,email,team)}
+        onUpdateEmail={(emailIndex,prevEmail,newEmail,team) => this.handleEmailUpdate(emailIndex,prevEmail,newEmail,team)}
+        onDeleteTeam={(_id) => this.handleTeamDelete(index, _id)}
+        key={item._id} 
+        index={index} />;
+    });
+    return listItems;
+  }
+
+  render() {
+    return (
+      <div className="my-teams-container">
+        <div className="row team-header">
+          <div className="my-teams-header">
+            <b>{this.props.company.name || 'My teams'}</b>
+          </div>
+          <h5>Some dummy text here</h5>
+          <div className="create-new-team-btn">
+            <a href="#" onClick={()=>this.props.addNewTeam()} className="create-team-btn create-new-team">
+              <p className="unskew-create-team">Create New Team</p>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div className="team-panels">
+            {this.renderTeamPanels(this.props.teams)}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default Teams
+const mapStateToProps = state => ({
+	isFetchingTeams: state.teams.isFetchingTeams,
+	teams: state.teams.data
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchTeams: bindActionCreators(fetchTeams, dispatch),
+    addNewTeam: bindActionCreators(addNewTeam, dispatch),
+    cancelTeam: bindActionCreators(cancelTeam, dispatch),
+    saveTeam: bindActionCreators(saveTeam, dispatch),
+    addTeamEmail: bindActionCreators(addTeamEmail, dispatch),
+    updateTeamEmail: bindActionCreators(updateTeamEmail, dispatch),
+    deleteTeam: bindActionCreators(deleteTeam, dispatch)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Teams));
