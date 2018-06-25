@@ -276,6 +276,7 @@ const WorkExplanation = () => {
       </section>
       <section className="play-the-game clearfix">
         <div className="images-wrapper">
+          <div className="play-the-game-video"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/veQyAxuRzD0?rel=0&amp;controls=0&amp;showinfo=0" frameBorder="0" allowFullScreen=""></iframe></div>
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game.png"
             alt="play the game"/>

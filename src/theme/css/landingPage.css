@@ -1759,6 +1759,15 @@ html.vertical-hidden {
     left: -58px;
 }
 
+.landing-page-wrapper .work-explanation .play-the-game .play-the-game-video {
+    position: absolute;
+    width: 422px;
+    height: 320px;
+    top: 6px;
+    left: 20px;
+    z-index: 9;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation .select-house .background-img-1,
     .landing-page-wrapper .work-explanation .play-the-game .background-img-1,
@@ -1768,6 +1777,13 @@ html.vertical-hidden {
         width: 100%;
         max-width: 202px;
         transform: translateX(-50%);
+    }
+    .landing-page-wrapper .work-explanation .play-the-game .play-the-game-video {
+        width: 100%;
+        height: 100%;
+        top: 2px;
+        left: 84px;
+        max-width: 215px;
     }
 }
 
