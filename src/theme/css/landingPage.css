@@ -779,6 +779,10 @@ html.vertical-hidden {
     color: #333333;
 }
 
+.landing-page-wrapper .our-blog h3 a {
+    color: #fff;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .our-blog h2 {
         margin: 8px 0 14px;
@@ -810,6 +814,10 @@ html.vertical-hidden {
     position: absolute;
 }
 
+.landing-page-wrapper .our-blog article a{
+    text-decoration: none;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .our-blog .one-news {
         width: 100%;
@@ -823,6 +831,16 @@ html.vertical-hidden {
 .landing-page-wrapper .our-blog .one-news h3 {
     margin: 7px 0;
     font: normal 28px "MyriadPro Bold";
+}
+
+.landing-page-wrapper .our-blog .one-news img {
+    width: 460px;
+    height: 490px;
+}
+
+.landing-page-wrapper .our-blog .two-news img {
+    width: 460px;
+    height: 240px;
 }
 
 @media screen and (max-width: 750px) {

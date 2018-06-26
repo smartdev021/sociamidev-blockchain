@@ -5,21 +5,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withCookies } from 'react-cookie';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { openSignUpForm } from '~/src/redux/actions/authorization';
+import { fetchArticles } from '~/src/redux/actions/articles';
 import Authorize from '~/src/authentication/Authorize';
 
-const Banner = ({openSignUpForm}) => {
+const Banner = ({ openSignUpForm }) => {
   return (
     <div className="banner-wrapper">
       <img
         src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg"
-        alt="banner"/>
+        alt="banner" />
       <div>
         <section>
           <h2>game up your passion</h2>
-          <p>Plug in for the Future. Explore a world of quests with <br/> friends and play
+          <p>Plug in for the Future. Explore a world of quests with <br /> friends and play
             them
             together to
             gain glory and rewards.</p>
@@ -39,7 +40,7 @@ const AboutComponent = () => {
       <h2>Available now on Alpha. <span>FREE</span>.</h2>
       <p>Soqqle is a novel game that brings your heartfelt aspirations to real life.</p>
       <h3>Join quests across different roles for the #futureofwork and team up with others to
-        accomplish common goals! We call this - <span>The Game For Life.<br/></span> Isn’t
+        accomplish common goals! We call this - <span>The Game For Life.<br /></span> Isn’t
         this amazing?
       </h3>
       <span className="blue-rectangle">&nbsp;</span>
@@ -48,45 +49,72 @@ const AboutComponent = () => {
   );
 };
 
-const OurBlog = () => {
+const Article = ({article}) => {
+  const date = new Date(article.data.date);
+  const dateStr = date.getDate() +'.'+date.getMonth()+1 + '.' + date.getFullYear();
+  const title = article.openGraph.title ? article.openGraph.title : article.data.title;
+  const subTitle = article.openGraph.description ? article.openGraph.description : article.data.subTitle;
+  const image = article.openGraph.image ? article.openGraph.image.url : '';
+  return (
+      <article>
+        <p className="date">{dateStr}</p>
+        <h3><a href={article.data.urlLink} target="_blank">{title}</a></h3>
+        <p>{subTitle}</p>
+      </article>
+  )
+}
+
+const OurBlog = (props) => {
+  const article = {
+    data: {
+      title: '',
+      subTitle: '',
+      date: new Date(),
+      urlLink: '',
+    },
+    jsonLd: {},
+    general: {},
+    openGraph: {
+      image: {
+        url: ''
+      }
+    }
+  }
+  let firstArticle = article
+  let secondArticle = article
+  let thirdArticle = article
+  if(props.articles) {
+    firstArticle = props.articles.length > 0 ? props.articles[0] : article;
+    secondArticle = props.articles.length > 1 ? props.articles[1] : article;
+    thirdArticle = props.articles.length > 2 ? props.articles[2] : article;
+  }
   return (
     <div className="our-blog">
       <h2>Our blog</h2>
       <section>
-        <div className="one-news">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/blog-1.png"/>
-          <article>
-            <p className="date">15.05.18</p>
-            <h3>Can Blockchain be Trusted with <br/> all these Wallet Vulnerabilities?
-            </h3>
-            <p>Can no news be good news in the <br/> Blockchain world?</p>
-          </article>
-        </div>
+        {
+          firstArticle ?
+            <div className="one-news">
+              <img src={firstArticle.openGraph.image.url} />
+              <Article article={firstArticle}></Article>
+            </div> : null
+        }
+
         <div className="two-news">
-          <div className="top-news">
-            <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/blog-2.png"/>
-            <article>
-              <p className="date">15.05.18</p>
-              <h3>We closed our Soqqle Alpha last <br/> week — you won’t believe what
-                we got.</h3>
-              <p>Our Marvelous platform caught the eyes of <br/> everyone we demoed
-                to.</p>
-            </article>
-          </div>
-          <div className="bottom-news">
-            <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/blog-3.png"/>
-            <article>
-              <p className="date">15.05.18</p>
-              <h3>Singapore for a Blockchain Hub?</h3>
-              <p>spent 4 years in Hong Kong before moving <br/> back to Singapore. The
-                difference
-                and why? <br/> It isn’t ALL about Blockchain.
-              </p>
-            </article>
-          </div>
+          {
+            secondArticle ?
+              <div className="top-news">
+                <img src={secondArticle.openGraph.image.url} />
+                <Article article={secondArticle}></Article>
+              </div> : null
+          }
+          {
+            thirdArticle ?
+              <div className="bottom-news">
+                <img src={thirdArticle.openGraph.image.url} />
+                <Article article={thirdArticle}></Article>
+              </div> : null
+          }
         </div>
       </section>
       <button type="button" className="all-news-button"><p>See all news</p></button>
@@ -102,21 +130,21 @@ const SoqqleInfo = () => {
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/learning-course.png"
           className="learning-course"
-          alt="drive purposeful learning"/>
+          alt="drive purposeful learning" />
         <p>Drive purposeful learning</p>
       </section>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/combine-goals.png"
           className="goals"
-          alt="Combine social and learning goals"/>
+          alt="Combine social and learning goals" />
         <p>Combine social and learning goals</p>
       </section>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/jorney.png"
           className="jorney"
-          alt="Helps identify networks to join the journey"/>
+          alt="Helps identify networks to join the journey" />
         <p>Helps identify networks to join the journey</p>
       </section>
     </div>
@@ -131,10 +159,10 @@ const TalkAboutUs = () => {
         <div>
           <img className="avatar"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-2.png"
-            alt="avatar"/>
+            alt="avatar" />
           <img className="twitter"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-            alt="twitter"/>
+            alt="twitter" />
         </div>
         <article>
           <h3>Pek Yun Ning</h3>
@@ -144,51 +172,51 @@ const TalkAboutUs = () => {
         </article>
         <img className="twitter-mobile"
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-          alt="avatar"/>
+          alt="avatar" />
         <span className="opacity-layout"> </span>
       </section>
       <section className="main-section">
         <div>
           <img className="avatar"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-1.png"
-            alt="avatar"/>
+            alt="avatar" />
           <img className="twitter"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-            alt="twitter"/>
+            alt="twitter" />
         </div>
         <article>
           <h3>Pek Yun Ning</h3>
-          <p>I think the concept of a Game-Based experience <br/>to explore a world of
+          <p>I think the concept of a Game-Based experience <br />to explore a world of
             opportunities is
-            superb. <br/> I can’t wait to hear more about and take part <br/>in the
+            superb. <br /> I can’t wait to hear more about and take part <br />in the
             BETA!</p>
         </article>
         <img className="twitter-mobile"
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-          alt="avatar"/>
+          alt="avatar" />
       </section>
       <section className="background-section-2">
         <div>
           <img className="avatar"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-2.png"
-            alt="avatar"/>
+            alt="avatar" />
           <img className="twitter"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-            alt="twitter"/>
+            alt="twitter" />
         </div>
         <article>
           <h3>David Avetyan</h3>
-          <p>Thank you for a great website.I like it very very <br/> much. It helped me a
+          <p>Thank you for a great website.I like it very very <br /> much. It helped me a
             lot.
-            Thanks a lot..Thank <br/> you for a great website.I like it very very
-            much. <br/> It
-            helped me a lot. Thanks a lot..Thank you for a great <br/> website. I like
+            Thanks a lot..Thank <br /> you for a great website.I like it very very
+            much. <br /> It
+            helped me a lot. Thanks a lot..Thank you for a great <br /> website. I like
             it very
-            very much. It helped me a lot. <br/> Thanks a lot..</p>
+            very much. It helped me a lot. <br /> Thanks a lot..</p>
         </article>
         <img className="twitter-mobile"
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-          alt="avatar"/>
+          alt="avatar" />
         <span className="opacity-layout"> </span>
       </section>
       <footer>
@@ -207,11 +235,11 @@ const VideoComponent = () => {
       <video height="415"
         poster="https://upload.wikimedia.org/wikipedia/commons/e/e8/Elephants_Dream_s5_both.jpg">
         <source src="https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4"
-          type="video/mp4"/>
+          type="video/mp4" />
         <source src="https://archive.org/download/ElephantsDream/ed_hd.ogv"
-          type="video/ogg"/>
+          type="video/ogg" />
         <source src="https://archive.org/download/ElephantsDream/ed_hd.avi"
-          type="video/avi"/>
+          type="video/avi" />
         Your browser doesn't support HTML5 video tag.
       </video>
       <button type="button" className="all-videos-button"><p>See all videos</p></button>
@@ -228,15 +256,15 @@ const WorkExplanation = () => {
         <div className="images-wrapper">
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.png"
-            alt="select your house"/>
+            alt="select your house" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house-1.png"
             className="background-img-1"
-            alt="select your house on background"/>
+            alt="select your house on background" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house-2.png"
             className="background-img-2"
-            alt="select your house on background"/>
+            alt="select your house on background" />
         </div>
         <div className="description">
           <span className="blue-rectangle"> </span>
@@ -253,15 +281,15 @@ const WorkExplanation = () => {
         <div className="images-wrapper">
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.png"
-            alt="select a hero"/>
+            alt="select a hero" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero-1.png"
             className="background-img-1"
-            alt="select a hero on background"/>
+            alt="select a hero on background" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero-2.png"
             className="background-img-2"
-            alt="select a hero on background"/>
+            alt="select a hero on background" />
         </div>
         <div className="description">
           <span className="blue-rectangle"> </span>
@@ -278,15 +306,15 @@ const WorkExplanation = () => {
         <div className="images-wrapper">
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png"
-            alt="select your house"/>
+            alt="select your house" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward-1.png"
             className="background-img-1"
-            alt="get a reward on background"/>
+            alt="get a reward on background" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward-2.png"
             className="background-img-2"
-            alt="get a reward on background"/>
+            alt="get a reward on background" />
         </div>
         <div className="description">
           <span className="blue-rectangle"> </span>
@@ -302,15 +330,15 @@ const WorkExplanation = () => {
         <div className="images-wrapper">
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.png"
-            alt="use your rewards"/>
+            alt="use your rewards" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards-1.png"
             className="background-img-1"
-            alt="use your rewards on background"/>
+            alt="use your rewards on background" />
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards-2.png"
             className="background-img-2"
-            alt="use your rewards on background"/>
+            alt="use your rewards on background" />
         </div>
         <div className="description">
           <span className="blue-rectangle"> </span>
@@ -332,21 +360,25 @@ class LandingPageContent extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.props.fetchArticles()
+  }
+
   render() {
     return (
       <div className="landing-page-wrapper">
         <header>
-          <Banner openSignUpForm={this.props.openSignUpForm}/>
+          <Banner openSignUpForm={this.props.openSignUpForm} />
         </header>
-        <AboutComponent/>
+        <AboutComponent />
         <main>
-          <SoqqleInfo/>
-          <WorkExplanation/>
+          <SoqqleInfo />
+          <WorkExplanation />
         </main>
-        <VideoComponent/>
+        <VideoComponent />
         <main>
-          <OurBlog/>
-          <TalkAboutUs/>
+          <OurBlog articles={this.props.articles} />
+          <TalkAboutUs />
         </main>
       </div>
     );
@@ -360,11 +392,13 @@ LandingPageContent.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  fetchArticles: bindActionCreators(fetchArticles, dispatch)
 });
 
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
+  articles: state.articles.articles
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPageContent));

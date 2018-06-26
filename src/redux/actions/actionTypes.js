@@ -152,3 +152,6 @@ export const UPDATE_EMAIL_COMPLETE = 'update_email_complete';
 export const DELETE_TEAM_INITIATE = 'delete_team_initiate';
 export const DELETE_TEAM_COMPLETE = 'delete_team_complete';
 
+// Articles
+export const FETCH_ARTICLES_INITIATE = 'fetch_articles_initiate';
+export const FETCH_ARTICLES_COMPLETE = 'fetch_articles_complete';
