@@ -25,6 +25,8 @@ class SkillCard extends React.Component {
       flipCardClass: false,
       openVideo: false,
       tree: undefined,
+      selectedTask: undefined,
+      selectedSkill: undefined
     };
   }
 
@@ -57,14 +59,28 @@ class SkillCard extends React.Component {
     this.setState({ flipCardClass: !this.state.flipCardClass });
   }
 
-  selectSkill(e) {
+  startTask() {
+    if(this.state.selectedTask && this.state.selectedSkill) {
+      this.props.onStart(this.state.selectedTask, this.state.selectedSkill, this.state.tree);
+      this.setState({
+        isTaskSelected: false,
+        selectedTask: undefined,
+        selectedSkill: undefined,
+        flipCardClass: false
+      });
+    }
+  }
+
+  selectSkill(e, selectedSkill) {
+    this.setState({ selectedSkill });
     $('.pskill-banner').removeClass('active');
     $(e.target)
       .closest('div.pskill-banner')
       .addClass('active');
   }
 
-  selectTask(e) {
+  selectTask(e, selectedTask) {
+    this.setState({ selectedTask });
     $('.ptask-banner').removeClass('active');
     $(e.target)
       .closest('div.ptask-banner')
@@ -105,7 +121,7 @@ class SkillCard extends React.Component {
     }
     const listItems = skillParsed.map(function(skill, i) {
       return (
-        <div className="pskill-banner" onClick={e => that.selectSkill(e)} key={i}>
+        <div className="pskill-banner" onClick={e => that.selectSkill(e, skill)} key={i}>
           <div className="pskill-name">{skill}</div>
           <div className="ptree-checkmark-div">
             <div className="ptree-checkmark" />
@@ -121,7 +137,7 @@ class SkillCard extends React.Component {
       <div>
         <div className="ptree-back-header">Select task to continue.</div>
         <div className="ptree-task-list">
-          <div className="ptask-banner" onClick={e => this.selectTask(e)}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Illuminate')}>
             <div className="ptask-left">
               <div className="ptask-name">Illuminate</div>
               <div className="ptask-desc">30 min 3 questions</div>
@@ -201,8 +217,8 @@ class SkillCard extends React.Component {
           <button className="ptree-btn ptree-back" onClick={() => this.toggleTaskView()}>
             Back
           </button>
-          <button className="ptree-btn ptree-next" onClick={() => this.flipCard()}>
-            Next
+          <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-next" onClick={() => this.startTask()}>
+            Start
           </button>
         </div>
       </div>
