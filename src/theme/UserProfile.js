@@ -428,6 +428,9 @@ class UserProfile extends React.Component {
             tokenCountLabel = `Complete ${cond.count} "${cond.action}".`;
           }
           break;
+        case 'Level':
+          tokenCountLabel = `Reach level ${cond.count}.`;
+          break;
       }
       return (
         <div key={cond._id} className="token-count">
@@ -444,6 +447,7 @@ class UserProfile extends React.Component {
         <div className="progress-custom">
           {/* {this.getTotalAchievementCount(achievement._id)} */}
           {this.renderProgressLength(achievement._id)}
+
         </div>
         <div className="earned-token">Earned 50 tokens during 7 days</div>
       </Popover>
@@ -452,6 +456,7 @@ class UserProfile extends React.Component {
 
   renderProgressLength(achievementId) {
     const total = this.getTotalAchievementCount(achievementId)
+    console.log(total)
     const style = {
       width: `${(total.totalCtr/total.totalCount) * 100}%`
     }
