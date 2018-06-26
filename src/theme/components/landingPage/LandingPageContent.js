@@ -274,7 +274,7 @@ const WorkExplanation = () => {
             tasks.
             Develop together the same way.</p>
           <p>There are 6 houses available in BETA.</p>
-          <a href="/houses" className="explore-house">Explore house &#62;</a>
+          <a href="/houses" className="explore-page">Explore Houses &#62;</a>
         </div>
       </section>
       <section className="select-hero clearfix">
@@ -299,14 +299,39 @@ const WorkExplanation = () => {
             challenges
             individually or with your friends.</p>
           <p>There are 4 heros available in BETA.</p>
-          <a href="">Explore Heroes &#62;</a>
+          <a href="/heroes" className="explore-page">Explore Heroes &#62;</a>
+        </div>
+      </section>
+      <section className="play-the-game clearfix">
+        <div className="images-wrapper">
+          <div className="play-the-game-video"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/veQyAxuRzD0?rel=0&amp;controls=0&amp;showinfo=0" frameBorder="0" allowFullScreen=""></iframe></div>
+          <img
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game.png"
+            alt="play the game"/>
+          <img
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game-1.png"
+            className="background-img-1"
+            alt="play the game on background"/>
+          <img
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game-2.png"
+            className="background-img-2"
+            alt="play the game on background"/>
+        </div>
+        <div className="description">
+          <span className="blue-rectangle"> </span>
+          <h1>3</h1>
+          <h3>3. Play the game</h3>
+          <p>Complete quests along the story of the hero
+            you chose, and get method to others so form
+            your own dream team.</p>
+          <a href="">Explore Story &#62;</a>
         </div>
       </section>
       <section className="get-reward clearfix">
         <div className="images-wrapper">
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png"
-            alt="select your house" />
+            alt="get a reward"/>
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward-1.png"
             className="background-img-1"
@@ -318,8 +343,8 @@ const WorkExplanation = () => {
         </div>
         <div className="description">
           <span className="blue-rectangle"> </span>
-          <h1>3</h1>
-          <h3>3. Get a Reward</h3>
+          <h1>4</h1>
+          <h3>4. Get a Reward</h3>
           <p>Cumulate SOQQ Sparks, Achievements and Bonuses upon the completion of tasks.
             Get more
             for doing Group Tasks.</p>
@@ -342,8 +367,8 @@ const WorkExplanation = () => {
         </div>
         <div className="description">
           <span className="blue-rectangle"> </span>
-          <h1>4</h1>
-          <h3>4. Use your Rewards</h3>
+          <h1>5</h1>
+          <h3>5. Use your Rewards</h3>
           <p>SOQQ Sparks are powered by Blockchain Force. Use them to boost experience
             gain, or
             obtain character upgrades. </p>
