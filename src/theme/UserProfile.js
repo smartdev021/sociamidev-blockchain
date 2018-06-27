@@ -431,6 +431,9 @@ class UserProfile extends React.Component {
         case 'Level':
           tokenCountLabel = `Reach level ${cond.count}.`;
           break;
+        case 'Story':
+          tokenCountLabel = `Requires ${_.get(cond, '_story.name')}.`
+          break;
       }
       return (
         <div key={cond._id} className="token-count">
