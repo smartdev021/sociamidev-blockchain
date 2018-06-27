@@ -469,8 +469,10 @@ class UserProfile extends React.Component {
     };
     if (achievementById) {
       _.each(achievementById.conditions, condition => {
-        total.totalCtr += condition.counter
-        total.totalCount += condition.count
+        if (condition.type !== 'Story') {
+          total.totalCtr += condition.counter
+          total.totalCount += condition.count
+        }
       })
     } else {
       // set totalCount to 1 so that counter will not be divided to zero
