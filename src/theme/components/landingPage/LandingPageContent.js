@@ -50,11 +50,11 @@ const AboutComponent = () => {
 };
 
 const Article = ({article}) => {
-  const date = new Date(article.data.date);
-  const dateStr = date.getDate() +'.'+date.getMonth()+1 + '.' + date.getFullYear();
+  const published_time = article.openGraph.published_time ? new Date(article.openGraph.published_time) : new Date(article.data.date)
+  const date = new Date(published_time);
+  const dateStr = date.getDate() +'.'+ (date.getMonth()+1).toString() + '.' + date.getFullYear();
   const title = article.openGraph.title ? article.openGraph.title : article.data.title;
   const subTitle = article.openGraph.description ? article.openGraph.description : article.data.subTitle;
-  const image = article.openGraph.image ? article.openGraph.image.url : '';
   return (
       <article>
         <p className="date">{dateStr}</p>
