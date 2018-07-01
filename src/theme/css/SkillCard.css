@@ -39,6 +39,10 @@
 .progression-tree-hero-img {
     width: 250px;
 }
+.progression-tree-blockforce-img{
+    width: 160px;
+    margin-right: 40px;
+}
 
 
 .ptree-card-item{
@@ -347,6 +351,9 @@
     }
     .pskill-name{
         font:normal 15px "MyriadPro Semibold";
+    }
+    .progression-tree-blockforce-img{
+        padding-bottom: 40px;
     }
 }
 
