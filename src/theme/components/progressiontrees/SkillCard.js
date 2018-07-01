@@ -211,13 +211,16 @@ class SkillCard extends React.Component {
 
   getImgUrl(img) {
     let imgUrl;
+    let imgStyle;
     if (img == 'Miner') {
       imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png';
     } else if (img == 'Nomad') {
       imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png';
     } else if (img == 'Innovator') {
       imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
-    } else {
+    } else if (img == 'Blockforce'){
+      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
+    }else{
       imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
     }
     return imgUrl;

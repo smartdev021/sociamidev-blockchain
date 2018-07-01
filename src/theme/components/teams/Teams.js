@@ -71,7 +71,7 @@ class Teams extends React.Component {
 
   render() {
     return (
-      <div className="my-teams-container">
+      <div className="soqqle-content-container my-teams-container">
         <div className="row team-header">
           <div className="my-teams-header">
             <b>{this.props.company.name || 'My teams'}</b>

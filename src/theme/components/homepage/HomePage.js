@@ -200,6 +200,8 @@ class HomePage extends React.Component {
       <div className="progression-tree-skill-list">
         {this.props.roadmapsAdmin.data.length != 0 &&
           this.props.roadmapsAdmin.data.map((item, index) => {
+            console.log('item')
+            console.log(item)
             return <SkillCard key={index} skillItem={item} />;
           })}
       </div>

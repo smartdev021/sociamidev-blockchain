@@ -301,19 +301,19 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .banner-wrapper button {
+.landing-page-wrapper .banner-wrapper button,.landing-page-wrapper .banner-wrapper a {
     display: inline-block;
     font: normal 20px "MyriadPro Semibold";
     color: #000;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .banner-wrapper button {
+    .landing-page-wrapper .banner-wrapper button, .landing-page-wrapper .banner-wrapper a {
         font-size: 13px;
     }
 }
 
-.landing-page-wrapper .banner-wrapper button.explore-button {
+.landing-page-wrapper .banner-wrapper .explore-button {
     padding: 5px 60px;
     margin: 0 20px 0 5px;
     background: #ffd400;
@@ -322,7 +322,7 @@ html.vertical-hidden {
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .banner-wrapper button.explore-button {
+    .landing-page-wrapper .banner-wrapper .explore-button {
         padding: 7px 14px 4px;
         margin: 0 5px 0 0;
     }
@@ -342,13 +342,13 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .banner-wrapper button p {
+.landing-page-wrapper .banner-wrapper button p, .landing-page-wrapper .banner-wrapper a p {
     margin: 0;
     transform: skew(38deg);
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .banner-wrapper button p {
+    .landing-page-wrapper .banner-wrapper button p, .landing-page-wrapper .banner-wrapper a p {
         transform: skew(32deg);
     }
 }
@@ -363,7 +363,7 @@ html.vertical-hidden {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .footer {
-        padding: 65px 0 30px;
+        padding: 100px 0 30px;
     }
 }
 

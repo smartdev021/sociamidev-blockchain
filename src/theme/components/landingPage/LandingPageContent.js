@@ -5,12 +5,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withCookies } from 'react-cookie';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import { openSignUpForm } from '~/src/redux/actions/authorization';
 import Authorize from '~/src/authentication/Authorize';
+import { openSignUpForm } from '~/src/redux/actions/authorization';
+import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
 
-const Banner = ({openSignUpForm}) => {
+const Banner = ({ openSignUpForm, startCharacterCreation }) => {
   return (
     <div className="banner-wrapper">
       <img
@@ -24,9 +26,13 @@ const Banner = ({openSignUpForm}) => {
             together to
             gain glory and rewards.</p>
         </section>
-        <button type="button" className="explore-button"><p>Explore Soqqle</p></button>
+        <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
+          <p>Explore Soqqle</p>
+        </Link>
         <button type="button" className="sign-in-button"
-          onClick={() => openSignUpForm()}><p>Sign in</p></button>
+          onClick={() => openSignUpForm()}>
+          <p>Sign in</p>
+        </button>
       </div>
     </div>
   );
@@ -336,7 +342,8 @@ class LandingPageContent extends React.Component {
     return (
       <div className="landing-page-wrapper">
         <header>
-          <Banner openSignUpForm={this.props.openSignUpForm}/>
+          <Banner openSignUpForm={this.props.openSignUpForm}
+          startCharacterCreation={this.props.startCharacterCreation}/>
         </header>
         <AboutComponent/>
         <main>

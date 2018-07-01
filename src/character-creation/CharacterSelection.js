@@ -10,8 +10,8 @@ import { Icon } from 'react-fa';
 
 import ActionLink from '~/src/components/common/ActionLink';
 
-import './common.css';
-import './characterSelection.css';
+// import './common.css';
+// import './characterSelection.css';
 
 class CharacterSelection extends React.Component {
   constructor(props) {

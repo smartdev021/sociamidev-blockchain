@@ -48,11 +48,6 @@ class UserMenuDropdown extends React.Component {
             </Link>
           </div>
           <div className="row user-links">
-            <Link className="user-link-text" to="/privacy">
-              Team Setup
-            </Link>
-          </div>
-          <div className="row user-links">
             <ActionLink className="user-link-text" href="#" onClick={() => this.props.onSignOut()}>
               Logout
             </ActionLink>
