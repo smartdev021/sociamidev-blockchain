@@ -98,7 +98,7 @@
 
 .character-selection-button-container {}
 
-.character-selection-button {
+/* .character-selection-button {
     padding: 5px;
     cursor: pointer;
     background: #2fa7d2;
@@ -116,7 +116,7 @@
     background: #f26c30;
     opacity: 1;
     border: 6px solid #ffca28;
-}
+} */
 
 .character-selection-button.character-order-0 img {
     margin-left: -97px;
@@ -156,7 +156,7 @@
 }
 
 
-#character-skills {
+/* #character-skills {
     padding-top: 10px;
     padding-bottom: 40px;
 }
@@ -179,7 +179,7 @@
     display: inline-block;
     cursor: default;
     margin-top: 10px;
-}
+} */
 
 .character-creation-progressbar-container {
     padding: 15px 0px 15px 0px;
@@ -242,19 +242,19 @@
 .choose-house-text{
     width: 100%;
 }
-.select-character-button{
+/* .select-character-button{
     text-align: center;
     zoom: .7;
-}
+} */
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
 }
 @media all and (max-width: 768px) {
-    .character-selection-button{
+    /* .character-selection-button{
         width:50px;
         height:50px;
-    }
+    } */
     .character-creation-header{
         padding: 10px 0px 10px 0px !important;
     }
@@ -274,11 +274,11 @@
         text-transform: uppercase;
         height:auto !important;
     }
-    .character-header{
+    /* .character-header{
         padding: 15px 0px 10px 0px !important;
         zoom: .9;
         -moz-transform: scale(0.9)
-    }
+    } */
     #character-name{
         font-size: 32px;
         font-family: "Fjalla One";

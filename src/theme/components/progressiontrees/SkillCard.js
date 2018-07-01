@@ -226,17 +226,34 @@ class SkillCard extends React.Component {
   }
 
   getImgUrl(img) {
-    let imgUrl;
+    let imgJson;
     if (img == 'Miner') {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png';
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png',
+        imgClass : 'progression-tree-hero-img'
+      }
     } else if (img == 'Nomad') {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png';
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png',
+        imgClass : 'progression-tree-hero-img'
+      }
     } else if (img == 'Innovator') {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
-    } else {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
+        imgClass : 'progression-tree-hero-img'
+      }
+    } else if (img == 'Blockforce'){
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
+        imgClass : 'progression-tree-blockforce-img'
+      }
+    }else{
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
+        imgClass : 'progression-tree-hero-img'
+      }
     }
-    return imgUrl;
+    return imgJson;
   }
 
   render() {
@@ -246,14 +263,14 @@ class SkillCard extends React.Component {
       ? this.renderSkillCard(skillItem)
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
-    const imgUrl = this.getImgUrl(skillItem.heroimg);
+    const imgJson = this.getImgUrl(skillItem.heroimg);
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
         <div className="progression-tree-skill-content">
           <div className="progression-tree-skill-item">
             <div className="progression-tree-hero-container col-md-6 col-sm-12">
-              <img src={imgUrl} className="progression-tree-hero-img" />
+              <img src={imgJson.imgUrl} className={imgJson.imgClass} />
             </div>
             <div className="progression-tree-skill-card col-md-6 col-sm-12">
               <div className={`ptree-card-item` + flipClass}>
