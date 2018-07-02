@@ -71,6 +71,10 @@ class SkillCard extends React.Component {
     }
   }
 
+  quickStart() {
+    this.props.onQuickStart(this.state.tree);
+  }
+
   selectSkill(e, selectedSkill) {
     this.setState({ selectedSkill });
     $('.pskill-banner').removeClass('active');
@@ -280,7 +284,7 @@ class SkillCard extends React.Component {
                     <span className="ptree-yellow-bar" />
                     <div className="ptree-card-body">{skillItem.description}</div>
                     <div className="pskill-btn-group ptree-btn-group">
-                      <button className="ptree-btn ptree-start">Quick start</button>
+                      <button className="ptree-btn ptree-start" onClick={() => this.quickStart()}>Quick start</button>
                       <button className="ptree-btn ptree-view" onClick={() => this.flipCard()}>
                         View tasks
                       </button>
