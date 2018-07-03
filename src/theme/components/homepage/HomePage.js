@@ -316,7 +316,7 @@ class HomePage extends React.Component {
     const randomTask = ["Illuminate","Deepdive"][Math.floor(Math.random() * 2)];
     const skills = tree.weightage1[0].split(',');
     const randomSkill = skills[Math.floor(Math.random() * skills.length)];
-    this.handleSkillStart("Deepdive",randomSkill,tree);
+    this.handleSkillStart(randomTask,randomSkill,tree);
   }
 
   handleSkillStart(task, skill, tree) {
