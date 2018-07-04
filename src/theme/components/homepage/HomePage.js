@@ -46,6 +46,7 @@ class HomePage extends React.Component {
     this.state = {
       isDetailsOpen: false,
       currentTask: {},
+      quickStarts: {}
     };
     this.handleQuickStart = this.handleQuickStart.bind(this);
     this.handleSkillStart = this.handleSkillStart.bind(this);
@@ -313,10 +314,15 @@ class HomePage extends React.Component {
   }
 
   handleQuickStart(tree) {
+    this.setState( prevState => {
+      const quickStarts = { ...prevState.quickStarts };
+      quickStarts[tree.name] = true;
+      return { quickStarts };
+    });
     const randomTask = ["Illuminate","Deepdive"][Math.floor(Math.random() * 2)];
     const skills = tree.weightage1[0].split(',');
     const randomSkill = skills[Math.floor(Math.random() * skills.length)];
-    this.handleSkillStart(randomTask,randomSkill,tree);
+    this.handleSkillStart("Illuminate",randomSkill,tree);
   }
 
   handleSkillStart(task, skill, tree) {
@@ -335,6 +341,12 @@ class HomePage extends React.Component {
         }
       })
       .catch(function(error) {
+      }).finally(()=>{
+        this.setState( prevState => {
+          const quickStarts = { ...prevState.quickStarts };
+          quickStarts[tree.name] = false;
+          return { quickStarts };
+        });
       });
   }
 
@@ -343,7 +355,7 @@ class HomePage extends React.Component {
       <div className="progression-tree-skill-list">
         {this.props.roadmapsAdmin.data.length != 0 &&
           this.props.roadmapsAdmin.data.map((item, index) => {
-            return <SkillCard key={index} skillItem={item} onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}/>;
+            return <SkillCard key={index} skillItem={item} quickStartProgress={this.state.quickStarts[item.name] === true} onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}/>;
           })}
       </div>
     );
