@@ -301,19 +301,19 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .banner-wrapper button {
+.landing-page-wrapper .banner-wrapper button,.landing-page-wrapper .banner-wrapper a {
     display: inline-block;
     font: normal 20px "MyriadPro Semibold";
     color: #000;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .banner-wrapper button {
+    .landing-page-wrapper .banner-wrapper button, .landing-page-wrapper .banner-wrapper a {
         font-size: 13px;
     }
 }
 
-.landing-page-wrapper .banner-wrapper button.explore-button {
+.landing-page-wrapper .banner-wrapper .explore-button {
     padding: 5px 60px;
     margin: 0 20px 0 5px;
     background: #ffd400;
@@ -322,7 +322,7 @@ html.vertical-hidden {
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .banner-wrapper button.explore-button {
+    .landing-page-wrapper .banner-wrapper .explore-button {
         padding: 7px 14px 4px;
         margin: 0 5px 0 0;
     }
@@ -342,15 +342,22 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .banner-wrapper button p {
+.landing-page-wrapper .banner-wrapper button p, .landing-page-wrapper .banner-wrapper a p {
     margin: 0;
     transform: skew(38deg);
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .banner-wrapper button p {
+    .landing-page-wrapper .banner-wrapper button p, .landing-page-wrapper .banner-wrapper a p {
         transform: skew(32deg);
     }
+}
+
+.landing-page-wrapper #privacy-policy-container {
+    background-color: #fff;
+    color: #000000;
+    padding-top: 90px;
+    padding-bottom: 30px;
 }
 
 .landing-page-wrapper .footer {
@@ -363,7 +370,7 @@ html.vertical-hidden {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .footer {
-        padding: 65px 0 30px;
+        padding: 100px 0 30px;
     }
 }
 
@@ -486,6 +493,12 @@ html.vertical-hidden {
     font-size: 16px;
     text-transform: uppercase;
     list-style: none;
+}
+
+.landing-page-wrapper .footer .privacy-list li a {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
 }
 
 .landing-page-wrapper .footer .privacy-list li::after {
@@ -926,6 +939,10 @@ html.vertical-hidden {
     color: #333333;
 }
 
+.landing-page-wrapper .our-blog h3 a {
+    color: #fff;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .our-blog h2 {
         margin: 8px 0 14px;
@@ -957,6 +974,10 @@ html.vertical-hidden {
     position: absolute;
 }
 
+.landing-page-wrapper .our-blog article a{
+    text-decoration: none;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .our-blog .one-news {
         width: 100%;
@@ -970,6 +991,16 @@ html.vertical-hidden {
 .landing-page-wrapper .our-blog .one-news h3 {
     margin: 7px 0;
     font: normal 28px "MyriadPro Bold";
+}
+
+.landing-page-wrapper .our-blog .one-news img {
+    width: 460px;
+    height: 490px;
+}
+
+.landing-page-wrapper .our-blog .two-news img {
+    width: 460px;
+    height: 240px;
 }
 
 @media screen and (max-width: 750px) {
@@ -1692,8 +1723,10 @@ html.vertical-hidden {
 
 .landing-page-wrapper .work-explanation .select-house .description,
 .landing-page-wrapper .work-explanation .select-house .images-wrapper,
-.landing-page-wrapper .work-explanation .get-reward .description,
-.landing-page-wrapper .work-explanation .get-reward .images-wrapper {
+.landing-page-wrapper .work-explanation .play-the-game .description,
+.landing-page-wrapper .work-explanation .play-the-game .images-wrapper,
+.landing-page-wrapper .work-explanation .use-rewards .description,
+.landing-page-wrapper .work-explanation .use-rewards .images-wrapper {
     float: left;
     margin: 0 0 0 193px;
 }
@@ -1706,8 +1739,10 @@ html.vertical-hidden {
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation .select-house .description,
     .landing-page-wrapper .work-explanation .select-house .images-wrapper,
-    .landing-page-wrapper .work-explanation .get-reward .description,
-    .landing-page-wrapper .work-explanation .get-reward .images-wrapper {
+    .landing-page-wrapper .work-explanation .play-the-game .description,
+    .landing-page-wrapper .work-explanation .play-the-game .images-wrapper,
+    .landing-page-wrapper .work-explanation .use-rewards .description,
+    .landing-page-wrapper .work-explanation .use-rewards .images-wrapper {
         display: block;
         float: none;
         max-width: 320px;
@@ -1718,95 +1753,14 @@ html.vertical-hidden {
 }
 
 .landing-page-wrapper .work-explanation .select-house .description,
-.landing-page-wrapper .work-explanation .get-reward .description {
+.landing-page-wrapper .work-explanation .play-the-game .description,
+.landing-page-wrapper .work-explanation .use-rewards .description {
     margin: 68px 0 0 165px;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation .select-house .description,
-    .landing-page-wrapper .work-explanation .get-reward .description {
-        width: 100%;
-        max-width: 228px;
-        padding: 0;
-        margin: 43px auto 0;
-        text-align: left;
-    }
-}
-
-.landing-page-wrapper .work-explanation .select-house .background-img-1,
-.landing-page-wrapper .work-explanation .get-reward .background-img-1 {
-    top: -85px;
-    left: -58px;
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .select-house .background-img-1,
-    .landing-page-wrapper .work-explanation .get-reward .background-img-1 {
-        top: -40px;
-        left: 50%;
-        width: 100%;
-        max-width: 202px;
-        transform: translateX(-50%);
-    }
-}
-
-.landing-page-wrapper .work-explanation .select-house .background-img-2,
-.landing-page-wrapper .work-explanation .get-reward .background-img-2 {
-    bottom: -35px;
-    left: -141px;
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .select-house .background-img-2,
-    .landing-page-wrapper .work-explanation .get-reward .background-img-2 {
-        bottom: -14px;
-        left: 37%;
-        width: 100%;
-        max-width: 202px;
-        transform: translateX(-50%);
-    }
-}
-
-.landing-page-wrapper .work-explanation .select-house h1,
-.landing-page-wrapper .work-explanation .get-reward h1 {
-    left: -90px;
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .select-house h1,
-    .landing-page-wrapper .work-explanation .get-reward h1 {
-        top: -43px;
-        left: -38px;
-    }
-}
-
-.landing-page-wrapper .work-explanation .select-hero .description,
-.landing-page-wrapper .work-explanation .select-hero .images-wrapper,
-.landing-page-wrapper .work-explanation .use-rewards .description,
-.landing-page-wrapper .work-explanation .use-rewards .images-wrapper {
-    float: right;
-    margin: 0 197px 0 0;
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .select-hero .description,
-    .landing-page-wrapper .work-explanation .select-hero .images-wrapper,
-    .landing-page-wrapper .work-explanation .use-rewards .description,
-    .landing-page-wrapper .work-explanation .use-rewards .images-wrapper {
-        float: none;
-        max-width: 320px;
-        padding: 0 0 0 12px;
-        margin: 0;
-    }
-}
-
-.landing-page-wrapper .work-explanation .select-hero .description,
-.landing-page-wrapper .work-explanation .use-rewards .description {
-    margin: 0 47px 0 0;
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .select-hero .description,
+    .landing-page-wrapper .work-explanation .play-the-game .description,
     .landing-page-wrapper .work-explanation .use-rewards .description {
         width: 100%;
         max-width: 228px;
@@ -1816,30 +1770,143 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .work-explanation .select-hero .background-img-1,
+.landing-page-wrapper .work-explanation .select-house .background-img-1,
+.landing-page-wrapper .work-explanation .play-the-game .background-img-1,
 .landing-page-wrapper .work-explanation .use-rewards .background-img-1 {
+    top: -85px;
+    left: -58px;
+}
+
+.landing-page-wrapper .work-explanation .play-the-game .play-the-game-video {
+    position: absolute;
+    width: 422px;
+    height: 320px;
+    top: 6px;
+    left: 20px;
+    z-index: 9;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house .background-img-1,
+    .landing-page-wrapper .work-explanation .play-the-game .background-img-1,
+    .landing-page-wrapper .work-explanation .use-rewards .background-img-1 {
+        top: -40px;
+        left: 50%;
+        width: 100%;
+        max-width: 202px;
+        transform: translateX(-50%);
+    }
+    .landing-page-wrapper .work-explanation .play-the-game .play-the-game-video {
+        width: 100%;
+        height: 100%;
+        top: 2px;
+        left: 84px;
+        max-width: 215px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house .background-img-2,
+.landing-page-wrapper .work-explanation .play-the-game .background-img-2,
+.landing-page-wrapper .work-explanation .use-rewards .background-img-2 {
+    bottom: -35px;
+    left: -141px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house .background-img-2,
+    .landing-page-wrapper .work-explanation .play-the-game .background-img-2,
+    .landing-page-wrapper .work-explanation .use-rewards .background-img-2 {
+        bottom: -14px;
+        left: 37%;
+        width: 100%;
+        max-width: 202px;
+        transform: translateX(-50%);
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-house h1,
+.landing-page-wrapper .work-explanation .play-the-game h1,
+.landing-page-wrapper .work-explanation .use-rewards h1 {
+    left: -90px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-house h1,
+    .landing-page-wrapper .work-explanation .play-the-game h1,
+    .landing-page-wrapper .work-explanation .use-rewards h1 {
+        top: -43px;
+        left: -38px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .description,
+.landing-page-wrapper .work-explanation .select-hero .images-wrapper,
+.landing-page-wrapper .work-explanation .get-reward .description,
+.landing-page-wrapper .work-explanation .get-reward .images-wrapper {
+    float: right;
+    margin: 0 197px 0 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .description,
+    .landing-page-wrapper .work-explanation .select-hero .images-wrapper,
+    .landing-page-wrapper .work-explanation .get-reward .description,
+    .landing-page-wrapper .work-explanation .get-reward .images-wrapper {
+        float: none;
+        max-width: 320px;
+        padding: 0 0 0 12px;
+        margin: 0;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .description,
+.landing-page-wrapper .work-explanation .get-reward .description {
+    margin: 0 47px 0 0;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .select-hero .description,
+    .landing-page-wrapper .work-explanation .get-reward .description {
+        width: 100%;
+        max-width: 228px;
+        padding: 0;
+        margin: 43px auto 0;
+        text-align: left;
+    }
+}
+
+.landing-page-wrapper .work-explanation .select-hero .background-img-1 {
     top: -90px;
     right: -78px;
 }
 
+.landing-page-wrapper .work-explanation .get-reward .background-img-1 {
+    top: -83px;
+    right: -68px;
+}
+
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .select-hero .background-img-1,
-    .landing-page-wrapper .work-explanation .use-rewards .background-img-1 {
+    .landing-page-wrapper .work-explanation .select-hero .background-img-1 {
         top: -44px;
         right: -37px;
+        width: 320px;
+    }
+    .landing-page-wrapper .work-explanation .get-reward .background-img-1 {
+        top: -52px;
+        right: -31px;
         width: 320px;
     }
 }
 
 .landing-page-wrapper .work-explanation .select-hero .background-img-2,
-.landing-page-wrapper .work-explanation .use-rewards .background-img-2 {
+.landing-page-wrapper .work-explanation .get-reward .background-img-2 {
     top: 72px;
     right: -152px;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation .select-hero .background-img-2,
-    .landing-page-wrapper .work-explanation .use-rewards .background-img-2 {
+    .landing-page-wrapper .work-explanation .get-reward .background-img-2 {
         top: 32px;
         right: 0;
         left: 98px;
@@ -1888,71 +1955,103 @@ html.vertical-hidden {
     }
 }
 
-.landing-page-wrapper .work-explanation .get-reward {
+.landing-page-wrapper .work-explanation .play-the-game {
     padding-top: 122px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .get-reward {
+    .landing-page-wrapper .work-explanation .play-the-game {
         padding-top: 91px;
     }
 }
 
-.landing-page-wrapper .work-explanation .get-reward .description {
+.landing-page-wrapper .work-explanation .play-the-game .description {
     margin-top: 9px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .get-reward .description {
+    .landing-page-wrapper .work-explanation .play-the-game .description {
         max-width: 242px;
-        margin-top: 54px;
+        margin-top: 43px;
     }
 }
 
-.landing-page-wrapper .work-explanation .get-reward h1 {
+.landing-page-wrapper .work-explanation .play-the-game h1 {
     top: -95px;
     left: -108px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .get-reward h1 {
+    .landing-page-wrapper .work-explanation .play-the-game h1 {
         top: -51px;
         left: -31px;
     }
 }
 
-.landing-page-wrapper .work-explanation .use-rewards {
+.landing-page-wrapper .work-explanation .get-reward {
     padding-top: 112px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .use-rewards {
-        padding-top: 90px;
+    .landing-page-wrapper .work-explanation .get-reward {
+        padding-top: 112px;
     }
 }
 
-.landing-page-wrapper .work-explanation .use-rewards .description {
-    margin-top: 3px;
+.landing-page-wrapper .work-explanation .get-reward .description {
+    margin-top: 43px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .use-rewards .description {
+    .landing-page-wrapper .work-explanation .get-reward .description {
         display: block;
         max-width: 256px;
-        margin: 38px auto 75px;
     }
 }
 
-.landing-page-wrapper .work-explanation .use-rewards h1 {
+.landing-page-wrapper .work-explanation .get-reward h1 {
     top: -81px;
     left: -102px;
 }
 
 @media screen and (max-width: 750px) {
-    .landing-page-wrapper .work-explanation .use-rewards h1 {
+    .landing-page-wrapper .work-explanation .get-reward h1 {
         top: -39px;
         left: -14px;
     }
 }
 
+.landing-page-wrapper .work-explanation .use-rewards {
+    padding-top: 122px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .use-rewards {
+        padding-top: 122px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .use-rewards .description {
+    margin-top: 9px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .use-rewards .description {
+        max-width: 242px;
+        margin-top: 43px;
+        margin: 38px auto 75px;
+    }
+}
+
+.landing-page-wrapper .work-explanation .use-rewards h1 {
+    top: -95px;
+    left: -108px;
+}
+
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .work-explanation .use-rewards h1 {
+        top: -51px;
+        left: -31px;
+    }
+}
 /*# sourceMappingURL=style.css.map */

@@ -428,6 +428,12 @@ class UserProfile extends React.Component {
             tokenCountLabel = `Complete ${cond.count} "${cond.action}".`;
           }
           break;
+        case 'Level':
+          tokenCountLabel = `Reach level ${cond.count}.`;
+          break;
+        case 'Story':
+          tokenCountLabel = `Requires ${_.get(cond, '_story.name')}.`
+          break;
       }
       return (
         <div key={cond._id} className="token-count">
@@ -444,6 +450,7 @@ class UserProfile extends React.Component {
         <div className="progress-custom">
           {/* {this.getTotalAchievementCount(achievement._id)} */}
           {this.renderProgressLength(achievement._id)}
+
         </div>
         <div className="earned-token">Earned 50 tokens during 7 days</div>
       </Popover>
@@ -452,6 +459,7 @@ class UserProfile extends React.Component {
 
   renderProgressLength(achievementId) {
     const total = this.getTotalAchievementCount(achievementId)
+    console.log(total)
     const style = {
       width: `${(total.totalCtr/total.totalCount) * 100}%`
     }
@@ -469,8 +477,10 @@ class UserProfile extends React.Component {
     };
     if (achievementById) {
       _.each(achievementById.conditions, condition => {
-        total.totalCtr += condition.counter
-        total.totalCount += condition.count
+        if (condition.type !== 'Story') {
+          total.totalCtr += condition.counter
+          total.totalCount += condition.count
+        }
       })
     } else {
       // set totalCount to 1 so that counter will not be divided to zero

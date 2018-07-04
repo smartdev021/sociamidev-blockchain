@@ -21,13 +21,23 @@ import SkillCard from '~/src/theme/components/progressiontrees/SkillCard';
 import { setSearchQuery } from '~/src/redux/actions/fetchResults';
 
 import { fetchRoadmaps, fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
+import { saveTask } from '~/src/redux/actions/tasks';
+import Axios from 'axios';
+import ConfigMain from '~/configs/main';
 
 import { prepareTimers, showAllTimers, showTopTimers } from '~/src/redux/actions/timers';
+import TaskTypes from '~/src/common/TaskTypes';
+import UserInteractions from '~/src/common/UserInteractions';
+import { userInteractionPush } from '~/src/redux/actions/userInteractions';
 
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = { find_mentor: 'Find Mentor' };
 
 import '~/src/theme/css/homePage.css';
+
+const RandomInt = function RandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -37,6 +47,10 @@ class HomePage extends React.Component {
       isDetailsOpen: false,
       currentTask: {},
     };
+    this.handleQuickStart = this.handleQuickStart.bind(this);
+    this.handleSkillStart = this.handleSkillStart.bind(this);
+    this.saveIlluminate = this.saveIlluminate.bind(this);
+    this.saveDeepdive = this.saveDeepdive.bind(this);
   }
 
   componentWillMount() {
@@ -195,12 +209,141 @@ class HomePage extends React.Component {
     }
   }
 
+  saveIlluminate(tree,skillInfo) {
+    const that = this;
+    const CurrentTree = tree;
+    const illuminate = {
+      name: `Illuminate for roadmap "${CurrentTree.name}"`,
+      description: `Illuminate for roadmap "${CurrentTree.name}"`,
+      type: TaskTypes.ILLUMINATE,
+      userName: `${that.props.userProfile.firstName} ${that.props.userProfile.lastName}`,
+      userID: that.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: that.props.userProfile._id,
+        firstName: that.props.userProfile.firstName,
+        lastName: that.props.userProfile.lastName,
+      },
+      metaData: {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: skillInfo._id,
+            name: skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: that.props.userProfile._id,
+              firstName: that.props.userProfile.firstName,
+              lastName: that.props.userProfile.lastName,
+            },
+            status: 'accepted',
+            isCreator: true,
+          },
+        ],
+        ratings: [],
+        time: Date.now(),
+        awardXP: RandomInt(30, 40),
+      },
+    };
+    that.props.saveTask(illuminate);
+  }
+
+  saveDeepdive(tree,skillInfo) {
+    const date = new Date();
+    const CurrentTree = tree;
+    const hangout = {
+      name: `Hangout for roadmap "${CurrentTree.name}"`,
+      description: 'Hangout with John, and answer questions together',
+      type: TaskTypes.DEEPDIVE,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`,
+      userID: this.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      },
+      metaData: {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: skillInfo._id,
+            name: skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: this.props.userProfile._id,
+              firstName: this.props.userProfile.firstName,
+              lastName: this.props.userProfile.lastName,
+            },
+            status: 'accepted',
+            isCreator: true,
+          },
+        ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
+        ratings: [],
+        time: date.getTime(),
+        awardXP: RandomInt(30, 40),
+      },
+    };
+    this.props.saveTask(hangout);
+  
+    if (this.props.userProfile && this.props.userProfile._id) {
+      this.props.userInteractionPush(
+        this.props.userProfile._id,
+        UserInteractions.Types.ACTION_EXECUTE,
+        UserInteractions.SubTypes.DEEPDIVE_START,
+        {
+          roadmapId: CurrentTree._id,
+          skillId: skillInfo._id,
+          deepdiveTime: date.getTime(),
+        },
+      );
+    }
+  }
+
+  handleQuickStart(tree) {
+    const randomTask = ["Illuminate","Deepdive"][Math.floor(Math.random() * 2)];
+    const skills = tree.weightage1[0].split(',');
+    const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+    this.handleSkillStart(randomTask,randomSkill,tree);
+  }
+
+  handleSkillStart(task, skill, tree) {
+    if(task !== 'Illuminate' && task !== 'Deepdive') {
+      return;
+    }
+    const url = `${ConfigMain.getBackendURL()}/skillGet?name=${skill}`;
+    const that = this;
+    Axios.get(url)
+      .then(function(response) {
+        const skillInfo = response.data;
+        if(task === 'Illuminate') {
+          that.saveIlluminate(tree,skillInfo);
+        } else if(task === 'Deepdive') {
+          that.saveDeepdive(tree,skillInfo);
+        }
+      })
+      .catch(function(error) {
+      });
+  }
+
   renderUserProgressionTrees() {
     return (
       <div className="progression-tree-skill-list">
         {this.props.roadmapsAdmin.data.length != 0 &&
           this.props.roadmapsAdmin.data.map((item, index) => {
-            return <SkillCard key={index} skillItem={item} />;
+            return <SkillCard key={index} skillItem={item} onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}/>;
           })}
       </div>
     );
@@ -268,6 +411,8 @@ const mapDispatchToProps = dispatch => ({
   prepareTimers: bindActionCreators(prepareTimers, dispatch),
   showAllTimers: bindActionCreators(showAllTimers, dispatch),
   showTopTimers: bindActionCreators(showTopTimers, dispatch),
+  saveTask: bindActionCreators(saveTask, dispatch),
+  userInteractionPush: bindActionCreators(userInteractionPush, dispatch)
 });
 
 const mapStateToProps = state => ({
@@ -275,6 +420,7 @@ const mapStateToProps = state => ({
   tasks: state.tasks.data,
   roadmapsAdmin: state.roadmapsAdmin,
   timers: state.timers,
+  saveTask
 });
 
 //withRouter - is a workaround for problem of shouldComponentUpdate when using react-router-v4 with redux

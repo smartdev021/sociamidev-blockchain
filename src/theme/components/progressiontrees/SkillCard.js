@@ -25,6 +25,8 @@ class SkillCard extends React.Component {
       flipCardClass: false,
       openVideo: false,
       tree: undefined,
+      selectedTask: undefined,
+      selectedSkill: undefined
     };
   }
 
@@ -57,14 +59,32 @@ class SkillCard extends React.Component {
     this.setState({ flipCardClass: !this.state.flipCardClass });
   }
 
-  selectSkill(e) {
+  startTask() {
+    if(this.state.selectedTask && this.state.selectedSkill) {
+      this.props.onStart(this.state.selectedTask, this.state.selectedSkill, this.state.tree);
+      this.setState({
+        isTaskSelected: false,
+        selectedTask: undefined,
+        selectedSkill: undefined,
+        flipCardClass: false
+      });
+    }
+  }
+
+  quickStart() {
+    this.props.onQuickStart(this.state.tree);
+  }
+
+  selectSkill(e, selectedSkill) {
+    this.setState({ selectedSkill });
     $('.pskill-banner').removeClass('active');
     $(e.target)
       .closest('div.pskill-banner')
       .addClass('active');
   }
 
-  selectTask(e) {
+  selectTask(e, selectedTask) {
+    this.setState({ selectedTask });
     $('.ptask-banner').removeClass('active');
     $(e.target)
       .closest('div.ptask-banner')
@@ -105,7 +125,7 @@ class SkillCard extends React.Component {
     }
     const listItems = skillParsed.map(function(skill, i) {
       return (
-        <div className="pskill-banner" onClick={e => that.selectSkill(e)} key={i}>
+        <div className="pskill-banner" onClick={e => that.selectSkill(e, skill)} key={i}>
           <div className="pskill-name">{skill}</div>
           <div className="ptree-checkmark-div">
             <div className="ptree-checkmark" />
@@ -121,7 +141,7 @@ class SkillCard extends React.Component {
       <div>
         <div className="ptree-back-header">Select task to continue.</div>
         <div className="ptree-task-list">
-          <div className="ptask-banner" onClick={e => this.selectTask(e)}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Illuminate')}>
             <div className="ptask-left">
               <div className="ptask-name">Illuminate</div>
               <div className="ptask-desc">30 min 3 questions</div>
@@ -201,8 +221,8 @@ class SkillCard extends React.Component {
           <button className="ptree-btn ptree-back" onClick={() => this.toggleTaskView()}>
             Back
           </button>
-          <button className="ptree-btn ptree-next" onClick={() => this.flipCard()}>
-            Next
+          <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-next" onClick={() => this.startTask()}>
+            Start
           </button>
         </div>
       </div>
@@ -210,17 +230,34 @@ class SkillCard extends React.Component {
   }
 
   getImgUrl(img) {
-    let imgUrl;
+    let imgJson;
     if (img == 'Miner') {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png';
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png',
+        imgClass : 'progression-tree-hero-img'
+      }
     } else if (img == 'Nomad') {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png';
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png',
+        imgClass : 'progression-tree-hero-img'
+      }
     } else if (img == 'Innovator') {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
-    } else {
-      imgUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png';
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
+        imgClass : 'progression-tree-hero-img'
+      }
+    } else if (img == 'Blockforce'){
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
+        imgClass : 'progression-tree-blockforce-img'
+      }
+    }else{
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
+        imgClass : 'progression-tree-hero-img'
+      }
     }
-    return imgUrl;
+    return imgJson;
   }
 
   render() {
@@ -230,14 +267,14 @@ class SkillCard extends React.Component {
       ? this.renderSkillCard(skillItem)
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
-    const imgUrl = this.getImgUrl(skillItem.heroimg);
+    const imgJson = this.getImgUrl(skillItem.heroimg);
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
         <div className="progression-tree-skill-content">
           <div className="progression-tree-skill-item">
             <div className="progression-tree-hero-container col-md-6 col-sm-12">
-              <img src={imgUrl} className="progression-tree-hero-img" />
+              <img src={imgJson.imgUrl} className={imgJson.imgClass} />
             </div>
             <div className="progression-tree-skill-card col-md-6 col-sm-12">
               <div className={`ptree-card-item` + flipClass}>
@@ -247,7 +284,7 @@ class SkillCard extends React.Component {
                     <span className="ptree-yellow-bar" />
                     <div className="ptree-card-body">{skillItem.description}</div>
                     <div className="pskill-btn-group ptree-btn-group">
-                      <button className="ptree-btn ptree-start">Quick start</button>
+                      <button className="ptree-btn ptree-start" onClick={() => this.quickStart()}>Quick start</button>
                       <button className="ptree-btn ptree-view" onClick={() => this.flipCard()}>
                         View tasks
                       </button>

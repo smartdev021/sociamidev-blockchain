@@ -9,14 +9,19 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom'; //temporarily here, remove it!!!!!!!
 import { openSignUpForm } from '~/src/redux/actions/authorization';
+import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
 import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
 import LandingPageContent from "~/src/theme/components/landingPage/LandingPageContent";
+import Houses from "~/src/theme/components/houses/Houses";
+import Heroes from "~/src/theme/components/heroes/Heroes";
+import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
+import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
+import CharacterCreationFlow from "~/src/theme/components/characterCreation/CharacterCreationFlow";
+
 import '~/src/theme/css/landingPage.css';
 import '~/src/theme/css/materialize.css';
 import '~/src/theme/css/materializeCommon.css';
-import Houses from "~/src/theme/components/houses/Houses";
-import Heroes from "~/src/theme/components/heroes/Heroes";
 
 //mailerlite subscribe
 import Axios from 'axios';
@@ -77,8 +82,8 @@ const Footer = () => {
       <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
         All trademarks referenced herein are the properties of their respective owners.</h4>
       <ul className="privacy-list">
-        <li>Privacy</li>
-        <li> Terms</li>
+        <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
+        <li><a href="/termsOfUse" target="_blank">Terms</a></li>
       </ul>
     </footer>
   );
@@ -235,6 +240,9 @@ class LandingPage extends Component {
         <Route path='/authorize' render={routeProps => <Authorize {...routeProps}{...this.props}/>}/>
         <Route exact path='/houses' render={routeProps => <Houses {...routeProps}{...this.props}/>}/>
         <Route exact path='/heroes' render={routeProps => <Heroes {...routeProps}{...this.props}/>}/>
+        <Route exact path="/privacyPolicy" render={routeProps => <PrivacyPolicy {...routeProps} {...this.props} />}/>
+        <Route exact path="/termsOfUse" render={routeProps => <TermsOfUse {...routeProps} {...this.props} />}/>
+        <Route exact path='/characterCreation' render={routeProps => <CharacterCreationFlow {...routeProps}{...this.props}/>}/>
         <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
       </Switch>
     );
@@ -273,10 +281,12 @@ class LandingPage extends Component {
 LandingPage.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isSignUpFormOpen: PropTypes.bool.isRequired,
+  startCharacterCreation: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
 });
 
 const mapStateToProps = state => ({
