@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Icon } from 'react-fa';
 
 import { fetchRoadmaps, fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
 
@@ -284,7 +285,9 @@ class SkillCard extends React.Component {
                     <span className="ptree-yellow-bar" />
                     <div className="ptree-card-body">{skillItem.description}</div>
                     <div className="pskill-btn-group ptree-btn-group">
-                      <button className="ptree-btn ptree-start" onClick={() => this.quickStart()}>Quick start</button>
+                      <button className="ptree-btn ptree-start" disabled={this.props.quickStartProgress} onClick={() => this.quickStart()}>
+                        Quick start   { this.props.quickStartProgress && <Icon spin name="spinner" /> }
+                      </button>
                       <button className="ptree-btn ptree-view" onClick={() => this.flipCard()}>
                         View tasks
                       </button>
