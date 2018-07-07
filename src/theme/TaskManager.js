@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import TaskScanner from '~/src/theme/components/tasks/TaskScanner';
 import TasksMyComponent from '~/src/theme/components/tasks/TasksMy';
 import HeaderTaskManager from '~/src/theme/components/tasks/HeaderTaskManager';
+import Achievement from '~/src/theme/components/tasks/Achievement';
 
 import AnswerQuestions from '~/src/theme/components/tasks/AnswerQuestions';
 
@@ -62,7 +63,7 @@ class TaskManager extends React.Component {
       scannerQuery: '',
       timeNow: Date.now(),
       isScannerExpanded: !this.props.isAuthorized,
-
+      isAnswerSubmitComplete: false,
       activeHangout: undefined,
       isAnswerQuestionsOpen: false,
 
@@ -512,6 +513,7 @@ class TaskManager extends React.Component {
   }
 
   handleAnswersSubmitComplete() {
+    this.setState({isAnswerSubmitComplete:true})
     this.props.resetActiveHangout();
   }
 
@@ -551,16 +553,21 @@ class TaskManager extends React.Component {
       : 'col-md-4 expand-tokens close-tokens-mobile';
 
     return (
-      <div className="row content-wrap">
+      <div className="row content-wrap-flex">
         <div className={MyTasksColClass}>
           {this.props.activeHangout ? (
-            <AnswerQuestions
-              currentTask={this.props.activeHangout}
-              onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
-              onSubmitComplete={() => this.handleAnswersSubmitComplete()}
-            />
+            <div className="pt-63">
+              <AnswerQuestions
+                currentTask={this.props.activeHangout}
+                onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
+                onSubmitComplete={() => this.handleAnswersSubmitComplete()}
+              />
+            </div>
           ) : (
-            <div>
+            this.state.isAnswerSubmitComplete ?
+            (<Achievement />)
+             :
+            <div className="pt-63">
               <DetailsPopup
                 modalIsOpen={this.state.isDetailsPopupOpen}
                 onConfirm={item => this.handleAcceptConfirm(item)}
@@ -601,7 +608,7 @@ class TaskManager extends React.Component {
             </div>
           )}
         </div>
-        <div className={[ScannerColClass, tasksScannerFiltered.length > 0 ? 'show' : 'hidden'].join(' ')}>
+        <div className={[ScannerColClass, tasksScannerFiltered.length > 0 ? 'show pt-63' : 'hidden'].join(' ')}>
           <TaskScanner
             tasks={tasksScanner}
             scannerQuery={this.state.scannerQuery}
