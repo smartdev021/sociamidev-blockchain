@@ -504,7 +504,7 @@ html, body {
     height: 100%;
     padding: 10px;
     min-height: 100%;
-    position: relative;
+    overflow-y: scroll;
 }
 
 .side-right{
@@ -589,16 +589,9 @@ html, body {
 .box-head {
     text-align: center;
     color: #ffffff;
-    padding: 0px 0px 35px;
+    padding: 50px 0px 35px;
     position: relative;
     z-index: 9999;
-    margin-top: 50px;
-}
-.close-search {
-    position: absolute;
-    top: -65px;
-    right: 0;
-    z-index: 99999;
 }
 
 .heading-border {
@@ -1209,13 +1202,6 @@ html, body {
     display: flex;
     min-height: 100vh;
     padding-top: 63px;
-}
-.content-wrap-flex {
-    display: flex;
-    min-height: 100vh;
-}
-.pt-63 {
-  padding-top: 63px;
 }
 
 .nav-menu {

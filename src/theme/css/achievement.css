@@ -4,16 +4,16 @@
   width: 100%;
   height: 100%;
   background-size: 100%;
-  background-attachment: fixed;
 }
 .achievement-wrapper .center-wrapper {
   background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/achievements/center-box-bg.png);
   position: absolute;
   width: 464px;
   height: 206px;
-  top: 17%;
-  left: 50%;
-  transform: translate(-50%, -40%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   margin: auto;
 }
 .achievement-wrapper .center-wrapper .content-wp {
@@ -42,15 +42,11 @@
   top: -18px;
   font-weight: bold;
 }
-@media (max-width: 1024px) {
-  .achievement-wrapper .center-wrapper {margin: 150px auto;}
-}
 @media (min-width: 992px) {
 	.achievement-wrapper {background-repeat: no-repeat;}
 }
 @media (max-width: 991px) {
 	.achievement-wrapper {background-size: cover;}
-    .achievement-wrapper .center-wrapper {margin: 100px auto;}
 }
 @media (max-width: 767px){
 	.achievement-wrapper .center-wrapper {width: 320px; height: 150px;  background-size: 100%;}
