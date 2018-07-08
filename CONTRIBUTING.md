@@ -10,6 +10,7 @@ Setup your code editor and plugins. Recommended:
 Don't use sublime, notepad++, vim etc - you will miss many critical plugins provided by the community.
 
 Make sure you have:
+
 - .editorconfig support -  https://editorconfig.org
 -  Install https://prettier.io and setup it run on save. You don't have excuses not to use it at 2k18
 
@@ -42,7 +43,8 @@ Install https://github.com/zalmoxisus/redux-devtools-extension If need to inspec
 
 ### Authorization logic
 
-It's complicated.
+It's complicated
+
 - App.js renders
 - Check local storage if we were authorized before
 - If a user was not authorized, render landing page.
