@@ -547,9 +547,9 @@ class TaskManager extends React.Component {
 
     const tasksScannerFiltered = this.filterTasksScanner(tasksScanner);
 
-    const MyTasksColClass = this.state.isScannerExpanded ? 'col-md-4 expand-deep' : 'col-md-8 expand-deep';
+    const MyTasksColClass = this.state.isScannerExpanded ? 'col-md-4 expand-deep' : 'col-xs-12 col-md-8 col-sm-12 expand-deep';
     const ScannerColClass = this.state.isScannerExpanded
-      ? 'col-md-8 expand-tokens open-tokens-mobile'
+      ? 'col-md-8 col-xs-12 col-sm-12 expand-tokens open-tokens-mobile'
       : 'col-md-4 expand-tokens close-tokens-mobile';
 
     return (
