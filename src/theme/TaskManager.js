@@ -516,7 +516,7 @@ class TaskManager extends React.Component {
     this.setState({ isAnswerSubmitComplete: true });
     setTimeout(() => {
       this.setState({ isAnswerSubmitComplete: false });
-    }, 5000);
+    }, 10000);
     this.props.resetActiveHangout();
   }
 
