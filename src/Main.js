@@ -22,7 +22,8 @@ import ConfigMain from '~/configs/main';
 //routes
 import Authorize from '~/src/authentication/Authorize';
 
-import HomePage from '~/src/theme/components/homepage/HomePage.js';
+import HomePage from '~/src/theme/components/homepage/HomePage';
+import Heroes from '~/src/theme/Heroes';
 import TaskManager from '~/src/theme/TaskManager';
 import TrendScanner from '~/src/theme/TrendScanner.js';
 import ProjectManager from '~/src/theme/ProjectManagement';
@@ -96,6 +97,10 @@ class Main extends React.Component {
           render={routeProps => <TaskManager {...routeProps} {...this.props} />}
         />
         <Route path="/taskBrowser" render={routeProps => <TaskBrowser {...routeProps} {...this.props} />} />
+        <Route
+          path="/heroes"
+          render={routeProps => <Heroes {...routeProps} {...this.props} />}
+        />
         {!ConfigMain.ChallengesScannerDisabled && (
           <Route
             path="/projectManagement"
