@@ -53,7 +53,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
-              style={{ marginTop: '-4px' }}
+              style={{ marginTop: '-4px', width: '16px' }}
               />
             </div>
             <div className="navbar-btn-name">
@@ -66,7 +66,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
-              style={{ marginTop: '-5px' }}
+              style={{ marginTop: '-5px', width: '18px' }}
               />
             </div>
             <div className="navbar-btn-name">
@@ -296,7 +296,7 @@ class ThemeHeader extends React.Component {
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
-                      style={{ marginTop: '-4px' }}
+                      style={{ marginTop: '-4px', width: '16px' }}
                       />
                     </div>
                     <div className="navbar-btn-name">
@@ -308,7 +308,7 @@ class ThemeHeader extends React.Component {
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
-                      style={{ marginTop: '-5px' }}
+                      style={{ marginTop: '-5px', width: '18px' }}
                       />
                     </div>
                     <div className="navbar-btn-name">

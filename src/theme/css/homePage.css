@@ -504,4 +504,5 @@ span.new-img-icon-head img {
   .home-page-new-wrapper .my-photos-wp ul{text-align: center;}
   .home-page-new-wrapper .my-photos-wp ul li{float: none; margin-right: 22px; display: inline-block;}
   .home-page-new-wrapper .my-photos-wp ul li:nth-child(2n){float: none;}
+  span.new-img-icon-head {width: 22px; height: 22px;}
 }
