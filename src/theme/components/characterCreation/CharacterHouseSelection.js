@@ -10,7 +10,9 @@
 
   import ActionLink from '~/src/components/common/ActionLink';
 
-  class CharacterSelection extends React.Component {
+  import '~/src/theme/css/characterHouseSelection.css';
+
+  class CharacterHouseSelection extends React.Component {
     constructor(props) {
       super(props);
       this.modalDefaultStyles = {
@@ -121,6 +123,26 @@
 
     renderMobileView(SelectedCharacter){
       const HouseModal = this.state.isModalOpen ? this.renderHouseModal(SelectedCharacter) : null;
+      let backgroundImageUrl
+      console.log('SelectedCharacter.name')
+      console.log(SelectedCharacter.name)
+      if(SelectedCharacter.name == 'The business clairvoyants'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
+      }else if(SelectedCharacter.name == 'The executives'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
+      }else if(SelectedCharacter.name == 'The network clairvoyants'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
+      }else if(SelectedCharacter.name == 'The Science illuminati'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
+      }else if(SelectedCharacter.name == 'The bot tinkerers'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
+      }else if(SelectedCharacter.name == 'The app ninjas'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+      }else{
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+      }
+      console.log('backgroundImageUrl')
+      console.log(backgroundImageUrl)
         return(
           <div className="house-mobile-view">
               {HouseModal}
@@ -132,7 +154,7 @@
               </p>
               <div className="houses-wrapper">
                 <div className="character-description-container">
-                  <div className="character-description-box">
+                  <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}>
                       <div className="character-header">
                         {SelectedCharacter.name}
                       </div>
@@ -414,6 +436,6 @@
     }
   }
 
-  CharacterSelection.propTypes = {};
+  CharacterHouseSelection.propTypes = {};
 
-  export default require('react-click-outside')(CharacterSelection);
+  export default require('react-click-outside')(CharacterHouseSelection);

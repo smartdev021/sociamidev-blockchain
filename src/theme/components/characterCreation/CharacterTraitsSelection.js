@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import '~/src/theme/css/characterTraitSelection.css';
+
 class CharacterTraitsSelection extends React.Component {
   constructor(props) {
     super(props);
