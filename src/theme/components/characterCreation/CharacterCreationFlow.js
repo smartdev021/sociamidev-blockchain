@@ -5,13 +5,11 @@ import { bindActionCreators } from 'redux';
 import { withCookies, Cookies } from 'react-cookie';
 
 import CharacterTraitsSelection from "~/src/theme/components/characterCreation/CharacterTraitsSelection";
-import CharacterSelection from "~/src/theme/components/characterCreation/CharacterSelection";
+import CharacterHouseSelection from "~/src/theme/components/characterCreation/CharacterHouseSelection";
 import CharacterAuthentication from "~/src/theme/components/characterCreation/CharacterAuthentication";
 
 import ConfigMain from '~/configs/main';
 
-import '~/src/theme/css/characterTraitSelection.css';
-import '~/src/theme/css/characterHouseSelection.css';
 
 import {
   setSelectedCharacterIndex,
@@ -143,7 +141,7 @@ class CharacterCreationFlow extends React.Component {
         }
         case SELECT_CHARACTER: {
           FormToRender = (
-            <CharacterSelection
+            <CharacterHouseSelection
               characterCreationState={this.state.characterCreationState}
               onClose={() => this.handleCloseCharacterCreation()}
               onNextStep={() => this.characterCreationNextStep()}
