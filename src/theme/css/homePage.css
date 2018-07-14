@@ -289,14 +289,7 @@
   margin-top: 9px;
 }
 .home-page-new-wrapper .custom-select select {
-  border-radius: 0;
-  width: 100%;
-  font-family: monospace;
-  height: 33px;
-  font-size: 16px;
-  background-color: transparent;
-  border: 2px solid #0069ba;
-  color: #fff;
+  display: none;
 }
 .home-page-new-wrapper .select-selected:after {
   position: absolute;

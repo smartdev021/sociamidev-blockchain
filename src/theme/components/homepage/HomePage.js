@@ -3,6 +3,7 @@
 */
 
 import React, { Component } from 'react';
+import Team from '~/src/theme/components/homepage/Team';
 import '~/src/theme/css/homePage.css';
 
 class HomePage extends React.Component {
@@ -176,18 +177,7 @@ class HomePage extends React.Component {
                       </ul>
                     </div>
                   </div>
-                  <div className="black-box bg-right-team">
-                    <div className="team-wp">
-                      <h3 className="col-heading">Team</h3>
-                      <div className="custom-select">
-                        <select>
-                          <option value="0">The misfits</option>
-                          <option value="1">Legendary</option>
-                          <option value="2">Marry Christmas</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+                  <Team />
                 </div>
                 <div className="col-middle">
                   <div className="top-box-wp">
