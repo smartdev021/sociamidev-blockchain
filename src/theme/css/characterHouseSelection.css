@@ -1,11 +1,15 @@
-.select-house-wrapper {
+.materialize-warper.select-house-wrapper {
+    font-family: 'MyriadPro';
+    background-size: 100%;
     position: relative;
+    background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png);
     min-height: 860px;
     margin-bottom: -55px;
+    background-size: cover;
 }
   
 @media screen and (max-width: 768px) {
-    .select-house-wrapper{
+    .materialize-warper.select-house-wrapper {
         min-height: 800px;
         margin-bottom: -70px;
     }
@@ -29,26 +33,10 @@
     }
 }
 
-.select-house-wrapper > div{
-    position: absolute;
-    top: 13%;
-    width: 100%;
-    padding:0px 25px 0px 25px;
-}
-
 .select-house-wrapper .houses-wrapper{
-    padding-left: 16%;
-    padding-right: 16%;
     width: 100%;
     margin-top: 25px;
     overflow: auto;
-}
-
-@media screen and (max-width: 768px) {
-    .select-house-wrapper > div{
-        position: absolute;
-        top: 5%;
-    }
 }
 
 @media screen and (max-width: 768px) {
@@ -109,6 +97,7 @@
     box-shadow: 0px 12px 24px 0px rgba(10, 22, 34, 0.004);
     height: 471px;
     position: relative;
+    background-size: cover;
 }
 
 @media screen and (max-width: 768px) {
@@ -145,6 +134,11 @@
     border-color: rgb(32, 128, 229);
     border-radius: 50%;
     box-shadow: 1px 1px 1px 1px rgb(32, 128, 229);
+}
+
+.character-selection-button.character-order img {
+    width: 150px;
+    height: 150px;
 }
 
 .character-panel-container .character-name{
@@ -325,12 +319,14 @@
 
 .house-button-wrapper{
     text-align: center;
+    padding-top: 25px !important;
+    padding-bottom: 50px !important;
 }
 
 .house-button-wrapper button{
     display: inline-block;
     padding: 5px 90px;
-    margin: 45px 10px 0px 10px;
+    margin: 45px 10px 0px 10px !important;
     font: normal 20px "MyriadPro Semibold";
     color: black;
     transform: skew(-38deg);
@@ -354,7 +350,7 @@
 
 @media screen and (max-width: 768px) {
     .house-button-wrapper{
-        
+        padding-top: 0 !important;
     }
     .house-button-wrapper button{
         padding: 5px 40px;
@@ -393,6 +389,7 @@
     background-color: rgb(4, 4, 4);
     width: 85%;
     margin: 0 auto;
+    background-size: cover;
 }
 
 .character-description-box-modal .character-name-modal{
@@ -454,7 +451,7 @@
 .house-button-wrapper-modal button{
     display: inline-block;
     padding: 10px 45px;
-    margin: 45px 10px 0px 10px;
+    margin: 45px 10px 0px 10px !important;
     font: normal 20px "MyriadPro Semibold";
     color: black;
     transform: skew(-38deg);

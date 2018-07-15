@@ -118,7 +118,7 @@
     border: 6px solid #ffca28;
 } */
 
-.character-selection-button.character-order-0 img {
+/* .character-selection-button.character-order-0 img {
     margin-left: -97px;
     margin-top: -35px;
 }
@@ -141,7 +141,7 @@
 .character-selection-button.character-order-5 img {
     margin-left: -99px;
     margin-top: -32px
-}
+} */
 
 #character-selection-image-big img {
     position: absolute;

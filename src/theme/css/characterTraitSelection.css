@@ -1,51 +1,22 @@
-.select-trait-wrapper {
+.materialize-warper.select-trait-wrapper {
+  font-family: 'MyriadPro';
+  background-size: cover;
   position: relative;
-  /* background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png); */
+  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png);
   min-height: 860px;
   margin-bottom: -55px;
 }
 
 @media screen and (max-width: 750px) {
-  .select-trait-wrapper{
+  .materialize-warper.select-trait-wrapper{
     min-height: 800px;
-    margin-bottom: -70px;
+    margin-bottom: -51px;
   }
-}
-
-.select-trait-wrapper > div{
-  position: absolute;
-  top: 13%;
-  width: 100%;
-  padding:0px 25px 0px 25px;
 }
 
 .select-trait-wrapper .traits-wrapper{
-  padding-left: 16%;
-  padding-right: 16%;
   width: 100%;
-  margin-top: 25px;
-  overflow: auto;
-  overflow-y: hidden;
-}
-
-@media screen and (max-width: 750px) {
-  .select-trait-wrapper > div{
-    position: absolute;
-    top: 5%;
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .select-trait-wrapper .traits-wrapper{
-    padding: 0;
-    
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .select-trait-wrapper .side-margin{
-    margin: 0;
-  }
+  padding: 0;
 }
 
 .select-trait-wrapper .hover-image{
@@ -217,7 +188,7 @@
 .trait-button-wrapper button{
   display: inline-block;
   padding: 5px 50px;
-  margin: 45px 10px 0px 10px;
+  margin: 20px 10px 0px 10px !important;
   font: normal 20px "MyriadPro Semibold";
   color: black;
   transform: skew(-38deg);

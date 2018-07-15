@@ -63,10 +63,33 @@ class CharacterTraitsSelection extends React.Component {
     //   );
     // }
     return (
-      <div className="select-trait-wrapper">
-        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png" alt="step background" />
-        <div>
-            <p className="title-desktop">
+      <div className="materialize-warper select-trait-wrapper">
+        <div className="container">
+            <div className="row">
+                <div className="character-wizard-steps">
+                    <div className="active-wizard-circle" style={{float:'left'}}></div>
+                    <div className="wizard-step active">SELECT YOUR TRAITS</div>
+                    <div className="wizard-line"></div>
+                    <div className="wizard-circle"></div>
+                    <div className="wizard-step">SELECT YOUR HOUSE</div>
+                    <div className="wizard-line"></div>
+                    <div className="wizard-circle"></div>
+                    <div className="wizard-step" style={{float:'right'}}>PLUGIN</div>
+                </div>
+                <div className="character-wizard-steps-mobile">
+                    <div className="col-xs-6 step-1">
+                        <div className="active-wizard-circle" style={{float:'left'}}></div>
+                        <div className="wizard-line" style={{float:'right'}}></div>
+                        <div className="wizard-step active" >SELECT YOUR TRAITS</div>
+                    </div>
+                    <div className="col-xs-6 step-2">
+                        <div className="wizard-circle" style={{float:'left'}}></div>
+                        <div className="wizard-line" style={{float:'right'}}></div>
+                        <div className="wizard-step">SELECT YOUR HOUSE</div>
+                    </div>
+                </div>
+            </div>
+            {/* <p className="title-desktop">
                 <span className="active">select your traits</span>
                 <span>select your house</span>
                 <span>plug in</span>
@@ -75,8 +98,8 @@ class CharacterTraitsSelection extends React.Component {
                 <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/step-title-mobile.png" alt="step title mobile" />
                 <span className="active">select your traits</span>
                 <span>select your house</span>
-            </p>
-            <div className="traits-wrapper">
+            </p> */}
+            <div className="traits-wrapper row">
                 {this.props.traitsList.map((trait, i) => {
                 let imgUrl
                 let imgHoverUrl
@@ -114,7 +137,7 @@ class CharacterTraitsSelection extends React.Component {
             </div>
             <div className="trait-button-wrapper">
               <button type="button" className="next-button" 
-              onClick={() => this.props.onNextStep()}>
+              onClick={() => this.props.onNextStep({ characterTraitsIndex: this.props.selectedIndex })} >
                 <p>Next</p>
               </button>
             </div>
