@@ -35,6 +35,10 @@
       // Modal.defaultStyles = this.modalDefaultStyles;
     }
 
+    componentDidMount(){
+      window.scrollTo(0, 0);
+    }
+
     handleClickOutside() {
       /* () => this.handleClose();*/
     }
