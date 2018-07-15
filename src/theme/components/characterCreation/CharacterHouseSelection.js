@@ -73,18 +73,35 @@
         <div className="character-panel-container">
           <div className="character-panel">
             {characters.map((character, i) => {
+              let backgroundImageUrl
+              if(character.name == 'The business clairvoyants'){
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
+              }else if(character.name == 'The executives'){
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
+              }else if(character.name == 'The network clairvoyants'){
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
+              }else if(character.name == 'The Science illuminati'){
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
+              }else if(character.name == 'The bot tinkerers'){
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
+              }else if(character.name == 'The app ninjas'){
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+              }else{
+                backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+              }
               if (i >= firstIndex && i <= lastIndex) {
                 return (
                   <div className="col-xs-6 character-grid" key={i}>
                     <div
-                      className={`character-selection-button character-order-${i} ${
+                      className={`character-selection-button character-order ${
                         this.props.selectedIndex == i ? 'character-selected' : ''
                       }`}
                       onClick={() => this.handleChangeSelectedChatacter(i)}
                       onMouseOver={() => this.handleMouseOverCharacter(i)}
                       onMouseOut={() => this.handleMouseOutCharacter()}
                     >
-                      <img src={this.props.charactersList[i].imageURL} />
+                      {/* <img src={this.props.charactersList[i].imageURL} /> */}
+                      <img src={backgroundImageUrl} />
                     </div>
                     <div className="character-name">{this.props.charactersList[i].name}</div>
                   </div>
@@ -102,14 +119,31 @@
           <div className="character-panel">
             {characters.map((character, i) => {
               if (i >= firstIndex && i <= lastIndex) {
+                let backgroundImageUrl
+                if(character.name == 'The business clairvoyants'){
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
+                }else if(character.name == 'The executives'){
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
+                }else if(character.name == 'The network clairvoyants'){
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
+                }else if(character.name == 'The Science illuminati'){
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
+                }else if(character.name == 'The bot tinkerers'){
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
+                }else if(character.name == 'The app ninjas'){
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+                }else{
+                  backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+                }
                 return (
                   <div className="col-xs-6 character-grid" key={i}>
                     <div
-                      className={`character-selection-button character-order-${i} ${
+                      className={`character-selection-button character-order ${
                         this.props.selectedIndex == i ? 'character-selected' : ''
                       }`}
                       onClick={() => this.handleChangeSelectedChatacterMobile(i)}>
-                      <img src={this.props.charactersList[i].imageURL} />
+                      {/* <img src={this.props.charactersList[i].imageURL} /> */}
+                      <img src={backgroundImageUrl} />
                     </div>
                     <div className="character-name">{this.props.charactersList[i].name}</div>
                   </div>
@@ -124,8 +158,6 @@
     renderMobileView(SelectedCharacter){
       const HouseModal = this.state.isModalOpen ? this.renderHouseModal(SelectedCharacter) : null;
       let backgroundImageUrl
-      console.log('SelectedCharacter.name')
-      console.log(SelectedCharacter.name)
       if(SelectedCharacter.name == 'The business clairvoyants'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
       }else if(SelectedCharacter.name == 'The executives'){
@@ -141,17 +173,21 @@
       }else{
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
       }
-      console.log('backgroundImageUrl')
-      console.log(backgroundImageUrl)
         return(
-          <div className="house-mobile-view">
+          <div className="container house-mobile-view">
               {HouseModal}
-              <p className="title-mobile">
-                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/step-title-mobile.png" alt="step title mobile" 
-                  style={{width: '100%'}}/>
-                  <span>select your traits</span>
-                  <span className="active">select your house</span>
-              </p>
+              <div className="character-wizard-steps-mobile">
+                  <div className="col-xs-6 step-1">
+                      <div className="wizard-circle" style={{float:'left'}}></div>
+                      <div className="wizard-line" style={{float:'right'}}></div>
+                      <div className="wizard-step" >SELECT YOUR TRAITS</div>
+                  </div>
+                  <div className="col-xs-6 step-2">
+                      <div className="active-wizard-circle" style={{float:'left'}}></div>
+                      <div className="wizard-line" style={{float:'right'}}></div>
+                      <div className="wizard-step active">SELECT YOUR HOUSE</div>
+                  </div>
+              </div>
               <div className="houses-wrapper">
                 <div className="character-description-container">
                   <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}>
@@ -190,13 +226,29 @@
     }
 
     renderHouseModal(SelectedCharacter){
+      let backgroundImageUrl
+      if(SelectedCharacter.name == 'The business clairvoyants'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
+      }else if(SelectedCharacter.name == 'The executives'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
+      }else if(SelectedCharacter.name == 'The network clairvoyants'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
+      }else if(SelectedCharacter.name == 'The Science illuminati'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
+      }else if(SelectedCharacter.name == 'The bot tinkerers'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
+      }else if(SelectedCharacter.name == 'The app ninjas'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+      }else{
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+      }
         return (
           <div className="select-house-lightbox" onClick={() => this.onClose()}>
             <a
               className="fa fa-2x fa-times close-house-lightbox"
               onClick={() => this.closeHouseModalPopup()}
             />
-            <div className="character-description-box-modal">
+            <div className="character-description-box-modal" style={{backgroundImage: `url(${backgroundImageUrl})`}}>
                   <div className="character-header-modal">
                     {SelectedCharacter.name}
                   </div>
@@ -380,26 +432,40 @@
       //     </div>
       //   )
       // }
-
+      let backgroundImageUrl
+      if(SelectedCharacter.name == 'The business clairvoyants'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
+      }else if(SelectedCharacter.name == 'The executives'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
+      }else if(SelectedCharacter.name == 'The network clairvoyants'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
+      }else if(SelectedCharacter.name == 'The Science illuminati'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
+      }else if(SelectedCharacter.name == 'The bot tinkerers'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
+      }else if(SelectedCharacter.name == 'The app ninjas'){
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+      }else{
+        backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
+      }
       return (
-        <div className="select-house-wrapper">
-          <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png" alt="step background" />
-          <div className="house-desktop-view">
-              <p className="title-desktop">
-                  <span>select your traits</span>
-                  <span className="active">select your house</span>
-                  <span>plug in</span>
-              </p>
-              <p className="title-mobile">
-                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/step-title-mobile.png" alt="step title mobile" 
-                  style={{width: '100%'}}/>
-                  <span>select your traits</span>
-                  <span className="active">select your house</span>
-              </p>
+        <div className="materialize-warper select-house-wrapper">
+          {/* <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png" alt="step background" /> */}
+          <div className="container house-desktop-view">
+              <div className="character-wizard-steps">
+                  <div className="wizard-circle" style={{float:'left'}}></div>
+                  <div className="wizard-step">SELECT YOUR TRAITS</div>
+                  <div className="wizard-line"></div>
+                  <div className="active-wizard-circle"></div>
+                  <div className="wizard-step active">SELECT YOUR HOUSE</div>
+                  <div className="wizard-line"></div>
+                  <div className="wizard-circle"></div>
+                  <div className="wizard-step" style={{float:'right'}}>PLUGIN</div>
+              </div>
               <div className="houses-wrapper">
                 {this.renderCharacters(this.props.charactersList, 0, this.props.charactersList.length - 1)}
                 <div className="character-description-container">
-                  <div className="character-description-box">
+                  <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}>
                       <div className="character-header">
                         {SelectedCharacter.name}
                       </div>

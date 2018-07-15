@@ -10,6 +10,9 @@ import CharacterAuthentication from "~/src/theme/components/characterCreation/Ch
 
 import ConfigMain from '~/configs/main';
 
+import {
+  setUserProfileCharacter,
+} from '~/src/redux/actions/authorization';
 
 import {
   setSelectedCharacterIndex,
@@ -20,6 +23,8 @@ import {
   fetchListCharacterClasses,
   fetchListCharacterTraits,
 } from '~/src/redux/actions/characterCreation';
+
+import '~/src/theme/css/characterCreation.css';
 
 const SELECT_TRAITS = 'SelectTraits';
 const SELECT_CHARACTER = 'SelectCharacter';
@@ -170,6 +175,18 @@ class CharacterCreationFlow extends React.Component {
           break;
         }
         default:
+          FormToRender = (
+            <CharacterTraitsSelection
+              characterCreationState={this.state.characterCreationState}
+              onClose={() => this.handleCloseCharacterCreation()}
+              onNextStep={() => this.characterCreationNextStep()}
+              onSelect={index => this.handleSelectCharacterTraits(index)}
+              selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
+              traitsList={this.props.listCharacterTraits}
+              progressValue={progressValue}
+              isFetchingCharacterTraits={this.props.isFetchingCharacterTraits}
+            />
+          );
           break;
       }
     }
