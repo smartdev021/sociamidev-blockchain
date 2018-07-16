@@ -415,6 +415,7 @@ class App extends Component {
         this.chatLogIn();
 
         this.props.fetchUserActivities(this.props.userProfile._id);
+        this.props.fetchUserTasks(this.props.userProfile._id);
 
         this.props.fetchUserAccounting(this.props.userProfile._id);
 
@@ -663,6 +664,7 @@ const mapStateToProps = state => ({
   exactLocation: state.exactLocation,
   searchResults: state.searchResults,
   userActivities: state.userProfile.activities.data,
+  userTasks: state.userProfile.tasks,
 
   characterCreationData: state.characterCreationData,
   listCharacterTraits: state.characterCreation.listCharacterTraits,

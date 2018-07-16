@@ -11,12 +11,12 @@ import { ListGroupItem, ListGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ActivityTypes from '~/src/common/ActivityTypes';
-
-import ActionLink from '~/src/components/common/ActionLink';
+// import ActivityTypes from '~/src/common/ActivityTypes';
+// import ActionLink from '~/src/components/common/ActionLink';
 
 import '~/src/theme/css/notifications.css';
 import { fetchUserTasks } from '~/src/redux/actions/authorization';
+import { markActivitySeen } from '~/src/redux/actions/activities';
 import { setActiveHangout } from '~/src/redux/actions/tasks';
 
 class Notifications extends React.Component {
@@ -45,14 +45,14 @@ class Notifications extends React.Component {
 
   renderNotifications() {
     const that = this;
-    const TaskStartedActivities = this.props.userActivities
-      ? this.props.userActivities.filter(function(activity) {
-          return (
-            activity.type == ActivityTypes.TASK_STATUS_CHANGED ||
-            activity.type == ActivityTypes.USER_TASK_ACTION
-          );
-        })
-      : [];
+    // const TaskStartedActivities = this.props.userActivities
+    //   ? this.props.userActivities.filter(function(activity) {
+    //       return (
+    //         activity.type == ActivityTypes.TASK_STATUS_CHANGED ||
+    //         activity.type == ActivityTypes.USER_TASK_ACTION
+    //       );
+    //     })
+    //   : [];
 
     const oneDay = 24 * 60 * 60 * 1000;
     const Notifications = this.props.userTasks.created
@@ -220,11 +220,13 @@ Notifications.PropTypes = {
 };
 
 const mapStateToProps = state => ({
+  currentUserID: state.userProfile.profile._id,
   userTasks: state.userProfile.tasks,
   userProfile: state.userProfile.profile,
 });
 
 const mapDispatchToProps = dispatch => ({
+  markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
   setActiveHangout: bindActionCreators(setActiveHangout, dispatch),
 });

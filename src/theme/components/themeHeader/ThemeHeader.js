@@ -170,7 +170,7 @@ class ThemeHeader extends React.Component {
   }
 
   handleNotificationsOpen() {
-    if (this.props.userActivities.length > 0) {
+    if (this.props.userTasks.created.length > 0) {
       this.setState({ notificationsOpen: true });
     }
   }
@@ -278,6 +278,7 @@ class ThemeHeader extends React.Component {
           <Notifications
             onClose={() => this.handleNotificationsClose()}
             userActivities={this.props.userActivities}
+            markActivitySeen={() => this.props.markActivitySeen()}
           />
         )}
 

@@ -146,6 +146,9 @@ class Main extends React.Component {
           userActivities={this.props.userActivities}
           logout={() => this.props.logout()}
           fetchUserActivities={() => this.props.fetchUserActivities()}
+          fetchUserTasks={() => this.props.fetchUserTasks()}
+          userTasks={this.props.userTasks}
+          markActivitySeen={() => this.props.markActivitySeen()}
           openSidebar={open => this.handleSidebarOpen(open)}
           isSidebarOpen={this.state.isSidebarOpen}
           userProfile={this.props.userProfile}
@@ -177,6 +180,7 @@ const mapStateToProps = state => ({
   currentUserID: state.userProfile.profile._id,
   isAuthorized: state.userProfile.isAuthorized,
   userActivities: state.userProfile.activities.data,
+  userTasks: state.userProfile.tasks,
   isAdmin: state.userProfile.isAdmin,
   company: state.userProfile.company
 });
