@@ -1,42 +1,27 @@
 import React from 'react';
-import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
-import { getPopupParentElement } from '~/src/common/PopupUtils.js';
-
 import { Icon } from 'react-fa';
 
-import { ProgressBar } from 'react-bootstrap';
+import '~/src/theme/css/characterAuthentication.css';
 
 class CharacterAuthentication extends React.Component {
   constructor(props) {
     super(props);
-    this.modalDefaultStyles = {};
   }
 
   componentWillMount() {
-    this.modalDefaultStyles = Modal.defaultStyles;
-
-    Modal.defaultStyles.content.background = 'white';
-    Modal.defaultStyles.content.color = 'initial';
-
-    Modal.defaultStyles.content['width'] = '1093px';
-    Modal.defaultStyles.content['height'] = 'auto';
-
-    Modal.defaultStyles.content['minWidth'] = 'initial';
-    Modal.defaultStyles.content['maxWidth'] = 'initial';
-    Modal.defaultStyles.content['overflowX'] = 'hidden';
-    Modal.defaultStyles.content['overflowY'] = 'scroll';
-    Modal.defaultStyles.content['marginLeft'] = 'auto';
-    Modal.defaultStyles.content['marginRight'] = 'auto';
-    Modal.defaultStyles.content['left'] = '0';
-    Modal.defaultStyles.content['right'] = '0';
+    
   }
 
   componentWillUnmount() {
-    Modal.defaultStyles = this.modalDefaultStyles;
+    
+  }
+
+  componentDidMount(){
+    window.scrollTo(0, 0);
   }
 
   handleClickOutside() {
@@ -63,90 +48,97 @@ class CharacterAuthentication extends React.Component {
 
   render() {
     return (
-      <Modal
-        isOpen={true}
-        onRequestClose={() => {}}
-        contentLabel={'Character Selection'}
-        parentSelector={getPopupParentElement}
-      >
-        <Icon
-          onClick={() => this.handleClose()}
-          className="character-creation-popup-close-icon"
-          name="times"
-          aria-hidden="true"
-        />
-        <div id="character-authenticate-container">
-          <div id="character-authenticate-container-inner">
-            <div className="box-head">
-              <h1 className="text-center text-uppercase text-heading heading-border heading-border-decorators-visible">
-                <span>Plug In</span>
-              </h1>
+      <div className="materialize-warper authentication-wrapper">
+        <div className="container">
+          <div className="row">
+            <div className="character-wizard-steps">
+                <div className="wizard-circle" style={{float:'left'}}></div>
+                <div className="wizard-step">SELECT YOUR TRAITS</div>
+                <div className="wizard-line"></div>
+                <div className="wizard-circle"></div>
+                <div className="wizard-step">SELECT YOUR HOUSE</div>
+                <div className="wizard-line"></div>
+                <div className="active-wizard-circle"></div>
+                <div className="wizard-step active" style={{float:'right'}}>PLUGIN</div>
             </div>
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="text-center" id="character-creation-authenticate-button-container">
-                    <span
-                      className="character-creation-auth-button"
-                      id="character-creation-button-facebook"
-                      onClick={() => this.handleSignUpFacebook()}
-                    >
-                      <Icon className="character-creation-social-icon" name="facebook" />Login with Facebook
-                    </span>
-                    <span
-                      className="character-creation-auth-button"
-                      id="character-creation-button-linkedin"
-                      onClick={() => this.handleSignUpLinkedIn()}
-                    >
-                      <Icon className="character-creation-social-icon linkedin" name="linkedin" />Login with
-                      LinkedIn
-                    </span>
-                  </div>
-                </div>
+            <div className="character-wizard-steps-mobile">
+              <div className="col-xs-6 step-1">
+                  <div className="wizard-circle" style={{float:'left'}}></div>
+                  <div className="wizard-line" style={{float:'right'}}></div>
+                  <div className="wizard-step" >SELECT YOUR HOUSE</div>
               </div>
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="text-center" id="character-creation-authorization-disclaimer">
-                    <p className="character-creation-paragraph" id="character-creation-paragraph-primary">
-                      <b>
-                        By clicking on any of the above authentication methods, you agree to our t&c&apos;s{' '}
-                        <br /> and confirm that you have read our
-                        <Link to="/privacyPolicy" target="_blank">
-                          {' '}
-                          Data Privacy
-                        </Link>
-                        {' (which includes our Cookie Use Plociy) and our '}
-                        <Link to="/termsOfUse" target="_blank">
-                          {' '}
-                          Terms of Use
-                        </Link>
-                      </b>
-                    </p>
-                    <hr />
-                    <p className="character-creation-paragraph">
-                      &#42;The Soqqle Platform is currently on Alpha and subject to changes based on
-                      feasibility of features that may be introduced, revised, updated or otherwise changed
-                      from time to time. As a result, content and related achievements (eg levels and tokens)
-                      MAY be wiped out before our Go Live.
-                    </p>
-                    <p className="character-creation-paragraph" id="character-creation-paragraph-secondary">
-                      &#42;We currently do not support non Facebook/LinkedIn authentication methods but plan
-                      to do so in the near future.
-                    </p>
-                    <p className="character-creation-paragraph" id="character-creation-paragraph-tertiary">
-                      &#42;Soqqle is a platform to encourage personal growth by making learning fun.
-                    </p>
-                    <p>We encourage you to support collaboration by maintaining courtesy and integrity.</p>
-                  </div>
-                </div>
+              <div className="col-xs-6 step-2">
+                  <div className="active-wizard-circle" style={{float:'left'}}></div>
+                  <div className="wizard-line" style={{float:'right'}}></div>
+                  <div className="wizard-step active">PLUGIN</div>
               </div>
             </div>
-            <div className="character-creation-progressbar-container">
-              <ProgressBar striped bsStyle="danger" now={this.props.progressValue} />
+          </div>
+          <div className="row">
+            <div className="authentication-card">
+              <div className="col-md-5 account-creation">
+                <h5>Create an Account</h5>
+                  <button className="btn auth-facebook-button" onClick={() => this.handleSignUpFacebook()}>
+                    <i className="fa fa-facebook" style={{marginRight:'10px'}}></i>
+                    Login with Facebook
+                  </button>
+                  <button className="btn auth-linkedin-button" onClick={() => this.handleSignUpLinkedIn()}>
+                    <i className="fa fa-linkedin" style={{marginRight:'10px'}}></i>
+                    Login with LinkedIn
+                  </button>
+                <p>or</p>
+                <div>
+
+                  <div className="form-group-auth">
+                      <label htmlFor="name">Name</label>
+                      <input type="text" className="auth-input" id="name" placeholder="" />
+                  </div>
+
+                  <div className="form-group-auth">
+                      <label htmlFor="email">Email or mobile phone number</label>
+                      <input type="text" className="auth-input" id="email" placeholder="" />
+                  </div>
+
+                  <div className="form-group-auth">
+                      <label htmlFor="password">Password</label>
+                      <input type="password" className="password-input" id="password" placeholder="" />
+                  </div>
+
+                </div>
+                <div>
+                  <button className="btn auth-create-button">Create</button>
+                </div>
+              </div>
+              <div className="col-md-7 account-tnc">
+                <p className="authentication-tnc">
+                By clicking on any ot the above authentication methods, you agree to our t&c's and 
+                confirm that you have read our 
+                <Link to="/privacyPolicy" target="_blank">
+                {' '}
+                 Data Privacy </Link>
+                (which incudes our Cookie Use Policy) and 
+                our 
+                <Link to="/termsOfUse" target="_blank">
+                {' '}
+                 Terms of Use </Link>
+                </p>
+                <p className="authentication-para">
+                <sup>*</sup>The Soqqle Platform is currently on Alpha and subject to changes 
+                based on feasibility of features that may be intro-duced, revised, 
+                updated or otherwise changed from time to time. As a result, content and 
+                related achievements(eg levels and tokens) MAY be wiped out before our Go Live. 
+                </p>
+                <p className="authentication-para">
+                <sup>*</sup>Soqqle is a platform to encourage personal growth by making learning fun. 
+                </p>
+                <p className="authentication-para">
+                We encourage you to support collaboration by maintaining courtesy and integrity.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </Modal>
+      </div>
     );
   }
 }

@@ -22,7 +22,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import PubSub from 'pubsub-js';
 
 import '~/src/theme/css/ThemeHeader.css';
-  
+
 const Logo = () => {
   return (
     <div className="logo">
@@ -35,7 +35,7 @@ const Logo = () => {
     </div>
   );
 };
-  
+
 const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
   const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
@@ -44,33 +44,33 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
       <button type="button" className="close-menu" onClick={closeMenu}>
         <span>x</span>
       </button>
-      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png" 
+      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
       style={{paddingBottom: '20px'}}
       />
       <footer>
         <div className="navbar-btn-row">
-          <Link to="/projectManagement" className="navbar-button" onClick={closeMenu}>
-            <div className="navbar-btn-img">
-              <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
-              style={{ width: '18px' }}
-              />
-            </div>
-            <div className="navbar-btn-name">
-              Challenges
-            </div>
-          </Link>
-        
-        
           <Link to="/progressionTrees" className="navbar-button" onClick={closeMenu}>
             <div className="navbar-btn-img">
               <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
-              style={{ width: '18px' }}
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
+              style={{ marginTop: '-4px', width: '16px' }}
               />
             </div>
             <div className="navbar-btn-name">
-              Progression
+              Story
+            </div>
+          </Link>
+
+
+          <Link to="/heroes" className="navbar-button" onClick={closeMenu}>
+            <div className="navbar-btn-img">
+              <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
+              style={{ marginTop: '-5px', width: '18px' }}
+              />
+            </div>
+            <div className="navbar-btn-name">
+              Heroes
             </div>
           </Link>
         </div>
@@ -170,7 +170,7 @@ class ThemeHeader extends React.Component {
   }
 
   handleNotificationsOpen() {
-    if (this.props.userActivities.length > 0) {
+    if (this.props.userTasks.created.length > 0) {
       this.setState({ notificationsOpen: true });
     }
   }
@@ -278,10 +278,11 @@ class ThemeHeader extends React.Component {
           <Notifications
             onClose={() => this.handleNotificationsClose()}
             userActivities={this.props.userActivities}
+            markActivitySeen={() => this.props.markActivitySeen()}
           />
         )}
 
-        
+
         <div className="navbar-wrapper">
             <header>
                 <Logo/>
@@ -291,32 +292,31 @@ class ThemeHeader extends React.Component {
                     <span> </span>
                     <span> </span>
                   </button>
-                  
-                  <Link to="/projectManagement" className="navbar-button"> 
-                    <div className="navbar-btn-img">
-                      <img
-                      src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Challenges.png"
-                      style={{ width: '18px' }}
-                      />
-                    </div>
-                    <div className="navbar-btn-name">
-                      Challenges
-                    </div>
-                  </Link>
-                
-                
+
                   <Link to="/progressionTrees" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
-                      src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Progression.png"
-                      style={{ width: '18px' }}
+                      src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
+                      style={{ marginTop: '-4px', width: '16px' }}
                       />
                     </div>
                     <div className="navbar-btn-name">
-                      Progression
+                      Story
                     </div>
                   </Link>
-                
+
+                  <Link to="/heroes" className="navbar-button">
+                    <div className="navbar-btn-img">
+                      <img
+                      src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
+                      style={{ marginTop: '-5px', width: '18px' }}
+                      />
+                    </div>
+                    <div className="navbar-btn-name">
+                      Heroes
+                    </div>
+                  </Link>
+
                   <Link to="/taskManagement" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
@@ -330,6 +330,8 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
+                    <li><a href="#"><span className="new-img-icon-head"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png" alt="" /></span></a></li>
+                    <li><a href="#"><span className="new-img-icon-head"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" /></span></a></li>
                     <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
                     <li className="notification">
                       <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>

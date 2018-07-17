@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux';
 import { withCookies, Cookies } from 'react-cookie';
 
 import CharacterTraitsSelection from "~/src/theme/components/characterCreation/CharacterTraitsSelection";
-import CharacterSelection from "~/src/theme/components/characterCreation/CharacterSelection";
+import CharacterHouseSelection from "~/src/theme/components/characterCreation/CharacterHouseSelection";
 import CharacterAuthentication from "~/src/theme/components/characterCreation/CharacterAuthentication";
 
 import ConfigMain from '~/configs/main';
 
-import '~/src/theme/css/characterTraitSelection.css';
-import '~/src/theme/css/characterHouseSelection.css';
+import {
+  setUserProfileCharacter,
+} from '~/src/redux/actions/authorization';
 
 import {
   setSelectedCharacterIndex,
@@ -22,6 +23,8 @@ import {
   fetchListCharacterClasses,
   fetchListCharacterTraits,
 } from '~/src/redux/actions/characterCreation';
+
+import '~/src/theme/css/characterCreation.css';
 
 const SELECT_TRAITS = 'SelectTraits';
 const SELECT_CHARACTER = 'SelectCharacter';
@@ -143,7 +146,7 @@ class CharacterCreationFlow extends React.Component {
         }
         case SELECT_CHARACTER: {
           FormToRender = (
-            <CharacterSelection
+            <CharacterHouseSelection
               characterCreationState={this.state.characterCreationState}
               onClose={() => this.handleCloseCharacterCreation()}
               onNextStep={() => this.characterCreationNextStep()}
@@ -172,6 +175,18 @@ class CharacterCreationFlow extends React.Component {
           break;
         }
         default:
+          FormToRender = (
+            <CharacterTraitsSelection
+              characterCreationState={this.state.characterCreationState}
+              onClose={() => this.handleCloseCharacterCreation()}
+              onNextStep={() => this.characterCreationNextStep()}
+              onSelect={index => this.handleSelectCharacterTraits(index)}
+              selectedIndex={this.props.characterCreationData.selectedTraitsIndex}
+              traitsList={this.props.listCharacterTraits}
+              progressValue={progressValue}
+              isFetchingCharacterTraits={this.props.isFetchingCharacterTraits}
+            />
+          );
           break;
       }
     }

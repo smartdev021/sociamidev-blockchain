@@ -504,7 +504,7 @@ html, body {
     height: 100%;
     padding: 10px;
     min-height: 100%;
-    overflow-y: scroll
+    overflow-y: scroll;
 }
 
 .side-right{
@@ -673,7 +673,7 @@ html, body {
     margin: 10px;
 }
 
-.heading-border-decorators-visible:before, 
+.heading-border-decorators-visible:before,
 .heading-border-decorators-visible:after,
 .heading-border-decorators-visible span:before,
 .heading-border-decorators-visible span:after {
@@ -1021,7 +1021,7 @@ html, body {
 .scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
 .scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
 
-.display-none { 
+.display-none {
     display: none;
 }
 
@@ -1150,7 +1150,7 @@ html, body {
     }
 
     .text-heading{
-        
+
     }
 
     .bt-search{
@@ -1199,7 +1199,7 @@ html, body {
 }
 
 .content-wrap{
-    display: flex;   
+    display: flex;
     min-height: 100vh;
     padding-top: 63px;
 }
@@ -1245,7 +1245,7 @@ html, body {
     .nav-links{
         width: 50%;
         padding-right: 10px;
-    }   
+    }
     .nav-tasks{
         position: fixed;
         margin-top: 60px;
@@ -1411,6 +1411,5 @@ html, body {
         border-bottom: 2px solid #e89859;
         top: 18px;
         width: 15%;
-    }   
+    }
 }
-
