@@ -3,13 +3,24 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
-import { Icon } from 'react-fa';
+import Axios from 'axios';
+import ConfigMain from '~/configs/main';
+
+import { connect, mapStateToProps } from 'react-redux';
+import { signUp } from '~/src/redux/actions/authorization';
 
 import '~/src/theme/css/characterAuthentication.css';
 
 class CharacterAuthentication extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      message: null,
+    };
   }
 
   componentWillMount() {
@@ -40,6 +51,30 @@ class CharacterAuthentication extends React.Component {
   handleSignUpLinkedIn() {
     this.props.onHandleCreationFinish();
     this.props.onHandleSignUpLinkedIn();
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    Axios.post(`${ConfigMain.getBackendURL()}/auth/sign-in`, {
+      email: this.state.email,
+      name: this.state.name,
+      password: this.state.password,
+    })
+      .then(response => {
+        this.props.signUp(response.data);
+      })
+      .catch(err => {
+        if (err.response.status === 403) {
+          this.setState({ message: 'Email address already registered. Password incorrect.' });
+        } else {
+          this.setState({ message: 'Unknown server error occurs' });
+        }
+      });
   }
 
   render() {
@@ -83,27 +118,31 @@ class CharacterAuthentication extends React.Component {
                     Login with LinkedIn
                   </button>
                 <p>or</p>
-                <div>
+                
+                <form onChange={event => this.handleChange(event)}
+                  onSubmit={event => this.handleSubmit(event)}>
 
                   <div className="form-group-auth">
                       <label htmlFor="name">Name</label>
-                      <input type="text" className="auth-input" id="name" placeholder="" />
+                      <input type="text" className="auth-input" name="name" id="name" placeholder="" value={this.state.name} required />
                   </div>
 
                   <div className="form-group-auth">
                       <label htmlFor="email">Email or mobile phone number</label>
-                      <input type="text" className="auth-input" id="email" placeholder="" />
+                      <input type="text" className="auth-input" name="email" id="email" placeholder="" value={this.state.email} required />
                   </div>
 
                   <div className="form-group-auth">
                       <label htmlFor="password">Password</label>
-                      <input type="password" className="password-input" id="password" placeholder="" />
+                      <input type="password" className="password-input" name="password" id="password" placeholder="" value={this.state.password} required />
                   </div>
-
-                </div>
-                <div>
-                  <button className="btn auth-create-button">Create</button>
-                </div>
+                  {this.state.message && <div>{this.state.message}</div>}
+                  <div>
+                    <button type="submit" className="btn auth-create-button">Create</button>
+                  </div>
+                  
+                </form>
+                
               </div>
               <div className="col-md-7 account-tnc">
                 <p className="authentication-tnc">
@@ -141,4 +180,7 @@ class CharacterAuthentication extends React.Component {
 
 CharacterAuthentication.propTypes = {};
 
-export default require('react-click-outside')(CharacterAuthentication);
+export default connect(
+  null,
+  { signUp },
+)(CharacterAuthentication);
