@@ -2,25 +2,16 @@
   import Modal from 'react-modal';
   import PropTypes from 'prop-types';
 
-  import { ProgressBar } from 'react-bootstrap';
-
   import { getPopupParentElement } from '~/src/common/PopupUtils.js';
 
   import { Icon } from 'react-fa';
-
-  import ActionLink from '~/src/components/common/ActionLink';
 
   import '~/src/theme/css/characterHouseSelection.css';
 
   class CharacterHouseSelection extends React.Component {
     constructor(props) {
       super(props);
-      this.modalDefaultStyles = {
-        width: '90%',
-        margin: '0 auto',
-        paddingTop: '40px'
-      };
-
+      
       this.state = {
         mouseOveredIndex: undefined,
         isModalOpen: false
@@ -28,11 +19,11 @@
     }
 
     componentWillMount() {
-      this.modalDefaultStyles = Modal.defaultStyles;
+      
     }
 
     componentWillUnmount() {
-      // Modal.defaultStyles = this.modalDefaultStyles;
+      
     }
 
     componentDidMount(){
@@ -40,7 +31,7 @@
     }
 
     handleClickOutside() {
-      /* () => this.handleClose();*/
+      
     }
 
     handleClose() {
@@ -247,7 +238,7 @@
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
       }
         return (
-          <div className="select-house-lightbox" onClick={() => this.onClose()}>
+          <div className="select-house-lightbox">
             <a
               className="fa fa-2x fa-times close-house-lightbox"
               onClick={() => this.closeHouseModalPopup()}
@@ -319,123 +310,7 @@
         ? this.props.charactersList[this.state.mouseOveredIndex]
         : this.props.charactersList[this.props.selectedIndex];
 
-      // const HouseModal = () => {
-      //   const SelectedCharacter = this.state.mouseOveredIndex
-      //   ? this.props.charactersList[this.state.mouseOveredIndex]
-      //   : this.props.charactersList[this.props.selectedIndex];
-      //   return(
-      //     <Modal
-      //       isOpen={this.state.isModalOpen}
-      //       onRequestClose={() => this.closeHouseModalPopup()}
-      //       contentLabel={'Character Selection'}
-      //     >
-      //       <div className="character-description-box-modal"
-      //       // style={{}}
-      //       >
-      //           <div className="character-header-modal">
-      //             {SelectedCharacter.name}
-      //           </div>
-      //           <div className="character-description-modal">
-      //             {SelectedCharacter.description1 && SelectedCharacter.description1}
-      //             {SelectedCharacter.description2 && SelectedCharacter.description2}
-      //             {SelectedCharacter.description3 && SelectedCharacter.description3}
-      //           </div>
-      //           <ul  className="character-skills-modal">
-      //             {SelectedCharacter.skills.map((skill, i) => {
-      //               return (
-      //                 <li className="character-skill-modal" key={i}>
-      //                   {skill}
-      //                 </li>
-      //               );
-      //             })}
-      //           </ul>
-      //       </div>
-
-      //       <div className="house-button-wrapper">
-      //         <button type="button" className="back-button" onClick={() => this.props.onNextStep()}>
-      //           <p>Back</p>
-      //         </button>
-      //         <button type="button" className="next-button" 
-      //         onClick={() => this.props.onNextStep({ characterTraitsIndex: this.props.selectedIndex })}>
-      //           <p>Next</p>
-      //         </button>
-      //       </div>
-            
-      //     </Modal>
-      //   )
-      // }
-
-      // const renderModal() {
-      //   return (
-      //     <div className="ptree-video-lightbox" onClick={() => this.onPlayVideo()}>
-      //       <div className="ptree-video-container">
-      //         <iframe
-      //           className="ptree-video"
-      //           width="420"
-      //           height="345"
-      //           id="intro-video"
-      //           src="https://www.youtube.com/embed/i8PJgSclIf0"
-      //         />
-      //         <a
-      //           className="fa fa-2x fa-times"
-      //           style={{ color: 'white', verticalAlign: 'top' }}
-      //           onClick={() => this.onPlayVideo()}
-      //         />
-      //       </div>
-      //     </div>
-      //   );
-      // }
-
-      // const HouseModal = this.state.isModalOpen ? this.renderVideo() : null;
-
-      // const MobileView = () => {
-      //   return(
-      //     <div className="house-mobile-view">
-      //         <HouseModal />
-      //         <p className="title-mobile">
-      //             <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/step-title-mobile.png" alt="step title mobile" 
-      //             style={{width: '100%'}}/>
-      //             <span>select your traits</span>
-      //             <span className="active">select your house</span>
-      //         </p>
-      //         <div className="houses-wrapper">
-      //           <div className="character-description-container">
-      //             <div className="character-description-box"
-      //             // style={{}}
-      //             >
-      //                 <div className="character-header">
-      //                   {SelectedCharacter.name}
-      //                 </div>
-      //                 <div className="character-description">
-      //                   {SelectedCharacter.description1 && SelectedCharacter.description1}
-      //                   {SelectedCharacter.description2 && SelectedCharacter.description2}
-      //                   {SelectedCharacter.description3 && SelectedCharacter.description3}
-      //                 </div>
-      //                 <ul  className="character-skills">
-      //                   {SelectedCharacter.skills.map((skill, i) => {
-      //                     return (
-      //                       <li className="character-skill" key={i}>
-      //                         {skill}
-      //                       </li>
-      //                     );
-      //                   })}
-      //                 </ul>
-      //             </div>
-      //           </div>
-      //           {this.renderMobileCharacters(this.props.charactersList, 0, this.props.charactersList.length - 1)}
-      //         </div>
-      //         <div className="house-button-wrapper">
-      //           <button type="button" className="back-button" onClick={() => this.props.onNextStep()}>
-      //             <p>Back</p>
-      //           </button>
-      //           <button type="button" className="next-button" 
-      //           onClick={() => this.props.onNextStep({ characterTraitsIndex: this.props.selectedIndex })}>
-      //             <p>Next</p>
-      //           </button>
-      //         </div>
-      //     </div>
-      //   )
-      // }
+        
       let backgroundImageUrl
       if(SelectedCharacter.name == 'The business clairvoyants'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
@@ -508,4 +383,4 @@
 
   CharacterHouseSelection.propTypes = {};
 
-  export default require('react-click-outside')(CharacterHouseSelection);
+  export default (CharacterHouseSelection);

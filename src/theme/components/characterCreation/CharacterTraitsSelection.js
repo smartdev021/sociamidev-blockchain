@@ -93,16 +93,6 @@ class CharacterTraitsSelection extends React.Component {
                     </div>
                 </div>
             </div>
-            {/* <p className="title-desktop">
-                <span className="active">select your traits</span>
-                <span>select your house</span>
-                <span>plug in</span>
-            </p>
-            <p className="title-mobile">
-                <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/step-title-mobile.png" alt="step title mobile" />
-                <span className="active">select your traits</span>
-                <span>select your house</span>
-            </p> */}
             <div className="traits-wrapper row">
                 {this.props.traitsList.map((trait, i) => {
                 let imgUrl
