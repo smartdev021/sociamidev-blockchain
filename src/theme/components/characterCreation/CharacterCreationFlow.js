@@ -205,8 +205,6 @@ class CharacterCreationFlow extends React.Component {
           break;
       }
     }
-    console.log('this.state')
-    console.log(this.state)
     return FormToRender;
   }
 
