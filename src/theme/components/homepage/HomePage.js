@@ -3,12 +3,46 @@
 */
 
 import React, { Component } from 'react';
+import Axios from 'axios';
+import { Icon } from 'react-fa';
+
+import ConfigMain from '~/configs/main';
+
 import Team from '~/src/theme/components/homepage/Team';
+import Post from '~/src/theme/components/homepage/Post';
 import '~/src/theme/css/homePage.css';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      posts: [],
+      loadingPosts: true
+    }
+    this.createPost = this.createPost.bind(this);
+    this.postInput = null;
+    this.setPostInputRef = element => {
+      this.postInput = element;
+    };
+  }
+
+  createPost() {
+    Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`, 
+      {message: this.postInput.value, userName: this.props.userProfile.firstName + " "+ this.props.userProfile.lastName})
+    .then((response) => {
+      this.postInput.value = "";
+    })
+    .catch(error => {
+    });
+  }
+
+  componentDidMount() {
+    Axios.get(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/feeds`)
+    .then((response) => {
+      this.setState({ posts: response.data, loadingPosts: false });
+    })
+    .catch(error => {
+    });
   }
 
   render() {
@@ -184,53 +218,18 @@ class HomePage extends React.Component {
                     <div className="profile-icon">
                       <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/center-top-profile.png" alt="" />
                     </div>
-                    <input type="text" name="" placeholder="What do you want to say..." />
+                    <input type="text" name="" ref={this.setPostInputRef} placeholder="What do you want to say..." />
                     <div className="buttons-wp">
                       <ul>
                         <li><a href="#"><div className="icon-white"><i className="fa fa-camera"></i></div></a></li>
                         <li><a href="#"><div className="icon-white"><i className="fa fa-video-camera"></i></div></a></li>
-                        <li><a href="#"><div className="icon-white icon-purpal"><i className="fa fa-paper-plane"></i></div></a></li>
+                        <li><a href="#"><div className="icon-white icon-purpal" onClick={this.createPost}><i className="fa fa-paper-plane"></i></div></a></li>
                       </ul>
                     </div>
                   </div>
-                  <div className="black-box">
-                    <div className="main-comment-box">
-                      <div className="top-head">
-                        <div className="profile-icon">
-                          <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-9.png" alt="" />
-                        </div>
-                        <span className="col-heading">David Avetyan</span>
-                        <span className="date">17.02.18</span>
-                      </div>
-                      <p>The #data seeker looks to see all, in order to protect all in the name of information.</p>
-                      <div className="img-box">
-                        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/center-middle-img.png" alt="" />
-                      </div>
-                      <h4>Winning the Game of Innovation Advantages and Disadvantages</h4>
-                      <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation...</p>
-                      <div className="bot-wp">
-                        <div className="likewp">
-                          <div className="thum-like">
-                            <i className="fa fa-thumbs-up" aria-hidden="true"></i>
-                          </div>
-                          <span>Anna +23 others</span>
-                          <span className="comments-txt">4 comments</span>
-                        </div>
-                        <div className="input-wp">
-                          <div className="input-filed">
-                            <input type="text" name="" placeholder="Write comment..." />
-                            <a href="#" className="camera-icon"><i className="fa fa-camera"></i></a>
-                          </div>
-                          <div className="bot-share-btns">
-                            <ul>
-                              <li><a href="#"><div className="icon-white text-blue"><i className="fa fa-share"></i></div></a></li>
-                              <li><a href="#"><div className="icon-white icon-blue"><i className="fa fa-thumbs-up"></i></div></a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  { this.state.loadingPosts ? <Icon style={{ color: 'white', textAlign: 'center', width: '100%', fontSize: '30px' }} spin name="spinner" /> : this.state.posts.length === 0 ? 
+                      <span style={{ color: 'gray', fontSize: '16px', textAlign: 'center', width: '100%', display: 'inline-block' }}>There are no posts! Start making friends!</span>
+                    : this.state.posts.map( post => <Post key={post._id} data={post} />) }
                 </div>
               </div>
             </div>
