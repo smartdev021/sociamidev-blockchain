@@ -208,7 +208,7 @@
                 {this.renderMobileCharacters(this.props.charactersList, 0, this.props.charactersList.length - 1)}
               </div>
               <div className="house-button-wrapper">
-                <button type="button" className="back-button" onClick={() => this.props.onNextStep()}>
+                <button type="button" className="back-button" onClick={() => this.props.onPreviousStep()}>
                   <p>Back</p>
                 </button>
                 <button type="button" className="next-button" 
@@ -366,7 +366,7 @@
                 </div>
               </div>
               <div className="house-button-wrapper">
-                <button type="button" className="back-button" onClick={() => this.props.onNextStep()}>
+                <button type="button" className="back-button"  onClick={() => this.props.onPreviousStep()}>
                   <p>Back</p>
                 </button>
                 <button type="button" className="next-button" 

@@ -99,6 +99,19 @@ class CharacterCreationFlow extends React.Component {
     });
   }
 
+  characterCreationPreviousStep() {
+    // if (this.state.characterCreationState.step == SELECT_TRAITS && this.props.isAuthorized) {
+    //   this.props.onHandleCharacterDataSet();
+    //   this.handleCloseCharacterCreation();
+    // } else {
+      const characterCreationFlowStepIndex =
+        (this.state.characterCreationFlowStepIndex - 1) % CharacterCreationFlowData.length;
+      this.setState({
+        characterCreationState: CharacterCreationFlowData[characterCreationFlowStepIndex],
+        characterCreationFlowStepIndex: characterCreationFlowStepIndex,
+      });
+  }
+
   characterCreationNextStep() {
     if (this.state.characterCreationState.step == SELECT_CHARACTER && this.props.isAuthorized) {
       this.props.onHandleCharacterDataSet();
@@ -149,6 +162,7 @@ class CharacterCreationFlow extends React.Component {
             <CharacterHouseSelection
               characterCreationState={this.state.characterCreationState}
               onClose={() => this.handleCloseCharacterCreation()}
+              onPreviousStep={() => this.characterCreationPreviousStep()}
               onNextStep={() => this.characterCreationNextStep()}
               onSelect={index => this.handleSelectCharacter(index)}
               selectedIndex={this.props.characterCreationData.selectedCharacterIndex}
@@ -164,6 +178,7 @@ class CharacterCreationFlow extends React.Component {
           FormToRender = (
             <CharacterAuthentication
               characterCreationState={this.state.characterCreationState}
+              onPreviousStep={() => this.characterCreationPreviousStep()}
               onClose={() => this.handleCloseCharacterCreation()}
               onHandleSignUpFacebook={() => this.props.onHandleSignUpFacebook()}
               onHandleSignUpLinkedIn={() => this.props.onHandleSignUpLinkedIn()}
