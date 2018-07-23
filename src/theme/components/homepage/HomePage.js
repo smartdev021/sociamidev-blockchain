@@ -20,6 +20,7 @@ class HomePage extends React.Component {
       loadingPosts: true
     }
     this.createPost = this.createPost.bind(this);
+    this.fetchPosts = this.fetchPosts.bind(this);
     this.postInput = null;
     this.setPostInputRef = element => {
       this.postInput = element;
@@ -27,22 +28,28 @@ class HomePage extends React.Component {
   }
 
   createPost() {
+    const that = this;
     Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`, 
       {message: this.postInput.value, userName: this.props.userProfile.firstName + " "+ this.props.userProfile.lastName})
     .then((response) => {
       this.postInput.value = "";
+      that.fetchPosts();
     })
     .catch(error => {
     });
   }
 
-  componentDidMount() {
+  fetchPosts() {
     Axios.get(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/feeds`)
     .then((response) => {
       this.setState({ posts: response.data, loadingPosts: false });
     })
     .catch(error => {
     });
+  }
+
+  componentDidMount() {
+    this.fetchPosts();
   }
 
   render() {
