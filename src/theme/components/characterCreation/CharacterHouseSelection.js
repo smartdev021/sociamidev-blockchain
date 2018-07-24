@@ -329,7 +329,7 @@
       }
       return (
         <div className="materialize-warper select-house-wrapper">
-          {/* <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png" alt="step background" /> */}
+          {/* <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/character-creation-background.png" alt="step background" /> */}
           <div className="container house-desktop-view">
               <div className="character-wizard-steps">
                   <div className="wizard-circle" style={{float:'left'}}></div>

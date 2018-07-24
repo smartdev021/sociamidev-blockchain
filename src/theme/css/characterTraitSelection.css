@@ -2,7 +2,7 @@
   font-family: 'MyriadPro';
   background-size: cover;
   position: relative;
-  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png);
+  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/character-creation-background.png);
   min-height: 860px;
   margin-bottom: -55px;
 }
