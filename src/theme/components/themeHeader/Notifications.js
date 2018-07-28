@@ -141,6 +141,9 @@ class Notifications extends React.Component {
     //         }
     //       })
     //     : [];
+
+    const { userProfile = {} } = this.props;
+
     return (
       <ListGroup>
         <ListGroupItem className="notifyTitle">
@@ -165,7 +168,7 @@ class Notifications extends React.Component {
                   <div className="notificationRow notify-grow">
                     <div className="notify-container">
                       <div className="notifyIcon">
-                        <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/friends-list/Danicon.png" />
+                        {userProfile.pictureURL ? <img src={userProfile.pictureURL} /> : <i className="fa fa-user-circle fa-2x fa-profile-image" />}
                       </div>
                       <div className="notify-text-detail">
                         <div className="notifyDesc">
