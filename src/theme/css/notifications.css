@@ -217,4 +217,15 @@ span.notification-item.list-group-item:hover .notify-hide {
     text-align: left;
     padding-left: 50px;
   }
+
+  .list-group::after{
+    right: 100px;
+    border: 6px solid #000;
+    border-color: transparent transparent #ffc700 #ffc700;
+  }
+  .list-group:before {
+    right: 100px;
+    border: 6px solid #000;
+    border-color: transparent transparent #0a0a0a #0a0a0a;
+  }
 }
