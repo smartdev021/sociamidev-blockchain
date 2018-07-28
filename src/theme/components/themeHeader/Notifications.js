@@ -57,22 +57,22 @@ class Notifications extends React.Component {
     const oneDay = 24 * 60 * 60 * 1000;
     const Notifications = this.props.userTasks.created
       ? this.props.userTasks.created
-          .map(function(task) {
-            const days = Math.round(Math.abs((new Date().getTime() - task.date) / oneDay));
-            const daysText = days === 0 ? 'Today ' : days + ' days ago';
-            return {
-              _id: task._id,
-              isSeen: true,
-              title: task.description,
-              name: 'You can start your ',
-              date: daysText,
-              status: task.status,
-              task,
-            };
-          })
-          .filter(task => task.status !== 'complete')
-          .slice(0, 10)
-          .reverse()
+        .map(function (task) {
+          const days = Math.round(Math.abs((new Date().getTime() - task.date) / oneDay));
+          const daysText = days === 0 ? 'Today ' : days + ' days ago';
+          return {
+            _id: task._id,
+            isSeen: true,
+            title: task.description,
+            name: 'You can start your ',
+            date: daysText,
+            status: task.status,
+            task,
+          };
+        })
+        .filter(task => task.status !== 'complete')
+        .slice(0, 10)
+        .reverse()
       : [];
 
     // const Notifications =
@@ -143,13 +143,12 @@ class Notifications extends React.Component {
     //     : [];
     return (
       <ListGroup>
-        <div className="notification-arrow-up" />
         <ListGroupItem className="notifyTitle">
-          <div>Your Notifications {Notifications.length}</div>
+          <div>Notifications ({Notifications.length})</div>
         </ListGroupItem>
-        {this.props.userTasks.isLoading ? <h4 className="notifications-loading">Loading...</h4> : null}
+        {this.props.userTasks.isLoading ? <div className="notifications-loading">Loading...</div> : null}
         <div id="notificationSection">
-          {Notifications.map(function(notification, i) {
+          {Notifications.map(function (notification, i) {
             return (
               <ListGroupItem
                 key={i}
@@ -170,30 +169,26 @@ class Notifications extends React.Component {
                       </div>
                       <div className="notify-text-detail">
                         <div className="notifyDesc">
-                          <span className="notify-name">{notification.name}&nbsp;&nbsp;</span>
+                          <span className="notify-name">{notification.name}</span>
                           <span className="notify-title">{notification.title}</span>
                         </div>
-                        <div className="notify-date">{notification.date}</div>
-                      </div>
-                      {notification.isSeen ? (
-                        <div className="notify-checked">new</div>
-                      ) : (
-                        <div className="notify-checked-true">
-                          <span aria-hidden="true" className="fa fa-check" />
+
+                        <div className="notifyMeta">
+                          <span className="notify-date">{notification.date}</span>
+                          <span className="notify-actions">
+                            <Link
+                              to="/taskManagement"
+                              className="notify-btn-notification-check"
+                              onClick={() => that.handleStartClick(notification.task)}
+                            >
+                              Start
+                            </Link>
+                            <button className="notify-btn-notification-reschedule">
+                              Reschedule
+                            </button>
+                          </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="notify-hide">
-                      <Link
-                        to="/taskManagement"
-                        className="notify-btn-notification-check"
-                        onClick={() => that.handleStartClick(notification.task)}
-                      >
-                        <span aria-hidden="true" className="fa fa-check" />&nbsp;&nbsp;START
-                      </Link>
-                      <button className="notify-btn-notification-reschedule">
-                        <span aria-hidden="true" className="fa fa-times" />&nbsp;&nbsp;RESCHEDULE
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -201,9 +196,13 @@ class Notifications extends React.Component {
             );
           })}
         </div>
-        <div className="more-notifications">
-          <a href="#">See all notifications ></a>
-        </div>
+        {
+          !this.props.userTasks.isLoading && (
+            <div className="more-notifications">
+              <a href="#">See all notifications ></a>
+            </div>
+          )
+        }
       </ListGroup>
     );
   }
