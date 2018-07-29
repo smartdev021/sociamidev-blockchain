@@ -8,6 +8,8 @@ import { Icon } from 'react-fa';
 
 import ConfigMain from '~/configs/main';
 
+import Friends from '~/src/theme/components/homepage/Friends';
+import Photos from '~/src/theme/components/homepage/Photos';
 import Team from '~/src/theme/components/homepage/Team';
 import Post from '~/src/theme/components/homepage/Post';
 import '~/src/theme/css/homePage.css';
@@ -60,44 +62,8 @@ class HomePage extends React.Component {
             <div className="row">
               <div className="row">
                 <div className="col">
-                  <div className="black-box">
-                    <div className="my-friends-wp">
-                      <h3 className="col-heading">My friends</h3>
-                      <ul>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-1.png" /></span>
-                        <p>John</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-2.png" /></span>
-                        <p>Lina</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-3.png" /></span>
-                        <p>Sona</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-4.png" /></span>
-                        <p>John</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-5.png" /></span>
-                        <p>Anna</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-6.png" /></span>
-                        <p>John</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-7.png" /></span>
-                        <p>Masha</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-8.png" /></span>
-                        <p>Karina</p> </li>
-                        <li><span className="img-wp"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-9.png" /></span>
-                        <p>Anahit</p> </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="black-box">
-                    <div className="my-photos-wp">
-                      <h3 className="col-heading">My photos</h3>
-                      <ul>
-                        <li><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/left-bottom-1.jpg" /></li>
-                        <li><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/left-bottom-2.jpg" /></li>
-                        <li><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/left-bottom-3.jpg" /></li>
-                        <li><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/left-bottom-4.jpg" /></li>
-                        <li><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/left-bottom-5.jpg" /></li>
-                        <li><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/left-bottom-6.jpg" /></li>
-                      </ul>
-                    </div>
-                  </div>
+                  <Friends heading="My friends" />
+                  <Photos heading="My photos" />
                 </div>
                 <div className="col pull-right">
                   <div className="black-box">

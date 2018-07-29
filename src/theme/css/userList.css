@@ -118,6 +118,10 @@
     top: 18px;
 }
 
+.friendName a.full-name{
+    color: #5f5b5b;
+}
+
 .friendName .friendFacebookRecommendation{
     font-size: 10px;
     color: #ff0000;

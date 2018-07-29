@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 import ConfigMain from '~/configs/main';
 import '../theme/css/userList.css';
 import { Tab, Tabs } from '../../node_modules/react-bootstrap';
@@ -292,7 +293,9 @@ class ConnectionsView extends React.Component {
                     <div className="friendInfoContainer">
                       <div className="friendInfo">
                         <span className="friendName">
-                          {friend.firstName} {friend.lastName}
+                          <Link className="full-name" to={`/userProfile?id=${friend.id}`}>
+                            {friend.firstName} {friend.lastName}
+                          </Link>
                           {friend.isFacebookFriend && (
                             <span className="friendFacebookRecommendation">
                               {' '}
