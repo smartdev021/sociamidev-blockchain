@@ -21,18 +21,18 @@ const Banner = ({ openSignUpForm, startCharacterCreation }) => {
         alt="banner" />
       <div>
         <section>
-          <h2>game up your passion</h2>
+          <h2>Sign Up for the BETA</h2>
           <p>Plug in for the Future. Explore a world of quests with <br /> friends and play
             them
             together to
             gain glory and rewards.</p>
         </section>
         <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
-          <p>Explore Soqqle</p>
+          <p>Sign Up Now!</p>
         </Link>
         <button type="button" className="sign-in-button"
           onClick={() => openSignUpForm()}>
-          <p>Sign in</p>
+          <p>View Trailer</p>
         </button>
       </div>
     </div>

@@ -106,14 +106,14 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
       <button type="button">
         <p>Markets</p>
       </button>
-      {!isEmailInputVisible
+      {/* {!isEmailInputVisible
         ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
           <p>Subscribe</p>
         </button>
         : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />}
       <button type="button" className="sign-up-button">
         <p>Enterprise sign up</p>
-      </button>
+      </button> */}
     </div>
   );
 };
@@ -173,8 +173,8 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
               type="email" placeholder="email@example.com" autoFocus={true} required={true} />
           </div>
         </div>
-        <button type="button" className="subscribe-button" onClick={handleInputSubmit}><p>Subscribe</p></button>
-        <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
+        {/* <button type="button" className="subscribe-button" onClick={handleInputSubmit}><p>Subscribe</p></button>
+        <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button> */}
       </footer>
     </div>
   );
