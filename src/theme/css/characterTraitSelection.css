@@ -2,7 +2,7 @@
   font-family: 'MyriadPro';
   background-size: cover;
   position: relative;
-  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png);
+  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/character-creation-background.png);
   min-height: 860px;
   margin-bottom: -55px;
 }
@@ -37,6 +37,7 @@
   box-sizing: border-box;
   height: 250px;
   width: 100%;
+  cursor: url('https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/cursor.png'), auto;
 }
 
 @media screen and (max-width: 750px) {
@@ -60,7 +61,7 @@
   }
 }
 
-.select-trait-wrapper div.trait-card:hover{
+/* .select-trait-wrapper div.trait-card:hover{
   color: white;
   cursor: url('https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/cursor.png'), auto;
   background: #1a6fc8;
@@ -73,6 +74,21 @@
 
 .select-trait-wrapper div.trait-card:hover .hover-image{
   display: inline;
+} */
+
+.select-trait-wrapper div.trait-card.active{
+  color: white;
+  cursor: url('https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/cursor.png'), auto;
+  background: #1a6fc8;
+  transform: scale(1.15);
+}
+
+.select-trait-wrapper div.trait-card.active img{
+  display: none;
+}
+
+.select-trait-wrapper div.trait-card.active .hover-image{
+  display: inline;
 }
 
 .select-trait-wrapper h3{
@@ -82,9 +98,8 @@
 @media screen and (max-width: 750px) {
   .select-trait-wrapper h3{
     max-width: 130px;
-    margin: 4px 0 8px;
+    margin: 0 auto;
     font-size: 13px;
-    line-height: 12.8px;
   }
 }
 

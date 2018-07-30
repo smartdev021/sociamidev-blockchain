@@ -1,35 +1,71 @@
 div#notificationTile {
   position: absolute;
-  width: 400px;
+  width: 332px;
   right: 20px;
-  top: 64px;
+  top: 70px;
   border: none;
   height: 400px;
-  overflow: auto;
   padding: 0 10px;
+  z-index: 200;
 }
 
-.notification-arrow-up {
+.list-group {
+	position: relative;
+	background: #88b7d5;
+  border: 1px solid #ffc700;
+  box-shadow: 0px 0px 10px 3px rgba(184,161,44,0.7);
+}
+
+.list-group::after{
+  content: "";
+  position: absolute;
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #2fa7d2;
+  margin-left: -10px;
+  top: 0px;
+  right: 96px;
+  box-sizing: border-box;
+  border: 10px solid black;
+  border-color: transparent transparent #ffc700 #ffc700;
+  transform-origin: 0 0;
+  transform: rotate(135deg);
+  box-shadow: 0px 0px 15px 5px rgba(184,161,44,0.76);
+  z-index: -1;
+}
+
+.list-group::before{
+  content: "";
   position: absolute;
-  right: 58px;
-  top: -10px;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  top: 2px;
+  right: 96px;
+  box-sizing: border-box;
+  border: 10px solid black;
+  border-color: transparent transparent #0a0a0a #0a0a0a;
+  transform-origin: 0 0;
+  transform: rotate(135deg);
   z-index: 200;
 }
 
 .notifyTitle {
   position: relative;
   display: block;
-  background-color: #2fa7d2;
+  color: #ffc700;
+  font-size: 1.3em;
+  background-color: #0a0a0a;
   border: none;
-  text-align: center;
-  color: #fff;
-  font-size: 1.1em;
-  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.26);
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
+.notifyMeta {
+  margin-top: 5px;
+}
+
+.notify-actions {
+  float: right;
 }
 
 .notify-container {
@@ -44,24 +80,27 @@ div#notificationTile {
 }
 
 .notifyIcon {
-  border: 2px solid #a7daec;
+  border: 1px solid #ffc700;
   border-radius: 100px;
-  padding: 2px;
   margin-right: 10px;
+  margin-top: 5px;
+}
+
+.notifyIcon > img {
+  width: 32px;
+  border-radius: 50%;
 }
 
 .notify-date {
-  color: #bababa;
+  color: #6f6f6f;
 }
 
 .notify-title {
-  color: #000;
+  color: #dadada;
 }
 
 .notify-name {
-  font-weight: bold;
-  color: #000;
-  font-size: 1.1em;
+  color: #dadada;
 }
 
 .notify-checked {
@@ -74,9 +113,19 @@ div#notificationTile {
   box-shadow: 0px 4px 10px 0px rgba(221, 48, 58, 0.33);
 }
 
+.fa-profile-image {
+  color: rgb(1, 111, 176);
+}
+
 span.notification-item.list-group-item {
-  border: none;
+  border: 1px solid #444444;
   border-radius: 0;
+  background-color: #0a0a0a;
+  padding: 5px 15px !important;
+}
+
+span.notification-item.list-group-item:hover {
+  background-color: #1e1e1e;
 }
 
 #notificationSection {
@@ -91,29 +140,28 @@ span.notification-item.list-group-item {
   transition: all 0.2s ease-in-out;
 }
 
-span.notification-item.list-group-item:hover {
-  transform: scale(1.05, 1.1);
-  z-index: 100;
-  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15);
-}
-
 a.notify-btn-notification-check {
   border: none;
   outline: none;
-  background: #fdda2c;
-  color: #e7403f;
+  color: #fff;
   width: 150px;
   padding: 6px;
   text-align: center;
+  margin-right: 5px;
+}
+
+a.notify-btn-notification-check:hover {
+  color: #cb00dc;
 }
 
 button.notify-btn-notification-reschedule {
-  background: #fff;
-  border: 2px solid #c2c2c2;
-  border-radius: 3px;
-  width: 150px;
-  padding: 6px;
-  color: #c2c2c2;
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+
+button.notify-btn-notification-reschedule:hover {
+  color: #cb00dc;
 }
 
 .notify-hide {
@@ -139,16 +187,24 @@ span.notification-item.list-group-item:hover .notify-hide {
 }
 
 .more-notifications {
-  background: #efefef;
+  background: #0a0a0a;
   text-align: center;
-  font-size: 1.3em;
   padding: 10px;
   font-weight: bold;
-  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.26);
+}
+
+.more-notifications > a {
+  color: #fff;
+}
+
+.more-notifications > a:hover {
+  color: #cb00dc;
 }
 
 .notifications-loading {
   text-align: center;
+  font-size: 16px;
+  padding: 10px 15px;
 }
 
 @media (max-width: 480px) {
@@ -165,5 +221,16 @@ span.notification-item.list-group-item:hover .notify-hide {
   .notifyTitle div {
     text-align: left;
     padding-left: 50px;
+  }
+
+  .list-group::after{
+    right: 100px;
+    border: 6px solid #000;
+    border-color: transparent transparent #ffc700 #ffc700;
+  }
+  .list-group:before {
+    right: 100px;
+    border: 6px solid #000;
+    border-color: transparent transparent #0a0a0a #0a0a0a;
   }
 }

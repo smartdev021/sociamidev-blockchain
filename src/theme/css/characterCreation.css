@@ -59,7 +59,7 @@
   }
   .character-wizard-steps .wizard-step{
     font-family: "MyriadPro Bold";
-    font-size:18px;
+    font-size: 1.4vw;
     margin-left: 20px;
     color: rgba(254, 254, 254, 0.21);
     text-transform: uppercase;

@@ -1,6 +1,6 @@
 .materialize-warper.authentication-wrapper {
   font-family: 'MyriadPro';
-  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png);
+  background-image: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/character-creation-background.png);
   background-size: cover;
   min-height: 860px;
   position: relative;
@@ -9,7 +9,6 @@
 
 @media (max-width:767px) {
   .materialize-warper.authentication-wrapper {
-    background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/select-trait-background.png);
     position: relative;
     background-size: cover;
   }
