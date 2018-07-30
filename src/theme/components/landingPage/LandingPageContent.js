@@ -12,8 +12,73 @@ import Authorize from '~/src/authentication/Authorize';
 import { openSignUpForm } from '~/src/redux/actions/authorization';
 import { fetchArticles } from '~/src/redux/actions/articles';
 import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
+//mailerlite subscribe
+import Axios from 'axios';
+import ConfigMain from '~/configs/main';
+import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
 
-const Banner = ({ openSignUpForm, startCharacterCreation }) => {
+const validateEmail = (email) => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
+//this one is for desktop only, for mobile, there is simple input element
+const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email }) => {
+  const handleInputSubmit = (event) => {
+    event.preventDefault();
+    if (validateEmail(email)) {
+      onEmailInputSubmit(email);
+    }
+  }
+
+  return (
+    <span>
+      <span className="landing-email-input-textfield-container">
+        <input value={email}
+          onChange={onEmailInput}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              handleInputSubmit(event)
+            }
+          }}
+          type="email" placeholder="email@example.com" autoFocus={true} />
+      </span>,
+    <button type="submit" onClick={handleInputSubmit}><p>Send</p></button>
+    </span>
+  )
+}
+
+//
+
+const Footer = () => {
+  return (
+    <footer className="footer">
+      <a href="/" className="footer-logo">
+        <img
+          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          alt="logo"
+        />
+      </a>
+      <h3>Subscribe to our Newsletter</h3>
+      <div><input type="email" className="mail" value="Mail" /></div>
+      <button type="button" className="subscribe"><p>Subscribe</p></button>
+      <ul className="info-list">
+        <li>About</li>
+        <li>Support</li>
+        <li>Contact</li>
+        <li>Press</li>
+      </ul>
+      <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
+        All trademarks referenced herein are the properties of their respective owners.</h4>
+      <ul className="privacy-list">
+        <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
+        <li><a href="/termsOfUse" target="_blank">Terms</a></li>
+      </ul>
+    </footer>
+  );
+};
+
+const Banner = ({ openMenu, openSignUpForm, startCharacterCreation}) => {
   return (
     <div className="banner-wrapper">
       <img
@@ -21,15 +86,20 @@ const Banner = ({ openSignUpForm, startCharacterCreation }) => {
         alt="banner" />
       <div>
         <section>
-          <h2>Sign Up for the BETA</h2>
+          <h2>sign up for the beta</h2>
           <p>Plug in for the Future. Explore a world of quests with <br /> friends and play
             them
             together to
             gain glory and rewards.</p>
         </section>
-        <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
+        {!isEmailInputVisible
+        ? <button type="button" className="explore-button" onClick={onEmailInputShow}>
           <p>Sign Up Now!</p>
-        </Link>
+        </button>
+        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />}
+        {/* <Link to="/characterCreation" className="explore-button" onClick={ onEmailInputShow}>
+          <p>Sign Up Now!</p>
+        </Link> */}
         <button type="button" className="sign-in-button"
           onClick={() => openSignUpForm()}>
           <p>View Trailer</p>
@@ -389,8 +459,40 @@ class LandingPageContent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = { isOpen: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
+
+    this.toggle = this.toggle.bind(this);
   }
 
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+//mailerlite subscribe
+  handleEmailInputShow(show) {
+    this.setState({ isEmailInputVisible: show });
+  }
+
+  handleEmailInputSubmit(value) {
+    if (value) {
+      const body = { groupId: 10186414, name: "n/a", email: value };
+      Axios.post(`${ConfigMain.getBackendURL()}/addSubscriberToGroup`, body)
+        .then((response) => {
+        })
+        .catch(error => {
+        });
+      this.setState({ email: "", isEmailInputVisible: false, isSubscriptionModalVisible: true });
+    }
+  }
+
+  handleEmailInput(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handleCloseSubscribeThankYouModal() {
+    this.setState({ isSubscriptionModalVisible: false });
+  }
   componentWillMount() {
     this.props.fetchArticles()
   }
@@ -400,7 +502,14 @@ class LandingPageContent extends React.Component {
       <div className="landing-page-wrapper">
         <header>
           <Banner openSignUpForm={this.props.openSignUpForm}
-          startCharacterCreation={this.props.startCharacterCreation}/>
+           startCharacterCreation={this.props.startCharacterCreation}/>
+           <Banner openMenu={this.toggle}
+            onEmailInputShow={() => this.handleEmailInputShow(true)}
+            onEmailInputHide={() => this.handleEmailInputShow(false)}
+            onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
+            onEmailInput={(event) => { this.handleEmailInput(event) }}
+            isEmailInputVisible={this.state.isEmailInputVisible}
+            email={this.state.email} />
         </header>
         <AboutComponent />
         <main>
