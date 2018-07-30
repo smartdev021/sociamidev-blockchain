@@ -14,8 +14,8 @@ import _ from 'lodash';
 import Img from 'react-image';
 
 import ConfigMain from '~/configs/main';
-import Friends from '~/src/theme/components/homepage/Friends';
-import Photos from '~/src/theme/components/homepage/Photos';
+import Friends from '~/src/theme/components/userProfile/Friends';
+import Photos from '~/src/theme/components/userProfile/Photos';
 import '~/src/theme/css/userProfile.css';
 
 import { fetchListCharacterClasses, fetchListCharacterTraits } from '~/src/redux/actions/characterCreation';
