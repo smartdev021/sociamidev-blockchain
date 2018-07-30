@@ -460,7 +460,129 @@ span.new-img-icon-head {
 span.new-img-icon-head img {
   width: 100%;
 }
-
+.home-page-new-wrapper .left-content ul{
+  margin: 0;
+  padding: 0;
+}
+.home-page-new-wrapper .left-content ul li {
+  color: #d8d8d8;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 100%;
+  float: left;
+  margin-top: 28px;
+  margin-bottom: 2px;
+  padding: 0 25px;
+}
+.home-page-new-wrapper .left-content ul li:last-child{
+  margin-bottom: 30px;
+}
+.home-page-new-wrapper .left-content ul li a{
+  color: #d8d8d8;
+  text-decoration: none;
+}
+.home-page-new-wrapper .left-content ul li span.icon-wp {
+  float: left;
+  margin-right: 22px;
+}
+.home-page-new-wrapper .p-0{
+  padding: 0 !important;
+}
+.home-page-new-wrapper .left-content ul li.drop-down {
+  border-top: 1px solid #383838;
+  border-bottom: 1px solid #383838;
+  background: #1e1e1e;
+  padding-top: 18px;
+  padding-bottom: 0;
+}
+.home-page-new-wrapper .left-content ul li.drop-down ul {
+  position: relative;
+  top: -15px;
+}
+.home-page-new-wrapper .left-content ul li.drop-down ul li {
+  text-transform: capitalize;
+  margin: 0 22px 0px 22px;
+  height: 32px;
+}
+.home-page-new-wrapper .left-content ul li.drop-down ul li a{
+  color: #686868;
+  text-decoration: none;
+}
+.home-page-new-wrapper .left-content ul li.drop-down ul li a:hover{
+  color: #fff;
+}
+.home-page-new-wrapper .left-content .top-head .icon {
+  border: 2px solid rgb(145, 19, 177);
+  border-radius: 50%;
+  background-color: rgb(20, 72, 114);
+  box-shadow: 0px 0px 8px 0px rgba(222, 108, 255, 0.81), 0px 0px 8px 0px rgba(226, 108, 255, 0.99), 0px 0px 10px 0px rgba(108, 192, 255, 0.99);
+  width: 34px;
+  height: 34px;
+  float: left;
+  margin-right: 10px;
+}
+.home-page-new-wrapper .left-content .top-head {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #383838;
+  margin: 14px 21px 0;
+  display: block;
+  line-height: 36px;
+}
+.home-page-new-wrapper .left-content ul li.drop-down a {
+  color: #9b01aa;
+  line-height: 40px;
+}
+.home-page-new-wrapper .left-content .top-head .icon img{
+  width: 100%;
+}
+.home-page-new-wrapper .left-content .top-head .col-heading {
+  text-align: left;
+  color: #9601a3;
+  font-size: 16px;
+  margin: 0;
+}
+.home-page-new-wrapper a.purpal-text-link {
+  color: #d01fe5;
+  font-size: 14px;
+  float: right;
+}
+.home-page-new-wrapper .box-bottom-right-col {
+  float: left;
+  width: 100%;
+  padding: 19px 15px;
+  background: #111222;
+  border-top: 1px solid #0069be;
+  color: #fff;
+}
+.home-page-new-wrapper .left-arrow{
+  float: left;
+}
+.home-page-new-wrapper .right-arrow{
+  float: right;
+}
+.home-page-new-wrapper .box-bottom-right-col span.txt{
+  padding: 0 5px;
+  font-size: 12px;
+}
+.home-page-new-wrapper .box-bottom-right-col p{
+  margin-bottom: 0;
+}
+.home-page-new-wrapper .next-previous-icons {
+  position: absolute;
+  font-size: 14px;
+  width: 100%;
+  padding: 0 20px;
+  top: -4px;
+  left: 0;
+  color: #ffc225;
+}
+.home-page-new-wrapper .next-previous-icons .left-arrow, .home-page-new-wrapper .next-previous-icons .right-arrow{
+  cursor: pointer;
+}
+.l-h40{
+  height: 43px;
+  line-height: 40px;
+}
 /*Start Responsive css*/
 @media (min-width: 1920px) {
   .home-page-new-wrapper {
