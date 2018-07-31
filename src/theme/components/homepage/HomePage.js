@@ -60,7 +60,7 @@ class HomePage extends React.Component {
           <div className="container">
             <div className="row">
               <div className="row">
-                <div className="col">
+                <div className="col fixed-wp">
                   <div className="black-box p-0">
                     <div className="left-content">
                       <div className="top-head">
@@ -86,18 +86,14 @@ class HomePage extends React.Component {
                             <p>Messages</p>
                           </a>
                         </li>
-                        <li className="drop-down">
+                        <div className="line-devider"></div>
+                        <li>
                           <a href="#">
                             <span className="icon-wp">
                               <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/team-menu-icon.png" />
                             </span>
                             <p>Team</p>
                           </a>
-                          <ul>
-                            <li><a href="#">The misfits</a></li>
-                            <li><a href="#">Legendary</a></li>
-                            <li><a href="#">Marry Christmas</a></li>
-                          </ul>
                         </li>
                         <li className="l-h40">
                           <a href="#">
@@ -279,7 +275,7 @@ class HomePage extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-middle">
+                <div className="col-middle ml-fixed">
                   <div className="top-box-wp">
                     <div className="profile-icon">
                       <img src={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} alt="" />

@@ -470,7 +470,7 @@ span.new-img-icon-head img {
   display: inline-block;
   width: 100%;
   float: left;
-  margin-top: 28px;
+  margin-top: 17px;
   margin-bottom: 2px;
   padding: 0 25px;
 }
@@ -583,6 +583,19 @@ span.new-img-icon-head img {
   height: 43px;
   line-height: 40px;
 }
+.ml-fixed {
+  margin-left: 303px !important;
+}
+.fixed-wp {
+  position: fixed;
+}
+.line-devider {
+  background: #383838;
+  height: 1px;
+  width: 100%;
+  float: left;
+  margin: 7px 0;
+}
 /*Start Responsive css*/
 @media (min-width: 1920px) {
   .home-page-new-wrapper {
@@ -592,14 +605,14 @@ span.new-img-icon-head img {
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  .home-page-new-wrapper .col-middle {width: 42%; margin: 0 20px;}
+  .home-page-new-wrapper .col-middle {width: 42%; margin: 0 5px;}
   .home-page-new-wrapper .col {width: 27%;}
   .home-page-new-wrapper .main-comment-box .img-box {left: 0; width: 100%;  transform: scale(1.2);}
 }
 @media (max-width: 991px) and (min-width: 768px) {
   .home-page-new-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}
   .home-page-new-wrapper .col{ width: auto; margin: 0 30px; display: block; }
-  .home-page-new-wrapper .col-middle{width: auto;}
+  .home-page-new-wrapper .col-middle{width: 89%;}
   .home-page-new-wrapper .main-comment-box .img-box{width: 100%; margin: 15px 0; position: relative; left: auto;}
   .home-page-new-wrapper .black-box{padding: 15px;}
   .home-page-new-wrapper .col-middle .buttons-wp{bottom: -20px;}
@@ -607,6 +620,8 @@ span.new-img-icon-head img {
   .home-page-new-wrapper .my-photos-wp ul{text-align: center;}
   .home-page-new-wrapper .my-photos-wp ul li{float: none; margin-right: 22px; display: inline-block;}
   .home-page-new-wrapper .my-photos-wp ul li:nth-child(2n){float: none;}
+  .fixed-wp {position: relative;}
+  .ml-fixed {margin-left: 30px !important;}
 }
 @media (max-width: 767px) {
   .home-page-new-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}
@@ -620,4 +635,6 @@ span.new-img-icon-head img {
   .home-page-new-wrapper .my-photos-wp ul li{float: none; margin-right: 22px; display: inline-block;}
   .home-page-new-wrapper .my-photos-wp ul li:nth-child(2n){float: none;}
   span.new-img-icon-head {width: 22px; height: 22px;}
+  .fixed-wp {position: relative;}
+  .ml-fixed {margin-left: 30px !important;}
 }
