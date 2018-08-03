@@ -457,7 +457,7 @@ class LandingPageContent extends React.Component {
         })
         .catch(error => {
         });
-      this.setState({ email: "", isEmailInputVisible: false, isSubscriptionModalVisible: true });
+      this.setState({isEmailInputVisible: false, isSubscriptionModalVisible: true });
     }
   }
 
@@ -473,7 +473,7 @@ class LandingPageContent extends React.Component {
     return (
       <div className="landing-page-wrapper">
         <header>
-          <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
+          <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible} email={this.state.email}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <Banner openSignUpForm={this.props.openSignUpForm}
             startCharacterCreation={this.props.startCharacterCreation}
