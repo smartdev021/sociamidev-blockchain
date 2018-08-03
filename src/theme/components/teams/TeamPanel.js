@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Icon } from 'react-fa';
 
 import EmailBlock from './EmailBlock';
+import AddAchievementModal from './AddAchievementModal';
 
 class TeamPanel extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class TeamPanel extends React.Component {
     this.state = {
       addEmailBoolean: false,
       deleteModal: false,
-      renameTitle: !props.team._id
+      renameTitle: !props.team._id,
+      addAchievementsFlag: false
     };
     this.updateTeamName = this.updateTeamName.bind(this);
     this.toggleEmailAdd = this.toggleEmailAdd.bind(this);
@@ -183,12 +185,33 @@ class TeamPanel extends React.Component {
         </div>
       );
     } else {
+      // footer = (
+      //   <div className="team-add-email">
+      //     <a className="team-add-email-link" onClick={() => this.addEmailToTeam()}>
+      //       <i className="fa fa-plus" /> Add new email
+      //     </a>
+      //   </div>
+      // );
       footer = (
-        <div className="team-add-email">
-          <a className="team-add-email-link" onClick={() => this.addEmailToTeam()}>
-            <i className="fa fa-plus" /> Add new email
-          </a>
-        </div>
+        <a className="team-add-email" style={{
+          justifyContent: 'space-between',
+          paddingLeft: '10px',
+          paddingRight: '10px',
+          height: '60px',
+          fontSize: '20px'}} onClick={() => this.setState({addAchievementsFlag: true})}>
+          <div style={{ display: 'flex', flexDirection: 'column'}}>
+            <span style={{fontSize: '16px', marginBottom: '10px'}}>Achievement</span>
+            <span style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <i className="fa fa-yahoo" />
+              <i className="fa fa-fighter-jet" />
+              <i className="fa fa-mobile" />
+              <i className="fa fa-whatsapp" />
+            </span>
+          </div>
+          <span className="team-add-email-link" style={{fontSize: '30px'}}>
+            <i className="fa fa-plus-circle" />
+          </span>
+        </a>
       );
     }
 
@@ -221,6 +244,7 @@ class TeamPanel extends React.Component {
 
     return (
       <div className="team-container" key={index}>
+        <AddAchievementModal isOpen={this.state.addAchievementsFlag} onClose={() => this.setState({addAchievementsFlag: false})} />
         {deleteModalPopup}
         <div className="team-list">
           {header}
