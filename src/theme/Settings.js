@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
 
-import '~/src/theme/css/Privacy.css';
+import '~/src/theme/css/settings.css';
 
-class Privacy extends Component {
+class Settings extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      theme: 'Dark',
       visibility: 'Public',
       autoAccept: 'No',
       IsLondon: 'none',
       IsDropDownOpen: 'none',
+      themeToggle: 'none',
       visibilityToggle: 'none',
       autoAcceptToggle: 'none',
       IsAccountOpen: 'none',
       IsPrivacyOpen: 'block',
       IsCommOpen: 'none',
     };
+    this.handleThemeChange = this.handleThemeChange.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.handleAutoAcceptChange = this.handleAutoAcceptChange.bind(this);
     this.toggleAutoAccept = this.toggleAutoAccept.bind(this);
     this.toggleVisibility = this.toggleVisibility.bind(this);
+    this.toggleTheme = this.toggleTheme.bind(this);
 
     this.toggleAccountOption = this.toggleAccountOption.bind(this);
     this.togglePrivacyOption = this.togglePrivacyOption.bind(this);
     this.toggleCommunicationOption = this.toggleCommunicationOption.bind(this);
+  }
+
+  toggleTheme() {
+    this.state.themeToggle == 'none'
+      ? this.setState({ themeToggle: 'block' })
+      : this.setState({ themeToggle: 'none' });
   }
 
   toggleVisibility() {
@@ -37,6 +47,10 @@ class Privacy extends Component {
     this.state.autoAcceptToggle == 'none'
       ? this.setState({ autoAcceptToggle: 'block' })
       : this.setState({ autoAcceptToggle: 'none' });
+  }
+
+  handleThemeChange(e) {
+    this.setState({ theme: e.target.value });
   }
 
   handleVisibilityChange(e) {
@@ -73,11 +87,39 @@ class Privacy extends Component {
         </div>
 
         <div id="account" style={{ display: this.state.IsAccountOpen }}>
-          <p>This is the account Tab</p>
+          <p></p>
+          <div className="sidebar">
+            <a href="#">Account Settings</a>
+          </div>
+          <div id="Content">
+            <div id="privacyTitle">Account Settings</div>
+            <hr />
+            <div id="visibility">
+              <label id="changeBtn" onClick={this.toggleTheme}>
+                Change
+              </label>
+              <h3>Soqqle Theme?</h3>
+              <p>
+                Soqqle theme with dark theme will see pages with black color as background in the platform.
+                Soqqle theme with light theme will see pages with white color as background in the platform.
+              </p>
+              <div style={{ display: this.state.themeToggle }}>
+                <div className="dropdown">
+                  <div>
+                    <select value={this.state.theme} onChange={this.handleThemeChange}>
+                      <option value="Dark">Dark</option>
+                      <option value="Light">Light</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
         </div>
         <div id="privacy" style={{ display: this.state.IsPrivacyOpen }}>
           <div className="sidebar">
-            <a href="#">Privay Settings</a>
+            <a href="#">Privacy Settings</a>
           </div>
           <div id="Content">
             <div id="privacyTitle">Privacy Settings</div>
@@ -134,4 +176,4 @@ class Privacy extends Component {
   }
 }
 
-export default Privacy;
+export default Settings;

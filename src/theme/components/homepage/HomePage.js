@@ -9,7 +9,8 @@ import { Icon } from 'react-fa';
 import ConfigMain from '~/configs/main';
 
 import Post from '~/src/theme/components/homepage/Post';
-import '~/src/theme/css/homePage.css';
+import '~/src/theme/css/darkTheme.css';
+import '~/src/theme/css/lightTheme.css';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -55,13 +56,13 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div className="home-page-new-wrapper profile-wrapper">
+      <div className="dark-theme-wrapper profile-wrapper main-bg">
         <div className="row">
           <div className="container">
             <div className="row">
               <div className="row">
                 <div className="col fixed-wp">
-                  <div className="black-box p-0">
+                  <div className="col-box-wp p-0">
                     <div className="left-content">
                       <div className="top-head">
                         <div className="icon">
@@ -148,7 +149,7 @@ class HomePage extends React.Component {
                   </div>
                 </div>
                 <div className="col pull-right">
-                  <div className="black-box-right">
+                  <div className="theme-box-right">
                     <h3 className="next-previous-icons"><span className="left-arrow">&#9664;</span>  <span className="right-arrow">&#9654;</span></h3>
                     <div className="box">
                       <div className="games-network-wp">
@@ -194,7 +195,7 @@ class HomePage extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="black-box">
+                  <div className="col-box-wp">
                     <div className="games-network-wp">
                       <h3 className="col-heading">Games in Network <a href="#" className="purpal-text-link">View all</a></h3>
                       <ul>
@@ -258,7 +259,7 @@ class HomePage extends React.Component {
                       </ul>
                     </div>
                   </div>
-                  <div className="black-box">
+                  <div className="col-box-wp">
                     <div className="Upcoming-Team-Quests-wp">
                       <h3 className="col-heading">Upcoming Team Quests</h3>
                       <ul>
