@@ -4,7 +4,7 @@ import Moment from 'moment';
 export default (props) => {
 
   return (
-    <div className="black-box">
+    <div className="col-box-wp">
       <div className="main-comment-box">
         <div className="top-head">
           <div className="profile-icon">

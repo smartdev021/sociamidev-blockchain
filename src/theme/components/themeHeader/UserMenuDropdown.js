@@ -48,7 +48,7 @@ class UserMenuDropdown extends React.Component {
             </div>
           )}
           <div className="row user-links">
-            <Link className="user-link-text" to="/privacy">
+            <Link className="user-link-text" to="/settings">
               Settings
             </Link>
           </div>

@@ -1,4 +1,4 @@
-.profile-wrapper .black-box-right{
+.profile-wrapper .theme-box-right{
   border: 1px solid rgb(6, 144, 247);
   box-shadow: 0px 0px 5.53px 1.47px rgba(73, 177, 255, 0.53);
   background: #111222;
@@ -8,7 +8,7 @@
   padding: 0px;
   position: relative;
 }
-.profile-wrapper .black-box-right .box{
+.profile-wrapper .theme-box-right .box{
   background-image: -moz-linear-gradient( 138deg, rgba(50,57,194,0.2) 0%, rgba(22,22,22,0.2) 100%);
   background-image: -webkit-linear-gradient( 138deg, rgba(50,57,194,0.2) 0%, rgba(22,22,22,0.2) 100%);
   background-image: -ms-linear-gradient( 138deg, rgba(50,57,194,0.2) 0%, rgba(22,22,22,0.2) 100%);
@@ -91,20 +91,20 @@
 }
 .profile-wrapper .top-wp .clf .imgbox img{width: 100%;}
 
-.profile-wrapper .black-box-right .box .col-heading{
+.profile-wrapper .theme-box-right .box .col-heading{
   margin-bottom: 12px;
   text-align: center;
 }
-.profile-wrapper .black-box-right .box h5 {
+.profile-wrapper .theme-box-right .box h5 {
   color: #ffb500;
   font-size: 12px;
   margin: 15px 0;
 }
-.profile-wrapper .black-box-right .box .fot-wp p {
+.profile-wrapper .theme-box-right .box .fot-wp p {
   margin: 0;
   font-weight: 200;
 }
-.profile-wrapper .black-box-right .box .fot-wp {
+.profile-wrapper .theme-box-right .box .fot-wp {
   text-align: left;
   color: #fff;
   font-size: 12px;
@@ -112,12 +112,12 @@
   line-height: 25px;
   margin-top: 5px;
 }
-.profile-wrapper .black-box-right .box .fot-wp .bttons-right-box {
+.profile-wrapper .theme-box-right .box .fot-wp .bttons-right-box {
   float: left;
   width: 100%;
   margin: 15px 0 20px;
 }
-.profile-wrapper .black-box-right .box .fot-wp .bttons-right-box li {
+.profile-wrapper .theme-box-right .box .fot-wp .bttons-right-box li {
   display: inline-block;
   background-color: rgb(0, 105, 190);
   box-shadow: inset 0px 3px 7px 0px rgba(0, 82, 147, 0.71);
@@ -130,7 +130,7 @@
   height: 25px;
   line-height: 25px;
 }
-.profile-wrapper .black-box-right .box .fot-wp .bttons-right-box li a {
+.profile-wrapper .theme-box-right .box .fot-wp .bttons-right-box li a {
   color: #fff;
   transform: skew(30deg);
   display: block;
@@ -264,7 +264,7 @@
 @media (min-width: 768px) and (max-width: 1199px){
   .profile-wrapper .top-wp .last-right {width: 33%;}
   .profile-wrapper .top-wp .last-right .btn-follow{margin: 0 1rem;}
-  .profile-wrapper .black-box-right .box .fot-wp .bttons-right-box li a {padding: 0 12px;}
+  .profile-wrapper .theme-box-right .box .fot-wp .bttons-right-box li a {padding: 0 12px;}
 }
 @media (max-width: 767px){
   .profile-wrapper .top-wp {padding: 12px 15px; height: auto; background-size: cover;}
