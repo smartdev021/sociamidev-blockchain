@@ -18,6 +18,8 @@ import TrailerModal from "~/src/theme/components/landingPage/TrailerModal";
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 
+const soqqleEnv = process.env.SOQQLE_ENV;
+
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
@@ -57,35 +59,38 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
         alt="banner" />
       <div>
         <section>
-          {/* <h2>game up your passion</h2> */}
-          <h2>sign up for beta</h2>
+          {
+            soqqleEnv === 'production' ?
+            <h2>sign up for beta</h2>:
+            <h2>game up your passion</h2>
+          }
           <p>Plug in for the Future. Explore a world of quests with <br /> friends and play
             them
             together to
             gain glory and rewards.</p>
         </section>
-        {/* <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
-          <p>Explore Soqqle</p>
-        </Link> */}
-        {/* <button type="button" className="sign-in-button"
-          onClick={() => openSignUpForm()}>
-          <p>Sign in</p>
-        </button> */}
-        <button type="button" className="explore-button" onClick={onBetaFormModalShow}>
-          <p>Sign up now!</p>
-        </button>
-        {/* {!isEmailInputVisible
-        ? <button type="button" className="explore-button" onClick={onEmailInputShow}>
-          <p>Sign up now!</p>
-        </button>
-        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />} */}
-        {/* <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
-          <p>Sign up now!</p>
-        </Link> */}
-        <button type="button" className="sign-in-button"
-          onClick={onTrailerModalShow}>
-          <p>View Trailer</p>
-        </button>
+        {
+          soqqleEnv === 'production' ?
+          <button type="button" className="explore-button" onClick={onBetaFormModalShow}>
+            <p>Sign up now!</p>
+          </button>
+          :
+          <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
+            <p>Explore Soqqle</p>
+          </Link>
+        }
+        {
+          soqqleEnv === 'production' ?
+          <button type="button" className="sign-in-button"
+            onClick={onTrailerModalShow}>
+            <p>View Trailer</p>
+          </button> 
+          :
+          <button type="button" className="sign-in-button"
+            onClick={() => openSignUpForm()}>
+            <p>Sign in</p>
+          </button>
+        }
       </div>
     </div>
   );
@@ -448,10 +453,10 @@ class LandingPageContent extends React.Component {
     this.props.fetchArticles()
   }
 
-  // //mailerlite subscribe
-  // handleEmailInputShow(show) {
-  //   this.setState({ isEmailInputVisible: show });
-  // }
+  //mailerlite subscribe
+  handleEmailInputShow(show) {
+    this.setState({ isEmailInputVisible: show });
+  }
 
   handleonBetaFormModalShow(show) {
     this.setState({ isBetaFormModalVisible: show });
