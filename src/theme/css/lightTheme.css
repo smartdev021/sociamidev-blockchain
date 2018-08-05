@@ -619,7 +619,11 @@ span.new-img-icon-head img {
 .light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-send, .light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-follow{background: #ccc;}
 .light-theme-wrapper .btn-lavel-yellow:hover, .light-theme-wrapper .blue-rounded-btn:hover{border-color: #000 !important; color: #000;}
 input:focus {outline:0;}
-
+/*---------Settings pages css---------*/
+.light-theme-wrapper.settings-wrapper .devider-box{color: #000; border-bottom: 1px solid #d2d2d2;}
+.light-theme-wrapper.settings-wrapper .devider-box:last-child{border-bottom: 0;}
+.light-theme-wrapper.settings-wrapper .custom-select{float: left; min-width: 178px;}
+/*-----End-----*/
 /*Start Responsive css*/
 @media (min-width: 1920px) {
   .light-theme-wrapper {
