@@ -13,6 +13,8 @@ import { openSignUpForm } from '~/src/redux/actions/authorization';
 import { fetchArticles } from '~/src/redux/actions/articles';
 import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
 import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
+import BetaFormModal from "~/src/theme/components/landingPage/BetaFormModal";
+import TrailerModal from "~/src/theme/components/landingPage/TrailerModal";
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 
@@ -47,7 +49,7 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Banner = ({ openSignUpForm, startCharacterCreation, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onTrailerModalShow }) => {
   return (
     <div className="banner-wrapper">
       <img
@@ -69,16 +71,19 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onEmailInputShow, onEm
           onClick={() => openSignUpForm()}>
           <p>Sign in</p>
         </button> */}
-        {!isEmailInputVisible
+        <button type="button" className="explore-button" onClick={onBetaFormModalShow}>
+          <p>Sign up now!</p>
+        </button>
+        {/* {!isEmailInputVisible
         ? <button type="button" className="explore-button" onClick={onEmailInputShow}>
           <p>Sign up now!</p>
         </button>
-        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />}
+        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />} */}
         {/* <Link to="/characterCreation" className="explore-button" onClick={() => startCharacterCreation() }>
           <p>Sign up now!</p>
         </Link> */}
         <button type="button" className="sign-in-button"
-          onClick={() => openSignUpForm()}>
+          onClick={onTrailerModalShow}>
           <p>View Trailer</p>
         </button>
       </div>
@@ -436,16 +441,24 @@ class LandingPageContent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false,};
+    this.state = { isBetaFormModalVisible: false, isTrailerModalVisible: false, email: "", isSubscriptionModalVisible: false,};
   }
 
   componentWillMount() {
     this.props.fetchArticles()
   }
 
-  //mailerlite subscribe
-  handleEmailInputShow(show) {
-    this.setState({ isEmailInputVisible: show });
+  // //mailerlite subscribe
+  // handleEmailInputShow(show) {
+  //   this.setState({ isEmailInputVisible: show });
+  // }
+
+  handleonBetaFormModalShow(show) {
+    this.setState({ isBetaFormModalVisible: show });
+  }
+  
+  handleonTrailerModalShow(show) {
+    this.setState({ isTrailerModalVisible: show });
   }
 
   handleEmailInputSubmit(value) {
@@ -457,7 +470,7 @@ class LandingPageContent extends React.Component {
         })
         .catch(error => {
         });
-      this.setState({isEmailInputVisible: false, isSubscriptionModalVisible: true });
+      this.setState({isBetaFormModalVisible: false, isSubscriptionModalVisible: true });
     }
   }
 
@@ -475,14 +488,21 @@ class LandingPageContent extends React.Component {
         <header>
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible} email={this.state.email}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
+          <BetaFormModal isVisible={this.state.isBetaFormModalVisible} email={this.state.email}
+            closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} 
+            onBetaFormModalHide={() => this.handleonBetaFormModalShow(false)}
+            onEmailInput={(event) => { this.handleEmailInput(event) }}
+            email={this.state.email}
+            onEmailInputSubmit={value=> {this.handleEmailInputSubmit(value)}}/>
+          <TrailerModal isVisible={this.state.isTrailerModalVisible}
+            onTrailerModalHide={() => this.handleonTrailerModalShow(false)}
+          />
           <Banner openSignUpForm={this.props.openSignUpForm}
             startCharacterCreation={this.props.startCharacterCreation}
-            onEmailInputShow={() => this.handleEmailInputShow(true)}
-            onEmailInputHide={() => this.handleEmailInputShow(false)}
             onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
-            onEmailInput={(event) => { this.handleEmailInput(event) }}
             isEmailInputVisible={this.state.isEmailInputVisible}
-            email={this.state.email}
+            onTrailerModalShow={() => this.handleonTrailerModalShow(true)}
+            onBetaFormModalShow={() => this.handleonBetaFormModalShow(true)}
           />
         </header>
         <AboutComponent />
