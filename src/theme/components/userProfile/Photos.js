@@ -3,7 +3,7 @@ import React from 'react';
 const Photos = (props) => {
 
   return (
-    <div className="black-box">
+    <div className="col-box-wp">
       <div className="my-photos-wp">
         <h3 className="col-heading">{props.heading}</h3>
         <ul>

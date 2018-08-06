@@ -554,7 +554,7 @@ class UserProfile extends Component {
 
   render() {
     return (
-      <div className="home-page-new-wrapper profile-wrapper">
+      <div className="dark-theme-wrapper profile-wrapper main-bg">
         <div className="row">
           <div className="container">
             {this.state.isProfileLoading && (
@@ -593,7 +593,7 @@ class UserProfile extends Component {
                 </div>
                 <div className="row">
                   <div className="col">
-                    <div className="black-box">
+                    <div className="col-box-wp">
                       <div className="intro-wp">
                         <h3 className="col-heading">Intro <span className="pull-right"><a href="#" className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
                         <ul>
@@ -608,7 +608,7 @@ class UserProfile extends Component {
                     <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />
                   </div>
                   <div className="col pull-right">
-                    <div className="black-box-right">
+                    <div className="theme-box-right">
                       <div className="box">
                         <div className="games-network-wp">
                           <h3 className="col-heading">Quest</h3>
@@ -620,7 +620,7 @@ class UserProfile extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="black-box-right">
+                    <div className="theme-box-right">
                       <div className="box">
                         <div className="games-network-wp">
                           <h3 className="col-heading">Quest</h3>
@@ -632,7 +632,7 @@ class UserProfile extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="black-box-right">
+                    <div className="theme-box-right">
                       <div className="box">
                         <div className="games-network-wp">
                             <div className="text-center"><a href="#" className="blue-rounded-btn small-text">Challenge</a> <a href="#" className="blue-rounded-btn small-text">Private</a></div>
@@ -653,7 +653,7 @@ class UserProfile extends Component {
                     </div>
                   </div>
                   <div className="col-middle">
-                    <div className="black-box">
+                    <div className="col-box-wp">
                       <div className="main-comment-box">
                         <div className="top-head">
                           <div className="profile-icon">
@@ -690,14 +690,14 @@ class UserProfile extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="black-box">
+                    <div className="col-box-wp">
                       <div className="main-comment-box">
                         <h4 className="heading-md">Growth Hack Timber Logs
                         <span className="pull-right"><a href="#" className="blue-rounded-btn">Challenge</a> <a href="#" className="blue-rounded-btn">Private</a></span></h4>
                         <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation...</p>
                       </div>
                     </div>
-                    <div className="black-box">
+                    <div className="col-box-wp">
                       <div className="main-comment-box">
                         <h4 className="heading-md">Growth Hack Timber Logs
                         <span className="pull-right"><a href="#" className="blue-rounded-btn">Challenge</a> <a href="#" className="blue-rounded-btn">Private</a></span></h4>
