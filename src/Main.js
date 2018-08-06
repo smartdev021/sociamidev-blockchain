@@ -36,10 +36,11 @@ import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
 import '~/src/theme/css/main.css';
-import UserProfile from '~/src/theme/UserProfile.js';
+// import UserProfile from '~/src/theme/UserProfile.js';
+import UserProfile from '~/src/theme/components/userProfile/UserProfile';
 import Teams from '~/src/theme/components/teams/Teams.js';
 
-import Privacy from '~/src/theme/Privacy.js';
+import Settings from '~/src/theme/Settings.js';
 
 import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
@@ -116,7 +117,7 @@ class Main extends React.Component {
           path="/connectionsView"
           render={routeProps => <ConnectionsView {...routeProps} {...this.props} />}
         />
-        <Route path="/privacy" render={routeProps => <Privacy {...routeProps} {...this.props} />} />
+        <Route path="/settings" render={routeProps => <Settings {...routeProps} {...this.props} />} />
         <Route
           exact
           path="/termsOfUse"
