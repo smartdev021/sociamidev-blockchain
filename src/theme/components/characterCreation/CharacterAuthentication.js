@@ -23,20 +23,8 @@ class CharacterAuthentication extends React.Component {
     };
   }
 
-  componentWillMount() {
-    
-  }
-
-  componentWillUnmount() {
-    
-  }
-
-  handleClickOutside() {
-    /* () => this.handleClose();*/
-  }
-
-  handleClose() {
-    this.props.onClose();
+  componentDidMount(){
+    window.scrollTo(0, 0);
   }
 
   handleCharacterSelectConfirm() {
@@ -64,6 +52,7 @@ class CharacterAuthentication extends React.Component {
       email: this.state.email,
       name: this.state.name,
       password: this.state.password,
+      character: this.props.getCharacterCreationData()
     })
       .then(response => {
         this.props.signUp(response.data);
