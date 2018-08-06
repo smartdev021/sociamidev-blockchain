@@ -41,6 +41,7 @@ import {
   fetchUserActivities,
   fetchUserTasks,
   setUserProfileCharacter,
+  updateAvatar
 } from '~/src/redux/actions/authorization';
 
 import { fetchAllTasks, updateTask } from '~/src/redux/actions/tasks';
@@ -591,6 +592,7 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
+            changeAvatar ={ url=> this.props.updateAvatar(url) }
             logout={() => this.logout()}
           />
           <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
@@ -624,6 +626,7 @@ App.propTypes = {
   fetchAllTasks: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
+  updateAvatar: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
   setUserProfileCharacter: PropTypes.func.isRequired,
@@ -639,6 +642,7 @@ const mapDispatchToProps = dispatch => ({
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
   update_userProfile: bindActionCreators(update_userProfile, dispatch),
+  updateAvatar: bindActionCreators(updateAvatar, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   updateTask: bindActionCreators(updateTask, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),

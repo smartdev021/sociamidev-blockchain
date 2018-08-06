@@ -81,6 +81,28 @@ class UserProfile extends Component {
     this.setUserProfile(queryId);
   }
 
+  openImageDialog() {
+    var file = this.refs.userImageInput;
+    if(file) {
+      file.click();
+    }
+  }
+  
+  uploadImage(e) {
+    var file = e.target.files[0];
+    if(file) {
+      var userID = this.state.userID;
+      var imageFormData = new FormData();
+      imageFormData.append("image", file);
+      Axios.post(`${ConfigMain.getBackendURL()}/userProfile/${userID}/upload-image`,imageFormData).then(response => {
+       this.setState({pictureURL:_.get(response,'data.profile.pictureURL','')});
+        this.props.changeAvatar(_.get(response,'data.profile.pictureURL',''));
+      }).catch(err => {
+        
+      });
+    }
+  }
+
   setUserAchievement(queryId) {
     const id = queryId && this.state.userID != queryId ? queryId : this.props.userProfile._id;
     Axios(`${ConfigMain.getBackendURL()}/userAchievement/${id}`)
@@ -572,17 +594,18 @@ class UserProfile extends Component {
                   <div className="top-wp">
                     <div className="col-sm-5">
                       <div className="clf">
-                        <div className="imgbox">
+                        <div className="imgbox" onClick={this.openImageDialog.bind(this)}>
                           <a href="#">
-                            <img src={this.state.pictureURL ? this.state.pictureURL : profilePic} />
-                            <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
+                            <input type="file" ref="userImageInput" accept=".jpg, .png, .jpeg, .gif" style={{display:'none'}} onChange={this.uploadImage.bind(this)}/> 
+                            <img src={this.state.pictureURL ? this.state.pictureURL : profilePic}/>
+                            { !this.state.pictureURL ? <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span> : null }
                           </a>                                
                         </div>
                         <h3>{this.state.firstName} {this.state.lastName}</h3>
                       </div>
                     </div>
-                    <div className="col-sm-2 h-100">
-                      <span className="middle-edit"><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
+                    <div className="col-sm-2 h-100" >
+                      <span className="middle-edit" onClick={this.openImageDialog.bind(this)}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
                     </div>
                     <div className="col-sm-5 last-right">
                       <p>Blockforce enhancer <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
