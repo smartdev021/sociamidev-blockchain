@@ -34,6 +34,7 @@ import Loadable from 'react-loading-overlay';
 import {
   fetchUserProfile,
   update_userProfile,
+  fetchUserTheme,
   logout,
   openUserProfile,
   openSignUpForm,
@@ -345,6 +346,7 @@ class App extends Component {
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID || this.state.userID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID, this.state.userID);
+      this.props.fetchUserTheme(this.state.userID);
     }
   }
 
@@ -619,6 +621,7 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
+  fetchUserTheme: PropTypes.func.isRequired,
   update_userProfile: PropTypes.func.isRequired,
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
@@ -638,6 +641,7 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
+  fetchUserTheme: bindActionCreators(fetchUserTheme, dispatch),
   update_userProfile: bindActionCreators(update_userProfile, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   updateTask: bindActionCreators(updateTask, dispatch),

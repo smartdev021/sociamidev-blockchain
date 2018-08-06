@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateUserTheme } from '~/src/redux/actions/authorization';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import RightSection from '~/src/theme/components/homepage/RightSection';
@@ -12,7 +16,7 @@ class Settings extends Component {
     this.state = {
       isThemeClose: true,
       themeActive: false,
-      theme: 'Dark',
+      theme: this.props.userProfile.theme,
       themeToggle: 'block',
       isVisibilityClose: true,
       visibilityActive: false,
@@ -80,6 +84,7 @@ class Settings extends Component {
       themeActive: !this.state.themeActive,
       theme: theme
     });
+    this.props.updateUserTheme(this.props.userProfile._id, theme);
   }
 
   renderTeamSelect(options) {
@@ -213,7 +218,7 @@ class Settings extends Component {
 
   render() {
     return (
-      <div className="dark-theme-wrapper profile-wrapper settings-wrapper main-bg">
+      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper settings-wrapper main-bg`}>
         <div className="row">
           <div className="container">
             <div className="row">
@@ -291,4 +296,16 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+
+Settings.PropTypes = {
+  updateUserTheme: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+  updateUserTheme: bindActionCreators(updateUserTheme, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Settings);

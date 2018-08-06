@@ -15,6 +15,12 @@ export const FETCH_USER_PROFILE_TASKS_COMPLETE = 'fetch_user_profile_tasks_compl
 export const FETCH_USER_PROFILE_ACTIVITIES_INITIATE = 'fetch_user_activities_initiate';
 export const FETCH_USER_PROFILE_ACTIVITIES_COMPLETE = 'fetch_user_activities_complete';
 
+export const FETCH_USER_THEME_INITIATE = 'fetch_user_theme_initiate';
+export const FETCH_USER_THEME_COMPLETE = 'fetch_user_theme_complete';
+
+export const UPDATE_USER_THEME_INITIATE = 'update_user_theme_initiate';
+export const UPDATE_USER_THEME_COMPLETE = 'update_user_theme_complete';
+
 export const PROGRESSION_TREE_START_INITIATE = 'progression_tree_start_initiate';
 export const PROGRESSION_TREE_START_COMPLETE = 'progression_tree_start_complete';
 
