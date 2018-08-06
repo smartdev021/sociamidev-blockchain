@@ -83,7 +83,7 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
           soqqleEnv === 'production' ?
           <button type="button" className="sign-in-button"
             onClick={onTrailerModalShow}>
-            <p>View Trailer</p>
+            <p>Trailer</p>
           </button> 
           :
           <button type="button" className="sign-in-button"
