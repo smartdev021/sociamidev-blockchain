@@ -609,7 +609,6 @@ html.vertical-hidden {
 span.landing-email-input-textfield-container {
   height: 33px;
   display: inline-block;
-  transform: skew(8deg);
   border: 2px solid #2c82df;
   width: 195px;
 }
@@ -623,6 +622,13 @@ span.landing-email-input-textfield-container input[type="email"] {
   color: #fff;
   padding: 0 10px 0 10px;
   background: transparent;
+}
+
+.modal-thank-you-subscribtion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
 }
 
 /*Subscribe email input*/
