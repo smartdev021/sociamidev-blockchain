@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Icon } from 'react-fa';
 
 import EmailBlock from './EmailBlock';
+import AddAchievementModal from './AddAchievementModal';
 
 class TeamPanel extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class TeamPanel extends React.Component {
     this.state = {
       addEmailBoolean: false,
       deleteModal: false,
-      renameTitle: !props.team._id
+      renameTitle: !props.team._id,
+      addAchievementsFlag: false
     };
     this.updateTeamName = this.updateTeamName.bind(this);
     this.toggleEmailAdd = this.toggleEmailAdd.bind(this);
@@ -183,12 +185,33 @@ class TeamPanel extends React.Component {
         </div>
       );
     } else {
+      // footer = (
+      //   <div className="team-add-email">
+      //     <a className="team-add-email-link" onClick={() => this.addEmailToTeam()}>
+      //       <i className="fa fa-plus" /> Add new email
+      //     </a>
+      //   </div>
+      // );
       footer = (
-        <div className="team-add-email">
-          <a className="team-add-email-link" onClick={() => this.addEmailToTeam()}>
-            <i className="fa fa-plus" /> Add new email
-          </a>
-        </div>
+        <a className="team-add-email" style={{
+          justifyContent: 'space-between',
+          paddingLeft: '10px',
+          paddingRight: '10px',
+          height: '60px',
+          fontSize: '20px'}} onClick={() => this.setState({addAchievementsFlag: true})}>
+          <div style={{ display: 'flex', flexDirection: 'column'}}>
+            <span style={{fontSize: '16px', marginBottom: '10px'}}>Achievement</span>
+            <span style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <i className="fa fa-yahoo" />
+              <i className="fa fa-fighter-jet" />
+              <i className="fa fa-mobile" />
+              <i className="fa fa-whatsapp" />
+            </span>
+          </div>
+          <span className="team-add-email-link" style={{fontSize: '30px'}}>
+            <i className="fa fa-plus-circle" />
+          </span>
+        </a>
       );
     }
 
@@ -221,10 +244,50 @@ class TeamPanel extends React.Component {
 
     return (
       <div className="team-container" key={index}>
+        <AddAchievementModal isOpen={this.state.addAchievementsFlag} onClose={() => this.setState({addAchievementsFlag: false})} />
         {deleteModalPopup}
         <div className="team-list">
           {header}
-          <div className="team-email-container">{this.renderEmails(team.emails)}</div>
+          <div style={{padding: '15px', clear: 'both'}}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <span style={{ fontSize: '12px'}}>Primary Keywords: </span>
+              <div className="team-email-item" style={{
+                background: 'transparent',    
+                boxShadow: 'none',
+                width: 'auto',
+                cursor: 'pointer',
+                padding: '0',
+                margin: '0',
+                height: 'auto',
+                marginLeft: '5px',}}>
+                <span style={{ fontSize: '17px'}}>Retail</span>
+                <a className="fa fa-pencil edit-team-email-checkbox" />
+              </div>
+            </div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <span style={{ fontSize: '12px'}}>Secondary Keywords: </span>
+              <div className="team-email-item" style={{
+                background: 'transparent',    
+                boxShadow: 'none',
+                width: 'auto',
+                cursor: 'pointer',
+                padding: '0',
+                margin: '0',
+                height: 'auto',
+                marginLeft: '5px',}}>
+                <span style={{ fontSize: '17px'}}>Customer</span>
+                <a className="fa fa-pencil edit-team-email-checkbox" />
+              </div>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+              <button className="ptree-btn ptree-view">
+                <Icon style={{ color: 'black' }} name="users" /> 
+                <span style={{marginLeft: '5px'}}>View Roles</span>
+              </button>
+              <button className="ptree-btn ptree-start">Dashboard</button>
+            </div>
+          </div>
+          <div style={{ marginTop: 0 }} className="team-email-container">{this.renderEmails(team.emails)}</div>
         </div>
 
         {footer}
