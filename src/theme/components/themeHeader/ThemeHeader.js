@@ -270,7 +270,17 @@ class ThemeHeader extends React.Component {
 
     const OpenMenuClass = !this.props.isSidebarOpen ? 'open-menu' : 'open-menu';
     const CloseMenuClass = this.props.isSidebarOpen ? 'close-menu' : 'close-menu';
+    
+    let houseImage = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png";
+    if(this.props.houses.houses.length > 0) {
+      houseImage = this.props.houses.houses[0].imageUrl;
+    }
 
+    let companyImages = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png";
+    if(this.props.companies.company.length > 0) {
+      companyImages = this.props.companies.company[0].imageUrl;
+    }   
+    
     return (
       <div className="soqqle-header" id="popup-root">
         <ToastContainer />
@@ -330,8 +340,26 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li><a href="#"><span className="new-img-icon-head"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png" alt="" /></span></a></li>
-                    <li><a href="#"><span className="new-img-icon-head"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" /></span></a></li>
+                    <li><a href="#"><span className="new-img-icon-head"><img src={houseImage} alt="" /></span></a></li>
+                    <li><a href="#"><span className="new-img-icon-head"><img src={companyImages} alt="" /></span></a></li>
+                    {/* <li>
+                      <ul className="sub-navbar">
+                        <li>
+                          <a href="#">
+                            <span className="new-img-icon-head">
+                              <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" />
+                            </span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <span className="new-img-icon-head">
+                              <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" />
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li> */}
                     <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
                     <li className="notification">
                       <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>

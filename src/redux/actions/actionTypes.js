@@ -155,3 +155,11 @@ export const DELETE_TEAM_COMPLETE = 'delete_team_complete';
 // Articles
 export const FETCH_ARTICLES_INITIATE = 'fetch_articles_initiate';
 export const FETCH_ARTICLES_COMPLETE = 'fetch_articles_complete';
+
+// Houses
+export const FETCH_HOUSES_INITIATE = 'fetch_houses_initiate';
+export const FETCH_HOUSES_COMPLETE = 'fetch_houses_complete';
+
+// Company
+export const FETCH_COMPANY_INITIATE = 'fetch_company_initiate';
+export const FETCH_COMPANY_COMPLETE = 'fetch_company_complete';

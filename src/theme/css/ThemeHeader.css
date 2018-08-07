@@ -299,6 +299,15 @@
     font-size: 25px;
 }
 
+.navbar-wrapper .header .navbar-options .sub-navbar{
+    display:contents;
+}
+
+.navbar-wrapper .header .navbar-options .sub-navbar li{
+    display: table-row-group;
+    width: 100%;
+}
+
 @media screen and (max-width: 750px) {
     .navbar-wrapper .header .navbar-options{
         float: left;

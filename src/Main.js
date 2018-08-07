@@ -45,6 +45,8 @@ import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
 
 import { fetchAllTasks } from '~/src/redux/actions/tasks';
+import { fetchHousesByEmail } from '~/src/redux/actions/houses';
+import { fetchCompanyByEmail } from '~/src/redux/actions/company';
 
 import { markActivitySeen } from '~/src/redux/actions/activities';
 
@@ -75,6 +77,11 @@ class Main extends React.Component {
     }
 
     return RedirectTo;
+  }
+
+  componentDidMount() {
+    this.props.onFetchHouseByEmail(this.props.userProfile.profile.email)
+    this.props.onFetchCompanyByEmail(this.props.userProfile.profile.email)
   }
 
   renderRoutes() {
@@ -147,6 +154,8 @@ class Main extends React.Component {
           logout={() => this.props.logout()}
           fetchUserActivities={() => this.props.fetchUserActivities()}
           fetchUserTasks={() => this.props.fetchUserTasks()}
+          houses={this.props.houses}
+          companies={this.props.companies}
           userTasks={this.props.userTasks}
           markActivitySeen={() => this.props.markActivitySeen()}
           openSidebar={open => this.handleSidebarOpen(open)}
@@ -174,6 +183,8 @@ Main.propTypes = {
 const mapDispatchToProps = dispatch => ({
   onFetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
+  onFetchHouseByEmail: bindActionCreators(fetchHousesByEmail, dispatch),
+  onFetchCompanyByEmail: bindActionCreators(fetchCompanyByEmail, dispatch)
 });
 
 const mapStateToProps = state => ({
@@ -182,7 +193,10 @@ const mapStateToProps = state => ({
   userActivities: state.userProfile.activities.data,
   userTasks: state.userProfile.tasks,
   isAdmin: state.userProfile.isAdmin,
-  company: state.userProfile.company
+  company: state.userProfile.company,
+  userProfile: state.userProfile,
+  houses: state.houses,
+  companies: state.company
 });
 
 export default withRouter(
