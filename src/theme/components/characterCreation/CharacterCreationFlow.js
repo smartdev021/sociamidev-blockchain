@@ -134,6 +134,22 @@ class CharacterCreationFlow extends React.Component {
     this.props.setSelectedCharacterIndex(index);
   }
 
+  getCharacterCreationData() {
+    let data = undefined;
+
+    if (this.props.characterCreationData && this.props.characterCreationData.isInProgress) {
+      data = {
+        characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]
+          .name,
+        traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
+        traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
+        characterIndex: this.props.characterCreationData.selectedCharacterIndex,
+      };
+    }
+
+    return data;
+  }
+
   renderCharacterCreationForm() {
     let FormToRender = null;
 
@@ -185,6 +201,7 @@ class CharacterCreationFlow extends React.Component {
               onHandleCreationFinish={() => this.props.finishCharacterCreation()}
               progressValue={progressValue}
               isAuthorized={this.props.isAuthorized}
+              getCharacterCreationData= {() => this.getCharacterCreationData()}
             />
           );
           break;
