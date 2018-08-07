@@ -605,6 +605,32 @@ html.vertical-hidden {
     transform: skew(8deg);
 }
 
+/* BetaForm email */
+span.landing-email-input-textfield-container {
+  height: 33px;
+  display: inline-block;
+  border: 2px solid #2c82df;
+  width: 195px;
+}
+
+span.landing-email-input-textfield-container input[type="email"] {
+  height: 100%;
+  outline: 0;
+  border: none;
+  box-shadow:none;
+  font: normal 16px "MyriadPro Regular";
+  color: #fff;
+  padding: 0 10px 0 10px;
+  background: transparent;
+}
+
+.modal-thank-you-subscribtion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+}
+
 /*Subscribe email input*/
 .landing-page-wrapper input[type="email"] {
     background: transparent;

@@ -58,7 +58,7 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div className="dark-theme-wrapper profile-wrapper main-bg">
+      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper main-bg`}>
         <div className="row">
           <div className="container">
             <div className="row">

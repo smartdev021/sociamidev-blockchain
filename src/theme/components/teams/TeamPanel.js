@@ -248,7 +248,46 @@ class TeamPanel extends React.Component {
         {deleteModalPopup}
         <div className="team-list">
           {header}
-          <div className="team-email-container">{this.renderEmails(team.emails)}</div>
+          <div style={{padding: '15px', clear: 'both'}}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <span style={{ fontSize: '12px'}}>Primary Keywords: </span>
+              <div className="team-email-item" style={{
+                background: 'transparent',    
+                boxShadow: 'none',
+                width: 'auto',
+                cursor: 'pointer',
+                padding: '0',
+                margin: '0',
+                height: 'auto',
+                marginLeft: '5px',}}>
+                <span style={{ fontSize: '17px'}}>Retail</span>
+                <a className="fa fa-pencil edit-team-email-checkbox" />
+              </div>
+            </div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <span style={{ fontSize: '12px'}}>Secondary Keywords: </span>
+              <div className="team-email-item" style={{
+                background: 'transparent',    
+                boxShadow: 'none',
+                width: 'auto',
+                cursor: 'pointer',
+                padding: '0',
+                margin: '0',
+                height: 'auto',
+                marginLeft: '5px',}}>
+                <span style={{ fontSize: '17px'}}>Customer</span>
+                <a className="fa fa-pencil edit-team-email-checkbox" />
+              </div>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+              <button className="ptree-btn ptree-view">
+                <Icon style={{ color: 'black' }} name="users" /> 
+                <span style={{marginLeft: '5px'}}>View Roles</span>
+              </button>
+              <button className="ptree-btn ptree-start">Dashboard</button>
+            </div>
+          </div>
+          <div style={{ marginTop: 0 }} className="team-email-container">{this.renderEmails(team.emails)}</div>
         </div>
 
         {footer}
