@@ -43,6 +43,7 @@ class UserProfile extends Component {
       hangout: 63,
       mentees: 36,
       rating: 10,
+      uploadType:'',
       blogs: [
         {
           text:
@@ -81,9 +82,11 @@ class UserProfile extends Component {
     this.setUserProfile(queryId);
   }
 
-  openImageDialog() {
+  openImageDialog(type,evt) {
+    evt.stopPropagation();
     var file = this.refs.userImageInput;
     if(file) {
+      this.setState({uploadType: type});
       file.click();
     }
   }
@@ -92,11 +95,17 @@ class UserProfile extends Component {
     var file = e.target.files[0];
     if(file) {
       var userID = this.state.userID;
+      var uploadType = this.state.uploadType;
       var imageFormData = new FormData();
       imageFormData.append("image", file);
-      Axios.post(`${ConfigMain.getBackendURL()}/userProfile/${userID}/upload-image`,imageFormData).then(response => {
-       this.setState({pictureURL:_.get(response,'data.profile.pictureURL','')});
-        this.props.changeAvatar(_.get(response,'data.profile.pictureURL',''));
+      Axios.post(`${ConfigMain.getBackendURL()}/userProfile/${userID}/${uploadType}/upload-image`,imageFormData).then(response => {
+        if(uploadType == 'avatar') {
+          this.setState({pictureURL:_.get(response,'data.profile.pictureURL','')});
+          this.props.changeAvatar(_.get(response,'data.profile.pictureURL',''));
+        }else {
+          this.setState({coverBackgroundURL:_.get(response,'data.profile.coverBackgroundURL','')});   
+          this.props.changeCoverBackground(_.get(response,'data.profile.coverBackgroundURL',''));
+        }
       }).catch(err => {
         
       });
@@ -121,6 +130,7 @@ class UserProfile extends Component {
             firstName: _.get(response, 'data.profile.firstName', ''),
             lastName: _.get(response, 'data.profile.lastName', ''),
             pictureURL: _.get(response, 'data.profile.pictureURL', ''),
+            coverBackgroundURL: _.get(response, 'data.profile.coverBackgroundURL',''),
             email: _.get(response, 'data.profile.email', ''),
             myProfile: false,
             hangout: _.size(_.get(response, 'data.hangouts')),
@@ -136,6 +146,7 @@ class UserProfile extends Component {
         lastName: _.get(this, 'props.userProfile.lastName'),
         userID: _.get(this, 'props.userProfile._id'),
         pictureURL: _.get(this, 'props.userProfile.pictureURL'),
+        coverBackgroundURL: _.get(this, 'props.userProfile.coverBackgroundURL'),
         email: _.get(this, 'props.userProfile.email', 'Danshen@gmail.com'),
         myProfile: true,
         progressionTrees: this.props.userProfile.progressionTrees,
@@ -573,10 +584,18 @@ class UserProfile extends Component {
       </div>
     );
   }
+  coverStyle() {
+    var style = {};
+    style["background"] = "url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/profile-top-bg.jpg)";
+    if(this.state.coverBackgroundURL) {
+      style["background"] = "url(" + this.state.coverBackgroundURL + ")";
+    }
+    return style;
+  }
 
   render() {
     return (
-      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper main-bg`}>
+      <div className="dark-theme-wrapper profile-wrapper main-bg">
         <div className="row">
           <div className="container">
             {this.state.isProfileLoading && (
@@ -591,27 +610,27 @@ class UserProfile extends Component {
             {!this.state.isProfileLoading && (
               <div className="row">
                 <div className="row">
-                  <div className="top-wp">
+                  <div className="top-wp" style={this.coverStyle()}>
                     <div className="col-sm-5">
                       <div className="clf">
-                        <div className="imgbox" onClick={this.openImageDialog.bind(this)}>
-                          <a href="#">
-                            <input type="file" ref="userImageInput" accept=".jpg, .png, .jpeg, .gif" style={{display:'none'}} onChange={this.uploadImage.bind(this)}/> 
+                        <div className="imgbox" onClick={this.openImageDialog.bind(this,'avatar')}>
+                          <a href="#"> 
                             <img src={this.state.pictureURL ? this.state.pictureURL : profilePic}/>
-                            { !this.state.pictureURL ? <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span> : null }
+                            <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
                           </a>                                
                         </div>
                         <h3>{this.state.firstName} {this.state.lastName}</h3>
                       </div>
                     </div>
                     <div className="col-sm-2 h-100" >
-                      <span className="middle-edit" onClick={this.openImageDialog.bind(this)}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
+                      <span className="middle-edit" onClick={this.openImageDialog.bind(this,'background')}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
                     </div>
                     <div className="col-sm-5 last-right">
                       <p>Blockforce enhancer <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
                       <p>Data miner <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
                       <p><a href="#" className="btn-join">Add</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a></p>
                     </div>
+                    <input type="file" ref="userImageInput" accept=".jpg, .png, .jpeg, .gif" style={{display:'none'}} onChange={this.uploadImage.bind(this)}/>
                   </div>
                 </div>
                 <div className="row">
