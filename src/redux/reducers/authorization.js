@@ -11,6 +11,7 @@ import {
   FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
   UPDATE_USER_PROFILE_INITIATE,
   UPDATE_USER_PROFILE_COMPLETE,
+  UPDATE_USER_AVATAR,
   USER_PROFIE_UPDATE_FREQUENTLY,
   FETCH_USER_THEME_INITIATE,
   FETCH_USER_THEME_COMPLETE,
@@ -43,6 +44,7 @@ const userProfileInitialState = {
     skills: 'javascript, c++',
     experience: 'Google',
     education: 'Harvard',
+    pictureURL: null,
     facebook: null,
     linkedin: null,
     theme: 'Dark',
@@ -87,6 +89,8 @@ export function userProfile(state = userProfileInitialState, action) {
       return { ...state, isLoading: true };
     case UPDATE_USER_PROFILE_COMPLETE:
       return { ...state, isAuthorized: true, isLoading: false, profile: action.profile };
+    case UPDATE_USER_AVATAR:
+      return { ...state,profile: Object.assign({}, state.profile, { pictureURL: action.url }) };
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
       return { ...state, tasks: { assigned: [], created: [], isLoading: true } };
     }

@@ -22,6 +22,7 @@ import {
   SIGNUP_FORM_CLOSE,
   UPDATE_USER_PROFILE_COMPLETE,
   UPDATE_USER_PROFILE_INITIATE,
+  UPDATE_USER_AVATAR,
   USER_LOG_OUT,
   USER_SIGN_UP,
 } from './actionTypes';
@@ -323,6 +324,12 @@ export function update_userProfile(userIdFacebook, userIdLinkedIn) {
       .catch(function(error) {
         // Fail? Ignore.
       });
+  };
+}
+export function updateAvatar(url) {
+  return {
+    type: UPDATE_USER_AVATAR,
+    url: url
   };
 }
 
