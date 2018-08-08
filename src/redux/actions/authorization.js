@@ -19,6 +19,7 @@ import {
   UPDATE_USER_PROFILE_COMPLETE,
   UPDATE_USER_PROFILE_INITIATE,
   UPDATE_USER_AVATAR,
+  UPDATE_USER_COVERBACKGROUND,
   USER_LOG_OUT,
   USER_SIGN_UP,
 } from './actionTypes';
@@ -265,7 +266,12 @@ export function updateAvatar(url) {
     url: url
   };
 }
-
+export function updateCoverBackground(url) {
+  return {
+    type: UPDATE_USER_COVERBACKGROUND,
+    url: url
+  };
+}
 export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
   return function(dispatch) {
     //async action entry point
