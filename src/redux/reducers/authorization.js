@@ -12,6 +12,7 @@ import {
   UPDATE_USER_PROFILE_INITIATE,
   UPDATE_USER_PROFILE_COMPLETE,
   UPDATE_USER_AVATAR,
+  UPDATE_USER_COVERBACKGROUND,
   USER_PROFIE_UPDATE_FREQUENTLY,
   FETCH_USER_THEME_INITIATE,
   FETCH_USER_THEME_COMPLETE,
@@ -45,6 +46,7 @@ const userProfileInitialState = {
     experience: 'Google',
     education: 'Harvard',
     pictureURL: null,
+    coverBackgroundURL: null,
     facebook: null,
     linkedin: null,
     theme: 'Dark',
@@ -91,6 +93,8 @@ export function userProfile(state = userProfileInitialState, action) {
       return { ...state, isAuthorized: true, isLoading: false, profile: action.profile };
     case UPDATE_USER_AVATAR:
       return { ...state,profile: Object.assign({}, state.profile, { pictureURL: action.url }) };
+    case UPDATE_USER_COVERBACKGROUND:
+      return { ...state,profile: Object.assign({}, state.profile, { coverBackgroundURL: action.url }) };
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
       return { ...state, tasks: { assigned: [], created: [], isLoading: true } };
     }
