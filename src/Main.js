@@ -35,6 +35,7 @@ import SkillBrowser from '~/src/theme/components/progressiontrees/SkillBrowser';
 import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
+import MyChallenges from '~/src/theme/components/challenges/MyChallenges';
 import '~/src/theme/css/main.css';
 // import UserProfile from '~/src/theme/UserProfile.js';
 import UserProfile from '~/src/theme/components/userProfile/UserProfile';
@@ -116,6 +117,11 @@ class Main extends React.Component {
           exact
           path="/connectionsView"
           render={routeProps => <ConnectionsView {...routeProps} {...this.props} />}
+        />
+        <Route
+          exact
+          path="/myChallenges"
+          render={routeProps => <MyChallenges {...routeProps} {...this.props} />}
         />
         <Route path="/settings" render={routeProps => <Settings {...routeProps} {...this.props} />} />
         <Route

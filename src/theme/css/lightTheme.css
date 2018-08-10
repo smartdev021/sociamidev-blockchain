@@ -624,6 +624,17 @@ input:focus {outline:0;}
 .light-theme-wrapper.settings-wrapper .devider-box:last-child{border-bottom: 0;}
 .light-theme-wrapper.settings-wrapper .custom-select{float: left; min-width: 178px;}
 /*-----End-----*/
+/*-----Start My challenges -----*/
+.light-theme-wrapper.mychallenges-wrapper .col-middle table tr th, .light-theme-wrapper.mychallenges-wrapper .col-middle table tr td, 
+.light-theme-wrapper.mychallenges-wrapper .col-middle h3, .light-theme-wrapper.mychallenges-wrapper .col-middle .pur-btn, 
+.light-theme-wrapper.mychallenges-wrapper .col-middle .top-head .col-heading, .light-theme-wrapper.mychallenges-wrapper .col-middle .bot-warp {color: #000;}
+.light-theme-wrapper.mychallenges-wrapper .col-middle .yellow-btn:hover, .light-theme-wrapper.mychallenges-wrapper .col-middle .pur-btn:hover{border-color: #000; color: #000;}
+.light-theme-wrapper.mychallenges-wrapper .col-middle .black-bg {background: #fff;}
+.light-theme-wrapper.mychallenges-wrapper .col-middle .form-control, .light-theme-wrapper.mychallenges-wrapper .col-middle .select-selected, 
+.light-theme-wrapper.mychallenges-wrapper .col-middle .select-items, .light-theme-wrapper.mychallenges-wrapper .col-middle .select-items div {background: #efefef;}
+.light-theme-wrapper.mychallenges-wrapper .col-middle .top-heading, .light-theme-wrapper.mychallenges-wrapper .col-middle h3.yellow-text {color: #000 !important; }
+.light-theme-wrapper.mychallenges-wrapper .col-middle .yellow-btn, .light-theme-wrapper.mychallenges-wrapper .col-middle .pur-btn{border-color: #0069ba; color: #0069ba;}
+/*------End------*/
 /*Start Responsive css*/
 @media (min-width: 1920px) {
   .light-theme-wrapper {
