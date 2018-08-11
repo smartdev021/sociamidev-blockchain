@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Moment from 'moment';
+import Axios from 'axios';
+import * as linkify from 'linkifyjs';
+
+import Spinner from '~/src/theme/components/homepage/Spinner';
+import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
+import ConfigMain from '~/configs/main';
+
 
 const PostHeader = ({ authorName, date }) => (
   <div className="top-head">
@@ -43,22 +50,56 @@ const PostFooter = () => (
   </div>
 );
 
-export default (props) => {
-  const { authorName, date, isPreview } = props.data;
+export default class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFetchMetaLoading: false,
+      linkMeta: {},
+    };
+  }
 
-  return (
-    <div className="col-box-wp">
-      <div className="main-comment-box">
-        <PostHeader authorName={authorName} date={date} />
-        
-        <p>{props.data.message}</p>
-        {/* <div className="img-box">
-        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/center-middle-img.png" alt="" />
+  componentDidMount() {
+    const { isContainUrl, url } = this.props;
+    if (isContainUrl) this.fetchLinkMeta(url);
+  }
+
+  fetchLinkMeta(link) {
+    this.setState({ isFetchMetaLoading: true });
+    const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
+
+    Axios.get(linkMetaScraperEndpoint)
+      .then(({ data }) => {
+        if (data.result.status == 'OK') {
+          this.setState({ 
+            linkMeta: data.meta, 
+            isFetchMetaLoading: false 
+          });
+        }
+      })
+      .catch(error => this.setState({ isFetchMetaLoading: false }));
+  }
+
+  render() {
+    const { isContainUrl } = this.props;
+    const { authorName, date, message } = this.props.data;
+
+    const linkSnippet = isContainUrl ?
+      <LinkPreview 
+        isLoading={this.state.isFetchMetaLoading}
+        meta={this.state.linkMeta}
+        loader={<Spinner shown={this.state.isFetchMetaLoading} />}
+      /> : '';
+  
+    return (
+      <div className="col-box-wp">
+        <div className="main-comment-box">
+          <PostHeader authorName={authorName} date={date} />
+          <p>{message}</p>
+          { linkSnippet }
+          <PostFooter />
         </div>
-        <h4>Winning the Game of Innovation Advantages and Disadvantages</h4>
-        <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation...</p> */}
-        <PostFooter />
       </div>
-    </div>
-  );
+    );
+  }
 }

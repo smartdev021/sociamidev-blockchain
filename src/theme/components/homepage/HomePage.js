@@ -4,56 +4,20 @@
 
 import React, { Component } from 'react';
 import Axios from 'axios';
-import * as linkify from 'linkifyjs';
 import Textarea from 'react-textarea-autosize';
-import { Icon } from 'react-fa';
 import ConfigMain from '~/configs/main';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import RightSection from '~/src/theme/components/homepage/RightSection';
-import Post from '~/src/theme/components/homepage/Post';
+import PostList from '~/src/theme/components/homepage/PostList';
 import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
+import Spinner from '~/src/theme/components/homepage/Spinner';
+import { findUrlInText } from '~/src/utils/UrlUtils';
 import '~/src/theme/css/darkTheme.css';
 import '~/src/theme/css/lightTheme.css';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
-const Spinner = ({ shown }) => {
-  const iconStyle = {
-    color: 'white', 
-    textAlign: 'center',
-    width: '100%', 
-    fontSize: '30px'
-  };
-
-  if (!shown) return <div />;
-
-  return <Icon style={iconStyle} spin name="spinner" />;
-};
-
-const NoPost = ({ condition }) => {
-  const spanStyle = {
-    color: 'gray', 
-    fontSize: '16px', 
-    textAlign: 'center', 
-    width: '100%', 
-    display: 'inline-block' 
-  };
-
-  if (!condition) return <div />;
-  return <span style={spanStyle}>There are no posts! Start making friends!</span>;
-};
-
-const PostList = ({ isLoading, posts }) => {
-  if (isLoading) return <Spinner shown />;
-  if (posts.length === 0) return <NoPost condition={true} />; 
-    
-  return (
-    <div>
-      { posts.map( post => <Post key={post._id} data={post} />)}
-    </div>
-  );
-};
 
 const PostButton = ({ onPost }) => (
   <div className="buttons-wp">
@@ -70,15 +34,18 @@ const PostButton = ({ onPost }) => (
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.defaultPostLinkData = {
+      isPreviewLoading: false,
+      isPreviewReady: false,
+      meta: {},
+    };
+
     this.state = {
       posts: [],
       loadingPosts: true,
-      postLink: {
-        isPreviewLoading: false,
-        isPreviewReady: false,
-        meta: {},
-      },
+      postLink: this.defaultPostLinkData
     };
+
     this.createPost = this.createPost.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
     this.detectPostType = this.detectPostType.bind(this);
@@ -95,46 +62,47 @@ class HomePage extends React.Component {
       userName: this.props.userProfile.firstName + " "+ this.props.userProfile.lastName
     };
 
-    Axios
-      .post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`, postData)
+    Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`, postData)
       .then((response) => {
-        this.postInput.value = "";
+        this.postInput.value = '';
+        this.clearLinkPreview();
         that.fetchPosts();
       })
-      .catch(error => {
-        console.log(error)
-      });
+      .catch(error => console.log(error));
   }
 
   fetchPosts() {
-    Axios
-      .get(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/feeds`)
-      .then((response) => {
-        this.setState({ posts: response.data, loadingPosts: false });
-      })
+    const feedsEndoint = `${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/feeds`;
+
+    this.setState({ loadingPosts: true });
+    Axios.get(feedsEndoint)
+      .then(response => 
+        this.setState({ posts: response.data, loadingPosts: false }))
       .catch(error => {});
+  }
+
+  clearLinkPreview() {
+    this.setState({ postLink: this.defaultPostLinkData });
   }
 
   detectPostType(event) {
     const text = event.target.value;
-    const findLinkResult = linkify.find(text);
+    const foundUrlResult = findUrlInText(text);
 
-    const hasURL = Object.keys(findLinkResult).length > 0;
-
-    if (hasURL) {
-      const hrefLink = findLinkResult['0'].href;
+    if (foundUrlResult.hasUrl) {
+      const hrefLink = foundUrlResult.firstUrl;
 
       this.setState({ postLink: { isPreviewLoading: true } });
       this.fetchLink(hrefLink);
     } else {
-      this.setState({ postLink: { meta: {} }});
+      this.setState({ postLink: this.defaultPostLinkData });
     }
   }
 
   fetchLink(link) {
     const that = this;
-    Axios
-      .get(`${ConfigMain.getLinkScraperServiceURL()}?url=${link}`)
+    const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
+    Axios.get(linkMetaScraperEndpoint)
       .then(({ data }) => {
         if (data.result.status == 'OK') {
           that.showLinkPreview(data.meta);
@@ -181,10 +149,10 @@ class HomePage extends React.Component {
                       <img src={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} alt="" />
                     </div>
 
-                    <Textarea 
+                    <Textarea
                       name="" 
                       onChange={this.detectPostType} 
-                      ref={this.setPostInputRef} 
+                      inputRef={this.setPostInputRef} 
                       placeholder="What do you want to say..." 
                     />
 
