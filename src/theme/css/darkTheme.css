@@ -687,7 +687,40 @@ input:focus {outline:0;}
   float: left;
   min-width: 178px;
 }
-/*------Settings End------*/
+/*------End------*/
+/*------Start my challenges css----*/
+.mychallenges-wrapper .col-middle h3 {font-size: 24px;color: #fff; margin:10px 0 1rem 0;}
+.mychallenges-wrapper .col-middle .yellow-btn {border: 2px solid #ffc500; background: transparent; color: #ffc500; font-size: 14px; border-radius: 50px; height: 34px; padding: 0 10px; margin: 5px 0 20px 0; display: inline-block; text-decoration: none; margin-right: 10px;}
+.mychallenges-wrapper .col-middle .pur-btn {border: 2px solid #8e019c; background: transparent; color: #fff; font-size: 14px; border-radius: 50px; height: 34px; padding: 0 10px; margin: 5px 0 20px 0; display: inline-block; text-decoration: none;}
+.mychallenges-wrapper .col-middle .yellow-btn:hover, .mychallenges-wrapper .col-middle .pur-btn:hover{border-color: #fff; color: #fff;}
+.mychallenges-wrapper .col-middle .gray-text{ color: #5d5e72 !important;}
+.mychallenges-wrapper .col-middle .yellow-text{ color: #ffc700 !important; }
+.mychallenges-wrapper .col-middle table tr th, .mychallenges-wrapper .col-middle table tr td {color: #fff; padding: 17px 10px; font-weight: 100; font-size: 12px; border-top: 1px solid #0091fa }
+.mychallenges-wrapper .col-middle .table>thead>tr>th { font-weight: 600; border-bottom: 0;}
+.mychallenges-wrapper .col-middle .top-heading {font-size: 18px; text-align: center; color: #f2bd00; margin: 0;}
+.mychallenges-wrapper .col-middle form {padding: 0 10px; margin: 18px 0 0 0;}
+.mychallenges-wrapper .col-middle .black-bg{background: #000;}
+.mychallenges-wrapper .col-middle .form-control {box-shadow: none; border: 1px solid #0091fa; margin-bottom: 10px; background: #131313; font-size: 12px; padding: 9px 15px; border-radius: 3px;}
+.mychallenges-wrapper .col-middle .select-selected {color: #999999; border: 1px solid rgb(0, 105, 186); cursor: pointer; user-select: none; font-size: 12px; font-weight: normal; height: 36px; line-height: 34px; padding: 0 15px; border-radius: 2px; background: #131313;}
+.mychallenges-wrapper .col-middle .custom-select {margin-top: 0;  margin-bottom: 10px;}
+.mychallenges-wrapper .col-middle .select-items {background: #131313;}
+.mychallenges-wrapper .col-middle .select-items div{color: #999988; padding: 8px 15px; border: 1px solid #383838; font-size: 12px;}
+.mychallenges-wrapper .col-middle form .pl-7{padding-left: 7px}
+.mychallenges-wrapper .col-middle form .pr-7{padding-right: 7px}
+.mychallenges-wrapper .col-middle form .pt-3{padding-top: 3px}
+.mychallenges-wrapper .col-middle .top-head .profile-icon {border: 2px solid rgb(49, 156, 237); border-radius: 50%; background-color: rgb(20, 72, 114); box-shadow: 0px 0px 4px 0px rgba(108, 192, 255, 0.81), 0px 0px 4px 0px rgba(108, 192, 255, 0.99), 0px 0px 8px 0px rgba(108, 192, 255, 0.99); width: 41px; height: 41px; float: left; overflow: hidden; margin-right: 10px;}
+.mychallenges-wrapper .col-middle .top-head .profile-icon img {width: 100%;}
+.mychallenges-wrapper .col-middle .top-head .col-heading{color: #fff; display: block;}
+.mychallenges-wrapper .col-middle .top-head .bule-text {color: #0066bb;}
+.mychallenges-wrapper .col-middle .img-warp {width: 100%; float: left; border-radius: 6px; margin: 18px 0}
+.mychallenges-wrapper .col-middle .img-warp img{width: 100%;}
+.mychallenges-wrapper .col-middle .bot-warp {float: left; width: 100%; font-size: 12px; color: #fff;}
+.mychallenges-wrapper .col-middle .bot-warp h6{color: #ffc500; font-size: 12px; margin: 0 0 5px 0; text-transform: uppercase;}
+.mychallenges-wrapper .col-middle .bot-warp p{margin-bottom: 0;}
+.mychallenges-wrapper .col-middle .bot-warp .btn {float: right; margin-left: 20px; text-decoration: none; border: 2px solid #9b01aa; color: #9b01aa; font-size: 12px; box-shadow: none; border-radius: 50px; background: transparent; display: inline-block; height: 34px; padding: 0 20px; line-height: 30px;}
+.mychallenges-wrapper .col-middle .bot-warp .btn.active, .mychallenges-wrapper .col-middle .bot-warp .btn:hover, .mychallenges-wrapper .col-middle .bot-warp .btn:focus{background-image: -moz-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%); background-image: -webkit-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%); background-image: -ms-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);  box-shadow: 0px 0px 15px 0px rgba(255, 0, 254, 0.44),0px 0px 15px 0px rgba(207, 0, 254, 0.25),0px 0px 15px 0px rgba(207, 0, 254, 0.36); color:#fff;}
+.mychallenges-wrapper .col-middle .yellow-btn.mtb-1 {margin: 1rem 0 0 0;}
+/*----End-----*/
 /*Start Responsive css*/
 @media (min-width: 1920px) {
   .dark-theme-wrapper {
@@ -702,6 +735,8 @@ input:focus {outline:0;}
   .dark-theme-wrapper .col {width: 27%;}
   .dark-theme-wrapper .main-comment-box .img-box {left: 0; width: 100%;  transform: scale(1.2);}
   .settings-wrapper .tab-wp li{padding: 0 35px;}
+  /*------Start my challenges -------*/
+  .mychallenges-wrapper .col-middle .yellow-btn, .mychallenges-wrapper .col-middle .pur-btn{font-size: 12px}
 }
 @media (max-width: 991px) and (min-width: 768px) {
   .dark-theme-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}
@@ -716,6 +751,8 @@ input:focus {outline:0;}
   .dark-theme-wrapper .my-photos-wp ul li:nth-child(2n){float: none;}
   .fixed-wp {position: relative;}
   .ml-fixed {margin-left: 30px !important;}
+  /*------Start my challenges -------*/
+  .mychallenges-wrapper.dark-theme-wrapper .col-middle { width: 92%;}
 }
 @media (max-width: 767px) {
   .dark-theme-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}
@@ -733,4 +770,10 @@ input:focus {outline:0;}
   .ml-fixed {margin-left: 30px !important;}
   .settings-wrapper .devider-box h3 span{width: 100%;}
   .settings-wrapper .tab-wp li{padding: 0 15px;}
+  /*------Start my challenges -------*/
+  .mychallenges-wrapper.dark-theme-wrapper .col-middle {width: 85%;}
+  .mychallenges-wrapper .col-middle form .pl-7{padding-left: 15px}
+  .mychallenges-wrapper .col-middle form .pr-7{padding-right: 15px}
+  .mychallenges-wrapper .col-middle form {padding: 0px}
+  .mychallenges-wrapper .col-middle .bot-warp .btn {margin: 15px;}
 }
