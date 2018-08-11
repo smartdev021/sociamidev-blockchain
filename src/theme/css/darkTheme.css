@@ -781,6 +781,7 @@ input:focus {outline:0;}
   /*------Start my challenges -------*/
   .mychallenges-wrapper .col-middle .yellow-btn, .mychallenges-wrapper .col-middle .pur-btn{font-size: 12px}
 }
+
 @media (max-width: 991px) and (min-width: 768px) {
   .dark-theme-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}
   .dark-theme-wrapper .col{ width: auto; margin: 0 30px; display: block; }
@@ -793,9 +794,14 @@ input:focus {outline:0;}
   .dark-theme-wrapper .my-photos-wp ul li{float: none; margin-right: 22px; display: inline-block;}
   .dark-theme-wrapper .my-photos-wp ul li:nth-child(2n){float: none;}
   .fixed-wp {position: relative;}
-  .ml-fixed {margin-left: 30px !important;}
+  .ml-fixed {margin-left: 30px;}
   /*------Start my challenges -------*/
   .mychallenges-wrapper.dark-theme-wrapper .col-middle { width: 92%;}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .dark-theme-wrapper .left-content ul li {margin-top: 5px !important}
+  .ml-fixed { margin-left: 290px !important}
+  .dark-theme-wrapper .main-comment-box .bot-wp .input-wp .input-filed{width: 77%;}
 }
 @media (max-width: 767px) {
   .dark-theme-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}

@@ -31,7 +31,7 @@ class UserMenuDropdown extends React.Component {
           </div>
           <hr className="user-hr" />
           <div className="row user-links">
-            <Link className="user-link-text" to="/projectManagement">
+            <Link className="user-link-text" to="/challenges">
               Challenges
             </Link>
           </div>
