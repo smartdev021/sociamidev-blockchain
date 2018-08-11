@@ -81,8 +81,8 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onFetchHouseByEmail(this.props.userProfile.profile.email)
-    this.props.onFetchCompanyByEmail(this.props.userProfile.profile.email)
+    this.props.onFetchHouseByEmail(this.props.profile.email)
+    this.props.onFetchCompanyByEmail(this.props.profile.email)
   }
 
   renderRoutes() {
@@ -179,6 +179,8 @@ Main.propTypes = {
   onFetchAllTasks: PropTypes.func.isRequired,
   userActivities: PropTypes.array.isRequired,
   markActivitySeen: PropTypes.func.isRequired,
+  onFetchHouseByEmail: PropTypes.func.isRequired,
+  onFetchCompanyByEmail: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -195,9 +197,9 @@ const mapStateToProps = state => ({
   userTasks: state.userProfile.tasks,
   isAdmin: state.userProfile.isAdmin,
   company: state.userProfile.company,
-  userProfile: state.userProfile,
   houses: state.houses,
-  companies: state.company
+  companies: state.company,
+  profile: state.userProfile.profile
 });
 
 export default withRouter(
