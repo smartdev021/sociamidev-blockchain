@@ -29,13 +29,13 @@ export default class PostList extends Component {
 
 
   render () {
-    const { isLoading, posts } = this.props;
+    const { isLoading, posts, userProfile } = this.props;
     if (isLoading) return <Spinner shown />;
     if (posts.length === 0) return <NoPost condition={true} />; 
     
     const postList = posts.map( post => {
       const foundUrlResult = findUrlInText(post.message);
-      const postProps = { key: post._id, data: post };
+      const postProps = { key: post._id, data: post, userProfile };
       if (foundUrlResult.hasUrl) {
         postProps.isContainUrl = true;
         postProps.url = foundUrlResult.firstUrl;

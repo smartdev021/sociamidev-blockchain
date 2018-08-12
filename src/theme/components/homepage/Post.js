@@ -7,16 +7,23 @@ import Spinner from '~/src/theme/components/homepage/Spinner';
 import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
 import ConfigMain from '~/configs/main';
 
+const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
-const PostHeader = ({ author, authorName, date }) => (
-  <div className="top-head">
-    <div className="profile-icon">
-      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-9.png" alt="" />
-    </div>
-    <span className="col-heading">{authorName}</span>
-    <span className="date">{Moment(date).format('DD.MM.YYYY')}</span>
-  </div>
-)
+const PostHeader = ({ author, authorName, date, userProfile }) => {
+  const { _id: userId, pictureURL, firstName, lastName } = userProfile;
+  const userPictureUrl = (author === userId && pictureURL) ? pictureURL : profilePic;
+  const newAuthorName = (author === userId) ? firstName + " " + lastName : authorName;
+
+  return (
+    <div className="top-head">
+      <div className="profile-icon">
+       <img src={userPictureUrl} alt="" />
+      </div>
+      <span className="col-heading">{newAuthorName}</span>
+      <span className="date">{Moment(date).format('DD.MM.YYYY')}</span>
+     </div>
+  )
+}
 
 const CommentBox = () => (
   <div className="input-wp">
@@ -91,13 +98,13 @@ export default class Post extends Component {
   }
 
   render() {
-    const { authorName, date, message } = this.props.data;
+    const { userProfile } = this.props;
+    const { author, authorName, date, message } = this.props.data;
   
-
     return (
       <div className="col-box-wp">
         <div className="main-comment-box">
-          <PostHeader authorName={authorName} date={date}  />
+          <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile} />
           <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
           { this.linkSnippet() }
           <PostFooter />

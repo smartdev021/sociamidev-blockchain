@@ -183,6 +183,7 @@ class HomePage extends React.Component {
                   <PostList 
                     isLoading={isFetchingPostLoading} 
                     posts={this.state.posts}
+                    userProfile={this.props.userProfile}
                   />
                 </div>
               </div>
