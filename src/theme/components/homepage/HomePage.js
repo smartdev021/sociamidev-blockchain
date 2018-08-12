@@ -12,7 +12,7 @@ import RightSection from '~/src/theme/components/homepage/RightSection';
 import PostList from '~/src/theme/components/homepage/PostList';
 import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
 import Spinner from '~/src/theme/components/homepage/Spinner';
-import { findUrlInText } from '~/src/utils/UrlUtils';
+import { findUrlInText, isSameLink } from '~/src/utils/UrlUtils';
 import '~/src/theme/css/darkTheme.css';
 import '~/src/theme/css/lightTheme.css';
 
@@ -36,7 +36,6 @@ class HomePage extends React.Component {
     super(props);
     this.defaultPostLinkData = {
       isPreviewLoading: false,
-      isPreviewReady: false,
       meta: {},
     };
 
@@ -90,10 +89,11 @@ class HomePage extends React.Component {
     const foundUrlResult = findUrlInText(text);
     const currentMeta = this.state.postLink.meta;
 
-    if (foundUrlResult.hasUrl && currentMeta) {
+    
+    if (foundUrlResult.hasUrl && typeof currentMeta !== 'undefined') {
       const hrefLink = foundUrlResult.firstUrl;
       const currentMetaLink = currentMeta.url;
-      if (!currentMetaLink || currentMetaLink !== hrefLink) {
+      if (!currentMetaLink || !isSameLink(currentMetaLink, hrefLink)) {
         this.fetchLink(hrefLink);
       }
 
@@ -104,32 +104,32 @@ class HomePage extends React.Component {
   }
 
   fetchLink(link) {
-    const that = this;
     const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
 
     this.loadingLinkPreview(true);
     Axios.get(linkMetaScraperEndpoint)
       .then(({ data }) => {
         if (data.result.status == 'OK') {
-          that.showLinkPreview(data.meta);
+          this.showLinkPreview(data.meta);
+        } else {
+          this.loadingLinkPreview(false)
         }
       })
       .catch(error => this.loadingLinkPreview(false));
   }
 
-  loadingLinkPreview(isLoading) {
-    this.setState({ 
-      postLink: { 
-        ...this.state.postLink, 
-        isPreviewLoading: isLoading 
-      } 
-    });
+  loadingLinkPreview(isPreviewLoading) {
+    const postLink = { 
+      ...this.state.postLink, 
+      isPreviewLoading
+    };
+
+    this.setState({ postLink });
   }
 
   showLinkPreview(meta) {
     const currentPostLinkState = { 
       isPreviewLoading: false,
-      isPreviewReady: false,
       meta,
     };
 
