@@ -80,23 +80,25 @@ export default class Post extends Component {
       .catch(error => this.setState({ isFetchMetaLoading: false }));
   }
 
-  render() {
+  linkSnippet() {
     const { isContainUrl } = this.props;
-    const { authorName, date, message } = this.props.data;
-
-    const linkSnippet = isContainUrl ?
+    return isContainUrl ? 
       <LinkPreview 
         isLoading={this.state.isFetchMetaLoading}
         meta={this.state.linkMeta}
         loader={<Spinner shown={this.state.isFetchMetaLoading} />}
       /> : '';
+  }
+
+  render() {
+    const { authorName, date, message } = this.props.data;
   
     return (
       <div className="col-box-wp">
         <div className="main-comment-box">
           <PostHeader authorName={authorName} date={date} />
           <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
-          { linkSnippet }
+          { this.linkSnippet() }
           <PostFooter />
         </div>
       </div>
