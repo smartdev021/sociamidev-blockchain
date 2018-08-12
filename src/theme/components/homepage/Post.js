@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'moment';
 import Axios from 'axios';
-import * as linkify from 'linkifyjs';
+import nl2br from 'nl2br';
 
 import Spinner from '~/src/theme/components/homepage/Spinner';
 import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
@@ -95,7 +95,7 @@ export default class Post extends Component {
       <div className="col-box-wp">
         <div className="main-comment-box">
           <PostHeader authorName={authorName} date={date} />
-          <p>{message}</p>
+          <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
           { linkSnippet }
           <PostFooter />
         </div>
