@@ -1,18 +1,14 @@
 /*
-    author: Alexander Zolotov
+  author: Alexander Zolotov
 */
 
 import React, { Component } from 'react';
-
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-
-import { Icon } from 'react-fa';
 
 import ThemeHeader from '~/src/theme/components/themeHeader/ThemeHeader';
 // import SidebarLeft from '~/src/theme/SidebarLeft';
@@ -32,29 +28,25 @@ import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser';
 import ProgressionTreeBrowser from '~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew';
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import SkillBrowser from '~/src/theme/components/progressiontrees/SkillBrowser';
-import About from '~/src/theme/About.js';
-import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
+import Story from '~/src/theme/components/story/Story';
 import Challenges from '~/src/theme/components/challenges/Challenges';
 import '~/src/theme/css/main.css';
 // import UserProfile from '~/src/theme/UserProfile.js';
 import UserProfile from '~/src/theme/components/userProfile/UserProfile';
 import Teams from '~/src/theme/components/teams/Teams.js';
-
 import Settings from '~/src/theme/Settings.js';
-
 import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
 
 import { fetchAllTasks } from '~/src/redux/actions/tasks';
 import { fetchHousesByEmail } from '~/src/redux/actions/houses';
 import { fetchCompanyByEmail } from '~/src/redux/actions/company';
-
 import { markActivitySeen } from '~/src/redux/actions/activities';
 
 import '~/src/style.css';
 
-class Main extends React.Component {
+class Main extends Component {
   constructor(props) {
     super(props);
 
@@ -91,6 +83,11 @@ class Main extends React.Component {
       <Switch>
         <Route exact path="/" render={routeProps => <HomePage {...routeProps} {...this.props} />} />
         <Route path="/authorize" render={routeProps => <Authorize {...routeProps} {...this.props} />} />)}/>
+        <Route
+          exact
+          path="/story"
+          render={routeProps => <Story {...routeProps} {...this.props} />}
+        />
         <Route
           exact
           path="/progressionTrees"
