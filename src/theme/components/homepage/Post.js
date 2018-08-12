@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import Moment from 'moment';
 import Axios from 'axios';
-import * as linkify from 'linkifyjs';
 
 import Spinner from '~/src/theme/components/homepage/Spinner';
 import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
 import ConfigMain from '~/configs/main';
 
+const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
-const PostHeader = ({ authorName, date }) => (
-  <div className="top-head">
-    <div className="profile-icon">
-      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-9.png" alt="" />
+const PostHeader = ({ author, authorName, date, userProfile }) => {
+  const pictureURL = (author === userProfile._id && userProfile.pictureURL) ? userProfile.pictureURL : profilePic;
+  const newAuthorName = (author === userProfile._id) ? userProfile.firstName + " " + userProfile.lastName : authorName;
+  return (
+    <div className="top-head">
+      <div className="profile-icon">
+        <img src={pictureURL} alt="" />
+      </div>
+      <span className="col-heading">{newAuthorName}</span>
+      <span className="date">{Moment(date).format('DD.MM.YYYY')}</span>
     </div>
-    <span className="col-heading">{authorName}</span>
-    <span className="date">{Moment(date).format('DD.MM.YYYY')}</span>
-  </div>
-)
+  );
+}
 
 const CommentBox = () => (
   <div className="input-wp">
@@ -81,8 +85,8 @@ export default class Post extends Component {
   }
 
   render() {
-    const { isContainUrl } = this.props;
-    const { authorName, date, message } = this.props.data;
+    const { isContainUrl, userProfile } = this.props;
+    const { author, authorName, date, message } = this.props.data;
 
     const linkSnippet = isContainUrl ?
       <LinkPreview 
@@ -94,7 +98,7 @@ export default class Post extends Component {
     return (
       <div className="col-box-wp">
         <div className="main-comment-box">
-          <PostHeader authorName={authorName} date={date} />
+          <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile} />
           <p>{message}</p>
           { linkSnippet }
           <PostFooter />

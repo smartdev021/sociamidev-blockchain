@@ -80,7 +80,8 @@ export function userProfile(state = userProfileInitialState, action) {
       return {
         ...state,
         profile: Object.assign({}, action.profile, {
-          theme: state.profile.theme
+          theme: state.profile.theme,
+          lastName: action.profile.lastName || ""
         }),
         isAdmin: action.isAdmin,
         isAuthorized: action.isAuthorized,
