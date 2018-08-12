@@ -137,7 +137,10 @@ class Main extends React.Component {
   }
 
   render() {
-    const RedirectTo = this.getRedirectLocation();
+    let RedirectTo = this.getRedirectLocation();
+    if(this.props.history.location.pathname == "/characterCreation"){
+      RedirectTo = <Redirect to="/" push />;
+    }
     return (
       <div className="soqqle-page-wrapper">
         {RedirectTo}
@@ -155,10 +158,9 @@ class Main extends React.Component {
           userProfile={this.props.userProfile}
           accounting={this.props.accounting}
         />
-        {/* <div className="session-content"> */}
-          {/* <SidebarLeft isOpen={this.state.isSidebarOpen} screenWidth={this.props.screenWidth}/> */}
-          <div className="soqqle-page-content">{this.renderRoutes()}</div>
-        {/* </div> */}
+        
+        <div className="soqqle-page-content">{this.renderRoutes()}</div>
+        
       </div>
     );
   }
