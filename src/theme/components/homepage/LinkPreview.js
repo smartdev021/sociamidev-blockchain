@@ -11,18 +11,15 @@ class LinkPreview extends Component {
   }
 
   hasMeta() {
-    if (typeof this.props.meta === 'undefined') return false;
-    if (Object.keys(this.props.meta).length > 0) return true
+    const { meta } = this.props;
+    if (typeof meta === 'undefined') return false;
+    if (Object.keys(meta).length > 0) return true
 
     return false;
   }
 
-  render() {
-    const { meta, loader, isLoading } = this.props;
-
-    if (isLoading) return loader;
-    if (!this.hasMeta()) return <div />;
-    
+  linkSnippet() {
+    const { meta } = this.props;
     const { image, title, description, url } = meta;
     const { hostname } = URL.parse(url);
     const refinedHostname = hostname.replace(/^www\./, '').toUpperCase();
@@ -35,6 +32,15 @@ class LinkPreview extends Component {
         <div>{ refinedHostname }</div>
       </div>
     );
+  }
+
+  render() {
+    const { loader, isLoading } = this.props;
+    const hasNoMeta = !this.hasMeta();
+
+    if (isLoading) return loader;
+    if (hasNoMeta) return <div />;
+    return this.linkSnippet();
   }
 }
 
