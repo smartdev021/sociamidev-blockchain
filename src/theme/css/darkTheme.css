@@ -798,7 +798,7 @@ input:focus {outline:0;}
   /*------Start my challenges -------*/
   .mychallenges-wrapper.dark-theme-wrapper .col-middle { width: 92%;}
 }
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (min-width: 992px) and (max-width: 1440px) {
   .dark-theme-wrapper .left-content ul li {margin-top: 5px !important}
   .ml-fixed { margin-left: 290px !important}
   .dark-theme-wrapper .main-comment-box .bot-wp .input-wp .input-filed{width: 77%;}
