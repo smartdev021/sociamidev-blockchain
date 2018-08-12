@@ -1,6 +1,4 @@
 import * as linkify from 'linkifyjs';
-import normalizeUrl from 'normalize-url';
-import compareUrls from 'compare-urls';
 
 export function findUrlInText(text) {
   const findUrlResult = linkify.find(text);
@@ -14,11 +12,7 @@ export function findUrlInText(text) {
 
 export function isSameLink(url1, url2) {
   if (typeof url1 !== 'undefined' && typeof url2 !== 'undefined') {
-    const opts = {normalizeHttps: true};
-    return compareUrls(
-      normalizeUrl(url1, opts),
-      normalizeUrl(url2, opts),
-    );
+    return url1.replace(/^http(s)\:/ig, '') === url2.replace(/^http(s)\:/ig, '');
   }
 
   return false;
