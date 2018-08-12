@@ -8,7 +8,7 @@ import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
 import ConfigMain from '~/configs/main';
 
 
-const PostHeader = ({ authorName, date }) => (
+const PostHeader = ({ author, authorName, date }) => (
   <div className="top-head">
     <div className="profile-icon">
       <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/my-friends-9.png" alt="" />
@@ -96,7 +96,7 @@ export default class Post extends Component {
     return (
       <div className="col-box-wp">
         <div className="main-comment-box">
-          <PostHeader authorName={authorName} date={date} />
+          <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile}  />
           <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
           { this.linkSnippet() }
           <PostFooter />
