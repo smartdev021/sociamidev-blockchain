@@ -250,6 +250,32 @@ class Settings extends Component {
                         { this.renderTeamSelect([{value: "Dark", label: "Dark"}, {value: "Light", label: "Light"}]) }
                       </div>
                     </div>
+                    <div className="line-devider"></div>
+                    <div className="box">
+                      <div className="devider-box">
+                        <h3>
+                          Email Address
+                          <span>
+                            <a href="javascript:;" className="change-btn" onClick={this.toggleTheme}>
+                              <i className="fa fa-pencil"></i> Change
+                            </a>
+                          </span>
+                        </h3>
+                        <p>This is your email address and can be changed anytime.</p>
+                        <div className="main-comment-box">
+                          <div className="bot-wp">
+                            <div className="input-wp">
+                              <div className="input-filed">
+                                <input type="email" name="" value={this.props.userProfile.email} 
+                                style={{color:'rgb(48,48,48)'}}
+                                />
+                                <a href="#" className="camera-icon"><i className="fa fa-envelope"></i></a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div id="privacy" className="theme-box-right" style={{ display: this.state.IsPrivacyOpen }}>
                     <div className="box">
