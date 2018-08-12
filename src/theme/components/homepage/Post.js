@@ -93,10 +93,11 @@ export default class Post extends Component {
   render() {
     const { authorName, date, message } = this.props.data;
   
+
     return (
       <div className="col-box-wp">
         <div className="main-comment-box">
-          <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile}  />
+          <PostHeader authorName={authorName} date={date}  />
           <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
           { this.linkSnippet() }
           <PostFooter />
