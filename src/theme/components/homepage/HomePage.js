@@ -103,8 +103,6 @@ class HomePage extends React.Component {
     this.setState({ postLink: this.defaultPostLinkData });
   }
 
-  
-
   fetchLink(link) {
     const that = this;
     const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
