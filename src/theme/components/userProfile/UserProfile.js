@@ -34,6 +34,7 @@ class UserProfile extends Component {
       lastName: this.props.userProfile.lastName,
       userID: this.props.userProfile._id,
       work: 'Product Manager at Soqqle',
+      character: this.props.userProfile.character,
       from: 'Singapore | Hong Kong',
       email: this.props.userProfile.email ? this.props.userProfile.email : 'Danshen@gmail.com',
       myProfile: true,
@@ -643,6 +644,8 @@ class UserProfile extends Component {
                           <li><span className="icon p-icon"></span> Studied at Yoobo</li>
                           <li><span className="icon bt-icon"></span> Lives in Vietnam</li>
                           <li><span className="icon pc-icon"></span> Joined September 2017</li>
+                          <li><span className="icon bt-icon"></span> {this.state.character.traitsName}</li>
+                          <li><span className="icon pc-icon"></span> {this.state.character.characterName}</li>
                         </ul>
                       </div>
                     </div>
