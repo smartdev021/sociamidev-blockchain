@@ -564,6 +564,7 @@ span.new-img-icon-head img {
   width: 34px;
   height: 34px;
   float: left;
+  overflow: hidden;
   margin-right: 10px;
 }
 .dark-theme-wrapper .left-content .top-head {
@@ -585,6 +586,7 @@ span.new-img-icon-head img {
   color: #9601a3;
   font-size: 16px;
   margin: 0;
+  display: inline-block;
 }
 .dark-theme-wrapper a.purpal-text-link {
   color: #d01fe5;
