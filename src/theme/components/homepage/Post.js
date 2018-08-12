@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'moment';
 import Axios from 'axios';
+import nl2br from 'nl2br';
 
 import Spinner from '~/src/theme/components/homepage/Spinner';
 import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
@@ -98,7 +99,7 @@ export default class Post extends Component {
     return (
       <div className="col-box-wp">
         <div className="main-comment-box">
-          <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile} />
+          <PostHeader authorName={authorName} date={date} />
           <p>{message}</p>
           { linkSnippet }
           <PostFooter />
