@@ -88,27 +88,44 @@ class HomePage extends React.Component {
   detectPostType(event) {
     const text = event.target.value;
     const foundUrlResult = findUrlInText(text);
+    const currentMeta = this.state.postLink.meta;
 
-    if (foundUrlResult.hasUrl) {
+    if (foundUrlResult.hasUrl && currentMeta) {
       const hrefLink = foundUrlResult.firstUrl;
+      const currentMetaLink = currentMeta.url;
+      if (!currentMetaLink || currentMetaLink !== hrefLink) {
+        this.fetchLink(hrefLink);
+      }
 
-      this.setState({ postLink: { isPreviewLoading: true } });
-      this.fetchLink(hrefLink);
-    } else {
-      this.setState({ postLink: this.defaultPostLinkData });
+      return;
     }
+
+    this.setState({ postLink: this.defaultPostLinkData });
   }
+
+  
 
   fetchLink(link) {
     const that = this;
     const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
+
+    this.loadingLinkPreview(true);
     Axios.get(linkMetaScraperEndpoint)
       .then(({ data }) => {
         if (data.result.status == 'OK') {
           that.showLinkPreview(data.meta);
         }
       })
-      .catch(error => {});
+      .catch(error => this.loadingLinkPreview(false));
+  }
+
+  loadingLinkPreview(isLoading) {
+    this.setState({ 
+      postLink: { 
+        ...this.state.postLink, 
+        isPreviewLoading: isLoading 
+      } 
+    });
   }
 
   showLinkPreview(meta) {
