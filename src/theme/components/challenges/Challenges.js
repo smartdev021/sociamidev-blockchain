@@ -1,3 +1,7 @@
+/*
+  Replacement of: src/theme/ProjectManagement.js
+*/
+
 import React, { Component } from 'react';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
