@@ -29,11 +29,14 @@
 .light-theme-wrapper .col-middle .top-box-wp{
   border:2px solid rgb(115, 2, 139);;
   box-shadow: 0px 0px 38px 0px rgba(223, 73, 255, 0.67),0px 0px 11.06px 2.94px rgba(223, 73, 255, 0.3),0px 0px 4.74px 1.26px rgba(255, 208, 254, 0.26),0px 8px 15.52px 0.48px rgba(3, 7, 81, 0.52);
-  float: left;
+  /* float: left; */
+  clear: both;
   position: relative;
   background: #fff;
   width: 100%;
   height: 61px;
+  display: table;
+  table-layout: fixed;
   margin-bottom: 40px;
 }
 .light-theme-wrapper .col-middle .top-box-wp .profile-icon {
@@ -61,6 +64,40 @@
   background: transparent;
   border: 0;
   font-size: 16px;
+}
+.light-theme-wrapper .col-middle .top-box-wp textarea {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  color: #333;
+  background: transparent;
+  border: 0;
+  font-size: 16px;
+  border-style: none;
+  padding-top: 0.3em;
+  padding-left: 3.5em;
+  border: none;
+  resize: none;
+  outline: none;
+}
+.light-theme-wrapper .top-box-wp .link-preview {
+  padding: 1em;
+  margin-bottom: 1.5em;
+  word-wrap: break-word;
+}
+.light-theme-wrapper .link-preview img {
+  width: 100%;
+}
+.light-theme-wrapper .link-preview .description {
+  color: #333;
+  margin-bottom: 0.5em;
+}
+.light-theme-wrapper .link-preview h3.title {
+  text-align: left;
+  color: #ffc225;
+  font-size: 1em;
 }
 .light-theme-wrapper .my-friends-wp{
 	text-align: center;
@@ -480,7 +517,7 @@ span.new-img-icon-head img {
   padding: 0 25px;
 }
 .light-theme-wrapper .left-content ul li:last-child{
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .light-theme-wrapper .left-content ul li a{
   color: #000;
@@ -663,6 +700,12 @@ input:focus {outline:0;}
   .light-theme-wrapper .my-photos-wp ul li:nth-child(2n){float: none;}
   .fixed-wp {position: relative;}
   .ml-fixed {margin-left: 30px !important;}
+  /*------Start my challenges -------*/
+  .mychallenges-wrapper.light-theme-wrapper .col-middle { width: 92%;}
+}
+@media (min-width: 992px) and (max-width: 1440px) {
+  .light-theme-wrapper .left-content ul li {margin-top: 5px !important}
+  .light-theme-wrapper .main-comment-box .bot-wp .input-wp .input-filed{width: 77%;}
 }
 @media (max-width: 767px) {
   .light-theme-wrapper{padding-right: 15px; padding-left: 15px; background-size: cover;}
@@ -678,4 +721,6 @@ input:focus {outline:0;}
   span.new-img-icon-head {width: 22px; height: 22px;}
   .fixed-wp {position: relative;}
   .ml-fixed {margin-left: 30px !important;}
+  /*------Start my challenges -------*/
+  .mychallenges-wrapper.light-theme-wrapper .col-middle {width: 85%;}
 }
