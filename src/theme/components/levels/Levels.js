@@ -16,7 +16,7 @@ class Levels extends Component {
 
     renderProgressionLevels(UserProgressionTreeLevels){
         let listItems = UserProgressionTreeLevels.map((ProgTreeLevel, i) => {
-            let widthPercent = +(ProgTreeLevel.currentLevelXP / ProgTreeLevel.totalXP).toFixed(2) * 100;
+            let widthPercent = Math.round(ProgTreeLevel.currentLevelXP / ProgTreeLevel.totalXP) * 100;
             return(
                 <div className="col-md-4 experience-container" key={i}>
                     <div className="experience-box">
