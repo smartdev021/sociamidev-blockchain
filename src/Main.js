@@ -12,12 +12,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
+import ConfigMain from '~/configs/main';
+import { fetchAllTasks } from '~/src/redux/actions/tasks';
+import { markActivitySeen } from '~/src/redux/actions/activities';
+
 import { Icon } from 'react-fa';
+
+import '~/src/style.css';
+import '~/src/theme/css/main.css';
 
 import ThemeHeader from '~/src/theme/components/themeHeader/ThemeHeader';
 // import SidebarLeft from '~/src/theme/SidebarLeft';
-
-import ConfigMain from '~/configs/main';
 
 //routes
 import Authorize from '~/src/authentication/Authorize';
@@ -35,21 +40,14 @@ import SkillBrowser from '~/src/theme/components/progressiontrees/SkillBrowser';
 import About from '~/src/theme/About.js';
 import ICO from '~/src/theme/ICO.js';
 import ConnectionsView from '~/src/theme/ConnectionsView.js';
-import '~/src/theme/css/main.css';
 // import UserProfile from '~/src/theme/UserProfile.js';
 import UserProfile from '~/src/theme/components/userProfile/UserProfile';
 import Teams from '~/src/theme/components/teams/Teams.js';
-
 import Settings from '~/src/theme/Settings.js';
-
 import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
 
-import { fetchAllTasks } from '~/src/redux/actions/tasks';
-
-import { markActivitySeen } from '~/src/redux/actions/activities';
-
-import '~/src/style.css';
+import Levels from './theme/components/levels/Levels';
 
 class Main extends React.Component {
   constructor(props) {
@@ -132,6 +130,9 @@ class Main extends React.Component {
         {this.props.isAdmin && (
           <Route path="/teams" render={routeProps => <Teams {...routeProps} {...this.props} />} />
         )}
+
+        <Route path="/levels" render={routeProps => <Levels {...routeProps} {...this.props} />} />)}/>
+
       </Switch>
     );
   }
