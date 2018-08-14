@@ -249,9 +249,6 @@ class Settings extends Component {
                         <p></p>
                         { this.renderTeamSelect([{value: "Dark", label: "Dark"}, {value: "Light", label: "Light"}]) }
                       </div>
-                    </div>
-                    <div className="line-devider"></div>
-                    <div className="box">
                       <div className="devider-box">
                         <h3>
                           Email Address

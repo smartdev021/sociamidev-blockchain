@@ -12,19 +12,19 @@ import ApproveChallenge from '~/src/theme/components/challenges/ApproveChallenge
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
-export class Challenges extends Component {
+class Challenges extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentPage: "MyChallenges"
+      currentPage: "MyChallenges",
+      profilePic: this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic
     }
   }
 
   togglePage(page) {
     this.setState({
-      currentPage: page,
-      profilePic: this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic
+      currentPage: page
     });
   }
 

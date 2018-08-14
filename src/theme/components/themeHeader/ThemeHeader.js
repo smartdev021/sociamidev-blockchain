@@ -49,7 +49,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
       />
       <footer>
         <div className="navbar-btn-row">
-          <Link to="/progressionTrees" className="navbar-button" onClick={closeMenu}>
+          <Link to="/story" className="navbar-button" onClick={closeMenu}>
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
@@ -303,7 +303,7 @@ class ThemeHeader extends React.Component {
                     <span> </span>
                   </button>
 
-                  <Link to="/progressionTrees" className="navbar-button">
+                  <Link to="/story" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"

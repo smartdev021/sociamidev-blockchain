@@ -18,7 +18,6 @@ import '~/src/theme/css/lightTheme.css';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
-
 const PostButton = ({ onPost }) => (
   <div className="buttons-wp">
     <ul>
@@ -29,9 +28,7 @@ const PostButton = ({ onPost }) => (
   </div>
 );
 
-
-
-class HomePage extends React.Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.defaultPostLinkData = {
