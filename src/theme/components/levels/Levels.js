@@ -23,7 +23,7 @@ class Levels extends Component {
                         <div className="main-comment-box">
                             <div className="prog-tree-level-name">{ProgTreeLevel.name}</div>
                             <div className="prog-tree-level">
-                                <div className="btn-lavel-yellow">LEVEL {ProgTreeLevel.level}</div>
+                                <div className="prog-tree-level-btn">LEVEL {ProgTreeLevel.level}</div>
                             </div>
                             <div className="prog-tree-level-progress">
                                 <div className="prog-tree-level-percentage">{widthPercent} %</div>

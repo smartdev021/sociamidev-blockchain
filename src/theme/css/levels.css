@@ -37,6 +37,17 @@
     text-align: center;
 }
 
+.dark-theme-wrapper .prog-tree-level-btn{
+    border-width: 1px;
+    border-color: rgb(255, 199, 0);
+    border-style: solid;
+    border-radius: 11px;
+    width: 94px;
+    height: 21px;
+    color: rgb(255,199,0);
+    display: inline-block;
+}
+
 .dark-theme-wrapper .prog-tree-level-progress{
     position: absolute;
     left: 0%;
@@ -90,8 +101,12 @@
     left: 5%;
 }
 .dark-theme-wrapper .prog-tree-total-xp-value{
-    color: #fff;
     transform: skew(30deg);
-    display: block;
-    padding: 0 15px;
+    font-size: 13px;
+    font-family: "Myriad Pro";
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1.2;
+    padding: 5px;
 }
