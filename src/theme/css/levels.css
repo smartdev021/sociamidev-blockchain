@@ -1,10 +1,8 @@
 .dark-theme-wrapper .experience-h4{
-    font-size: 24px;
-    font-family: "Myriad Pro";
     color: rgb(255, 197, 0);
     line-height: 1.2;
     padding: 0px 0px 15px 5px;
-    font-weight: 600;
+    font: normal 24px "MyriadPro Semibold"
 }
 
 .dark-theme-wrapper .experience-container{
@@ -21,12 +19,10 @@
 }
 
 .dark-theme-wrapper .prog-tree-level-name{
-    font-size: 16px;
-    font-family: "Myriad Pro";
+    font: normal 16px "MyriadPro Semibold";
     color: rgb(255, 255, 255);
     line-height: 1.2;
     text-align: center;
-    font-weight: 600;
 }
 
 .dark-theme-wrapper .prog-tree-level{
@@ -54,7 +50,6 @@
     right: 0%;
     top: 90px;
     color: #ffa300;
-    font-size: 14px;
     text-transform: uppercase;
     line-height: 24px;
     border-width: 1px;
@@ -66,6 +61,7 @@
     background-color: black;
     border-radius: 2px;
     padding: 2px 2px 2px 2px;
+    font: normal 14px "MyriadPro Semibold"
 }
 
 .dark-theme-wrapper .prog-tree-level-percentage{
@@ -90,7 +86,7 @@
     width: 85%;
     margin: 0 3px;
     color: #fff;
-    font-size: 12px;
+    font: normal 12px "MyriadPro Semibold";
     text-transform: uppercase;
     transform: skew(-30deg);
     height: 25px;
@@ -102,10 +98,8 @@
 }
 .dark-theme-wrapper .prog-tree-total-xp-value{
     transform: skew(30deg);
-    font-size: 13px;
-    font-family: "Myriad Pro";
+    font: normal 13px "MyriadPro Semibold";
     color: rgb(255, 255, 255);
-    font-weight: 600;
     text-transform: uppercase;
     line-height: 1.2;
     padding: 5px;
