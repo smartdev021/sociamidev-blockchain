@@ -26,6 +26,7 @@
   padding: 25px;
   position: relative;
 }
+.light-theme-wrapper .left-content ul li:nth-child(1) span.icon-wp img, .light-theme-wrapper .left-content ul li:nth-child(2) span.icon-wp img{filter: invert(100%);;}
 .light-theme-wrapper .col-middle .top-box-wp{
   border:2px solid rgb(115, 2, 139);;
   box-shadow: 0px 0px 38px 0px rgba(223, 73, 255, 0.67),0px 0px 11.06px 2.94px rgba(223, 73, 255, 0.3),0px 0px 4.74px 1.26px rgba(255, 208, 254, 0.26),0px 8px 15.52px 0.48px rgba(3, 7, 81, 0.52);
@@ -675,20 +676,10 @@ input:focus {outline:0;}
 .light-theme-wrapper.mychallenges-wrapper .col-middle .yellow-btn, .light-theme-wrapper.mychallenges-wrapper .col-middle .pur-btn{border-color: #0069ba; color: #0069ba;}
 /*------End------*/
 /*--------Start stories section css---------*/
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp {background: #fff; width: 100%; float: left; margin-bottom: 30px; padding: 25px; position: relative; border: 2px solid rgb(135, 0, 143); box-shadow: 0px 0px 38px 0px rgba(255, 71, 255, 0.67),0px 0px 11.06px 2.94px rgba(255, 71, 255, 0.3),0px 0px 4.74px 1.26px rgba(255, 209, 255, 0.26),0px 8px 15.52px 0.48px rgba(0, 1, 82, 0.52);}
+.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp {background: #fff;}
 .light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .px-15{padding: 0 15px;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp p{color: #000; font-weight: 300;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp p.graylight{color: #5d5e72; }
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp h4{color: #f4bd00; font-size: 14px; margin: 5px 0;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .img-box-wp{overflow: hidden; float: left; width: 100%; border-radius: 6px;  margin: 20px 0;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .img-box-wp img{width: 100%; vertical-align: middle;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .fot-wp{float: left; width: 100%;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .fot-wp .bttons-right-box {float: left; width: 100%; margin: 0px; padding: 0;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .fot-wp .bttons-right-box li {display: inline-block; background-color: rgb(0, 105, 190); box-shadow: inset 0px 3px 7px 0px rgba(0, 82, 147, 0.71); width: auto; margin: 0 3px; color: #fff; font-size: 12px; text-transform: uppercase; transform: skew(-30deg); height: 25px; line-height: 25px;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .fot-wp .bttons-right-box li a {color: #fff; transform: skew(30deg); display: block; padding: 0 15px;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .fot-wp .pperpal-txt{margin: 0}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp .fot-wp .pperpal-txt span{color: #9b01aa; top: 6px; position: relative; margin: 0;}
-.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp.yellow-shadow {border:2px solid rgb(244, 189, 0); box-shadow: 0px 0px 38px 0px rgba(255, 192, 0, 0.67);}
+.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp p{color: #000;}
+.light-theme-wrapper.stories-wrapper .col-middle  .col-box-wp p.graylight{color: #5d5e72;}
 
 /*-----------End----------------*/
 /*Start Responsive css*/
@@ -740,6 +731,4 @@ input:focus {outline:0;}
   .ml-fixed {margin-left: 30px !important;}
   /*------Start my challenges -------*/
   .mychallenges-wrapper.light-theme-wrapper .col-middle {width: 85%;}
-  /*--------Start stories section css---------*/
-  .dark-theme-wrapper.stories-wrapper .col-middle .col-box-wp .fot-wp .bttons-right-box li{margin: 10px 0; font-size: 11px;}
 }
