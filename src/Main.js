@@ -48,6 +48,7 @@ import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
 
 import Levels from './theme/components/levels/Levels';
+import Tasks from './theme/components/tasks/Tasks';
 
 class Main extends Component {
   constructor(props) {
@@ -147,6 +148,8 @@ class Main extends Component {
         )}
 
         <Route path="/levels" render={routeProps => <Levels {...routeProps} {...this.props} />} />)}/>
+
+        <Route path="/tasks" render={routeProps => <Tasks {...routeProps} {...this.props} />} />)}/>
 
       </Switch>
     );
