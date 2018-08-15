@@ -60,7 +60,12 @@ export class Challenges extends Component {
           <div className="container">
             <div className="row">
               <div className="row">
-                <LeftNav userProfile={this.props.userProfile} profilePic={this.state.profilePic} />
+                
+                <LeftNav 
+                  accounting={this.props.accounting}
+                  userProfile={this.props.userProfile} 
+                  profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
+                  />
 
                 <RightSection />
 

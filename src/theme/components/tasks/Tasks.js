@@ -76,7 +76,73 @@ const Hours12 = date => {
     return (date.getHours() + 24) % 12 || 12;
 };
   
-const RenderSingleTask = (task, i, props) => {
+class Tasks extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        IsCurrentTaskOpen : 'block',
+        IsJoinTaskOpen : 'none',
+        scannerQuery: '',
+        timeNow: Date.now(),
+        isScannerExpanded: !this.props.isAuthorized,
+        isAnswerSubmitComplete: false,
+        activeHangout: undefined,
+        isAnswerQuestionsOpen: false,
+
+        //
+        filterCurrent: Filters[0],
+    };
+
+    this.redirectLocation = undefined;
+
+    //this is for making task 'Start' button available in real time
+    this.timeNowUpdateInterval = undefined;
+
+    this.toggleCurrentTaskOption = this.toggleCurrentTaskOption.bind(this);
+    this.toggleJoinTaskOption = this.toggleJoinTaskOption.bind(this);
+    this.renderTasks = this.renderTasks.bind(this);
+    this.renderSingleTask = this.renderSingleTask.bind(this);
+    this.handleOpenConfirmTaskDetailsPopup = this.handleOpenConfirmTaskDetailsPopup.bind(this);
+  }
+
+  toggleCurrentTaskOption() {
+    this.setState({ IsCurrentTaskOpen: 'block', IsJoinTaskOpen: 'none'});
+  }
+
+  toggleJoinTaskOption() {
+    this.setState({ IsCurrentTaskOpen: 'none', IsJoinTaskOpen: 'block'});
+  }
+
+  renderTasks() {
+    let foundTasks = [];
+
+    const scannerQuery = this.state.scannerQuery.toLowerCase();
+
+    if (scannerQuery != '') {
+      foundTasks = this.props.tasks.filter(function(task) {
+        return (
+          (this.props.currentUserID == undefined || task.userID != this.props.currentUserID) &&
+          task.name &&
+          task.name.toLowerCase().startsWith(scannerQuery)
+        );
+      });
+    } else {
+      foundTasks = this.props.tasks;
+    }
+
+    let that = this;
+
+    if (foundTasks.length == 0) {
+      return null;
+    } else {
+      return foundTasks.map(function(task, i) {
+        return that.renderSingleTask(task, i);
+      });
+    }
+  }
+
+  renderSingleTask(task, i){
     if (!task.type) {
       return null;
     }
@@ -112,7 +178,6 @@ const RenderSingleTask = (task, i, props) => {
       }
   
       if (date < new Date()) time = 'mutually convenient time today';
-  
       return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp col-box-join-task">
@@ -120,73 +185,10 @@ const RenderSingleTask = (task, i, props) => {
                 <a className="link-yellow"> {task.metaData.subject.roadmap.name} </a>
                     at <a className="link-yellow"> {time}.</a>
                 </p>
-                <a className="btn-join task-join" onClick={() => props.handleOpenConfirmTaskDetailsPopup(task)}>Join</a>
+                <a className="btn-join task-join" onClick={() => this.handleOpenConfirmTaskDetailsPopup(task)}>Join</a>
             </div>
         </div>
       );
-    }
-};
-
-class Tasks extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-        IsCurrentTaskOpen : 'block',
-        IsJoinTaskOpen : 'none',
-        scannerQuery: '',
-        timeNow: Date.now(),
-        isScannerExpanded: !this.props.isAuthorized,
-        isAnswerSubmitComplete: false,
-        activeHangout: undefined,
-        isAnswerQuestionsOpen: false,
-
-        //
-        filterCurrent: Filters[0],
-    };
-
-    this.redirectLocation = undefined;
-
-    //this is for making task 'Start' button available in real time
-    this.timeNowUpdateInterval = undefined;
-
-    this.toggleCurrentTaskOption = this.toggleCurrentTaskOption.bind(this);
-    this.toggleJoinTaskOption = this.toggleJoinTaskOption.bind(this);
-  }
-
-  toggleCurrentTaskOption() {
-    this.setState({ IsCurrentTaskOpen: 'block', IsJoinTaskOpen: 'none'});
-  }
-
-  toggleJoinTaskOption() {
-    this.setState({ IsCurrentTaskOpen: 'none', IsJoinTaskOpen: 'block'});
-  }
-
-  renderTasks() {
-    let foundTasks = [];
-
-    const scannerQuery = this.state.scannerQuery.toLowerCase();
-
-    if (scannerQuery != '') {
-      foundTasks = this.props.tasks.filter(function(task) {
-        return (
-          (this.props.currentUserID == undefined || task.userID != this.props.currentUserID) &&
-          task.name &&
-          task.name.toLowerCase().startsWith(scannerQuery)
-        );
-      });
-    } else {
-      foundTasks = this.props.tasks;
-    }
-
-    let that = this;
-
-    if (foundTasks.length == 0) {
-      return null;
-    } else {
-      return foundTasks.map(function(task, i) {
-        return RenderSingleTask(task, i, that.props);
-      });
     }
   }
 
@@ -674,7 +676,11 @@ class Tasks extends React.Component {
                     <div className="row">
                         <div className="row">
                         
-                            <LeftNav userProfile={this.props.userProfile} profilePic={this.state.profilePic} />
+                            <LeftNav 
+                              accounting={this.props.accounting}
+                              userProfile={this.props.userProfile} 
+                              profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
+                            />
 
                             <RightSection />
 
