@@ -124,7 +124,7 @@ const RenderIlluminateActions = (task, props) => {
   switch (task.status) {
     case 'None': {
       return (
-        <a className="answer-question"
+        <a className="pur-btn answer-question"
         onClick={() => props.onHangoutActionPerform('answer_questions', task)}>
             Answer questions
         </a>
@@ -140,7 +140,7 @@ const RenderDecodeActions = (task, props) => {
   switch (task.status) {
     case 'None': {
       return (
-        <a className="answer-question"
+        <a className="pur-btn answer-question"
         onClick={() => props.onHangoutActionPerform('answer_questions', task)}>
             Answer questions
         </a>

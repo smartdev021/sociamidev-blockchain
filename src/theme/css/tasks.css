@@ -44,27 +44,13 @@
     left: 0%;
     right: 0%;
     bottom: -15px;
-    font: normal 12px "MyriadPro";
     position: absolute;
-    font-weight: bold;
-    line-height: 1.2;
-    border: 2px solid #8e019c;
-    background: black;
-    color: #fff;
-    font-size: 12px;
-    padding: 0 10px;
-    margin: 0 auto;
-    display: inline-block;
-    text-decoration: none;
+    margin: 0 auto !important;
     text-align: center;
-    padding-top: 10px;
-    border-width: 2px;
-    border-color: rgb(150, 1, 163);
-    border-style: solid;
-    border-radius: 20px;
-    opacity: 0.949;
-    height: 40px;
+    padding-top: 9px !important;
+    height: 40px !important;
     width: 133px;
+    font-size: 12px !important;
 }
 
 .tasks-wrapper .col-box-join-task{
@@ -189,4 +175,20 @@
 .task-text{
     display: inline-block;
     width: 80%;
+}
+.light-theme-wrapper.tasks-wrapper .col-middle .yellow-btn, .light-theme-wrapper.tasks-wrapper .col-middle .pur-btn {
+    border-color: #0069ba;
+    color: #0069ba;
+}
+.dark-theme-wrapper.tasks-wrapper .col-middle .pur-btn {
+    border: 2px solid #8e019c;
+    background: black;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 50px;
+    height: 34px;
+    padding: 0 10px;
+    margin: 5px 0 20px 0;
+    display: inline-block;
+    text-decoration: none;
 }
