@@ -139,7 +139,8 @@ class HomePage extends Component {
 
   render() {
     const isFetchingPostLoading = this.state.loadingPosts;
-
+    console.log(this.props)
+    console.log('this.props')
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper main-bg`}>
         <div className="row">
@@ -148,6 +149,7 @@ class HomePage extends Component {
               <div className="row">
                 
                 <LeftNav 
+                  accounting={this.props.accounting}
                   userProfile={this.props.userProfile} 
                   profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
                 />
