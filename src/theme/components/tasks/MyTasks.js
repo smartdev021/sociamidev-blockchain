@@ -124,7 +124,7 @@ const RenderIlluminateActions = (task, props) => {
   switch (task.status) {
     case 'None': {
       return (
-        <a className="btn-join answer-question"
+        <a className="answer-question"
         onClick={() => props.onHangoutActionPerform('answer_questions', task)}>
             Answer questions
         </a>
@@ -140,7 +140,7 @@ const RenderDecodeActions = (task, props) => {
   switch (task.status) {
     case 'None': {
       return (
-        <a className="btn-join answer-question"
+        <a className="answer-question"
         onClick={() => props.onHangoutActionPerform('answer_questions', task)}>
             Answer questions
         </a>
@@ -714,12 +714,15 @@ const RenderTask = (task, i, props) => {
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'20px'}}>
+                <div className="top-head" style={{padding:'10px 20px 10px 20px'}}>
                     <div className="profile-icon">
                         <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
                     </div>
-                    <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                    <span className="bule-text">2 days ago</span>
+                    <div className="task-text">
+                      <span className="col-heading">{RenderTaskTitle(task, props)}</span>
+                      <span className="bule-text">2 days ago</span>
+                    </div>
+                    
                 </div>
                 <div className="att-box task-id">TaskId: {task._id}}</div>
                 <div className="att-box">
@@ -740,12 +743,14 @@ const RenderTask = (task, i, props) => {
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'20px'}}>
+                <div className="top-head" style={{padding:'10px 20px 10px 20px'}}>
                     <div className="profile-icon">
                         <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
                     </div>
-                    <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                    <span className="bule-text">2 days ago</span>
+                    <div className="task-text">
+                      <span className="col-heading">{RenderTaskTitle(task, props)}</span>
+                      <span className="bule-text">2 days ago</span>
+                    </div>
                 </div>
                 <div className="att-box task-id">TaskId: {task._id}}</div>
                 <div className="att-box">
@@ -765,12 +770,14 @@ const RenderTask = (task, i, props) => {
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'20px'}}>
+                <div className="top-head" style={{padding:'10px 20px 10px 20px'}}>
                     <div className="profile-icon">
                         <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
                     </div>
-                    <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                    <span className="bule-text">2 days ago</span>
+                    <div className="task-text">
+                      <span className="col-heading">{RenderTaskTitle(task, props)}</span>
+                      <span className="bule-text">2 days ago</span>
+                    </div>
                 </div>
                 <div className="att-box task-id">TaskId: {task._id}}</div>
                 <div className="att-box">
