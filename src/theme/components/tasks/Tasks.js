@@ -706,6 +706,11 @@ class Tasks extends React.Component {
                                         </div>
                                         <div id="currenttask" style={{ display: this.state.IsCurrentTaskOpen }}>
                                             
+                                            {/* <HeaderTaskManager
+                                                filters={Filters}
+                                                onFilterChange={newFilter => this.handleFilterChange(newFilter)}
+                                                filterCurrent={this.state.filterCurrent}
+                                            /> */}
                                             <MyTasks
                                                 tasks={myTasks}
                                                 handleOpenCancelTaskDetailsPopup={task => this.handleOpenCancelTaskDetailsPopup(task)}
@@ -739,13 +744,6 @@ class Tasks extends React.Component {
                                                 item="cancel_confirmation"
                                                 task={this.state.detailsPopupItem}
                                             />
-                                            <HeaderTaskManager
-                                                filters={Filters}
-                                                onFilterChange={newFilter => this.handleFilterChange(newFilter)}
-                                                filterCurrent={this.state.filterCurrent}
-                                            />
-
-
                                         </div>
                                         <div id="jointask" style={{ display: this.state.IsJoinTaskOpen }}>
                                             <div className="row">
