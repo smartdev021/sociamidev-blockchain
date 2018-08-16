@@ -25,7 +25,11 @@ class Story extends Component {
           <div className="container">
             <div className="row">
               <div className="row">
-                <LeftNav userProfile={this.props.userProfile} profilePic={this.state.profilePic} />
+                <LeftNav
+                  accounting={this.props.accounting}
+                  userProfile={this.props.userProfile}
+                  profilePic={this.state.profilePic}
+                />
 
                 <RightSection />
 
