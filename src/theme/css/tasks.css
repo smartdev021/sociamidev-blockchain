@@ -51,6 +51,9 @@
     height: 40px !important;
     width: 133px;
     font-size: 12px !important;
+    padding: 0 10px;
+    border-radius: 50px;
+    border: 2px solid;
 }
 
 .tasks-wrapper .col-box-join-task{
@@ -87,7 +90,7 @@
 .dark-theme-wrapper.tasks-wrapper .col-middle .top-head .col-heading {
     display: block;
     color: rgb(255, 255, 255);
-    font: normal 16px "MyriadPro Semibold";
+    font: normal 15px "MyriadPro Semibold";
 }
 .tasks-wrapper .col-middle .top-head .bule-text {
     font-size: 11px;
@@ -174,7 +177,7 @@
 }
 .task-text{
     display: inline-block;
-    width: 80%;
+    width: 85%;
 }
 .light-theme-wrapper.tasks-wrapper .col-middle .yellow-btn, .light-theme-wrapper.tasks-wrapper .col-middle .pur-btn {
     border-color: #0069ba;

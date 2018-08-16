@@ -714,7 +714,7 @@ const RenderTask = (task, i, props) => {
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'10px 20px 10px 20px'}}>
+                <div className="top-head" style={{padding:'10px 10px'}}>
                     <div className="profile-icon">
                         <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
                     </div>
@@ -743,7 +743,7 @@ const RenderTask = (task, i, props) => {
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'10px 20px 10px 20px'}}>
+                <div className="top-head" style={{padding:'10px 10px'}}>
                     <div className="profile-icon">
                         <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
                     </div>
@@ -770,7 +770,7 @@ const RenderTask = (task, i, props) => {
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'10px 20px 10px 20px'}}>
+                <div className="top-head" style={{padding:'10px 10px'}}>
                     <div className="profile-icon">
                         <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
                     </div>
