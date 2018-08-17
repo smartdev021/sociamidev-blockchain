@@ -645,7 +645,7 @@ class UserProfile extends Component {
                           <li><span className="icon bt-icon"></span> Lives in Vietnam</li>
                           <li><span className="icon pc-icon"></span> Joined September 2017</li>
                           { (this.state.character.traitsName) ? <li><span className="icon bt-icon"></span> {this.state.character.traitsName}</li> : null }
-                          { (this.state.character.characterName) ? <li><span className="icon bt-icon"></span> {this.state.character.characterName}</li> : null }
+                          { (this.state.character.characterName) ? <li><span className="icon pc-icon"></span> {this.state.character.characterName}</li> : null }
                         </ul>
                       </div>
                     </div>
