@@ -103,7 +103,7 @@ class Main extends Component {
         />
         <Route path="/skillBrowser" render={routeProps => <SkillBrowser {...routeProps} {...this.props} />} />
         <Route
-          path="/tasks"
+          path="/taskManagement"
           render={routeProps => <TaskManager {...routeProps} {...this.props} />}
         />
         <Route path="/taskBrowser" render={routeProps => <TaskBrowser {...routeProps} {...this.props} />} />
@@ -149,7 +149,7 @@ class Main extends Component {
 
         <Route path="/levels" render={routeProps => <Levels {...routeProps} {...this.props} />} />)}/>
 
-        <Route path="/taskManagement" render={routeProps => <Tasks {...routeProps} {...this.props} />} />)}/>
+        <Route path="/tasks" render={routeProps => <Tasks {...routeProps} {...this.props} />} />)}/>
 
       </Switch>
     );

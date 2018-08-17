@@ -311,7 +311,7 @@ class HangoutSubmitForm extends React.Component {
               Your DeepDive has been created! Let's wait for a match!<br />Find out more about what's
               happening around this topic below.
             </p>
-            <Link to="/taskManagement">
+            <Link to="/tasks">
               <button type="submit" className="btn-md btn-outline-inverse goto-task-manager-btn">
                 Goto Task Manager Instead
               </button>

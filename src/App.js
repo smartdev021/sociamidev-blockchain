@@ -251,7 +251,7 @@ class App extends Component {
 
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
     if (this.props.exactLocation && this.props.exactLocation == 'RoadmapsWidgetDetails') {
-      lastLocation.pathname = '/taskManagement';
+      lastLocation.pathname = "/tasks";
     }
 
     cookies.set('lastLocation', lastLocation, options);

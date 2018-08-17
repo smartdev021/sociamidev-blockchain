@@ -75,7 +75,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
           </Link>
         </div>
         <div className="navbar-btn-row">
-          <Link to="/taskManagement" className="navbar-button" onClick={closeMenu}>
+          <Link to="/tasks" className="navbar-button" onClick={closeMenu}>
             <div className="navbar-btn-img">
               <img
               src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
@@ -327,7 +327,7 @@ class ThemeHeader extends React.Component {
                     </div>
                   </Link>
 
-                  <Link to="/taskManagement" className="navbar-button">
+                  <Link to="/tasks" className="navbar-button">
                     <div className="navbar-btn-img">
                       <img
                       src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"

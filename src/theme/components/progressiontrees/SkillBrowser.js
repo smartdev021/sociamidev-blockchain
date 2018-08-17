@@ -777,7 +777,7 @@ class SkillBrowser extends React.Component {
       : 'btn-md btn-outline-inverse illuminate-button-disabled';
 
     if (redirectToTaskManagement) {
-      return <Redirect to="/taskManagement" />;
+      return <Redirect to="/tasks" />;
     }
 
     const DecodeFlipCard = this.RenderDecodeFlipcard();

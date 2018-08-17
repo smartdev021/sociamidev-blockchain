@@ -138,9 +138,9 @@ class NavTop extends React.Component {
                 <li>
                   <p className="navbar-btn">
                     <Link
-                      to="/taskManagement"
+                      to="/tasks"
                       className={
-                        this.props.location.pathname == '/taskManagement'
+                        this.props.location.pathname == "/tasks"
                           ? ButtonClassName + ' active'
                           : ButtonClassName
                       }
