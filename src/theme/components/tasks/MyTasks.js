@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import TimeAgo from 'react-timeago';
+
 import { Icon } from 'react-fa';
 
 import Countdown from 'react-countdown-now';
@@ -707,7 +709,6 @@ const RenderTask = (task, i, props) => {
     createdDate.getDate() + ' ' + months[createdDate.getMonth()] + ' ' + createdDate.getFullYear();
   if (task.type === TaskTypes.DEEPDIVE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
-
     const SkillName = task.metaData.subject.skill.name;
     let ThirdLine = GenerateDateString(taskTime, props);
     if (taskTime < new Date()) ThirdLine = 'Start when both ready';
@@ -720,7 +721,9 @@ const RenderTask = (task, i, props) => {
                     </div>
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                      <span className="bule-text">2 days ago</span>
+                      <span className="bule-text">
+                        <TimeAgo date={taskTime} minPeriod={60} />
+                      </span>
                     </div>
                     
                 </div>
@@ -739,6 +742,7 @@ const RenderTask = (task, i, props) => {
         </div>
     );
   } else if (task.type === TaskTypes.ILLUMINATE) {
+    const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
     const SkillName = task.metaData.subject.skill.name;
     return (
         <div className="col-md-6" key={i}>
@@ -749,7 +753,9 @@ const RenderTask = (task, i, props) => {
                     </div>
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                      <span className="bule-text">2 days ago</span>
+                      <span className="bule-text">
+                        <TimeAgo date={taskTime} minPeriod={60} />
+                      </span>
                     </div>
                 </div>
                 <div className="att-box task-id">TaskId: {task._id}}</div>
@@ -766,6 +772,7 @@ const RenderTask = (task, i, props) => {
         </div>
     );
   } else if (task.type === TaskTypes.DECODE) {
+    const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
     const SkillName = task.metaData.subject.skill.name;
     return (
         <div className="col-md-6" key={i}>
@@ -776,7 +783,9 @@ const RenderTask = (task, i, props) => {
                     </div>
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                      <span className="bule-text">2 days ago</span>
+                      <span className="bule-text">
+                        <TimeAgo date={taskTime} minPeriod={60} />
+                      </span>
                     </div>
                 </div>
                 <div className="att-box task-id">TaskId: {task._id}}</div>

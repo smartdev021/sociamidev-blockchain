@@ -4,7 +4,8 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import Axios from 'axios';
+
 import { Icon } from 'react-fa';
 
 import { fetchRoadmaps, fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
@@ -17,6 +18,16 @@ import ConfigMain from '~/configs/main';
 
 import '~/src/theme/css/SkillCard.css';
 
+import UserInteractions from '~/src/common/UserInteractions';
+import TaskTypes from '~/src/common/TaskTypes';
+import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
+import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
+
+
+const RandomInt = function RandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 class SkillCard extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +38,9 @@ class SkillCard extends React.Component {
       openVideo: false,
       tree: undefined,
       selectedTask: undefined,
-      selectedSkill: undefined
+      selectedSkill: undefined,
+      isHangoutFormVisible: false,
+      TrendScannerComponentVisible: false
     };
   }
 
@@ -35,7 +48,7 @@ class SkillCard extends React.Component {
     const treeId = this.props.skillItem._id;
     if (treeId) {
       this.setState({ isLoading: true });
-      axios
+      Axios
         .get(`${ConfigMain.getBackendURL()}/roadmapGet?id=${treeId}`)
         .then(response => this.treeFetchSuccess(response))
         .catch(error => this.treeFetchFailed(error));
@@ -62,13 +75,21 @@ class SkillCard extends React.Component {
 
   startTask() {
     if(this.state.selectedTask && this.state.selectedSkill) {
-      this.props.onStart(this.state.selectedTask, this.state.selectedSkill, this.state.tree);
-      this.setState({
-        isTaskSelected: false,
-        selectedTask: undefined,
-        selectedSkill: undefined,
-        flipCardClass: false
-      });
+      if(this.state.selectedTask == 'Deepdive'){
+        this.setState({
+          isHangoutFormVisible: true,
+          isTaskSelected: false,
+          flipCardClass: false,
+        });
+      }else{
+        this.props.onStart(this.state.selectedTask, this.state.selectedSkill, this.state.tree);
+        this.setState({
+          isTaskSelected: false,
+          selectedTask: undefined,
+          selectedSkill: undefined,
+          flipCardClass: false
+        });
+      }
     }
   }
 
@@ -77,7 +98,18 @@ class SkillCard extends React.Component {
   }
 
   selectSkill(e, selectedSkill) {
-    this.setState({ selectedSkill });
+
+    const url = `${ConfigMain.getBackendURL()}/skillGet?name=${selectedSkill}`;
+    const that = this;
+    that.setState({ isLoading: true, isHangoutFormVisible: false });
+    Axios.get(url)
+      .then(function(response) {
+        that.setState({ skillInfo: response.data, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+      })
+      .catch(function(error) {
+        that.setState({ skillInfo: undefined, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+      });
+
     $('.pskill-banner').removeClass('active');
     $(e.target)
       .closest('div.pskill-banner')
@@ -85,6 +117,10 @@ class SkillCard extends React.Component {
   }
 
   selectTask(e, selectedTask) {
+
+
+
+
     this.setState({ selectedTask });
     $('.ptask-banner').removeClass('active');
     $(e.target)
@@ -155,7 +191,7 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e)}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Deepdive')}>
             <div className="ptask-left">
               <div className="ptask-name">Deepdive</div>
               <div className="ptask-desc">30 min 10 questions</div>
@@ -168,7 +204,7 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e)}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'XXX')}>
             <div className="ptask-left">
               <div className="ptask-name">XXX</div>
               <div className="ptask-desc">xxx</div>
@@ -181,7 +217,7 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e)}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
             <div className="ptask-left">
               <div className="ptask-name">Brainstorm</div>
               <div className="ptask-desc">60 min 1 challenge</div>
@@ -261,6 +297,71 @@ class SkillCard extends React.Component {
     return imgJson;
   }
 
+  onCloseModal() {
+    this.setState({ isIlluminateFormVisible: false, isHangoutFormVisible: false });
+  }
+
+  handleToggle() {
+    this.setState({ IsDisplayForm: 'none' });
+  }
+
+  toggleTrendScannerComponent() {
+    this.setState({
+      TrendScannerComponentVisible: true,
+      isHangoutFormVisible: true,
+    });
+  }
+
+  handleTimeChange(e) {
+    e.preventDefault();
+  }
+
+  handleStartHangout(date) {
+    const CurrentTree = this.state.tree;
+
+    const hangout = {
+      name: `Hangout for roadmap "${CurrentTree.name}"`,
+      description: 'Hangout with John, and answer questions together',
+      type: TaskTypes.DEEPDIVE,
+      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`,
+      userID: this.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: this.props.userProfile._id,
+        firstName: this.props.userProfile.firstName,
+        lastName: this.props.userProfile.lastName,
+      },
+      metaData: {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: this.state.skillInfo._id,
+            name: this.state.skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: this.props.userProfile._id,
+              firstName: this.props.userProfile.firstName,
+              lastName: this.props.userProfile.lastName,
+            },
+            status: 'accepted',
+            isCreator: true,
+          },
+        ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
+        ratings: [],
+        time: date.getTime(),
+        awardXP: RandomInt(30, 40),
+      },
+    }
+  }
+
+  
+
   render() {
     const { skillItem } = this.props;
     const flipClass = this.state.flipCardClass ? ' hover' : '';
@@ -268,10 +369,35 @@ class SkillCard extends React.Component {
       ? this.renderSkillCard(skillItem)
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
-    const imgJson = this.getImgUrl(skillItem.heroimg);
+    const imgJson = this.getImgUrl(skillItem.heroimg)
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
+
+        <HangoutSubmitForm
+        isHangoutFormVisible={this.state.isHangoutFormVisible}
+        onHandleStartHangout={date => this.handleStartHangout(date)}
+        onTimeChange={e => handleTimeChange(e)}
+        toogleTrenScan={() => this.toggleTrendScannerComponent()}
+        handleToggle={() => this.handleToggle()}
+        onCloseModal={() => this.onCloseModal()} />
+
+
+        {/* {this.state.TrendScannerComponentVisible && (
+            <div className="row">
+              <div className="col-lg-12">
+                <div id="skill-breakdown-trend-scanner">
+                  <TrendScannerComponent
+                    onHandleSelectCategory={e => this.handleSelectCategory(e)}
+                    resultsSelectedCategory={this.props.resultsSelectedCategory}
+                    isFetchInProgress={this.props.isFetchInProgress}
+                    searchResults={this.props.searchResults}
+                  />
+                </div>
+              </div>
+            </div>
+          )} */}
+
         <div className="progression-tree-skill-content">
           <div className="progression-tree-skill-item">
             <div className="progression-tree-hero-container col-md-6 col-sm-12">
