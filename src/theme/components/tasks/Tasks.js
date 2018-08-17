@@ -32,6 +32,8 @@ import TaskTypes from '~/src/common/TaskTypes';
 
 import '~/src/theme/css/tasks.css'
 
+const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
+
 import {
   fetchTasksInitiate,
   fetchTasksComplete,

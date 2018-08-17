@@ -9,6 +9,8 @@ import RightSection from '~/src/theme/components/homepage/RightSection';
 
 import '~/src/theme/css/levels.css';
 
+const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
+
 class Levels extends Component {
     constructor(props) {
         super(props);
