@@ -138,7 +138,7 @@
     top: 0;
     left: -20px;
     z-index: 2;
-    padding: 15px 55px 10px 80px;
+    padding: 0px 55px 10px 80px;
     margin: 0;
     background: #000;
     transform: skewX(-35deg);
