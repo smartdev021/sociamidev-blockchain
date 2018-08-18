@@ -595,6 +595,13 @@ class UserProfile extends Component {
   }
 
   render() {
+    let traitsNameLine
+    let characterNameLine
+    if(this.state.character){
+    traitsNameLine = (this.state.character.traitsName) ? (<li><span className="icon bt-icon"></span> {this.state.character.traitsName}</li>) : null ;
+    characterNameLine = (this.state.character.characterName) ? (<li><span className="icon pc-icon"></span> {this.state.character.characterName}</li>) : null ;
+    }
+
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper main-bg`}>
         <div className="row">
@@ -644,8 +651,8 @@ class UserProfile extends Component {
                           <li><span className="icon p-icon"></span> Studied at Yoobo</li>
                           <li><span className="icon bt-icon"></span> Lives in Vietnam</li>
                           <li><span className="icon pc-icon"></span> Joined September 2017</li>
-                          { (this.state.character.traitsName) ? <li><span className="icon bt-icon"></span> {this.state.character.traitsName}</li> : null }
-                          { (this.state.character.characterName) ? <li><span className="icon pc-icon"></span> {this.state.character.characterName}</li> : null }
+                          {traitsNameLine}
+                          {characterNameLine}
                         </ul>
                       </div>
                     </div>
