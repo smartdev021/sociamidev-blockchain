@@ -14,7 +14,7 @@ import ActionLink from '~/src/components/common/ActionLink';
 import Notifications from '~/src/theme/components/themeHeader/Notifications';
 import StatsDropdown from '~/src/theme/components/themeHeader/StatsDropdown';
 import UserMenuDropdown from '~/src/theme/components/themeHeader/UserMenuDropdown';
-import CompanyDropDown from '~/src/theme/components/themeHeader/CompanyDropDown';
+import CompanyDropDown from '~/src/theme/components/themeHeader/CompanyDropdown';
 
 import ConfigMain from '~/configs/main';
 
