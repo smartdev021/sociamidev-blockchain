@@ -14,6 +14,7 @@ import ActionLink from '~/src/components/common/ActionLink';
 import Notifications from '~/src/theme/components/themeHeader/Notifications';
 import StatsDropdown from '~/src/theme/components/themeHeader/StatsDropdown';
 import UserMenuDropdown from '~/src/theme/components/themeHeader/UserMenuDropdown';
+import CompanyDropDown from '~/src/theme/components/themeHeader/CompanyDropDown';
 
 import ConfigMain from '~/configs/main';
 
@@ -155,25 +156,16 @@ class ThemeHeader extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
     this.handleOutsideClickCompany = this.handleOutsideClickCompany.bind(this);
+    this.selectCompany = this.selectCompany.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
   }
 
   toggleCompany() {
-    this.setState({isCompanyOpen: !this.state.isCompanyOpen}, () => {
-      if(this.state.isCompanyOpen) {
-        console.log('ADDED')
-        document.addEventListener('click', this.handleOutsideClickCompany, false);
-      } else {
-        document.removeEventListener('click', this.handleOutsideClickCompany, false);
-      }
-    });
+    this.setState({isCompanyOpen: !this.state.isCompanyOpen})
   }
 
-  handleOutsideClickCompany(e) {
-    console.log('e',e)
-    if (!this.node.contains(e.target)) {
-      console.log('OUt SIDE')
-    }
+  handleOutsideClickCompany() {
+    this.setState({isCompanyOpen: !this.state.isCompanyOpen})
   }
 
   selectCompany(id) {
@@ -271,7 +263,6 @@ class ThemeHeader extends React.Component {
       }
     }
     if (prevProps.companies.company != this.props.companies.company) {
-      console.log('this.props.companies.company', this.props.companies.company)
       if(this.props.companies.company.length > 0) {
         const activeCompany = this.props.companies.company[0];
         this.setState({activeCompany: activeCompany})
@@ -279,7 +270,6 @@ class ThemeHeader extends React.Component {
         this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)}); 
       }  
     }
-    
   }
 
   toggle() {
@@ -334,28 +324,7 @@ class ThemeHeader extends React.Component {
           />
         )}
         {this.state.companies.length > 0 && this.state.isCompanyOpen && (
-          <div id="companyDropdown" ref={node => { this.node = node }}>>
-            <ListGroup>
-              <ListGroupItem className="notifyTitle">
-                <ul className="sub-navbar">
-                  {
-                    this.state.companies.map((c,i) => {
-                      return (
-                        <li key={i}>
-                          <a href="javascript:" onClick={() => this.selectCompany(c._id)} >
-                            <span className="new-img-icon-head">
-                              <img src={c.imageUrl} alt="" />
-                            </span>
-                            <span className="company-name">{c.name}</span>
-                          </a>
-                        </li>
-                      )
-                    })                      
-                  }
-                </ul>
-              </ListGroupItem>
-            </ListGroup>
-          </div>
+          <CompanyDropDown companies={this.state.companies} handleClickOutside={this.handleOutsideClickCompany} selectCompany={this.selectCompany}/>
         )}
 
         <div className="navbar-wrapper">
@@ -406,7 +375,6 @@ class ThemeHeader extends React.Component {
 
                   <div className="navbar-options">
                     <li><a href="#"><span className="new-img-icon-head"><img src={houseImage} alt="" /></span></a></li>
-                    {/* <li><a href="#"><span className="new-img-icon-head"><img src={companyImages} alt="" /></span></a></li> */}
                     <li>
                       <a href="javascript:" onClick={this.toggleCompany}>
                         <span className="new-img-icon-head">
