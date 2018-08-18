@@ -19,11 +19,15 @@ import ConfigMain from '~/configs/main';
 
 import { ToastContainer, toast } from 'react-toastify';
 
+import { ListGroupItem, ListGroup } from 'react-bootstrap';
+
 import PubSub from 'pubsub-js';
 
 import '~/src/theme/css/ThemeHeader.css';
 
 import logoSrc from '../../../../assets/img/logo.png'
+
+import defaultHouseCompanyImage from '../../../../assets/img/question-mark.jpg';
 
 const Logo = () => {
   return (
@@ -142,11 +146,42 @@ class ThemeHeader extends React.Component {
 
     this.state = {
       notificationsOpen: false,
-      isOpen: false
+      isOpen: false,
+      isCompanyOpen: false,
+      companies: [],
+      activeCompany: {imageUrl: defaultHouseCompanyImage}
     };
 
     this.toggle = this.toggle.bind(this);
+    this.toggleCompany = this.toggleCompany.bind(this);
+    this.handleOutsideClickCompany = this.handleOutsideClickCompany.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
+  }
+
+  toggleCompany() {
+    this.setState({isCompanyOpen: !this.state.isCompanyOpen}, () => {
+      if(this.state.isCompanyOpen) {
+        console.log('ADDED')
+        document.addEventListener('click', this.handleOutsideClickCompany, false);
+      } else {
+        document.removeEventListener('click', this.handleOutsideClickCompany, false);
+      }
+    });
+  }
+
+  handleOutsideClickCompany(e) {
+    console.log('e',e)
+    if (!this.node.contains(e.target)) {
+      console.log('OUt SIDE')
+    }
+  }
+
+  selectCompany(id) {
+    const activeCompany = this.props.companies.company.filter(c => c._id === id)[0];
+    this.setState({activeCompany: activeCompany});
+    const companyArr = this.props.companies.company;
+    this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)}); 
+    this.setState({isCompanyOpen: !this.state.isCompanyOpen});
   }
 
   componentDidMount() {
@@ -235,6 +270,16 @@ class ThemeHeader extends React.Component {
         this.PubsubEventsUnSubscribe();
       }
     }
+    if (prevProps.companies.company != this.props.companies.company) {
+      console.log('this.props.companies.company', this.props.companies.company)
+      if(this.props.companies.company.length > 0) {
+        const activeCompany = this.props.companies.company[0];
+        this.setState({activeCompany: activeCompany})
+        const companyArr = this.props.companies.company;
+        this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)}); 
+      }  
+    }
+    
   }
 
   toggle() {
@@ -273,15 +318,10 @@ class ThemeHeader extends React.Component {
     const OpenMenuClass = !this.props.isSidebarOpen ? 'open-menu' : 'open-menu';
     const CloseMenuClass = this.props.isSidebarOpen ? 'close-menu' : 'close-menu';
     
-    let houseImage = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png";
+    let houseImage = defaultHouseCompanyImage;
     if(this.props.houses.houses.length > 0) {
       houseImage = this.props.houses.houses[0].imageUrl;
-    }
-
-    let companyImages = "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png";
-    if(this.props.companies.company.length > 0) {
-      companyImages = this.props.companies.company[0].imageUrl;
-    }   
+    } 
     
     return (
       <div className="soqqle-header" id="popup-root">
@@ -293,7 +333,30 @@ class ThemeHeader extends React.Component {
             markActivitySeen={() => this.props.markActivitySeen()}
           />
         )}
-
+        {this.state.companies.length > 0 && this.state.isCompanyOpen && (
+          <div id="companyDropdown" ref={node => { this.node = node }}>>
+            <ListGroup>
+              <ListGroupItem className="notifyTitle">
+                <ul className="sub-navbar">
+                  {
+                    this.state.companies.map((c,i) => {
+                      return (
+                        <li key={i}>
+                          <a href="javascript:" onClick={() => this.selectCompany(c._id)} >
+                            <span className="new-img-icon-head">
+                              <img src={c.imageUrl} alt="" />
+                            </span>
+                            <span className="company-name">{c.name}</span>
+                          </a>
+                        </li>
+                      )
+                    })                      
+                  }
+                </ul>
+              </ListGroupItem>
+            </ListGroup>
+          </div>
+        )}
 
         <div className="navbar-wrapper">
             <header>
@@ -343,25 +406,14 @@ class ThemeHeader extends React.Component {
 
                   <div className="navbar-options">
                     <li><a href="#"><span className="new-img-icon-head"><img src={houseImage} alt="" /></span></a></li>
-                    <li><a href="#"><span className="new-img-icon-head"><img src={companyImages} alt="" /></span></a></li>
-                    {/* <li>
-                      <ul className="sub-navbar">
-                        <li>
-                          <a href="#">
-                            <span className="new-img-icon-head">
-                              <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" />
-                            </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <span className="new-img-icon-head">
-                              <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" />
-                            </span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li> */}
+                    {/* <li><a href="#"><span className="new-img-icon-head"><img src={companyImages} alt="" /></span></a></li> */}
+                    <li>
+                      <a href="javascript:" onClick={this.toggleCompany}>
+                        <span className="new-img-icon-head">
+                          <img src={this.state.activeCompany.imageUrl ? this.state.activeCompany.imageUrl : ''} alt="" />
+                        </span>
+                      </a>
+                    </li>
                     {/* <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} /> */}
                     <li className="notification">
                       <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
