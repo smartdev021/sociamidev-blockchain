@@ -23,12 +23,14 @@ import PubSub from 'pubsub-js';
 
 import '~/src/theme/css/ThemeHeader.css';
 
+import logoSrc from '../../../../assets/img/logo.png'
+
 const Logo = () => {
   return (
     <div className="logo">
       <Link to="/">
         <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+          src={logoSrc}
           alt="logo"
         />
       </Link>
@@ -88,14 +90,14 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
           </Link>
         </div>
         <div className="navbar-mobile-options">
-          <Link to="" className="navbar-option" onClick={closeMenu}>
+          {/* <Link to="" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">
             <img className="navbar-option-icon"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"
             />
             States</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link>
+          </Link> */ }
           <Link to="" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">
             <img className="navbar-option-icon"
@@ -360,7 +362,7 @@ class ThemeHeader extends React.Component {
                         </li>
                       </ul>
                     </li> */}
-                    <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
+                    {/* <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} /> */}
                     <li className="notification">
                       <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
                         <Icon name="bell" aria-hidden="true" />
