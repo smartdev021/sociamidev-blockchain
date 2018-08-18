@@ -37,7 +37,7 @@ import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser';
 import ProgressionTreeBrowser from '~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew';
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import SkillBrowser from '~/src/theme/components/progressiontrees/SkillBrowser';
-import ConnectionsView from '~/src/theme/components/connections/ConnectionsView.js';
+import Connections from '~/src/theme/components/connections/Connections.js';
 import Story from '~/src/theme/components/story/Story';
 import Challenges from '~/src/theme/components/challenges/Challenges';
 // import UserProfile from '~/src/theme/UserProfile.js';
@@ -123,8 +123,8 @@ class Main extends Component {
         />
         <Route
           exact
-          path="/connectionsView"
-          render={routeProps => <ConnectionsView {...routeProps} {...this.props} />}
+          path="/connections"
+          render={routeProps => <Connections {...routeProps} {...this.props} />}
         />
         <Route
           exact
@@ -157,7 +157,7 @@ class Main extends Component {
 
   render() {
     let RedirectTo = this.getRedirectLocation();
-    if(this.props.history.location.pathname == "/characterCreation"){
+    if (this.props.history.location.pathname == "/characterCreation") {
       RedirectTo = <Redirect to="/" push />;
     }
     return (
@@ -179,9 +179,9 @@ class Main extends Component {
           userProfile={this.props.userProfile}
           accounting={this.props.accounting}
         />
-        
+
         <div className="soqqle-page-content">{this.renderRoutes()}</div>
-        
+
       </div>
     );
   }

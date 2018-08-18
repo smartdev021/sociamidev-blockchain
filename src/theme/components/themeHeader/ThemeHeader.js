@@ -111,7 +111,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
             Notification</div>
             <i className="glyphicon glyphicon-chevron-right pull-right"></i>
           </Link>
-          <Link to="/connectionsView" className="navbar-option" onClick={closeMenu}>
+          <Link to="/connections" className="navbar-option" onClick={closeMenu}>
             <div className="navbar-option-name">
             <img className="navbar-option-icon"
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
@@ -390,7 +390,7 @@ class ThemeHeader extends React.Component {
                       </ActionLink>
                     </li>
                     <li className="register">
-                      <Link href="#" to="/connectionsView">
+                      <Link href="#" to="/connections">
                         <Icon name="user-plus" aria-hidden="true" />
                       </Link>
                     </li>

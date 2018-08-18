@@ -205,7 +205,7 @@ class ThemeHeader extends React.Component {
                   </ActionLink>
                 </li>
                 <li className="register">
-                  <Link href="#" to="/connectionsView">
+                  <Link href="#" to="/connections">
                     <Icon name="user-plus" aria-hidden="true" />
                   </Link>
                 </li>

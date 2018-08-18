@@ -8,7 +8,8 @@ import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import RightSection from '~/src/theme/components/homepage/RightSection';
 import ConnectionCard from './ConnectionCard';
 
-class ConnectionsView extends React.Component {
+const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
+class Connections extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,9 +110,9 @@ class ConnectionsView extends React.Component {
   }
 }
 
-ConnectionsView.propTypes = {
+Connections.propTypes = {
   userProfile: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
 
-export default ConnectionsView;
+export default Connections;

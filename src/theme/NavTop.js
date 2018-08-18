@@ -44,7 +44,7 @@ class NavTop extends React.Component {
     let ConnectionsViewLink = '';
     if (this.props.isAuthorized) {
       ConnectionsViewLink = (
-        <Link href="#" to="/connectionsView">
+        <Link href="#" to="/connections">
           <img src="http://sociamibucket.s3.amazonaws.com/assets/images/custom_ui/add-friend.png" />
         </Link>
       );

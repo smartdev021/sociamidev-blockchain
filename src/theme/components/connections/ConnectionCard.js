@@ -30,7 +30,7 @@ function ConnectionCard() {
           </div>
         </li>
         <li>
-          <span>Projects</span>
+          <span>Challenges</span>
           <div className="sql-badge">
             <a href="#">5</a>
           </div>
