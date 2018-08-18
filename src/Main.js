@@ -37,7 +37,7 @@ import TaskBrowser from '~/src/theme/components/tasks/TaskBrowser';
 import ProgressionTreeBrowser from '~/src/theme/components/progressiontrees/ProgressiontreeBrowserNew';
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import SkillBrowser from '~/src/theme/components/progressiontrees/SkillBrowser';
-import ConnectionsView from '~/src/theme/ConnectionsView.js';
+import ConnectionsView from '~/src/theme/components/connections/ConnectionsView.js';
 import Story from '~/src/theme/components/story/Story';
 import Challenges from '~/src/theme/components/challenges/Challenges';
 // import UserProfile from '~/src/theme/UserProfile.js';
