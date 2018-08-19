@@ -271,3 +271,9 @@
   .profile-wrapper .top-wp .middle-edit a {display: inline-block; text-align: center;}
   .profile-wrapper .top-wp .last-right {width: 100%;}
 }
+.light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-follow, .light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-send {
+  background: #ccc;
+}
+.btn-follow, .btn-send {
+  background: #ccc;
+}
