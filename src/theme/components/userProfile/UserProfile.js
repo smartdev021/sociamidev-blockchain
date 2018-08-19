@@ -540,7 +540,7 @@ class UserProfile extends Component {
         // <div className="col-md-5 experience-container" key={i}>
           <div className="row">
             <div className="col-sm-8" style={{ 'text-align': 'right', color: 'white' }}><p>{ProgTreeLevel.name}</p></div>
-            <div className="col-sm-4"><a href="#" className="btn-lavel-yellow pull-right">LEVEL {ProgTreeLevel.level}</a></div>
+            <div className="col-sm-4"><a href="/levels" className="btn-lavel-yellow pull-right">LEVEL {ProgTreeLevel.level}</a></div>
           </div>
         // </div>
       )
