@@ -6,6 +6,11 @@ import { updateUserTheme } from '~/src/redux/actions/authorization';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import RightSection from '~/src/theme/components/homepage/RightSection';
+import social1 from './images/f-acc.png';
+import social2 from './images/linkedin-acc.png';
+import envelope from './images/envelope.png';
+import close from './images/close.png';
+import '~/src/theme/css/setting.css';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -276,6 +281,60 @@ class Settings extends Component {
                             </div>
                           </div>
                         </div>
+                      </div>
+                      <div className="devider-box">
+                        <h3>
+                          Link accounts
+                          <span>
+                            <a href="javascript:;" className="change-btn">
+                              <i className="fa fa-users"></i> Add
+                            </a>
+                          </span>                          
+                        </h3>
+                        <p>
+                          <span className="logo-social" style={ { backgroundImage: `url(${envelope})` } }></span>
+                          <div className="inline">
+                            <span className="abs -mt-3">
+                              danialshen83@ymail.com
+                              <a href="javascript:;">
+                                <span className="close-x" style={ { backgroundImage: `url(${close})` } }></span>
+                              </a>                              
+                            </span>
+                          </div>                          
+                        </p>
+                        <p>
+                          <span className="logo-social" style={ { backgroundImage: `url(${social1})` } }></span>
+                          <div className="inline">
+                            <span className="abs">
+                              danialshen83@ymail.com
+                              <a href="javascript:;">
+                                <span className="close-x" style={ { backgroundImage: `url(${close})` } }></span>
+                              </a>                              
+                            </span>
+                          </div>                          
+                        </p>
+                        <p>
+                          <span className="logo-social" style={ { backgroundImage: `url(${social2})` } }></span>
+                          <div className="inline">
+                            <span className="abs">
+                              danialsh@ymail.com
+                              <a href="javascript:;">
+                                <span className="close-x" style={ { backgroundImage: `url(${close})` } }></span>
+                              </a>                              
+                            </span>
+                          </div>                          
+                        </p>
+                        <p>
+                          <span className="logo-social" style={ { backgroundImage: `url(${envelope})` } }></span>
+                          <div className="inline">
+                            <span className="abs -mt-3">
+                              danial@ymail.com
+                              <a href="javascript:;">
+                                <span className="close-x" style={ { backgroundImage: `url(${close})` } }></span>
+                              </a>                              
+                            </span>
+                          </div>                          
+                        </p>
                       </div>
                     </div>
                   </div>
