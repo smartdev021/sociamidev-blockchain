@@ -756,8 +756,7 @@ const RenderTask = (task, i, props) => {
                 </div>
                 <div className="att-box" style={{height:'70px'}}>
                     <div className="task-att">DATE</div>
-                    <div className="task-att-name">{taskDate}</div>   
-                    <p>{ThirdLine}</p> 
+                    <div className="task-att-name">{taskDate}</div>
                 </div>
                 {RenderActions(task, props)}
             </div>
