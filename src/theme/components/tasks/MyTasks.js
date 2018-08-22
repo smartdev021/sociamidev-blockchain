@@ -22,6 +22,7 @@ import TooltipUser from '~/src/theme/components/tasks/TooltipUser';
 import PubSub from 'pubsub-js';
 
 import TaskTypes from '~/src/common/TaskTypes';
+import { SSL_OP_NETSCAPE_CA_DN_BUG } from 'constants';
 
 const RenderDummyFriends = false;
 
@@ -119,26 +120,7 @@ const GenerateDateString = (time, props) => {
     DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
   }
 
-  return DateString;
-};
-
-const GenerateDateStringDeepdive = (time, props) => {
-  const DateFromTime = new Date(time);
-
-  const Noon = new Date(
-    DateFromTime.getFullYear(),
-    DateFromTime.getMonth(),
-    DateFromTime.getDate(),
-    12,
-    0,
-    0,
-  );
-
-  const AmPm = DateFromTime.getTime() < Noon.getTime() ? 'am' : 'pm';
-
-  const Hours = String(Hours12(DateFromTime)) + AmPm;
-
-  let DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
+  DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
 
   return DateString;
 };
@@ -730,10 +712,10 @@ const RenderTask = (task, i, props) => {
     createdDate.getDate() + ' ' + months[createdDate.getMonth()] + ' ' + createdDate.getFullYear();
   if (task.type === TaskTypes.DEEPDIVE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
-    const taskDate = GenerateDateStringDeepdive(taskTime, props);
+    let taskDate = GenerateDateString(taskTime, props);
     const SkillName = task.metaData.subject.skill.name;
     let ThirdLine = GenerateDateString(taskTime, props);
-    if (taskTime < new Date()) ThirdLine = 'Start when both ready';
+    if (taskTime < new Date()) taskDate = 'Start when both ready';
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
