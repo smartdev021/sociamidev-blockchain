@@ -103,13 +103,13 @@ const GenerateDateString = (time, props) => {
     DateFromTime.getMonth() == Today.getMonth() &&
     DateFromTime.getDate() == Today.getDate()
   ) {
-    DateString = ` today at ${Hours}`;
+    DateString = ` Today at ${Hours}`;
   } else if (
     DateFromTime.getFullYear() == Tomorrow.getFullYear() &&
     DateFromTime.getMonth() == Tomorrow.getMonth() &&
     DateFromTime.getDate() == Tomorrow.getDate()
   ) {
-    DateString = ` tomorrow at ${Hours}`;
+    DateString = ` Tomorrow at ${Hours}`;
   } else if (
     DateFromTime.getFullYear() == ThisSunday.getFullYear() &&
     DateFromTime.getMonth() == ThisSunday.getMonth() &&
@@ -119,8 +119,6 @@ const GenerateDateString = (time, props) => {
   } else {
     DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
   }
-
-  DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
 
   return DateString;
 };
@@ -712,9 +710,8 @@ const RenderTask = (task, i, props) => {
     createdDate.getDate() + ' ' + months[createdDate.getMonth()] + ' ' + createdDate.getFullYear();
   if (task.type === TaskTypes.DEEPDIVE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
-    let taskDate = GenerateDateString(taskTime, props);
     const SkillName = task.metaData.subject.skill.name;
-    let ThirdLine = GenerateDateString(taskTime, props);
+    let taskDate = GenerateDateString(taskTime, props);
     if (taskTime < new Date()) taskDate = 'Start when both ready';
     return (
         <div className="col-md-6" key={i}>
