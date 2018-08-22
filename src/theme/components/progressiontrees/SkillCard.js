@@ -438,7 +438,9 @@ class SkillCard extends React.Component {
           </div>
         </div>
 
-        {this.state.TrendScannerComponentVisible && (
+        {/* remove Trend scanner as of iteration 2 */}
+
+        {/* {this.state.TrendScannerComponentVisible && (
             <div className="row">
               <div className="col-lg-12">
                 <div id="skill-breakdown-trend-scanner">
@@ -451,7 +453,7 @@ class SkillCard extends React.Component {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
           
       </div>
     );

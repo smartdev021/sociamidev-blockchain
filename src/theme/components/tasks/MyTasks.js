@@ -122,6 +122,27 @@ const GenerateDateString = (time, props) => {
   return DateString;
 };
 
+const GenerateDateStringDeepdive = (time, props) => {
+  const DateFromTime = new Date(time);
+
+  const Noon = new Date(
+    DateFromTime.getFullYear(),
+    DateFromTime.getMonth(),
+    DateFromTime.getDate(),
+    12,
+    0,
+    0,
+  );
+
+  const AmPm = DateFromTime.getTime() < Noon.getTime() ? 'am' : 'pm';
+
+  const Hours = String(Hours12(DateFromTime)) + AmPm;
+
+  let DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
+
+  return DateString;
+};
+
 const RenderIlluminateActions = (task, props) => {
   switch (task.status) {
     case 'None': {
@@ -709,6 +730,7 @@ const RenderTask = (task, i, props) => {
     createdDate.getDate() + ' ' + months[createdDate.getMonth()] + ' ' + createdDate.getFullYear();
   if (task.type === TaskTypes.DEEPDIVE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
+    const taskDate = GenerateDateStringDeepdive(taskTime, props);
     const SkillName = task.metaData.subject.skill.name;
     let ThirdLine = GenerateDateString(taskTime, props);
     if (taskTime < new Date()) ThirdLine = 'Start when both ready';
@@ -722,7 +744,7 @@ const RenderTask = (task, i, props) => {
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
                       <span className="bule-text">
-                        <TimeAgo date={taskTime} minPeriod={60} />
+                        <TimeAgo date={createdDate} minPeriod={60} />
                       </span>
                     </div>
                     
@@ -734,7 +756,7 @@ const RenderTask = (task, i, props) => {
                 </div>
                 <div className="att-box" style={{height:'70px'}}>
                     <div className="task-att">DATE</div>
-                    <div className="task-att-name">{dateTimeString}</div>   
+                    <div className="task-att-name">{taskDate}</div>   
                     <p>{ThirdLine}</p> 
                 </div>
                 {RenderActions(task, props)}
@@ -754,7 +776,7 @@ const RenderTask = (task, i, props) => {
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
                       <span className="bule-text">
-                        <TimeAgo date={taskTime} minPeriod={60} />
+                        <TimeAgo date={createdDate} minPeriod={60} />
                       </span>
                     </div>
                 </div>
@@ -784,7 +806,7 @@ const RenderTask = (task, i, props) => {
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
                       <span className="bule-text">
-                        <TimeAgo date={taskTime} minPeriod={60} />
+                        <TimeAgo date={createdDate} minPeriod={60} />
                       </span>
                     </div>
                 </div>
