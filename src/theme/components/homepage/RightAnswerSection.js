@@ -36,31 +36,5 @@ class RightAnswerSection extends React.Component {
     );
   }
 }
-// const RightAnswerSection = props => {
-//   return (
-//     <div className="col pull-right">
-//       <div className="theme-box-right">
-//         <div className="row">
-//           <div className="col-sm-12">
-//             <div id="test1" />
-//             {/* <iframe
-//               className="answer-right-iframe"
-//               src="https://books.google.com/talktobooks/query?q=what%20is%20blockchain&amp;output=embed"
-//             /> */}
-//             {/* <object type="text/html" className="answer-right-iframe" data="https://google.com/" /> */}
-//             {/* <iframe
-//               id="a"
-//               name="disable-x-frame-options"
-//               sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock"
-//               className="search_window answer-right-iframe"
-//               src="https://books.google.com/talktobooks/query?q=what%20is%20blockchain"
-//             /> */}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-// loadURL(iframe.src);
 
 export default RightAnswerSection;
