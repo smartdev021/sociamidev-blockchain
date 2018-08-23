@@ -270,18 +270,6 @@
   min-height: 800px;
   color: #fff;
 }
-<<<<<<< HEAD
-@media (min-width: 768px) and (max-width: 1199px){
-  .profile-wrapper .top-wp .last-right {width: 33%;}
-  .profile-wrapper .top-wp .last-right .btn-follow{margin: 0 1rem;}
-  .profile-wrapper .theme-box-right .box .fot-wp .bttons-right-box li a {padding: 0 12px;}
-}
-@media (max-width: 767px){
-  .profile-wrapper .top-wp {padding: 12px 15px; height: auto; background-size: cover;}
-  .profile-wrapper .top-wp .middle-edit {display: inline-block; height: auto;  width: 100%; text-align: center; margin: 15px 0;}
-  .profile-wrapper .top-wp .middle-edit a {display: inline-block; text-align: center;}
-  .profile-wrapper .top-wp .last-right {width: 100%;}
-=======
 @media (min-width: 768px) and (max-width: 1199px) {
   .profile-wrapper .top-wp .last-right {
     width: 33%;
@@ -313,11 +301,12 @@
   .profile-wrapper .top-wp .last-right {
     width: 100%;
   }
->>>>>>> marianaborel
 }
-.light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-follow, .light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-send {
+.light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-follow,
+.light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-send {
   background: #ccc;
 }
-.btn-follow, .btn-send {
+.btn-follow,
+.btn-send {
   background: #ccc;
 }
