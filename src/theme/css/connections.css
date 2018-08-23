@@ -44,7 +44,12 @@
   font-size: 16px;
   margin: 0 auto;
   margin-top: -10px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 150px;
 }
 
 .connection-info > p {
@@ -60,8 +65,9 @@
   align-items: center;
 }
 
-div.connection-actions > a.btn-send {
+div.connection-actions > a.btn-circ {
   border: 1px solid #8f029e;
+  background: transparent;
   width: 29px;
   height: 29px;
   display: inline-block;
@@ -72,6 +78,22 @@ div.connection-actions > a.btn-send {
   border-radius: 50%;
   padding-top: 4px;
   padding-left: 4px;
+}
+div.connection-actions > a.btn-prim {
+  border-radius: 14px;
+  background-image: -moz-linear-gradient(90deg, rgb(50, 0, 55) 0%, rgb(164, 0, 178) 100%);
+  background-image: -webkit-linear-gradient(90deg, rgb(50, 0, 55) 0%, rgb(164, 0, 178) 100%);
+  background-image: -ms-linear-gradient(90deg, rgb(50, 0, 55) 0%, rgb(164, 0, 178) 100%);
+  opacity: 0.949;
+  box-shadow: 0px 0px 15px 0px rgba(255, 0, 254, 0.44), 0px 0px 15px 0px rgba(207, 0, 254, 0.25), 0px 0px 15px 0px rgba(207, 0, 254, 0.36);
+  width: 50px;
+  height: 29px;
+  font-size: 10px;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  line-height: 29px;
 }
 
 ul.connection-details {
