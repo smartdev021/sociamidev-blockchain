@@ -9,6 +9,7 @@ const AnswerSimpleQuestion = props => {
         name="answer_your"
         onChange={e => props.onHandleAnswerInput(e)}
         value={props.answerMy.text}
+        style={{ backgroundColor: '#000', color: 'white' }}
       />
       {/* {props.partner &&
             <div className="col-lg-6">

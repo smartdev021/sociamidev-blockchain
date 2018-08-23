@@ -13,6 +13,7 @@ import {
   UPDATE_TASK_COMPLETE,
   SET_ACTIVE_HANGOUT,
   RESET_ACTIVE_HANGOUT,
+  LOAD_ACTIVATE_URL,
 } from '~/src/redux/actions/actionTypes';
 
 const tasksInitialState = {
@@ -107,6 +108,11 @@ export function tasks(state = tasksInitialState, action) {
       return {
         ...state,
         activeHangout: null,
+      };
+    }
+    case LOAD_ACTIVATE_URL: {
+      return {
+        ...state,
       };
     }
     default:

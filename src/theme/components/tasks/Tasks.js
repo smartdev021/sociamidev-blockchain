@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import RightSection from '~/src/theme/components/homepage/RightSection';
-
+import RightAnswerSection from '~/src/theme/components/homepage/RightAnswerSection';
 import MyTasks from '~/src/theme/components/tasks/MyTasks';
 
 import TaskScanner from '~/src/theme/components/tasks/TaskScanner';
@@ -30,9 +30,10 @@ import DetailsPopup from '~/src/components/common/DetailsPopup';
 
 import TaskTypes from '~/src/common/TaskTypes';
 
-import '~/src/theme/css/tasks.css'
+import '~/src/theme/css/tasks.css';
 
-const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
+const profilePic =
+  'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
 import {
   fetchTasksInitiate,
@@ -45,6 +46,7 @@ import {
   taskJoinStatusChange,
   setActiveHangout,
   resetActiveHangout,
+  loadURL,
 } from '~/src/redux/actions/tasks';
 
 import { openSignUpForm, fetchUserTasks } from '~/src/redux/actions/authorization';
@@ -65,35 +67,35 @@ const Filters = [TasksAll, TasksConfirmed, TasksMy, TasksOthers, TasksSentReques
 const BackendURL = ConfigMain.getBackendURL();
 
 const DayFromNumber = dayNum => {
-    const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return DayNames[dayNum];
+  const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  return DayNames[dayNum];
 };
-  
+
 const MonthFromNumber = monthNum => {
-    const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
-    return MonthNames[monthNum];
+  const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
+  return MonthNames[monthNum];
 };
-  
+
 const Hours12 = date => {
-    return (date.getHours() + 24) % 12 || 12;
+  return (date.getHours() + 24) % 12 || 12;
 };
-  
+
 class Tasks extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        IsCurrentTaskOpen : 'block',
-        IsJoinTaskOpen : 'none',
-        scannerQuery: '',
-        timeNow: Date.now(),
-        isScannerExpanded: !this.props.isAuthorized,
-        isAnswerSubmitComplete: false,
-        activeHangout: undefined,
-        isAnswerQuestionsOpen: false,
+      IsCurrentTaskOpen: 'block',
+      IsJoinTaskOpen: 'none',
+      scannerQuery: '',
+      timeNow: Date.now(),
+      isScannerExpanded: !this.props.isAuthorized,
+      isAnswerSubmitComplete: false,
+      activeHangout: undefined,
+      isAnswerQuestionsOpen: false,
 
-        //
-        filterCurrent: Filters[0],
+      //
+      filterCurrent: Filters[0],
     };
 
     this.redirectLocation = undefined;
@@ -109,11 +111,11 @@ class Tasks extends React.Component {
   }
 
   toggleCurrentTaskOption() {
-    this.setState({ IsCurrentTaskOpen: 'block', IsJoinTaskOpen: 'none'});
+    this.setState({ IsCurrentTaskOpen: 'block', IsJoinTaskOpen: 'none' });
   }
 
   toggleJoinTaskOption() {
-    this.setState({ IsCurrentTaskOpen: 'none', IsJoinTaskOpen: 'block'});
+    this.setState({ IsCurrentTaskOpen: 'none', IsJoinTaskOpen: 'block' });
   }
 
   renderTasks() {
@@ -144,23 +146,23 @@ class Tasks extends React.Component {
     }
   }
 
-  renderSingleTask(task, i){
+  renderSingleTask(task, i) {
     if (!task.type) {
       return null;
     }
-  
+
     if (task.type == TaskTypes.DEEPDIVE) {
       const date = new Date(task.metaData.time);
-  
+
       const dateNow = new Date(Date.now());
       const dateTomorrow = new Date(Date.now() + 60 * 60 * 24);
-  
+
       const Noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
       const AmPm = date.getTime() < Noon.getTime() ? 'am' : 'pm';
-  
+
       const Hours = String(Hours12(date)) + AmPm;
       let time = '';
-  
+
       if (
         dateNow.getDate() == date.getDate() &&
         dateNow.getMonth() == date.getMonth() &&
@@ -178,17 +180,20 @@ class Tasks extends React.Component {
           date.getMonth(),
         )})`;
       }
-  
+
       if (date < new Date()) time = 'mutually convenient time today';
       return (
         <div className="col-md-6" key={i}>
-            <div className="col-box-wp col-box-join-task">
-                <p className="task-desc"><a className="link-yellow">{task.creator.firstName}</a> is looking to discuss 
-                <a className="link-yellow"> {task.metaData.subject.roadmap.name} </a>
-                    at <a className="link-yellow"> {time}.</a>
-                </p>
-                <a className="btn-join task-join" onClick={() => this.handleOpenConfirmTaskDetailsPopup(task)}>Join</a>
-            </div>
+          <div className="col-box-wp col-box-join-task">
+            <p className="task-desc">
+              <a className="link-yellow">{task.creator.firstName}</a> is looking to discuss
+              <a className="link-yellow"> {task.metaData.subject.roadmap.name} </a>
+              at <a className="link-yellow"> {time}.</a>
+            </p>
+            <a className="btn-join task-join" onClick={() => this.handleOpenConfirmTaskDetailsPopup(task)}>
+              Join
+            </a>
+          </div>
         </div>
       );
     }
@@ -641,6 +646,16 @@ class Tasks extends React.Component {
     this.props.resetActiveHangout();
   }
 
+  /**
+   * added by Mariana
+   * @description function that embeds books.google.com/talktobooks/ site into rightanswerquestion iframe
+   * @param url  website address to embed
+   */
+  getLoadURL(url) {
+    console.log('~~~~~~~~~getLoadURL~~~~~~');
+    this.props.loadURL(url);
+  }
+
   filterTasksScanner(tasksScanner) {
     let foundTasks = [];
     const scannerQuery = this.state.scannerQuery.toLowerCase();
@@ -672,95 +687,111 @@ class Tasks extends React.Component {
       ? 'col-md-8 expand-tokens open-tokens-mobile'
       : 'col-md-4 expand-tokens close-tokens-mobile';
     return (
-        <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper tasks-wrapper main-bg`}>
+      <div
+        className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper tasks-wrapper main-bg`}
+      >
+        <div className="row">
+          <div className="container">
             <div className="row">
-                <div className="container">
-                    <div className="row">
-                        <div className="row">
-                        
-                            <LeftNav 
-                              accounting={this.props.accounting}
-                              userProfile={this.props.userProfile} 
-                              profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
-                            />
+              <div className="row">
+                <LeftNav
+                  accounting={this.props.accounting}
+                  userProfile={this.props.userProfile}
+                  profilePic={
+                    this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic
+                  }
+                />
 
-                            <RightSection />
-
-                            { this.state.isAnswerSubmitComplete ? <Achievement /> : (
-                                <div>
-                                {this.props.activeHangout ? 
-                                    <AnswerQuestions
-                                        currentTask={this.props.activeHangout}
-                                        onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
-                                        onSubmitComplete={() => this.handleAnswersSubmitComplete()}
-                                    />
-                                 : 
-                                (
-                                    <div className="col-middle ml-fixed">
-                                        <div className="col-box-wp mb-20 p-0">
-                                            <div className="task-heading">
-                                                Tasks    
-                                            </div>
-                                            <ul className="tab-wp pull-right">
-                                            <li className={this.state.IsCurrentTaskOpen == 'block' ? 'active' : ''}><a onClick={this.toggleCurrentTaskOption}>Current Task</a></li>
-                                            <li className={this.state.IsJoinTaskOpen == 'block' ? 'active' : ''}><a onClick={this.toggleJoinTaskOption}>Join Task</a></li>
-                                            </ul>
-                                        </div>
-                                        <div id="currenttask" style={{ display: this.state.IsCurrentTaskOpen }}>
-                                            
-                                            {/* <HeaderTaskManager
+                {this.props.activeHangout ? (
+                  <RightAnswerSection getLoadURL={url => this.getLoadURL(url)} />
+                ) : (
+                  <RightSection />
+                )}
+                {this.state.isAnswerSubmitComplete ? (
+                  <Achievement />
+                ) : (
+                  <div>
+                    {this.props.activeHangout ? (
+                      <AnswerQuestions
+                        currentTask={this.props.activeHangout}
+                        onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
+                        onSubmitComplete={() => this.handleAnswersSubmitComplete()}
+                      />
+                    ) : (
+                      <div className="col-middle ml-fixed">
+                        <div className="col-box-wp mb-20 p-0">
+                          <div className="task-heading">Tasks</div>
+                          <ul className="tab-wp pull-right">
+                            <li className={this.state.IsCurrentTaskOpen == 'block' ? 'active' : ''}>
+                              <a onClick={this.toggleCurrentTaskOption}>Current Task</a>
+                            </li>
+                            <li className={this.state.IsJoinTaskOpen == 'block' ? 'active' : ''}>
+                              <a onClick={this.toggleJoinTaskOption}>Join Task</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div id="currenttask" style={{ display: this.state.IsCurrentTaskOpen }}>
+                          {/* <HeaderTaskManager
                                                 filters={Filters}
                                                 onFilterChange={newFilter => this.handleFilterChange(newFilter)}
                                                 filterCurrent={this.state.filterCurrent}
                                             /> */}
-                                            <MyTasks
-                                                tasks={myTasks}
-                                                handleOpenCancelTaskDetailsPopup={task => this.handleOpenCancelTaskDetailsPopup(task)}
-                                                onHangoutActionPerform={(action, hangout) => this.hangoutActionPerform(action, hangout)}
-                                                onHangoutRate={(hangout, userId, rate) => this.handleHangoutRate(hangout, userId, rate)}
-                                                assignedTasks={this.props.tasksAssignedToCurrentUser}
-                                                currentUserID={this.props.userProfile._id}
-                                                timeNow={this.state.timeNow}
-                                                isAuthorized={this.props.isAuthorized}
-                                                isCollapsed={this.state.isScannerExpanded}
-                                                userProfile={this.props.userProfile}
-                                                currentUserID={this.props.userProfile._id}
-                                                onHangoutRequestAccept={(hangout, user) => this.hangoutRequestAccept(hangout, user)}
-                                                onHangoutRequestReject={(hangout, user) => this.hangoutRequestReject(hangout, user)}
-                                            />
+                          <MyTasks
+                            tasks={myTasks}
+                            handleOpenCancelTaskDetailsPopup={task =>
+                              this.handleOpenCancelTaskDetailsPopup(task)
+                            }
+                            onHangoutActionPerform={(action, hangout) =>
+                              this.hangoutActionPerform(action, hangout)
+                            }
+                            onHangoutRate={(hangout, userId, rate) =>
+                              this.handleHangoutRate(hangout, userId, rate)
+                            }
+                            assignedTasks={this.props.tasksAssignedToCurrentUser}
+                            currentUserID={this.props.userProfile._id}
+                            timeNow={this.state.timeNow}
+                            isAuthorized={this.props.isAuthorized}
+                            isCollapsed={this.state.isScannerExpanded}
+                            userProfile={this.props.userProfile}
+                            currentUserID={this.props.userProfile._id}
+                            onHangoutRequestAccept={(hangout, user) =>
+                              this.hangoutRequestAccept(hangout, user)
+                            }
+                            onHangoutRequestReject={(hangout, user) =>
+                              this.hangoutRequestReject(hangout, user)
+                            }
+                          />
 
-                                            <DetailsPopup
-                                                modalIsOpen={this.state.isDetailsPopupOpen}
-                                                onConfirm={item => this.handleAcceptConfirm(item)}
-                                                onCloseModal={() => this.handleCloseConfirmTaskDetailsPopup()}
-                                                item={this.state.detailsPopupItem}
-                                                item="accept_confirmation"
-                                                task={this.state.detailsPopupItem}
-                                            />
+                          <DetailsPopup
+                            modalIsOpen={this.state.isDetailsPopupOpen}
+                            onConfirm={item => this.handleAcceptConfirm(item)}
+                            onCloseModal={() => this.handleCloseConfirmTaskDetailsPopup()}
+                            item={this.state.detailsPopupItem}
+                            item="accept_confirmation"
+                            task={this.state.detailsPopupItem}
+                          />
 
-                                            <DetailsPopup
-                                                modalIsOpen={this.state.isDetailsPopupOpenCancelTask}
-                                                onConfirm={item => this.handleAcceptCancel(item)}
-                                                onCloseModal={() => this.handleCloseCancelTaskDetailsPopup()}
-                                                item={this.state.detailsPopupItem}
-                                                item="cancel_confirmation"
-                                                task={this.state.detailsPopupItem}
-                                            />
-                                        </div>
-                                        <div id="jointask" style={{ display: this.state.IsJoinTaskOpen }}>
-                                            <div className="row">
-                                                {this.renderTasks()}
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                            )}
+                          <DetailsPopup
+                            modalIsOpen={this.state.isDetailsPopupOpenCancelTask}
+                            onConfirm={item => this.handleAcceptCancel(item)}
+                            onCloseModal={() => this.handleCloseCancelTaskDetailsPopup()}
+                            item={this.state.detailsPopupItem}
+                            item="cancel_confirmation"
+                            task={this.state.detailsPopupItem}
+                          />
                         </div>
-                    </div>
-                </div>
+                        <div id="jointask" style={{ display: this.state.IsJoinTaskOpen }}>
+                          <div className="row">{this.renderTasks()}</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     );
   }
 }
@@ -823,6 +854,7 @@ const mapDispatchToProps = dispatch => ({
   taskAssign: bindActionCreators(taskAssign, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
   taskJoinStatusChange: bindActionCreators(taskJoinStatusChange, dispatch),
+  loadURL: bindActionCreators(loadURL, dispatch),
 });
 
 export default withRouter(
