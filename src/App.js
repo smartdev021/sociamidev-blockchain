@@ -41,6 +41,7 @@ import {
   fetchUserActivities,
   fetchUserTasks,
   setUserProfileCharacter,
+  saveUserLocation
 } from '~/src/redux/actions/authorization';
 
 import { fetchAllTasks, updateTask } from '~/src/redux/actions/tasks';
@@ -157,6 +158,7 @@ class App extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
 
     this.props.fetchTaskActivityUnlockReqs();
+    this.props.saveUserLocation(this.state.userID);
     this.restoreAuthFromLS();
   }
 
@@ -647,6 +649,7 @@ const mapDispatchToProps = dispatch => ({
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
+  saveUserLocation: bindActionCreators(saveUserLocation, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
   fetchTaskActivityUnlockReqs: bindActionCreators(fetchTaskActivityUnlockReqs, dispatch),

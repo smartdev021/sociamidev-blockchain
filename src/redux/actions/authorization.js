@@ -23,6 +23,7 @@ import {
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main';
+import { saveUserLocation as saveUserLocationSR } from '../../lib/backend/sr-authorization';
 
 export function openSignUpForm() {
   return {
@@ -68,6 +69,99 @@ export function updateUserProfileComplete(userProfile) {
   return {
     type: UPDATE_USER_PROFILE_COMPLETE,
     profile: userProfile,
+  };
+}
+
+export function saveUserLocation(userID) {
+
+  return dispatch => {
+    if (navigator && navigator.geolocation) {
+      navigator.permissions &&
+        navigator.permissions
+          .query({ name: "geolocation" })
+          .then(function(PermissionStatus) {
+            if (PermissionStatus.state == "granted") {
+              navigator.geolocation.getCurrentPosition(
+                function(position) {
+                  var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                  };
+
+                  var latlng = pos.lat + ", " + pos.lng;
+                  fetch(
+                    "http://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+                      latlng +
+                      "&sensor=false"
+                  ).then(function(res) {
+                    res.json().then(function(res) {
+                      var country = "";
+                      var results = res.results;
+
+                      if (results && results.length) {
+                        var indice = 0;
+                        for (var j = 0; j < results.length; j++) {
+                          if (results[j].types[0] == "locality") {
+                            indice = j;
+                            break;
+                          }
+                        }
+                        // alert('The good number is: ' + j);
+                        // console.log(results[j]);
+                        for (
+                          var i = 0;
+                          i < results[j].address_components.length;
+                          i++
+                        ) {
+                          // if (results[j].address_components[i].types[0] == 'locality') {
+                          //   //this is the object you are looking for City
+                          //   city = results[j].address_components[i];
+                          // }
+                          // if (results[j].address_components[i].types[0] == 'administrative_area_level_1') {
+                          //   //this is the object you are looking for State
+                          //   region = results[j].address_components[i];
+                          // }
+                          if (
+                            results[j].address_components[i].types[0] ==
+                            "country"
+                          ) {
+                            //this is the object you are looking for
+                            country = results[j].address_components[i];
+                          }
+                        }
+
+                        //city data
+                        // alert(city.long_name + ' || ' + region.long_name + ' || ' + country.short_name);
+                      } else {
+                        // alert('No results found');
+                      }
+
+                      saveUserLocationSR(userID, {
+                        country: country
+                      })
+                        .then(function(res1) {
+                          console.log("save here", res1);
+                        })
+                        .catch(function(err1) {
+                          console.log("err1 here", err1);
+                        });
+
+                      console.log("gotch", country);
+                    });
+                  });
+                },
+                function() {
+                  console.log("oi?");
+                  // handleLocationError(true, infoWindow, map.getCenter());
+                }
+              );
+
+              //allowed
+            } else {
+              //denied
+            }
+          });
+    }
   };
 }
 
