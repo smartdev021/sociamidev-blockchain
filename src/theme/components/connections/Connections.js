@@ -117,7 +117,7 @@ class Connections extends React.Component {
       .then(function(data) {
         that.setState({ allTabLoading: false, allFriendList: data });
       }).catch(function(error) {
-        this.setState({ allTabLoading: false });      
+        that.setState({ allTabLoading: false });      
       });
   }
 
@@ -142,7 +142,7 @@ class Connections extends React.Component {
             return fList.connectionStatus === 'Friends';
           })
         });
-    }).catch(function(error) { this.setState({ otherTabLoading: false }); });
+    }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
 
   renderAllTab() {
