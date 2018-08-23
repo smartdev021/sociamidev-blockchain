@@ -22,6 +22,7 @@ import TooltipUser from '~/src/theme/components/tasks/TooltipUser';
 import PubSub from 'pubsub-js';
 
 import TaskTypes from '~/src/common/TaskTypes';
+import { SSL_OP_NETSCAPE_CA_DN_BUG } from 'constants';
 
 const RenderDummyFriends = false;
 
@@ -102,13 +103,13 @@ const GenerateDateString = (time, props) => {
     DateFromTime.getMonth() == Today.getMonth() &&
     DateFromTime.getDate() == Today.getDate()
   ) {
-    DateString = ` today at ${Hours}`;
+    DateString = ` Today at ${Hours}`;
   } else if (
     DateFromTime.getFullYear() == Tomorrow.getFullYear() &&
     DateFromTime.getMonth() == Tomorrow.getMonth() &&
     DateFromTime.getDate() == Tomorrow.getDate()
   ) {
-    DateString = ` tomorrow at ${Hours}`;
+    DateString = ` Tomorrow at ${Hours}`;
   } else if (
     DateFromTime.getFullYear() == ThisSunday.getFullYear() &&
     DateFromTime.getMonth() == ThisSunday.getMonth() &&
@@ -710,8 +711,8 @@ const RenderTask = (task, i, props) => {
   if (task.type === TaskTypes.DEEPDIVE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
     const SkillName = task.metaData.subject.skill.name;
-    let ThirdLine = GenerateDateString(taskTime, props);
-    if (taskTime < new Date()) ThirdLine = 'Start when both ready';
+    let taskDate = GenerateDateString(taskTime, props);
+    if (taskTime < new Date()) taskDate = 'Start when both ready';
     return (
         <div className="col-md-6" key={i}>
             <div className="col-box-wp no-padding">
@@ -722,7 +723,7 @@ const RenderTask = (task, i, props) => {
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
                       <span className="bule-text">
-                        <TimeAgo date={taskTime} minPeriod={60} />
+                        <TimeAgo date={createdDate} minPeriod={60} />
                       </span>
                     </div>
                     
@@ -734,8 +735,7 @@ const RenderTask = (task, i, props) => {
                 </div>
                 <div className="att-box" style={{height:'70px'}}>
                     <div className="task-att">DATE</div>
-                    <div className="task-att-name">{dateTimeString}</div>   
-                    <p>{ThirdLine}</p> 
+                    <div className="task-att-name">{taskDate}</div>
                 </div>
                 {RenderActions(task, props)}
             </div>
@@ -754,7 +754,7 @@ const RenderTask = (task, i, props) => {
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
                       <span className="bule-text">
-                        <TimeAgo date={taskTime} minPeriod={60} />
+                        <TimeAgo date={createdDate} minPeriod={60} />
                       </span>
                     </div>
                 </div>
@@ -784,7 +784,7 @@ const RenderTask = (task, i, props) => {
                     <div className="task-text">
                       <span className="col-heading">{RenderTaskTitle(task, props)}</span>
                       <span className="bule-text">
-                        <TimeAgo date={taskTime} minPeriod={60} />
+                        <TimeAgo date={createdDate} minPeriod={60} />
                       </span>
                     </div>
                 </div>

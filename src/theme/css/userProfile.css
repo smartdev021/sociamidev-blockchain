@@ -302,3 +302,9 @@
     width: 100%;
   }
 }
+.light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-follow, .light-theme-wrapper.profile-wrapper .top-wp .last-right .btn-send {
+  background: #ccc;
+}
+.btn-follow, .btn-send {
+  background: #ccc;
+}
