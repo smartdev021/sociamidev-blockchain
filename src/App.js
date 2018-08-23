@@ -43,7 +43,7 @@ import {
   fetchUserTasks,
   setUserProfileCharacter,
   updateAvatar,
-  updateCoverBackground
+  updateCoverBackground,
 } from '~/src/redux/actions/authorization';
 
 import { fetchAllTasks, updateTask } from '~/src/redux/actions/tasks';
@@ -251,7 +251,7 @@ class App extends Component {
 
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
     if (this.props.exactLocation && this.props.exactLocation == 'RoadmapsWidgetDetails') {
-      lastLocation.pathname = "/tasks";
+      lastLocation.pathname = '/tasks';
     }
 
     cookies.set('lastLocation', lastLocation, options);
@@ -594,8 +594,8 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
-            changeAvatar ={ url=> this.props.updateAvatar(url) }
-            changeCoverBackground ={ url=> this.props.updateCoverBackground(url) }
+            changeAvatar={url => this.props.updateAvatar(url)}
+            changeCoverBackground={url => this.props.updateCoverBackground(url)}
             logout={() => this.logout()}
           />
           <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
