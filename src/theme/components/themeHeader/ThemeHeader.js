@@ -26,8 +26,7 @@ import PubSub from 'pubsub-js';
 
 import '~/src/theme/css/ThemeHeader.css';
 
-import logoSrc from '../../../../assets/img/logoicon.png';
-import addConnection from '../../../../assets/img/usericon.png'
+import logoSrc from '../../../../assets/img/logo.png'
 
 import defaultHouseCompanyImage from '../../../../assets/img/question-mark.jpg';
 
@@ -375,11 +374,11 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li><a href="#"><span className="new-img-icon-head"><img style={{marginTop:-10}} src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png" alt="" /></span></a></li>
+                    <li><a href="#"><span className="new-img-icon-head"><img src={houseImage} alt="" /></span></a></li>
                     <li>
                       <a href="javascript:" onClick={this.toggleCompany}>
                         <span className="new-img-icon-head">
-                          <img  style={{marginTop:-10}}  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" />
+                          <img src={this.state.activeCompany.imageUrl ? this.state.activeCompany.imageUrl : ''} alt="" />
                         </span>
                       </a>
                     </li>
@@ -392,8 +391,7 @@ class ThemeHeader extends React.Component {
                     </li>
                     <li className="register">
                       <Link href="#" to="/connections">
-                      <img  style={{marginTop:-15}}src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
-                        />
+                        <Icon name="user-plus" aria-hidden="true" />
                       </Link>
                     </li>
                     <UserMenuDropdown
