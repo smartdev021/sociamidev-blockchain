@@ -2,6 +2,8 @@
     position: fixed;
     width: 100%;
     z-index: 100000;
+    background: #000;
+    height: 65px;
 }
 
 .navbar-wrapper header {
@@ -28,7 +30,6 @@
     right: -75px;
     z-index: 2;
     padding: 0 89px 0 43px;
-    background: #000;
     transform: skew(-37deg);
 }
 
@@ -107,12 +108,11 @@
 }
 
 .navbar-wrapper .header a.navbar-button {
-    padding: 7px 25px;
-    margin-left: 9px;
+    padding: 7px 0px 0px 0px;
     font-family: "MyriadPro Semibold";
     background-color: rgb(0, 105, 186);
     box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);
-    width: 172px;
+    width: 100px;
     height: 32px;
 }
 
@@ -140,7 +140,6 @@
     z-index: 2;
     padding: 0px 55px 10px 80px;
     margin: 0;
-    background: #000;
     transform: skewX(-35deg);
 }
 
@@ -152,13 +151,13 @@
 
 .navbar-wrapper .logo img {
     width: 100%;
-    max-width: 140px;
+    max-width: 150px;
     transform: skew(35deg);
 }
 
 @media screen and (max-width: 750px) {
     .navbar-wrapper .logo img {
-        width: 80px;
+        width: 130px;
     }
 }
 
@@ -290,7 +289,7 @@
 
 .navbar-wrapper .header .navbar-options li{
     display: inline;
-    padding: 10px;
+    padding: 7px;
 }
 
 .navbar-wrapper .header .navbar-options li a i,
