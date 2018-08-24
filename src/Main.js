@@ -38,6 +38,7 @@ import ProgressionTreeBrowser from '~/src/theme/components/progressiontrees/Prog
 import ProgressionTrees from '~/src/theme/ProgressionTrees';
 import SkillBrowser from '~/src/theme/components/progressiontrees/SkillBrowser';
 import Connections from '~/src/theme/components/connections/Connections.js';
+import ConnectionsViewOld from '~/src/theme/ConnectionsViewOld.js';
 import Story from '~/src/theme/components/story/Story';
 import Challenges from '~/src/theme/components/challenges/Challenges';
 // import UserProfile from '~/src/theme/UserProfile.js';
@@ -125,6 +126,11 @@ class Main extends Component {
           exact
           path="/connections"
           render={routeProps => <Connections {...routeProps} {...this.props} />}
+        />
+        <Route
+          exact
+          path="/connectionsView"
+          render={routeProps => <ConnectionsViewOld {...routeProps} {...this.props} />}
         />
         <Route
           exact

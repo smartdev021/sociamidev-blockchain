@@ -1,6 +1,5 @@
 import React from 'react';
 import Axios from 'axios';
-import { Link } from 'react-router-dom';
 import ConfigMain from '~/configs/main';
 import '../../css/connections.css';
 import PropTypes from 'prop-types';
@@ -8,6 +7,7 @@ import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import Spinner from '~/src/theme/components/homepage/Spinner';
 import RightSection from '~/src/theme/components/homepage/RightSection';
 import ConnectionCard from './ConnectionCard';
+import ScrollHandle from './ScrollHandle';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 function makeCall(url, currentUser, skip, data) {
@@ -53,7 +53,7 @@ class Connections extends React.Component {
   componentDidMount() {
     this.fetchAllConnections();
     this.fetchAllFriends();
-    this.fetchFacebookFriends();
+    this.fetchFacebookFriends();        
   }
 
   handleFriendRequest(user, action) {
@@ -130,18 +130,21 @@ class Connections extends React.Component {
         currentUser: self.props.currentUserId,
       },
     }).then(function(response) {
-        self.setState({
-          otherTabLoading: false,
-          receivedList: response.data.filter(function(fList) {
-            return fList.connectionStatus === 'Received';
-          }),
-          sentList: response.data.filter(function(fList) {
-            return fList.connectionStatus === 'Sent';
-          }),
-          friendList: response.data.filter(function(fList) {
-            return fList.connectionStatus === 'Friends';
-          })
-        });
+      const receivedList = response.data.filter(function(fList) {
+        return fList.connectionStatus === 'Received';
+      });
+      const sentList = response.data.filter(function(fList) {
+        return fList.connectionStatus === 'Sent';
+      });
+      const friendList = response.data.filter(function(fList) {
+        return fList.connectionStatus === 'Friends';
+      });
+      self.setState({
+        otherTabLoading: false,
+        receivedList,
+        sentList,
+        friendList 
+      });
     }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
 
@@ -220,7 +223,7 @@ class Connections extends React.Component {
     if (this.state.otherTabLoading) return <Spinner shown />;
     return (
       <div className="connection-container">
-        {this.state.sendList.map(connection => 
+        {this.state.sentList.map(connection => 
           <ConnectionCard
             key={connection.id}
             connection={connection} 
