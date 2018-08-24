@@ -10,26 +10,6 @@ import ConnectionCard from './ConnectionCard';
 import ScrollHandle from './ScrollHandle';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
-function makeCall(url, currentUser, skip, data) {
-  return Axios.get(url, {
-    params: {
-      currentUser,
-      skip,
-    },
-  }).then(function(response) {
-    if (response.data.length) {
-      return makeCall(url, currentUser, skip + response.data.length, data.concat(response.data));
-    } else {
-      return data;
-    }
-  });
-}
-function fetchAllSoqqlers(currentUserId) {
-  const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
-  return new Promise((resolve, reject) => {
-    makeCall(allFrndUrl, currentUserId, 0, []).then(resolve, reject);
-  });
-}
 class Connections extends React.Component {
   constructor(props) {
     super(props);
@@ -42,9 +22,11 @@ class Connections extends React.Component {
       facebookFriends: [],
       allTabLoading: false,
       otherTabLoading: false,
+      skip: 0,
+      moreSoqqlersToFetch: true,
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
-    this.fetchAllFriends = this.fetchAllFriends.bind(this);
+    this.fetchMoreSoqqlers = this.fetchMoreSoqqlers.bind(this);
     this.fetchFacebookFriends = this.fetchFacebookFriends.bind(this);
     this.handleAddSoqqler = this.handleAddSoqqler.bind(this);
     this.handleFriendRequest = this.handleFriendRequest.bind(this);
@@ -52,7 +34,7 @@ class Connections extends React.Component {
 
   componentDidMount() {
     this.fetchAllConnections();
-    this.fetchAllFriends();
+    this.fetchMoreSoqqlers();
     this.fetchFacebookFriends();        
   }
 
@@ -110,15 +92,31 @@ class Connections extends React.Component {
     }).catch(function(error) {});
   }
 
-  fetchAllFriends() {
+  fetchMoreSoqqlers() {
+    if(!this.state.moreSoqqlersToFetch || this.state.allTabLoading) return;
     const that = this;
     this.setState({ allTabLoading: true });
-    fetchAllSoqqlers(this.props.currentUserId)
-      .then(function(data) {
-        that.setState({ allTabLoading: false, allFriendList: data });
-      }).catch(function(error) {
-        that.setState({ allTabLoading: false });      
-      });
+    const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
+    const prevSkip = this.state.skip;
+    const prevSoqList = this.state.allFriendList;
+    Axios.get(allFrndUrl, {
+      params: {
+        currentUser: this.props.currentUserId,
+        skip: prevSkip,
+      },
+    }).then(function(response) {
+      if (response.data.length) {
+        that.setState({
+          allTabLoading: false,
+          skip: prevSkip + response.data.length,
+          allFriendList: prevSoqList.concat(response.data) 
+        });
+      } else {
+        that.setState({ moreSoqqlersToFetch: false, allTabLoading: false });
+      }
+    }).catch(function(error) {
+      that.setState({ allTabLoading: false });      
+    });
   }
 
   fetchAllConnections() {
@@ -149,7 +147,6 @@ class Connections extends React.Component {
   }
 
   renderAllTab() {
-    if (this.state.allTabLoading) return <Spinner shown />;
     let allTabsData = this.state.allFriendList;
     const facebookFriends = this.state.facebookFriends;
     if (facebookFriends.length > 0) {
@@ -181,7 +178,7 @@ class Connections extends React.Component {
             onPrimaryAction={() => this.handleAddSoqqler(connection.id)} 
           />)
         }
-      </div>    
+      </div>  
     );
   }
 
@@ -257,6 +254,10 @@ class Connections extends React.Component {
         <div>
           <div style={{ display: this.state.activeTabName === 'All' }}>
             {this.state.activeTabName === 'All' && this.renderAllTab()}
+            <ScrollHandle 
+              progress={this.state.allTabLoading}
+              active={this.state.moreSoqqlersToFetch}
+              onActive={this.fetchMoreSoqqlers}/>  
           </div>
           <div style={{ display: this.state.activeTabName === 'Connections' }}>
             {this.state.activeTabName === 'Connections' && this.renderConnectionsTab()}

@@ -7,7 +7,6 @@ class ScrollHandle extends Component {
     super(props);
     this.state = {
       positionY: -1,
-      active: false,
     }
     this.handleScroll = this.handleScroll.bind(this);
   }
@@ -21,14 +20,17 @@ class ScrollHandle extends Component {
   }
 
   handleScroll(e) {
-    const elPos = this.element.offsetTop - this.element.offsetHeight - this.element.parentElement.offsetTop
-    if( elPos <= window.pageYOffset && !this.state.active) {
-      this.setState({ active: true});
+    if(this.props.progress || !this.props.active) return;
+    const windowHeight = document.querySelector('body').offsetHeight;
+    const visibleScreen = window.pageYOffset + windowHeight + 50;
+    if(this.element.offsetTop <= visibleScreen)  {
+      // the scroll position falls inside the visible screen area
+      this.props.onActive();
     }
   }
 
   render() {
-    return <div ref={(el) => { this.element = el; } }>{this.state.active && <Spinner shown />}</div>
+    return <div ref={(el) => { this.element = el; } }>{this.props.progress && <Spinner shown />}</div>
   }
 }
 
