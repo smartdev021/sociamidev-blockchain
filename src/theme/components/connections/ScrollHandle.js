@@ -30,7 +30,11 @@ class ScrollHandle extends Component {
   }
 
   render() {
-    return <div ref={(el) => { this.element = el; } }>{this.props.progress && <Spinner shown />}</div>
+    return (
+      <div style={{ marginBottom: '100px' }}ref={(el) => { this.element = el; } }>
+        {this.props.progress && <Spinner shown />}
+      </div>
+    );
   }
 }
 

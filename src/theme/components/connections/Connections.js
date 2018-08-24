@@ -252,20 +252,20 @@ class Connections extends React.Component {
           </ul>
         </div>
         <div>
-          <div style={{ display: this.state.activeTabName === 'All' }}>
+          <div style={{ display: this.state.activeTabName === 'All' ? 'block' : 'none' }}>
             {this.state.activeTabName === 'All' && this.renderAllTab()}
             <ScrollHandle 
               progress={this.state.allTabLoading}
-              active={this.state.moreSoqqlersToFetch}
-              onActive={this.fetchMoreSoqqlers}/>  
+              active={this.state.moreSoqqlersToFetch && this.state.activeTabName === 'All'}
+              onActive={this.fetchMoreSoqqlers}/>
           </div>
-          <div style={{ display: this.state.activeTabName === 'Connections' }}>
+          <div style={{ display: this.state.activeTabName === 'Connections' ? 'block' : 'none' }}>
             {this.state.activeTabName === 'Connections' && this.renderConnectionsTab()}
           </div>
-          <div style={{ display: this.state.activeTabName === 'Sent' }}>
+          <div style={{ display: this.state.activeTabName === 'Sent' ? 'block' : 'none' }}>
             {this.state.activeTabName === 'Sent' && this.renderSentTab()}
           </div>
-          <div style={{ display: this.state.activeTabName === 'Received' }}>
+          <div style={{ display: this.state.activeTabName === 'Received' ? 'block' : 'none' }}>
             {this.state.activeTabName === 'Received' && this.renderReceivedTab()}
           </div>
         </div>
