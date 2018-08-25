@@ -177,7 +177,6 @@ export function userProfile(state = userProfileInitialState, action) {
         isLoading: false,
       };
     case SET_USER_GEOLOCATION:
-      console.log(' hoi naman', state, action)
       return {
         ...state,
         geolocation: action.geolocation
