@@ -1,5 +1,6 @@
 /*
-    author: Alexander Zolotov
+  author: Alexander Zolotov
+  Replaced by: src/theme/components/challenges/Challenges.js
 */
 
 import React, { Component } from 'react';
@@ -8,16 +9,10 @@ import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-
-import { Icon } from 'react-fa';
-
 import PropTypes from 'prop-types';
 
 import PopupNewProject from '~/src/theme/components/PopupNewProject';
 import MyProjectsContainer from '~/src/theme/components/projects/MyProjectsContainer';
-
-import ActionLink from '~/src/components/common/ActionLink';
-
 import ProjectsScanner from '~/src/theme/components/projects/ProjectsScanner';
 
 import '~/src/theme/css/common.css';
@@ -37,7 +32,7 @@ import { fetchRoadmapsDetailsByIds } from '~/src/redux/actions/roadmaps';
 
 import { projectsFetch, projectSave } from '~/src/redux/actions/projects';
 
-class ProjectManager extends React.Component {
+class ProjectManager extends Component {
   constructor(props) {
     super(props);
 

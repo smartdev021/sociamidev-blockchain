@@ -107,7 +107,7 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
         <p>Markets</p>
       </button>
       {
-        process.env.SOQQLE_ENV !== 'production' &&
+        process.env.SOQQLE_ENV !== 'production' && 
         (!isEmailInputVisible
           ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
             <p>Subscribe</p>
@@ -115,14 +115,14 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
           : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
         )
       }
-
+      
       {/* {!isEmailInputVisible
         ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
           <p>Subscribe</p>
         </button>
         : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />} */}
       {
-        process.env.SOQQLE_ENV !== 'production' &&
+        process.env.SOQQLE_ENV !== 'production' && 
         <button type="button" className="sign-up-button">
           <p>Enterprise sign up</p>
         </button>

@@ -1,9 +1,9 @@
 /*
-    author: Alexander Zolotov
+  author: Alexander Zolotov
+  Replaced by: src/theme/components/story/Story.js
 */
 
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -23,14 +23,10 @@ import { Icon } from 'react-fa';
 import ActionLink from '~/src/components/common/ActionLink';
 
 import { fetchRoadmaps, fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
-
 import { startProgressionTree, stopProgressionTree } from '~/src/redux/actions/authorization';
-
 import { saveTask } from '~/src/redux/actions/tasks';
 
-import ConfigMain from '~/configs/main';
-
-class ProgressionTrees extends React.Component {
+class ProgressionTrees extends Component {
   constructor(props) {
     super(props);
 

@@ -355,7 +355,12 @@ class Heroes extends React.Component {
       <div className="progression-tree-skill-list">
         {this.props.roadmapsAdmin.data.length != 0 &&
           this.props.roadmapsAdmin.data.map((item, index) => {
-            return <SkillCard key={index} skillItem={item} quickStartProgress={this.state.quickStarts[item.name] === true} onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}/>;
+            return <SkillCard key={index} skillItem={item} 
+            quickStartProgress={this.state.quickStarts[item.name] === true} 
+            onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} 
+            onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}
+            userProfile={this.props.userProfile}
+            />;
           })}
       </div>
     );

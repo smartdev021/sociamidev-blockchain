@@ -34,6 +34,7 @@ import Loadable from 'react-loading-overlay';
 import {
   fetchUserProfile,
   update_userProfile,
+  fetchUserTheme,
   logout,
   openUserProfile,
   openSignUpForm,
@@ -41,6 +42,8 @@ import {
   fetchUserActivities,
   fetchUserTasks,
   setUserProfileCharacter,
+  updateAvatar,
+  updateCoverBackground,
   saveUserLocation
 } from '~/src/redux/actions/authorization';
 
@@ -250,7 +253,7 @@ class App extends Component {
 
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
     if (this.props.exactLocation && this.props.exactLocation == 'RoadmapsWidgetDetails') {
-      lastLocation.pathname = '/taskManagement';
+      lastLocation.pathname = '/tasks';
     }
 
     cookies.set('lastLocation', lastLocation, options);
@@ -306,7 +309,6 @@ class App extends Component {
     this.props.closeSignUpForm();
 
     this.storeCurrentLocationInCookies();
-
     window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
   }
 
@@ -347,6 +349,7 @@ class App extends Component {
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID || this.state.userID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID, this.state.userID);
+      this.props.fetchUserTheme(this.state.userID);
     }
   }
 
@@ -593,6 +596,8 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
+            changeAvatar={url => this.props.updateAvatar(url)}
+            changeCoverBackground={url => this.props.updateCoverBackground(url)}
             logout={() => this.logout()}
           />
           <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
@@ -621,11 +626,14 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
+  fetchUserTheme: PropTypes.func.isRequired,
   update_userProfile: PropTypes.func.isRequired,
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
+  updateAvatar: PropTypes.func.isRequired,
+  updateCoverBackground: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
   setUserProfileCharacter: PropTypes.func.isRequired,
@@ -640,7 +648,10 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
+  fetchUserTheme: bindActionCreators(fetchUserTheme, dispatch),
   update_userProfile: bindActionCreators(update_userProfile, dispatch),
+  updateAvatar: bindActionCreators(updateAvatar, dispatch),
+  updateCoverBackground: bindActionCreators(updateCoverBackground, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   updateTask: bindActionCreators(updateTask, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),

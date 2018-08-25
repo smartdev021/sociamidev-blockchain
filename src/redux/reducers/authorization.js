@@ -11,7 +11,13 @@ import {
   FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
   UPDATE_USER_PROFILE_INITIATE,
   UPDATE_USER_PROFILE_COMPLETE,
+  UPDATE_USER_AVATAR,
+  UPDATE_USER_COVERBACKGROUND,
   USER_PROFIE_UPDATE_FREQUENTLY,
+  FETCH_USER_THEME_INITIATE,
+  FETCH_USER_THEME_COMPLETE,
+  UPDATE_USER_THEME_INITIATE,
+  UPDATE_USER_THEME_COMPLETE,
   PROGRESSION_TREE_START_INITIATE,
   PROGRESSION_TREE_START_COMPLETE,
   PROGRESSION_TREE_STOP_INITIATE,
@@ -41,8 +47,11 @@ const userProfileInitialState = {
     skills: 'javascript, c++',
     experience: 'Google',
     education: 'Harvard',
+    pictureURL: null,
+    coverBackgroundURL: null,
     facebook: null,
     linkedin: null,
+    theme: 'Dark',
     progressionTrees: [],
     progressionTreeLevels: [],
   },
@@ -72,7 +81,11 @@ export function userProfile(state = userProfileInitialState, action) {
     case FETCH_USER_PROFILE_COMPLETE:
       return {
         ...state,
-        profile: action.profile,
+        profile: Object.assign({}, action.profile, {
+          theme: state.profile.theme,
+          firstName: action.profile.firstName || "",
+          lastName: action.profile.lastName || ""
+        }),
         isAdmin: action.isAdmin,
         isAuthorized: action.isAuthorized,
         isLoading: false,
@@ -82,6 +95,10 @@ export function userProfile(state = userProfileInitialState, action) {
       return { ...state, isLoading: true };
     case UPDATE_USER_PROFILE_COMPLETE:
       return { ...state, isAuthorized: true, isLoading: false, profile: action.profile };
+    case UPDATE_USER_AVATAR:
+      return { ...state,profile: Object.assign({}, state.profile, { pictureURL: action.url }) };
+    case UPDATE_USER_COVERBACKGROUND:
+      return { ...state,profile: Object.assign({}, state.profile, { coverBackgroundURL: action.url }) };
     case FETCH_USER_PROFILE_TASKS_INITIATE: {
       return { ...state, tasks: { assigned: [], created: [], isLoading: true } };
     }
@@ -98,6 +115,28 @@ export function userProfile(state = userProfileInitialState, action) {
       return {
         ...state,
         activities: Object.assign({}, state.activities, { data: action.activities, isLoading: false }),
+      };
+    }
+    case FETCH_USER_THEME_INITIATE:
+      return { ...state, isLoading: true };
+    case FETCH_USER_THEME_COMPLETE: {
+      return {
+        ...state,
+        profile: Object.assign({}, state.profile, {
+          theme: action.theme
+        }),
+        isLoading: false,
+      };
+    }
+    case UPDATE_USER_THEME_INITIATE:
+      return { ...state, isLoading: true };
+    case UPDATE_USER_THEME_COMPLETE: {
+      return {
+        ...state,
+        profile: Object.assign({}, state.profile, {
+          theme: action.theme
+        }),
+        isLoading: false,
       };
     }
     case PROGRESSION_TREE_START_INITIATE: {

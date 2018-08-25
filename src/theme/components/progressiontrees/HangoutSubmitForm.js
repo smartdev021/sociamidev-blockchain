@@ -252,7 +252,7 @@ class HangoutSubmitForm extends React.Component {
               <div className="row">
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                    <label for="txtDate">Date</label>
+                    <label htmlFor="txtDate">Date</label>
                     <input
                       type="date"
                       className="form-control validate-field required"
@@ -267,7 +267,7 @@ class HangoutSubmitForm extends React.Component {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label for="txtTime">Time</label>
+                    <label htmlFor="txtTime">Time</label>
                     <input
                       type="time"
                       className=" form-control validate-field required"
@@ -311,7 +311,7 @@ class HangoutSubmitForm extends React.Component {
               Your DeepDive has been created! Let's wait for a match!<br />Find out more about what's
               happening around this topic below.
             </p>
-            <Link to="/taskManagement">
+            <Link to="/tasks">
               <button type="submit" className="btn-md btn-outline-inverse goto-task-manager-btn">
                 Goto Task Manager Instead
               </button>

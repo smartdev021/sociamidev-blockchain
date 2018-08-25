@@ -138,7 +138,7 @@
     top: 0;
     left: -20px;
     z-index: 2;
-    padding: 15px 55px 10px 80px;
+    padding: 0px 55px 10px 80px;
     margin: 0;
     background: #000;
     transform: skewX(-35deg);
@@ -152,13 +152,13 @@
 
 .navbar-wrapper .logo img {
     width: 100%;
-    max-width: 84px;
+    max-width: 140px;
     transform: skew(35deg);
 }
 
 @media screen and (max-width: 750px) {
     .navbar-wrapper .logo img {
-        width: 58px;
+        width: 80px;
     }
 }
 
@@ -297,6 +297,15 @@
 .navbar-wrapper .header .navbar-options li a span{
     color: white;
     font-size: 25px;
+}
+
+.navbar-wrapper .header .navbar-options .sub-navbar{
+    display:contents;
+}
+
+.navbar-wrapper .header .navbar-options .sub-navbar li{
+    display: table-row-group;
+    width: 100%;
 }
 
 @media screen and (max-width: 750px) {

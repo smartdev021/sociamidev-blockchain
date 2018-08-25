@@ -34,14 +34,15 @@
 }
 .progression-tree-hero-container{
     text-align: center;
-    margin-top: -70px;
 }
 .progression-tree-hero-img {
     width: 250px;
+    margin-top: -80px;
 }
 .progression-tree-blockforce-img{
     width: 160px;
     margin-right: 40px;
+    margin-top: -70px;
 }
 
 

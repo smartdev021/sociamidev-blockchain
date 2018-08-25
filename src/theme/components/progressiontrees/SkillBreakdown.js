@@ -296,7 +296,7 @@ class SkillBreakdown extends React.Component {
       : 'btn-md btn-outline-inverse deep-dive-button-disabled';
 
     if (redirectToTaskManagement) {
-      return <Redirect to="/taskManagement" />;
+      return <Redirect to="/tasks" />;
     }
     return (
       <div className="container-fluid progress-browser-wrap" id="skill-break-down">

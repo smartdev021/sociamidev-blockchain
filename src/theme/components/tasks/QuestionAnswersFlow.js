@@ -11,6 +11,7 @@ import QuestionTypes from '~/src/common/QuestionTypes';
 import AnswerSimpleQuestion from '~/src/theme/components/tasks/common/AnswerSimpleQuestion';
 import AnswerMultipleVariants from '~/src/theme/components/tasks/common/AnswerMultipleVariants';
 import AnswerTrueFalse from '~/src/theme/components/tasks/common/AnswerTrueFalse';
+import { loadURL } from '~/src/redux/actions/tasks';
 
 const answerPersonImg = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/answer-person.png';
 const avatar = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/avatar.png';
@@ -29,10 +30,12 @@ class QuestionAnswersFlow extends React.Component {
 
     this.state = {
       currentQuestion: 0,
+      viewRight: false,
     };
     this.getAnswerMy = this.getAnswerMy.bind(this);
     this.getAnswerPartner = this.getAnswerPartner.bind(this);
     this.getAnswerOthers = this.getAnswerOthers.bind(this);
+    // this.setLoadURL = this.getLoadURL.bind(this);
   }
 
   getAnswerMy(questionId) {
@@ -152,77 +155,44 @@ class QuestionAnswersFlow extends React.Component {
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
-          <button onClick={this.props.onBackToMyTasks}>
-            <img src={backArrowImg} />&nbsp;&nbsp;BACK TO MY TASKS
+          <button type="button" onClick={this.props.onBackToMyTasks} className="close" aria-label="Close">
+            <span aria-hidden="true" style={{ fontSize: '18px' }}>
+              &times;
+            </span>
           </button>
         </div>
         <div className="QuestionAnswersFlow-current-question-indicator">
-          <img src={leftArrowImg} />
-          <span>{`${currentQuestion + 1} of ${questions.length}`}</span>
-          <img src={rightArrowImg} />
+          <p className="QuestionAnswersFlow-main-question">
+            ({`${currentQuestion + 1} / ${questions.length}`}) {question.question}
+          </p>
         </div>
-        <div>
-          <h3 className="QuestionAnswersFlow-main-question">{question.question}</h3>
-        </div>
-        <div
-          className={
-            'QuestionAnswersFlow-answer' +
-            ' ' +
-            (this.props.currentTaskType !== 'illuminate' && AnswerPartner !== '' ? 'show' : 'hidden')
-          }
-        >
-          <div className="row">
-            <div className="col-xs-1">
-              <span>
-                <img src={answerPersonImg} alt="answer-person-avatar" />
-              </span>
-            </div>
-            <div className="col-xs-11">
-              <div className="QuestionAnswersFlow-answer-text partner-answer-text">
-                {AnswerPartner}
-                {/* <a href="#">&nbsp;&nbsp;Show more</a> */}
-              </div>
-            </div>
+        <div className="QuestionAnswersFlow-previous-next-side">
+          <div className="QuestionAnswersFlow-previous">
+            <a
+              className="btn-prev QuestionAnswersFlow-previous"
+              onClick={this.handleNextOrPrevious.bind(this, 'prev')}
+            >
+              ◀ previous
+            </a>
+          </div>
+          <div className="QuestionAnswersFlow-next">
+            {currentQuestion === questions.length - 1 ? (
+              <a className="btn-next QuestionAnswersFlow-next" onClick={e => this.props.onSubmit(e)}>
+                submit ▶
+              </a>
+            ) : (
+              <a
+                className="btn-next QuestionAnswersFlow-next"
+                onClick={this.handleNextOrPrevious.bind(this, 'next')}
+              >
+                next ▶
+              </a>
+            )}
           </div>
         </div>
-        <div
-          className={
-            'QuestionAnswersFlow-other-players-answers' +
-            ' ' +
-            (renderAnswerOthers.length > 0 ? 'show' : 'hidden')
-          }
-        >
-          <span className="QuestionAnswersFlow-other-players-answers-text">Other players' answers</span>
-          <span className="QuestionAnswersFlow-other-players-answers-images">{renderAnswerOthers}</span>
-        </div>
-        {/* <div className="QuestionAnswersFlow-textarea">
-        <textarea id={`answer_your_${question._id}`} 
-                        className="validate-field required question-text-area"
-                          name="answer_your" onChange={(e)=>this.props.onHandleAnswerInput(e)} value={AnswerMy ? AnswerMy.text : ""}/>
-        </div> */}
         {this.renderAnswerInput()}
         <div className="QuestionAnswersFlow-social-share">
-          <span>World must know my answer</span>
-          <a href="#">
-            <img src={linkedInImg} />
-          </a>
-          <a href="#">
-            <img src={feacbookImg} />
-          </a>
-        </div>
-        <div className="QuestionAnswersFlow-prev-next-ctn">
-          <button className="btn-prev" onClick={this.handleNextOrPrevious.bind(this, 'prev')}>
-            <img src={btnPreviousImg} />
-          </button>
-          {currentQuestion === questions.length - 1 ? (
-            <button className="btn-next" onClick={e => this.props.onSubmit(e)}>
-              <img src={btnSubmitImg} />
-            </button>
-          ) : (
-            <button className="btn-next" onClick={this.handleNextOrPrevious.bind(this, 'next')}>
-              <img src={btnNextImg} />
-            </button>
-          )}
+          <span>Jhon: It will change finance and healthcare the most</span>
         </div>
       </div>
     );

@@ -17,6 +17,12 @@ export const FETCH_USER_PROFILE_TASKS_COMPLETE = 'fetch_user_profile_tasks_compl
 export const FETCH_USER_PROFILE_ACTIVITIES_INITIATE = 'fetch_user_activities_initiate';
 export const FETCH_USER_PROFILE_ACTIVITIES_COMPLETE = 'fetch_user_activities_complete';
 
+export const FETCH_USER_THEME_INITIATE = 'fetch_user_theme_initiate';
+export const FETCH_USER_THEME_COMPLETE = 'fetch_user_theme_complete';
+
+export const UPDATE_USER_THEME_INITIATE = 'update_user_theme_initiate';
+export const UPDATE_USER_THEME_COMPLETE = 'update_user_theme_complete';
+
 export const PROGRESSION_TREE_START_INITIATE = 'progression_tree_start_initiate';
 export const PROGRESSION_TREE_START_COMPLETE = 'progression_tree_start_complete';
 
@@ -116,6 +122,8 @@ export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = 'fetch_list_character_traits
 
 export const UPDATE_USER_PROFILE_INITIATE = 'update_user_profile_initiate';
 export const UPDATE_USER_PROFILE_COMPLETE = 'update_user_profile_complete';
+export const UPDATE_USER_AVATAR = 'update_user_avatar';
+export const UPDATE_USER_COVERBACKGROUND = 'update_user_coverbackground';
 
 export const USER_ACCOUNTING_FETCH_INITIATE = 'user_accounting_fetch_initiate';
 export const USER_ACCOUNTING_FETCH_COMPLETE = 'user_accounting_fetch_complete';
@@ -157,3 +165,13 @@ export const DELETE_TEAM_COMPLETE = 'delete_team_complete';
 // Articles
 export const FETCH_ARTICLES_INITIATE = 'fetch_articles_initiate';
 export const FETCH_ARTICLES_COMPLETE = 'fetch_articles_complete';
+
+// Houses
+export const FETCH_HOUSES_INITIATE = 'fetch_houses_initiate';
+export const FETCH_HOUSES_COMPLETE = 'fetch_houses_complete';
+
+// Company
+export const FETCH_COMPANY_INITIATE = 'fetch_company_initiate';
+export const FETCH_COMPANY_COMPLETE = 'fetch_company_complete';
+
+export const LOAD_ACTIVATE_URL = 'load_activate_url';

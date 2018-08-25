@@ -1,6 +1,7 @@
 const BACKEND_URL_REMOTE_PROD = 'https://api.soqqle.com';
 const BACKEND_URL_REMOTE_STAGING = 'https://stgapi.soqqle.com';
 const BACKEND_URL_LOCAL = 'http://localhost:3001';
+const LINK_SCRAPER_URL = 'https://api.urlmeta.org/';
 
 var ConfigMain = {
   getBackendURL: function() {
@@ -16,6 +17,10 @@ var ConfigMain = {
   getCookiesExpirationPeriod: function() {
     //10 years
     return 10 * 365 * 24 * 60 * 60 * 1000;
+  },
+
+  getLinkScraperServiceURL: function() {
+    return LINK_SCRAPER_URL;
   },
 
   ChallengesScannerDisabled: false,
