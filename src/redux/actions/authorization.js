@@ -103,8 +103,10 @@ export function saveUserLocation(userID) {
                   };
 
                   var latlng = pos.lat + ", " + pos.lng;
+                  const isLocal = new RegExp('soqqle.com').test(window.location.href) ? false : true;
+                  const _protocol = isLocal ? 'http' : 'https';
                   fetch(
-                    "http://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+                    _protocol + "://maps.googleapis.com/maps/api/geocode/json?latlng=" +
                       latlng +
                       "&sensor=false"
                   ).then(function(res) {
