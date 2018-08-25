@@ -24,7 +24,7 @@ import {
   PROGRESSION_TREE_STOP_COMPLETE,
   USER_LOG_OUT,
   USER_SIGN_UP,
-  SET_USER_GEOLOCATION
+  SET_USER_LOCALE_DATA
 } from '~/src/redux/actions/actionTypes';
 
 export function isOpenProfilePending(state = false, action) {
@@ -39,7 +39,7 @@ export function isOpenProfilePending(state = false, action) {
 }
 
 const userProfileInitialState = {
-  geolocation: {},
+  locale: {},
   profile: {
     firstName: 'John',
     lastName: 'Doe',
@@ -176,10 +176,14 @@ export function userProfile(state = userProfileInitialState, action) {
         }),
         isLoading: false,
       };
-    case SET_USER_GEOLOCATION:
+    case SET_USER_LOCALE_DATA:
+      let localeTemporary = 'en';
+      if (action.locale && action.locale.languages && action.locale.languages.length) {
+        localeTemporary = action.locale.languages.join(' | ');
+      }
       return {
         ...state,
-        geolocation: action.geolocation
+        locale: { localeTemporary: localeTemporary, ...action.locale }
       };
     default:
       return state;
