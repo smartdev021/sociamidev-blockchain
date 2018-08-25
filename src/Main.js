@@ -170,6 +170,7 @@ class Main extends Component {
       <div className="soqqle-page-wrapper">
         {RedirectTo}
         <ThemeHeader
+          localeData={this.props.localeData}
           isAdmin={this.props.isAdmin}
           isAuthorized={this.props.isAuthorized}
           userActivities={this.props.userActivities}
@@ -211,6 +212,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  localeData: state.userProfile.locale,
   currentUserID: state.userProfile.profile._id,
   isAuthorized: state.userProfile.isAuthorized,
   userActivities: state.userProfile.activities.data,
