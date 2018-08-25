@@ -24,6 +24,7 @@ import {
   PROGRESSION_TREE_STOP_COMPLETE,
   USER_LOG_OUT,
   USER_SIGN_UP,
+  SET_USER_GEOLOCATION
 } from '~/src/redux/actions/actionTypes';
 
 export function isOpenProfilePending(state = false, action) {
@@ -38,6 +39,7 @@ export function isOpenProfilePending(state = false, action) {
 }
 
 const userProfileInitialState = {
+  geolocation: {},
   profile: {
     firstName: 'John',
     lastName: 'Doe',
@@ -173,6 +175,12 @@ export function userProfile(state = userProfileInitialState, action) {
           progressionTrees: state.profile.progressionTrees.concat(action.tree),
         }),
         isLoading: false,
+      };
+    case SET_USER_GEOLOCATION:
+      console.log(' hoi naman', state, action)
+      return {
+        ...state,
+        geolocation: action.geolocation
       };
     default:
       return state;

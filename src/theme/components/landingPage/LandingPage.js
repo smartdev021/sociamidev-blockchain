@@ -131,10 +131,25 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
   );
 };
 
-const Logo = () => {
+const logoOnClickProp = (thatProps) => {
+  return {
+    href: '/',
+    onClick: (e) => {
+      e.preventDefault();
+
+      if (thatProps.geolocation && thatProps.geolocation.country) {
+        const countryObj = thatProps.geolocation.country;
+        const n = `Geolocation country: ${countryObj.short_name} - ${countryObj.long_name}`;
+        alert(n);
+      }
+    }
+  }
+};
+
+const Logo = (thatProps) => {
   return (
     <div className="logo">
-      <a href="/">
+      <a {...logoOnClickProp(thatProps)}>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
           alt="logo"
@@ -144,7 +159,7 @@ const Logo = () => {
   );
 };
 
-const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, geolocation }) => {
   const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
   const handleInputSubmit = (event) => {
@@ -160,7 +175,7 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
         <span>x</span>
       </button>
       <div className="mobile-logo">
-        <a href="/">
+        <a {...logoOnClickProp({ geolocation })}>
           <img
             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
             alt="logo"
@@ -268,7 +283,7 @@ class LandingPage extends Component {
         <header>
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
-          <Logo />
+          <Logo {...{geolocation: this.props.geolocation}} />
           <Header openMenu={this.toggle}
             onEmailInputShow={() => this.handleEmailInputShow(true)}
             onEmailInputHide={() => this.handleEmailInputShow(false)}
@@ -279,7 +294,9 @@ class LandingPage extends Component {
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <Footer />
-        <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle}
+        <MobileMenu
+          geolocation={this.props.geolocation}
+          isOpen={this.state.isOpen} closeMenu={this.toggle}
           onEmailInputShow={() => this.handleEmailInputShow(true)}
           onEmailInputHide={() => this.handleEmailInputShow(false)}
           onEmailInputSubmit={(event) => { this.handleEmailInputSubmit(event) }}
@@ -299,11 +316,12 @@ LandingPage.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
-  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch)
 });
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
+  geolocation: state.userProfile.geolocation,
 });
 
 export default connect(

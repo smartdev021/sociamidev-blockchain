@@ -26,6 +26,7 @@ import {
   UPDATE_USER_COVERBACKGROUND,
   USER_LOG_OUT,
   USER_SIGN_UP,
+  SET_USER_GEOLOCATION
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main';
@@ -54,6 +55,13 @@ export function openUserProfileComplete() {
   };
 }
 
+export function setUserGeolocation(data) {
+  return {
+    type: SET_USER_GEOLOCATION,
+    geolocation: data
+  }
+}
+
 export function fetchUserProfileComplete(userProfile, authorized, adminUser, company) {
   return {
     type: FETCH_USER_PROFILE_COMPLETE,
@@ -74,6 +82,93 @@ export function updateUserProfileComplete(userProfile) {
   return {
     type: UPDATE_USER_PROFILE_COMPLETE,
     profile: userProfile,
+  };
+}
+
+export function saveUserLocation(userID) {
+
+  return dispatch => {
+    if (navigator && navigator.geolocation) {
+      navigator.permissions &&
+        navigator.permissions
+          .query({ name: "geolocation" })
+          .then(function(PermissionStatus) {
+            const permissionStatusState = PermissionStatus.state;
+            if (permissionStatusState === "granted" || permissionStatusState === 'prompt') {
+              navigator.geolocation.getCurrentPosition(
+                function(position) {
+                  var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                  };
+
+                  var latlng = pos.lat + ", " + pos.lng;
+                  fetch(
+                    "http://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+                      latlng +
+                      "&sensor=false"
+                  ).then(function(res) {
+                    res.json().then(function(res) {
+                      var country = "";
+                      var results = res.results;
+
+                      if (results && results.length) {
+                        var indice = 0;
+                        for (var j = 0; j < results.length; j++) {
+                          if (results[j].types[0] == "locality") {
+                            indice = j;
+                            break;
+                          }
+                        }
+                        // alert('The good number is: ' + j);
+                        // console.log(results[j]);
+                        for (
+                          var i = 0;
+                          i < results[j].address_components.length;
+                          i++
+                        ) {
+                          // if (results[j].address_components[i].types[0] == 'locality') {
+                          //   //this is the object you are looking for City
+                          //   city = results[j].address_components[i];
+                          // }
+                          // if (results[j].address_components[i].types[0] == 'administrative_area_level_1') {
+                          //   //this is the object you are looking for State
+                          //   region = results[j].address_components[i];
+                          // }
+                          if (
+                            results[j].address_components[i].types[0] ==
+                            "country"
+                          ) {
+                            //this is the object you are looking for
+                            country = results[j].address_components[i];
+                          }
+                        }
+
+                        //city data
+                        // alert(city.long_name + ' || ' + region.long_name + ' || ' + country.short_name);
+                      } else {
+                        // alert('No results found');
+                      }
+
+                      dispatch(setUserGeolocation({
+                        pos: pos,
+                        country: country
+                      }))
+                    });
+                  });
+                },
+                function(ee) {
+                  console.log("failed to retrieve geolocation", ee);
+                  // handleLocationError(true, infoWindow, map.getCenter());
+                }
+              );
+
+              //allowed
+            } else {
+              //denied
+            }
+          });
+    }
   };
 }
 
