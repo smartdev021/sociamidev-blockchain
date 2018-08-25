@@ -20,10 +20,10 @@ import {
   UPDATE_USER_PROFILE_INITIATE,
   USER_LOG_OUT,
   USER_SIGN_UP,
+  SET_USER_GEOLOCATION
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main';
-import { saveUserLocation as saveUserLocationSR } from '../../lib/backend/sr-authorization';
 
 export function openSignUpForm() {
   return {
@@ -47,6 +47,13 @@ export function openUserProfileComplete() {
   return {
     type: OPEN_USER_PROFILE_COMPLETE,
   };
+}
+
+export function setUserGeolocation(data) {
+  return {
+    type: SET_USER_GEOLOCATION,
+    geolocation: data
+  }
 }
 
 export function fetchUserProfileComplete(userProfile, authorized, adminUser, company) {
@@ -80,7 +87,8 @@ export function saveUserLocation(userID) {
         navigator.permissions
           .query({ name: "geolocation" })
           .then(function(PermissionStatus) {
-            if (PermissionStatus.state == "granted") {
+            const permissionStatusState = PermissionStatus.state;
+            if (permissionStatusState === "granted" || permissionStatusState === 'prompt') {
               navigator.geolocation.getCurrentPosition(
                 function(position) {
                   var pos = {
@@ -136,17 +144,10 @@ export function saveUserLocation(userID) {
                         // alert('No results found');
                       }
 
-                      saveUserLocationSR(userID, {
+                      dispatch(setUserGeolocation({
+                        pos: pos,
                         country: country
-                      })
-                        .then(function(res1) {
-                          console.log("save here", res1);
-                        })
-                        .catch(function(err1) {
-                          console.log("err1 here", err1);
-                        });
-
-                      console.log("gotch", country);
+                      }))
                     });
                   });
                 },
