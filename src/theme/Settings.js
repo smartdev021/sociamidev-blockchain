@@ -92,7 +92,7 @@ class Settings extends Component {
     this.props.updateUserTheme(this.props.userProfile._id, theme);
   }
 
-  renderTeamSelect(options) {
+  renderThemeSelect(options) {
     return (
       <div>
         <div className="custom-select" style={{ display: this.state.themeToggle }}>
@@ -257,7 +257,7 @@ class Settings extends Component {
                           </span>
                         </h3>
                         <p></p>
-                        { this.renderTeamSelect([{value: "Dark", label: "Dark"}, {value: "Light", label: "Light"}]) }
+                        { this.renderThemeSelect([{value: "Dark", label: "Dark"}, {value: "Light", label: "Light"}]) }
                       </div>
                       <div className="devider-box">
                         <h3>

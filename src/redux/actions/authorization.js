@@ -233,7 +233,7 @@ export function fetchUserTheme(userId) {
         );
       })
       .catch(function(error) {
-        dispatch(fetchUserThemeComplete('dark'));
+        dispatch(fetchUserThemeComplete('Dark'));
       });
   };
 }
@@ -265,7 +265,7 @@ export function updateUserTheme(userId, theme) {
         );
       })
       .catch(function(error) {
-        dispatch(updateUserThemeComplete('dark'));
+        dispatch(updateUserThemeComplete('Dark'));
       });
   };
 }

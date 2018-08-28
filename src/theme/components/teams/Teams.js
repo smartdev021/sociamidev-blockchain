@@ -64,7 +64,8 @@ class Teams extends React.Component {
         onUpdateEmail={(emailIndex,prevEmail,newEmail,team) => this.handleEmailUpdate(emailIndex,prevEmail,newEmail,team)}
         onDeleteTeam={(_id) => this.handleTeamDelete(index, _id)}
         key={item._id} 
-        index={index} />;
+        index={index}
+        company={this.props.company} />;
     });
     return listItems;
   }
