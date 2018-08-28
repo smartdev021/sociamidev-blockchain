@@ -172,7 +172,7 @@ class ThemeHeader extends React.Component {
     const activeCompany = this.props.companies.company.filter(c => c._id === id)[0];
     this.setState({activeCompany: activeCompany});
     const companyArr = this.props.companies.company;
-    this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)}); 
+    this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)});
     this.setState({isCompanyOpen: !this.state.isCompanyOpen});
   }
 
@@ -267,8 +267,8 @@ class ThemeHeader extends React.Component {
         const activeCompany = this.props.companies.company[0];
         this.setState({activeCompany: activeCompany})
         const companyArr = this.props.companies.company;
-        this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)}); 
-      }  
+        this.setState({companies: companyArr.filter(c => c._id !== activeCompany._id)});
+      }
     }
   }
 
@@ -307,12 +307,12 @@ class ThemeHeader extends React.Component {
 
     const OpenMenuClass = !this.props.isSidebarOpen ? 'open-menu' : 'open-menu';
     const CloseMenuClass = this.props.isSidebarOpen ? 'close-menu' : 'close-menu';
-    
+
     let houseImage = defaultHouseCompanyImage;
     if(this.props.houses.houses.length > 0) {
       houseImage = this.props.houses.houses[0].imageUrl;
-    } 
-    
+    }
+
     return (
       <div className="soqqle-header" id="popup-root">
         <ToastContainer />
@@ -395,6 +395,7 @@ class ThemeHeader extends React.Component {
                       </Link>
                     </li>
                     <UserMenuDropdown
+                      localeData={this.props.localeData}
                       isAdmin={this.props.isAdmin}
                       userProfile={this.props.userProfile}
                       onSignOut={() => this.onSignOut()}

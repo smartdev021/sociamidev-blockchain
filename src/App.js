@@ -44,7 +44,7 @@ import {
   setUserProfileCharacter,
   updateAvatar,
   updateCoverBackground,
-  saveUserLocation
+  setUserLocaleDataI18Next
 } from '~/src/redux/actions/authorization';
 
 import { fetchAllTasks, updateTask } from '~/src/redux/actions/tasks';
@@ -67,6 +67,9 @@ let DataProviderIndeed = require('~/src/data_providers/indeed/DataProvider');
 let DataProviderEventBrite = require('~/src/data_providers/event_brite/DataProvider');
 let DataProviderUdemy = require('~/src/data_providers/udemy/DataProvider');
 let DataProviderFreelancer = require('~/src/data_providers/freelancer/DataProvider');
+
+import i18next from 'i18next';
+import LngDetector from 'i18next-browser-languagedetector';
 
 const BackendURL = ConfigMain.getBackendURL();
 var socketConn;
@@ -161,7 +164,7 @@ class App extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
 
     this.props.fetchTaskActivityUnlockReqs();
-    this.props.saveUserLocation(this.state.userID);
+    this.props.setUserLocaleDataI18Next(i18next.use(LngDetector));
     this.restoreAuthFromLS();
   }
 
@@ -660,7 +663,7 @@ const mapDispatchToProps = dispatch => ({
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
-  saveUserLocation: bindActionCreators(saveUserLocation, dispatch),
+  setUserLocaleDataI18Next: bindActionCreators(setUserLocaleDataI18Next, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
   fetchTaskActivityUnlockReqs: bindActionCreators(fetchTaskActivityUnlockReqs, dispatch),

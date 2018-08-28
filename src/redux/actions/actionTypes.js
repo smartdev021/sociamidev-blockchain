@@ -1,4 +1,4 @@
-export const SET_USER_GEOLOCATION = 'set_user_geolocation';
+export const SET_USER_LOCALE_DATA = 'set_user_locale_data';
 
 export const SELECT_RESULTS_CATEGORY = 'action_select_results_category'; //choose from 'Jobs', 'Events', etc.
 export const OPEN_USER_PROFILE = 'action_open_user_profile';
