@@ -15,6 +15,7 @@ import Spinner from '~/src/theme/components/homepage/Spinner';
 import { findUrlInText, isSameLink } from '~/src/utils/UrlUtils';
 import '~/src/theme/css/darkTheme.css';
 import '~/src/theme/css/lightTheme.css';
+import '~/src/css/bootstrap-workaround.css';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -27,6 +28,8 @@ const PostButton = ({ onPost }) => (
     </ul>
   </div>
 );
+
+const FIX_MOBILE_MARGIN_8959 = 'fix-mobile-margin-8959';
 
 class HomePage extends Component {
   constructor(props) {
@@ -146,7 +149,7 @@ class HomePage extends Component {
         <div className="row">
           <div className="container">
             <div className="row">
-              <div className="row">
+              <div className={`row ${FIX_MOBILE_MARGIN_8959}`}>
                 
                 <LeftNav 
                   accounting={this.props.accounting}
