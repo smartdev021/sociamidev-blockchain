@@ -62,8 +62,8 @@ class TeamPanel extends Component {
   }
 
   componentDidMount() {
-    this.getAchievementData();
     this.getAchievementGroup();
+    this.getAchievementData();
     this.getCompanies();
   }
 

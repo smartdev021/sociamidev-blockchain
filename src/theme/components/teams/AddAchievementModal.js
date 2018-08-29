@@ -41,6 +41,7 @@ class AddAchievementModal extends Component {
     this.addCondition = this.addCondition.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.removeCondition = this.removeCondition.bind(this);
   }
 
   componentWillMount() {
@@ -151,6 +152,14 @@ class AddAchievementModal extends Component {
 
     let formData = this.state.formData;
     this.setState({formData})
+  }
+
+  removeCondition(id) {
+    let conditions = this.state.formData.conditions;
+    _.remove(conditions, condition => condition.id === id);
+    _.set(this, 'state.formData.conditions', conditions)
+    let formData = this.state.formData;
+    this.setState({formData});
   }
 
   detailsForm() {
@@ -282,9 +291,12 @@ class AddAchievementModal extends Component {
         {
           _.map(conditions, (c, index) => {
             return (
-              <div key={c.id} style={{padding: '10px 10px 5px', clear: 'both', background: 'rgba(99, 99, 99, 0.5)', display: 'inline-block', width: '100%', borderRadius: '5px'}}>
+              <div key={index} style={{padding: '10px 10px 5px', clear: 'both', background: 'rgba(99, 99, 99, 0.5)', display: 'inline-block', width: '100%', borderRadius: '5px'}}>
                 <div>
-                  <span style={{ color: 'white' }} className="col-lg-6">Condition Type:</span>
+                  <div className="col-lg-12" style={{ padding: 0, width: 'auto', margin: '-10px 0 0 -5px' }}>
+                    <span style={{ color: '#ffc225', cursor: 'pointer' }} className="fa fa-minus-circle" onClick={() => this.removeCondition(c.id)}></span>
+                  </div>
+                  <span style={{ color: 'white', clear: 'both' }} className="col-lg-6">Condition Type:</span>
                   <select
                     className="col-lg-6"
                     style={{
@@ -745,7 +757,7 @@ class AddAchievementModal extends Component {
             margin: '15px',
             border: 'transparent'
           }}
-          onClick={this.addCondition}
+          onClick={() => this.addCondition()}
         >
           Add Condition
         </button>
@@ -839,7 +851,7 @@ class AddAchievementModal extends Component {
                     fontSize: '16px',
                     border: 'transparent'
                   }}
-                  onClick={this.onSubmit}
+                  onClick={() => this.onSubmit()}
                 >
                   {this.props.achievementId == 0 ? 'Submit' : 'Update'}
                 </button>
@@ -852,7 +864,7 @@ class AddAchievementModal extends Component {
                       border: 'transparent',
                       marginLeft: '10px'
                     }}
-                    onClick={this.onDelete}
+                    onClick={() => this.onDelete()}
                   >
                     Delete
                   </button>
