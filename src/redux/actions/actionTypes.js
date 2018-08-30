@@ -178,7 +178,7 @@ export const FETCH_COMPANY_INITIATE = 'fetch_company_initiate';
 export const FETCH_COMPANY_COMPLETE = 'fetch_company_complete';
 
 // Company
-export const FETCH_STORIES_INITIATE = 'fetch_stories_initiate';
-export const FETCH_STORIES_COMPLETE = 'fetch_stories_complete';
+export const FETCH_SKILLS_INITIATE = 'fetch_skills_initiate';
+export const FETCH_SKILLS_COMPLETE = 'fetch_skills_complete';
 
 export const LOAD_ACTIVATE_URL = 'load_activate_url';
