@@ -719,7 +719,7 @@ class Tasks extends React.Component {
                       />
                     ) : (
                       <div className="col-middle ml-fixed">
-                        <div className="col-box-wp mb-50 p-0">
+                        <div className="col-box-wp mb-20 p-0">
                           <div className="task-heading">Tasks</div>
                           <ul className="tab-wp pull-right">
                             <li className={this.state.IsCurrentTaskOpen == 'block' ? 'active' : ''}>
