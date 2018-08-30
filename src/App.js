@@ -27,7 +27,8 @@ import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main';
 import ActionLink from '~/src/components/common/ActionLink';
 
-import CharacterCreationFlow from '~/src/character-creation/CharacterCreationFlow';
+// import CharacterCreationFlow from '~/src/character-creation/CharacterCreationFlow';
+import CharacterCreationFlow from '~/src/theme/components/characterCreation/CharacterCreationFlow';
 
 import Loadable from 'react-loading-overlay';
 
@@ -503,7 +504,9 @@ class App extends Component {
   }
 
   handleCharacterDataSet() {
-    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
+    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData()).then(
+      result => this.props.fetchUserTheme(this.props.userProfile._id)
+    )
   }
 
   chatEndListener(event, data) {
@@ -560,6 +563,12 @@ class App extends Component {
     let RedirectTo = this.getRedirectLocation();
 
     let ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
+    
+    if (this.props.userProfile.character === null || this.props.userProfile.theme === undefined){
+      return (
+        <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
+      )
+    }
 
     return (
       <Loadable
@@ -603,7 +612,6 @@ class App extends Component {
             changeCoverBackground={url => this.props.updateCoverBackground(url)}
             logout={() => this.logout()}
           />
-          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
           {ChatAppLink}
         </div>
       </Loadable>
