@@ -1,3 +1,19 @@
+/**
+**
+** https://stackoverflow.com/questions/12046315/prevent-overscrolling-of-web-page
+**
+**/
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: auto;
+}
+
 /*
 **
 ** .row.fix-mobile-margin-8959 is a work around to fix
