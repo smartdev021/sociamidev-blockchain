@@ -107,7 +107,8 @@ export const FETCH_USER_FRIENDS_COMPLETE = 'fetch_user_friends_complete';
 //character creation
 export const SET_CHARACTER_CREATION_DATA = 'set_character_creation_data';
 
-export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX = 'set_character_creation_character_index';
+export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX =
+  'set_character_creation_character_index';
 export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX =
   'set_character_creation_character_traits_index';
 
@@ -131,8 +132,10 @@ export const USER_ACCOUNTING_FETCH_COMPLETE = 'user_accounting_fetch_complete';
 export const SET_ACTIVE_HANGOUT = 'set_active_hangout';
 export const RESET_ACTIVE_HANGOUT = 'reset_active_hangout';
 
-export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_INITIATE = 'task_activity_unlock_requirements_fetch_initiate';
-export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE = 'task_activity_unlock_requirements_fetch_complete';
+export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_INITIATE =
+  'task_activity_unlock_requirements_fetch_initiate';
+export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE =
+  'task_activity_unlock_requirements_fetch_complete';
 
 // Achievements
 export const FETCH_ACHIEVEMENTS_INITIATE = 'fetch_achievements_initiate';
@@ -173,5 +176,9 @@ export const FETCH_HOUSES_COMPLETE = 'fetch_houses_complete';
 // Company
 export const FETCH_COMPANY_INITIATE = 'fetch_company_initiate';
 export const FETCH_COMPANY_COMPLETE = 'fetch_company_complete';
+
+// Company
+export const FETCH_STORIES_INITIATE = 'fetch_stories_initiate';
+export const FETCH_STORIES_COMPLETE = 'fetch_stories_complete';
 
 export const LOAD_ACTIVATE_URL = 'load_activate_url';
