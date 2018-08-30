@@ -88,7 +88,7 @@
     "pubsub-js": "^1.6.0",
     "query-string": "^5.1.0",
     "rc-tooltip": "^3.7.0",
-    "react": "^15.6.1",
+    "react": "^15.6.2",
     "react-bootstrap": "^0.31.3",
     "react-click-outside": "^3.0.0",
     "react-cookie": "^2.1.1",

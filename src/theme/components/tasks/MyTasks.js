@@ -22,22 +22,16 @@ import TooltipUser from '~/src/theme/components/tasks/TooltipUser';
 import PubSub from 'pubsub-js';
 
 import TaskTypes from '~/src/common/TaskTypes';
+
+import { GenerateDateString } from '~/src/utils/DateUtils';
+
+import goldClock from '~/src/theme/images/clock-with-white-face.png';
+import goldClose from '~/src/theme/images/gold-close.png';
+import goldChat from '~/src/theme/images/gold-chat.png';
+
 import { SSL_OP_NETSCAPE_CA_DN_BUG } from 'constants';
 
 const RenderDummyFriends = false;
-
-/*Helper functions*/
-const DayFromNumber = dayNum => {
-  const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-  return DayNames[dayNum];
-};
-
-const MonthFromNumber = monthNum => {
-  const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
-
-  return MonthNames[monthNum];
-};
 
 const GetHangoutPartner = (hangout, props) => {
   let Partner = hangout.metaData.participants.find(function(participant) {
@@ -73,63 +67,15 @@ const Hours12 = date => {
   return (date.getHours() + 24) % 12 || 12;
 };
 
-const GenerateDateString = (time, props) => {
-  const DateFromTime = new Date(time);
-
-  const Noon = new Date(
-    DateFromTime.getFullYear(),
-    DateFromTime.getMonth(),
-    DateFromTime.getDate(),
-    12,
-    0,
-    0,
-  );
-
-  const AmPm = DateFromTime.getTime() < Noon.getTime() ? 'am' : 'pm';
-
-  const Hours = String(Hours12(DateFromTime)) + AmPm;
-
-  const CurrentDate = new Date();
-
-  const Today = new Date();
-  const Tomorrow = new Date(Today.getTime() + 24 * 60 * 60 * 1000);
-  const AfterTomorrow = new Date(Tomorrow.getTime() + 24 * 60 * 60 * 1000);
-  const ThisSunday = new Date(CurrentDate.setDate(CurrentDate.getDate() - CurrentDate.getDay() + 6));
-
-  let DateString = '';
-
-  if (
-    DateFromTime.getFullYear() == Today.getFullYear() &&
-    DateFromTime.getMonth() == Today.getMonth() &&
-    DateFromTime.getDate() == Today.getDate()
-  ) {
-    DateString = ` Today at ${Hours}`;
-  } else if (
-    DateFromTime.getFullYear() == Tomorrow.getFullYear() &&
-    DateFromTime.getMonth() == Tomorrow.getMonth() &&
-    DateFromTime.getDate() == Tomorrow.getDate()
-  ) {
-    DateString = ` Tomorrow at ${Hours}`;
-  } else if (
-    DateFromTime.getFullYear() == ThisSunday.getFullYear() &&
-    DateFromTime.getMonth() == ThisSunday.getMonth() &&
-    DateFromTime.getDate() <= ThisSunday.getDate()
-  ) {
-    DateString = ` on ${DayFromNumber(DateFromTime.getDay())} at ${Hours}`;
-  } else {
-    DateString = `${DateFromTime.getDate()} ${MonthFromNumber(DateFromTime.getMonth())} at ${Hours}`;
-  }
-
-  return DateString;
-};
-
 const RenderIlluminateActions = (task, props) => {
   switch (task.status) {
     case 'None': {
       return (
-        <a className="pur-btn answer-question"
-        onClick={() => props.onHangoutActionPerform('answer_questions', task)}>
-            Answer questions
+        <a
+          className="pur-btn answer-question"
+          onClick={() => props.onHangoutActionPerform('answer_questions', task)}
+        >
+          Start
         </a>
       );
     }
@@ -139,13 +85,47 @@ const RenderIlluminateActions = (task, props) => {
   }
 };
 
+const RenderDeepDiveActions = (task, props) => {
+  const FirstPendingParticipant = GetFirstPendingParticipant(task, props);
+  switch (task.status) {
+    case 'None': {
+      return (
+        <div className="deep-dive-btn-container">
+          <a
+            href="#"
+            className="pur-btn answer-question"
+            onClick={() => props.onHangoutRequestAccept(task, FirstPendingParticipant.user)}
+          >
+            Accept
+          </a>
+          <a
+            href="#"
+            className="pur-btn answer-question"
+            onClick={() => props.ontaskRequestReject(task, FirstPendingParticipant.user)}
+          >
+            Reject
+          </a>
+        </div>
+      );
+    }
+    case 'complete': {
+      return <div className="deep-tools" />;
+    }
+    default: {
+      return null;
+    }
+  }
+};
+
 const RenderDecodeActions = (task, props) => {
   switch (task.status) {
     case 'None': {
       return (
-        <a className="pur-btn answer-question"
-        onClick={() => props.onHangoutActionPerform('answer_questions', task)}>
-            Answer questions
+        <a
+          className="pur-btn answer-question"
+          onClick={() => props.onHangoutActionPerform('answer_questions', task)}
+        >
+          Start
         </a>
       );
     }
@@ -188,7 +168,7 @@ const RenderActions = (hangout, props) => {
 
   switch (hangout.status) {
     case 'complete': {
-      return <div className="deep-tools" />;
+      return <div className="action-group" />;
     }
     case 'finished': {
       if (
@@ -197,23 +177,15 @@ const RenderActions = (hangout, props) => {
         }) == -1
       ) {
         return (
-          <div className="deep-tools">
+          <div className="action-group">
             <ul>
               <li>
-                <ActionLink
-                  href="#"
-                  onClick={() => props.onHangoutRate(hangout, Partner.user._id, 'good')}
-                  className="btn-base btn-red"
-                >
+                <ActionLink href="#" onClick={() => props.onHangoutRate(hangout, Partner.user._id, 'good')}>
                   Good
                 </ActionLink>
               </li>
               <li>
-                <ActionLink
-                  href="#"
-                  onClick={() => props.onHangoutRate(hangout, Partner.user._id, 'bad')}
-                  className="btn-base btn-red"
-                >
+                <ActionLink href="#" onClick={() => props.onHangoutRate(hangout, Partner.user._id, 'bad')}>
                   Bad
                 </ActionLink>
               </li>
@@ -225,7 +197,7 @@ const RenderActions = (hangout, props) => {
           <a className="btn-feedback">
             Waiting partner's feedback
             <p> Start when both ready</p>
-        </a>
+          </a>
         );
       }
     }
@@ -233,23 +205,20 @@ const RenderActions = (hangout, props) => {
       if (hangout.creator._id == props.currentUserID) {
         if (FirstAcceptedParticipant) {
           return (
-            <div className="deep-tools">
+            <div className="action-group">
               <ul>
                 <li>
                   <ActionLink
                     href="#"
                     onClick={() => props.onHangoutActionPerform('reschedule', hangout)}
-                    className="btn-base btn-red"
-                  >
-                    Reschedule
-                  </ActionLink>
+                    style={{ backgroundImage: `url(${goldClock})` }}
+                  />
                 </li>
                 <li>
                   <ActionLink
                     href="#"
                     disabled={StartDisabled}
                     onClick={() => props.onHangoutActionPerform('start', hangout)}
-                    className={StartDisabled ? 'btn-base btn-red disabled' : 'btn-base btn-red '}
                   >
                     {ButtonStartText}
                   </ActionLink>
@@ -258,26 +227,38 @@ const RenderActions = (hangout, props) => {
                   <ActionLink
                     href="#"
                     onClick={() => props.onHangoutActionPerform('cancel', hangout)}
-                    className="btn-base btn-red"
-                  >
-                    Cancel
-                  </ActionLink>
+                    style={{ backgroundImage: `url(${goldClose})` }}
+                  />
                 </li>
               </ul>
             </div>
           );
         } else if (FirstPendingParticipant) {
           return (
-            <div className="deep-tools">
+            <div className="action-group">
               <ul>
                 <li>
                   <ActionLink
                     href="#"
-                    onClick={() => props.onHangoutRequestAccept(hangout, FirstPendingParticipant.user)}
-                    className="btn-base btn-red"
-                  >
-                    Accept
-                  </ActionLink>
+                    onClick={() => {
+                      openChat(Partner);
+                    }}
+                    style={{ backgroundImage: `url(${goldChat})` }}
+                  />
+                </li>
+              </ul>
+            </div>
+          );
+        } else {
+          return (
+            <div className="action-group">
+              <ul>
+                <li>
+                  <ActionLink
+                    href="#"
+                    onClick={() => props.onHangoutActionPerform('reschedule', hangout)}
+                    style={{ backgroundImage: `url(${goldClock})` }}
+                  />
                 </li>
                 <li>
                   <ActionLink
@@ -285,44 +266,15 @@ const RenderActions = (hangout, props) => {
                     onClick={() => {
                       openChat(Partner);
                     }}
-                    className="btn-base btn-red"
-                  >
-                    Open Chat
-                  </ActionLink>
-                </li>
-                <li>
-                  <ActionLink
-                    href="#"
-                    onClick={() => props.onHangoutRequestReject(hangout, FirstPendingParticipant.user)}
-                    className="btn-base btn-red"
-                  >
-                    Reject
-                  </ActionLink>
-                </li>
-              </ul>
-            </div>
-          );
-        } else {
-          return (
-            <div className="deep-tools">
-              <ul>
-                <li>
-                  <ActionLink
-                    href="#"
-                    onClick={() => props.onHangoutActionPerform('reschedule', hangout)}
-                    className="btn-base btn-red"
-                  >
-                    Reschedule
-                  </ActionLink>
+                    style={{ backgroundImage: `url(${goldChat})` }}
+                  />
                 </li>
                 <li>
                   <ActionLink
                     href="#"
                     onClick={() => props.onHangoutActionPerform('cancel', hangout)}
-                    className="btn-base btn-red"
-                  >
-                    Cancel
-                  </ActionLink>
+                    style={{ backgroundImage: `url(${goldClose})` }}
+                  />
                 </li>
               </ul>
             </div>
@@ -330,14 +282,10 @@ const RenderActions = (hangout, props) => {
         }
       } else {
         return (
-          <div className="deep-tools">
+          <div className="action-group">
             <ul>
               <li>
-                <ActionLink
-                  href="#"
-                  onClick={() => props.onHangoutActionPerform('leave', hangout)}
-                  className="btn-base btn-red"
-                >
+                <ActionLink href="#" onClick={() => props.onHangoutActionPerform('leave', hangout)}>
                   Withdraw
                 </ActionLink>
               </li>
@@ -347,10 +295,8 @@ const RenderActions = (hangout, props) => {
                   onClick={() => {
                     openChat(Partner);
                   }}
-                  className="btn-base btn-red"
-                >
-                  Open Chat
-                </ActionLink>
+                  style={{ backgroundImage: `url(${goldChat})` }}
+                />
               </li>
             </ul>
           </div>
@@ -359,23 +305,17 @@ const RenderActions = (hangout, props) => {
     }
     case 'started': {
       return (
-        <div className="deep-tools">
+        <div className="action-group">
           <ul>
             <li>
               <ActionLink
                 href="#"
                 onClick={() => props.onHangoutActionPerform('reschedule', hangout)}
-                className="btn-base btn-red"
-              >
-                Reschedule
-              </ActionLink>
+                style={{ backgroundImage: `url(${goldClock})` }}
+              />
             </li>
             <li>
-              <ActionLink
-                href="#"
-                onClick={() => props.onHangoutActionPerform('answer_questions', hangout)}
-                className="btn-base btn-red"
-              >
+              <ActionLink href="#" onClick={() => props.onHangoutActionPerform('answer_questions', hangout)}>
                 Answer Questions
               </ActionLink>
             </li>
@@ -383,10 +323,8 @@ const RenderActions = (hangout, props) => {
               <ActionLink
                 href="#"
                 onClick={() => props.onHangoutActionPerform('cancel', hangout)}
-                className="btn-base btn-red"
-              >
-                Cancel
-              </ActionLink>
+                style={{ backgroundImage: `url(${goldClose})` }}
+              />
             </li>
           </ul>
         </div>
@@ -396,14 +334,10 @@ const RenderActions = (hangout, props) => {
     case 'canceled': {
       if (hangout.creator._id != props.currentUserID) {
         return (
-          <div className="deep-tools">
+          <div className="action-group">
             <ul>
               <li>
-                <ActionLink
-                  href="#"
-                  onClick={() => props.onHangoutActionPerform('leave', hangout)}
-                  className="btn-base btn-red"
-                >
+                <ActionLink href="#" onClick={() => props.onHangoutActionPerform('leave', hangout)}>
                   Withdraw
                 </ActionLink>
               </li>
@@ -413,20 +347,18 @@ const RenderActions = (hangout, props) => {
                   onClick={() => {
                     openChat(Partner);
                   }}
-                  className="btn-base btn-red"
-                >
-                  Open Chat
-                </ActionLink>
+                  style={{ backgroundImage: `url(${goldChat})` }}
+                />
               </li>
             </ul>
           </div>
         );
       } else {
-        return <div className="deep-tools" />;
+        return <div className="action-group" />;
       }
     }
     default: {
-      return <div className="deep-tools" />;
+      return <div className="action-group" />;
     }
   }
 };
@@ -437,7 +369,7 @@ const IlluminateTitleFromStatus = task => {
     //   {' '}
     //   <a href="#" className="link-yellow" />{' '}
     // </h4>
-    <span className="col-heading">{' '}</span>
+    <span className="col-heading"> </span>
   );
   switch (task.status) {
     case 'started':
@@ -452,7 +384,7 @@ const IlluminateTitleFromStatus = task => {
       break;
     }
     default: {
-      result = <span className="col-heading">Illuminate is in Progress</span>
+      result = <span className="col-heading">Illuminate is in Progress</span>;
       break;
     }
   }
@@ -461,23 +393,21 @@ const IlluminateTitleFromStatus = task => {
 };
 
 const DecodeTitleFromStatus = task => {
-  let result = (
-    <span className="col-heading">{' '}</span>
-  );
+  let result = <span className="col-heading"> </span>;
   switch (task.status) {
     case 'started':
       result = <span className="col-heading">Decode is in Progress</span>;
       break;
     case 'finished': {
-        result = <span className="col-heading">Decode is finished</span>;
+      result = <span className="col-heading">Decode is finished</span>;
       break;
     }
     case 'complete': {
-        result = <span className="col-heading">Decode is complete</span>;
+      result = <span className="col-heading">Decode is complete</span>;
       break;
     }
     default: {
-        result = <span className="col-heading">Decode is in Progress</span>;
+      result = <span className="col-heading">Decode is in Progress</span>;
       break;
     }
   }
@@ -486,9 +416,7 @@ const DecodeTitleFromStatus = task => {
 };
 
 const HangoutTitleFromStatus = (task, Partner, props) => {
-  let result = (
-    <span className="col-heading">{' '}</span>
-  );
+  let result = <span className="col-heading"> </span>;
 
   if (!Partner) {
     switch (task.status) {
@@ -541,35 +469,35 @@ const HangoutTitleFromStatus = (task, Partner, props) => {
               </a>
             </TooltipUser>{' '}
             is in progress
-        </span>
+          </span>
         );
         break;
       }
       case 'finished': {
         result = (
-            <span className="col-heading">
-                Deepdive with{' '}
-                    <TooltipUser user={Partner} currentUser={props.userProfile}>
-                    <a href="#" className="link-yellow">
-                        {Partner.user.firstName}
-                    </a>
-                    </TooltipUser>{' '}
-                is finished
-            </span>
+          <span className="col-heading">
+            Deepdive with{' '}
+            <TooltipUser user={Partner} currentUser={props.userProfile}>
+              <a href="#" className="link-yellow">
+                {Partner.user.firstName}
+              </a>
+            </TooltipUser>{' '}
+            is finished
+          </span>
         );
         break;
       }
       case 'complete': {
         result = (
-            <span className="col-heading">
-                Deepdive with{' '}
-                <TooltipUser user={Partner} currentUser={props.userProfile}>
-                <a href="#" className="link-yellow">
-                    {Partner.user.firstName}
-                </a>
-                </TooltipUser>{' '}
-                is complete
-            </span>
+          <span className="col-heading">
+            Deepdive with{' '}
+            <TooltipUser user={Partner} currentUser={props.userProfile}>
+              <a href="#" className="link-yellow">
+                {Partner.user.firstName}
+              </a>
+            </TooltipUser>{' '}
+            is complete
+          </span>
         );
         break;
       }
@@ -577,23 +505,23 @@ const HangoutTitleFromStatus = (task, Partner, props) => {
         if (Partner.status == 'accepted') {
           result = (
             <span className="col-heading">
-                Confirmed Deepdive with{' '}
-                <TooltipUser user={Partner} currentUser={props.userProfile}>
-                    <a href="#" className="link-yellow">
-                    {Partner.user.firstName}
-                    </a>
-                </TooltipUser>
+              Confirmed Deepdive with{' '}
+              <TooltipUser user={Partner} currentUser={props.userProfile}>
+                <a href="#" className="link-yellow">
+                  {Partner.user.firstName}
+                </a>
+              </TooltipUser>
             </span>
           );
         } else if (Partner.status == 'pending') {
           result = (
             <span className="col-heading">
-                <TooltipUser user={Partner} currentUser={props.userProfile}>
-                    <a href="#" className="link-yellow">
-                    {Partner.user.firstName}{' '}
-                    </a>
-                </TooltipUser>
-                {` wants to join your "${task.metaData.subject.skill.name}" Deepdive`}
+              <TooltipUser user={Partner} currentUser={props.userProfile}>
+                <a href="#" className="link-yellow">
+                  {Partner.user.firstName}{' '}
+                </a>
+              </TooltipUser>
+              {` wants to join your "${task.metaData.subject.skill.name}" Deepdive`}
             </span>
           );
         }
@@ -606,11 +534,7 @@ const HangoutTitleFromStatus = (task, Partner, props) => {
 };
 
 const RenderTaskTitle = (task, props) => {
-  let result = (
-    <span className="col-heading">
-        {' '}
-    </span>
-  );
+  let result = <span className="col-heading"> </span>;
 
   if (task.type === TaskTypes.DEEPDIVE) {
     const Partner = GetHangoutPartner(task, props);
@@ -623,38 +547,34 @@ const RenderTaskTitle = (task, props) => {
 
       //Why is this possible???
       if (!CurrentUserAsParticipant) {
-        result = (
-            <span className="col-heading">
-                {' '}
-            </span>
-        );
+        result = <span className="col-heading"> </span>;
       } else {
         //for Sent Requests
         switch (CurrentUserAsParticipant.status) {
           case 'pending': {
             result = (
-                <span className="col-heading">
-                    Your request to Deepdive with{' '}
-                    <TooltipUser user={Partner} currentUser={props.userProfile}>
-                    <a href="#" className="link-yellow">
-                        {Partner.user.firstName}
-                    </a>
-                    </TooltipUser>{' '}
-                    is pending approval
-                </span>
+              <span className="col-heading">
+                Your request to Deepdive with{' '}
+                <TooltipUser user={Partner} currentUser={props.userProfile}>
+                  <a href="#" className="link-yellow">
+                    {Partner.user.firstName}
+                  </a>
+                </TooltipUser>{' '}
+                is pending approval
+              </span>
             );
             break;
           }
           case 'rejected': {
             result = (
-                <span className="col-heading">
-                    <TooltipUser user={Partner} currentUser={props.userProfile}>
-                        <a href="#" className="link-yellow">
-                            {Partner.user.firstName}
-                        </a>
-                        </TooltipUser>{' '}
-                    has not confirmed your request to join theirs Deepdive
-                </span>
+              <span className="col-heading">
+                <TooltipUser user={Partner} currentUser={props.userProfile}>
+                  <a href="#" className="link-yellow">
+                    {Partner.user.firstName}
+                  </a>
+                </TooltipUser>{' '}
+                has not confirmed your request to join theirs Deepdive
+              </span>
             );
             break;
           }
@@ -711,95 +631,110 @@ const RenderTask = (task, i, props) => {
   if (task.type === TaskTypes.DEEPDIVE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
     const SkillName = task.metaData.subject.skill.name;
-    let taskDate = GenerateDateString(taskTime, props);
+    let taskDate = GenerateDateString(taskTime);
     if (taskTime < new Date()) taskDate = 'Start when both ready';
     return (
-        <div className="col-md-6" key={i}>
-            <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'10px 10px'}}>
-                    <div className="profile-icon">
-                        <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
-                    </div>
-                    <div className="task-text">
-                      <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                      <span className="bule-text">
-                        <TimeAgo date={createdDate} minPeriod={60} />
-                      </span>
-                    </div>
-                    
-                </div>
-                <div className="att-box task-id">TaskId: {task._id}}</div>
-                <div className="att-box">
-                    <div className="task-att">SKILL</div>
-                    <div className="task-att-name">{SkillName}</div>    
-                </div>
-                <div className="att-box" style={{height:'70px'}}>
-                    <div className="task-att">DATE</div>
-                    <div className="task-att-name">{taskDate}</div>
-                </div>
-                {RenderActions(task, props)}
+      <div className="col-md-6" key={i}>
+        <div className="col-box-wp no-padding">
+          {RenderActions(task, props)}
+
+          <div className="top-head" style={{ padding: '10px 10px' }}>
+            <div className="profile-icon">
+              <img
+                src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249"
+                alt=""
+              />
             </div>
+            <div className="task-text">
+              <span className="col-heading">{RenderTaskTitle(task, props)}</span>
+              <span className="bule-text">
+                <TimeAgo date={createdDate} minPeriod={60} />
+              </span>
+            </div>
+          </div>
+          <div className="att-box task-id">TaskId: {task._id}}</div>
+          <div className="att-box">
+            <div className="task-att">SKILL</div>
+            <div className="task-att-name">{SkillName}</div>
+          </div>
+          <div className="att-box" style={{ height: '70px' }}>
+            <div className="task-att">DATE</div>
+            <div className="task-att-name">{taskDate}</div>
+          </div>
+          {RenderDeepDiveActions(task, props)}
         </div>
+      </div>
     );
   } else if (task.type === TaskTypes.ILLUMINATE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
     const SkillName = task.metaData.subject.skill.name;
     return (
-        <div className="col-md-6" key={i}>
-            <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'10px 10px'}}>
-                    <div className="profile-icon">
-                        <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
-                    </div>
-                    <div className="task-text">
-                      <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                      <span className="bule-text">
-                        <TimeAgo date={createdDate} minPeriod={60} />
-                      </span>
-                    </div>
-                </div>
-                <div className="att-box task-id">TaskId: {task._id}}</div>
-                <div className="att-box">
-                    <div className="task-att">SKILL</div>
-                    <div className="task-att-name" onClick={() => DebugOutputClick(task)}>{SkillName}</div>    
-                </div>
-                <div className="att-box" style={{height:'70px'}}>
-                    <div className="task-att">DATE</div>
-                    <div className="task-att-name">{dateTimeString}</div>
-                </div>
-                {RenderIlluminateActions(task, props)}
+      <div className="col-md-6" key={i}>
+        <div className="col-box-wp no-padding">
+          {RenderActions(task, props)}
+          <div className="top-head" style={{ padding: '10px 10px' }}>
+            <div className="profile-icon">
+              <img
+                src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249"
+                alt=""
+              />
             </div>
+            <div className="task-text">
+              <span className="col-heading">{RenderTaskTitle(task, props)}</span>
+              <span className="bule-text">
+                <TimeAgo date={createdDate} minPeriod={60} />
+              </span>
+            </div>
+          </div>
+          <div className="att-box task-id">TaskId: {task._id}}</div>
+          <div className="att-box">
+            <div className="task-att">SKILL</div>
+            <div className="task-att-name" onClick={() => DebugOutputClick(task)}>
+              {SkillName}
+            </div>
+          </div>
+          <div className="att-box" style={{ height: '70px' }}>
+            <div className="task-att">DATE</div>
+            <div className="task-att-name">{dateTimeString}</div>
+          </div>
+          {RenderIlluminateActions(task, props)}
         </div>
+      </div>
     );
   } else if (task.type === TaskTypes.DECODE) {
     const taskTime = task.status == 'None' ? task.metaData.time : task.timeStatusChanged;
     const SkillName = task.metaData.subject.skill.name;
     return (
-        <div className="col-md-6" key={i}>
-            <div className="col-box-wp no-padding">
-                <div className="top-head" style={{padding:'10px 10px'}}>
-                    <div className="profile-icon">
-                        <img src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249" alt="" />
-                    </div>
-                    <div className="task-text">
-                      <span className="col-heading">{RenderTaskTitle(task, props)}</span>
-                      <span className="bule-text">
-                        <TimeAgo date={createdDate} minPeriod={60} />
-                      </span>
-                    </div>
-                </div>
-                <div className="att-box task-id">TaskId: {task._id}}</div>
-                <div className="att-box">
-                    <div className="task-att">SKILL</div>
-                    <div className="task-att-name" onClick={() => DebugOutputClick(task)}>{SkillName}</div>    
-                </div>
-                <div className="att-box" style={{height:'70px'}}>
-                    <div className="task-att">DATE</div>
-                    <div className="task-att-name">{dateTimeString}</div>
-                </div>
-                {RenderDecodeActions(task, props)}
+      <div className="col-md-6" key={i}>
+        <div className="col-box-wp no-padding">
+          <div className="top-head" style={{ padding: '10px 10px' }}>
+            <div className="profile-icon">
+              <img
+                src="https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userProfile/avatar_1534087468249"
+                alt=""
+              />
             </div>
+            <div className="task-text">
+              <span className="col-heading">{RenderTaskTitle(task, props)}</span>
+              <span className="bule-text">
+                <TimeAgo date={createdDate} minPeriod={60} />
+              </span>
+            </div>
+          </div>
+          <div className="att-box task-id">TaskId: {task._id}}</div>
+          <div className="att-box">
+            <div className="task-att">SKILL</div>
+            <div className="task-att-name" onClick={() => DebugOutputClick(task)}>
+              {SkillName}
+            </div>
+          </div>
+          <div className="att-box" style={{ height: '70px' }}>
+            <div className="task-att">DATE</div>
+            <div className="task-att-name">{dateTimeString}</div>
+          </div>
+          {RenderDecodeActions(task, props)}
         </div>
+      </div>
     );
   }
 
@@ -813,7 +748,7 @@ const RenderTask = (task, i, props) => {
       </div>
     </div>
   );
-}
+};
 
 const RenderTasks = props => {
   if (!props.tasks || props.tasks.length == 0) {
@@ -831,9 +766,7 @@ class MyTasks extends React.Component {
   }
 
   render() {
-    return (
-        <div className="row">{RenderTasks(this.props)}</div>
-    )
+    return <div className="row">{RenderTasks(this.props)}</div>;
   }
 }
 
