@@ -3,7 +3,7 @@
 ** https://stackoverflow.com/questions/12046315/prevent-overscrolling-of-web-page
 **
 **/
-
+/* not working, we need the scroll-snap
 html {
     overflow: hidden;
     height: 100%;
@@ -13,6 +13,8 @@ body {
     height: 100%;
     overflow: auto;
 }
+*/
+
 
 /*
 **
