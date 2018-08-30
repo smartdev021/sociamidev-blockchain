@@ -71,6 +71,7 @@ let DataProviderFreelancer = require('~/src/data_providers/freelancer/DataProvid
 
 import i18next from 'i18next';
 import LngDetector from 'i18next-browser-languagedetector';
+import { Footer } from './theme/components/landingPage/Footer';
 
 const BackendURL = ConfigMain.getBackendURL();
 var socketConn;
@@ -566,7 +567,11 @@ class App extends Component {
     
     if (this.props.userProfile.character === null || this.props.userProfile.theme === undefined){
       return (
-        <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
+        <div className="landing-page-wrapper landing-page-container">
+          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
+          <Footer />
+        </div>
+        
       )
     }
 

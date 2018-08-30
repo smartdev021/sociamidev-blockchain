@@ -27,6 +27,9 @@ import '~/src/theme/css/materializeCommon.css';
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
+import { Logo } from './Logo';
+import { Footer } from './Footer';
+import { MobileMenu } from './MobileMenu';
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -60,34 +63,6 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
 }
 
 //
-
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <a href="/" className="footer-logo">
-        <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-          alt="logo"
-        />
-      </a>
-      <h3>Subscribe to our Newsletter</h3>
-      <div><input type="email" className="mail" value="Mail" /></div>
-      <button type="button" className="subscribe"><p>Subscribe</p></button>
-      <ul className="info-list">
-        <li>About</li>
-        <li>Support</li>
-        <li>Contact</li>
-        <li>Press</li>
-      </ul>
-      <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
-        All trademarks referenced herein are the properties of their respective owners.</h4>
-      <ul className="privacy-list">
-        <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
-        <li><a href="/termsOfUse" target="_blank">Terms</a></li>
-      </ul>
-    </footer>
-  );
-};
 
 const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
   return (
@@ -127,68 +102,6 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
           <p>Enterprise sign up</p>
         </button>
       }
-    </div>
-  );
-};
-
-const Logo = () => {
-  return (
-    <div className="logo">
-      <a href="/">
-        <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-          alt="logo"
-        />
-      </a>
-    </div>
-  );
-};
-
-const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
-  const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
-
-  const handleInputSubmit = (event) => {
-    event.preventDefault();
-    if (validateEmail(email)) {
-      onEmailInputSubmit(email);
-    }
-  }
-
-  return (
-    <div className={mobileClass}>
-      <button type="button" className="close-menu" onClick={closeMenu}>
-        <span>x</span>
-      </button>
-      <div className="mobile-logo">
-        <a href="/">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-            alt="logo"
-          />
-        </a>
-      </div>
-      <ul>
-        <li>The games</li>
-        <li>Forums</li>
-        <li>Markets</li>
-      </ul>
-      <footer>
-        <div className="mobile-menu-email-subscribe-container">
-          <div className="landing-email-input-textfield-container">
-            <input value={email}
-              onKeyPress={(event) => {
-                //doesn't make sense for mobile, but her for consistency
-                if (event.key === 'Enter') {
-                  handleInputSubmit(event)
-                }
-              }}
-              onChange={onEmailInput}
-              type="email" placeholder="email@example.com" autoFocus={true} required={true} />
-          </div>
-        </div>
-        <button type="button" className="subscribe-button" onClick={handleInputSubmit}><p>Subscribe</p></button>
-        <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
-      </footer>
     </div>
   );
 };
@@ -279,7 +192,7 @@ class LandingPage extends Component {
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
         <Footer />
-        <MobileMenu
+        <MobileMenu 
           isOpen={this.state.isOpen} closeMenu={this.toggle}
           onEmailInputShow={() => this.handleEmailInputShow(true)}
           onEmailInputHide={() => this.handleEmailInputShow(false)}
