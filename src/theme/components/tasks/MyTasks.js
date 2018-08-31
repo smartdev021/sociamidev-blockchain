@@ -177,13 +177,13 @@ const RenderActions = (hangout, props) => {
         }) == -1
       ) {
         return (
-          <div className="deep-tools">
+          <div className="deep-dive-btn-container">
             <ul>
               <li>
                 <ActionLink
                   href="#"
                   onClick={() => props.onHangoutRate(hangout, Partner.user._id, 'good')}
-                  className="btn-base btn-red"
+                  className="pur-btn answer-question"
                 >
                   Good
                 </ActionLink>
@@ -192,7 +192,7 @@ const RenderActions = (hangout, props) => {
                 <ActionLink
                   href="#"
                   onClick={() => props.onHangoutRate(hangout, Partner.user._id, 'bad')}
-                  className="btn-base btn-red"
+                  className="pur-btn answer-question"
                 >
                   Bad
                 </ActionLink>
@@ -256,9 +256,7 @@ const RenderActions = (hangout, props) => {
             </div>
           );
         } else {
-          return (
-            <div className="deep-tools" />
-          );
+          return <div className="deep-tools" />;
         }
       } else {
         return (
