@@ -1460,8 +1460,8 @@ html, body {
     display: flex;
 }
 
-.deep-dive-btn-container pur-btn {
-    display: flex;
+.deep-dive-btn-container .pur-btn {
+    display: flex !important;
     justify-content: center;
 }
 
