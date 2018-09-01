@@ -24,6 +24,7 @@ import { teams } from './teams';
 import { articles } from './articles';
 import { houses } from './houses';
 import { company } from './company';
+import { skills } from './story';
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -56,5 +57,6 @@ export default combineReducers({
   teams,
   articles,
   houses,
-  company
+  company,
+  skills
 });
