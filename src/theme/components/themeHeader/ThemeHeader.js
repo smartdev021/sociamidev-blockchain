@@ -11,6 +11,7 @@ import { Icon } from 'react-fa';
 
 import ActionLink from '~/src/components/common/ActionLink';
 
+import UserIconToggle from '~/src/theme/components/themeHeader/UserIconToggle';
 import Notifications from '~/src/theme/components/themeHeader/Notifications';
 import StatsDropdown from '~/src/theme/components/themeHeader/StatsDropdown';
 import UserMenuDropdown from '~/src/theme/components/themeHeader/UserMenuDropdown';
@@ -139,6 +140,7 @@ class ThemeHeader extends React.Component {
     super(props);
 
     this.state = {
+      userToggleOpen: false,
       notificationsOpen: false,
       isOpen: false
     };
@@ -177,6 +179,14 @@ class ThemeHeader extends React.Component {
 
   handleNotificationsClose() {
     this.setState({ notificationsOpen: false });
+  }
+
+  handleUserToggleOpen() {
+    this.setState({ userToggleOpen: true });
+  }
+
+  handleUserToggleClose() {
+    this.setState({ userToggleOpen: false });
   }
 
   componentWillMount() {
@@ -282,6 +292,12 @@ class ThemeHeader extends React.Component {
           />
         )}
 
+        {this.state.userToggleOpen && (
+          <UserIconToggle
+            onClose={() => this.handleUserToggleClose()}
+          />
+        )}
+
 
         <div className="navbar-wrapper">
             <header>
@@ -330,8 +346,20 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li><a href="#"><span className="new-img-icon-head"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png" alt="" /></span></a></li>
-                    <li><a href="#"><span className="new-img-icon-head"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" /></span></a></li>
+                    <li>
+                      <a href="#">
+                        <span className="new-img-icon-head">
+                          <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-1.png" alt="" />
+                        </span>
+                      </a>
+                    </li>
+                    <li className="navbar-icon">
+                      <ActionLink href="#" onClick={() => this.handleUserToggleOpen()}>
+                        <span className="new-img-icon-head">
+                          <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/header-menu-new-icon-2.png" alt="" />
+                        </span>
+                      </ActionLink>
+                    </li>
                     <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} />
                     <li className="notification">
                       <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
