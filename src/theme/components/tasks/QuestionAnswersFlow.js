@@ -153,7 +153,7 @@ class QuestionAnswersFlow extends React.Component {
       );
     });
     return (
-      <div className="QuestionAnswersFlow-container">
+      <div className="col pull-right QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
           <button type="button" onClick={this.props.onBackToMyTasks} className="close" aria-label="Close">
             <span aria-hidden="true" style={{ fontSize: '18px' }}>
@@ -192,7 +192,8 @@ class QuestionAnswersFlow extends React.Component {
         </div>
         {this.renderAnswerInput()}
         <div className="QuestionAnswersFlow-social-share">
-          <span>Jhon: It will change finance and healthcare the most</span>
+          {/* <span>Jhon: It will change finance and healthcare the most</span> */}
+          <span>{AnswerPartner}</span>
         </div>
       </div>
     );
