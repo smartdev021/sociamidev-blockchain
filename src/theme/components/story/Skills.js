@@ -11,12 +11,27 @@ class StoryItem extends Component {
     };
   }
 
+  /**
+   * render get shadow randomly
+   * the default is violet
+   */
+  getShadow() {
+    const SHADOW_COUNT = 2; //set
+    const rnd = Math.floor(Math.random() * SHADOW_COUNT)
+    console.log(rnd)
+    const YELLOW = 1;
+    switch(rnd) {
+      case YELLOW: return 'yellow-shadow';
+      default: return '';
+    }
+  }
+
   render () {
     return (
-      <div className='col-box-wp black-bg'>
+      <div className={'col-box-wp black-bg '+ this.getShadow()}>
         <p>{_.get(this, 'state.data.description')}</p>
         <p className='graylight'>
-          Topics: Basic Innovation, Creativity, Government, Why Innovation Now?
+          {_.get(this, 'state.data.skill')}
         </p>
         <div className='row'>
           <div className='col-sm-8'>
