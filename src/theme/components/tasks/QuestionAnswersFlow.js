@@ -152,8 +152,11 @@ class QuestionAnswersFlow extends React.Component {
         </span>
       );
     });
+
+    let partnerName = this.props.partner ? `${this.props.partner.user.firstName} :`  : null
+
     return (
-      <div className="col pull-right QuestionAnswersFlow-container">
+      <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
           <button type="button" onClick={this.props.onBackToMyTasks} className="close" aria-label="Close">
             <span aria-hidden="true" style={{ fontSize: '18px' }}>
@@ -193,7 +196,7 @@ class QuestionAnswersFlow extends React.Component {
         {this.renderAnswerInput()}
         <div className="QuestionAnswersFlow-social-share">
           {/* <span>Jhon: It will change finance and healthcare the most</span> */}
-          <span>{AnswerPartner}</span>
+          <span style={{color:"darkgrey"}}>{partnerName} {AnswerPartner}</span>
         </div>
       </div>
     );
