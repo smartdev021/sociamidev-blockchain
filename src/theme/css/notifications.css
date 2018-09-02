@@ -1,8 +1,8 @@
 div#notificationTile {
   position: absolute;
   width: 332px;
-  right: 20px;
-  top: 70px;
+  right: 119px;
+  top: 60px;
   border: none;
   height: 400px;
   padding: 0 10px;
@@ -12,8 +12,8 @@ div#notificationTile {
 div#companyDropdown {
   position: absolute;
   width: 250px;
-  right: 70px;
-  top: 70px;
+  right: 160px;
+  top: 61px;
   border: none;
   height: 400px;
   padding: 0 10px;
