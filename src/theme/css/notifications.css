@@ -257,4 +257,25 @@ span.notification-item.list-group-item:hover .notify-hide {
     border: 6px solid #000;
     border-color: transparent transparent #0a0a0a #0a0a0a;
   }
+
+  div#companyDropdown {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    z-index: 100;
+    width: 100%;
+    line-height: 1;
+    background: #fff;
+  }
+
+  div#companyDropdown .list-group::after{
+    right: 131px;
+    border: 6px solid #000;
+    border-color: transparent transparent #ffc700 #ffc700;
+  }
+  div#companyDropdown .list-group:before {
+    right: 131px;
+    border: 6px solid #000;
+    border-color: transparent transparent #0a0a0a #0a0a0a;
+  }
 }
