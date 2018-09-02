@@ -55,7 +55,7 @@ html.vertical-hidden {
     min-height: 100vh;
     display: block;
     overflow-x: hidden;
-    overflow-y: scroll;
+    /* overflow-y: scroll; this comment is to remove 2bars scroll showing on chrome windows*/
     -webkit-overflow-scrolling: touch;
 }
 
