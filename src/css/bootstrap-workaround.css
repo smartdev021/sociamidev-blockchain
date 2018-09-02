@@ -1,9 +1,12 @@
 /* Disable horizontal overscroll on ios */
-html, body {
-  overflow: auto;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+
+@supports (-webkit-overflow-scrolling: touch) {
+  html, body {
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /*
