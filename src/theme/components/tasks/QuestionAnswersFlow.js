@@ -155,6 +155,8 @@ class QuestionAnswersFlow extends React.Component {
 
     let partnerName = this.props.partner ? `${this.props.partner.user.firstName} :`  : null
 
+    let partnerMsg = AnswerPartner.trim() ? {partnerName} + ' ' + {AnswerPartner} : null
+
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
@@ -196,7 +198,7 @@ class QuestionAnswersFlow extends React.Component {
         {this.renderAnswerInput()}
         <div className="QuestionAnswersFlow-social-share">
           {/* <span>Jhon: It will change finance and healthcare the most</span> */}
-          <span style={{color:"darkgrey"}}>{partnerName} {AnswerPartner}</span>
+          <span style={{color:"darkgrey"}}>{partnerMsg}</span>
         </div>
       </div>
     );
