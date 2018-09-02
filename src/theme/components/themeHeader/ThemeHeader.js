@@ -391,7 +391,7 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li className="navbar-icon">
+                    <li>
                       {/*<ActionLink href="#" onClick={() => this.handleUserToggleOpen()}>*/}
                       <ActionLink href="#" onClick={() => {}}>
                         <span className="new-img-icon-head">
@@ -399,7 +399,7 @@ class ThemeHeader extends React.Component {
                         </span>
                       </ActionLink>
                     </li>
-                    <li className="navbar-icon">
+                    <li>
                       <a href="javascript:" onClick={this.toggleCompany}>
                         <span className="new-img-icon-head">
                           <img src={this.state.activeCompany.imageUrl ? this.state.activeCompany.imageUrl : ''} alt="" />
