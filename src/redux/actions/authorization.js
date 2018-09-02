@@ -10,6 +10,10 @@ import {
   FETCH_USER_PROFILE_ACTIVITIES_INITIATE,
   FETCH_USER_PROFILE_ACTIVITIES_COMPLETE,
   USER_PROFIE_UPDATE_FREQUENTLY,
+  FETCH_USER_THEME_INITIATE,
+  FETCH_USER_THEME_COMPLETE,
+  UPDATE_USER_THEME_INITIATE,
+  UPDATE_USER_THEME_COMPLETE,
   PROGRESSION_TREE_START_INITIATE,
   PROGRESSION_TREE_START_COMPLETE,
   PROGRESSION_TREE_STOP_INITIATE,
@@ -18,8 +22,11 @@ import {
   SIGNUP_FORM_CLOSE,
   UPDATE_USER_PROFILE_COMPLETE,
   UPDATE_USER_PROFILE_INITIATE,
+  UPDATE_USER_AVATAR,
+  UPDATE_USER_COVERBACKGROUND,
   USER_LOG_OUT,
   USER_SIGN_UP,
+  SET_USER_LOCALE_DATA
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main';
@@ -48,6 +55,13 @@ export function openUserProfileComplete() {
   };
 }
 
+export function setUserLocaleData(data) {
+  return {
+    type: SET_USER_LOCALE_DATA,
+    locale: data
+  }
+}
+
 export function fetchUserProfileComplete(userProfile, authorized, adminUser, company) {
   return {
     type: FETCH_USER_PROFILE_COMPLETE,
@@ -68,6 +82,37 @@ export function updateUserProfileComplete(userProfile) {
   return {
     type: UPDATE_USER_PROFILE_COMPLETE,
     profile: userProfile,
+  };
+}
+
+export function setUserLocaleDataI18Next(module) {
+  return dispatch => {
+    module.init(
+      {
+        fallbackLng: 'en',
+        detection: {
+          order: [
+            "querystring",
+            "cookie",
+            "localStorage",
+            "navigator",
+            "htmlTag",
+            "path",
+            "subdomain"
+          ]
+        }
+      },
+      (a, b) => {
+        if (module && module.language && module.languages && module.languages.length) {
+          dispatch(
+            setUserLocaleData({
+              current: module.language,
+              languages: module.languages
+            })
+          );
+        }
+      }
+    );
   };
 }
 
@@ -101,6 +146,69 @@ export function fetchUserProfileTasksComplete(assignedTasks, createdTasks) {
     type: FETCH_USER_PROFILE_TASKS_COMPLETE,
     tasksAssigned: assignedTasks,
     tasksCreated: createdTasks,
+  };
+}
+
+export function fetchUserThemeInitiate() {
+  return {
+    type: FETCH_USER_THEME_INITIATE,
+  };
+}
+
+export function fetchUserThemeComplete(theme) {
+  return {
+    type: FETCH_USER_THEME_COMPLETE,
+    theme: theme,
+  };
+}
+
+export function fetchUserTheme(userId) {
+  return function(dispatch) {
+    dispatch(fetchUserThemeInitiate());
+
+    const url = `${ConfigMain.getBackendURL()}/preferences/${userId}`;
+
+    return Axios.get(url)
+      .then(function(response) {
+        dispatch(
+          fetchUserThemeComplete(response.data.theme),
+        );
+      })
+      .catch(function(error) {
+        dispatch(fetchUserThemeComplete('Dark'));
+      });
+  };
+}
+
+export function updateUserThemeInitiate() {
+  return {
+    type: UPDATE_USER_THEME_INITIATE,
+  };
+}
+
+export function updateUserThemeComplete(theme) {
+  return {
+    type: UPDATE_USER_THEME_COMPLETE,
+    theme: theme,
+  };
+}
+
+export function updateUserTheme(userId, theme) {
+  return function(dispatch) {
+    dispatch(updateUserThemeInitiate());
+
+    const url = `${ConfigMain.getBackendURL()}/preferences/${userId}`;
+    const body = { theme: theme };
+
+    return Axios.put(url, body)
+      .then(function(response) {
+        dispatch(
+          updateUserThemeComplete(response.data.theme),
+        );
+      })
+      .catch(function(error) {
+        dispatch(updateUserThemeComplete('Dark'));
+      });
   };
 }
 
@@ -258,7 +366,18 @@ export function update_userProfile(userIdFacebook, userIdLinkedIn) {
       });
   };
 }
-
+export function updateAvatar(url) {
+  return {
+    type: UPDATE_USER_AVATAR,
+    url: url
+  };
+}
+export function updateCoverBackground(url) {
+  return {
+    type: UPDATE_USER_COVERBACKGROUND,
+    url: url
+  };
+}
 export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
   return function(dispatch) {
     //async action entry point

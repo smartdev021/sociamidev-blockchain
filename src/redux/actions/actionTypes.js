@@ -1,3 +1,5 @@
+export const SET_USER_LOCALE_DATA = 'set_user_locale_data';
+
 export const SELECT_RESULTS_CATEGORY = 'action_select_results_category'; //choose from 'Jobs', 'Events', etc.
 export const OPEN_USER_PROFILE = 'action_open_user_profile';
 export const OPEN_USER_PROFILE_COMPLETE = 'action_open_user_profile_complete';
@@ -14,6 +16,12 @@ export const FETCH_USER_PROFILE_TASKS_COMPLETE = 'fetch_user_profile_tasks_compl
 
 export const FETCH_USER_PROFILE_ACTIVITIES_INITIATE = 'fetch_user_activities_initiate';
 export const FETCH_USER_PROFILE_ACTIVITIES_COMPLETE = 'fetch_user_activities_complete';
+
+export const FETCH_USER_THEME_INITIATE = 'fetch_user_theme_initiate';
+export const FETCH_USER_THEME_COMPLETE = 'fetch_user_theme_complete';
+
+export const UPDATE_USER_THEME_INITIATE = 'update_user_theme_initiate';
+export const UPDATE_USER_THEME_COMPLETE = 'update_user_theme_complete';
 
 export const PROGRESSION_TREE_START_INITIATE = 'progression_tree_start_initiate';
 export const PROGRESSION_TREE_START_COMPLETE = 'progression_tree_start_complete';
@@ -99,7 +107,8 @@ export const FETCH_USER_FRIENDS_COMPLETE = 'fetch_user_friends_complete';
 //character creation
 export const SET_CHARACTER_CREATION_DATA = 'set_character_creation_data';
 
-export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX = 'set_character_creation_character_index';
+export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_INDEX =
+  'set_character_creation_character_index';
 export const SET_CHARACTER_CREATION_SELECTED_CHARACTER_TRAITS_INDEX =
   'set_character_creation_character_traits_index';
 
@@ -114,6 +123,8 @@ export const FETCH_LIST_CHARACTER_TRAITS_COMPLETE = 'fetch_list_character_traits
 
 export const UPDATE_USER_PROFILE_INITIATE = 'update_user_profile_initiate';
 export const UPDATE_USER_PROFILE_COMPLETE = 'update_user_profile_complete';
+export const UPDATE_USER_AVATAR = 'update_user_avatar';
+export const UPDATE_USER_COVERBACKGROUND = 'update_user_coverbackground';
 
 export const USER_ACCOUNTING_FETCH_INITIATE = 'user_accounting_fetch_initiate';
 export const USER_ACCOUNTING_FETCH_COMPLETE = 'user_accounting_fetch_complete';
@@ -121,8 +132,10 @@ export const USER_ACCOUNTING_FETCH_COMPLETE = 'user_accounting_fetch_complete';
 export const SET_ACTIVE_HANGOUT = 'set_active_hangout';
 export const RESET_ACTIVE_HANGOUT = 'reset_active_hangout';
 
-export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_INITIATE = 'task_activity_unlock_requirements_fetch_initiate';
-export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE = 'task_activity_unlock_requirements_fetch_complete';
+export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_INITIATE =
+  'task_activity_unlock_requirements_fetch_initiate';
+export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE =
+  'task_activity_unlock_requirements_fetch_complete';
 
 // Achievements
 export const FETCH_ACHIEVEMENTS_INITIATE = 'fetch_achievements_initiate';
@@ -155,3 +168,17 @@ export const DELETE_TEAM_COMPLETE = 'delete_team_complete';
 // Articles
 export const FETCH_ARTICLES_INITIATE = 'fetch_articles_initiate';
 export const FETCH_ARTICLES_COMPLETE = 'fetch_articles_complete';
+
+// Houses
+export const FETCH_HOUSES_INITIATE = 'fetch_houses_initiate';
+export const FETCH_HOUSES_COMPLETE = 'fetch_houses_complete';
+
+// Company
+export const FETCH_COMPANY_INITIATE = 'fetch_company_initiate';
+export const FETCH_COMPANY_COMPLETE = 'fetch_company_complete';
+
+// Company
+export const FETCH_SKILLS_INITIATE = 'fetch_skills_initiate';
+export const FETCH_SKILLS_COMPLETE = 'fetch_skills_complete';
+
+export const LOAD_ACTIVATE_URL = 'load_activate_url';

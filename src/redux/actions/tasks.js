@@ -16,6 +16,7 @@ import {
   TASK_SET_PUBLISHED,
   SET_ACTIVE_HANGOUT,
   RESET_ACTIVE_HANGOUT,
+  LOAD_ACTIVATE_URL,
 } from './actionTypes';
 
 export function removeTask(taskId) {
@@ -156,6 +157,17 @@ export function saveTask(task) {
   };
 }
 
+// export function loadURL(src) {
+//   url = src;
+//   var script = document.createElement('script');
+//   script.src =
+//     'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20data.headers%20where%20url%3D%22' +
+//     encodeURIComponent(url) +
+//     '%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=getData';
+
+//   document.body.appendChild(script);
+// }
+
 export function deleteTask(taskId) {
   return function(dispatch) {
     dispatch(updateTaskInitiate());
@@ -284,6 +296,25 @@ export function hangoutAnswersSave(body) {
       .catch(function(error) {
         dispatch(updateTaskComplete());
       });
+  };
+}
+
+/**
+ * added by Mariana
+ * @description function that embeds books.google.com/talktobooks/ site into rightanswerquestion iframe
+ * @param url  website address to embed
+ */
+export function loadURL(url) {
+  var script = document.createElement('script');
+  script.src =
+    'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20data.headers%20where%20url%3D%22' +
+    encodeURIComponent(url) +
+    '%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=getData';
+
+  document.body.appendChild(script);
+
+  return {
+    type: LOAD_ACTIVATE_URL,
   };
 }
 

@@ -180,7 +180,7 @@ class Notifications extends React.Component {
                           <span className="notify-date">{notification.date}</span>
                           <span className="notify-actions">
                             <Link
-                              to="/taskManagement"
+                              to="/tasks"
                               className="notify-btn-notification-check"
                               onClick={() => that.handleStartClick(notification.task)}
                             >
