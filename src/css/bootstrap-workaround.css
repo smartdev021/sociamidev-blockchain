@@ -1,20 +1,13 @@
-/**
-**
-** https://stackoverflow.com/questions/12046315/prevent-overscrolling-of-web-page
-**
-**/
-/* not working, we need the scroll-snap
-html {
-    overflow: hidden;
-    height: 100%;
-}
+/* Disable horizontal overscroll on ios */
 
-body {
-    height: 100%;
+@supports (-webkit-overflow-scrolling: touch) {
+  html, body {
     overflow: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
 }
-*/
-
 
 /*
 **

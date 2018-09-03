@@ -4,8 +4,8 @@
   *
 **/
 .QuestionAnswersFlow-container {
-  margin-left: 285px;
-  margin-right: 285px;
+  /* margin-left: 285px;
+  margin-right: 285px; */
   background: url('../images/qa_background.png') no-repeat;
   background-position: center;
   background-size: cover;

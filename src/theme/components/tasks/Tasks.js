@@ -715,14 +715,14 @@ class Tasks extends React.Component {
                 )}
                 {this.state.isAnswerSubmitComplete ? (
                   <Achievement />
-                ) : (
-                  <div>
-                    {this.props.activeHangout ? (
+                ) : (this.props.activeHangout ? (
+                      <div className="col-middle ml-fixed">
                       <AnswerQuestions
                         currentTask={this.props.activeHangout}
                         onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
                         onSubmitComplete={() => this.handleAnswersSubmitComplete()}
                       />
+                      </div>
                     ) : (
                       <div className="col-middle ml-fixed">
                         <div className="col-box-wp mb-50 p-0">
@@ -790,8 +790,7 @@ class Tasks extends React.Component {
                           <div className="row">{this.renderTasks()}</div>
                         </div>
                       </div>
-                    )}
-                  </div>
+                    )
                 )}
               </div>
             </div>

@@ -11,6 +11,7 @@ import { Icon } from 'react-fa';
 
 import ActionLink from '~/src/components/common/ActionLink';
 
+import UserIconToggle from '~/src/theme/components/themeHeader/UserIconToggle';
 import Notifications from '~/src/theme/components/themeHeader/Notifications';
 import StatsDropdown from '~/src/theme/components/themeHeader/StatsDropdown';
 import UserMenuDropdown from '~/src/theme/components/themeHeader/UserMenuDropdown';
@@ -146,6 +147,7 @@ class ThemeHeader extends React.Component {
     super(props);
 
     this.state = {
+      userToggleOpen: false,
       notificationsOpen: false,
       isOpen: false,
       isCompanyOpen: false,
@@ -206,6 +208,14 @@ class ThemeHeader extends React.Component {
 
   handleNotificationsClose() {
     this.setState({ notificationsOpen: false });
+  }
+
+  handleUserToggleOpen() {
+    this.setState({ userToggleOpen: true });
+  }
+
+  handleUserToggleClose() {
+    this.setState({ userToggleOpen: false });
   }
 
   componentWillMount() {
@@ -323,6 +333,13 @@ class ThemeHeader extends React.Component {
             markActivitySeen={() => this.props.markActivitySeen()}
           />
         )}
+
+        {this.state.userToggleOpen && (
+          <UserIconToggle
+            onClose={() => this.handleUserToggleClose()}
+          />
+        )}
+
         {this.state.companies.length > 0 && this.state.isCompanyOpen && (
           <CompanyDropDown companies={this.state.companies} handleClickOutside={this.handleOutsideClickCompany} selectCompany={this.selectCompany}/>
         )}
@@ -374,7 +391,14 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li><a href="#"><span className="new-img-icon-head"><img src={houseImage} alt="" /></span></a></li>
+                    <li>
+                      {/*<ActionLink href="#" onClick={() => this.handleUserToggleOpen()}>*/}
+                      <ActionLink href="#" onClick={() => {}}>
+                        <span className="new-img-icon-head">
+                          <img src={houseImage} alt="" />
+                        </span>
+                      </ActionLink>
+                    </li>
                     <li>
                       <a href="javascript:" onClick={this.toggleCompany}>
                         <span className="new-img-icon-head">

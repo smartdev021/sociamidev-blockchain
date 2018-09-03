@@ -1,3 +1,7 @@
+.navbar-wrapper header{
+  background-color: #000;
+  height: 60px;
+}
 .soqqle-header{
     position: fixed;
     width: 100%;
@@ -25,10 +29,9 @@
 .navbar-wrapper .header {
     position: absolute;
     top: 0;
-    right: -75px;
+    right: 70px;
     z-index: 2;
     padding: 0 89px 0 43px;
-    background: #000;
     transform: skew(-37deg);
 }
 
@@ -112,7 +115,7 @@
     font-family: "MyriadPro Semibold";
     background-color: rgb(0, 105, 186);
     box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);
-    width: 172px;
+    width: 135px;
     height: 32px;
 }
 
@@ -136,11 +139,10 @@
 .navbar-wrapper .logo {
     position: absolute;
     top: 0;
-    left: -20px;
+    left: 55px;
     z-index: 2;
     padding: 0px 55px 10px 80px;
     margin: 0;
-    background: #000;
     transform: skewX(-35deg);
 }
 
@@ -278,25 +280,32 @@
 
 .navbar-wrapper .header .navbar-options{
     float: right;
-    padding: 7px 25px;
-    margin: 8px 6px;
+    padding-left: 25px;
+    margin: 5px 0 8px 35px;
     font: normal 16px "MyriadPro Regular";
     color: #fff;
     background: none;
     border: 0;
     outline: 0;
     transform: skew(37deg);
+    display: flex;
 }
 
 .navbar-wrapper .header .navbar-options li{
-    display: inline;
-    padding: 10px;
+    display: flex;
+    padding: 10px 6.8px;
+    align-items: center;
 }
 
 .navbar-wrapper .header .navbar-options li a i,
 .navbar-wrapper .header .navbar-options li a span{
     color: white;
     font-size: 25px;
+    top:0;
+}
+
+.navbar-wrapper .header .navbar-options li.navbar-icon {
+  padding-left: unset;
 }
 
 .navbar-wrapper .header .navbar-options .sub-navbar{
@@ -308,7 +317,22 @@
     width: 100%;
 }
 
+.navbar-wrapper .header .navbar-options .notification span{
+    font-size: 22px;
+}
+
+.navbar-wrapper .header .navbar-options .register span{
+    font-size: 22px;
+}
+
+.navbar-wrapper .header .navbar-options .user-menu i{
+    font-size: 30px;
+}
+
 @media screen and (max-width: 750px) {
+    .navbar-wrapper .logo {
+      left: -20px;
+    }
     .navbar-wrapper .header .navbar-options{
         float: left;
         padding: 0px;
@@ -325,7 +349,7 @@
     }
     .navbar-wrapper .header .navbar-options li a i,
     .navbar-wrapper .header .navbar-options li a span{
-        font-size: 18px;
+        font-size: 18px !important;
     }
     .navbar-wrapper .mobile-menu footer .navbar-mobile-options {
         padding: 20px;
