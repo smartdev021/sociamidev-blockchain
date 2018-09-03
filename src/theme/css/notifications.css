@@ -1,7 +1,7 @@
 div#notificationTile {
   position: absolute;
   width: 332px;
-  right: 119px;
+  right: -18%;
   top: 60px;
   border: none;
   height: 400px;
@@ -12,7 +12,7 @@ div#notificationTile {
 div#companyDropdown {
   position: absolute;
   width: 250px;
-  right: 160px;
+  right: -1%;
   top: 61px;
   border: none;
   height: 400px;
@@ -80,8 +80,9 @@ div#companyDropdown {
   position: absolute;
   margin-top: 9px;
   margin-left: 5px;
-  color: white;
-  font-size: 11pt;
+  color: white !important;
+  font-size: 11pt !important;
+  top:unset !important;
 }
 
 .notifyMeta {
@@ -231,13 +232,17 @@ span.notification-item.list-group-item:hover .notify-hide {
   padding: 10px 15px;
 }
 
+div#companyDropdown .notifyTitle.list-group-item ul li{
+  padding: unset;
+}
+
 @media (max-width: 480px) {
   div#notificationTile {
     position: absolute;
-    right: 0;
+    right: calc(-28.7vw + 50%);
     top: 40px;
     z-index: 100;
-    width: 100%;
+    width: 100vw;
     line-height: 1;
     background: #fff;
   }
@@ -248,33 +253,36 @@ span.notification-item.list-group-item:hover .notify-hide {
   }
 
   .list-group::after{
-    right: 100px;
+    right: 84px;
     border: 6px solid #000;
     border-color: transparent transparent #ffc700 #ffc700;
   }
   .list-group:before {
-    right: 100px;
+    right: 84px;
     border: 6px solid #000;
     border-color: transparent transparent #0a0a0a #0a0a0a;
   }
 
   div#companyDropdown {
     position: absolute;
-    right: 0;
+    right: calc(-28.7vw + 50%);
     top: 40px;
     z-index: 100;
-    width: 100%;
+    width: 100vw;
     line-height: 1;
     background: #fff;
   }
+  div#companyDropdown .notifyTitle.list-group-item{
+    padding: 10px 15px;
+  }
 
   div#companyDropdown .list-group::after{
-    right: 131px;
+    right: 115px;
     border: 6px solid #000;
     border-color: transparent transparent #ffc700 #ffc700;
   }
   div#companyDropdown .list-group:before {
-    right: 131px;
+    right: 115px;
     border: 6px solid #000;
     border-color: transparent transparent #0a0a0a #0a0a0a;
   }

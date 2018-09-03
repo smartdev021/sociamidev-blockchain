@@ -1,5 +1,8 @@
-.navbar-wrapper header{
+.navbar-wrapper{
   background-color: #000;
+}
+
+.navbar-wrapper header{
   height: 60px;
 }
 .soqqle-header{
@@ -10,7 +13,7 @@
 
 .navbar-wrapper header {
     position: relative;
-    margin: 0;
+    margin: auto;
 }
 
 .navbar-wrapper main {
@@ -29,7 +32,7 @@
 .navbar-wrapper .header {
     position: absolute;
     top: 0;
-    right: 70px;
+    right: -90px;
     z-index: 2;
     padding: 0 89px 0 43px;
     transform: skew(-37deg);
@@ -138,12 +141,12 @@
 
 .navbar-wrapper .logo {
     position: absolute;
-    top: 0;
-    left: 55px;
+    /*top: 0;*/
+    /*left: -20px;*/
     z-index: 2;
-    padding: 0px 55px 10px 80px;
+    /*padding: 0px 55px 10px 80px;*/
     margin: 0;
-    transform: skewX(-35deg);
+    /*transform: skewX(-35deg);*/
 }
 
 @media screen and (max-width: 750px) {
@@ -155,7 +158,7 @@
 .navbar-wrapper .logo img {
     width: 100%;
     max-width: 140px;
-    transform: skew(35deg);
+    /*transform: skew(35deg);*/
 }
 
 @media screen and (max-width: 750px) {
@@ -317,7 +320,7 @@
     width: 100%;
 }
 
-.navbar-wrapper .header .navbar-options .notification span{
+.navbar-wrapper .header .navbar-options .notification a span{
     font-size: 22px;
 }
 
@@ -330,8 +333,9 @@
 }
 
 @media screen and (max-width: 750px) {
-    .navbar-wrapper .logo {
-      left: -20px;
+    div#companyDropdown .notifyTitle .company-name {
+      font-size: 11pt !important;
+      margin-top: 4px;
     }
     .navbar-wrapper .header .navbar-options{
         float: left;
@@ -374,4 +378,22 @@
         width: 20px !important;
         margin-right: 10px !important;    
     }  
+}
+
+
+/*@media screen and (min-width: 768px) {*/
+  /*.navbar-wrapper header{*/
+    /*width: 768px;*/
+  /*}*/
+/*}*/
+
+@media screen and (min-width: 992px) {
+  .navbar-wrapper header{
+    width: 992px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .navbar-wrapper header{
+    width: 1200px;
+  }
 }

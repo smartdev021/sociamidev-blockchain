@@ -326,22 +326,11 @@ class ThemeHeader extends React.Component {
     return (
       <div className="soqqle-header" id="popup-root">
         <ToastContainer />
-        {this.state.notificationsOpen && (
-          <Notifications
-            onClose={() => this.handleNotificationsClose()}
-            userActivities={this.props.userActivities}
-            markActivitySeen={() => this.props.markActivitySeen()}
-          />
-        )}
 
         {this.state.userToggleOpen && (
           <UserIconToggle
             onClose={() => this.handleUserToggleClose()}
           />
-        )}
-
-        {this.state.companies.length > 0 && this.state.isCompanyOpen && (
-          <CompanyDropDown companies={this.state.companies} handleClickOutside={this.handleOutsideClickCompany} selectCompany={this.selectCompany}/>
         )}
 
         <div className="navbar-wrapper">
@@ -399,8 +388,11 @@ class ThemeHeader extends React.Component {
                         </span>
                       </ActionLink>
                     </li>
-                    <li>
-                      <a href="javascript:" onClick={this.toggleCompany}>
+                    <li className="navbar-company">
+                      {this.state.companies.length > 0 && this.state.isCompanyOpen && (
+                        <CompanyDropDown companies={this.state.companies} handleClickOutside={this.handleOutsideClickCompany} selectCompany={this.selectCompany}/>
+                      )}
+                      <a href="javascript:" onClick={this.toggleCompany} className="navbar-company-a">
                         <span className="new-img-icon-head">
                           <img src={this.state.activeCompany.imageUrl ? this.state.activeCompany.imageUrl : ''} alt="" />
                         </span>
@@ -408,6 +400,13 @@ class ThemeHeader extends React.Component {
                     </li>
                     {/* <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} /> */}
                     <li className="notification">
+                      {this.state.notificationsOpen && (
+                        <Notifications
+                          onClose={() => this.handleNotificationsClose()}
+                          userActivities={this.props.userActivities}
+                          markActivitySeen={() => this.props.markActivitySeen()}
+                        />
+                      )}
                       <ActionLink href="#" onClick={() => this.handleNotificationsOpen()}>
                         <Icon name="bell" aria-hidden="true" />
                         {/* {labelNotif} */}
