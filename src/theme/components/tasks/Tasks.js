@@ -123,8 +123,14 @@ class Tasks extends React.Component {
 
     const scannerQuery = this.state.scannerQuery.toLowerCase();
 
+    const latest = task => {
+      const oneWeekAgo = new Date() - 60 * 60 * 24 * 7 * 1000;
+      return task.date >= oneWeekAgo;
+    };
+
     if (scannerQuery != '') {
-      foundTasks = this.props.tasks.filter(function(task) {
+      foundTasks = this.props.tasks
+        .filter(function(task) {
         return (
           (this.props.currentUserID == undefined || task.userID != this.props.currentUserID) &&
           task.name &&
@@ -140,7 +146,7 @@ class Tasks extends React.Component {
     if (foundTasks.length == 0) {
       return null;
     } else {
-      return foundTasks.map(function(task, i) {
+      return foundTasks.filter(latest).map(function(task, i) {
         return that.renderSingleTask(task, i);
       });
     }
@@ -856,9 +862,4 @@ const mapDispatchToProps = dispatch => ({
   loadURL: bindActionCreators(loadURL, dispatch),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(Tasks),
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tasks));
