@@ -71,8 +71,8 @@ class Notifications extends React.Component {
           };
         })
         .filter(task => task.status !== 'complete')
-        .slice(0, 10)
         .reverse()
+        .slice(0, 10)
       : [];
 
     // const Notifications =
