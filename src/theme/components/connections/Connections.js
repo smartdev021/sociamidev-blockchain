@@ -190,8 +190,8 @@ class Connections extends React.Component {
           <ConnectionCard
             key={connection.id}
             connection={connection}
-            actionName={friend.connectionStatus}
-            onPrimaryAction={() => this.handleAddSoqqler(connection.id, friend.connectionStatus)} 
+            actionName={connection.connectionStatus}
+            onPrimaryAction={() => this.handleAddSoqqler(connection.id, connection.connectionStatus)} 
           />)
         }
       </div>
