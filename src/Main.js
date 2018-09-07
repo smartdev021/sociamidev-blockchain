@@ -49,6 +49,7 @@ import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
 
 import Levels from './theme/components/levels/Levels';
+import Sparks from './theme/components/sparks/Sparks';
 import Tasks from './theme/components/tasks/Tasks';
 
 class Main extends Component {
@@ -152,6 +153,8 @@ class Main extends Component {
         {this.props.isAdmin && (
           <Route path="/teams" render={routeProps => <Teams {...routeProps} {...this.props} />} />
         )}
+
+        <Route path="/sparks" render={routeProps => <Sparks {...routeProps} {...this.props} />} />)}/>
 
         <Route path="/levels" render={routeProps => <Levels {...routeProps} {...this.props} />} />)}/>
 
