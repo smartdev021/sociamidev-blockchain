@@ -1,13 +1,12 @@
-import React from 'react';
-
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import TeamPanel from './TeamPanel';
 import '~/src/theme/css/teams.css';
 
-import { 
+import {
   fetchTeams,
   addNewTeam,
   saveTeam,
@@ -17,12 +16,23 @@ import {
   cancelTeam
 } from '~/src/redux/actions/teams';
 
-class Teams extends React.Component {
+import { fetchAchievements, addAchievementGroup, updateAchievementGroup } from '~/src/redux/actions/achievements';
+import { fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
+import { fetchStories } from '~/src/redux/actions/story';
+
+class Teams extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       addToTeam: {},
+      achievements: [],
+      achievementGroups: [],
+      currentAchievementGroup: undefined,
+      roadmaps: [],
+      skills: []
     };
+
     this.handleCancel = this.handleCancel.bind(this);
     this.handleTeamSave = this.handleTeamSave.bind(this);
     this.handleEmailAdd = this.handleEmailAdd.bind(this);
@@ -32,6 +42,74 @@ class Teams extends React.Component {
 
   componentWillMount() {
     this.props.fetchTeams();
+    this.props.fetchAchievements();
+    this.props.fetchRoadmapsFromAdmin();
+    this.props.fetchStories();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isFetchingAchievementGroups && !this.props.isFetchingAchievementGroups) {
+      let achievementGroups = this.props.achievementGroups;
+      _.each(achievementGroups, (record) => {
+        _.set(record, 'key', _.get(record, '_id', ''));
+        _.set(record, 'company', _.get(record, '_company'))
+        _.set(record, 'achievements', _.get(record, '_achievements', []));
+      })
+      this.setState({ achievementGroups });
+      let currentAchievementGroup = undefined;
+      if(!this.state.currentAchievementGroup) {
+        try {
+          currentAchievementGroup = _.find(achievementGroups, group => {
+            if(group.company) {
+              return group.company._id == this.props.company._id || group.company.name == this.props.company.name;
+            }
+          });
+        } catch(exp) {
+        }
+      }
+
+      if(!currentAchievementGroup) {
+        this.props.addAchievementGroup(this.props.company.name);
+      } else if(currentAchievementGroup._id != 0) {
+        this.setState({ currentAchievementGroup });
+        let achievements = currentAchievementGroup.achievements;
+        if(achievements) {
+          _.each(achievements, (record) => {
+            _.set(record, 'key', _.get(record, '_id', ''));
+          });
+          this.setState({ achievements });
+        }
+      }
+    }
+    if (prevProps.isFetchingRoadmaps && !this.props.isFetchingRoadmaps) {
+      this.setState({ roadmaps: this.props.roadmaps });
+    }
+    if (prevProps.isFetchingSkills && !this.props.isFetchingSkills) {
+      this.setState({ skills: this.props.skills });
+    }
+    if (prevProps.isAddingAchievementGroup && !this.props.isAddingAchievementGroup) {
+      let currentAchievementGroup = this.props.getAchievementGroup;
+      currentAchievementGroup['key'] = currentAchievementGroup._id;
+      _.set(currentAchievementGroup, '_company', this.props.company._id);
+
+      this.setState({ currentAchievementGroup });
+      this.props.updateAchievementGroup(currentAchievementGroup);
+    }
+    if (prevProps.isUpdatingAchievementGroup && !this.props.isUpdatingAchievementGroup) {
+      const newData = [...this.state.achievementGroups];
+      let currentAchievementGroup = this.state.currentAchievementGroup;
+      _.set(currentAchievementGroup, 'company', this.props.company);
+      this.setState({ currentAchievementGroup });
+      let achievements = currentAchievementGroup.achievements;
+      if(achievements) {
+        _.each(achievements, (achievement) => {
+          _.set(achievement, 'key', _.get(achievement, '_id', ''));
+        });
+        this.setState({ achievements });
+      }
+
+      this.setState({ achievementGroups: [currentAchievementGroup, ...newData] });
+    }
   }
 
   handleCancel(index, team) {
@@ -65,7 +143,12 @@ class Teams extends React.Component {
         onDeleteTeam={(_id) => this.handleTeamDelete(index, _id)}
         key={item._id} 
         index={index}
-        company={this.props.company} />;
+        company={this.props.company}
+        achievements={this.state.achievements}
+        achievementGroups={this.state.achievementGroups}
+        currentAchievementGroup={this.state.currentAchievementGroup}
+        roadmaps={this.state.roadmaps}
+        skills={this.state.skills} />;
     });
     return listItems;
   }
@@ -96,17 +179,31 @@ class Teams extends React.Component {
 
 const mapStateToProps = state => ({
 	isFetchingTeams: state.teams.isFetchingTeams,
-	teams: state.teams.data
+	teams: state.teams.data,
+	isFetchingAchievementGroups: state.achievements.isFetchingAchievements,
+	achievementGroups: state.achievements.data,
+	isAddingAchievementGroup: state.addAchievementGroup.isAddingAchievementGroup,
+	getAchievementGroup: state.addAchievementGroup.data,
+	isUpdatingAchievementGroup: state.updateAchievementGroup.isUpdatingAchievementGroup,
+	isFetchingRoadmaps: state.roadmapsAdmin.isFetching,
+	roadmaps: state.roadmapsAdmin.data,
+	isFetchingSkills: state.skills.isFetchingSkills,
+	skills: state.skills.data
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchTeams: bindActionCreators(fetchTeams, dispatch),
-    addNewTeam: bindActionCreators(addNewTeam, dispatch),
-    cancelTeam: bindActionCreators(cancelTeam, dispatch),
-    saveTeam: bindActionCreators(saveTeam, dispatch),
-    addTeamEmail: bindActionCreators(addTeamEmail, dispatch),
-    updateTeamEmail: bindActionCreators(updateTeamEmail, dispatch),
-    deleteTeam: bindActionCreators(deleteTeam, dispatch)
+  fetchTeams: bindActionCreators(fetchTeams, dispatch),
+  addNewTeam: bindActionCreators(addNewTeam, dispatch),
+  cancelTeam: bindActionCreators(cancelTeam, dispatch),
+  saveTeam: bindActionCreators(saveTeam, dispatch),
+  addTeamEmail: bindActionCreators(addTeamEmail, dispatch),
+  updateTeamEmail: bindActionCreators(updateTeamEmail, dispatch),
+  deleteTeam: bindActionCreators(deleteTeam, dispatch),
+  fetchAchievements: bindActionCreators(fetchAchievements, dispatch),
+  addAchievementGroup: bindActionCreators(addAchievementGroup, dispatch),
+  updateAchievementGroup: bindActionCreators(updateAchievementGroup, dispatch),
+  fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
+  fetchStories: bindActionCreators(fetchStories, dispatch)
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Teams));

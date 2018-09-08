@@ -140,6 +140,12 @@ export const TASK_ACTIVITY_UNLOCK_REQS_FETCH_COMPLETE =
 // Achievements
 export const FETCH_ACHIEVEMENTS_INITIATE = 'fetch_achievements_initiate';
 export const FETCH_ACHIEVEMENTS_COMPLETE = 'fetch_achievements_complete';
+export const FETCH_ACHIEVEMENT_GROUPS_INITIATE = 'fetch_achievement_groups_initiate';
+export const FETCH_ACHIEVEMENT_GROUPS_COMPLETE = 'fetch_achievement_groups_complete';
+export const ADD_ACHIEVEMENT_GROUP_INITIATE = 'add_achievement_group_initiate';
+export const ADD_ACHIEVEMENT_GROUP_COMPLETE = 'add_achievement_group_complete';
+export const UPDATE_ACHIEVEMENT_GROUP_INITIATE = 'update_achievement_group_initiate';
+export const UPDATE_ACHIEVEMENT_GROUP_COMPLETE = 'update_achievement_group_complete';
 
 //Timers on Home page
 export const PREPARE_TIMERS_IN_PROGRESS = 'prepare_timers_in_progress';

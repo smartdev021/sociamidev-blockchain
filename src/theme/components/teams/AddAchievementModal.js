@@ -114,18 +114,14 @@ class AddAchievementModal extends Component {
 
   onSubmit() {
     let conf = {
-      messageLoading: 'Create achievement record in progress..',
       url: '/achievements',
-      method: 'post',
-      messageSuccess: 'Achievement added!'
+      method: 'post'
     };
 
     if (this.state.formData._id) {
       conf = {
-        messageLoading: 'Update achievement record in progress..',
         url: `/achievements/${this.state.formData._id}`,
-        method: 'put',
-        messageSuccess: 'Achievement updated!'
+        method: 'put'
       };
     }
 
