@@ -14,13 +14,13 @@ import {
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 
-export function fetchAchievementsInitiate() {
+export function fetchTeamsInitiate() {
     return {
         type: FETCH_TEAMS_INITIATE,
     }
 }
 
-export function fetchAchievementsComplete(data) {
+export function fetchTeamsComplete(data) {
     return {
         type: FETCH_TEAMS_COMPLETE,
         data: data,
@@ -180,16 +180,16 @@ export function updateTeamEmail(emailIndex, prevEmail, newEmail, team) {
 }
 export function fetchTeams() {
     return function (dispatch) {
-      dispatch(fetchAchievementsInitiate());
+      dispatch(fetchTeamsInitiate());
       
       const url = `${ConfigMain.getBackendURL()}/team/all`;
         return (
         Axios.get(url)
         .then(function(response) {
-            dispatch(fetchAchievementsComplete(response.data));
+            dispatch(fetchTeamsComplete(response.data));
         })
         .catch(function(error) {
-            dispatch(fetchAchievementsComplete([]));
+            dispatch(fetchTeamsComplete([]));
         }));
     }
 }

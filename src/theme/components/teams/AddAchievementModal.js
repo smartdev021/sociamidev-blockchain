@@ -15,6 +15,8 @@ class AddAchievementModal extends Component {
     this.modalDefaultStyles = {};
 
     this.state = {
+      saveAchievement: false,
+      deleteAchievement: false,
       formData: {
         type: 'Achievement',
         name: '',
@@ -77,13 +79,16 @@ class AddAchievementModal extends Component {
   }
 
   onDelete() {
+    this.setState({ deleteAchievement: true });
     const id = this.props.achievementId;
     const url = `${ConfigMain.getBackendURL()}/achievements/${id}`;
     return Axios.delete(url)
       .then(response => {
         this.props.getAchievementGroup({id: id, action: 'delete'});
+        this.setState({ deleteAchievement: false });
       })
       .catch(error => {
+        this.setState({ deleteAchievement: false });
       });
   }
 
@@ -113,19 +118,16 @@ class AddAchievementModal extends Component {
   }
 
   onSubmit() {
+    this.setState({ saveAchievement: true });
     let conf = {
-      messageLoading: 'Create achievement record in progress..',
       url: '/achievements',
-      method: 'post',
-      messageSuccess: 'Achievement added!'
+      method: 'post'
     };
 
     if (this.state.formData._id) {
       conf = {
-        messageLoading: 'Update achievement record in progress..',
         url: `/achievements/${this.state.formData._id}`,
-        method: 'put',
-        messageSuccess: 'Achievement updated!'
+        method: 'put'
       };
     }
 
@@ -135,8 +137,10 @@ class AddAchievementModal extends Component {
       data: this.state.formData
     }).then(response => {
       this.props.getAchievementGroup({id: response.data._id, action: 'create'});
+      this.setState({ saveAchievement: false });
     })
     .catch(err => {
+      this.setState({ saveAchievement: false });
     });
   }
 
@@ -851,6 +855,7 @@ class AddAchievementModal extends Component {
                     fontSize: '16px',
                     border: 'transparent'
                   }}
+                  disabled={this.state.saveAchievement}
                   onClick={() => this.onSubmit()}
                 >
                   {this.props.achievementId == 0 ? 'Submit' : 'Update'}
@@ -864,6 +869,7 @@ class AddAchievementModal extends Component {
                       border: 'transparent',
                       marginLeft: '10px'
                     }}
+                    disabled={this.state.deleteAchievement}
                     onClick={() => this.onDelete()}
                   >
                     Delete
