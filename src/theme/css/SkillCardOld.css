@@ -9,37 +9,42 @@
     width: 114px;
     height: 3px;
 }
-.progression-tree-skill-list{
-    padding: 0;
-}
 .progression-tree-skill-container{
     padding-top: 20px;
     padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .progression-tree-skill-content{
     font-family: "MyriadPro Semibold";
 }
+.progression-tree-skill-list{
+    padding-left: 50px;
+    padding-right: 50px;
+}
 .progression-tree-skill-item{
-    border-width: 1px;
-    border-color: rgb(0, 145, 250);
     border-style: solid;
+    border-width: 4px;
+    border-color: rgb(137, 203, 253);
     background-color: rgb(0, 0, 0);
-    width: 434px;
-    height: 292px;
+    box-shadow: 0px 0px 15px 0px rgba(141, 211, 255, 0.4),0px 0px 15px 0px rgba(141, 211, 255, 0.83),0px 11px 22px 0px rgba(10, 10, 10, 0.44);
+    /* width: 561px; */
+    height: 261px;
+    border-radius: 3px;
 }
 .progression-tree-hero-container{
     text-align: center;
 }
 .progression-tree-hero-img {
-    width: 280px;
+    width: 250px;
     margin-top: -80px;
-    margin-left: -50px;
 }
 .progression-tree-blockforce-img{
     width: 160px;
-    margin-top: -20px;
-    margin-left: -30px;
+    margin-right: 40px;
+    margin-top: -70px;
 }
+
 
 .ptree-card-item{
     /* height: 250px; */
@@ -48,7 +53,7 @@
 .ptree-card{
     padding: 20px;
     /* width: 85%; */
-    /* box-shadow: 0px 11px 22px 0px rgba(10, 10, 10, 0.44),0px 11px 22px 0px rgba(10, 10, 10, 0.44),0px 11px 22px 0px rgba(10, 10, 10, 0.44); */
+    box-shadow: 0px 11px 22px 0px rgba(10, 10, 10, 0.44),0px 11px 22px 0px rgba(10, 10, 10, 0.44),0px 11px 22px 0px rgba(10, 10, 10, 0.44);
     /* width: 271px; */
     height: 270px;
 }
@@ -56,107 +61,83 @@
     height: 100%;
     width: 100%;
     /* padding: 20px; */
-    /* background: #EBEFF2; */
+    background: #EBEFF2;
 }
 .ptree-card-back{
     height: 100%;
     width: 100%;  
     /* padding: 20px;  */
-    /* background: #EBEFF2; */
+    background: #EBEFF2;
 }
 .ptree-card-body{
     overflow: scroll;
-    padding: 10px 20px 0px 20px;
+    padding: 0px 20px 0px 20px;
     font-family: "MyriadPro Semibold";
     height: 51%;
-    font-size: 14px;
-    color: rgb(138, 139, 172);
-    line-height: 1.429;
 }
 .ptree-btn{
     width: 48%;
     justify-content: center;
     height: 30px;
     font-family: "MyriadPro Semibold";
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 12px;
-    font-family: "Myriad Pro";
-    background: black;
-    border-width: 2px;
-    border-style: solid;
-    opacity: 0.949;
-    width: 113px;
-    height: 40px;
-    line-height: 1.5;
 }
 .ptree-start{
     float: left;
     font-family: "MyriadPro Semibold";
-    border-color: rgb(1, 138, 239);
-    color: rgb(1, 138, 239);
-    background: black;
+    line-height: 1.125;
+    background-color: rgb(255, 212, 0);
+    /* box-shadow: inset 0px 3px 7px 0px rgba(226, 179, 0, 0.71); */
+    box-shadow: inset 0px 3px 7px 5px rgba(226, 179, 0, 0.71);
+    border:0;
 }
 .ptree-view{
     float: right;
-    background: black;
+    background: transparent;
     font-family: "MyriadPro Semibold";
-    border-color: rgb(150, 1, 163);
-    color: rgb(208, 31, 229);
+    line-height: 1.125;
+    border-width: 2px;
+    border-color: rgb(255, 212, 0);
     border-style: solid;
 }
 
 .ptree-card-heading{
     text-transform: uppercase;
-    padding: 0px 0px 0px 20px;
-    font: normal 18px "MyriadPro";
-    color: rgb(255, 212, 0);
-    line-height: 1.389;
+    padding: 30px 20px 0px 20px;
+    font: normal 17px "MyriadPro Bold";
 }
 .ptree-btn-group{
-    padding-top: 10px;
+    /* padding-top: 10px; */
     position: absolute;
-    bottom: -30px;
+    bottom: 0;
     width: 100%;
     padding: 0px 20px 20px 20px;
+    background: #EBEFF2
 }
 .ptree-task-list{
-    margin: 10px 0px 0px 20px;
-    border-width: 1px;
-    border-color: rgb(255, 199, 0);
-    border-style: solid;
-    background-color: rgb(10, 10, 10);
-    box-shadow: 0px 0px 32px 0px rgba(255, 176, 0, 0.61);
-    width: 90%;
+    padding: 0px 20px 0px 20px;
 }
 .ptree-back-header{
-    /* font-size: 18px;
-    font-family: "MyriadPro Bold";
-    color: rgb(255, 212, 0);
-    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
     padding: 20px 15px 0px 15px;
-    float: left; */
-
-
-    font-size: 16px;
-    font-family: "MyriadPro Bold";
-    color: rgb(255, 212, 0);
-    text-transform: uppercase;
-    padding: 0px 0px 0px 20px;
-    float: left;
+    line-height: 1;
+    /* font-family: "MyriadPro Semibold"; */
 }
 .pskill-banner {
-    padding: 5px 10px;
+    padding: 5px;
     margin: 5px 0px 5px 0px;
     cursor: pointer;
+    /* font-family: "MyriadPro Semibold"; */
+    background-color: rgb(255, 255, 255);
     box-shadow: 0px 2px 6px 0px rgba(19, 19, 19, 0.19);
     font-size: 14px;
     line-height: 1.286;
     overflow: auto;
-    color: rgb(138, 139, 172);
 }
 .pskill-banner.active{
-    color: white !important;
+    background:#006BB9;
+    color: white;
 }
 .pskill-name{
     font: normal 14px "MyriadPro Semibold";
@@ -165,18 +146,19 @@
     width: 90%;
 }
 .ptask-banner {
-    padding: 5px 10px;
+    padding: 5px;
     box-shadow: 0px 3px 6px 0px rgba(19, 19, 19, 0.19);
+    background: white;
     margin: 5px 0px 5px 0px;
     cursor: pointer;
     overflow: auto;
-    color: white;
 }
 .ptask-banner.active{
-    background:rgb(30, 30, 30)
+    background:#006BB9;
+    color: white;
 }
 .ptask-banner.active div{
-    color: #FFD149;
+    color:white;
 }
 .ptask-name{
     cursor: pointer;
@@ -184,7 +166,7 @@
     line-height: .6 !important;
 }
 .ptask-desc{
-    /* color: #FFD149; */
+    color: #FFD149;
     cursor: pointer;
     font: normal 14px "MyriadPro Bold";
 }
@@ -203,9 +185,9 @@
     margin-left: 3px;
 }
 .ptree-hero-img{
-    width: 285px;
-    margin-top: -71px;
-    margin-left: -63px;
+    width: 180px;
+    margin-left: -20px;
+    margin-top: -10px;
 }
 .ptask-left{
     float: left;
@@ -229,28 +211,11 @@
     line-height: 1.2;
 }
 .ptree-skill-set{
-    /* CHECK THIS CSS
-    margin: 10px 0px 0px 20px;
-    border-width: 1px;
-    border-color: rgb(255, 199, 0);
-    border-style: solid;
-    background-color: rgb(10, 10, 10);
-    box-shadow: 0px 0px 32px 0px rgba(255, 176, 0, 0.61);
-    width: 90%;
-    padding-left: 10px;
-    min-height: 200px;
-    overflow: auto; */
-
-    margin: 30px 0px 0px 20px;
-    border-width: 1px;
-    border-color: rgb(255, 199, 0);
-    border-style: solid;
-    background-color: rgb(10, 10, 10);
-    box-shadow: 0px 0px 32px 0px rgba(255, 176, 0, 0.61);
-    width: 90%;
-    min-height: 198px;
+    height: 140px;
     overflow: auto;
-
+    margin-right: 0px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 .ptree-skill-set-btn-group{
     overflow: auto;
