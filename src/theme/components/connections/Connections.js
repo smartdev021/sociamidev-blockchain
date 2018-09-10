@@ -17,7 +17,7 @@ class Connections extends React.Component {
       activeTabName: 'All',
       allFriendList: [],
       receivedList: [],
-      sendList: [],
+      sentList: [],
       friendList: [],
       facebookFriends: [],
       allTabLoading: false,
