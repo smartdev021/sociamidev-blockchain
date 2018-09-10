@@ -15,7 +15,7 @@
   text-decoration: none;
 }
 .tasks-wrapper .tab-wp li.active:after {
-  color: #d01fe5; 
+  color: #d01fe5;
   background: #9601a3;
   content: '';
   position: absolute;
