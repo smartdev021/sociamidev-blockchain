@@ -104,13 +104,7 @@ export function addAchievementGroup(companyName) {
       scope: 'Public'
     }
     return (
-      Axios({
-        url: url,
-        method: 'post',
-        data: {
-          ...params,
-        }
-      })
+      Axios.post(url, params)
       .then(function(response) {
         dispatch(addAchievementGroupComplete(response.data));
       })
@@ -126,11 +120,7 @@ export function updateAchievementGroup(achievementGroup) {
     dispatch(updateAchievementGroupInitiate());
     const url = `${ConfigMain.getBackendURL()}/achievement/group/${achievementGroup.key}`;
     return (
-      Axios({
-        url: url,
-        method: 'put',
-        data: { ...achievementGroup }
-      })
+      Axios.put(url, achievementGroup)
       .then(function(response) {
         dispatch(updateAchievementGroupComplete(response.data));
       })
