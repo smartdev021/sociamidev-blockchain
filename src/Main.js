@@ -28,7 +28,8 @@ import ThemeHeader from '~/src/theme/components/themeHeader/ThemeHeader';
 import Authorize from '~/src/authentication/Authorize';
 
 import HomePage from '~/src/theme/components/homepage/HomePage';
-import Heroes from '~/src/theme/Heroes';
+// import Heroes from '~/src/theme/Heroes';
+import Heroes from '~/src/theme/components/heroes/Heroes';
 import TaskManager from '~/src/theme/TaskManager';
 import TrendScanner from '~/src/theme/TrendScanner.js';
 import ProjectManager from '~/src/theme/ProjectManagement';
