@@ -120,7 +120,7 @@ class HangoutSubmitForm extends React.Component {
     this.props.onHandleStartHangout(midnightToday);
     this.props.toogleTrenScan();
     this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
-    // this.props.handleToggle();
+    this.props.onCloseModal();
   }
 
   renderForm() {
@@ -231,7 +231,7 @@ class HangoutSubmitForm extends React.Component {
               <li>
                 <ActionLink
                   href="#"
-                  onClick={this.onCreateTaskInFlexibleTime}
+                  onClick={() => this.onCreateTaskInFlexibleTime()}
                   className="action-btn blue-btn"
                 >
                   Ok
