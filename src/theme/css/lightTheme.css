@@ -780,7 +780,10 @@ input:focus {
 .light-theme-wrapper.stories-wrapper .col-middle .col-box-wp p.graylight {
   color: #5d5e72;
 }
-
+/*----------Start Company page-----------*/
+.light-theme-wrapper .company-middle-wrapper .top-sec-wp .box-wp ul li, .light-theme-wrapper .company-middle-wrapper .top-sec-wp .box-wp ul li a{
+  color: #000;
+}
 /*-----------End----------------*/
 /*Start Responsive css*/
 @media (min-width: 1920px) {

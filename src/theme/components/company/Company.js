@@ -132,19 +132,111 @@ class Company extends Component {
 
   render() {
     return (
-      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper company-wrapper main-bg`}>
+      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <div className="row">
           <div className="container">
-            <div className="row">    
-              <LeftNav 
-                accounting={this.props.accounting}
-                userProfile={this.props.userProfile} 
-                profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
-              />
+            <div className="row">
+              <div className="row">
+                <LeftNav
+                  accounting={this.props.accounting}
+                  userProfile={this.props.userProfile}
+                  profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
+                />
 
-              <RightSection />
+                <RightSection />
 
-              <div className="col-middle ml-fixed"></div>
+                <div className="col-middle company-middle-wrapper ml-fixed">
+                  <div className="col-box-wp mb-20 p-0">
+                    <ul className="tab-wp">
+                      <li className="active"><a href="#">Achievement</a></li>
+                      <li><a href="#">Story</a></li>
+                      <li><a href="#">Benefits</a></li>
+                    </ul>
+                  </div>
+                  <div className="theme-box-right">
+                    <div className="box">
+                      <div className="devider-box">
+                        <div className="top-sec-wp">
+                          <h3>Company</h3>
+                          <div className="box-wp">
+                            <button className="btn-yellow">Admin +</button>
+                            <ul>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                            </ul>
+                          </div>
+                          <div className="box-wp bb-0">
+                            <h5>moderators</h5>
+                            <ul>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="theme-box-right">
+                    <div className="box">
+                      <div className="devider-box">
+                        <h3>General Achievement Group <span><a href="#" className="change-btn txt-purpal"> Add +</a></span></h3>
+                        <div className="achievement-group-wp">
+                          <h4>Achievement Group 1 <span className="cross-icon">&#120273;</span></h4>
+                          <ul>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><span><a href="#">+</a></span></li>
+                          </ul>
+                        </div>
+                        <div className="achievement-group-wp">
+                          <h4>Achievement Group 1 <span className="cross-icon">&#120273;</span></h4>
+                          <ul>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><span><a href="#">+</a></span></li>
+                          </ul>
+                        </div>
+                        <div className="top-sec-wp mt-20">
+                          <h3>Team 1
+                            <div className="custom-select company-select">
+                              <select>
+                                <option value="0">Add Team</option>
+                                <option value="1">Other 1</option>
+                                <option value="1">Other 2</option>
+                              </select>
+                              </div>
+                          </h3>
+                          <div className="box-wp">
+                            <h5>Admin</h5>
+                            <ul>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                            </ul>
+                          </div>
+                          <div className="box-wp">
+                            <h5>moderators</h5>
+                            <ul>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div className="achievement-group-wp bb-0">
+                          <h4>Achievement Group <span className="cross-icon">&#120273;</span></h4>
+                          <ul>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><img src={this.props.company.imageUrl} alt="" /></li>
+                            <li><span><a href="#">+</a></span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
