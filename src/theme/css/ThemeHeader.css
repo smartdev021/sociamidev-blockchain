@@ -441,4 +441,10 @@
   .navbar-wrapper .header .navbar-options{
     margin: 0 6px;
   }
+  .light-theme-wrapper .container .fixed-wp, .dark-theme-wrapper .container .col.fixed-wp{
+    display: none;
+  }
+  .light-theme-wrapper .container .pull-right, .dark-theme-wrapper .container .col.pull-right{
+    display: none;
+  }
 }
