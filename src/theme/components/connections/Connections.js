@@ -124,6 +124,7 @@ class Connections extends React.Component {
   }
 
   fetchAllConnections() {
+    
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
     this.setState({ otherTabLoading: true });
@@ -153,20 +154,16 @@ class Connections extends React.Component {
   renderAllTab() {
     let allTabsData = this.state.allFriendList;
     const facebookFriends = this.state.facebookFriends;
+
     if (facebookFriends.length > 0) {
       allTabsData = this.state.allFriendList.map(function(friend) {
-        return 
-        Object.assign(
-          {},
-          friend, 
-          { 
-            isFacebookFriend: 
-              facebookFriends.findIndex(fb => fb.id === friend.facebookID) !== -1 
-          }
-        );
+        let friendData = Object.assign({},friend,{ isFacebookFriend: facebookFriends.findIndex(fb => fb.id === friend.facebookID) !== -1 })
+        return friendData;
+        ;
       });
       // Show Facebook friends on top
       allTabsData.sort(function(friend1, friend2) {
+
         if (friend1.isFacebookFriend === friend2.isFacebookFriend) return 0;
         if (friend1.isFacebookFriend) return -1;
         return 1;
@@ -273,7 +270,7 @@ class Connections extends React.Component {
             {this.state.activeTabName === 'Received' && this.renderReceivedTab()}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 
