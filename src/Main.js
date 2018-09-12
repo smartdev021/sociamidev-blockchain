@@ -45,6 +45,7 @@ import Challenges from '~/src/theme/components/challenges/Challenges';
 // import UserProfile from '~/src/theme/UserProfile.js';
 import UserProfile from '~/src/theme/components/userProfile/UserProfile';
 import Teams from '~/src/theme/components/teams/Teams.js';
+import Company from '~/src/theme/components/company/Company';
 import Settings from '~/src/theme/Settings.js';
 import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
@@ -151,6 +152,9 @@ class Main extends Component {
           render={routeProps => <PrivacyPolicy {...routeProps} {...this.props} />}
         />
         <Route path="/userProfile" render={routeProps => <UserProfile {...routeProps} {...this.props} />} />
+        {this.props.isAdmin && (
+          <Route path="/company" render={routeProps => <Company {...routeProps} {...this.props} />} />
+        )}
         {this.props.isAdmin && (
           <Route path="/teams" render={routeProps => <Teams {...routeProps} {...this.props} />} />
         )}

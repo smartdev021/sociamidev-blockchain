@@ -780,7 +780,18 @@ input:focus {
 .light-theme-wrapper.stories-wrapper .col-middle .col-box-wp p.graylight {
   color: #5d5e72;
 }
-
+/*----------Start Company page-----------*/
+.light-theme-wrapper .company-middle-wrapper .top-sec-wp .box-wp ul li, .light-theme-wrapper .company-middle-wrapper .top-sec-wp .box-wp ul li a{
+  color: #000;
+}
+.light-theme-wrapper .company-middle-wrapper .company-new-filed input {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #000;
+}
+.light-theme-wrapper .company-middle-wrapper .company-new-filed .close-new-company{
+  color: #000;
+}
 /*-----------End----------------*/
 /*Start Responsive css*/
 @media (min-width: 1920px) {

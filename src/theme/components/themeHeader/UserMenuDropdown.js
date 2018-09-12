@@ -47,6 +47,13 @@ class UserMenuDropdown extends React.Component {
           </div>
           {this.props.isAdmin && (
             <div className="row user-links">
+              <Link className="user-link-text" to="/company">
+                Company
+              </Link>
+            </div>
+          )}
+          {this.props.isAdmin && (
+            <div className="row user-links">
               <Link className="user-link-text" to="/teams">
                 My Teams
               </Link>
