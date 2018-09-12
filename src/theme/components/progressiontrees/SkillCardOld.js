@@ -174,9 +174,9 @@ class SkillCard extends React.Component {
       return (
         <div className="pskill-banner" onClick={e => that.selectSkill(e, skill)} key={i}>
           <div className="pskill-name">{skill}</div>
-          {/* <div className="ptree-checkmark-div">
+          <div className="ptree-checkmark-div">
             <div className="ptree-checkmark" />
-          </div> */}
+          </div>
         </div>
       );
     });
@@ -185,8 +185,8 @@ class SkillCard extends React.Component {
 
   renderTaskCard(skillItem) {
     return (
-      <div style={{display:"inline-grid",width:"100%"}}>
-        <div className="ptree-back-header">Select task to continue</div>
+      <div>
+        <div className="ptree-back-header">Select task to continue.</div>
         <div className="ptree-task-list">
           <div className="ptask-banner" onClick={e => this.selectTask(e, 'Illuminate')}>
             <div className="ptask-left">
@@ -241,10 +241,10 @@ class SkillCard extends React.Component {
           </div>
         </div>
         <div className="pskill-btn-group ptree-btn-group">
-          <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
+          <button className="ptree-btn ptree-back" onClick={() => this.flipCard()}>
             Back
           </button>
-          <button className="ptree-btn ptree-view" onClick={() => this.toggleTaskView()}>
+          <button className="ptree-btn ptree-next" onClick={() => this.toggleTaskView()}>
             Next
           </button>
         </div>
@@ -254,28 +254,24 @@ class SkillCard extends React.Component {
 
   renderSkillCard() {
     return (
-      <div style={{display:"inline-grid",width:"100%"}}>
       <div className="ptree-skill-list">
         <div className="ptree-back-header">
-          {/* <div> */}
-            Select one skill to improve it
-          {/* </div> */}
-          {/* <a className="view-video" onClick={() => this.onPlayVideo()}>
+          <div>Select one skill to improve it.</div>
+          <a className="view-video" onClick={() => this.onPlayVideo()}>
             View the video >
-          </a> */}
+          </a>
         </div>
 
         <div className="ptree-skill-set">{this.renderSkills(this.state.tree.weightage1)}</div>
 
-        <div className="pskill-btn-group ptree-btn-group">
-          <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
+        <div className="ptree-skill-set-btn-group">
+          <button className="ptree-btn ptree-back" onClick={() => this.toggleTaskView()}>
             Back
           </button>
-          <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
+          <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-next" onClick={() => this.startTask()}>
             Start
           </button>
         </div>
-      </div>
       </div>
     );
   }
@@ -416,14 +412,15 @@ class SkillCard extends React.Component {
 
         <div className="progression-tree-skill-content">
           <div className="progression-tree-skill-item">
-            <div className="progression-tree-hero-container col-md-4 col-sm-12">
+            <div className="progression-tree-hero-container col-md-6 col-sm-12">
               <img src={imgJson.imgUrl} className={imgJson.imgClass} />
             </div>
-            <div className="progression-tree-skill-card col-md-8 col-sm-12">
+            <div className="progression-tree-skill-card col-md-6 col-sm-12">
               <div className={`ptree-card-item` + flipClass}>
                 <div className="ptree-card">
                   <div className="ptree-card-front">
                     <div className="ptree-card-heading">{skillItem.name}</div>
+                    <span className="ptree-yellow-bar" />
                     <div className="ptree-card-body">{skillItem.description}</div>
                     <div className="pskill-btn-group ptree-btn-group">
                       <button className="ptree-btn ptree-start" disabled={this.props.quickStartProgress} onClick={() => this.quickStart()}>

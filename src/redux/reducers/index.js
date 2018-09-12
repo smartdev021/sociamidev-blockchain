@@ -18,7 +18,7 @@ import { userFriendsActivities } from './activities';
 import { characterCreation, characterCreationData } from './characterCreation';
 import { accounting } from './accounting';
 import { progression } from './progression';
-import { achievements } from './achievements';
+import { achievements, achievementGroups, addAchievementGroup, updateAchievementGroup } from './achievements';
 import { timers } from './timers';
 import { teams } from './teams';
 import { articles } from './articles';
@@ -53,6 +53,9 @@ export default combineReducers({
   accounting,
   progression,
   achievements,
+  achievementGroups,
+  addAchievementGroup,
+  updateAchievementGroup,
   timers,
   teams,
   articles,

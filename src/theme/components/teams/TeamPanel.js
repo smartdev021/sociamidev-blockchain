@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
+
 import Modal from 'react-modal';
 import { Icon } from 'react-fa';
 import Img from 'react-image';
 import _ from 'lodash';
-import Axios from 'axios';
-import Async from 'async';
 
-import ConfigMain from '~/configs/main';
 import EmailBlock from './EmailBlock';
 import AddAchievementModal from './AddAchievementModal';
-import { getPopupParentElement } from '~/src/common/PopupUtils.js';
+
+import { fetchAchievementGroups, updateAchievementGroup } from '~/src/redux/actions/achievements';
 
 class TeamPanel extends Component {
   constructor(props) {
@@ -20,14 +22,12 @@ class TeamPanel extends Component {
       deleteModal: false,
       renameTitle: !props.team._id,
       addAchievementsFlag: false,
-      achievements: [],
-      achievementsGroup: [],
-      currentAchievementGroup: undefined,
-      companies: [],
-      roadmapData: [],
-      skillsData: [],
-      achievementId: 0,
-      createAchievementGroup: false
+      achievements: props.achievements,
+      achievementGroups: props.achievementGroups,
+      currentAchievementGroup: props.currentAchievementGroup,
+      roadmapData: props.roadmaps,
+      skillsData: props.skills,
+      achievementId: 0
     };
 
     this.updateTeamName = this.updateTeamName.bind(this);
@@ -61,18 +61,53 @@ class TeamPanel extends Component {
     Modal.defaultStyles.content['boxShadow'] = '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
   }
 
-  componentDidMount() {
-    this.getAchievementGroup();
-    this.getAchievementData();
-    this.getCompanies();
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.team._id !== prevProps.team._id || this.props.team.name !== prevProps.team.name) {
       this.setState({renameTitle: !this.props.team._id});
     }
     if (this.props.team.emails.length !== prevProps.team.emails.length) {
       this.setState({addEmailBoolean: false});
+    }
+    if (this.props.achievements.length !== prevProps.achievements.length) {
+      this.setState({ achievements: this.props.achievements });
+    }
+    if (this.props.achievementGroups.length !== prevProps.achievementGroups.length) {
+      this.setState({ achievementGroups: this.props.achievementGroups });
+    }
+    if (this.props.currentAchievementGroup !== prevProps.currentAchievementGroup) {
+      this.setState({ currentAchievementGroup: this.props.currentAchievementGroup });
+    }
+    if (this.props.roadmaps.length !== prevProps.roadmaps.length) {
+      this.setState({ roadmapData: this.props.roadmaps });
+    }
+    if (this.props.skills.length !== prevProps.skills.length) {
+      this.setState({ skillsData: this.props.skills });
+    }
+    if (prevProps.isFetchingAchievementGroups && !this.props.isFetchingAchievementGroups) {
+      let achievementGroups = this.props.achievementGroups;
+      _.each(achievementGroups, (record) => {
+        _.set(record, 'key', _.get(record, '_id', ''));
+        _.set(record, 'company', _.get(record, '_company'))
+        _.set(record, 'achievements', _.get(record, '_achievements', []));
+      })
+      this.setState({ achievementGroups });
+      let currentAchievementGroup = _.find(achievementGroups, group => {
+        if(group.company) {
+          return group.company._id == this.props.company._id || group.company.name == this.props.company.name;
+        }
+      });
+
+      this.setState({ currentAchievementGroup });
+      let achievements = currentAchievementGroup.achievements;
+      if(achievements) {
+        _.each(achievements, (record) => {
+          _.set(record, 'key', _.get(record, '_id', ''));
+        });
+        this.setState({ achievements });
+      }
+    }
+    if (prevProps.isUpdatingAchievementGroup && !this.props.isUpdatingAchievementGroup) {
+      this.props.fetchAchievementGroups();
     }
   }
 
@@ -131,86 +166,7 @@ class TeamPanel extends Component {
   closeAddAchievementsModal() {
     this.setState({ addAchievementsFlag: false });
   }
-
-  getAchievementData() {
-    Async.parallel({
-      roadmapData: callback => this.getRoadmaps(callback),
-      skillsData: callback => this.getSkills(callback)
-    }, (err, data) => {
-      if (err) {
-      } else {
-        const roadmapData = _.get(data, 'roadmapData');
-        const skillsData = _.get(data, 'skillData');
-
-        if (roadmapData) {
-          this.setState({ roadmapData });
-        }
-
-        if (skillsData) {
-          this.setState({ skillsData });
-        }
-      }
-    })
-  }
-
-  getAchievements(callback) {
-    const url = `${ConfigMain.getBackendURL()}/achievements`;
-    return Axios.get(url)
-      .then(response => {
-        try {
-          callback(null, response.data);
-        } catch(exp) {
-          this.closeAddAchievementsModal();
-        }
-      })
-      .catch(error => {
-        try {
-          callback(error);
-        } catch(exp) {
-          this.closeAddAchievementsModal();
-        }
-      });
-  }
-
   getAchievementGroup(achievement) {
-    const url = `${ConfigMain.getBackendURL()}/achievement/group`;
-    Axios.get(url)
-      .then(response => {
-        let achievementsGroup = response.data;
-        _.each(achievementsGroup, (record) => {
-          _.set(record, 'key', _.get(record, '_id', ''));
-          _.set(record, 'company', _.get(record, '_company'))
-          _.set(record, 'achievements', _.get(record, '_achievements', []));
-        })
-        this.setState({ achievementsGroup });
-        let currentAchievementGroup = undefined;
-        if(!this.state.currentAchievementGroup) {
-          try {
-            currentAchievementGroup = _.find(achievementsGroup, group => {
-              if(group.company) {
-                return group.company._id == this.props.company._id || group.company.name == this.props.company.name;
-              }
-            });
-          } catch(exp) {
-          }
-        }
-
-        if(this.props.index == 0 && !currentAchievementGroup) {
-          this.addAchievementGroup();
-        } else if(currentAchievementGroup._id != 0) {
-          this.setState({ currentAchievementGroup });
-          let achievements = this.state.currentAchievementGroup.achievements;
-          if(achievements) {
-            _.each(achievements, (record) => {
-              _.set(record, 'key', _.get(record, '_id', ''));
-            });
-            this.setState({ achievements });
-          }
-        }
-      })
-      .catch(err => {
-      });
-
     if(achievement) {
       let record = this.state.currentAchievementGroup;
       let achievementIds = _.map(record.achievements, v => v._id);
@@ -223,119 +179,10 @@ class TeamPanel extends Component {
       }
       _.set(record, '_achievements', achievementIds)
 
-      Axios({
-        url: `${ConfigMain.getBackendURL()}/achievement/group/${record.key}`,
-        method: 'put',
-        data: { ...record }
-      }).then(response => {
-        Axios.get(`${ConfigMain.getBackendURL()}/achievement/group`)
-          .then(response => {
-            let achievementsGroup = response.data;
-            _.each(achievementsGroup, (record) => {
-              _.set(record, 'key', _.get(record, '_id', ''));
-              _.set(record, 'company', _.get(record, '_company'))
-              _.set(record, 'achievements', _.get(record, '_achievements', []));
-            })
-            this.setState({ achievementsGroup });
-            let currentAchievementGroup = this.state.currentAchievementGroup;
-            try {
-              currentAchievementGroup = _.find(achievementsGroup, group => {
-                if(group.company) {
-                  return group.company._id == this.props.company._id || group.company.name == this.props.company.name;
-                }
-              });
-            } catch(exp) {
-            }
-
-            this.setState({ currentAchievementGroup });
-            let achievements = this.state.currentAchievementGroup.achievements;
-            if(achievements) {
-              _.each(achievements, (record) => {
-                _.set(record, 'key', _.get(record, '_id', ''));
-              });
-              this.setState({ achievements });
-            }
-          })
-          .catch(err => {
-          });
-
-      }).catch((error) => {
-      });
+      this.props.updateAchievementGroup(record);
     }
 
     this.closeAddAchievementsModal();
-  }
-
-  addAchievementGroup() {
-    const newData = [...this.state.achievementsGroup];
-    var params = {
-      name: `${this.props.company.name} Achievements`,
-      scope: 'Public'
-    }
-
-    Axios({
-      url: `${ConfigMain.getBackendURL()}/achievement/group`,
-      method: 'post',
-      data: {
-        ...params,
-      }
-    }).then((response) => {
-      let record = response.data;
-      record['key'] = record._id;
-      _.set(record, '_company', this.props.company._id);
-
-      Axios({
-        url: `${ConfigMain.getBackendURL()}/achievement/group/${record.key}`,
-        method: 'put',
-        data: { ...record }
-      }).then(response => {
-        _.set(record, 'company', this.props.company);
-        this.setState({ currentAchievementGroup: record });
-        let achievements = this.state.currentAchievementGroup.achievements;
-        if(achievements) {
-          _.each(achievements, (record) => {
-            _.set(record, 'key', _.get(record, '_id', ''));
-          });
-          this.setState({ achievements });
-        }
-        this.setState({ achievementsGroup: [record, ...newData] });
-      }).catch((error) => {
-      });
-    }).catch((error) => {
-    });
-  }
-
-  getCompanies() {
-    const url = `${ConfigMain.getBackendURL()}/company`;
-    Axios.get(url)
-      .then(companies => {
-        this.setState({companies});
-      })
-      .catch(err => {
-        this.setState({companies: []});
-      });
-  }
-
-  getRoadmaps(callback) {
-    const url = `${ConfigMain.getBackendURL()}/roadmapsGet`;
-    return Axios.get(url)
-      .then(response => {
-        callback(null, response.data);
-      })
-      .catch(error => {
-        callback(error);
-      });
-  }
-
-  getSkills(callback) {
-    const url = `${ConfigMain.getBackendURL()}/skillsGet`;
-    return Axios.get(url)
-      .then(response => {
-        callback(null, response.data);
-      })
-      .catch(error => {
-        callback(error);
-      });
   }
 
   editAchievement(achievementId) {
@@ -570,4 +417,16 @@ class TeamPanel extends Component {
   }
 }
 
-export default TeamPanel;
+const mapStateToProps = state => ({
+  isFetchingAchievementGroups: state.achievementGroups.isFetchingAchievementGroups,
+  achievementGroups: state.achievementGroups.data,
+  isUpdatingAchievementGroup: state.updateAchievementGroup.isUpdatingAchievementGroup,
+  updateAchievementGroup: state.updateAchievementGroup.data
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchAchievementGroups: bindActionCreators(fetchAchievementGroups, dispatch),
+  updateAchievementGroup: bindActionCreators(updateAchievementGroup, dispatch)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamPanel));
