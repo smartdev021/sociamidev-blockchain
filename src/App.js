@@ -312,7 +312,6 @@ class App extends Component {
 
   HandleSignUp(endpoint) {
     this.props.closeSignUpForm();
-
     this.storeCurrentLocationInCookies();
     window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
   }

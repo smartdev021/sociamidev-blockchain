@@ -19,16 +19,6 @@ import '~/src/css/bootstrap-workaround.css';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
-const PostButton = ({ onPost }) => (
-  <div className="buttons-wp">
-    <ul>
-      <li><a href="#"><div className="icon-white"><i className="fa fa-camera"></i></div></a></li>
-      <li><a href="#"><div className="icon-white"><i className="fa fa-video-camera"></i></div></a></li>
-      <li><a href="#"><div className="icon-white icon-purpal" onClick={onPost}><i className="fa fa-paper-plane"></i></div></a></li>
-    </ul>
-  </div>
-);
-
 const FIX_MOBILE_MARGIN_8959 = 'fix-mobile-margin-8959';
 
 class HomePage extends Component {
@@ -46,6 +36,9 @@ class HomePage extends Component {
     };
 
     this.createPost = this.createPost.bind(this);
+    this.createCompnayPost = this.createCompnayPost.bind(this);
+    this.createHousePost = this.createHousePost.bind(this);
+    this.handleCreatePost = this.handleCreatePost.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
     this.detectPostType = this.detectPostType.bind(this);
     this.postInput = null;
@@ -54,20 +47,35 @@ class HomePage extends Component {
     };
   }
 
+  createHousePost() {
+    this.handleCreatePost(this.props.houses.houses[0]._id, this.props.houses.houses[0].name);
+  }
+
+  createCompnayPost() {
+    this.handleCreatePost(this.props.company._id, this.props.company.name);
+  }
+
   createPost() {
+    this.handleCreatePost(this.props.userProfile._id, `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`);
+  }
+
+  handleCreatePost(id, name) {
     const that = this;
     const postData = {
       message: this.postInput.value, 
-      userName: this.props.userProfile.firstName + " "+ this.props.userProfile.lastName
+      userName: name
     };
-
-    Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`, postData)
+    this.setState({isWritingPost: false});
+    Axios.post(`${ConfigMain.getBackendURL()}/${id}/posts`, postData)
       .then((response) => {
         this.postInput.value = '';
         this.clearLinkPreview();
         that.fetchPosts();
       })
-      .catch(error => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        this.setState({isWritingPost: true});
+      });
   }
 
   fetchPosts() {
@@ -160,7 +168,7 @@ class HomePage extends Component {
                 <RightSection />
 
                 <div className="col-middle ml-fixed">
-                  <div className="top-box-wp">
+                  <div className="top-box-wp" onFocus={() => this.setState({isWritingPost: true})}>
 
                     <div className="profile-icon">
                       <img src={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} alt="" />
@@ -172,14 +180,46 @@ class HomePage extends Component {
                       inputRef={this.setPostInputRef} 
                       placeholder="What do you want to say..." 
                     />
-
+                    <div style={{marginTop: '15px'}}>
+                      <ul style={{paddingLeft: '20px'}}>
+                        <li style={{display: 'inline-block', listStyle: 'none'}}>
+                          <a href="#">
+                            <i style={{color: 'rgb(150, 1, 163)', fontSize: '16px'}} className="fa fa-camera"></i>
+                          </a>
+                        </li>
+                        <li style={{display: 'inline-block', listStyle: 'none', paddingLeft: '20px'}}>
+                          <a href="#">
+                            <i style={{color: 'rgb(150, 1, 163)', fontSize: '16px'}} className="fa fa-video-camera"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                     <LinkPreview
                       isLoading={this.state.postLink.isPreviewLoading}
                       meta={this.state.postLink.meta}
                       loader={<Spinner shown={this.state.postLink.isPreviewLoading} />}
                     />
-                    <PostButton onPost={this.createPost} />
-                    
+                    { this.state.isWritingPost &&
+                    <div className="buttons-wp">
+                      <ul>
+                        { _.get(this.props.houses, 'houses.length', 0) > 0 && <li>
+                          <a href="#">
+                            <div className="icon-white" onClick={this.createHousePost}>
+                              <i style={{color: '#9601a3', fontSize: '20px'}} className="fa fa-home"></i>
+                            </div>
+                          </a>
+                        </li> }
+                        { this.props.isAdmin && <li>
+                          <a href="#">
+                            <div className="icon-white" onClick={this.createCompnayPost}>
+                              <i style={{color: '#9601a3', fontSize: '16px'}} className="fa fa-building"></i>
+                            </div>
+                          </a>
+                        </li> }
+                        <li><a href="#"><div className="icon-white icon-purpal" onClick={this.createPost}><i className="fa fa-paper-plane"></i></div></a></li>
+                      </ul>
+                    </div>
+                    }
                   </div>
               
                   <PostList 

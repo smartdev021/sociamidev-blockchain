@@ -1344,6 +1344,14 @@ span.landing-email-input-textfield-container input[type="email"] {
     }
 }
 
+@media screen and (max-width: 750px) {
+    .landing-page-wrapper .video iframe {
+        width: 100%;
+        height: 212px;
+        max-width: 278px;
+    }
+}
+
 .landing-page-wrapper .talk-about-us {
     position: relative;
     margin: 50px auto;

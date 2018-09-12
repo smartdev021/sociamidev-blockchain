@@ -17,7 +17,7 @@ class Connections extends React.Component {
       activeTabName: 'All',
       allFriendList: [],
       receivedList: [],
-      sendList: [],
+      sentList: [],
       friendList: [],
       facebookFriends: [],
       allTabLoading: false,
@@ -41,16 +41,19 @@ class Connections extends React.Component {
   handleFriendRequest(user, action) {
     var that = this;
     const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
+    this.setState({ otherTabLoading: true });
     Axios.post(url, {
       currentUser: that.props.userProfile,
       otherUser: user,
       connectAction: action,
     }).then(function(response) {
+      that.setState({ otherTabLoading: false });
       if (response.data === 'success') {
-        that.getAllFriends();
-        that.getAllConnections();
+        that.fetchMoreSoqqlers(true);
+        that.fetchAllConnections();
       }
     }).catch(function(error) {
+      that.setState({ otherTabLoading: false });
     });
   }
 
@@ -66,7 +69,7 @@ class Connections extends React.Component {
         that.setState(prevState => ({
           allFriendList: prevState.allFriendList.filter(el => el.id !== userid)
         }));
-        that.getAllConnections();
+        that.fetchAllConnections();
       }
     })
     .catch(function(error) {
@@ -92,13 +95,13 @@ class Connections extends React.Component {
     }).catch(function(error) {});
   }
 
-  fetchMoreSoqqlers() {
-    if(!this.state.moreSoqqlersToFetch || this.state.allTabLoading) return;
+  fetchMoreSoqqlers(reset) {
+    if(!reset && (!this.state.moreSoqqlersToFetch || this.state.allTabLoading)) return;
     const that = this;
     this.setState({ allTabLoading: true });
     const allFrndUrl = `${ConfigMain.getBackendURL()}/getAllSoqqlers`;
-    const prevSkip = this.state.skip;
-    const prevSoqList = this.state.allFriendList;
+    const prevSkip = reset ? 0 : this.state.skip;
+    const prevSoqList = reset ? [] : this.state.allFriendList;
     Axios.get(allFrndUrl, {
       params: {
         currentUser: this.props.currentUserId,
@@ -108,6 +111,7 @@ class Connections extends React.Component {
       if (response.data.length) {
         that.setState({
           allTabLoading: false,
+          moreSoqqlersToFetch: true,
           skip: prevSkip + response.data.length,
           allFriendList: prevSoqList.concat(response.data) 
         });
@@ -120,6 +124,7 @@ class Connections extends React.Component {
   }
 
   fetchAllConnections() {
+    
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
     this.setState({ otherTabLoading: true });
@@ -149,20 +154,16 @@ class Connections extends React.Component {
   renderAllTab() {
     let allTabsData = this.state.allFriendList;
     const facebookFriends = this.state.facebookFriends;
+
     if (facebookFriends.length > 0) {
       allTabsData = this.state.allFriendList.map(function(friend) {
-        return 
-        Object.assign(
-          {},
-          friend, 
-          { 
-            isFacebookFriend: 
-              facebookFriends.findIndex(fb => fb.id === friend.facebookID) !== -1 
-          }
-        );
+        let friendData = Object.assign({},friend,{ isFacebookFriend: facebookFriends.findIndex(fb => fb.id === friend.facebookID) !== -1 })
+        return friendData;
+        ;
       });
       // Show Facebook friends on top
       allTabsData.sort(function(friend1, friend2) {
+
         if (friend1.isFacebookFriend === friend2.isFacebookFriend) return 0;
         if (friend1.isFacebookFriend) return -1;
         return 1;
@@ -190,8 +191,8 @@ class Connections extends React.Component {
           <ConnectionCard
             key={connection.id}
             connection={connection}
-            actionName={friend.connectionStatus}
-            onPrimaryAction={() => this.handleAddSoqqler(connection.id, friend.connectionStatus)} 
+            actionName={connection.connectionStatus}
+            onPrimaryAction={() => this.handleFriendRequest(connection, connection.connectionStatus)} 
           />)
         }
       </div>
@@ -207,9 +208,9 @@ class Connections extends React.Component {
             key={connection.id}
             connection={connection} 
             actionName={'Accept'}
-            onPrimaryAction={() => this.handleAddSoqqler(connection.id, 'Accept')}
+            onPrimaryAction={() => this.handleFriendRequest(connection, 'Accept')}
             secondaryAction={'Reject'}
-            onSecondaryAction={() => this.handleAddSoqqler(connection.id, 'Reject')}
+            onSecondaryAction={() => this.handleFriendRequest(connection, 'Reject')}
           />)
         }
       </div>
@@ -225,7 +226,7 @@ class Connections extends React.Component {
             key={connection.id}
             connection={connection} 
             actionName={'Withdraw'}
-            onPrimaryAction={() => this.handleAddSoqqler(connection.id, 'Withdraw')} 
+            onPrimaryAction={() => this.handleFriendRequest(connection, 'Withdraw')} 
           />)
         }
       </div>
@@ -269,7 +270,7 @@ class Connections extends React.Component {
             {this.state.activeTabName === 'Received' && this.renderReceivedTab()}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 
