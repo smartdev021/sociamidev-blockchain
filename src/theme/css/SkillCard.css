@@ -328,11 +328,8 @@
 }
 
 @media (max-width: 768px){
-    /* .progression-tree-panels {
-        padding-top: 50px;
-    } */
     .progression-tree-skill-container{
-        height: 570px;
+        height: auto;
         margin-bottom: 20px;
         margin-top: 20px;
         padding-left: 20px;
@@ -343,20 +340,21 @@
         padding-left: 10px;
     }
     .progression-tree-skill-list{
-        height: 400px;
+        
     }
     .progression-tree-skill-card {
         padding-right: 20px;
         padding-left: 20px;
     }
     .progression-tree-skill-item{
-        height: 420px;
+        height: auto;
         margin:0;
-        border-style: solid;
+        width: auto;
+        /* border-style: solid;
         border-width: 8px;
-        border-color: rgb(137, 203, 253);
+        border-color: rgb(0, 145, 250);
         background-color: rgb(0, 0, 0);
-        box-shadow: 0px 0px 30px 0px rgba(141, 211, 255, 0.76), 0px 0px 30px 0px rgba(141, 211, 255, 0.76);
+        box-shadow: 0px 0px 30px 0px rgba(141, 211, 255, 0.76), 0px 0px 30px 0px rgba(141, 211, 255, 0.76); */
     }
     .ptree-card{
         height: 280px;
@@ -365,14 +363,11 @@
         margin-top: -30px;
     }
     .ptree-card-body{
-        height: 49%;
+        /* height: 49%; */
     }
-    /* .pskill-banner{
-        padding: 8px;
+    .ptree-btn{
+        width: 100px;
     }
-    .ptask-banner{
-        padding: 8px;
-    } */
     .ptree-skill-set{
         height: 145px;
     }
@@ -388,8 +383,15 @@
     .pskill-name{
         font:normal 15px "MyriadPro Semibold";
     }
+    .progression-tree-hero-img{
+        margin: 0 auto;
+    }
     .progression-tree-blockforce-img{
         padding-bottom: 40px;
+        margin: 0 auto;
+    }
+    .ptree-btn-group{
+        bottom: -40px;
     }
 }
 
