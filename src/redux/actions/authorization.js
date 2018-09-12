@@ -401,6 +401,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
           roadmaps: response.data.roadmaps,
           progressionTrees: response.data.progressionTrees,
           facebook: response.data.facebook,
+          facebookID: response.data.facebookID
         };
 
         newUserProfile = Object.assign({}, newUserProfile, { ...responseProfile });
