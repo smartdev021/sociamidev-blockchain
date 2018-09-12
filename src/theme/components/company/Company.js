@@ -27,6 +27,9 @@ class Company extends Component {
     super(props);
 
     this.state = {
+      isAddEmailExpanded: false,
+      addEmail: "",
+      addEmailError: false,
       company: props.company,
       addTeamGroupActive: false,
       addTeamGroup: "Select",
@@ -190,12 +193,31 @@ class Company extends Component {
     this.props.deleteTeam(index, _id);
   }
 
-  addCompanyEmail(email) {
-    let emails = this.state.company.emails;
-    emails.push(email);
-    _.set(this, 'state.company.emails', emails);
-    let company = this.state.company;
-    this.props.updateCompany(company);
+  validateEmail(email) {
+    const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{2,9}[\.][a-z]{2,5}/g;
+    return pattern.test(email);
+  }
+
+  toggleAddEmailExpanded() {
+    this.setState({ addEmailError: false, isAddEmailExpanded: !this.state.isAddEmailExpanded });
+  }
+
+  setEmailAddress(e) {
+    this.setState({ addEmailError: false, addEmail: e.target.value });
+  }
+
+  addCompanyEmail() {
+    let validEmail = this.validateEmail(this.state.addEmail.trim());
+    if(validEmail) {
+      this.setState({ addEmailError: false, addEmail: "" });
+      let emails = this.state.company.emails;
+      emails.push(this.state.addEmail);
+      _.set(this, 'state.company.emails', emails);
+      let company = this.state.company;
+      this.props.updateCompany(company);
+    } else {
+      this.setState({ addEmailError: true });
+    }
   }
 
   deleteCompanyEmail(email) {
@@ -276,7 +298,18 @@ class Company extends Component {
                         <div className="top-sec-wp">
                           <h3>{company.name}</h3>
                           <div className="box-wp bb-0">
-                            <button className="btn-yellow">Admin +</button>
+                            <button className="btn-yellow" onClick={() => this.toggleAddEmailExpanded()}>Admin +</button>
+                            <div className="company-new-filed" style={{ display: this.state.isAddEmailExpanded ? 'inline-block' : 'none' }}>
+                              <input
+                                type="email"
+                                placeholder="Enter email address"
+                                value={this.state.addEmail}
+                                onChange={e => this.setEmailAddress(e)}
+                              />
+                              <a onClick={() => this.addCompanyEmail()}>Add</a>
+                              <span className="close-new-company" onClick={() => this.toggleAddEmailExpanded()}>&#120273;</span>
+                            </div>
+                            {this.state.addEmailError ? <span style={{color: "red"}}>Please enter valid email address</span> : ''}
                             <ul>
                               {
                                 company.emails.map((email, index) => {
