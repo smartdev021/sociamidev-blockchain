@@ -24,6 +24,7 @@ class Team extends Component {
       addAchievementsFlag: false,
       achievements: props.achievements,
       achievementGroups: props.achievementGroups,
+      companyAchievementGroups: props.companyAchievementGroups,
       currentAchievementGroup: props.currentAchievementGroup,
       roadmapData: props.roadmaps,
       skillsData: props.skills,
@@ -74,6 +75,9 @@ class Team extends Component {
     if (this.props.achievementGroups.length !== prevProps.achievementGroups.length) {
       this.setState({ achievementGroups: this.props.achievementGroups });
     }
+    if (this.props.companyAchievementGroups.length !== prevProps.companyAchievementGroups.length) {
+      this.setState({ companyAchievementGroups: this.props.companyAchievementGroups });
+    }
     if (this.props.currentAchievementGroup !== prevProps.currentAchievementGroup) {
       this.setState({ currentAchievementGroup: this.props.currentAchievementGroup });
     }
@@ -85,12 +89,17 @@ class Team extends Component {
     }
     if (prevProps.isFetchingAchievementGroups && !this.props.isFetchingAchievementGroups) {
       let achievementGroups = this.props.achievementGroups;
+      let companyAchievementGroups = [];
       _.each(achievementGroups, (record) => {
         _.set(record, 'key', _.get(record, '_id', ''));
         _.set(record, 'company', _.get(record, '_company'))
         _.set(record, 'achievements', _.get(record, '_achievements', []));
+
+        if(group.company && (group.company._id == this.props.company._id || group.company.name == this.props.company.name)) {
+          companyAchievementGroups.push(group);
+        }
       })
-      this.setState({ achievementGroups });
+      this.setState({ achievementGroups, companyAchievementGroups });
       let currentAchievementGroup = _.find(achievementGroups, group => {
         if(group.company) {
           return group.company._id == this.props.company._id || group.company.name == this.props.company.name;
@@ -166,6 +175,7 @@ class Team extends Component {
   closeAddAchievementsModal() {
     this.setState({ addAchievementsFlag: false });
   }
+
   getAchievementGroup(achievement) {
     if(achievement) {
       let record = this.state.currentAchievementGroup;
@@ -192,167 +202,8 @@ class Team extends Component {
   render() {
     const { team, index } = this.props;
 
-    let header;
-    if (this.state.renameTitle) {
-      header = (
-        <div className="team-headers">
-          <div className="team-titles">
-            <div className="team-title">
-              <div className="team-email-item-editing">
-                <div className="team-email-edit-box">
-                  <input className="team-email-edit-input" defaultValue={team.name} ref={input=>{ this.teamNameInupt = input }} />
-                  <div className="team-email-edit-options">
-                    <a className="pull-left team-email-edit-button team-email-cancel-btn" onClick={this.cancelRename}>Cancel</a>
-                    <a className="pull-right team-email-edit-button  team-email-save-btn" onClick={this.updateTeamName}>Save</a>
-                  </div>
-                </div>
-
-                <div className="email-edit-lightbox">
-                </div>
-              </div>
-            </div>
-            <div className="team-date">{team.date}</div>
-          </div>
-        </div>
-      );
-    } else {
-      header = (
-        <div className="team-headers">
-          <div className="team-titles">
-            <div className="team-title">{team.name}</div>
-            <div className="team-date">{team.date}</div>
-          </div>
-          <div className="btn-group team-menu-group">
-            <button
-              type="button"
-              id="team-menu"
-              className="team-menu dropdown-toggle"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i className="fa fa-bars" />
-            </button>
-            <ul
-              className="dropdown-menu team-dropdown-menu"
-              style={{ right: '0', left: 'auto', minWidth: '70px' }}
-            >
-              <li>
-                <a href="#" onClick={this.toggleEditTitle}>Rename</a>
-              </li>
-              <li>
-                <a onClick={() => this.deleteTeam()}>Delete</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      );
-    }
-    let footer;
-    if (this.state.addEmailBoolean) {
-      footer = (
-        <div className="team-add-email-input">
-          <div className="">
-            <input className="team-email-input" type="text" ref={input=>{ this.addEmailInupt = input }} />
-          </div>
-
-          <div className="team-email-options">
-            <a className="pull-left" onClick={() => this.cancelEmail()}>
-              Cancel
-            </a>
-            <a className="pull-right" onClick={this.addEmail}>Add</a>
-          </div>
-        </div>
-      );
-    } else {
-      // footer = (
-      //   <div className="team-add-email">
-      //     <a className="team-add-email-link" onClick={() => this.addEmailToTeam()}>
-      //       <i className="fa fa-plus" /> Add new email
-      //     </a>
-      //   </div>
-      // );
-      footer = (
-        <a className="team-add-email" style={{
-          justifyContent: 'space-between',
-          paddingLeft: '10px',
-          paddingRight: '10px',
-          height: '60px',
-          fontSize: '20px'}}>
-          <div style={{ display: 'flex', flexDirection: 'column'}}>
-            <span style={{fontSize: '16px'}}>Achievements</span>
-            <span style={{display: 'flex', flexDirection: 'row'}}>
-            {
-              _.map(this.state.achievements, achievement => {
-                const id = achievement._id;
-                const image = `https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${id}?date=${new Date().toISOString()}`;
-                return (
-                  <span key={id}
-                    style={{
-                      border: '2px solid #ffc225',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'inline-block',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      marginRight: '3px'
-                    }}
-                  >
-                    <Img src={this.props.company.imageUrl}
-                      style={{maxWidth: 135, maxHeight: 120}}
-                      onError={(e) => {
-                        e.target.src=this.props.company.imageUrl}
-                      }
-                      onClick={() => this.setState({ achievementId: id, addAchievementsFlag: true })}
-                    />
-                    {/* <i className="fa fa-yahoo" onClick={() => this.setState({ achievementId: id, addAchievementsFlag: true })} /> */}
-                  </span>
-                )
-              })
-            }
-              {/* <i className="fa fa-yahoo" />
-              <i className="fa fa-fighter-jet" />
-              <i className="fa fa-mobile" />
-              <i className="fa fa-whatsapp" /> */}
-            </span>
-          </div>
-          <span className="team-add-email-link" style={{fontSize: '30px'}}>
-            <i className="fa fa-plus-circle" onClick={() => this.setState({ achievementId: 0, addAchievementsFlag: true })} />
-          </span>
-        </a>
-      );
-    }
-
-    let deleteModalPopup;
-
-    if (this.state.deleteModal) {
-      deleteModalPopup = (
-        <Modal isOpen={true} onRequestClose={() => this.deleteTeam()} contentLabel={'Delete Team'}>
-          {/* parentSelector={getPopupParentElement}> */}
-          <div className="delete-team-popup">
-            <span
-              aria-hidden="true"
-              onClick={() => this.deleteTeam()}
-              className=" character-creation-popup-close-icon"
-            />
-
-            <p>
-              Do you want to delete <strong>{this.props.team.name}</strong> ?
-            </p>
-            <div className="delete-team-btn-group">
-              <button className="btn delete-team-btn-yes" onClick={this.handleDeleteTeam}>Yes</button>
-              <button className="btn  delete-team-btn-no" onClick={() => this.deleteTeam()}>
-                No
-              </button>
-            </div>
-          </div>
-        </Modal>
-      );
-    }
-
     return (
-      <div className="team-container" key={index}>
+      <div key={index}>
         {
           this.state.addAchievementsFlag &&
           <AddAchievementModal
@@ -366,52 +217,45 @@ class Team extends Component {
             achievementId={this.state.achievementId}
           />
         }
-        {deleteModalPopup}
-        <div className="team-list">
-          {header}
-          <div style={{padding: '15px', clear: 'both'}}>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-              <span style={{ fontSize: '12px'}}>Primary Keywords: </span>
-              <div className="team-email-item" style={{
-                background: 'transparent',    
-                boxShadow: 'none',
-                width: 'auto',
-                cursor: 'pointer',
-                padding: '0',
-                margin: '0',
-                height: 'auto',
-                marginLeft: '5px',}}>
-                <span style={{ fontSize: '17px'}}>Retail</span>
-                <a className="fa fa-pencil edit-team-email-checkbox" />
-              </div>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-              <span style={{ fontSize: '12px'}}>Secondary Keywords: </span>
-              <div className="team-email-item" style={{
-                background: 'transparent',    
-                boxShadow: 'none',
-                width: 'auto',
-                cursor: 'pointer',
-                padding: '0',
-                margin: '0',
-                height: 'auto',
-                marginLeft: '5px',}}>
-                <span style={{ fontSize: '17px'}}>Customer</span>
-                <a className="fa fa-pencil edit-team-email-checkbox" />
-              </div>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}>
-              <button className="ptree-btn ptree-view">
-                <Icon style={{ color: 'black' }} name="users" /> 
-                <span style={{marginLeft: '5px'}}>View Roles</span>
-              </button>
-              <button className="ptree-btn ptree-start">Dashboard</button>
-            </div>
+        <div className="top-sec-wp">
+          <div className="box-wp bb-0">
+            <h5>{team.name}</h5>
+            <ul>
+              {
+                team.emails.map((email, index) => {
+                  return <li key={index}><a href="#">{email.email} <span className="cross-icon">&#120273;</span></a></li>
+                })
+              }
+            </ul>
           </div>
-          <div style={{ marginTop: 0 }} className="team-email-container">{this.renderEmails(team.emails)}</div>
         </div>
-
-        {footer}
+        {
+          _.map(this.state.companyAchievementGroups, achievementGroup => {
+            return (
+              <div className="achievement-group-wp" key={achievementGroup._id}>
+                <h4>{achievementGroup.name} <span className="cross-icon">&#120273;</span></h4>
+                <ul>
+                  {
+                    _.map(this.state.achievements, achievement => {
+                      const id = achievement._id;
+                      return (
+                        <li key={achievement._id}>
+                          <Img src={this.props.company.imageUrl}
+                            onError={(e) => {
+                              e.target.src=this.props.company.imageUrl}
+                            }
+                            onClick={() => this.setState({ achievementId: id, addAchievementsFlag: true })}
+                          />
+                        </li>
+                      )
+                    })
+                  }
+                  <li><span><a onClick={() => this.setState({ achievementId: 0, addAchievementsFlag: true })}>+</a></span></li>
+                </ul>
+              </div>
+            )
+          })
+        }
       </div>
     );
   }

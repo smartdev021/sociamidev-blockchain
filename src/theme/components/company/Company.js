@@ -3,8 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
+import Img from 'react-image';
+import _ from 'lodash';
+
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import RightSection from '~/src/theme/components/homepage/RightSection';
+import AchievementGroup from './AchievementGroup';
 import Team from './Team';
 import '~/src/theme/css/darkTheme.css';
 import '~/src/theme/css/lightTheme.css';
@@ -23,9 +27,13 @@ class Company extends Component {
     super(props);
 
     this.state = {
+      company: props.company,
+      addTeamGroupActive: false,
+      addTeamGroup: "Select",
       addToTeam: {},
       achievements: [],
       achievementGroups: [],
+      companyAchievementGroups: [],
       currentAchievementGroup: undefined,
       roadmaps: [],
       skills: []
@@ -36,6 +44,8 @@ class Company extends Component {
     this.handleEmailAdd = this.handleEmailAdd.bind(this);
     this.handleTeamDelete = this.handleTeamDelete.bind(this);
     this.handleEmailUpdate = this.handleEmailUpdate.bind(this);
+    this.addCompanyEmail = this.addCompanyEmail.bind(this);
+    this.deleteCompanyEmail = this.deleteCompanyEmail.bind(this);
   }
 
   componentWillMount() {
@@ -48,12 +58,17 @@ class Company extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.isFetchingAchievementGroups && !this.props.isFetchingAchievementGroups) {
       let achievementGroups = this.props.achievementGroups;
-      _.each(achievementGroups, (record) => {
-        _.set(record, 'key', _.get(record, '_id', ''));
-        _.set(record, 'company', _.get(record, '_company'))
-        _.set(record, 'achievements', _.get(record, '_achievements', []));
+      let companyAchievementGroups = [];
+      _.each(achievementGroups, (group) => {
+        _.set(group, 'key', _.get(group, '_id', ''));
+        _.set(group, 'company', _.get(group, '_company'))
+        _.set(group, 'achievements', _.get(group, '_achievements', []));
+
+        if(group.company && (group.company._id == this.props.company._id || group.company.name == this.props.company.name)) {
+          companyAchievementGroups.push(group);
+        }
       })
-      this.setState({ achievementGroups });
+      this.setState({ achievementGroups, companyAchievementGroups });
       let currentAchievementGroup = undefined;
       if(!this.state.currentAchievementGroup) {
         try {
@@ -95,6 +110,7 @@ class Company extends Component {
     }
     if (prevProps.isUpdatingAchievementGroup && !this.props.isUpdatingAchievementGroup) {
       const newData = [...this.state.achievementGroups];
+      let companyAchievementGroups = [...this.state.companyAchievementGroups];
       let currentAchievementGroup = this.state.currentAchievementGroup;
       _.set(currentAchievementGroup, 'company', this.props.company);
       this.setState({ currentAchievementGroup });
@@ -106,8 +122,52 @@ class Company extends Component {
         this.setState({ achievements });
       }
 
-      this.setState({ achievementGroups: [currentAchievementGroup, ...newData] });
+      this.setState({ achievementGroups: [currentAchievementGroup, ...newData], companyAchievementGroups: [currentAchievementGroup, ...companyAchievementGroups] });
     }
+  }
+
+  toggleAddTeamGroupState() {
+    this.setState({
+      addTeamGroupActive: !this.state.addTeamGroupActive
+    });
+  }
+
+  selectAddTeamGroup(addTeamGroup) {
+    this.setState({
+      addTeamGroupActive: !this.state.addTeamGroupActive,
+      addTeamGroup
+    });
+  }
+
+  renderAddTeamGroupSelect(options) {
+    return (
+      <div className="custom-select company-select">
+        <select>
+          {options.map((selectGroup, i) => {
+            return(
+              <option value={ selectGroup.value } key={ i }>{ selectGroup.label }</option>
+            )
+          })}
+        </select>
+        <div
+          className={ this.state.addTeamGroupActive ? 'select-selected select-arrow-active' : 'select-selected' }
+          onClick={ () => this.toggleAddTeamGroupState() }>
+          { this.state.addTeamGroup }
+        </div>
+
+        <div
+          className={ !this.state.addTeamGroupActive ? 'select-items select-hide' : 'select-items' }>
+          {options.map((selectGroup, i) => {
+            return(
+              <div
+                onClick={ () => this.selectAddTeamGroup(selectGroup.label) } key={ i }>
+                { selectGroup.label }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
   }
 
   handleCancel(index, team) {
@@ -130,7 +190,64 @@ class Company extends Component {
     this.props.deleteTeam(index, _id);
   }
 
+  addCompanyEmail(email) {
+    let emails = this.state.company.emails;
+    emails.push(email);
+    _.set(this, 'state.company.emails', emails);
+    let company = this.state.company;
+    this.props.updateCompany(company);
+  }
+
+  deleteCompanyEmail(email) {
+    let emails = this.state.company.emails;
+    _.remove(emails, e => e === email);
+    _.set(this, 'state.company.emails', emails);
+    let company = this.state.company;
+    this.props.updateCompany(company);
+  }
+
+  renderAchievementGroups(achievementGroups) {
+    let groups = achievementGroups.map((group, index) => {
+      return <AchievementGroup
+        key={group._id}
+        index={index}
+        group={group}
+        company={this.state.company}
+        achievements={this.state.achievements}
+        achievementGroups={this.state.achievementGroups}
+        companyAchievementGroups={this.state.companyAchievementGroups}
+        currentAchievementGroup={this.state.currentAchievementGroup}
+        roadmaps={this.state.roadmaps}
+        skills={this.state.skills} />;
+    });
+    return groups;
+  }
+
+  renderTeams(teams) {
+    let list = teams.map((team, index) => {
+      return <Team
+        key={team._id}
+        index={index}
+        team={team}
+        onCancel={(val) => this.handleCancel(index, val)}
+        onSave={(val) => this.handleTeamSave(index, val)}
+        onAddEmail={(email, teams) => this.handleEmailAdd(index, email, teams)}
+        onUpdateEmail={(emailIndex, prevEmail, newEmail, teams) => this.handleEmailUpdate(emailIndex, prevEmail, newEmail, teams)}
+        onDeleteTeam={(_id) => this.handleTeamDelete(index, _id)}
+        company={this.state.company}
+        achievements={this.state.achievements}
+        achievementGroups={this.state.achievementGroups}
+        companyAchievementGroups={this.state.companyAchievementGroups}
+        currentAchievementGroup={this.state.currentAchievementGroup}
+        roadmaps={this.state.roadmaps}
+        skills={this.state.skills} />;
+    });
+    return list;
+  }
+
   render() {
+    const { userProfile } = this.props;
+    const { company } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <div className="row">
@@ -139,8 +256,8 @@ class Company extends Component {
               <div className="row">
                 <LeftNav
                   accounting={this.props.accounting}
-                  userProfile={this.props.userProfile}
-                  profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
+                  userProfile={userProfile}
+                  profilePic={userProfile.pictureURL ? userProfile.pictureURL : profilePic} 
                 />
 
                 <RightSection />
@@ -157,21 +274,24 @@ class Company extends Component {
                     <div className="box">
                       <div className="devider-box">
                         <div className="top-sec-wp">
-                          <h3>Company</h3>
-                          <div className="box-wp">
+                          <h3>{company.name}</h3>
+                          <div className="box-wp bb-0">
                             <button className="btn-yellow">Admin +</button>
                             <ul>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              {
+                                company.emails.map((email, index) => {
+                                  return <li key={index}><a href="#">{email} <span className="cross-icon" onClick={() => this.deleteCompanyEmail(email)}>&#120273;</span></a></li>
+                                })
+                              }
                             </ul>
                           </div>
-                          <div className="box-wp bb-0">
+                          {/* <div className="box-wp bb-0">
                             <h5>moderators</h5>
                             <ul>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              <li><a href="#">danielshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              <li><a href="#">danielshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
                             </ul>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -180,58 +300,20 @@ class Company extends Component {
                     <div className="box">
                       <div className="devider-box">
                         <h3>General Achievement Group <span><a href="#" className="change-btn txt-purpal"> Add +</a></span></h3>
-                        <div className="achievement-group-wp">
-                          <h4>Achievement Group 1 <span className="cross-icon">&#120273;</span></h4>
-                          <ul>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><span><a href="#">+</a></span></li>
-                          </ul>
-                        </div>
-                        <div className="achievement-group-wp">
-                          <h4>Achievement Group 1 <span className="cross-icon">&#120273;</span></h4>
-                          <ul>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><span><a href="#">+</a></span></li>
-                          </ul>
-                        </div>
+                        {
+                          !this.props.isFetchingAchievementGroups &&
+                          this.renderAchievementGroups(this.state.companyAchievementGroups)
+                        }
                         <div className="top-sec-wp mt-20">
-                          <h3>Team 1
-                            <div className="custom-select company-select">
-                              <select>
-                                <option value="0">Add Team</option>
-                                <option value="1">Other 1</option>
-                                <option value="1">Other 2</option>
-                              </select>
-                              </div>
+                          <h3>Teams
+                            { this.renderAddTeamGroupSelect([{value: "", label: "Select"}, {value: "AddTeam", label: "Add Team"}, {value: "AddAchievementGroup", label: "Add Achievement Group"}]) }
                           </h3>
-                          <div className="box-wp">
-                            <h5>Admin</h5>
-                            <ul>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                            </ul>
-                          </div>
-                          <div className="box-wp">
-                            <h5>moderators</h5>
-                            <ul>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                              <li><a href="#">danialshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                            </ul>
-                          </div>
                         </div>
-                        <div className="achievement-group-wp bb-0">
-                          <h4>Achievement Group <span className="cross-icon">&#120273;</span></h4>
-                          <ul>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><img src={this.props.company.imageUrl} alt="" /></li>
-                            <li><span><a href="#">+</a></span></li>
-                          </ul>
-                        </div>
+
+                        {
+                          !this.props.isFetchingAchievementGroups &&
+                          this.renderTeams(this.props.teams)
+                        }
                       </div>
                     </div>
                   </div>
@@ -247,7 +329,7 @@ class Company extends Component {
 
 const mapStateToProps = state => ({
 	isUpdatingCompany: state.company.isUpdatingCompany,
-	company: state.company.company,
+	updatedCompany: state.company.company,
 	isFetchingTeams: state.teams.isFetchingTeams,
 	teams: state.teams.data,
 	isFetchingAchievementGroups: state.achievements.isFetchingAchievements,

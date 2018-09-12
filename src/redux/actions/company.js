@@ -54,9 +54,9 @@ export function fetchCompanyByEmail(email) {
 export function updateCompany(company) {
   return function (dispatch) {
     dispatch(updateCompanyInitiate());
-    const url = `${ConfigMain.getBackendURL()}/company/${company.key}`;
+    const url = `${ConfigMain.getBackendURL()}/company/${company._id}`;
     return (
-      Axios.put(url, { company })
+      Axios.put(url, company)
       .then(function(response) {
         dispatch(updateCompanyComplete(response.data));
       })
