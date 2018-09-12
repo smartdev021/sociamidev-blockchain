@@ -447,4 +447,7 @@
   .light-theme-wrapper .container .pull-right, .dark-theme-wrapper .container .col.pull-right{
     display: none;
   }
+  .soqqle-page-content .light-theme-wrapper,.soqqle-page-content .dark-theme-wrapper{
+    height: 100vh;
+  }
 }
