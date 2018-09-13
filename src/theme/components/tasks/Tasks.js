@@ -641,9 +641,6 @@ class Tasks extends React.Component {
 
   handleAnswersSubmitComplete() {
     this.setState({ isAnswerSubmitComplete: true });
-    setTimeout(() => {
-      this.setState({ isAnswerSubmitComplete: false });
-    }, 100000);
     this.props.resetActiveHangout();
   }
 
