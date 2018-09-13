@@ -1230,6 +1230,9 @@ input:focus {
   color: #ccc;
   cursor: pointer;
 }
+.company-middle-wrapper .wider-strip{
+  width: 895px;
+}
 /*-----------End----------------*/
 /*Start Responsive css*/
 @media (min-width: 1920px) {
@@ -1260,6 +1263,9 @@ input:focus {
   .mychallenges-wrapper .col-middle .yellow-btn,
   .mychallenges-wrapper .col-middle .pur-btn {
     font-size: 12px;
+  }
+  .company-middle-wrapper .wider-strip {
+    width: 100%;
   }
 }
 
@@ -1312,6 +1318,9 @@ input:focus {
   /*------Start my challenges -------*/
   .mychallenges-wrapper.dark-theme-wrapper .col-middle {
     width: 92%;
+  }
+  .company-middle-wrapper .wider-strip {
+    width: 100%;
   }
 }
 @media (min-width: 992px) and (max-width: 1440px) {
@@ -1400,5 +1409,8 @@ input:focus {
   .stories-wrapper .col-middle .col-box-wp .fot-wp .bttons-right-box li {
     margin: 10px 0;
     font-size: 11px;
+  }
+  .company-middle-wrapper .wider-strip {
+    width: 100%;
   }
 }

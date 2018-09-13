@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-
-import Img from 'react-image';
 import _ from 'lodash';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
-import RightSection from '~/src/theme/components/homepage/RightSection';
 import AchievementGroup from './AchievementGroup';
 import Team from './Team';
 import '~/src/theme/css/darkTheme.css';
@@ -282,10 +279,8 @@ class Company extends Component {
                   profilePic={userProfile.pictureURL ? userProfile.pictureURL : profilePic} 
                 />
 
-                <RightSection />
-
                 <div className="col-middle company-middle-wrapper ml-fixed">
-                  <div className="col-box-wp mb-20 p-0">
+                  <div className="col-box-wp wider-strip mb-20 p-0">
                     <ul className="tab-wp">
                       <li className="active"><a href="#">Achievement</a></li>
                       <li><a href="#">Story</a></li>
