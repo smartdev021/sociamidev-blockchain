@@ -29,6 +29,7 @@ import PubSub from 'pubsub-js';
 import '~/src/theme/css/ThemeHeader.css';
 
 import logoSrc from '../../../../assets/img/logo.png'
+import flagSrc from '~/src/theme/images/flag.png'
 
 import defaultHouseCompanyImage from '../../../../assets/img/question-mark.jpg';
 
@@ -53,6 +54,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut, userProfile }) => {
       <MobileMainMenu
         userProfile={userProfile}
         onSignOut={onSignOut}
+        onClick={closeMenu}
       />
       {/*<button type="button" className="close-menu" onClick={closeMenu}>*/}
         {/*<span>x</span>*/}
@@ -165,7 +167,7 @@ class ThemeHeader extends React.Component {
 
   handleNotificationsOpen() {
     if (this.props.userTasks.created.length > 0) {
-      this.setState({ notificationsOpen: true });
+      this.setState({ notificationsOpen: true, isOpen:false });
     }
   }
 
@@ -343,7 +345,35 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li>
+                    <li className="nav-bar-icon-holder" style={{display:!this.state.isOpen ? 'none' : 'flex'}}>
+                      <Link to="/tasks" onClick={this.toggle}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src={flagSrc}
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-bar-icon-holder" style={{display:!this.state.isOpen ? 'none' : 'flex'}}>
+                      <Link to="/story" onClick={this.toggle}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-bar-icon-holder" style={{display:!this.state.isOpen ? 'none' : 'flex'}}>
+                      <Link to="/heroes" onClick={this.toggle}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
+                          />
+                        </span>
+                      </Link>
+                    </li>
+
+                    <li style={{display:this.state.isOpen ? 'none' : 'flex'}}>
                       {/*<ActionLink href="#" onClick={() => this.handleUserToggleOpen()}>*/}
                       <ActionLink href="#" onClick={() => {}}>
                         <span className="new-img-icon-head">
@@ -351,7 +381,7 @@ class ThemeHeader extends React.Component {
                         </span>
                       </ActionLink>
                     </li>
-                    <li className="navbar-company">
+                    <li className="navbar-company" style={{display:this.state.isOpen ? 'none' : 'flex'}}>
                       {this.state.companies.length > 0 && this.state.isCompanyOpen && (
                         <CompanyDropDown companies={this.state.companies} handleClickOutside={this.handleOutsideClickCompany} selectCompany={this.selectCompany}/>
                       )}
@@ -362,7 +392,7 @@ class ThemeHeader extends React.Component {
                       </a>
                     </li>
                     {/* <StatsDropdown userProfile={this.props.userProfile} accounting={this.props.accounting} /> */}
-                    <li className="notification">
+                    <li className={`notification ${this.state.isOpen ? 'menu-open-css' : ''}`}>
                       {this.state.notificationsOpen && (
                         <Notifications
                           onClose={() => this.handleNotificationsClose()}
@@ -375,17 +405,20 @@ class ThemeHeader extends React.Component {
                         {/* {labelNotif} */}
                       </ActionLink>
                     </li>
-                    <li className="register">
+                    <li className="register" style={{display:this.state.isOpen ? 'none' : 'flex'}}>
                       <Link href="#" to="/connections">
                         <Icon name="user-plus" aria-hidden="true" />
                       </Link>
                     </li>
-                    <UserMenuDropdown
-                      localeData={this.props.localeData}
-                      isAdmin={this.props.isAdmin}
-                      userProfile={this.props.userProfile}
-                      onSignOut={() => this.onSignOut()}
-                    />
+                    {
+                      this.state.isOpen ? '' :
+                        <UserMenuDropdown
+                          localeData={this.props.localeData}
+                          isAdmin={this.props.isAdmin}
+                          userProfile={this.props.userProfile}
+                          onSignOut={() => this.onSignOut()}
+                        />
+                    }
                   </div>
                 </div>
             </header>

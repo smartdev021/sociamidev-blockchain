@@ -30,7 +30,7 @@ const MobileMainMenu = (props) => {
           </li>
           <div className="line-devider"/>
           <li className="mobile-menu-li">
-            <a href="">
+            <a href="" onClick={props.closeMenu}>
               <span className="icon-wp">
                 <img src={challengeMenuIcon} />
               </span>

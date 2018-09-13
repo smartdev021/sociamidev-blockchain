@@ -441,6 +441,16 @@
   .navbar-wrapper .header .navbar-options{
     margin: 0 6px;
   }
+  .navbar-wrapper .header .navbar-options li.notification.menu-open-css span{
+    color: grey;
+  }
+  .navbar-wrapper .header .navbar-options li.nav-bar-icon-holder{
+    padding: 6px 10px;
+  }
+  .navbar-wrapper .header .navbar-options li .nav-bar-icon img{
+    filter: invert(50%);
+    height: 20px;
+  }
   .light-theme-wrapper .container .fixed-wp, .dark-theme-wrapper .container .col.fixed-wp{
     display: none;
   }
