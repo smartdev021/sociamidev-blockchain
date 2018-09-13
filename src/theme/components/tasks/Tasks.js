@@ -108,6 +108,7 @@ class Tasks extends React.Component {
     this.renderTasks = this.renderTasks.bind(this);
     this.renderSingleTask = this.renderSingleTask.bind(this);
     this.handleOpenConfirmTaskDetailsPopup = this.handleOpenConfirmTaskDetailsPopup.bind(this);
+    this.closeAchievementModal = this.closeAchievementModal.bind(this);
   }
 
   toggleCurrentTaskOption() {
@@ -641,7 +642,11 @@ class Tasks extends React.Component {
 
   handleAnswersSubmitComplete() {
     this.setState({ isAnswerSubmitComplete: true });
+  }
+
+  closeAchievementModal() {
     this.props.resetActiveHangout();
+    this.setState({ isAnswerSubmitComplete: false });
   }
 
   handleBackToMyTasks() {
@@ -779,10 +784,7 @@ class Tasks extends React.Component {
                   </div>
                 )}
               </div>
-              <Achievement
-                isOpen={this.state.isAnswerSubmitComplete}
-                close={() => this.setState({ isAnswerSubmitComplete: false })}
-              />
+              <Achievement isOpen={this.state.isAnswerSubmitComplete} close={this.closeAchievementModal} />
             </div>
           </div>
         </div>

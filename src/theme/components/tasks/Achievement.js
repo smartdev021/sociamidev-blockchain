@@ -34,7 +34,7 @@ class Achievement extends React.Component {
       },
     };
     return (
-      <Modal isOpen={isOpen} style={modalStyleOverrides}>
+      <Modal isOpen={isOpen} style={modalStyleOverrides} onRequestClose={close}>
         <div className="modal-popup">
           <div className="achievement-container">
             <div className="achievement-wrapper">
