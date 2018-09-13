@@ -658,7 +658,6 @@ class Tasks extends React.Component {
    * @param url  website address to embed
    */
   getLoadURL(url) {
-    console.log('~~~~~~~~~getLoadURL~~~~~~');
     this.props.loadURL(url);
   }
 
