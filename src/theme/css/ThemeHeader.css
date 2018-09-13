@@ -431,6 +431,9 @@
 .navbar-wrapper .mobile-menu .line-devider-unset{
   margin-top: unset;
 }
+.navbar-wrapper .header .navbar-options li.nav-bar-icon-holder{
+  display: none;
+}
 @media screen and (max-width: 750px){
   .navbar-wrapper header {
     height: 40px;
@@ -441,11 +444,19 @@
   .navbar-wrapper .header .navbar-options{
     margin: 0 6px;
   }
-  .navbar-wrapper .header .navbar-options li.notification.menu-open-css span{
+  .navbar-wrapper .header .navbar-options .navbar-home,
+  .navbar-wrapper .header .navbar-options .navbar-company,
+  .navbar-wrapper .header .navbar-options .register,
+  .navbar-wrapper .header .navbar-options .user-menu
+  {
+    display: none;
+  }
+  .navbar-wrapper .header .navbar-options li.notification span{
     color: grey;
   }
   .navbar-wrapper .header .navbar-options li.nav-bar-icon-holder{
     padding: 6px 10px;
+    display: flex;
   }
   .navbar-wrapper .header .navbar-options li .nav-bar-icon img{
     filter: invert(50%);
@@ -458,6 +469,6 @@
     display: none;
   }
   .soqqle-page-content .light-theme-wrapper,.soqqle-page-content .dark-theme-wrapper{
-    height: 100vh;
+    min-height: 100vh;
   }
 }
