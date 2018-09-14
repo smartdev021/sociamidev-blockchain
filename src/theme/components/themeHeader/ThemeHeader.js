@@ -54,7 +54,7 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut, userProfile }) => {
       <MobileMainMenu
         userProfile={userProfile}
         onSignOut={onSignOut}
-        onClick={closeMenu}
+        closeMenu={closeMenu}
       />
       {/*<button type="button" className="close-menu" onClick={closeMenu}>*/}
         {/*<span>x</span>*/}
@@ -121,6 +121,7 @@ class ThemeHeader extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
     this.handleOutsideClickCompany = this.handleOutsideClickCompany.bind(this);
     this.selectCompany = this.selectCompany.bind(this);
