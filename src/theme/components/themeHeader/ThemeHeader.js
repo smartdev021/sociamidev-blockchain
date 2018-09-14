@@ -352,15 +352,6 @@ class ThemeHeader extends React.Component {
 
                   <div className="navbar-options">
                     <li className="nav-bar-icon-holder">
-                      <Link to="/tasks" onClick={this.closeMenu}>
-                        <span className="nav-bar-icon">
-                          <img
-                            src={flagSrc}
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-bar-icon-holder">
                       <Link to="/story" onClick={this.closeMenu}>
                         <span className="nav-bar-icon">
                           <img
@@ -374,6 +365,15 @@ class ThemeHeader extends React.Component {
                         <span className="nav-bar-icon">
                           <img
                             src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-bar-icon-holder">
+                      <Link to="/tasks" onClick={this.closeMenu}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src={flagSrc}
                           />
                         </span>
                       </Link>
