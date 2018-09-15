@@ -65,10 +65,10 @@
     /* background: #EBEFF2; */
 }
 .ptree-card-body{
-    overflow: scroll;
+    /* overflow: scroll; */
     padding: 10px 20px 0px 20px;
     font-family: "MyriadPro Semibold";
-    height: 51%;
+    /* height: 51%; */
     font-size: 14px;
     color: rgb(138, 139, 172);
     line-height: 1.429;
