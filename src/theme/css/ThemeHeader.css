@@ -62,7 +62,7 @@
     display: block;
     width: 40px;
     height: 2px;
-    background: #fff;
+    background: #8c019b;
 }
 
 @media screen and (max-width: 750px) {
@@ -181,6 +181,7 @@
     display: block;
     width: 100%;
     height: 100%;
+    overflow: auto;
 }
 
 .navbar-wrapper .mobile-menu .close-menu {
@@ -190,88 +191,6 @@
     background: none;
     border: 0;
 }
-
-/*.navbar-wrapper .mobile-menu span {*/
-    /*position: relative;*/
-    /*display: inline-block;*/
-    /*width: 33px;*/
-    /*height: 23px;*/
-    /*overflow: hidden;*/
-    /*text-indent: -9999px;*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu span::before,*/
-/*.navbar-wrapper .mobile-menu span::after {*/
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*left: 0;*/
-    /*width: 100%;*/
-    /*height: 2px;*/
-    /*margin-top: -1px;*/
-    /*background: #fff;*/
-    /*content: '';*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu span::before {*/
-    /*transform: rotate(45deg);*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu span::after {*/
-    /*transform: rotate(-45deg);*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu img {*/
-    /*display: block;*/
-    /*width: 120px;*/
-    /*margin: 0 auto;*/
-    /*clear: both;*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu ul {*/
-    /*max-width: 276px;*/
-    /*padding: 6px 0 0 23px;*/
-    /*!*margin: 0 auto;*!*/
-    /*font: normal 15px "MyriadPro Semibold";*/
-    /*color: #fff;*/
-    /*list-style: none;*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu li {*/
-    /*padding: 9px 0 4px;*/
-    /*border-bottom: 1px solid rgba(255, 255, 255, 0.46);*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu li::after {*/
-    /*float: right;*/
-    /*content: '\003E';*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu .navbar-button {*/
-    /*margin: 8px 10px;*/
-    /*font: normal 20px "MyriadPro Semibold";*/
-    /*color: #fff;*/
-    /*padding: 7px 9px;*/
-    /*background-color: rgb(0, 105, 186);*/
-    /*box-shadow: inset 0px 3px 7px 0px rgba(5, 83, 144, 0.71);*/
-    /*width: 155px;*/
-    /*display: inline-block;*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu .navbar-button .navbar-btn-name{*/
-    /*display: inline-block;*/
-    /*transform: skew(38deg);*/
-    /*color: white;*/
-/*}*/
-
-/*.navbar-wrapper .mobile-menu .navbar-button .navbar-btn-img{*/
-    /*display: inline-block;*/
-    /*transform: skew(38deg);*/
-    /*margin-right: 8px;*/
-/*}*/
-/*.navbar-wrapper .mobile-menu p {*/
-    /*margin: 0;*/
-    /*transform: skew(38deg);*/
-/*}*/
 
 .navbar-wrapper .mobile-menu footer {
     text-align: center;
@@ -408,6 +327,9 @@
 }
 .navbar-wrapper .mobile-menu.dark-theme-wrapper .left-content{
   background-color: rgb(0,0,0,0.6);
+  overflow: auto;
+  height: 100%;
+  padding-bottom: 60px;
 }
 .navbar-wrapper .mobile-menu.light-theme-wrapper .left-content{
   background-color: rgb(255,255,255,0.6);
