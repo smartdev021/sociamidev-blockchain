@@ -20,6 +20,7 @@
 }
 
 .connection-profile-pic > img {
+  cursor: pointer;
   border: 1px solid #9113b1;
   border-radius: 50%;
   background-color: #144872;
@@ -40,6 +41,7 @@
   padding: 2px;
 }
 .connection-info > h1 {
+  cursor: pointer;
   color: #d8d8d8;
   font-size: 16px;
   margin: 0 auto;

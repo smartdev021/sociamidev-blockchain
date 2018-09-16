@@ -29,13 +29,15 @@ class Sparks extends Component {
   }
 
   renderTable() {
-    const fn = this.props.userProfile && this.props.userProfile && this.props.userProfile.firstName;
-    const ln = this.props.userProfile && this.props.userProfile && this.props.userProfile.lastName;
-    const name = `${fn} ${ln}`;
-    const ac = this.props.accounting;
+    const { firstName, lastName } = this.props.userProfile;
+    const name = `${firstName} ${lastName}`;
+    const accountingData = this.props.accounting;
     const data =
-      ac && ac.data && ac.data.userTransactions && ac.data.userTransactions.length
-        ? ac.data.userTransactions
+      accountingData &&
+      accountingData.data &&
+      accountingData.data.userTransactions &&
+      accountingData.data.userTransactions.length
+        ? accountingData.data.userTransactions
         : [];
 
     const columns = [
@@ -70,21 +72,11 @@ class Sparks extends Component {
       },
     ];
 
-    return (
-      <ReactTable
-        onSortedChange={(newSorted, column, shiftKey) => {
-          // console.log('onst', newSorted, column, shiftKey);
-        }}
-        sorted={this.state.sorted}
-        className={'d-blue-box'}
-        data={data}
-        columns={columns}
-      />
-    );
+    return <ReactTable sorted={this.state.sorted} className={'d-blue-box'} data={data} columns={columns} />;
   }
 
   setSortClass(field) {
-    return this.state.sorted.filter(ss => ss.id === field).length ? 'current-sort ' : '';
+    return this.state.sorted.filter(sortItems => sortItems.id === field).length ? 'current-sort ' : '';
   }
 
   onSortClick(field) {
@@ -98,39 +90,42 @@ class Sparks extends Component {
     });
   }
 
+  getSortFunctionByField(field) {
+    return () => this.onSortClick(field);
+  }
+
   renderTableWrapper() {
-    const that = this;
     return (
       <div className="sparks-table-wrapper">
         <div className="d-blue-box sparks-filter-wrapper d-tb-bg">
           <span className="d-sv sort-by-label">SORT BY:</span>
           <ul className="sparks-filter">
             <li
-              onClick={this.onSortClick.bind(that, 'timestamp')}
+              onClick={this.getSortFunctionByField('timestamp')}
               className={`${this.setSortClass('timestamp')} sparks-tertiary sparks-li`}
             >
               <a href="javascript:void(0)">Date</a>
             </li>
             <li
-              onClick={this.onSortClick.bind(that, 'task')}
+              onClick={this.getSortFunctionByField('task')}
               className={`${this.setSortClass('task')} sparks-li`}
             >
               <a href="javascript:void(0)">Task</a>
             </li>
             <li
-              onClick={this.onSortClick.bind(that, 'receiver')}
+              onClick={this.getSortFunctionByField('receiver')}
               className={`${this.setSortClass('receiver')} sparks-li`}
             >
               <a href="javascript:void(0)">House</a>
             </li>
             <li
-              onClick={this.onSortClick.bind(that, 'progression')}
+              onClick={this.getSortFunctionByField('progression')}
               className={`${this.setSortClass('progression')} sparks-li`}
             >
               <a href="javascript:void(0)">Progression</a>
             </li>
             <li
-              onClick={this.onSortClick.bind(that, 'numTokens')}
+              onClick={this.getSortFunctionByField('numTokens')}
               className={`${this.setSortClass('numTokens')} sparks-li`}
             >
               <a href="javascript:void(0)">Tokens</a>
@@ -142,8 +137,19 @@ class Sparks extends Component {
     );
   }
 
+  editWalletInfo(e) {
+    e.preventDefault();
+  }
+
+  toggleAccountOption(e) {
+    e.preventDefault();
+  }
+
+  togglePrivacyOption(e) {
+    e.preventDefault();
+  }
+
   render() {
-    const UserProgressionTreeLevels = this.props.userProfile.progressionTreeLevels;
     return (
       <div
         className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper sparks-wrapper profile-wrapper settings-wrapper main-bg`}
@@ -167,21 +173,17 @@ class Sparks extends Component {
                   <div className="col-box-wp mb-20 p-0">
                     <ul className="tab-wp d-tb-bg">
                       <li className="wallet-address">
-                        <a
-                          className="sort-by-label d-tw"
-                          href="javascript:;"
-                          onClick={this.toggleAccountOption}
-                        >
+                        <a className="sort-by-label d-tw" onClick={this.toggleAccountOption}>
                           MY WALLET ADDRESS
                         </a>
                       </li>
                       <li className={this.state == 'block' ? 'active' : ''}>
-                        <a className="sparks-golden" href="javascript:;" onClick={this.togglePrivacyOption}>
+                        <a className="sparks-golden" onClick={this.togglePrivacyOption}>
                           SOME ADDRESS 234wef23slkdjff
                         </a>
                       </li>
                       <li>
-                        <a className="d-tw" href="javascript:;" onClick={this.toggleCommunicationOption}>
+                        <a className="d-tw" onClick={this.editWalletInfo}>
                           Edit
                         </a>
                       </li>

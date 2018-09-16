@@ -124,6 +124,7 @@ class Connections extends React.Component {
   }
 
   fetchAllConnections() {
+    
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
     this.setState({ otherTabLoading: true });
@@ -145,28 +146,29 @@ class Connections extends React.Component {
         otherTabLoading: false,
         receivedList,
         sentList,
-        friendList 
+        friendList
       });
     }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
 
+  navigateToUserProfile(id) {
+    return this.props.history.push(`/userprofile?id=${id}`);
+  }
+
   renderAllTab() {
+    const _that = this;
     let allTabsData = this.state.allFriendList;
     const facebookFriends = this.state.facebookFriends;
+
     if (facebookFriends.length > 0) {
       allTabsData = this.state.allFriendList.map(function(friend) {
-        return 
-        Object.assign(
-          {},
-          friend, 
-          { 
-            isFacebookFriend: 
-              facebookFriends.findIndex(fb => fb.id === friend.facebookID) !== -1 
-          }
-        );
+        let friendData = Object.assign({},friend,{ isFacebookFriend: facebookFriends.findIndex(fb => fb.id === friend.facebookID) !== -1 })
+        return friendData;
+        ;
       });
       // Show Facebook friends on top
       allTabsData.sort(function(friend1, friend2) {
+
         if (friend1.isFacebookFriend === friend2.isFacebookFriend) return 0;
         if (friend1.isFacebookFriend) return -1;
         return 1;
@@ -175,27 +177,30 @@ class Connections extends React.Component {
 
     return (
       <div className="connection-container">
-        {allTabsData.map(connection => 
+        {allTabsData.map(connection =>
           <ConnectionCard
             key={connection.id}
+            onClickCheckUserProfile={_that.navigateToUserProfile.bind(_that, connection.id)}
             connection={connection}
-            onPrimaryAction={() => this.handleAddSoqqler(connection.id)} 
+            onPrimaryAction={() => this.handleAddSoqqler(connection.id)}
           />)
         }
-      </div>  
+      </div>
     );
   }
 
   renderConnectionsTab() {
+    const _that = this;
     if (this.state.otherTabLoading) return <Spinner shown />;
     return (
       <div className="connection-container">
-        {this.state.friendList.map(connection => 
+        {this.state.friendList.map(connection =>
           <ConnectionCard
             key={connection.id}
+            onClickCheckUserProfile={_that.navigateToUserProfile.bind(_that, connection.id)}
             connection={connection}
             actionName={connection.connectionStatus}
-            onPrimaryAction={() => this.handleFriendRequest(connection, connection.connectionStatus)} 
+            onPrimaryAction={() => this.handleFriendRequest(connection, connection.connectionStatus)}
           />)
         }
       </div>
@@ -203,13 +208,15 @@ class Connections extends React.Component {
   }
 
   renderReceivedTab() {
+    const _that = this;
     if (this.state.otherTabLoading) return <Spinner shown />;
     return (
       <div className="connection-container">
-        {this.state.receivedList.map(connection => 
-          <ConnectionCard 
+        {this.state.receivedList.map(connection =>
+          <ConnectionCard
             key={connection.id}
-            connection={connection} 
+            onClickCheckUserProfile={_that.navigateToUserProfile.bind(_that, connection.id)}
+            connection={connection}
             actionName={'Accept'}
             onPrimaryAction={() => this.handleFriendRequest(connection, 'Accept')}
             secondaryAction={'Reject'}
@@ -221,15 +228,17 @@ class Connections extends React.Component {
   }
 
   renderSentTab() {
+    const _that = this;
     if (this.state.otherTabLoading) return <Spinner shown />;
     return (
       <div className="connection-container">
-        {this.state.sentList.map(connection => 
+        {this.state.sentList.map(connection =>
           <ConnectionCard
             key={connection.id}
-            connection={connection} 
+            onClickCheckUserProfile={_that.navigateToUserProfile.bind(_that, connection.id)}
+            connection={connection}
             actionName={'Withdraw'}
-            onPrimaryAction={() => this.handleFriendRequest(connection, 'Withdraw')} 
+            onPrimaryAction={() => this.handleFriendRequest(connection, 'Withdraw')}
           />)
         }
       </div>
@@ -273,7 +282,7 @@ class Connections extends React.Component {
             {this.state.activeTabName === 'Received' && this.renderReceivedTab()}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 
