@@ -85,10 +85,14 @@ class UserProfile extends Component {
 
   openImageDialog(type, evt) {
     evt.stopPropagation();
-    var file = this.refs.userImageInput;
-    if (file) {
-      this.setState({ uploadType: type });
-      file.click();
+    if (this.state.myProfile === true) {
+      var file = this.refs.userImageInput;
+      if (file) {
+        this.setState({ uploadType: type });
+        file.click();
+      }
+    } else {
+      evt.preventDefault();
     }
   }
 
@@ -665,7 +669,7 @@ class UserProfile extends Component {
                   <div className="col">
                     <div className="col-box-wp">
                       <div className="intro-wp">
-                        <h3 className="col-heading">Intro <span className="pull-right"><a href="#" className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
+                        <h3 className="col-heading">Intro <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
                         <ul>
                           <li><span className="icon"></span> {this.state.work}</li>
                           <li><span className="icon p-icon"></span> Studied at Yoobo</li>
