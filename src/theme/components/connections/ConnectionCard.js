@@ -5,11 +5,13 @@ function ConnectionCard(props) {
   return (
     <div className="connection-card">
       <div className="connection-profile-pic">
-        <img src={props.connection.profilePic || fallbackProfilePic}
+        <img
+          onClick={props.onClickCheckUserProfile}
+          src={props.connection.profilePic || fallbackProfilePic}
           onError={e => { e.target.src = fallbackProfilePic; }} />
       </div>
       <div className="connection-info">
-        <h1 title={`${props.connection.firstName} ${props.connection.lastName}`}>
+        <h1 onClick={props.onClickCheckUserProfile} title={`${props.connection.firstName} ${props.connection.lastName}`}>
           {props.connection.firstName} {props.connection.lastName}
         </h1>
         <p>Innovation is widely known as a value which is worth pursuing</p>
