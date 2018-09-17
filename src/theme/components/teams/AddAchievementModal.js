@@ -20,6 +20,7 @@ class AddAchievementModal extends Component {
       formData: {
         type: 'Achievement',
         name: '',
+        description: '',
         result: 'Title',
         resultValue: '',
         generic: true,
@@ -206,6 +207,18 @@ class AddAchievementModal extends Component {
             placeholder="Name"
             value={this.state.formData.name}
             onChange={e => this.setState({formData: _.merge(this.state.formData, {name:e.target.value})})}
+          />
+        </div>
+
+        <div>
+          <span style={{ color: 'white' }} className="col-lg-6">Description:</span>
+          <textarea
+            className="col-lg-6"
+            rows="2"
+            style={{ resize:'none', border: 'none', marginBottom: '5px', paddingLeft: '5px', paddingRight: '0' }}
+            placeholder="Description"
+            value={this.state.formData.description}
+            onChange={e => this.setState({formData: _.merge(this.state.formData, {description:e.target.value})})}
           />
         </div>
 
