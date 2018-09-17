@@ -121,7 +121,9 @@ class AchievementGroup extends Component {
               const id = achievement._id;
               return (
                 <li key={achievement._id}>
-                  <Img src={ `https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${achievement._id}?date=${new Date().toISOString()}`}
+                  <Img
+                    className="achievement-badge-icon" 
+                    src={ `https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${achievement._id}?date=${new Date().toISOString()}`}
                     onError={(e) => {
                       e.target.src=this.props.company.imageUrl}
                     }
