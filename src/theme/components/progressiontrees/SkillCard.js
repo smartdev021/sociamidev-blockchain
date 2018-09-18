@@ -189,14 +189,13 @@ class SkillCard extends React.Component {
 
   renderTaskCard(skillItem) {
     let lockedSkill = this.props.timers.data.reduce((a,i) => {
-      let haha =  i.name.split(' - ')
-      
-      
-      if(i[haha[0]]){
-        a[haha[0]][haha[1]] = i.date
+      let skillTask =  i.name.split(' - ')
+      if(a[skillTask[0]]){
+        a[skillTask[0]][skillTask[1]] = i.date
       }else{
-        a[haha[0]] = {}
-        a[haha[0]][haha[1]] = i.date
+        a[skillTask[0]] = {
+          [skillTask[1]] : i.date
+        }
       }
       return a
     },{})
@@ -225,7 +224,7 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single.png"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
               />
             </div>
@@ -238,7 +237,7 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two_new.png"
                 className="ptask-img-double"
               />
             </div>
@@ -251,8 +250,8 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
-                className="ptask-img-double"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
+                className="ptask-img-single"
               />
             </div>
           </div>
@@ -264,8 +263,8 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Group.png"
-                className="ptask-img-group"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
+                className="ptask-img-single"
               />
             </div>
           </div>
@@ -277,7 +276,7 @@ class SkillCard extends React.Component {
           {
               showButton ?
 
-              <button disabled={true} className="ptree-btn ptree-start">
+              <button disabled={true} className="ptree-btn ptree-start-task">
                 Locked
                 <span className="ptree-lock-timer">for <Countdown daysInHours={false} date={timeCounter} /></span>
                 
@@ -324,28 +323,28 @@ class SkillCard extends React.Component {
     let imgJson;
     if (img == 'Miner') {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/miner_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-miner-img'
       }
     } else if (img == 'Nomad') {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/nomad_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-nomad-img'
       }
     } else if (img == 'Innovator') {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-innovator-img'
       }
     } else if (img == 'Blockforce'){
       imgJson = {
         imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
-        imgClass : 'progression-tree-blockforce-img'
+        imgClass : 'progression-tree-hero-img progression-tree-blockforce-img'
       }
     }else{
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-innovator-img'
       }
     }
     return imgJson;
