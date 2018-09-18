@@ -361,7 +361,7 @@ class Heroes extends React.Component {
             quickStartProgress={this.state.quickStarts[item.name] === true} 
             onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} 
             onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}
-            userProfile={this.props.userProfile}
+            userProfile={this.props.userProfile} timers={this.props.timers}
             />;
           })}
       </div>
