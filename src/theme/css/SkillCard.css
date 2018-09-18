@@ -327,6 +327,11 @@
     position: relative;
 }
 
+.ptree-lock-timer{
+    color: rgb(93, 94, 114);
+    display: inherit;
+}
+
 @media (max-width: 768px){
     .progression-tree-skill-container{
         height: auto;
