@@ -386,15 +386,15 @@ class Heroes extends React.Component {
 
                 <div className='ml-fixed'>
                 <div className="row progression-tree-header-box">
-                  <div className="progression-tree-header">
+                  {/* <div className="progression-tree-header">
                     <b>My progression skills</b>
-                  </div>
+                  </div> */}
                   <div className="progression-tree-timers">
                     <div className="progression-tree-clock">
                     {this.renderTimers()}
                     </div>
                   </div>
-                  <a className="show-more-option">show more</a>
+                  {/* <a className="show-more-option">show more</a> */}
                 </div>
                     {this.renderUserProgressionTrees()}
                 </div>
@@ -403,20 +403,6 @@ class Heroes extends React.Component {
           </div>
         </div>
       </div>
-      // <div className="progression-tree-container soqqle-content-container">
-      //   <div className="row progression-tree-header-box">
-      //     <div className="progression-tree-header">
-      //       <b>My progression skills</b>
-      //     </div>
-      //     <div className="progression-tree-timers">
-      //       <div className="progression-tree-clock">
-      //       {this.renderTimers()}
-      //       </div>
-      //     </div>
-      //     <a className="show-more-option">show more</a>
-      //   </div>
-      //   <div className="progression-tree-panels row">{this.renderUserProgressionTrees()}</div>
-      // </div>
     );
   }
 }
