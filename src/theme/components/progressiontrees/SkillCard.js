@@ -188,6 +188,32 @@ class SkillCard extends React.Component {
   }
 
   renderTaskCard(skillItem) {
+    let lockedSkill = this.props.timers.data.reduce((a,i) => {
+      let haha =  i.name.split(' - ')
+      
+      
+      if(i[haha[0]]){
+        a[haha[0]][haha[1]] = i.date
+      }else{
+        a[haha[0]] = {}
+        a[haha[0]][haha[1]] = i.date
+      }
+      return a
+    },{})
+
+    let showButton
+    let timeCounter
+    if(lockedSkill[skillItem.name]){
+      if(lockedSkill[skillItem.name][this.state.selectedTask]){
+        showButton = true
+        timeCounter = lockedSkill[skillItem.name][this.state.selectedTask]
+      }else{
+        showButton = false
+      }
+    }else{
+      showButton = false
+    }
+
     return (
       <div style={{display:"inline-grid",width:"100%"}}>
         <div className="ptree-back-header">Select task to continue</div>
@@ -248,42 +274,25 @@ class SkillCard extends React.Component {
           <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
             Back
           </button>
-          <button className="ptree-btn ptree-view" onClick={() => this.toggleTaskView()}>
-            Next
-          </button>
+          {
+              showButton ?
+
+              <button disabled={true} className="ptree-btn ptree-start">
+                Locked
+                <span className="ptree-lock-timer">for <Countdown daysInHours={false} date={timeCounter} /></span>
+                
+              </button>
+
+              : <button className="ptree-btn ptree-view" onClick={() => this.toggleTaskView()}>
+              Next
+            </button>
+            }
         </div>
       </div>
     );
   }
 
   renderSkillCard(skillItem) {
-    let lockedSkill = this.props.timers.data.reduce((a,i) => {
-      let haha =  i.name.split(' - ')
-      
-      
-      if(i[haha[0]]){
-        a[haha[0]][haha[1]] = i.date
-      }else{
-        a[haha[0]] = {}
-        a[haha[0]][haha[1]] = i.date
-      }
-      return a
-    },{})
-
-    let showButton
-    let timeCounter
-    if(lockedSkill[skillItem.name]){
-      if(lockedSkill[skillItem.name][this.state.selectedTask]){
-        console.log('undallo')
-        showButton = true
-        timeCounter = lockedSkill[skillItem.name][this.state.selectedTask]
-      }else{
-        showButton = false
-      }
-    }else{
-      showButton = false
-    }
-
     return (
       <div style={{display:"inline-grid",width:"100%"}}>
         <div className="ptree-skill-list">
@@ -302,18 +311,9 @@ class SkillCard extends React.Component {
             <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
               Back
             </button>
-            {
-              showButton ?
-
-              <button disabled={true} className="ptree-btn ptree-start">
-                Locked
-                for <Countdown daysInHours={false} date={timeCounter} />
-              </button>
-
-              : <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
+            <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
                 Start
-              </button>
-            }
+            </button>
           </div>
         </div>
       </div>
