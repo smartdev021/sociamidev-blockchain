@@ -6,6 +6,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 
+import Countdown from 'react-countdown-now';
+
+import _ from 'lodash';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -252,30 +256,66 @@ class SkillCard extends React.Component {
     );
   }
 
-  renderSkillCard() {
+  renderSkillCard(skillItem) {
+    let lockedSkill = this.props.timers.data.reduce((a,i) => {
+      let haha =  i.name.split(' - ')
+      
+      
+      if(i[haha[0]]){
+        a[haha[0]][haha[1]] = i.date
+      }else{
+        a[haha[0]] = {}
+        a[haha[0]][haha[1]] = i.date
+      }
+      return a
+    },{})
+
+    let showButton
+    let timeCounter
+    if(lockedSkill[skillItem.name]){
+      if(lockedSkill[skillItem.name][this.state.selectedTask]){
+        console.log('undallo')
+        showButton = true
+        timeCounter = lockedSkill[skillItem.name][this.state.selectedTask]
+      }else{
+        showButton = false
+      }
+    }else{
+      showButton = false
+    }
+
     return (
       <div style={{display:"inline-grid",width:"100%"}}>
-      <div className="ptree-skill-list">
-        <div className="ptree-back-header">
-          {/* <div> */}
-            Select one skill to improve it
-          {/* </div> */}
-          {/* <a className="view-video" onClick={() => this.onPlayVideo()}>
-            View the video >
-          </a> */}
-        </div>
+        <div className="ptree-skill-list">
+          <div className="ptree-back-header">
+            {/* <div> */}
+              Select one skill to improve it
+            {/* </div> */}
+            {/* <a className="view-video" onClick={() => this.onPlayVideo()}>
+              View the video >
+            </a> */}
+          </div>
 
-        <div className="ptree-skill-set">{this.renderSkills(this.state.tree.weightage1)}</div>
+          <div className="ptree-skill-set">{this.renderSkills(this.state.tree.weightage1)}</div>
 
-        <div className="pskill-btn-group ptree-btn-group">
-          <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
-            Back
-          </button>
-          <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
-            Start
-          </button>
+          <div className="pskill-btn-group ptree-btn-group">
+            <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
+              Back
+            </button>
+            {
+              showButton ?
+
+              <button disabled={true} className="ptree-btn ptree-start">
+                Locked
+                for <Countdown daysInHours={false} date={timeCounter} />
+              </button>
+
+              : <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
+                Start
+              </button>
+            }
+          </div>
         </div>
-      </div>
       </div>
     );
   }
@@ -401,6 +441,7 @@ class SkillCard extends React.Component {
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
     const imgJson = this.getImgUrl(skillItem.heroimg)
+
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
