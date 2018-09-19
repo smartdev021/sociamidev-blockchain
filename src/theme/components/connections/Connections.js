@@ -199,8 +199,8 @@ class Connections extends React.Component {
             key={connection.id}
             onClickCheckUserProfile={_that.navigateToUserProfile.bind(_that, connection.id)}
             connection={connection}
-            actionName={connection.connectionStatus}
-            onPrimaryAction={() => this.handleFriendRequest(connection, connection.connectionStatus)}
+            actionName={'Withdraw'}
+            onPrimaryAction={() => this.handleFriendRequest(connection, 'Withdraw')}
           />)
         }
       </div>
