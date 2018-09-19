@@ -56,53 +56,6 @@ const MobileMenu = ({ isOpen, closeMenu, onSignOut, userProfile }) => {
         onSignOut={onSignOut}
         closeMenu={closeMenu}
       />
-      {/*<button type="button" className="close-menu" onClick={closeMenu}>*/}
-        {/*<span>x</span>*/}
-      {/*</button>*/}
-      {/*<footer>*/}
-        {/*<div className="navbar-mobile-options">*/}
-          {/*/!* <Link to="" className="navbar-option" onClick={closeMenu}>*/}
-            {/*<div className="navbar-option-name">*/}
-            {/*<img className="navbar-option-icon"*/}
-            {/*src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"*/}
-            {/*/>*/}
-            {/*States</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</Link> */ }*/}
-          {/*<Link to="" className="navbar-option" onClick={closeMenu}>*/}
-            {/*<div className="navbar-option-name">*/}
-            {/*<img className="navbar-option-icon"*/}
-            {/*src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"*/}
-            {/*/>*/}
-            {/*Notification</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</Link>*/}
-          {/*<Link to="/connections" className="navbar-option" onClick={closeMenu}>*/}
-            {/*<div className="navbar-option-name">*/}
-            {/*<img className="navbar-option-icon"*/}
-            {/*src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"*/}
-            {/*/>*/}
-            {/*Add Soqqler</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</Link>*/}
-          {/*<Link to="/userProfile" className="navbar-option" onClick={closeMenu}>*/}
-            {/*<div className="navbar-option-name">Your Profile</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</Link>*/}
-          {/*<Link to="" className="navbar-option" onClick={closeMenu}>*/}
-            {/*<div className="navbar-option-name">Settings</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</Link>*/}
-          {/*<Link to="/teams" className="navbar-option" onClick={closeMenu}>*/}
-            {/*<div className="navbar-option-name">Team Setup</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</Link>*/}
-          {/*<ActionLink className="navbar-option" href="#" onClick={onSignOut}>*/}
-            {/*<div className="navbar-option-name">Logout</div>*/}
-            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
-          {/*</ActionLink>*/}
-        {/*</div>*/}
-      {/*</footer>*/}
     </div>
   );
 };
