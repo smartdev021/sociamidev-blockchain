@@ -30,10 +30,20 @@
 .progression-tree-hero-container{
     text-align: center;
 }
-.progression-tree-hero-img {
-    width: 280px;
-    margin-top: -80px;
-    margin-left: -50px;
+.progression-tree-nomad-img{
+    width: 240px;
+    margin-left: -23px;
+    margin-top: -58px;
+}
+.progression-tree-innovator-img{
+    width: 185px;
+    margin-left: -8px;
+    margin-top: -18px;
+}
+.progression-tree-miner-img{
+    width: 185px;
+    margin-left: -36px;
+    margin-top: -18px;
 }
 .progression-tree-blockforce-img{
     width: 160px;
@@ -92,6 +102,13 @@
 }
 .ptree-start{
     float: left;
+    font-family: "MyriadPro Semibold";
+    border-color: rgb(1, 138, 239);
+    color: rgb(1, 138, 239);
+    background: black;
+}
+.ptree-start-task{
+    float: right;
     font-family: "MyriadPro Semibold";
     border-color: rgb(1, 138, 239);
     color: rgb(1, 138, 239);
@@ -219,7 +236,7 @@
     width:11px;
 }
 .ptask-img-double{
-    width:30px;
+    width:26px;
 }
 .ptask-img-group{
     width:30px;
@@ -327,6 +344,11 @@
     position: relative;
 }
 
+.ptree-lock-timer{
+    color: rgb(93, 94, 114);
+    display: inherit;
+}
+
 @media (max-width: 768px){
     .progression-tree-skill-container{
         height: auto;
@@ -385,10 +407,7 @@
     }
     .progression-tree-hero-img{
         margin: 0 auto;
-    }
-    .progression-tree-blockforce-img{
-        padding-bottom: 40px;
-        margin: 0 auto;
+        padding-bottom: 30px;
     }
     .ptree-btn-group{
         bottom: -40px;

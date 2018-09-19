@@ -6,6 +6,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 
+import Countdown from 'react-countdown-now';
+
+import _ from 'lodash';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -184,6 +188,31 @@ class SkillCard extends React.Component {
   }
 
   renderTaskCard(skillItem) {
+    let lockedSkill = this.props.timers.data.reduce((a,i) => {
+      let skillTask =  i.name.split(' - ')
+      if(a[skillTask[0]]){
+        a[skillTask[0]][skillTask[1]] = i.date
+      }else{
+        a[skillTask[0]] = {
+          [skillTask[1]] : i.date
+        }
+      }
+      return a
+    },{})
+
+    let showButton
+    let timeCounter
+    if(lockedSkill[skillItem.name]){
+      if(lockedSkill[skillItem.name][this.state.selectedTask]){
+        showButton = true
+        timeCounter = lockedSkill[skillItem.name][this.state.selectedTask]
+      }else{
+        showButton = false
+      }
+    }else{
+      showButton = false
+    }
+
     return (
       <div style={{display:"inline-grid",width:"100%"}}>
         <div className="ptree-back-header">Select task to continue</div>
@@ -195,7 +224,7 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single.png"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
               />
             </div>
@@ -208,7 +237,7 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two_new.png"
                 className="ptask-img-double"
               />
             </div>
@@ -221,8 +250,8 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two.png"
-                className="ptask-img-double"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
+                className="ptask-img-single"
               />
             </div>
           </div>
@@ -234,8 +263,8 @@ class SkillCard extends React.Component {
             </div>
             <div className="ptask-right">
               <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Group.png"
-                className="ptask-img-group"
+                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
+                className="ptask-img-single"
               />
             </div>
           </div>
@@ -244,38 +273,48 @@ class SkillCard extends React.Component {
           <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
             Back
           </button>
-          <button className="ptree-btn ptree-view" onClick={() => this.toggleTaskView()}>
-            Next
-          </button>
+          {
+              showButton ?
+
+              <button disabled={true} className="ptree-btn ptree-start-task">
+                Locked
+                <span className="ptree-lock-timer">for <Countdown daysInHours={false} date={timeCounter} /></span>
+                
+              </button>
+
+              : <button className="ptree-btn ptree-view" onClick={() => this.toggleTaskView()}>
+              Next
+            </button>
+            }
         </div>
       </div>
     );
   }
 
-  renderSkillCard() {
+  renderSkillCard(skillItem) {
     return (
       <div style={{display:"inline-grid",width:"100%"}}>
-      <div className="ptree-skill-list">
-        <div className="ptree-back-header">
-          {/* <div> */}
-            Select one skill to improve it
-          {/* </div> */}
-          {/* <a className="view-video" onClick={() => this.onPlayVideo()}>
-            View the video >
-          </a> */}
-        </div>
+        <div className="ptree-skill-list">
+          <div className="ptree-back-header">
+            {/* <div> */}
+              Select one skill to improve it
+            {/* </div> */}
+            {/* <a className="view-video" onClick={() => this.onPlayVideo()}>
+              View the video >
+            </a> */}
+          </div>
 
-        <div className="ptree-skill-set">{this.renderSkills(this.state.tree.weightage1)}</div>
+          <div className="ptree-skill-set">{this.renderSkills(this.state.tree.weightage1)}</div>
 
-        <div className="pskill-btn-group ptree-btn-group">
-          <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
-            Back
-          </button>
-          <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
-            Start
-          </button>
+          <div className="pskill-btn-group ptree-btn-group">
+            <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
+              Back
+            </button>
+            <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
+                Start
+            </button>
+          </div>
         </div>
-      </div>
       </div>
     );
   }
@@ -284,28 +323,28 @@ class SkillCard extends React.Component {
     let imgJson;
     if (img == 'Miner') {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/miner_glow.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/miner_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-miner-img'
       }
     } else if (img == 'Nomad') {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Nomad_LoRes.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/nomad_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-nomad-img'
       }
     } else if (img == 'Innovator') {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-innovator-img'
       }
     } else if (img == 'Blockforce'){
       imgJson = {
         imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
-        imgClass : 'progression-tree-blockforce-img'
+        imgClass : 'progression-tree-hero-img progression-tree-blockforce-img'
       }
     }else{
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/innovator.png',
-        imgClass : 'progression-tree-hero-img'
+        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png',
+        imgClass : 'progression-tree-hero-img progression-tree-innovator-img'
       }
     }
     return imgJson;
@@ -401,6 +440,7 @@ class SkillCard extends React.Component {
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
     const imgJson = this.getImgUrl(skillItem.heroimg)
+
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}

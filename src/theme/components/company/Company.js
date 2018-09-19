@@ -49,6 +49,7 @@ class Company extends Component {
   }
 
   componentWillMount() {
+    mixpanel.track("View Company");
     this.props.fetchTeams();
     this.props.fetchAchievements();
     this.props.fetchRoadmapsFromAdmin();

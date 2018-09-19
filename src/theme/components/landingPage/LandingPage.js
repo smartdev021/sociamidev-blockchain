@@ -174,6 +174,10 @@ class LandingPage extends Component {
     );
   }
 
+  componentWillMount() {
+    mixpanel.track("Enter Landing page");
+  }
+
   render() {
     return (
       <div className="landing-page-wrapper landing-page-container">

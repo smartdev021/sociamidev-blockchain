@@ -32,6 +32,7 @@ class Story extends Component {
 
   componentWillMount() {
     this.props.fetchStories();
+    mixpanel.track("Enter Story page");
   }
 
   renderSkillBox(skills) {
