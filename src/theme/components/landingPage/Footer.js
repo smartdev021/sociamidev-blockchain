@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export const Footer = () => {
+export const Footer = (localeData) => {
     return (
       <footer className="footer">
         <a href="/" className="footer-logo">
@@ -24,6 +24,11 @@ export const Footer = () => {
           <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
           <li><a href="/termsOfUse" target="_blank">Terms</a></li>
         </ul>
+        {
+          localeData && localeData.localeData && localeData.localeData.localeTemporary ? (
+            <span style={{marginLeft:350}}>{ localeData.localeData.localeTemporary}</span>
+          ) : <span></span>
+        }
       </footer>
     );
   };
