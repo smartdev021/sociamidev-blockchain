@@ -16,6 +16,7 @@ import Img from 'react-image';
 import ConfigMain from '~/configs/main';
 import Friends from '~/src/theme/components/userProfile/Friends';
 import Photos from '~/src/theme/components/userProfile/Photos';
+import Spinner from '~/src/theme/components/homepage/Spinner';
 import '~/src/theme/css/userProfile.css';
 
 import { fetchListCharacterClasses, fetchListCharacterTraits } from '~/src/redux/actions/characterCreation';
@@ -65,14 +66,17 @@ class UserProfile extends Component {
       promoCode: '',
       promocodesUsed: [],
       isProfileLoading: queryId ? true : false,
+      friendList: [],
+      otherTabLoading: false
     };
+    this.fetchAllConnections = this.fetchAllConnections.bind(this);
   }
 
   componentWillMount() {
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();
     this.props.fetchAchievements();
-
+    this.fetchAllConnections();
     this.updatePromoCodesUsed();
     this.setUserProfile(qs.parse(this.props.location.search).id);
     this.setUserAchievement(qs.parse(this.props.location.search).id)
@@ -81,6 +85,25 @@ class UserProfile extends Component {
   componentWillReceiveProps(nextProps) {
     const queryId = qs.parse(nextProps.location.search).id;
     this.setUserProfile(queryId);
+  }
+  fetchAllConnections() {
+    
+    const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
+    var self = this;
+    this.setState({ otherTabLoading: true });
+    Axios.get(connectionsUrl, {
+      params: {
+        currentUser: self.props.currentUserId,
+      },
+    }).then(function(response) {
+       const friendList = response.data.filter(function(fList) {
+        return fList.connectionStatus === 'Friends';
+      });
+      self.setState({
+        otherTabLoading: false,
+        friendList 
+      });
+    }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
 
   openImageDialog(type, evt) {
@@ -676,7 +699,13 @@ class UserProfile extends Component {
                         </ul>
                       </div>
                     </div>
-                    <Friends heading={this.state.myProfile ? "My friends" : "Friends"} />
+                    {
+                      this.state.otherTabLoading
+                      ?
+                      <Spinner shown />
+                      :
+                      <Friends connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
+                    }                   
                     <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />
                   </div>
                   <div className="col pull-right">
