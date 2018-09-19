@@ -57,6 +57,7 @@ class Heroes extends React.Component {
   }
 
   componentWillMount() {
+    mixpanel.track("View Heroes");
     this.props.onFetchAllTasks(false);
     this.props.fetchRoadmaps();
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);

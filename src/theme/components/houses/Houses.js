@@ -10,6 +10,10 @@ class Houses extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    mixpanel.track("View Houses");
+  }
+
   render() {
     return (
       <div className="materialize-warper common-mat-wrapper houses-wrapper">
