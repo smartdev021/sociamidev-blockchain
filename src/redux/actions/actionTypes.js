@@ -182,6 +182,8 @@ export const FETCH_HOUSES_COMPLETE = 'fetch_houses_complete';
 // Company
 export const FETCH_COMPANY_INITIATE = 'fetch_company_initiate';
 export const FETCH_COMPANY_COMPLETE = 'fetch_company_complete';
+export const UPDATE_COMPANY_INITIATE = 'update_company_initiate';
+export const UPDATE_COMPANY_COMPLETE = 'update_company_complete';
 
 // Company
 export const FETCH_SKILLS_INITIATE = 'fetch_skills_initiate';

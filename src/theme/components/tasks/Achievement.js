@@ -3,8 +3,10 @@
 */
 
 import React, { Component } from 'react';
+import Modal from 'react-modal';
 
 import PropTypes from 'prop-types';
+import ActionLink from '~/src/components/common/ActionLink';
 
 import '~/src/theme/css/achievement.css';
 
@@ -14,16 +16,43 @@ class Achievement extends React.Component {
   }
 
   render() {
+    const { isOpen, close } = this.props;
+    const modalStyleOverrides = {
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      content: {
+        border: 'none',
+        position: 'relative',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      },
+    };
     return (
-      <div className="achievement-wrapper">
-        <div className="center-wrapper">
-          <div className="content-wp">
-            <span className="numbering-heading">10</span>
-            <h5>achievement completion</h5>
-            <h2>DEEP DIVER</h2>
+      <Modal isOpen={isOpen} style={modalStyleOverrides} onRequestClose={close}>
+        <div className="modal-popup">
+          <div className="achievement-container">
+            <div className="achievement-wrapper">
+              <div className="center-wrapper">
+                <ActionLink href="#" className="modal-close-button" onClick={close} />
+                <div className="content-wp">
+                  <h6 className="yellow-text">Achievement completion</h6>
+                  <h4>DEEP DIVER</h4>
+                  <p>
+                    The Innovator quickly flies into action and arrives at the signal. The Chief of Police is
+                    there and tells him that the nefarious Shadow Professor has struck again
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </Modal>
     );
   }
 }

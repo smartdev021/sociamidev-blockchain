@@ -236,6 +236,22 @@ div#companyDropdown .notifyTitle.list-group-item ul li{
   padding: unset;
 }
 
+@media screen and (max-width: 750px) {
+  div#notificationTile {
+    top: 40px;
+  }
+  .list-group::after{
+    right: 10px;
+    border: 6px solid #000;
+    border-color: transparent transparent #ffc700 #ffc700;
+  }
+  .list-group:before {
+    right: 10px;
+    border: 6px solid #000;
+    border-color: transparent transparent #0a0a0a #0a0a0a;
+  }
+}
+
 @media (max-width: 480px) {
   div#notificationTile {
     position: absolute;
@@ -245,6 +261,7 @@ div#companyDropdown .notifyTitle.list-group-item ul li{
     width: 100vw;
     line-height: 1;
     background: #fff;
+    padding: unset;
   }
 
   .notifyTitle div {
@@ -253,12 +270,12 @@ div#companyDropdown .notifyTitle.list-group-item ul li{
   }
 
   .list-group::after{
-    right: 84px;
+    right: 37px;
     border: 6px solid #000;
     border-color: transparent transparent #ffc700 #ffc700;
   }
   .list-group:before {
-    right: 84px;
+    right: 37px;
     border: 6px solid #000;
     border-color: transparent transparent #0a0a0a #0a0a0a;
   }

@@ -16,7 +16,9 @@ import Img from 'react-image';
 import ConfigMain from '~/configs/main';
 import Friends from '~/src/theme/components/userProfile/Friends';
 import Photos from '~/src/theme/components/userProfile/Photos';
+
 import Spinner from '~/src/theme/components/homepage/Spinner';
+import PostList from '~/src/theme/components/homepage/PostList';
 import '~/src/theme/css/userProfile.css';
 
 import { fetchListCharacterClasses, fetchListCharacterTraits } from '~/src/redux/actions/characterCreation';
@@ -67,9 +69,26 @@ class UserProfile extends Component {
       promocodesUsed: [],
       isProfileLoading: queryId ? true : false,
       friendList: [],
-      otherTabLoading: false
+      otherTabLoading: false,
+      posts: [],
+      loadingPosts: true,
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
+     this.fetchPosts = this.fetchPosts.bind(this);
+  }
+
+  fetchPosts() {
+    const postsEndpoint = `${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`;
+
+    this.setState({ loadingPosts: true });
+    Axios.get(postsEndpoint)
+      .then(response => 
+        this.setState({ posts: response.data, loadingPosts: false }))
+      .catch(error => {});
+  }
+
+  componentDidMount() {
+    this.fetchPosts();
   }
 
   componentWillMount() {
@@ -108,10 +127,14 @@ class UserProfile extends Component {
 
   openImageDialog(type, evt) {
     evt.stopPropagation();
-    var file = this.refs.userImageInput;
-    if (file) {
-      this.setState({ uploadType: type });
-      file.click();
+    if (this.state.myProfile === true) {
+      var file = this.refs.userImageInput;
+      if (file) {
+        this.setState({ uploadType: type });
+        file.click();
+      }
+    } else {
+      evt.preventDefault();
     }
   }
 
@@ -688,7 +711,7 @@ class UserProfile extends Component {
                   <div className="col">
                     <div className="col-box-wp">
                       <div className="intro-wp">
-                        <h3 className="col-heading">Intro <span className="pull-right"><a href="#" className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
+                        <h3 className="col-heading">Intro <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
                         <ul>
                           <li><span className="icon"></span> {this.state.work}</li>
                           <li><span className="icon p-icon"></span> Studied at Yoobo</li>
@@ -754,43 +777,11 @@ class UserProfile extends Component {
                     </div>
                   </div>
                   <div className="col-middle">
-                    <div className="col-box-wp">
-                      <div className="main-comment-box">
-                        <div className="top-head">
-                          <div className="profile-icon">
-                            <img src={this.state.pictureURL ? this.state.pictureURL : profilePic} alt="" />
-                          </div>
-                          <span className="col-heading">{this.state.firstName} {this.state.lastName}</span>
-                        </div>
-                        <p></p>
-                        <div className="img-box">
-                          <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/center-middle-img.png" alt="" />
-                        </div>
-                        <h4>Winning the Game of Innovation Advantages and Disadvantages</h4>
-                        <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation...</p>
-                        <div className="bot-wp">
-                          <div className="likewp">
-                            <div className="thum-like">
-                              <i className="fa fa-thumbs-up" aria-hidden="true"></i>
-                            </div>
-                            <span>Anna +23 others</span>
-                            <span className="comments-txt">4 comments</span>
-                          </div>
-                          <div className="input-wp">
-                            <div className="input-filed">
-                              <input type="text" name="" placeholder="Write comment..." />
-                              <a href="#" className="camera-icon"><i className="fa fa-camera"></i></a>
-                            </div>
-                            <div className="bot-share-btns">
-                              <ul>
-                                <li><a href="#"><div className="icon-white text-blue"><i className="fa fa-share"></i></div></a></li>
-                                <li><a href="#"><div className="icon-white icon-blue"><i className="fa fa-thumbs-up"></i></div></a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <PostList 
+                      isLoading={this.state.loadingPosts} 
+                      posts={this.state.posts}
+                      userProfile={this.props.userProfile}
+                    />
                     <div className="col-box-wp">
                       <div className="main-comment-box">
                         <h4 className="heading-md">Growth Hack Timber Logs

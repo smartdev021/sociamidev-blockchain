@@ -16,6 +16,7 @@ import Notifications from '~/src/theme/components/themeHeader/Notifications';
 import StatsDropdown from '~/src/theme/components/themeHeader/StatsDropdown';
 import UserMenuDropdown from '~/src/theme/components/themeHeader/UserMenuDropdown';
 import CompanyDropDown from '~/src/theme/components/themeHeader/CompanyDropdown';
+import MobileMainMenu from '~/src/theme/components/themeHeader/MobileMainMenu';
 
 import ConfigMain from '~/configs/main';
 
@@ -28,6 +29,7 @@ import PubSub from 'pubsub-js';
 import '~/src/theme/css/ThemeHeader.css';
 
 import logoSrc from '../../../../assets/img/logo.png'
+import flagSrc from '~/src/theme/images/flag.png'
 
 import defaultHouseCompanyImage from '../../../../assets/img/question-mark.jpg';
 
@@ -44,100 +46,63 @@ const Logo = () => {
   );
 };
 
-const MobileMenu = ({ isOpen, closeMenu, onSignOut }) => {
+const MobileMenu = ({ isOpen, closeMenu, onSignOut, userProfile }) => {
   const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
   return (
-    <div className={mobileClass}>
-      <button type="button" className="close-menu" onClick={closeMenu}>
-        <span>x</span>
-      </button>
-      <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-      style={{paddingBottom: '20px'}}
+    <div className={`${mobileClass} ${userProfile.theme.toLowerCase()}-theme-wrapper main-bg`}>
+      <MobileMainMenu
+        userProfile={userProfile}
+        onSignOut={onSignOut}
+        closeMenu={closeMenu}
       />
-      <footer>
-        <div className="navbar-btn-row">
-          <Link to="/story" className="navbar-button" onClick={closeMenu}>
-            <div className="navbar-btn-img">
-              <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
-              style={{ marginTop: '-4px', width: '16px' }}
-              />
-            </div>
-            <div className="navbar-btn-name">
-              Story
-            </div>
-          </Link>
-
-
-          <Link to="/heroes" className="navbar-button" onClick={closeMenu}>
-            <div className="navbar-btn-img">
-              <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
-              style={{ marginTop: '-5px', width: '18px' }}
-              />
-            </div>
-            <div className="navbar-btn-name">
-              Heroes
-            </div>
-          </Link>
-        </div>
-        <div className="navbar-btn-row">
-          <Link to="/tasks" className="navbar-button" onClick={closeMenu}>
-            <div className="navbar-btn-img">
-              <img
-              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Tasks.png"
-              style={{ width: '18px' }}
-              />
-            </div>
-            <div className="navbar-btn-name">
-              Tasks
-            </div>
-          </Link>
-        </div>
-        <div className="navbar-mobile-options">
-          {/* <Link to="" className="navbar-option" onClick={closeMenu}>
-            <div className="navbar-option-name">
-            <img className="navbar-option-icon"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"
-            />
-            States</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link> */ }
-          <Link to="" className="navbar-option" onClick={closeMenu}>
-            <div className="navbar-option-name">
-            <img className="navbar-option-icon"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"
-            />
-            Notification</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link>
-          <Link to="/connections" className="navbar-option" onClick={closeMenu}>
-            <div className="navbar-option-name">
-            <img className="navbar-option-icon"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"
-            />
-            Add Soqqler</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link>
-          <Link to="/userProfile" className="navbar-option" onClick={closeMenu}>
-            <div className="navbar-option-name">Your Profile</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link>
-          <Link to="" className="navbar-option" onClick={closeMenu}>
-            <div className="navbar-option-name">Settings</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link>
-          <Link to="/teams" className="navbar-option" onClick={closeMenu}>
-            <div className="navbar-option-name">Team Setup</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </Link>
-          <ActionLink className="navbar-option" href="#" onClick={onSignOut}>
-            <div className="navbar-option-name">Logout</div>
-            <i className="glyphicon glyphicon-chevron-right pull-right"></i>
-          </ActionLink>
-        </div>
-      </footer>
+      {/*<button type="button" className="close-menu" onClick={closeMenu}>*/}
+        {/*<span>x</span>*/}
+      {/*</button>*/}
+      {/*<footer>*/}
+        {/*<div className="navbar-mobile-options">*/}
+          {/*/!* <Link to="" className="navbar-option" onClick={closeMenu}>*/}
+            {/*<div className="navbar-option-name">*/}
+            {/*<img className="navbar-option-icon"*/}
+            {/*src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/States.png"*/}
+            {/*/>*/}
+            {/*States</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</Link> */ }*/}
+          {/*<Link to="" className="navbar-option" onClick={closeMenu}>*/}
+            {/*<div className="navbar-option-name">*/}
+            {/*<img className="navbar-option-icon"*/}
+            {/*src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Notification.png"*/}
+            {/*/>*/}
+            {/*Notification</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</Link>*/}
+          {/*<Link to="/connections" className="navbar-option" onClick={closeMenu}>*/}
+            {/*<div className="navbar-option-name">*/}
+            {/*<img className="navbar-option-icon"*/}
+            {/*src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Add.png"*/}
+            {/*/>*/}
+            {/*Add Soqqler</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</Link>*/}
+          {/*<Link to="/userProfile" className="navbar-option" onClick={closeMenu}>*/}
+            {/*<div className="navbar-option-name">Your Profile</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</Link>*/}
+          {/*<Link to="" className="navbar-option" onClick={closeMenu}>*/}
+            {/*<div className="navbar-option-name">Settings</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</Link>*/}
+          {/*<Link to="/teams" className="navbar-option" onClick={closeMenu}>*/}
+            {/*<div className="navbar-option-name">Team Setup</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</Link>*/}
+          {/*<ActionLink className="navbar-option" href="#" onClick={onSignOut}>*/}
+            {/*<div className="navbar-option-name">Logout</div>*/}
+            {/*<i className="glyphicon glyphicon-chevron-right pull-right"></i>*/}
+          {/*</ActionLink>*/}
+        {/*</div>*/}
+      {/*</footer>*/}
     </div>
   );
 };
@@ -156,6 +121,7 @@ class ThemeHeader extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
     this.handleOutsideClickCompany = this.handleOutsideClickCompany.bind(this);
     this.selectCompany = this.selectCompany.bind(this);
@@ -202,7 +168,7 @@ class ThemeHeader extends React.Component {
 
   handleNotificationsOpen() {
     if (this.props.userTasks.created.length > 0) {
-      this.setState({ notificationsOpen: true });
+      this.setState({ notificationsOpen: true, isOpen:false });
     }
   }
 
@@ -285,6 +251,11 @@ class ThemeHeader extends React.Component {
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
+    });
+  }
+  closeMenu(){
+    this.setState({
+      isOpen: false
     });
   }
 
@@ -380,7 +351,35 @@ class ThemeHeader extends React.Component {
                   </Link>
 
                   <div className="navbar-options">
-                    <li>
+                    <li className="nav-bar-icon-holder">
+                      <Link to="/story" onClick={this.closeMenu}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Story.png"
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-bar-icon-holder">
+                      <Link to="/heroes" onClick={this.closeMenu}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/themeHeader/Heroes.png"
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-bar-icon-holder">
+                      <Link to="/tasks" onClick={this.closeMenu}>
+                        <span className="nav-bar-icon">
+                          <img
+                            src={flagSrc}
+                          />
+                        </span>
+                      </Link>
+                    </li>
+
+                    <li className="navbar-home">
                       {/*<ActionLink href="#" onClick={() => this.handleUserToggleOpen()}>*/}
                       <ActionLink href="#" onClick={() => {}}>
                         <span className="new-img-icon-head">
@@ -426,7 +425,12 @@ class ThemeHeader extends React.Component {
                   </div>
                 </div>
             </header>
-            <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle} onSignOut={this.onSignOut}/>
+            <MobileMenu
+              userProfile={this.props.userProfile}
+              isOpen={this.state.isOpen}
+              closeMenu={this.toggle}
+              onSignOut={this.onSignOut}
+            />
         </div>
       </div>
     );

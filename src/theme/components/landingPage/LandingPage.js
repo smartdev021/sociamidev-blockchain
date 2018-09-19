@@ -174,6 +174,10 @@ class LandingPage extends Component {
     );
   }
 
+  componentWillMount() {
+    mixpanel.track("Enter Landing page");
+  }
+
   render() {
     return (
       <div className="landing-page-wrapper landing-page-container">
@@ -191,8 +195,8 @@ class LandingPage extends Component {
             email={this.state.email} />
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <Footer />
-        <MobileMenu 
+        <Footer localeData={this.props.localeData}/>
+        <MobileMenu
           isOpen={this.state.isOpen} closeMenu={this.toggle}
           onEmailInputShow={() => this.handleEmailInputShow(true)}
           onEmailInputHide={() => this.handleEmailInputShow(false)}
@@ -217,7 +221,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  isAuthorized: state.userProfile.isAuthorized
+  isAuthorized: state.userProfile.isAuthorized,
+  localeData: state.userProfile.locale,
 });
 
 export default connect(
