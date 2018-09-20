@@ -656,6 +656,16 @@ class UserProfile extends Component {
     return style;
   }
 
+  renderIntroEdit() {
+    if (!this.state.myProfile) {
+      return <span></span>
+    }
+
+    return (
+      <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span>
+    )
+  }
+
   render() {
     let traitsNameLine
     let characterNameLine
@@ -686,14 +696,24 @@ class UserProfile extends Component {
                         <div className="imgbox" onClick={this.openImageDialog.bind(this, 'avatar')}>
                           <a href="#">
                             <img src={this.state.pictureURL ? this.state.pictureURL : profilePic} />
-                            <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
+                            { this.state.myProfile ? (
+                                <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
+                              ) : (
+                                <span></span>
+                              )
+                            }
                           </a>
                         </div>
                         <h3>{this.state.firstName} {this.state.lastName}</h3>
                       </div>
                     </div>
                     <div className="col-sm-2 h-100" >
-                      <span className="middle-edit" onClick={this.openImageDialog.bind(this, 'background')}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
+                      { this.state.myProfile ? (
+                          <span className="middle-edit" onClick={this.openImageDialog.bind(this, 'background')}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
+                        ) : (
+                          <span></span>
+                        )
+                      }
                     </div>
                     {/* <div className="col-sm-5 last-right">
                       <p>Blockforce enhancer <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
@@ -711,7 +731,7 @@ class UserProfile extends Component {
                   <div className="col">
                     <div className="col-box-wp">
                       <div className="intro-wp">
-                        <h3 className="col-heading">Intro <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
+                        <h3 className="col-heading">Intro {this.renderIntroEdit()}</h3>
                         <ul>
                           <li><span className="icon"></span> {this.state.work}</li>
                           <li><span className="icon p-icon"></span> Studied at Yoobo</li>
