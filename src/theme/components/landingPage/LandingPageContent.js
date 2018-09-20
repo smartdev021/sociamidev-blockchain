@@ -17,6 +17,7 @@ import BetaFormModal from "~/src/theme/components/landingPage/BetaFormModal";
 import TrailerModal from "~/src/theme/components/landingPage/TrailerModal";
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
+import Youtube from 'react-youtube';
 
 const soqqleEnv = process.env.SOQQLE_ENV;
 
@@ -295,11 +296,20 @@ const VideoComponent = () => {
     <div className="video">
       <div className="top-rectangle"></div>
       <h1>Discover Soqqle</h1>
-      <iframe width="740" height="415" src="https://www.youtube.com/embed/GN4XqcrfAWY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen 
-        onPlay={()=>{
-          mixpanel.track("View Video")
-        } }
-      ></iframe>
+      <Youtube
+        videoId="GN4XqcrfAWY"
+        id="GN4XqcrfAWY"
+        opts={
+          {
+            width: "740",
+            height: "415",
+            frameborder: "0",
+            allow: "autoplay; encrypted-media",
+            allowfullscreen: true
+          }
+        }
+        onPlay={()=> mixpanel.track('View Video')}
+      />
       <button type="button" className="all-videos-button"><p>See all videos</p></button>
     </div>
   );
