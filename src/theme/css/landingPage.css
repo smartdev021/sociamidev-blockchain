@@ -91,13 +91,10 @@ html.vertical-hidden {
   background-image: -webkit-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
   background-image: -ms-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
   box-shadow: 0px 0px 15px 0px rgba(207, 0, 254, 0.36);
-  position: absolute;
-  left: 0px;
-  top: 0px;
   width: 168px;
   height: 52px;
   display: inline-block;
-  margin: auto;
+  margin-top: 30px;
   bottom: 0;
   right: 0;
   line-height: 52px;
@@ -518,8 +515,8 @@ html.vertical-hidden {
     background: #191919;
     border-radius: 50px;
     min-width: 204;
-    height: 40px;
-    line-height: 40px;
+    height: 42px;
+    line-height: 36px;
 }
 .landing-page-wrapper .footer input.mail.new-text{
   transform: skew(0deg);
@@ -630,7 +627,7 @@ html.vertical-hidden {
     margin: 0 2px 0 6px;
 }
 .header-new-link{
-  min-width: 50%;
+  min-width: 40%;
   text-align: right;
 }
 .right-new-link{
@@ -642,7 +639,6 @@ html.vertical-hidden {
 }
 .right-new-link .right-dropdown-link{
   transform: skew(0deg);
-  display: none;
   position: absolute;
   padding: 10px;
   border: 1px solid #7d018a;
@@ -1710,7 +1706,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 .landing-page-wrapper .talk-about-us section.background-section-2 {
   right: 209px;
-  padding: 5px 29px 46px;
+  padding: 15px 30px 28px;;
   box-shadow: none;
   min-height: auto;
 }
@@ -1922,7 +1918,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation {
-        padding: 0;
+        padding: 0 0 60px;
     }
 }
 
@@ -2019,7 +2015,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .work-explanation h3 {
-    margin: 23px 0 21px;
+    margin: 8px 0 21px;
     font: normal 24px "MyriadPro Semibold";
 }
 
@@ -2086,7 +2082,7 @@ span.landing-email-input-textfield-container input[type="email"] {
         width: 100%;
         max-width: 228px;
         padding: 0;
-        margin: 43px auto 0;
+        margin: 15px auto 0;
         text-align: left;
     }
 }

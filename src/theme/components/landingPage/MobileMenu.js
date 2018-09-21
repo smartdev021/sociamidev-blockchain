@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
     const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
   
     const handleInputSubmit = (event) => {

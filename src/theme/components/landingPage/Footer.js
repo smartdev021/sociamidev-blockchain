@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 export const Footer = (localeData) => {
     return (
       <footer className="footer">
         <a href="/" className="footer-logo">
           <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo-footer.png"
             alt="logo"
+            className="h-auto"
           />
         </a>
         <h3>Subscribe to our Newsletter</h3>
-        <div><input type="email" className="mail" value="Mail" /></div>
-        <button type="button" className="subscribe"><p>Subscribe</p></button>
+        <div className="new-subscribe"><input type="email" className="mail new-text" value="Mail" /></div>
+        <button type="button" className="subscribe new-btn"><p>Subscribe</p></button>
         <ul className="info-list">
           <li>About</li>
           <li>Support</li>
