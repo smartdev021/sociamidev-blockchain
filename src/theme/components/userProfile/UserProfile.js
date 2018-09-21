@@ -72,7 +72,8 @@ class UserProfile extends Component {
       otherTabLoading: false,
       posts: [],
       loadingPosts: true,
-      selectedUserId: ''
+      isAddButtonLoading: false,
+
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
@@ -89,7 +90,7 @@ class UserProfile extends Component {
 
     this.setState({ loadingPosts: true });
     Axios.get(postsEndpoint)
-      .then(response => 
+      .then(response =>
         this.setState({ posts: response.data, loadingPosts: false }))
       .catch(error => {});
   }
@@ -113,7 +114,7 @@ class UserProfile extends Component {
     this.setUserProfile(queryId);
   }
   fetchAllConnections() {
-    
+
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
     var currentUser;
@@ -135,7 +136,7 @@ class UserProfile extends Component {
       });
       self.setState({
         otherTabLoading: false,
-        friendList 
+        friendList
       });
     }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
@@ -673,6 +674,110 @@ class UserProfile extends Component {
     return style;
   }
 
+  renderIntroEdit() {
+    if (!this.state.myProfile) {
+      return <span></span>
+    }
+
+    return (
+      <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span>
+    )
+  }
+
+  getConnectionStatus() {
+    let statusData = {
+      status: -1,
+      label: ''
+    };
+
+    const visitedUserId = qs.parse(this.props.location.search).id;
+
+    this.state.friendList.forEach(friend => {
+      if (statusData.status === -1 && visitedUserId === friend.id) {
+        statusData = {
+          status: 1,
+          label: 'Friends'
+        };
+      }
+    })
+
+    return statusData;
+  }
+
+  onClickWithdrawConnection(visitedUserId, e) {
+    var that = this;
+    const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
+    // this.setState({ otherTabLoading: true });
+    Axios.post(url, {
+      currentUser: that.props.userProfile,
+      otherUser: {id: visitedUserId},
+      connectAction: action,
+    }).then(function(response) {
+      that.setState({ otherTabLoading: false });
+      if (response.data === 'success') {
+        that.fetchMoreSoqqlers(true);
+        that.fetchAllConnections();
+      }
+    }).catch(function(error) {
+      that.setState({ otherTabLoading: false });
+    });
+  }
+
+  onClickAddUser(isFriend, visitedUserId, e) {
+    if (visitedUserId) {
+      var that = this;
+      const url = `${ConfigMain.getBackendURL()}/addSoqqler`;
+      this.setState({ isAddButtonLoading: true });
+      Axios.post(url, {
+        uid1: that.state.userID,
+        uid2: visitedUserId,
+        reqStatus: 2,
+      }).then(function(response) {
+        console.log("agatcha!", response);
+        if (response.data === 'success') {
+          // const found = this.state.friendList.filter(el => el.id === visitedUserId);
+          // if (!found.length) this.state.friendList.push()
+          that.setState(prevState => ({
+            friendList: [ ...prevState.friendList, {id: visitedUserId} ],
+            isAddButtonLoading: false
+          }));
+        }
+      })
+      .catch(function(error) {
+      });
+    }
+
+    e.preventDefault();
+  }
+
+  renderAddButtonSpinner() {
+    return this.state.isAddButtonLoading
+        ? (<span className="fa fa-spinner fa-spin"></span>)
+        : (<span></span>)
+  }
+
+  renderAddOrFollowUserButton() {
+    if (this.state.myProfile) {
+      return (<span></span>)
+    }
+
+    const visitedUserId = qs.parse(this.props.location.search).id;
+    const isFriend = this.getConnectionStatus().status === 1;
+
+    let buttonLabel = 'Add';
+    let buttonActionFn = this.onClickAddUser.bind(this, isFriend, visitedUserId);
+    if (isFriend === true) {
+      buttonLabel = 'Withdraw';
+      buttonActionFn = this.onClickWithdrawConnection.bind(this, visitedUserId);
+    }
+
+    return (
+      <p style={{width: '60%',float: 'right'}}>
+        <a href="#" onClick={buttonActionFn} className="btn-join">{this.renderAddButtonSpinner()} { buttonLabel }</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a>
+      </p>
+    )
+  }
+
   render() {
     let traitsNameLine
     let characterNameLine
@@ -703,14 +808,24 @@ class UserProfile extends Component {
                         <div className="imgbox" onClick={this.openImageDialog.bind(this, 'avatar')}>
                           <a href="#">
                             <img src={this.state.pictureURL ? this.state.pictureURL : profilePic} />
-                            <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
+                            { this.state.myProfile ? (
+                                <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
+                              ) : (
+                                <span></span>
+                              )
+                            }
                           </a>
                         </div>
                         <h3>{this.state.firstName} {this.state.lastName}</h3>
                       </div>
                     </div>
                     <div className="col-sm-2 h-100" >
-                      <span className="middle-edit" onClick={this.openImageDialog.bind(this, 'background')}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
+                      { this.state.myProfile ? (
+                          <span className="middle-edit" onClick={this.openImageDialog.bind(this, 'background')}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
+                        ) : (
+                          <span></span>
+                        )
+                      }
                     </div>
                     {/* <div className="col-sm-5 last-right">
                       <p>Blockforce enhancer <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
@@ -719,7 +834,7 @@ class UserProfile extends Component {
                     </div> */}
                     <div className="col-sm-5 last-right" style={{width: '40%', 'margin-top': '25px'}}>
                       {this.renderProgressionLevels(UserProgressionTreeLevels)}
-                      <p style={{width: '60%',float: 'right'}}><a href="#" className="btn-join">Add</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a></p>
+                      { this.renderAddOrFollowUserButton() }
                     </div>
                     <input type="file" ref="userImageInput" accept=".jpg, .png, .jpeg, .gif" style={{ display: 'none' }} onChange={this.uploadImage.bind(this)} />
                   </div>
@@ -728,7 +843,7 @@ class UserProfile extends Component {
                   <div className="col">
                     <div className="col-box-wp">
                       <div className="intro-wp">
-                        <h3 className="col-heading">Intro <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span></h3>
+                        <h3 className="col-heading">Intro {this.renderIntroEdit()}</h3>
                         <ul>
                           <li><span className="icon"></span> {this.state.work}</li>
                           <li><span className="icon p-icon"></span> Studied at Yoobo</li>
@@ -746,6 +861,7 @@ class UserProfile extends Component {
                       :
                       <Friends handleChange={this.navigateToUserProfile} connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
                     }                   
+
                     <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />
                   </div>
                   <div className="col pull-right">
@@ -794,8 +910,8 @@ class UserProfile extends Component {
                     </div>
                   </div>
                   <div className="col-middle">
-                    <PostList 
-                      isLoading={this.state.loadingPosts} 
+                    <PostList
+                      isLoading={this.state.loadingPosts}
                       posts={this.state.posts}
                       userProfile={this.props.userProfile}
                     />

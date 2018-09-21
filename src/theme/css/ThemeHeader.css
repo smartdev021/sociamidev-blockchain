@@ -169,8 +169,6 @@
 
 .navbar-wrapper .mobile-menu {
     display: none;
-    /*background: #000;*/
-    /*background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/new-home-page-bg.jpg);*/
 }
 
 .navbar-wrapper .mobile-menu.open {
