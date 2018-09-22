@@ -692,11 +692,14 @@ class UserProfile extends Component {
     };
 
     const visitedUserId = qs.parse(this.props.location.search).id;
-    const visitorId = this.state.userID;
+    const visitorId = this.props.userProfile._id;
     if (this.state.connectionDetails && this.state.connectionDetails.length) {
       this.state.connectionDetails.forEach(connectionDetail => {
         if (visitedUserId === connectionDetail.userID1
           && connectionDetail.userID2 === visitorId) {
+            console.log("vvv", visitedUserId === connectionDetail.userID1
+              && connectionDetail.userID2 === visitorId,
+              visitedUserId, connectionDetail.userID2, connectionDetail.userID1, visitorId);
             statusData = {
               status: connectionDetail.requestStatus,
               buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
@@ -717,35 +720,43 @@ class UserProfile extends Component {
   onClickWithdrawConnection(visitedUserId, e) {
     var that = this;
     const url = `${ConfigMain.getBackendURL()}/connectSoqqler`;
-    // this.setState({ otherTabLoading: true });
+    this.setState({ isAddButtonLoading: true });
     Axios.post(url, {
       currentUser: that.props.userProfile,
-      otherUser: {id: visitedUserId},
-      connectAction: action,
+      otherUser: { id: visitedUserId },
+      connectAction: 'Withdraw',
     }).then(function(response) {
-      that.setState({ otherTabLoading: false });
       if (response.data === 'success') {
-        that.fetchMoreSoqqlers(true);
-        that.fetchAllConnections();
+        that.setState(prevState => ({
+          connectionDetails: prevState.connectionDetails
+          .filter(connectionDetail => !(connectionDetail.userID1 === that.props.userProfile._id
+            && connectionDetail.userID2 === visitedUserId)),
+          isAddButtonLoading: false
+        }));
       }
     }).catch(function(error) {
-      that.setState({ otherTabLoading: false });
     });
+
+    e.preventDefault();
   }
 
-  onClickAddUser(isFriend, visitedUserId, e) {
+  onClickAddUser(connectionStatus, visitedUserId, e) {
     if (visitedUserId) {
       var that = this;
       const url = `${ConfigMain.getBackendURL()}/addSoqqler`;
       this.setState({ isAddButtonLoading: true });
       Axios.post(url, {
-        uid1: that.state.userID,
+        uid1: that.props.userProfile._id,
         uid2: visitedUserId,
         reqStatus: 2,
       }).then(function(response) {
         if (response.data === 'success') {
           that.setState(prevState => ({
-            friendList: [ ...prevState.friendList, {id: visitedUserId} ],
+            connectionDetails: [...prevState.connectionDetails, {
+              userID1: that.props.userProfile._id,
+              userID2: visitedUserId,
+              requestStatus: 1,
+            }],
             isAddButtonLoading: false
           }));
         }
@@ -769,13 +780,12 @@ class UserProfile extends Component {
     }
 
     const visitedUserId = qs.parse(this.props.location.search).id;
-    const isFriend = this.getConnectionStatus().status === 1;
+    const connectionStatus = this.getConnectionStatus().status;
     const buttonLabel = this.getConnectionStatus().buttonLabel;
 
-    // let buttonLabel = 'Add';
-    let buttonActionFn = this.onClickAddUser.bind(this, isFriend, visitedUserId);
-    if (isFriend === true) {
-      // buttonLabel = 'Withdraw';
+    let buttonActionFn = this.onClickAddUser.bind(this, connectionStatus, visitedUserId);
+
+    if (connectionStatus > 0) {
       buttonActionFn = this.onClickWithdrawConnection.bind(this, visitedUserId);
     }
 
