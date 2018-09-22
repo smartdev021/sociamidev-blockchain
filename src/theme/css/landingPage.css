@@ -70,6 +70,49 @@ html.vertical-hidden {
     margin: 0;
     background: #ebebeb;
 }
+.landing-page-wrapper .video-box-home {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  max-width: 945px;
+  margin: auto;
+}
+.landing-page-wrapper .video-box-home .img-box{
+  width: 100%;
+  position: relative;
+  margin: auto;
+}
+.landing-page-wrapper .video-box-home .img-box img{
+  width: 100%
+}
+.landing-page-wrapper .video-box-home .btn-video {
+  border: 2px solid rgb(150, 0, 162);
+  background-image: -moz-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  box-shadow: 0px 0px 15px 0px rgba(207, 0, 254, 0.36);
+  width: 168px;
+  height: 52px;
+  display: inline-block;
+  margin-top: 30px;
+  bottom: 0;
+  right: 0;
+  line-height: 52px;
+  color: #d01fe5;
+  background: #191919;
+  border-radius: 50px;
+  text-decoration: none;
+}
+.landing-page-wrapper .video-box-home .btn-video span {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+.landing-page-wrapper .video-box-home .btn-video span img {
+  width: 100%;
+}
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper main {
@@ -105,6 +148,10 @@ html.vertical-hidden {
     color: #fff;
     text-align: center;
     background: #000;
+}
+.landing-page-wrapper .about-wrapper.second-section-bg{
+    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/second-section-bg.png") #0c0c0c;
+    background-size: 100%;
 }
 
 @media screen and (max-width: 750px) {
@@ -193,6 +240,18 @@ html.vertical-hidden {
     max-width: 820px;
     margin: 1em auto;
     font: normal 18px "MyriadPro Regular";
+    position: relative;
+}
+.landing-page-wrapper .about-wrapper h3:after{
+  width: 50px;
+  height: 3px;
+  background: #0081e9;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  content: '';
 }
 
 @media screen and (max-width: 750px) {
@@ -224,6 +283,37 @@ html.vertical-hidden {
     top: 50%;
     left: 300px;
     transform: translateY(-50%) skew(-37deg);
+}
+.landing-page-wrapper .banner-wrapper div.banner-content {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-45%, -50%) skew(0deg);
+  text-align: center;
+}
+.landing-page-wrapper .banner-wrapper div.banner-content h2{
+  font-size: 72px;
+  color: #ffd500;
+}
+.landing-page-wrapper .banner-wrapper div.banner-content p {
+  font: normal 30px "MyriadPro Semibold";
+}
+.landing-page-wrapper .banner-wrapper div.banner-content a.btn-bottom {
+  display: inline-block;
+  color: #fff !important;
+  font-size: 14px !important;
+}
+.landing-page-wrapper .banner-wrapper div.banner-content .btn-top {
+  background-image: -moz-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  box-shadow: 0px 0px 15px 0px rgba(255, 0, 254, 0.44),0px 0px 15px 0px rgba(207, 0, 254, 0.25),0px 0px 15px 0px rgba(207, 0, 254, 0.36);
+  width: 199px;
+  height: 69px;
+  line-height: 69px;
+  color: #fff;
+  border-radius: 50px;
+  margin: 25px 0;
 }
 
 @media screen and (max-width: 750px) {
@@ -416,6 +506,23 @@ html.vertical-hidden {
     border: 2px solid #2c82df;
     transform: skew(-38deg);
 }
+.landing-page-wrapper .footer > div.new-subscribe {
+    display: inline-block;
+    padding: 0px 20px;
+    transform: skew(0deg);
+    border: 2px solid rgb(155, 1, 170);
+    box-shadow: 0px 0px 15px 0px rgba(207, 0, 254, 0.36);
+    background: #191919;
+    border-radius: 50px;
+    min-width: 204;
+    height: 42px;
+    line-height: 36px;
+}
+.landing-page-wrapper .footer input.mail.new-text{
+  transform: skew(0deg);
+  height: 100%;
+  max-width: 100%;
+}
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .footer > div {
@@ -433,7 +540,21 @@ html.vertical-hidden {
     outline: 0;
     transform: skew(-38deg);
 }
-
+.landing-page-wrapper .footer button.subscribe.new-btn {
+  background-image: -moz-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  box-shadow: 0px 0px 15px 0px rgba(255, 0, 254, 0.44),0px 0px 15px 0px rgba(207, 0, 254, 0.25),0px 0px 15px 0px rgba(207, 0, 254, 0.36);
+  width: 132px;
+  height: 43px;
+  transform: skew(0deg);
+  padding: 0;
+  border-radius: 50px;
+  margin-left: 15px;
+}
+.landing-page-wrapper .footer button.subscribe.new-btn p{
+  transform: skew(0deg);
+}
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .footer button {
         padding: 7px 22px 6px;
@@ -496,15 +617,95 @@ html.vertical-hidden {
 }
 
 .landing-page-wrapper .footer .privacy-list li a {
-    color: #fff;
+    color: #c3c3c3;
     text-decoration: none;
     outline: 0;
+    font-size: 16px;
 }
 
 .landing-page-wrapper .footer .privacy-list li::after {
     margin: 0 2px 0 6px;
 }
+.header-new-link{
+  min-width: 40%;
+  text-align: right;
+}
+.right-new-link{
+  transform: skew(37deg);
+  display: inline-block;
+  position: relative;
+  text-align: right;
+  margin-right: 15px;
+}
+.right-new-link .right-dropdown-link{
+  transform: skew(0deg);
+  position: absolute;
+  padding: 10px;
+  border: 1px solid #7d018a;
+  background: #0a0a0a;
+  width: 85px;
+  text-align: left;
+  top: 35px;
+  right: -35px;
+}
+.landing-page-wrapper .header button.right-new-signup {
+    background: #191919 !important;
+    border: 1px solid #2c82df;
+    border-radius: 50px;
+    transform: skew(37deg);
+}
+.landing-page-wrapper .header button.right-new-signup p{
+  transform: skew(0deg);
+  color: #2c82df;
+}
+.right-new-link .right-dropdown-link:after, .right-new-link .right-dropdown-link:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
 
+.right-new-link .right-dropdown-link:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #0a0a0a;
+  border-width: 7px;
+  margin-left: -7px;
+}
+.right-new-link .right-dropdown-link:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-bottom-color: #9200a7;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+
+.right-new-link .right-dropdown-link li{
+  padding: 3px 0;
+}
+.right-new-link .right-dropdown-link li a{
+  color: #fff;
+}
+.right-new-link .right-dropdown-link li a:hover{
+  color: #9b01aa;
+}
+.right-new-link .dd-new-right {
+    color: #9b01aa;
+    font-size: 16px;
+    text-decoration: none;
+    margin-left: 5rem;
+}
+.right-new-link .dd-new-right:hover{
+  color: #fff;
+}
+.right-new-link .dd-new-right i{
+  font-size: 20px;
+  position: relative;
+  top: 2px;
+}
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .footer .privacy-list li {
         font-size: 13px;
@@ -816,7 +1017,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .logo {
-        padding: 7px 35px 4px 42px;
+        padding: 6px 25px 5px 34px !important
     }
 }
 
@@ -966,7 +1167,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .our-blog h3 a {
-    color: #fff;
+    color: #ffd500;
 }
 
 @media screen and (max-width: 750px) {
@@ -1016,7 +1217,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 .landing-page-wrapper .our-blog .one-news h3 {
     margin: 7px 0;
-    font: normal 28px "MyriadPro Bold";
+    font: normal 28px "MyriadPro";
 }
 
 .landing-page-wrapper .our-blog .one-news img {
@@ -1079,7 +1280,8 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 .landing-page-wrapper .our-blog .two-news h3 {
     margin: 5px 0;
-    font: normal 24px "MyriadPro Bold";
+    font: normal 23px "MyriadPro";
+    line-height: 23px;
 }
 
 @media screen and (max-width: 750px) {
@@ -1103,7 +1305,17 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-page-wrapper .our-blog .bottom-news {
     margin-top: 7px;
 }
-
+.landing-page-wrapper .our-blog .bottom-news, .landing-page-wrapper .our-blog .top-news, .landing-page-wrapper .our-blog .one-news{
+  position: relative;
+}
+.landing-page-wrapper .our-blog .bottom-news .overlay, .landing-page-wrapper .our-blog .top-news .overlay, .landing-page-wrapper .our-blog .one-news .overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+}
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .our-blog .bottom-news {
         margin-top: 22px;
@@ -1120,8 +1332,24 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-page-wrapper .our-blog p {
     margin: 0;
     font: normal 18px "MyriadPro Semibold";
+    padding-right: 10px;
 }
-
+.landing-page-wrapper .our-blog .btn {
+  border: 2px solid rgb(150, 0, 162);
+  background-image: -moz-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(50,0,55) 0%, rgb(164,0,178) 100%);
+  box-shadow: 0px 0px 15px 0px rgba(207, 0, 254, 0.36);
+  width: 168px;
+  height: 52px;
+  display: inline-block;
+  line-height: 52px;
+  margin-top: 2rem;
+  border-radius: 50px;
+  background: #ebebeb;
+  color: #d01fe5;
+  text-align: center;
+}
 .landing-page-wrapper .our-blog p.date {
     font-family: "MyriadPro Regular";
 }
@@ -1156,7 +1384,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .soqqle-info {
-    margin: 87px 0;
+    margin: 87px 0 15px;
     text-align: center;
 }
 
@@ -1314,6 +1542,7 @@ span.landing-email-input-textfield-container input[type="email"] {
     padding: 40px 0;
     font: normal 40px "MyriadPro Semibold";
     color: #fff;
+    margin-top: 0;
 }
 
 @media screen and (max-width: 750px) {
@@ -1366,69 +1595,108 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .talk-about-us section {
-    max-width: 600px;
-    padding: 30px 10px 70px;
-    margin: 0 auto;
-    background: #fff;
-    box-shadow: 0 0 12px -1px #45769a;
+  max-width: 600px;
+  padding: 30px 10px 70px;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0px 13px 32px 0px rgba(0, 145, 250, 0.44);
+  border: 2px solid #0091fa;
+  min-height: 256px;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section {
-        max-width: 205px;
+        max-width: 85%;
         padding-bottom: 24px;
+        margin: 70px auto 30px;
     }
 }
 
 .landing-page-wrapper .talk-about-us section > div {
-    display: inline-block;
-    margin: 15px 30px 0 0;
-    vertical-align: top;
+  display: inline-block;
+  margin: auto;
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  width: 64px;
+  height: 64px;
+  border: 2px solid #0091fa;
+  border-radius: 50%;
+  z-index: 9;
+  overflow: hidden;
 }
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .talk-about-us section > div {
-        display: block;
-        margin: 0;
-    }
-}
-
 .landing-page-wrapper .talk-about-us section.main-section {
     position: relative;
-    z-index: 3;
+    z-index: 99;
+    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/testimonial-bg.png");
 }
-
+.h-auto{height: auto !important;}
+.f-w{max-width: 100% !important}
+.pt-12{padding-top: 12px !important;}
 .landing-page-wrapper .talk-about-us section.background-section-1,
 .landing-page-wrapper .talk-about-us section.background-section-2 {
     position: absolute;
-    top: 130px;
+    top: 150px;
 }
-
+@media (max-width: 991px) and (min-width: 768px){
+  .landing-page-wrapper .banner-wrapper div.banner-content p {
+    font: normal 20px "MyriadPro Semibold";
+  }
+  .landing-page-wrapper .banner-wrapper div.banner-content h2 {
+    font-size: 36px;
+    margin-top: 135px;
+  }
+  .landing-page-wrapper .soqqle-info section{
+    margin-bottom: 30px;
+  }
+  .right-new-link .dd-new-right{
+      margin-left: 1rem;
+  }
+  .landing-page-wrapper .header{
+    padding: 0 50px 0 15px;
+  }
+  .landing-page-wrapper .logo{
+    padding: 15px 50px 10px 50px 
+  }
+  .landing-page-wrapper .header .landing-email-input-textfield-container{
+    width: 108px;
+  }
+  .landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]{
+      width: 100%;
+  }
+  .landing-page-wrapper .work-explanation .images-wrapper{
+    float: none !important;
+    margin: auto !important;
+  }
+  #myCarousel{
+      text-align: center;
+  }
+  .landing-page-wrapper .work-explanation .select-house .description{
+      text-align: left;
+  }
+  .landing-page-wrapper .carousel-indicators {
+       width: 60% !important;
+       bottom: -60px;
+    }
+}
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-1 h3,
     .landing-page-wrapper .talk-about-us section.background-section-2 h3 {
         margin: 10px auto 4px;
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 
 .landing-page-wrapper .talk-about-us section.background-section-1 p,
 .landing-page-wrapper .talk-about-us section.background-section-2 p {
-    font-size: 13.73px;
+    font-size: 16px;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-1 p,
     .landing-page-wrapper .talk-about-us section.background-section-2 p {
-        font-size: 10px;
-    }
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .talk-about-us section.background-section-1 .avatar,
-    .landing-page-wrapper .talk-about-us section.background-section-2 .avatar {
-        width: 33px;
-        margin: 4px auto 13px;
+        font-size: 12px;
     }
 }
 
@@ -1448,15 +1716,19 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .talk-about-us section.background-section-1 {
-    left: 215px;
-    padding: 15px 30px 53px;
+  left: 215px;
+  padding: 15px 30px 28px;
+  box-shadow: none;
+  min-height: auto;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-1 {
-        top: 83px;
-        left: -130px;
+        top: 0px;
+        left: auto;
         padding-bottom: 19px;
+        position: relative;
+        max-width: 85%;
     }
 }
 
@@ -1466,30 +1738,36 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .talk-about-us section.background-section-2 {
-    right: 209px;
-    padding: 5px 29px 46px;
+  right: 209px;
+  padding: 15px 30px 28px;;
+  box-shadow: none;
+  min-height: auto;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-2 {
-        top: 83px;
-        right: -130px;
+        top: auto;
+        right: auto;
         padding: 15px 30px 19px;
+        position: relative;
     }
 }
 
 .landing-page-wrapper .talk-about-us article {
     display: inline-block;
     max-width: 360px;
-    text-align: left;
+    text-align: center;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us article {
         display: block;
-        height: 155px;
+        height: 120px;
         margin: 0 auto;
         text-align: center;
+    }
+    .landing-page-wrapper .talk-about-us section{
+        min-height: inherit;
     }
 }
 
@@ -1507,10 +1785,16 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .talk-about-us h3 {
-    margin: 28px 0 11px;
-    font: normal 24px "MyriadPro Bold";
+  margin: 8px 0 10px;
+  font: normal 18px "MyriadPro Bold";
+  text-transform: uppercase;
 }
-
+.landing-page-wrapper .talk-about-us h4 {
+  color: #d01fe5;
+  font: normal 14px "MyriadPro Bold";
+  text-transform: uppercase;
+  margin: 30px 0 0px;
+}
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us h3 {
         margin: 15px 0 4px;
@@ -1520,8 +1804,8 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 .landing-page-wrapper .talk-about-us p {
     margin: 0;
-    font: normal 18px "MyriadPro Regular";
-    color: #777777;
+    font: normal 16px "MyriadPro Regular";
+    color: #333;
 }
 
 @media screen and (max-width: 750px) {
@@ -1536,18 +1820,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .talk-about-us img.avatar {
-    padding: 5px;
-    margin: 10px 10px 0;
-    border: 4px solid #2080e5;
-    border-radius: 50%;
-}
-
-@media screen and (max-width: 750px) {
-    .landing-page-wrapper .talk-about-us img.avatar {
-        display: block;
-        width: 55px;
-        margin: -9px auto 0;
-    }
+  width: 100%;
 }
 
 .landing-page-wrapper .talk-about-us .twitter {
@@ -1580,16 +1853,64 @@ span.landing-email-input-textfield-container input[type="email"] {
     display: inline-block;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.6);
 }
 
 .landing-page-wrapper .talk-about-us footer {
-    margin: 22px 0;
+  margin: 0;
+  top: -65px;
+  position: relative;
+  z-index: 99;
+}
+.landing-page-wrapper .carousel-control.left, .landing-page-wrapper .carousel-control.right{
+  background: transparent;
+}
+.landing-page-wrapper .carousel-control {
+  width: 35px;
+  height: 35px;
+  margin: auto;
+  font-size: 36px;
+}
+.landing-page-wrapper .left.carousel-control{
+  left: 10%;
+}
+.landing-page-wrapper  .carousel-indicators{
+  width: 100%;
+}
+.landing-page-wrapper .carousel-indicators li {
+    background-color: #a5d1f0;
+    border: 1px solid #a5d1f0;
+    margin: 5px;
+}
+.landing-page-wrapper .carousel-indicators li.active {
+    background-color: #0091fa;
+    border: 1px solid #0091fa;
+    width: 10px;
+    height: 10px;
+}
+.landing-page-wrapper .right.carousel-control{
+  right: 10%;
+}
+.landing-page-wrapper .work-explanation a {
+  color: #9b01aa !important;
+  text-decoration: none;
+  text-shadow: none !important;
+}
+.landing-page-wrapper .talk-about-us footer a {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background: #addbfc;
+  border-radius: 50%;
+  margin: 0 7px;
+}
+.landing-page-wrapper .talk-about-us footer a.active{
+  background: #0091fa;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us footer {
         margin: 26px 0;
+        display: none;
     }
 }
 
@@ -1635,7 +1956,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .work-explanation {
-        padding: 0;
+        padding: 0 0 60px;
     }
 }
 
@@ -1684,7 +2005,10 @@ span.landing-email-input-textfield-container input[type="email"] {
     position: relative;
     display: inline-block;
 }
-
+.landing-page-wrapper .play-the-game-video{
+    width:454px;
+    height:320px;
+}
 .landing-page-wrapper .work-explanation .background-img-1,
 .landing-page-wrapper .work-explanation .background-img-2 {
     position: absolute;
@@ -1732,7 +2056,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
 
 .landing-page-wrapper .work-explanation h3 {
-    margin: 23px 0 21px;
+    margin: 8px 0 21px;
     font: normal 24px "MyriadPro Semibold";
 }
 
@@ -1799,7 +2123,7 @@ span.landing-email-input-textfield-container input[type="email"] {
         width: 100%;
         max-width: 228px;
         padding: 0;
-        margin: 43px auto 0;
+        margin: 15px auto 0;
         text-align: left;
     }
 }
@@ -2088,4 +2412,47 @@ span.landing-email-input-textfield-container input[type="email"] {
         left: -31px;
     }
 }
-/*# sourceMappingURL=style.css.map */
+@media (max-width: 767px){
+  .landing-page-wrapper .banner-wrapper div.banner-content p {
+    font: normal 16px "MyriadPro Semibold";
+  }
+  .landing-page-wrapper .play-the-game-video {
+    width: 215px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .landing-page-wrapper .banner-wrapper div.banner-content h2{
+    font-size: 30px;
+  }
+  .landing-page-wrapper .carousel-indicators{
+    left: 0;
+    margin-left: 0;
+    bottom: -15px;
+  }
+  .landing-page-wrapper .work-explanation a{
+    margin-bottom: 25px;
+  }
+  .landing-page-wrapper .left.carousel-control, .landing-page-wrapper .right.carousel-control{
+    font-size: 36px;
+    top: 100px;
+  }
+  .landing-page-wrapper .left.carousel-control{
+      left: -9px;
+  }
+  .landing-page-wrapper .right.carousel-control{
+      right: 8%;
+  }
+  .landing-page-wrapper .work-explanation .select-house .images-wrapper{
+    margin-left: 15px;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+  }
+  .landing-page-wrapper .footer button.subscribe.new-btn{
+    margin: 5px 0;
+  }
+  .header-new-link{
+    min-width: inherit;
+  }
+  .right-new-link{display: none;}
+}

@@ -62,9 +62,7 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-//
-
-const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -82,24 +80,28 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
         <p>Markets</p>
       </button>
       {
-        process.env.SOQQLE_ENV !== 'production' && 
-        (!isEmailInputVisible
-          ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
-            <p>Subscribe</p>
-          </button>
-          : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
+        process.env.SOQQLE_ENV !== 'production' &&
+        (
+          !isEmailInputVisible ?
+          <div className="right-new-link">
+            <a className="dd-new-right" onClick={onMoreMenuToggle}>More <i className="fa fa-angle-down"></i></a>
+            {
+              isMoreMenuVisible &&
+              <ul className="right-dropdown-link">
+                <li><a href="#">Enterprice</a></li>
+                <li><a onClick={onEmailInputShow}>Subscribe</a></li>
+              </ul>
+            }
+          </div>
+          :
+          <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
         )
       }
-      
-      {/* {!isEmailInputVisible
-        ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
-          <p>Subscribe</p>
-        </button>
-        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />} */}
+
       {
         process.env.SOQQLE_ENV !== 'production' && 
-        <button type="button" className="sign-up-button">
-          <p>Enterprise sign up</p>
+        <button type="button" className="sign-up-button right-new-signup" onClick={() => openSignUpForm()}>
+          <p>Sign up</p>
         </button>
       }
     </div>
@@ -109,7 +111,7 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
+    this.state = { isOpen: false, isMoreMenuVisible: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
 
     this.toggle = this.toggle.bind(this);
   }
@@ -125,9 +127,14 @@ class LandingPage extends Component {
     this.setState({ isEmailInputVisible: show });
   }
 
+  handleMoreMenuToggle() {
+    this.setState({ isMoreMenuVisible: !this.state.isMoreMenuVisible });
+  }
+
   handleEmailInputSubmit(value) {
     if (value) {
       const body = { groupId: 9716454, name: "n/a", email: value };
+      mixpanel.track('Sign Up Beta - submit')
       Axios.post(`${ConfigMain.getBackendURL()}/addSubscriberToGroup`, body)
         .then((response) => {
         })
@@ -175,7 +182,7 @@ class LandingPage extends Component {
   }
 
   componentWillMount() {
-    mixpanel.track("Enter Landing page");
+    mixpanel.track("Enter Landing");
   }
 
   render() {
@@ -186,7 +193,11 @@ class LandingPage extends Component {
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <Logo />
-          <Header openMenu={this.toggle}
+          <Header
+            openMenu={this.toggle}
+            openSignUpForm={this.props.openSignUpForm}
+            onMoreMenuToggle={() => this.handleMoreMenuToggle()}
+            isMoreMenuVisible={this.state.isMoreMenuVisible}
             onEmailInputShow={() => this.handleEmailInputShow(true)}
             onEmailInputHide={() => this.handleEmailInputShow(false)}
             onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
@@ -198,6 +209,8 @@ class LandingPage extends Component {
         <Footer localeData={this.props.localeData}/>
         <MobileMenu
           isOpen={this.state.isOpen} closeMenu={this.toggle}
+          onMoreMenuToggle={() => this.handleMoreMenuToggle()}
+          isMoreMenuVisible={this.state.isMoreMenuVisible}
           onEmailInputShow={() => this.handleEmailInputShow(true)}
           onEmailInputHide={() => this.handleEmailInputShow(false)}
           onEmailInputSubmit={(event) => { this.handleEmailInputSubmit(event) }}
