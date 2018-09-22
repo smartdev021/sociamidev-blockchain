@@ -1017,7 +1017,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .logo {
-        padding: 7px 35px 4px 42px;
+        padding: 6px 25px 5px 34px !important
     }
 }
 
@@ -1648,6 +1648,35 @@ span.landing-email-input-textfield-container input[type="email"] {
   .landing-page-wrapper .soqqle-info section{
     margin-bottom: 30px;
   }
+  .right-new-link .dd-new-right{
+      margin-left: 1rem;
+  }
+  .landing-page-wrapper .header{
+    padding: 0 50px 0 15px;
+  }
+  .landing-page-wrapper .logo{
+    padding: 15px 50px 10px 50px 
+  }
+  .landing-page-wrapper .header .landing-email-input-textfield-container{
+    width: 108px;
+  }
+  .landing-page-wrapper .header .landing-email-input-textfield-container input[type="email"]{
+      width: 100%;
+  }
+  .landing-page-wrapper .work-explanation .images-wrapper{
+    float: none !important;
+    margin: auto !important;
+  }
+  #myCarousel{
+      text-align: center;
+  }
+  .landing-page-wrapper .work-explanation .select-house .description{
+      text-align: left;
+  }
+  .landing-page-wrapper .carousel-indicators {
+       width: 60% !important;
+       bottom: -60px;
+    }
 }
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-1 h3,
@@ -1967,7 +1996,10 @@ span.landing-email-input-textfield-container input[type="email"] {
     position: relative;
     display: inline-block;
 }
-
+.landing-page-wrapper .play-the-game-video{
+    width:454px;
+    height:320px;
+}
 .landing-page-wrapper .work-explanation .background-img-1,
 .landing-page-wrapper .work-explanation .background-img-2 {
     position: absolute;
@@ -2374,6 +2406,11 @@ span.landing-email-input-textfield-container input[type="email"] {
 @media (max-width: 767px){
   .landing-page-wrapper .banner-wrapper div.banner-content p {
     font: normal 16px "MyriadPro Semibold";
+  }
+  .landing-page-wrapper .play-the-game-video {
+    width: 215px;
+    height: auto;
+    margin: 0 auto;
   }
   .landing-page-wrapper .banner-wrapper div.banner-content h2{
     font-size: 30px;

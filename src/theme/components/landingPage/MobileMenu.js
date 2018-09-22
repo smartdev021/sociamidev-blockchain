@@ -27,6 +27,7 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
           <li>The games</li>
           <li>Forums</li>
           <li>Markets</li>
+          <li>Enterprice</li>
         </ul>
         <footer>
           <div className="mobile-menu-email-subscribe-container">
