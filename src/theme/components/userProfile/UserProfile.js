@@ -184,6 +184,7 @@ class UserProfile extends Component {
             hangout: _.size(_.get(response, 'data.hangouts')),
             progressionTrees: _.get(response, 'data.progressionTrees'),
             progressionTreeLevels: _.get(response, 'data.profile.progressionTreeLevels'),
+            connectionDetails: _.get(response, 'data.connectionDetails'),
             isProfileLoading: false,
           });
         })
@@ -670,19 +671,28 @@ class UserProfile extends Component {
   getConnectionStatus() {
     let statusData = {
       status: -1,
-      label: ''
+      buttonLabel: 'Add'
     };
 
     const visitedUserId = qs.parse(this.props.location.search).id;
-
-    this.state.friendList.forEach(friend => {
-      if (statusData.status === -1 && visitedUserId === friend.id) {
-        statusData = {
-          status: 1,
-          label: 'Friends'
-        };
-      }
-    })
+    const visitorId = this.state.userID;
+    if (this.state.connectionDetails && this.state.connectionDetails.length) {
+      this.state.connectionDetails.forEach(connectionDetail => {
+        if (visitedUserId === connectionDetail.userID1
+          && connectionDetail.userID2 === visitorId) {
+            statusData = {
+              status: connectionDetail.requestStatus,
+              buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
+            };
+        } else if (visitedUserId === connectionDetail.userID2
+          && connectionDetail.userID1 === visitorId) {
+            statusData = {
+              status: connectionDetail.requestStatus,
+              buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
+            };
+        }
+      })
+    }
 
     return statusData;
   }
@@ -716,10 +726,7 @@ class UserProfile extends Component {
         uid2: visitedUserId,
         reqStatus: 2,
       }).then(function(response) {
-        console.log("agatcha!", response);
         if (response.data === 'success') {
-          // const found = this.state.friendList.filter(el => el.id === visitedUserId);
-          // if (!found.length) this.state.friendList.push()
           that.setState(prevState => ({
             friendList: [ ...prevState.friendList, {id: visitedUserId} ],
             isAddButtonLoading: false
@@ -746,11 +753,12 @@ class UserProfile extends Component {
 
     const visitedUserId = qs.parse(this.props.location.search).id;
     const isFriend = this.getConnectionStatus().status === 1;
+    const buttonLabel = this.getConnectionStatus().buttonLabel;
 
-    let buttonLabel = 'Add';
+    // let buttonLabel = 'Add';
     let buttonActionFn = this.onClickAddUser.bind(this, isFriend, visitedUserId);
     if (isFriend === true) {
-      buttonLabel = 'Withdraw';
+      // buttonLabel = 'Withdraw';
       buttonActionFn = this.onClickWithdrawConnection.bind(this, visitedUserId);
     }
 
