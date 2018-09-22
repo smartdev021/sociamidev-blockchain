@@ -26,6 +26,7 @@ module.exports = merge(common, build, {
     new HtmlWebpackPlugin({
       template: Path.join(__dirname, 'src/index.ejs'),
       mp_token: '"d7a0113338adc33892f32d3cd488d02a"',
+      title: 'Soqqle',
       inject: 'body',
     }),
   ],
