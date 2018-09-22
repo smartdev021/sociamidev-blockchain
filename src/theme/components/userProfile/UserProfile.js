@@ -86,19 +86,28 @@ class UserProfile extends Component {
   }
 
   fetchPosts() {
-    const postsEndpoint = `${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/posts`;
+    if(this.state.userID) {
+      const postsEndpoint = `${ConfigMain.getBackendURL()}/${this.state.userID}/posts`;
 
-    this.setState({ loadingPosts: true });
-    Axios.get(postsEndpoint)
-      .then(response =>
-        this.setState({ posts: response.data, loadingPosts: false }))
-      .catch(error => {});
+      this.setState({ loadingPosts: true });
+      Axios.get(postsEndpoint)
+        .then(response =>
+          this.setState({ posts: response.data, loadingPosts: false }))
+        .catch(error => {});
+    }
   }
 
   componentDidMount() {
     this.fetchPosts();
     this.fetchAllConnections();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.userID != prevState.userID) {
+      this.fetchPosts();
+    }
+  }
+
   componentWillMount() {
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();

@@ -2433,7 +2433,14 @@ span.landing-email-input-textfield-container input[type="email"] {
     margin-bottom: 25px;
   }
   .landing-page-wrapper .left.carousel-control, .landing-page-wrapper .right.carousel-control{
-    display: none;
+    font-size: 36px;
+    top: 100px;
+  }
+  .landing-page-wrapper .left.carousel-control{
+      left: -9px;
+  }
+  .landing-page-wrapper .right.carousel-control{
+      right: 8%;
   }
   .landing-page-wrapper .work-explanation .select-house .images-wrapper{
     margin-left: 15px;

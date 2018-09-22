@@ -19,6 +19,8 @@ import ChatMessages from './ChatMessages';
 import ChatWindowInput from './ChatWindowInput';
 import ChatWidget from './ChatWidget';
 
+import ChatHolder from '../ChatPage/ChatHolder';
+
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = '';
 
@@ -92,6 +94,7 @@ class ChatApp extends React.Component {
       userChatHistoryLoaded: false,
       chatButtonToggle: false,
       chatPanelToggle: false,
+      isChatHolder:false,
     };
   }
 
@@ -313,6 +316,13 @@ class ChatApp extends React.Component {
     this.setState(copy);
   }
 
+  toggleChatHolder() {
+    let copy = Object.assign({}, this.state, {
+      isChatHolder: !this.state.isChatHolder,
+    });
+    this.setState(copy);
+  }
+
   render() {
     const chatWindowClass = this.state.chatWindowOpen == 1 ? 'chatWindowShow' : 'chatWindowHide';
     const divChatClasses = `chatapp-chatContainer ${chatWindowClass}`;
@@ -325,6 +335,7 @@ class ChatApp extends React.Component {
     const divMainClasses = `chatapp-main-container ${chatMainClass}`;
     //
     const chatButtonClass = this.state.chatButtonToggle == true ? 'chat-btn active' : 'chat-btn';
+    const chatHolderButtonClass = this.state.isChatHolder == true ? 'chat-btn active' : 'chat-btn';
     const chatPanelClass =
       this.state.chatButtonToggle == true && this.state.chatPanelToggle == true
         ? 'chat-panel active'
@@ -388,6 +399,10 @@ class ChatApp extends React.Component {
     }
     return (
       <div>
+        <ChatHolder
+          isChatHolder={this.state.isChatHolder}
+          toggleChatHolder={()=>this.toggleChatHolder()}
+        />
         {/* <div className={divMainClasses} style={{'display':'none'}}>
           <div className="chatapp-container">
             <div className="chatapp-userContainer" id="userContainer">
@@ -409,6 +424,10 @@ class ChatApp extends React.Component {
           </div>
         </div> */}
         <div className="popout">
+          <div className={`${chatHolderButtonClass} new-chat-btn`} onClick={() => this.toggleChatHolder()}>
+            <i className="fa fa-comments" />
+            <span className="chat-label">15</span>
+          </div>
           <div className={chatButtonClass} onClick={() => this.toggleChatWidgetButton()}>
             <i className="fa fa-comments" />
             <span className="chat-label">15</span>

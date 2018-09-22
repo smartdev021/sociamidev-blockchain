@@ -2,6 +2,8 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const build = require('./webpack.build');
 const Webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+let Path = require('path');
 
 module.exports = merge(common, build, {
   plugins: [
@@ -12,6 +14,7 @@ module.exports = merge(common, build, {
       NODE_ENV: 'production',
       SOQQLE_ENV: 'production',
     }),
+
     new Webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false,
@@ -20,6 +23,12 @@ module.exports = merge(common, build, {
         comments: false,
       },
       sourceMap: true,
+    }),
+    new HtmlWebpackPlugin({
+      template: Path.join(__dirname, 'src/index.ejs'),
+      title: 'Soqqle',
+      mp_token: '"22ee903bd6b51fbaa669e7c25821ad16"',
+      inject: 'body',
     }),
   ],
 });
