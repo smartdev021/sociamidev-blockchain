@@ -73,9 +73,16 @@ class UserProfile extends Component {
       posts: [],
       loadingPosts: true,
       isAddButtonLoading: false,
+
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
-     this.fetchPosts = this.fetchPosts.bind(this);
+    this.fetchPosts = this.fetchPosts.bind(this);
+    this.navigateToUserProfile = this.navigateToUserProfile.bind(this);
+    var self = this;
+    this.props.history.listen((location, action) => {
+      self.props.location.search = location.search;
+      this.fetchAllConnections();
+    });
   }
 
   fetchPosts() {
@@ -90,13 +97,13 @@ class UserProfile extends Component {
 
   componentDidMount() {
     this.fetchPosts();
+    this.fetchAllConnections();
   }
-
   componentWillMount() {
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();
     this.props.fetchAchievements();
-    this.fetchAllConnections();
+   
     this.updatePromoCodesUsed();
     this.setUserProfile(qs.parse(this.props.location.search).id);
     this.setUserAchievement(qs.parse(this.props.location.search).id)
@@ -110,10 +117,18 @@ class UserProfile extends Component {
 
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
+    var currentUser;
+
+    if(self.props.location.search === ''){
+      currentUser =  self.props.currentUserId;
+    } else{
+      var id = self.props.location.search;
+      currentUser = id.substr(id.indexOf('=')+1);
+    }
     this.setState({ otherTabLoading: true });
     Axios.get(connectionsUrl, {
       params: {
-        currentUser: self.props.currentUserId,
+        currentUser: currentUser,
       },
     }).then(function(response) {
        const friendList = response.data.filter(function(fList) {
@@ -125,7 +140,9 @@ class UserProfile extends Component {
       });
     }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
-
+  navigateToUserProfile(id) {
+    return this.props.history.push(`/userprofile?id=${id}`);
+  }
   openImageDialog(type, evt) {
     evt.stopPropagation();
     if (this.state.myProfile === true) {
@@ -184,6 +201,7 @@ class UserProfile extends Component {
             hangout: _.size(_.get(response, 'data.hangouts')),
             progressionTrees: _.get(response, 'data.progressionTrees'),
             progressionTreeLevels: _.get(response, 'data.profile.progressionTreeLevels'),
+            connectionDetails: _.get(response, 'data.connectionDetails'),
             isProfileLoading: false,
           });
         })
@@ -670,19 +688,28 @@ class UserProfile extends Component {
   getConnectionStatus() {
     let statusData = {
       status: -1,
-      label: ''
+      buttonLabel: 'Add'
     };
 
     const visitedUserId = qs.parse(this.props.location.search).id;
-
-    this.state.friendList.forEach(friend => {
-      if (statusData.status === -1 && visitedUserId === friend.id) {
-        statusData = {
-          status: 1,
-          label: 'Friends'
-        };
-      }
-    })
+    const visitorId = this.state.userID;
+    if (this.state.connectionDetails && this.state.connectionDetails.length) {
+      this.state.connectionDetails.forEach(connectionDetail => {
+        if (visitedUserId === connectionDetail.userID1
+          && connectionDetail.userID2 === visitorId) {
+            statusData = {
+              status: connectionDetail.requestStatus,
+              buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
+            };
+        } else if (visitedUserId === connectionDetail.userID2
+          && connectionDetail.userID1 === visitorId) {
+            statusData = {
+              status: connectionDetail.requestStatus,
+              buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
+            };
+        }
+      })
+    }
 
     return statusData;
   }
@@ -716,10 +743,7 @@ class UserProfile extends Component {
         uid2: visitedUserId,
         reqStatus: 2,
       }).then(function(response) {
-        console.log("agatcha!", response);
         if (response.data === 'success') {
-          // const found = this.state.friendList.filter(el => el.id === visitedUserId);
-          // if (!found.length) this.state.friendList.push()
           that.setState(prevState => ({
             friendList: [ ...prevState.friendList, {id: visitedUserId} ],
             isAddButtonLoading: false
@@ -746,11 +770,12 @@ class UserProfile extends Component {
 
     const visitedUserId = qs.parse(this.props.location.search).id;
     const isFriend = this.getConnectionStatus().status === 1;
+    const buttonLabel = this.getConnectionStatus().buttonLabel;
 
-    let buttonLabel = 'Add';
+    // let buttonLabel = 'Add';
     let buttonActionFn = this.onClickAddUser.bind(this, isFriend, visitedUserId);
     if (isFriend === true) {
-      buttonLabel = 'Withdraw';
+      // buttonLabel = 'Withdraw';
       buttonActionFn = this.onClickWithdrawConnection.bind(this, visitedUserId);
     }
 
@@ -842,8 +867,9 @@ class UserProfile extends Component {
                       ?
                       <Spinner shown />
                       :
-                      <Friends connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
-                    }
+                      <Friends handleChange={this.navigateToUserProfile} connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
+                    }                   
+
                     <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />
                   </div>
                   <div className="col pull-right">
