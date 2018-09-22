@@ -73,9 +73,16 @@ class UserProfile extends Component {
       posts: [],
       loadingPosts: true,
       isAddButtonLoading: false,
+
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
-     this.fetchPosts = this.fetchPosts.bind(this);
+    this.fetchPosts = this.fetchPosts.bind(this);
+    this.navigateToUserProfile = this.navigateToUserProfile.bind(this);
+    var self = this;
+    this.props.history.listen((location, action) => {
+      self.props.location.search = location.search;
+      this.fetchAllConnections();
+    });
   }
 
   fetchPosts() {
@@ -90,13 +97,13 @@ class UserProfile extends Component {
 
   componentDidMount() {
     this.fetchPosts();
+    this.fetchAllConnections();
   }
-
   componentWillMount() {
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();
     this.props.fetchAchievements();
-    this.fetchAllConnections();
+   
     this.updatePromoCodesUsed();
     this.setUserProfile(qs.parse(this.props.location.search).id);
     this.setUserAchievement(qs.parse(this.props.location.search).id)
@@ -110,10 +117,18 @@ class UserProfile extends Component {
 
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
+    var currentUser;
+
+    if(self.props.location.search === ''){
+      currentUser =  self.props.currentUserId;
+    } else{
+      var id = self.props.location.search;
+      currentUser = id.substr(id.indexOf('=')+1);
+    }
     this.setState({ otherTabLoading: true });
     Axios.get(connectionsUrl, {
       params: {
-        currentUser: self.props.currentUserId,
+        currentUser: currentUser,
       },
     }).then(function(response) {
        const friendList = response.data.filter(function(fList) {
@@ -125,7 +140,9 @@ class UserProfile extends Component {
       });
     }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
-
+  navigateToUserProfile(id) {
+    return this.props.history.push(`/userprofile?id=${id}`);
+  }
   openImageDialog(type, evt) {
     evt.stopPropagation();
     if (this.state.myProfile === true) {
@@ -850,8 +867,9 @@ class UserProfile extends Component {
                       ?
                       <Spinner shown />
                       :
-                      <Friends connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
-                    }
+                      <Friends handleChange={this.navigateToUserProfile} connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
+                    }                   
+
                     <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />
                   </div>
                   <div className="col pull-right">

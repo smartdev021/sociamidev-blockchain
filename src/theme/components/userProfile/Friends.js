@@ -16,7 +16,7 @@ const Friends = (props) => {
                   if(ids.indexOf(friend.id) === -1){
                     ids.push(friend.id)
                     return(
-                      <li key={friend.id}><span className="img-wp"><img src={friend.profilePic} /></span>
+                      <li key={friend.id}><span className="img-wp"><img src={friend.profilePic} onClick={(event) => props.handleChange( friend.id )} /></span>
                       <p>{friend.firstName}</p> </li>
                     )
                   }                    
