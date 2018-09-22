@@ -782,16 +782,18 @@ class UserProfile extends Component {
     const visitedUserId = qs.parse(this.props.location.search).id;
     const connectionStatus = this.getConnectionStatus().status;
     const buttonLabel = this.getConnectionStatus().buttonLabel;
+    let buttonWidth = 71;
 
     let buttonActionFn = this.onClickAddUser.bind(this, connectionStatus, visitedUserId);
 
     if (connectionStatus > 0) {
       buttonActionFn = this.onClickWithdrawConnection.bind(this, visitedUserId);
+      buttonWidth = 91;
     }
 
     return (
       <p style={{width: '60%',float: 'right'}}>
-        <a href="#" onClick={buttonActionFn} className="btn-join">{this.renderAddButtonSpinner()} { buttonLabel }</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a>
+        <a href="#" onClick={buttonActionFn} className="btn-join" style={{ width: buttonWidth }}>{this.renderAddButtonSpinner()} { buttonLabel }</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a>
       </p>
     )
   }
