@@ -10,6 +10,9 @@ class Heroes extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    mixpanel.track("View Heroes");
+  }
   render() {
     return (
       <div className="materialize-warper common-mat-wrapper heroes-wrapper">

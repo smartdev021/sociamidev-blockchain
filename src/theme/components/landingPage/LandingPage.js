@@ -215,6 +215,7 @@ class LandingPage extends Component {
   handleEmailInputSubmit(value) {
     if (value) {
       const body = { groupId: 9716454, name: "n/a", email: value };
+      mixpanel.track('Sign Up Beta - submit')
       Axios.post(`${ConfigMain.getBackendURL()}/addSubscriberToGroup`, body)
         .then((response) => {
         })
@@ -259,6 +260,10 @@ class LandingPage extends Component {
         <Route path="*" render={routeProps => <LandingPageContent {...routeProps}{...this.props}/>}/>
       </Switch>
     );
+  }
+
+  componentWillMount() {
+    mixpanel.track("Enter Landing");
   }
 
   render() {
