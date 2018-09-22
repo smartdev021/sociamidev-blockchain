@@ -238,19 +238,19 @@ const TalkAboutUs = () => {
       <section className="background-section-1">
         <div>
           <img className="avatar"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-2.png"
+            src="http://d9hhrg4mnvzow.cloudfront.net/beta.soqqle.com/connect/1d6c97e1-unsplash-u-lay00ifd4-man-wearing-parka-jacket_02d01c01c01c00i000.jpg"
             alt="avatar" />
         </div>
         <article>
           <h4>advertiser</h4>
-          <h3>Pek Yun Ning</h3>
-          <p>A new way to be connected to the gamer to showcase brands better. Thats cool.</p>
+          <h3>CARLO</h3>
+          <p>I learnt about Soqqle in an event and was floored by the idea that we could learn more about others through games. Can't wait to be a part of Beta!</p>
         </article>
       </section>
       <section className="main-section">
         <div>
           <img className="avatar"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-1.png"
+            src="http://www.gravatar.com/avatar/beaba0a2c5b263f7218c096cf8b39f6d?s=250&d=mm&r=x"
             alt="avatar" />
         </div>
         <article>
@@ -262,20 +262,20 @@ const TalkAboutUs = () => {
       <section className="background-section-2">
         <div>
           <img className="avatar"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-2.png"
+            src="http://d9hhrg4mnvzow.cloudfront.net/beta.soqqle.com/connect/0a28d17b-unsplash-0e4pr7deta8-smiling-woman-holding-her-head_02001c01c01c00c000.jpg"
             alt="avatar" />
         </div>
         <article>
           <h4>broadcaster</h4>
-          <h3>David Avetyan</h3>
-          <p>If gamers can be more excited and engaged, more fans will come onboard.</p>
+          <h3>LILY</h3>
+          <p>A new way to find out more about brands, and people around me is very unique and unheard of! I hope to learn more about this cool project.</p>
         </article>
       </section>
-      <footer>
+      {/* <footer>
         <a href="#"></a>
         <a href="#" className="active"></a>
         <a href="#"></a>
-      </footer>
+      </footer> */}
     </div>
   );
 };

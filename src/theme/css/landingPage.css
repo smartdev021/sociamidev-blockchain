@@ -1606,8 +1606,9 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section {
-        max-width: 205px;
+        max-width: 85%;
         padding-bottom: 24px;
+        margin: 70px auto 30px;
     }
 }
 
@@ -1623,6 +1624,7 @@ span.landing-email-input-textfield-container input[type="email"] {
   border: 2px solid #0091fa;
   border-radius: 50%;
   z-index: 9;
+  overflow: hidden;
 }
 .landing-page-wrapper .talk-about-us section.main-section {
     position: relative;
@@ -1682,7 +1684,7 @@ span.landing-email-input-textfield-container input[type="email"] {
     .landing-page-wrapper .talk-about-us section.background-section-1 h3,
     .landing-page-wrapper .talk-about-us section.background-section-2 h3 {
         margin: 10px auto 4px;
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 
@@ -1694,7 +1696,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-1 p,
     .landing-page-wrapper .talk-about-us section.background-section-2 p {
-        font-size: 10px;
+        font-size: 12px;
     }
 }
 
@@ -1722,9 +1724,11 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-1 {
-        top: 83px;
-        left: -130px;
+        top: 0px;
+        left: auto;
         padding-bottom: 19px;
+        position: relative;
+        max-width: 85%;
     }
 }
 
@@ -1742,9 +1746,10 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us section.background-section-2 {
-        top: 83px;
-        right: -130px;
+        top: auto;
+        right: auto;
         padding: 15px 30px 19px;
+        position: relative;
     }
 }
 
@@ -1757,9 +1762,12 @@ span.landing-email-input-textfield-container input[type="email"] {
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us article {
         display: block;
-        height: 155px;
+        height: 120px;
         margin: 0 auto;
         text-align: center;
+    }
+    .landing-page-wrapper .talk-about-us section{
+        min-height: inherit;
     }
 }
 
@@ -1902,6 +1910,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .talk-about-us footer {
         margin: 26px 0;
+        display: none;
     }
 }
 
