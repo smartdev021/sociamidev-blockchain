@@ -43,6 +43,13 @@
         right: -31px;
         padding: 0 0px 0 10px;
     }
+    .chat-container{
+        margin: 0 !important;
+        width: 85%;
+    }
+    .chat-holder{
+        width: 50% !important;
+    }
 }
 
 .navbar-wrapper .header .burger {
