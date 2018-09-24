@@ -1368,8 +1368,45 @@ input:focus {
   color:#5d5e72;
   font-size:12px;
 }
+.achievements-left-wap-links{
+  min-height: 500px;
+}
+.achievements-left-wap-links li{
+    height: 42px;
+    position: relative;
+    line-height: 42px;
+    padding-left: 50px !important;
+}
+.achievements-left-wap-links li:after {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  content: '';
+  border: 1px solid #fff;
+  width: 10px;
+  height: 10px;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50%;
+}
+.achievements-left-wap-links li.active, .achievements-left-wap-links li:hover{
+  background: #1e1e1e;
+}
+.achievements-left-wap-links li.active a, .achievements-left-wap-links li:hover a{
+  color: #f4bf01 !important;
+}
+.achievements-left-wap-links li.active:after, .achievements-left-wap-links li:hover:after{
+  border-color: #f4bf01;
+}
 /*-----------End----------------*/
 /*Start Responsive css*/
+@media (min-width: 992px) {
+  .dark-theme-wrapper {
+    min-height: 100vh;
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+  }
+}
 @media (min-width: 1920px) {
   .dark-theme-wrapper {
     background-size: cover;

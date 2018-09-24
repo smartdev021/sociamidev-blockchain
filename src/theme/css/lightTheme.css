@@ -806,8 +806,16 @@ input:focus {
 .light-theme-wrapper .achievements-wrapper .top-box, .light-theme-wrapper .achievements-wrapper .bottom-box ul li{
   background: #fff;
 }
+.light-theme-wrapper .achievements-left-wap-links li:after{
+  border-color: #000;
+}
 /*-----------End----------------*/
 /*Start Responsive css*/
+@media (min-width: 992px) {
+  .light-theme-wrapper {
+    min-height: 100vh;
+  }
+}
 @media (min-width: 1920px) {
   .light-theme-wrapper {
     background-size: cover;
