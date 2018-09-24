@@ -54,20 +54,20 @@ const MobileMainMenu = (props) => {
             </a>
           </li>
           <li className="mobile-menu-li">
-            <a href="#" onClick={props.closeMenu}>
+            <Link to="/achievements" onClick={props.closeMenu}>
               <span className="icon-wp">
                 <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/achievements-menu-icon.png" />
               </span>
               <p>Achievements</p>
-            </a>
+            </Link>
           </li>
           <li className="mobile-menu-li">
-            <a href="#" onClick={props.closeMenu}>
+            <Link to="/connections" onClick={props.closeMenu}>
               <span className="icon-wp">
                 <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/connections-menu-icon.png" />
               </span>
               <p>Connections</p>
-            </a>
+            </Link>
           </li>
           <li className="mobile-menu-li">
             <Link to="/levels" onClick={props.closeMenu}>
