@@ -28,6 +28,7 @@ module.exports = merge(common, build, {
       template: Path.join(__dirname, 'src/index.ejs'),
       title: 'Soqqle',
       mp_token: '"22ee903bd6b51fbaa669e7c25821ad16"',
+      ga_id: '"UA-121113238-1"',
       inject: 'body',
     }),
   ],
