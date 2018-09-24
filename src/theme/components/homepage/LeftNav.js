@@ -47,20 +47,20 @@ const LeftNav = (props) => {
               </Link>
             </li>
             <li className="l-h40">
-              <a href="#">
+              <Link to="/achievements">
                 <span className="icon-wp">
                   <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/achievements-menu-icon.png" />
                 </span>
                 <p>Achievements</p>
-              </a>
+              </Link>
             </li>
             <li className="l-h40">
-              <a href="#">
+              <Link to="/connections">
                 <span className="icon-wp">
                   <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/connections-menu-icon.png" />
                 </span>
                 <p>Connections</p>
-              </a>
+              </Link>
             </li>
             <li className="l-h40">
               <Link to="/levels">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LeftNav from '~/src/theme/components/homepage/LeftNav';
-import RightSection from '~/src/theme/components/homepage/RightSection';
+import LeftNav from '~/src/theme/components/achievements/LeftNav';
+
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
 class Achievements extends Component {
@@ -16,13 +16,10 @@ class Achievements extends Component {
             <div className="row">
               <div className="row">
                 
-                <LeftNav 
-                  accounting={this.props.accounting}
+                <LeftNav
                   userProfile={this.props.userProfile} 
                   profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
                 />
-                
-                <RightSection />
 
                 <div className="col-middle ml-fixed">
                   <div className="achievements-wrapper">
