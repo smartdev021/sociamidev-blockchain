@@ -14,7 +14,10 @@ class ChatLeftSideHolder extends Component {
           ANONYMOUS
         </div>
         <div className="beautyTips">
-          <div>Beauty tips</div>
+          <div>
+            Beauty tips
+            <i className="fa fa-thumb-tack"></i>
+          </div>
           <div className="gaming">Gaming</div>
         </div>
         <div className="worldChat">

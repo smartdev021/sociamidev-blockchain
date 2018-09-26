@@ -1,12 +1,18 @@
 import React,{Component} from 'react';
 
+import ChatBottomMessage from './ChatBottomMessage';
+import ChatMessageHolder from './ChatMessageHolder';
+
 class ChatRightSideHolder extends Component {
   render(){
     return(
       <div className="chat-ChatRightSideHolder">
         <div className="right-header">
           <div className="search-box">
-            Search for peoples
+            <i className="fa fa-search"/>
+            <input
+              placeholder="Search for people, chats, message"
+            />
           </div>
           <div className="icon-bar">
             <ul>
@@ -17,19 +23,19 @@ class ChatRightSideHolder extends Component {
                 <div>MENTION</div>
               </li>
               <li>
-                <div className="icon-holder">
+                <div className="icon-holder mini-size">
                   <a className="fa fa-users"/>
                 </div>
                 <div>COMMUNITY</div>
               </li>
               <li>
-                <div className="icon-holder">
+                <div className="icon-holder mini-size">
                   <a className="fa fa-envelope-o"/>
                 </div>
                 <div>INBOX</div>
               </li>
               <li>
-                <div className="icon-holder">
+                <div className="icon-holder mini-size">
                   <a className="fa fa-align-right"/>
                 </div>
                 <div>NEWS</div>
@@ -43,10 +49,8 @@ class ChatRightSideHolder extends Component {
             </ul>
           </div>
         </div>
-
-        <div className="right-footer">
-
-        </div>
+        <ChatMessageHolder/>
+        <ChatBottomMessage/>
       </div>
     )
   }
