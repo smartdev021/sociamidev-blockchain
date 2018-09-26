@@ -46,6 +46,7 @@ import Challenges from '~/src/theme/components/challenges/Challenges';
 import UserProfile from '~/src/theme/components/userProfile/UserProfile';
 import Teams from '~/src/theme/components/teams/Teams.js';
 import Company from '~/src/theme/components/company/Company';
+import Achievements from '~/src/theme/components/achievements/Achievements';
 import Settings from '~/src/theme/Settings.js';
 import PrivacyPolicy from '~/src/theme/new_ui/PrivacyPolicy';
 import TermsOfUse from '~/src/theme/new_ui/TermsOfUse';
@@ -164,6 +165,8 @@ class Main extends Component {
         <Route path="/levels" render={routeProps => <Levels {...routeProps} {...this.props} />} />)}/>
 
         <Route path="/tasks" render={routeProps => <Tasks {...routeProps} {...this.props} />} />)}/>
+
+        <Route path="/achievements" render={routeProps => <Achievements {...routeProps} {...this.props} />} />)}/>
 
       </Switch>
     );

@@ -792,8 +792,30 @@ input:focus {
 .light-theme-wrapper .company-middle-wrapper .company-new-filed .close-new-company{
   color: #000;
 }
+/*-------------Start Achievements -------------*/
+.light-theme-wrapper .achievements-wrapper h2, .light-theme-wrapper .achievements-wrapper .bottom-box ul li h4 {
+  color: #000;
+}
+.light-theme-wrapper .achievements-wrapper .prograss{
+  border-color: #000;
+}
+.light-theme-wrapper .achievements-wrapper .btn-lavel-yellow {
+  color: #000;
+  border-color: #000;
+}
+.light-theme-wrapper .achievements-wrapper .top-box, .light-theme-wrapper .achievements-wrapper .bottom-box ul li{
+  background: #fff;
+}
+.light-theme-wrapper .achievements-left-wap-links li:after{
+  border-color: #000;
+}
 /*-----------End----------------*/
 /*Start Responsive css*/
+@media (min-width: 992px) {
+  .light-theme-wrapper {
+    min-height: 100vh;
+  }
+}
 @media (min-width: 1920px) {
   .light-theme-wrapper {
     background-size: cover;

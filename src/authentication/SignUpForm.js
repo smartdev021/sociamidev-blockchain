@@ -25,15 +25,14 @@ class SignupForm extends React.Component {
 
     this.modalDefaultStyles = Modal.defaultStyles;
 
-    Modal.defaultStyles.content.border = 'none';
-    Modal.defaultStyles.content.background = 'transparent';
+    Modal.defaultStyles.content.background = 'black';
     Modal.defaultStyles.content.overflow = 'hidden';
     Modal.defaultStyles.content['color'] = 'white';
-    Modal.defaultStyles.content['marginLeft'] = 'auto';
+    Modal.defaultStyles.content['marginLeft'] = '0 auto';
     Modal.defaultStyles.content['marginRight'] = 'auto';
     Modal.defaultStyles.content['minWidth'] = '260px';
-    Modal.defaultStyles.content['maxWidth'] = '380px';
-    Modal.defaultStyles.content['height'] = '300px';
+    Modal.defaultStyles.content['maxWidth'] = '588px';
+    Modal.defaultStyles.content['height'] = '213px';
     Modal.defaultStyles.content['boxShadow'] = 'none';
   }
 
@@ -51,7 +50,7 @@ class SignupForm extends React.Component {
 
   renderForm() {
     return (
-      <Modal
+      <Modal className="popup-signup-form"
         isOpen={this.props.modalIsOpen}
         onRequestClose={() => this.handleRequestClose()}
         contentLabel="Login Form"
@@ -61,26 +60,35 @@ class SignupForm extends React.Component {
           },
         }}
       >
-        <div className="popup-signup-form">
-          <h2 className="form-sign-u-heading">Sign Up</h2>
-
-          <button
-            type="button"
-            className="btn btn-lg btn-primary btn-block"
-            onClick={() => this.props.onHandleSignUpFacebook()}
-          >
-            FaceBook
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-lg btn-warning btn-block"
-            onClick={() => this.props.onHandleSignUpLinkedIn()}
-          >
-            LinkedIn
-          </button>
-
+        <div className="signup-form-header">
+          Create an Account
+        </div>
+        <div className="signup-box">
           <Registration />
+        </div>
+        <div className="singup-buttons">
+          <div className="col-xs-6 no-padding">
+            <button
+              type="button"
+              className="col-sm-6 btn signup-facebook-btn btn-lg btn-block"
+              onClick={() => this.props.onHandleSignUpFacebook()}
+            >
+              <i className="fa fa-facebook" style={{marginRight: '10px'}}></i>
+              Login with Facebook
+            </button>
+          </div>
+          <div className="col-xs-6 no-padding">
+            <button
+              type="button"
+              className="col-sm-6 btn signup-linkedin-btn btn-lg btn-block"
+              onClick={() => this.props.onHandleSignUpLinkedIn()}
+            >
+            <i className="fa fa-linkedin" style={{marginRight: '10px'}}></i>
+            Login with LinkedIn
+            </button>
+          </div>
+          
+
         </div>
       </Modal>
     );

@@ -64,7 +64,7 @@ export function fetchListCharacterClasses() {
   return function(dispatch) {
     dispatch(fetchListCharacterClassesInitiate());
 
-    const url = `${ConfigMain.getBackendURL()}/characterClassesGet`;
+    const url = `${ConfigMain.getBackendURL()}/houses`;
     return Axios.get(url)
       .then(function(response) {
         dispatch(fetchListCharacterClassesComplete(response.data));
