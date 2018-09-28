@@ -94,8 +94,9 @@ class App extends Component {
     this.state.anonymousUserId = uuid;
     this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
     socketConn = this.socket;
-
+    
     this.socket.on('newUser', user => {
+      console.log("==>", user)
       var chatObj = {
         eventType: 'newUser',
         data: user,
@@ -104,6 +105,7 @@ class App extends Component {
     });
 
     this.socket.on('server:user', userObj => {
+      console.log("userObj", userObj)
       var chatObj = {
         eventType: 'server:user',
         data: userObj,
