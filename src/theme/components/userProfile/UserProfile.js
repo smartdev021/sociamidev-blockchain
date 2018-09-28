@@ -82,7 +82,8 @@ class UserProfile extends Component {
     this.props.history.listen((location, action) => {
       self.props.location.search = location.search;
       this.fetchAllConnections();
-    });
+    }); 
+    this.fetchAllConnections();
   }
 
   fetchPosts() {
@@ -95,6 +96,7 @@ class UserProfile extends Component {
           this.setState({ posts: response.data, loadingPosts: false }))
         .catch(error => {});
     }
+
   }
 
   componentDidMount() {
@@ -107,7 +109,6 @@ class UserProfile extends Component {
       this.fetchPosts();
     }
   }
-
   componentWillMount() {
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();
@@ -123,7 +124,6 @@ class UserProfile extends Component {
     this.setUserProfile(queryId);
   }
   fetchAllConnections() {
-
     const connectionsUrl = `${ConfigMain.getBackendURL()}/getConnectedSoqqlers`;
     var self = this;
     var currentUser;
@@ -808,6 +808,7 @@ class UserProfile extends Component {
   }
 
   render() {
+    const { otherTabLoading, friendList } = this.state;
     let traitsNameLine
     let characterNameLine
     if (this.state.character) {
@@ -861,7 +862,7 @@ class UserProfile extends Component {
                       <p>Data miner <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
                       <p><a href="#" className="btn-join">Add</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a></p>
                     </div> */}
-                    <div className="col-sm-5 last-right" style={{width: '40%', 'margin-top': '25px'}}>
+                    <div className="col-sm-5 last-right" style={{width: '40%', 'marginTop': '25px'}}>
                       {this.renderProgressionLevels(UserProgressionTreeLevels)}
                       { this.renderAddOrFollowUserButton() }
                     </div>
@@ -884,11 +885,11 @@ class UserProfile extends Component {
                       </div>
                     </div>
                     {
-                      this.state.otherTabLoading
+                      otherTabLoading
                       ?
                       <Spinner shown />
                       :
-                      <Friends handleChange={this.navigateToUserProfile} connections={this.state.friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
+                      <Friends handleChange={this.navigateToUserProfile} connections={friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
                     }                   
 
                     <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />

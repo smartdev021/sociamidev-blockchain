@@ -2,17 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Friends = (props) => {
+  const { connections } = props;
   let ids = [];
   return (
     <div className="col-box-wp">
       <div className="my-friends-wp">
         <h3 className="col-heading">{props.heading}</h3>
           {
-            props.connections.length > 0
+            connections.length > 0
             ?
             <ul>
               {
-                props.connections.map(friend => {
+                connections.map(friend => {
                   if(ids.indexOf(friend.id) === -1){
                     ids.push(friend.id)
                     return(
@@ -25,9 +26,17 @@ const Friends = (props) => {
             </ul>
             :
             <div className="no-friends">
+            {
+              props.heading === 'Friends' 
+              ?
+             'No Friends'
+             :
+             <div>
               You have no friends!
               <Link to="/connections">
                 Add one?</Link>
+              </div>
+            }            
             </div>
           }
         
