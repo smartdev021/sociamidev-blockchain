@@ -177,13 +177,19 @@
               </div>
               <div className="houses-wrapper">
                 <div className="character-description-container">
-                  <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}>
+                  <div className='character-description-box'>
+                  {/* <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}> */}
                       <div className="character-header">
                         {SelectedCharacter.name}
                       </div>
                       <div className="character-description">
                         {SelectedCharacter.description && SelectedCharacter.description}
                       </div>
+                      <ul className="character-skills">
+                        <li className="character-skill">
+                          {SelectedCharacter.category}
+                        </li>
+                      </ul>
                   </div>
                 </div>
                 {this.renderMobileCharacters(this.props.charactersList, 0, this.props.charactersList.length - 1)}
@@ -224,23 +230,21 @@
               className="fa fa-2x fa-times close-house-lightbox"
               onClick={() => this.closeHouseModalPopup()}
             />
-            <div className="character-description-box-modal" style={{backgroundImage: `url(${backgroundImageUrl})`}}>
+            <div className="character-description-box-modal">
+            {/* <div className="character-description-box-modal" style={{backgroundImage: `url(${backgroundImageUrl})`}}> */}
                   <div className="character-header-modal">
                     {SelectedCharacter.name}
                   </div>
                   <div className="character-description-modal">
-                    {SelectedCharacter.description1 && SelectedCharacter.description1}
+                    {/* {SelectedCharacter.description1 && SelectedCharacter.description1}
                     {SelectedCharacter.description2 && SelectedCharacter.description2}
-                    {SelectedCharacter.description3 && SelectedCharacter.description3}
+                    {SelectedCharacter.description3 && SelectedCharacter.description3} */}
+                    {SelectedCharacter.description && SelectedCharacter.description}
                   </div>
-                  <ul  className="character-skills-modal">
-                    {SelectedCharacter.skills.map((skill, i) => {
-                      return (
-                        <li className="character-skill-modal" key={i}>
-                          {skill}
-                        </li>
-                      );
-                    })}
+                  <ul className="character-skills-modal">
+                    <li className="character-skill-modal">
+                      {SelectedCharacter.category}
+                    </li>
                   </ul>
               </div>
 
