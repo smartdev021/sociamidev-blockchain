@@ -101,7 +101,6 @@ class UserProfile extends Component {
 
   componentDidMount() {
     this.fetchPosts();
-    this.fetchAllConnections();
   }
 
   componentDidUpdate(prevProps, prevState) {
