@@ -30,6 +30,7 @@ import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
 import { Logo } from './Logo';
 import { Footer } from './Footer';
 import { MobileMenu } from './MobileMenu';
+import languageContent from './languageWiseContent.json';
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -206,7 +207,7 @@ class LandingPage extends Component {
             email={this.state.email} />
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <Footer localeData={this.props.localeData}/>
+        <Footer localeData={this.props.localeData} currentLanguage={this.props.currentLanguage}/>
         <MobileMenu
           isOpen={this.state.isOpen} closeMenu={this.toggle}
           onMoreMenuToggle={() => this.handleMoreMenuToggle()}
@@ -236,6 +237,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
   localeData: state.userProfile.locale,
+  currentLanguage: state.userProfile.locale.current || 'en'
 });
 
 export default connect(
