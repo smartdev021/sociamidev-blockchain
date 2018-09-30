@@ -1265,6 +1265,7 @@ input:focus {
   padding: 2px 10px;
   float: left;
   margin: 12px 2px;
+  cursor: pointer;
 }
 .achievements-wrapper .top-box ul li.active{
   background:#0069be;
