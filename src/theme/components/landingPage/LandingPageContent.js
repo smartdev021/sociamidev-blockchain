@@ -242,21 +242,19 @@ const TalkAboutUs = () => {
             alt="avatar" />
         </div>
         <article>
-          <h4>advertiser</h4>
-          <h3>CARLO</h3>
+          <h4>CARLO</h4>
           <p>I learnt about Soqqle in an event and was floored by the idea that we could learn more about others through games. Can't wait to be a part of Beta!</p>
         </article>
       </section>
       <section className="main-section">
         <div>
           <img className="avatar"
-            src="http://www.gravatar.com/avatar/beaba0a2c5b263f7218c096cf8b39f6d?s=250&d=mm&r=x"
+            src="http:////d9hhrg4mnvzow.cloudfront.net/beta.soqqle.com/edutech/54ac4729-unsplash-rzj4teqze4m-woman-smiling-closing-eyes-while-flipping-her-hair_04p03e03e03e00n000.jpg"
             alt="avatar" />
         </div>
         <article>
-          <h4>owner</h4>
-          <h3>Daniel Shen</h3>
-          <p>The Gamer's interests and well-being is our key goal, this may help to prove it.</p>
+          <h4>JAYES</h4>
+          <p>It'd be fantastic to be able to to know what my friends are interested in. Can't find anywhere else.</p>
         </article>
       </section>
       <section className="background-section-2">
@@ -266,8 +264,7 @@ const TalkAboutUs = () => {
             alt="avatar" />
         </div>
         <article>
-          <h4>broadcaster</h4>
-          <h3>LILY</h3>
+          <h4>LILY</h4>
           <p>A new way to find out more about brands, and people around me is very unique and unheard of! I hope to learn more about this cool project.</p>
         </article>
       </section>
