@@ -1790,8 +1790,7 @@ span.landing-email-input-textfield-container input[type="email"] {
   text-transform: uppercase;
 }
 .landing-page-wrapper .talk-about-us h4 {
-  color: #d01fe5;
-  font: normal 14px "MyriadPro Bold";
+  font: normal 18px "MyriadPro Bold";
   text-transform: uppercase;
   margin: 30px 0 0px;
 }
