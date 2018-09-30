@@ -1288,7 +1288,7 @@ input:focus {
   margin-bottom:12px;
   text-align:center;
   position:relative;
-  padding:20px 15px;
+  padding:20px 0px;
 }
 .achievements-wrapper .bottom-box ul li a {
   color: #90019c;
