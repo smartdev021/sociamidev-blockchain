@@ -465,7 +465,6 @@ class LandingPageContent extends React.Component {
   }
 
   render() {
-    console.log(languageContent)
     return (
       <div className="landing-page-wrapper">
         <header>
@@ -518,7 +517,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
   articles: state.articles.articles,
-  currentLanguage: state.userProfile.locale.current || 'en'
+  currentLanguage: state.userProfile.locale.selectedLanguage || 'en'
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPageContent));
