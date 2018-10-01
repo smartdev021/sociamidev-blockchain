@@ -78,7 +78,7 @@ class Achievements extends Component {
             <li>
               <div className="img-icon">
                 <img
-                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/achi-icon.png"
+                  src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${achievement._id}`}
                   alt=""
                 />
               </div>
