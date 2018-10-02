@@ -711,7 +711,11 @@ class Tasks extends React.Component {
                 {this.props.activeHangout ? (
                   <RightAnswerSection getLoadURL={url => this.getLoadURL(url)} />
                 ) : (
-                  <RightSection />
+                  <RightSection
+                    skills={this.props.skills}
+                    roadmapsAdmin={this.props.roadmapsAdmin}
+                    userProfile={this.props.userProfile}
+                  />
                 )}
                 {this.props.activeHangout ? (
                   <div className="col-middle ml-fixed">

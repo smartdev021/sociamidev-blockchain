@@ -16,7 +16,7 @@ const LeftNav = props => {
           <ul className="achievements-left-wap-links">
             {props.tempCompaniesNavData.map((company, index) => {
               return (
-                <li onClick={props.onLeftNavCompanyClick.bind(props, index)} href="#" className={index === props.currentCompany ? 'active' : ''}>
+                <li key={ index } onClick={props.onLeftNavCompanyClick.bind(props, index)} href="#" className={index === props.currentCompany ? 'active' : ''}>
                   <a>
                     <p>{company.name}</p>
                   </a>

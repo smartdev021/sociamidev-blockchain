@@ -5,14 +5,15 @@ import ConfigMain from '~/configs/main';
 
 export function fetchStoriesInitiate () {
   return {
-    type: FETCH_SKILLS_INITIATE
+    type: FETCH_SKILLS_INITIATE,
+    skills: []
   };
 }
 
 export function fetchStoriesComplete (data) {
   return {
     type: FETCH_SKILLS_COMPLETE,
-    data
+    skills: data
   };
 }
 
