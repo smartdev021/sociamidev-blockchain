@@ -1292,6 +1292,7 @@ input:focus {
   padding:20px 0px;
 }
 .achievements-wrapper .bottom-box ul li a {
+  font-size: 12px;
   color: #90019c;
   text-decoration: none;
   border: 1px solid #90019c;

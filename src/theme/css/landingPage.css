@@ -692,6 +692,10 @@ html.vertical-hidden {
 .right-new-link .right-dropdown-link li a:hover{
   color: #9b01aa;
 }
+.right-new-link .right-dropdown-link li b{
+  color: #fff;
+  margin: 0 5px;
+}
 .right-new-link .dd-new-right {
     color: #9b01aa;
     font-size: 16px;

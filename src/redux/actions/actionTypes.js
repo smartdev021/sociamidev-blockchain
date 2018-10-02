@@ -190,3 +190,6 @@ export const FETCH_SKILLS_INITIATE = 'fetch_skills_initiate';
 export const FETCH_SKILLS_COMPLETE = 'fetch_skills_complete';
 
 export const LOAD_ACTIVATE_URL = 'load_activate_url';
+
+//Language
+export const UPDATE_SELECTED_LANGUAGE = 'update_selected_language';
