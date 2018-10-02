@@ -8,7 +8,7 @@ import { withCookies } from 'react-cookie';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom'; //temporarily here, remove it!!!!!!!
-import { openSignUpForm } from '~/src/redux/actions/authorization';
+import { openSignUpForm,changePageLanguage } from '~/src/redux/actions/authorization';
 import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
 import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
@@ -62,7 +62,7 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage }) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -90,6 +90,8 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
               <ul className="right-dropdown-link">
                 <li><a href="#">Enterprice</a></li>
                 <li><a onClick={onEmailInputShow}>Subscribe</a></li>
+                <li><a onClick={()=>changePageLanguage('en')}>en</a></li>
+                <li><a onClick={()=>changePageLanguage('ko')}>ko</a></li>
               </ul>
             }
           </div>
@@ -203,10 +205,12 @@ class LandingPage extends Component {
             onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
             onEmailInput={(event) => { this.handleEmailInput(event) }}
             isEmailInputVisible={this.state.isEmailInputVisible}
-            email={this.state.email} />
+            email={this.state.email}
+            changePageLanguage={this.props.changePageLanguage}
+          />
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <Footer localeData={this.props.localeData}/>
+        <Footer localeData={this.props.localeData} currentLanguage={this.props.currentLanguage}/>
         <MobileMenu
           isOpen={this.state.isOpen} closeMenu={this.toggle}
           onMoreMenuToggle={() => this.handleMoreMenuToggle()}
@@ -230,12 +234,14 @@ LandingPage.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
-  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch)
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  changePageLanguage: bindActionCreators(changePageLanguage, dispatch)
 });
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
   localeData: state.userProfile.locale,
+  currentLanguage: state.userProfile.locale.selectedLanguage || 'en'
 });
 
 export default connect(

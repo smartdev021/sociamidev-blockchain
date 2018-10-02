@@ -18,6 +18,7 @@ import TrailerModal from "~/src/theme/components/landingPage/TrailerModal";
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import Youtube from 'react-youtube';
+import languageContent from './languageWiseContent.json';
 
 const soqqleEnv = process.env.SOQQLE_ENV;
 
@@ -52,21 +53,21 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onTrailerModalShow }) => {
+const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onTrailerModalShow, currentLanguage }) => {
   return (
     <div className="banner-wrapper">
       <img
         src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg"
         alt="banner" />
       <div className="banner-content">
-        <h2>{ soqqleEnv === 'production' ? 'SIGN UP FOR BETA' : 'CONNECT AND UNITE UP' }</h2>
-        <p>Plug in for the Future. Explore a world of quests with friends and play them together to gain glory and rewards</p>
+        <h2>{ soqqleEnv === 'production' ? 'SIGN UP FOR BETA' : languageContent[currentLanguage].banner_main }</h2>
+        <p>{languageContent[currentLanguage].banner_sub}</p>
         {
           soqqleEnv === 'production' ?
           <a className="btn-top" onClick={onBetaFormModalShow}>Sign up now!</a>
           :
           <Link to="/characterCreation" className="btn-top" onClick={() => startCharacterCreation() }>
-            Explore Soqqle
+            {languageContent[currentLanguage].banner_button}
           </Link>
         }
         {
@@ -113,15 +114,12 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
   );
 };
 
-const AboutComponent = () => {
+const AboutComponent = ({currentLanguage}) => {
   return (
     <div className="about-wrapper second-section-bg">
-      <h2>Available now on Alpha. <span>FREE</span>.</h2>
-      <p>Soqqle is a novel game that brings your heartfelt aspirations to real life.</p>
-      <h3>Join quests across different roles for the #futureofwork and team up with others to
-        accomplish common goals! We call this - <span>The Game For Life.<br /></span> Isn’t
-        this amazing?
-      </h3>
+      <h2 dangerouslySetInnerHTML={{ __html:languageContent[currentLanguage].about_header }}/>
+      <p>{languageContent[currentLanguage].about_second_line}</p>
+      <h3 dangerouslySetInnerHTML={{ __html: languageContent[currentLanguage].about_third_line}}/>
     </div>
   );
 };
@@ -167,7 +165,7 @@ const OurBlog = (props) => {
   }
   return (
     <div className="our-blog">
-      <h2>Our blog</h2>
+      <h2>{languageContent[props.currentLanguage].blog_header}</h2>
       <section>
         {
           firstArticle ?
@@ -197,44 +195,44 @@ const OurBlog = (props) => {
           }
         </div>
       </section>
-      <button type="button" className="btn"><p>See all news</p></button>
+      <button type="button" className="btn"><p>{languageContent[props.currentLanguage].blog_button}</p></button>
     </div>
   );
 };
 
-const SoqqleInfo = () => {
+const SoqqleInfo = ({currentLanguage}) => {
   return (
     <div className="soqqle-info">
-      <h2>What is Soqqle</h2>
+      <h2>{languageContent[currentLanguage].info_header}</h2>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/learning-course.png"
           className="learning-course"
           alt="drive purposeful learning" />
-        <p>Drive purposeful learning</p>
+        <p>{languageContent[currentLanguage].info_one}</p>
       </section>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/combine-goals.png"
           className="goals"
           alt="Combine social and learning goals" />
-        <p>Combine social and learning goals</p>
+        <p>{languageContent[currentLanguage].info_two}</p>
       </section>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/jorney.png"
           className="jorney"
           alt="Helps identify networks to join the journey" />
-        <p>Helps identify networks to join the journey</p>
+        <p>{languageContent[currentLanguage].info_three}</p>
       </section>
     </div>
   );
 };
 
-const TalkAboutUs = () => {
+const TalkAboutUs = ({currentLanguage}) => {
   return (
     <div className="talk-about-us">
-      <h2>They talk about us</h2>
+      <h2>{languageContent[currentLanguage].talk_header}</h2>
       <section className="background-section-1">
         <div>
           <img className="avatar"
@@ -277,10 +275,10 @@ const TalkAboutUs = () => {
   );
 };
 
-const VideoComponent = () => {
+const VideoComponent = ({currentLanguage}) => {
   return (
     <div className="video">
-      <h1>Discover Soqqle</h1>
+      <h1>{languageContent[currentLanguage].video_header}</h1>
       <div className="video-box-home">
         <div className="img-box">
           <Youtube
@@ -304,10 +302,10 @@ const VideoComponent = () => {
   );
 };
 
-const WorkExplanation = () => {
+const WorkExplanation = ({currentLanguage}) => {
   return (
     <div className="work-explanation">
-      <h2>How it works</h2>
+      <h2>{languageContent[currentLanguage].work_header}</h2>
       <div id="myCarousel" className="carousel slide" data-ride="carousel">
         <ol className="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
@@ -324,10 +322,10 @@ const WorkExplanation = () => {
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>1</h1>
-                <h3>1. Select your house</h3>
-                <p>Join an environment where people similar to you gather and complete similar tasks. Develop together the same way.</p>
-                <p>There are 6 houses available in BETA.</p>
-                <a href="/houses" className="explore-page">Explore Houses &gt;</a>
+                <h3>1. {languageContent[currentLanguage].work_one}</h3>
+                <p>{languageContent[currentLanguage].work_one_text}</p>
+                <p>{languageContent[currentLanguage].work_one_line}</p>
+                <a href="/houses" className="explore-page">{languageContent[currentLanguage].work_one_link} &gt;</a>
               </div>
             </div>
           </div>
@@ -342,12 +340,10 @@ const WorkExplanation = () => {
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>2</h1>
-                <h3>2. Select a Hero</h3>
-                <p>Select a hero and develop it through tasks, answering questions, solving
-                  challenges
-                  individually or with your friends.</p>
-                <p>There are 4 heros available in BETA.</p>
-                <a href="/heroes" className="explore-page">Explore Heroes &#62;</a>
+                <h3>2. {languageContent[currentLanguage].work_two}</h3>
+                <p>{languageContent[currentLanguage].work_two_text}</p>
+                <p>{languageContent[currentLanguage].work_two_line}</p>
+                <a href="/heroes" className="explore-page">{languageContent[currentLanguage].work_two_link} &#62;</a>
               </div>
             </div>
           </div>
@@ -365,11 +361,9 @@ const WorkExplanation = () => {
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>3</h1>
-                <h3>3. Play the game</h3>
-                <p>Complete quests along the story of the hero
-                  you chose, and get method to others so form
-                  your own dream team.</p>
-                <a href="" className="explore-page">Explore Story &#62;</a>
+                <h3>3. {languageContent[currentLanguage].work_three}</h3>
+                <p>{languageContent[currentLanguage].work_three_text}</p>
+                <a href="" className="explore-page">{languageContent[currentLanguage].work_three_link} &#62;</a>
               </div>
             </div>
           </div>
@@ -384,11 +378,9 @@ const WorkExplanation = () => {
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>4</h1>
-                <h3>4. Get a Reward</h3>
-                <p>Cumulate SOQQ Sparks, Achievements and Bonuses upon the completion of tasks.
-                  Get more
-                  for doing Group Tasks.</p>
-                <a href="" className="explore-page">Explore Rewards &#62;</a>
+                <h3>4. {languageContent[currentLanguage].work_four}</h3>
+                <p>{languageContent[currentLanguage].work_four_text}</p>
+                <a href="" className="explore-page">{languageContent[currentLanguage].work_four_link} &#62;</a>
               </div>
             </div>
           </div>
@@ -403,11 +395,9 @@ const WorkExplanation = () => {
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>5</h1>
-                <h3>5. Use your Rewards</h3>
-                <p>SOQQ Sparks are powered by Blockchain Force. Use them to boost experience
-                  gain, or
-                  obtain character upgrades. </p>
-                <a href="" className="explore-page">Explore Character Progression &#62;</a>
+                <h3>5. {languageContent[currentLanguage].work_five}</h3>
+                <p>{languageContent[currentLanguage].work_five_text}</p>
+                <a href="" className="explore-page">{languageContent[currentLanguage].work_five_link} &#62;</a>
               </div>
             </div>
           </div>
@@ -495,17 +485,18 @@ class LandingPageContent extends React.Component {
             isEmailInputVisible={this.state.isEmailInputVisible}
             onTrailerModalShow={() => this.handleonTrailerModalShow(true)}
             onBetaFormModalShow={() => this.handleonBetaFormModalShow(true)}
+            currentLanguage={this.props.currentLanguage}
           />
         </header>
-        <AboutComponent />
+        <AboutComponent currentLanguage={this.props.currentLanguage} />
         <main>
-          <SoqqleInfo />
-          <WorkExplanation />
+          <SoqqleInfo currentLanguage={this.props.currentLanguage} />
+          <WorkExplanation currentLanguage={this.props.currentLanguage} />
         </main>
-        <VideoComponent />
+        <VideoComponent currentLanguage={this.props.currentLanguage} />
         <main>
-          <OurBlog articles={this.props.articles} />
-          <TalkAboutUs />
+          <OurBlog articles={this.props.articles} currentLanguage={this.props.currentLanguage} />
+          <TalkAboutUs currentLanguage={this.props.currentLanguage} />
         </main>
       </div>
     );
@@ -525,7 +516,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
-  articles: state.articles.articles
+  articles: state.articles.articles,
+  currentLanguage: state.userProfile.locale.selectedLanguage || 'en'
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPageContent));
