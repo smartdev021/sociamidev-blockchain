@@ -8,7 +8,7 @@ import { withCookies } from 'react-cookie';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom'; //temporarily here, remove it!!!!!!!
-import { openSignUpForm } from '~/src/redux/actions/authorization';
+import { openSignUpForm,changePageLanguage } from '~/src/redux/actions/authorization';
 import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
 import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
@@ -27,6 +27,9 @@ import '~/src/theme/css/materializeCommon.css';
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
+import { Logo } from './Logo';
+import { Footer } from './Footer';
+import { MobileMenu } from './MobileMenu';
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -59,37 +62,7 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-//
-
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <a href="/" className="footer-logo">
-        <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-          alt="logo"
-        />
-      </a>
-      <h3>Subscribe to our Newsletter</h3>
-      <div><input type="email" className="mail" value="Mail" /></div>
-      <button type="button" className="subscribe"><p>Subscribe</p></button>
-      <ul className="info-list">
-        <li>About</li>
-        <li>Support</li>
-        <li>Contact</li>
-        <li>Press</li>
-      </ul>
-      <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
-        All trademarks referenced herein are the properties of their respective owners.</h4>
-      <ul className="privacy-list">
-        <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
-        <li><a href="/termsOfUse" target="_blank">Terms</a></li>
-      </ul>
-    </footer>
-  );
-};
-
-const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage }) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -107,88 +80,32 @@ const Header = ({ openMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubm
         <p>Markets</p>
       </button>
       {
-        process.env.SOQQLE_ENV !== 'production' && 
-        (!isEmailInputVisible
-          ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
-            <p>Subscribe</p>
-          </button>
-          : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
+        process.env.SOQQLE_ENV !== 'production' &&
+        (
+          !isEmailInputVisible ?
+          <div className="right-new-link">
+            <a className="dd-new-right" onClick={onMoreMenuToggle}>More <i className="fa fa-angle-down"></i></a>
+            {
+              isMoreMenuVisible &&
+              <ul className="right-dropdown-link">
+                <li><a href="#">Enterprice</a></li>
+                <li><a onClick={onEmailInputShow}>Subscribe</a></li>
+                <li><a onClick={()=>changePageLanguage('en')}>en</a></li>
+                <li><a onClick={()=>changePageLanguage('ko')}>ko</a></li>
+              </ul>
+            }
+          </div>
+          :
+          <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
         )
       }
-      
-      {/* {!isEmailInputVisible
-        ? <button type="button" className="subscribe-button" onClick={onEmailInputShow}>
-          <p>Subscribe</p>
-        </button>
-        : <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />} */}
+
       {
         process.env.SOQQLE_ENV !== 'production' && 
-        <button type="button" className="sign-up-button">
-          <p>Enterprise sign up</p>
+        <button type="button" className="sign-up-button right-new-signup" onClick={() => openSignUpForm()}>
+          <p>Sign up</p>
         </button>
       }
-    </div>
-  );
-};
-
-const Logo = () => {
-  return (
-    <div className="logo">
-      <a href="/">
-        <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-          alt="logo"
-        />
-      </a>
-    </div>
-  );
-};
-
-const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
-  const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
-
-  const handleInputSubmit = (event) => {
-    event.preventDefault();
-    if (validateEmail(email)) {
-      onEmailInputSubmit(email);
-    }
-  }
-
-  return (
-    <div className={mobileClass}>
-      <button type="button" className="close-menu" onClick={closeMenu}>
-        <span>x</span>
-      </button>
-      <div className="mobile-logo">
-        <a href="/">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo.png"
-            alt="logo"
-          />
-        </a>
-      </div>
-      <ul>
-        <li>The games</li>
-        <li>Forums</li>
-        <li>Markets</li>
-      </ul>
-      <footer>
-        <div className="mobile-menu-email-subscribe-container">
-          <div className="landing-email-input-textfield-container">
-            <input value={email}
-              onKeyPress={(event) => {
-                //doesn't make sense for mobile, but her for consistency
-                if (event.key === 'Enter') {
-                  handleInputSubmit(event)
-                }
-              }}
-              onChange={onEmailInput}
-              type="email" placeholder="email@example.com" autoFocus={true} required={true} />
-          </div>
-        </div>
-        <button type="button" className="subscribe-button" onClick={handleInputSubmit}><p>Subscribe</p></button>
-        <button type="button" className="sign-up-button"><p>Enterprise sign up</p></button>
-      </footer>
     </div>
   );
 };
@@ -196,7 +113,7 @@ const MobileMenu = ({ isOpen, closeMenu, onEmailInputShow, onEmailInputHide, onE
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
+    this.state = { isOpen: false, isMoreMenuVisible: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
 
     this.toggle = this.toggle.bind(this);
   }
@@ -210,6 +127,10 @@ class LandingPage extends Component {
   //mailerlite subscribe
   handleEmailInputShow(show) {
     this.setState({ isEmailInputVisible: show });
+  }
+
+  handleMoreMenuToggle() {
+    this.setState({ isMoreMenuVisible: !this.state.isMoreMenuVisible });
   }
 
   handleEmailInputSubmit(value) {
@@ -274,17 +195,26 @@ class LandingPage extends Component {
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <Logo />
-          <Header openMenu={this.toggle}
+          <Header
+            openMenu={this.toggle}
+            openSignUpForm={this.props.openSignUpForm}
+            onMoreMenuToggle={() => this.handleMoreMenuToggle()}
+            isMoreMenuVisible={this.state.isMoreMenuVisible}
             onEmailInputShow={() => this.handleEmailInputShow(true)}
             onEmailInputHide={() => this.handleEmailInputShow(false)}
             onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
             onEmailInput={(event) => { this.handleEmailInput(event) }}
             isEmailInputVisible={this.state.isEmailInputVisible}
-            email={this.state.email} />
+            email={this.state.email}
+            changePageLanguage={this.props.changePageLanguage}
+          />
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <Footer />
-        <MobileMenu isOpen={this.state.isOpen} closeMenu={this.toggle}
+        <Footer localeData={this.props.localeData} currentLanguage={this.props.currentLanguage}/>
+        <MobileMenu
+          isOpen={this.state.isOpen} closeMenu={this.toggle}
+          onMoreMenuToggle={() => this.handleMoreMenuToggle()}
+          isMoreMenuVisible={this.state.isMoreMenuVisible}
           onEmailInputShow={() => this.handleEmailInputShow(true)}
           onEmailInputHide={() => this.handleEmailInputShow(false)}
           onEmailInputSubmit={(event) => { this.handleEmailInputSubmit(event) }}
@@ -305,10 +235,13 @@ LandingPage.propTypes = {
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  changePageLanguage: bindActionCreators(changePageLanguage, dispatch)
 });
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
+  localeData: state.userProfile.locale,
+  currentLanguage: state.userProfile.locale.selectedLanguage || 'en'
 });
 
 export default connect(

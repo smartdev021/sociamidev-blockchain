@@ -30,8 +30,13 @@ class UserMenuDropdown extends React.Component {
             </div>
           </div>
           <hr className="user-hr" />
+          <div className="row user-links" style={{ paddingTop: 5, paddingBottom: 5, }}>
+            <span className="user-link-text">
+              { this.props.localeData && this.props.localeData.localeTemporary }
+            </span>
+          </div>
           <div className="row user-links">
-            <Link className="user-link-text" to="/projectManagement">
+            <Link className="user-link-text" to="/challenges">
               Challenges
             </Link>
           </div>
@@ -40,6 +45,13 @@ class UserMenuDropdown extends React.Component {
               Your Profile
             </Link>
           </div>
+          {this.props.isAdmin && (
+            <div className="row user-links">
+              <Link className="user-link-text" to="/company">
+                Company
+              </Link>
+            </div>
+          )}
           {this.props.isAdmin && (
             <div className="row user-links">
               <Link className="user-link-text" to="/teams">

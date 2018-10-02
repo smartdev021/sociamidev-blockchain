@@ -18,10 +18,13 @@ import { userFriendsActivities } from './activities';
 import { characterCreation, characterCreationData } from './characterCreation';
 import { accounting } from './accounting';
 import { progression } from './progression';
-import { achievements } from './achievements';
+import { achievements, achievementGroups, addAchievementGroup, updateAchievementGroup } from './achievements';
 import { timers } from './timers';
 import { teams } from './teams';
 import { articles } from './articles';
+import { houses } from './houses';
+import { company } from './company';
+import { skills } from './story';
 
 export default combineReducers({
   resultsSelectedCategory,
@@ -50,7 +53,13 @@ export default combineReducers({
   accounting,
   progression,
   achievements,
+  achievementGroups,
+  addAchievementGroup,
+  updateAchievementGroup,
   timers,
   teams,
-  articles
+  articles,
+  houses,
+  company,
+  skills
 });

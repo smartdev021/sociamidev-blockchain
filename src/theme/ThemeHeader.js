@@ -205,7 +205,7 @@ class ThemeHeader extends React.Component {
                   </ActionLink>
                 </li>
                 <li className="register">
-                  <Link href="#" to="/connectionsView">
+                  <Link href="#" to="/connections">
                     <Icon name="user-plus" aria-hidden="true" />
                   </Link>
                 </li>
@@ -257,7 +257,7 @@ class ThemeHeader extends React.Component {
                   />
                   PROGRESSIONS
                 </Link>
-                <Link to="/taskManagement" className="btn-nav">
+                <Link to="/tasks" className="btn-nav">
                   <img
                     src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/task.png"
                     style={{ width: '20px' }}

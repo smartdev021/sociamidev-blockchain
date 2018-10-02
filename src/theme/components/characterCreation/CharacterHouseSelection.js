@@ -18,14 +18,6 @@
       };
     }
 
-    componentWillMount() {
-      
-    }
-
-    componentWillUnmount() {
-      
-    }
-
     componentDidMount(){
       window.scrollTo(0, 0);
     }
@@ -185,23 +177,18 @@
               </div>
               <div className="houses-wrapper">
                 <div className="character-description-container">
-                  <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}>
+                  <div className='character-description-box'>
+                  {/* <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}> */}
                       <div className="character-header">
                         {SelectedCharacter.name}
                       </div>
                       <div className="character-description">
-                        {SelectedCharacter.description1 && SelectedCharacter.description1}
-                        {SelectedCharacter.description2 && SelectedCharacter.description2}
-                        {SelectedCharacter.description3 && SelectedCharacter.description3}
+                        {SelectedCharacter.description && SelectedCharacter.description}
                       </div>
-                      <ul  className="character-skills">
-                        {SelectedCharacter.skills.map((skill, i) => {
-                          return (
-                            <li className="character-skill" key={i}>
-                              {skill}
-                            </li>
-                          );
-                        })}
+                      <ul className="character-skills">
+                        <li className="character-skill">
+                          {SelectedCharacter.category}
+                        </li>
                       </ul>
                   </div>
                 </div>
@@ -243,23 +230,21 @@
               className="fa fa-2x fa-times close-house-lightbox"
               onClick={() => this.closeHouseModalPopup()}
             />
-            <div className="character-description-box-modal" style={{backgroundImage: `url(${backgroundImageUrl})`}}>
+            <div className="character-description-box-modal">
+            {/* <div className="character-description-box-modal" style={{backgroundImage: `url(${backgroundImageUrl})`}}> */}
                   <div className="character-header-modal">
                     {SelectedCharacter.name}
                   </div>
                   <div className="character-description-modal">
-                    {SelectedCharacter.description1 && SelectedCharacter.description1}
+                    {/* {SelectedCharacter.description1 && SelectedCharacter.description1}
                     {SelectedCharacter.description2 && SelectedCharacter.description2}
-                    {SelectedCharacter.description3 && SelectedCharacter.description3}
+                    {SelectedCharacter.description3 && SelectedCharacter.description3} */}
+                    {SelectedCharacter.description && SelectedCharacter.description}
                   </div>
-                  <ul  className="character-skills-modal">
-                    {SelectedCharacter.skills.map((skill, i) => {
-                      return (
-                        <li className="character-skill-modal" key={i}>
-                          {skill}
-                        </li>
-                      );
-                    })}
+                  <ul className="character-skills-modal">
+                    <li className="character-skill-modal">
+                      {SelectedCharacter.category}
+                    </li>
                   </ul>
               </div>
 
@@ -277,39 +262,10 @@
       }
 
     render() {
-      // if (this.props.isFetchingCharacters) {
-      //   return (
-      //     <Modal
-      //       isOpen={true}
-      //       onRequestClose={() => {}}
-      //       contentLabel={'Character Selection'}
-      //       parentSelector={getPopupParentElement}
-      //     >
-      //       <Icon
-      //         onClick={() => this.handleClose()}
-      //         className="character-creation-popup-close-icon"
-      //         name="times"
-      //         aria-hidden="true"
-      //       />
-      //       <div id="character-selection-container">
-      //         <div id="character-selection-container-inner">
-      //           <div className="container-fluid">
-      //             <div className="row">
-      //               <div className="col-lg-12">
-      //                 <Icon spin name="spinner" />
-      //               </div>
-      //             </div>
-      //           </div>
-      //         </div>
-      //       </div>
-      //     </Modal>
-      //   );
-      // }
 
       const SelectedCharacter = this.state.mouseOveredIndex
         ? this.props.charactersList[this.state.mouseOveredIndex]
         : this.props.charactersList[this.props.selectedIndex];
-
         
       let backgroundImageUrl
       if(SelectedCharacter.name == 'The business clairvoyants'){
@@ -329,7 +285,6 @@
       }
       return (
         <div className="materialize-warper select-house-wrapper">
-          {/* <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/character-creation-background.png" alt="step background" /> */}
           <div className="container house-desktop-view">
               <div className="character-wizard-steps">
                   <div className="wizard-circle" style={{float:'left'}}></div>
@@ -344,35 +299,39 @@
               <div className="houses-wrapper">
                 {this.renderCharacters(this.props.charactersList, 0, this.props.charactersList.length - 1)}
                 <div className="character-description-container">
-                  <div className='character-description-box' style={{backgroundImage: `url(${backgroundImageUrl})`}}>
+                  <div className='character-description-box'>
+                      <div className="select-house-header">
+                        Select your House
+                      </div>
+                      <div className="select-house-desc">
+                        Team members will be suggested to you based on your house, 
+                        including benefits that can aid your progression
+                      </div>
+                      <div className="select-house-desc">
+                        What do you like?
+                      </div>
+                      <ul className="character-skills">
+                            <li className="character-skill">
+                              {SelectedCharacter.category}
+                            </li>
+                      </ul>
                       <div className="character-header">
                         {SelectedCharacter.name}
                       </div>
                       <div className="character-description">
-                        {SelectedCharacter.description1 && SelectedCharacter.description1}
-                        {SelectedCharacter.description2 && SelectedCharacter.description2}
-                        {SelectedCharacter.description3 && SelectedCharacter.description3}
+                        {SelectedCharacter.description && SelectedCharacter.description}
                       </div>
-                      <ul  className="character-skills">
-                        {SelectedCharacter.skills.map((skill, i) => {
-                          return (
-                            <li className="character-skill" key={i}>
-                              {skill}
-                            </li>
-                          );
-                        })}
-                      </ul>
+                      <div className="house-button-wrapper">
+                        <button type="button" className="back-button"  onClick={() => this.props.onPreviousStep()}>
+                          <p>Back</p>
+                        </button>
+                        <button type="button" className="next-button" 
+                        onClick={() => this.props.onNextStep({ characterTraitsIndex: this.props.selectedIndex })}>
+                          <p>Next</p>
+                        </button>
+                      </div>
                   </div>
                 </div>
-              </div>
-              <div className="house-button-wrapper">
-                <button type="button" className="back-button"  onClick={() => this.props.onPreviousStep()}>
-                  <p>Back</p>
-                </button>
-                <button type="button" className="next-button" 
-                onClick={() => this.props.onNextStep({ characterTraitsIndex: this.props.selectedIndex })}>
-                  <p>Next</p>
-                </button>
               </div>
           </div>
           {this.renderMobileView(SelectedCharacter)}

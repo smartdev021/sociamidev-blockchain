@@ -27,13 +27,15 @@ import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main';
 import ActionLink from '~/src/components/common/ActionLink';
 
-import CharacterCreationFlow from '~/src/character-creation/CharacterCreationFlow';
+// import CharacterCreationFlow from '~/src/character-creation/CharacterCreationFlow';
+import CharacterCreationFlow from '~/src/theme/components/characterCreation/CharacterCreationFlow';
 
 import Loadable from 'react-loading-overlay';
 
 import {
   fetchUserProfile,
   update_userProfile,
+  fetchUserTheme,
   logout,
   openUserProfile,
   openSignUpForm,
@@ -41,6 +43,9 @@ import {
   fetchUserActivities,
   fetchUserTasks,
   setUserProfileCharacter,
+  updateAvatar,
+  updateCoverBackground,
+  setUserLocaleDataI18Next
 } from '~/src/redux/actions/authorization';
 
 import { fetchAllTasks, updateTask } from '~/src/redux/actions/tasks';
@@ -64,6 +69,10 @@ let DataProviderEventBrite = require('~/src/data_providers/event_brite/DataProvi
 let DataProviderUdemy = require('~/src/data_providers/udemy/DataProvider');
 let DataProviderFreelancer = require('~/src/data_providers/freelancer/DataProvider');
 
+import i18next from 'i18next';
+import LngDetector from 'i18next-browser-languagedetector';
+import { Footer } from './theme/components/landingPage/Footer';
+
 const BackendURL = ConfigMain.getBackendURL();
 var socketConn;
 
@@ -85,8 +94,9 @@ class App extends Component {
     this.state.anonymousUserId = uuid;
     this.socket = io(BackendURL, { query: `userID=${uuid}` }).connect();
     socketConn = this.socket;
-
+    
     this.socket.on('newUser', user => {
+      console.log("==>", user)
       var chatObj = {
         eventType: 'newUser',
         data: user,
@@ -95,6 +105,7 @@ class App extends Component {
     });
 
     this.socket.on('server:user', userObj => {
+      console.log("userObj", userObj)
       var chatObj = {
         eventType: 'server:user',
         data: userObj,
@@ -157,6 +168,7 @@ class App extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
 
     this.props.fetchTaskActivityUnlockReqs();
+    this.props.setUserLocaleDataI18Next(i18next.use(LngDetector));
     this.restoreAuthFromLS();
   }
 
@@ -248,7 +260,7 @@ class App extends Component {
 
     //TODO: need more robust way for redirection. Maybe store rediret path to backend session?
     if (this.props.exactLocation && this.props.exactLocation == 'RoadmapsWidgetDetails') {
-      lastLocation.pathname = '/taskManagement';
+      lastLocation.pathname = '/tasks';
     }
 
     cookies.set('lastLocation', lastLocation, options);
@@ -261,6 +273,8 @@ class App extends Component {
       data = {
         characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]
           .name,
+        characterId: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]
+          ._id,
         traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
         traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
         characterIndex: this.props.characterCreationData.selectedCharacterIndex,
@@ -302,9 +316,7 @@ class App extends Component {
 
   HandleSignUp(endpoint) {
     this.props.closeSignUpForm();
-
     this.storeCurrentLocationInCookies();
-
     window.location.href = `${BackendURL}/${endpoint}?${this.getParametersForLoginRequest().join('&')}`;
   }
 
@@ -345,6 +357,7 @@ class App extends Component {
   fetchUserInfoFromDataBase() {
     if (this.state.faceBookID || this.state.linkedInID || this.state.userID) {
       this.props.fetchUserProfile(this.state.faceBookID, this.state.linkedInID, this.state.userID);
+      this.props.fetchUserTheme(this.state.userID);
     }
   }
 
@@ -495,7 +508,9 @@ class App extends Component {
   }
 
   handleCharacterDataSet() {
-    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData());
+    this.props.setUserProfileCharacter(this.props.userProfile._id, this.getCharacterCreationData()).then(
+      result => this.props.fetchUserTheme(this.props.userProfile._id)
+    )
   }
 
   chatEndListener(event, data) {
@@ -552,6 +567,16 @@ class App extends Component {
     let RedirectTo = this.getRedirectLocation();
 
     let ChatAppLink = <ChatApp loggedin={this.props.isAuthorized} userProfile={this.props.userProfile} />;
+    
+    if (this.props.userProfile.character === null || this.props.userProfile.theme === undefined){
+      return (
+        <div className="landing-page-wrapper landing-page-container">
+          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
+          <Footer />
+        </div>
+        
+      )
+    }
 
     return (
       <Loadable
@@ -591,9 +616,10 @@ class App extends Component {
             screenWidth={this.state.screenWidth}
             screenHeight={this.state.screenHeight}
             accounting={this.props.accounting}
+            changeAvatar={url => this.props.updateAvatar(url)}
+            changeCoverBackground={url => this.props.updateCoverBackground(url)}
             logout={() => this.logout()}
           />
-          <CharacterCreationFlow onHandleCharacterDataSet={() => this.handleCharacterDataSet()} />
           {ChatAppLink}
         </div>
       </Loadable>
@@ -619,11 +645,14 @@ App.propTypes = {
   openSignUpForm: PropTypes.func.isRequired,
   closeSignUpForm: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
+  fetchUserTheme: PropTypes.func.isRequired,
   update_userProfile: PropTypes.func.isRequired,
   fetchUserActivities: PropTypes.func.isRequired,
   fetchAllTasks: PropTypes.func.isRequired,
   fetchUserTasks: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
+  updateAvatar: PropTypes.func.isRequired,
+  updateCoverBackground: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   startCharacterCreation: PropTypes.func.isRequired,
   setUserProfileCharacter: PropTypes.func.isRequired,
@@ -638,7 +667,10 @@ const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
   closeSignUpForm: bindActionCreators(closeSignUpForm, dispatch),
   fetchUserProfile: bindActionCreators(fetchUserProfile, dispatch),
+  fetchUserTheme: bindActionCreators(fetchUserTheme, dispatch),
   update_userProfile: bindActionCreators(update_userProfile, dispatch),
+  updateAvatar: bindActionCreators(updateAvatar, dispatch),
+  updateCoverBackground: bindActionCreators(updateCoverBackground, dispatch),
   fetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   updateTask: bindActionCreators(updateTask, dispatch),
   fetchResults: bindActionCreators(fetchResults, dispatch),
@@ -647,6 +679,7 @@ const mapDispatchToProps = dispatch => ({
   startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   setUserProfileCharacter: bindActionCreators(setUserProfileCharacter, dispatch),
   logout: bindActionCreators(logout, dispatch),
+  setUserLocaleDataI18Next: bindActionCreators(setUserLocaleDataI18Next, dispatch),
   fetchUserAccounting: bindActionCreators(fetchUserAccounting, dispatch),
   fetchUserTasks: bindActionCreators(fetchUserTasks, dispatch),
   fetchTaskActivityUnlockReqs: bindActionCreators(fetchTaskActivityUnlockReqs, dispatch),

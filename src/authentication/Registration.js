@@ -49,41 +49,39 @@ class Registration extends Component {
   render() {
     return (
       <form
-        style={styles.form}
         onChange={event => this.handleChange(event)}
         onSubmit={event => this.handleSubmit(event)}
       >
-        <input
-          className="form-control"
-          style={styles.input}
-          name="email"
-          type="email"
-          placeholder="Email"
-          required
-          value={this.state.email}
-        />
-        <input
-          className="form-control"
-          style={styles.input}
-          name="name"
-          type="text"
-          placeholder="Name"
-          required
-          value={this.state.name}
-        />
-        <input
-          className="form-control"
-          style={styles.input}
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          value={this.state.password}
-        />
-        {this.state.message && <div>{this.state.message}</div>}
-        <button className="btn btn-lg btn-primary btn-block" type="submit">
-          Signup
-        </button>
+        <div className="col-xs-12" style={{padding: '10px'}}>
+          <div className="signup-details">
+            <input
+              name="name"
+              type="text"
+              placeholder="Name"
+              required
+              value={this.state.name}
+            />
+          </div>
+
+          <div className="signup-details">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              value={this.state.password}
+            />
+          </div>
+        </div>
+        <div className="col-xs-12" style={{padding: '10px'}}>
+          <div className="signup-email">
+            <input type="email" className="mail new-text" placeholder="What is your email" 
+            name="email" type="email" required value={this.state.email} />
+          </div>
+          <button type="submit" className="btn signup-btn">Create</button>
+          {this.state.message && <div>{this.state.message}</div>}
+        </div>
+        <p className="signup-policy-terms">You agree to our Data Privacy and Terms of Use</p>
       </form>
     );
   }

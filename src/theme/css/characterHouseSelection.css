@@ -2,10 +2,7 @@
     font-family: 'MyriadPro';
     background-size: 100%;
     position: relative;
-    background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/characterCreation/character-creation-background.png);
-    min-height: 860px;
-    margin-bottom: -55px;
-    background-size: cover;
+    background: black;
 }
   
 @media screen and (max-width: 768px) {
@@ -36,7 +33,9 @@
 .select-house-wrapper .houses-wrapper{
     width: 100%;
     margin-top: 25px;
-    overflow: auto;
+    border-width: 1px;
+    border-color: rgb(66, 154, 222);
+    border-style: solid;
 }
 
 @media screen and (max-width: 768px) {
@@ -49,65 +48,57 @@
 .character-panel-container{
     width: 33.33333333%;
     float: left; 
-    padding: 5px;  
+    border-width: 1px;
+    border-color: rgb(66, 154, 222);
+    border-style: solid;
 }
 
 .character-description-container{
     width: 66.66666667%;
     float: right;
-    padding: 5px;
+    border-width: 1px;
+    border-color: rgb(66, 154, 222);
+    border-style: solid;
 }
 
 @media screen and (max-width: 768px) {
     .character-panel-container{
-        /* padding: 2px; */
         width: 100%;
         float: right;
     }
     
     .character-description-container{
-        /* padding: 2px; */
         width: 100%;
         float: left;
     }
 }
 
-/* @media screen and (max-width: 900px) and (min-width: 768px) {
-    .character-panel-container{
-        padding: 5px;
-    }
-    
-    .character-description-container{
-        padding: 5px;
-    }
-} */
-
 .select-house-wrapper div.character-panel {
-    background-color: rgb(255, 255, 255);
+    background-color: black;
     box-shadow: 0px 11px 22px 0px rgba(14, 31, 48, 0.76);
     height: 471px;
     padding: 20px 15px 20px 15px;
+    overflow-y: scroll;
 }
 
 .select-house-wrapper div.character-description-box {
     border-width: 2px;
-    border-color: rgb(235, 235, 235);
-    border-style: solid;
     background-color: rgb(0, 0, 0);
     box-shadow: 0px 12px 24px 0px rgba(10, 22, 34, 0.004);
     height: 471px;
     position: relative;
     background-size: cover;
+    padding: 40px 30px;
 }
 
 @media screen and (max-width: 768px) {
     .select-house-wrapper div.character-panel {
-        height: 400px;
+        height: auto;
         padding: 12px 0px 12px 0px;
     }
     
     .select-house-wrapper div.character-description-box {
-        height: 300px;
+        height: auto;
     }
 }
 
@@ -118,22 +109,26 @@
 
 .character-panel-container .character-selection-button {
     cursor: pointer;
-    background-color: rgb(235, 235, 235);
     border-radius: 50%;
     width: 91px;
     height: 91px;
     margin: 0 auto;
-    border: 0px solid #ffffff;
     overflow: hidden;
+
+    border-width: 2px;
+    border-color: rgb(150, 1, 163);
+    border-style: solid;
+    border-radius: 50%;
+    background-color: rgb(235, 235, 235);
 }
 
 .character-panel-container .character-selection-button.character-selected {
-    opacity: 1;
-    border-style: double;
-    border-width: 6px;
-    border-color: rgb(32, 128, 229);
+    border-width: 2px;
+    border-color: rgb(150, 1, 163);
+    border-style: solid;
     border-radius: 50%;
-    box-shadow: 1px 1px 1px 1px rgb(32, 128, 229);
+    background-color: rgb(235, 235, 235);
+    box-shadow: 0px 0px 15px 0px rgba(226, 113, 236, 0.004);
 }
 
 .character-selection-button.character-order img {
@@ -144,7 +139,7 @@
 .character-panel-container .character-name{
     text-align: center;
     font: normal 13px "MyriadPro Semibold";
-    color: black;
+    color: white;
     margin-top: 6px;
     line-height: 1.3;
     padding-left: 10%;
@@ -153,44 +148,35 @@
 }
 
 .character-description-container .character-header{
-    font: normal 40px "MyriadPro Semibold";
-    color: white;
+    font: normal 20px "MyriadPro Bold";
+    color: rgb(0, 105, 190);
     text-transform: uppercase;
-    padding-left: 5%;
-    padding-right: 5%;
-    text-align: center;
-    position: absolute;
-    top: 20%;
-    width: 100%;
-}
+    padding: 40px 0px 10px 0px;
+} 
 
 .character-description-container .character-description{
-    position: absolute;
-    top: 45%;
-    color: white;
-    font: normal 22px "MyriadPro Semibold";
-    padding-left: 10%;
-    padding-right: 10%;
-    text-align: center;
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    font: normal 16px "MyriadPro Semibold";
     width: 100%;
 }
 
 .character-description-container .character-skills{
     text-align: center;
-    position: absolute;
-    top: 75%;
-    width: 100%;
-    padding: 0;
+    display: inline-flex;
 }
 
 .character-description-container .character-skill{
-    font: normal 20px "MyriadPro Bold";
-    color: rgb(255, 212, 0);
-    text-align: center;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 10px;
-}
+    font: normal 12px "MyriadPro Bold";
+    border-width: 2px;
+    border-color: rgb(0, 145, 250);
+    color: rgb(0, 105, 190);
+    line-height: 1.2;
+    border-style: solid;
+    border-radius: 14px;
+    padding: 5px 15px;
+    margin-right: 10px;
+} 
 
 @media screen and (max-width: 768px) {
     .character-panel-container .character-grid{
@@ -206,14 +192,13 @@
 
     }
     .character-description-container .character-header{
-        top: 17%;
         font: normal 22px "MyriadPro Bold";
-        padding-left: 10%;
-        padding-right: 10%;
+        padding: 0;
     }
     .character-description-container .character-description{
         top: 40%;
         font: normal 16px "MyriadPro Bold";
+        padding: 15px 0px;
     }
     .character-description-container .character-skills{
         top: 80%;
@@ -226,7 +211,7 @@
 
 .select-house-wrapper p{
     margin: 16px 0 8px;
-    font: normal 15px "MyriadPro Regular";
+    font: normal 15px "MyriadPro Bold";
 }
 
 @media screen and (max-width: 768px) {
@@ -319,38 +304,43 @@
 
 .house-button-wrapper{
     text-align: center;
-    padding-top: 25px !important;
-    padding-bottom: 50px !important;
-}
-
-.house-button-wrapper button{
-    display: inline-block;
-    padding: 5px 90px;
-    margin: 45px 10px 0px 10px !important;
-    font: normal 20px "MyriadPro Semibold";
-    color: black;
-    transform: skew(-38deg);
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
 }
 
 .house-button-wrapper button.back-button{
-    background-color: white;
-    box-shadow: 0px 11px 18px 0px rgba(14, 31, 48, 0.4), inset 0px 3px 7px 0px rgba(195, 189, 161, 0.71);
+    border-width: 2px;
+    border-color: rgb(150, 1, 163);
+    border-style: solid;
+    opacity: 0.949;
+    width: 132px;
+    height: 47px;
+    border-radius: 50px;
+    background: black;
 }
 
 .house-button-wrapper button.next-button{
-    background-color: gold;
-    box-shadow: 0px 11px 18px 0px rgba(14, 31, 48, 0.4), inset 0px 3px 7px 0px rgba(206, 174, 18, 0.71);
-}
+    border-width: 2px;
+    border-color: rgb(150, 1, 163);
+    border-style: solid;
+    opacity: 0.949;
+    width: 132px;
+    height: 47px;
+    border-radius: 50px;
+    background: black;
+}  
 
 .house-button-wrapper p{
-    margin: 0;
-    font: normal 18px "MyriadPro Bold";
-    transform: skew(38deg);
+    color: rgb(150, 1, 163);
 }
 
 @media screen and (max-width: 768px) {
     .house-button-wrapper{
-        padding-top: 0 !important;
+        text-align: center;
+        position: absolute;
+        bottom: -25px;
+        left: 15%;
     }
     .house-button-wrapper button{
         padding: 5px 40px;
@@ -411,13 +401,13 @@
     padding-right: 5%;
     text-align: center;
     position: absolute;
-    top: 20%;
+    top: 5%;
     width: 100%;
 }
 
 .character-description-box-modal .character-description-modal{
     position: absolute;
-    top: 40%;
+    top: 25%;
     color: white;
     font: normal 20px "MyriadPro Semibold";
     padding-left: 6%;
@@ -478,4 +468,16 @@
     top: 0%;
     position: absolute;
     right: 5%;
+}
+.select-house-header{
+    font: normal 30px "MyriadPro Bold";
+    color: rgb(255, 197, 0);
+    line-height: 1.2;
+}
+.select-house-desc{
+    font: normal 18px "MyriadPro Bold";
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: left;
+    padding: 20px 0px;
 }

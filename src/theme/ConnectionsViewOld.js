@@ -6,7 +6,7 @@ import '../theme/css/userList.css';
 import { Tab, Tabs } from '../../node_modules/react-bootstrap';
 import PropTypes from 'prop-types';
 
-class ConnectionsView extends React.Component {
+class ConnectionsViewOld extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -508,9 +508,9 @@ class ConnectionsView extends React.Component {
   }
 }
 
-ConnectionsView.propTypes = {
+ConnectionsViewOld.propTypes = {
   userProfile: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
 
-export default ConnectionsView;
+export default ConnectionsViewOld;

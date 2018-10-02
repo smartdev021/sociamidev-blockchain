@@ -1,8 +1,19 @@
 div#notificationTile {
   position: absolute;
   width: 332px;
-  right: 20px;
-  top: 70px;
+  right: -18%;
+  top: 60px;
+  border: none;
+  height: 400px;
+  padding: 0 10px;
+  z-index: 200;
+}
+
+div#companyDropdown {
+  position: absolute;
+  width: 250px;
+  right: -1%;
+  top: 61px;
   border: none;
   height: 400px;
   padding: 0 10px;
@@ -58,6 +69,20 @@ div#notificationTile {
   border: none;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
+}
+
+.notifyTitle ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.notifyTitle .company-name {
+  position: absolute;
+  margin-top: 9px;
+  margin-left: 5px;
+  color: white !important;
+  font-size: 11pt !important;
+  top:unset !important;
 }
 
 .notifyMeta {
@@ -207,15 +232,36 @@ span.notification-item.list-group-item:hover .notify-hide {
   padding: 10px 15px;
 }
 
+div#companyDropdown .notifyTitle.list-group-item ul li{
+  padding: unset;
+}
+
+@media screen and (max-width: 750px) {
+  div#notificationTile {
+    top: 40px;
+  }
+  .list-group::after{
+    right: 10px;
+    border: 6px solid #000;
+    border-color: transparent transparent #ffc700 #ffc700;
+  }
+  .list-group:before {
+    right: 10px;
+    border: 6px solid #000;
+    border-color: transparent transparent #0a0a0a #0a0a0a;
+  }
+}
+
 @media (max-width: 480px) {
   div#notificationTile {
     position: absolute;
-    right: 0;
+    right: calc(-28.7vw + 50%);
     top: 40px;
     z-index: 100;
-    width: 100%;
+    width: 100vw;
     line-height: 1;
     background: #fff;
+    padding: unset;
   }
 
   .notifyTitle div {
@@ -224,12 +270,36 @@ span.notification-item.list-group-item:hover .notify-hide {
   }
 
   .list-group::after{
-    right: 100px;
+    right: 37px;
     border: 6px solid #000;
     border-color: transparent transparent #ffc700 #ffc700;
   }
   .list-group:before {
-    right: 100px;
+    right: 37px;
+    border: 6px solid #000;
+    border-color: transparent transparent #0a0a0a #0a0a0a;
+  }
+
+  div#companyDropdown {
+    position: absolute;
+    right: calc(-28.7vw + 50%);
+    top: 40px;
+    z-index: 100;
+    width: 100vw;
+    line-height: 1;
+    background: #fff;
+  }
+  div#companyDropdown .notifyTitle.list-group-item{
+    padding: 10px 15px;
+  }
+
+  div#companyDropdown .list-group::after{
+    right: 115px;
+    border: 6px solid #000;
+    border-color: transparent transparent #ffc700 #ffc700;
+  }
+  div#companyDropdown .list-group:before {
+    right: 115px;
     border: 6px solid #000;
     border-color: transparent transparent #0a0a0a #0a0a0a;
   }

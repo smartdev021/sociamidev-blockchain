@@ -18,6 +18,7 @@ import TrailerModal from "~/src/theme/components/landingPage/TrailerModal";
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import Youtube from 'react-youtube';
+import languageContent from './languageWiseContent.json';
 
 const soqqleEnv = process.env.SOQQLE_ENV;
 
@@ -52,14 +53,30 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onTrailerModalShow }) => {
+const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onTrailerModalShow, currentLanguage }) => {
   return (
     <div className="banner-wrapper">
       <img
         src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg"
         alt="banner" />
-      <div>
-        <section>
+      <div className="banner-content">
+        <h2>{ soqqleEnv === 'production' ? 'SIGN UP FOR BETA' : languageContent[currentLanguage].banner_main }</h2>
+        <p>{languageContent[currentLanguage].banner_sub}</p>
+        {
+          soqqleEnv === 'production' ?
+          <a className="btn-top" onClick={onBetaFormModalShow}>Sign up now!</a>
+          :
+          <Link to="/characterCreation" className="btn-top" onClick={() => startCharacterCreation() }>
+            {languageContent[currentLanguage].banner_button}
+          </Link>
+        }
+        {
+          soqqleEnv === 'production' ?
+          <span className="col-md-12"><a className="btn-bottom" onClick={onTrailerModalShow}>Trailer</a></span>
+          :
+          <span className="col-md-12"><a className="btn-bottom" onClick={() => openSignUpForm()}>Already have an account</a></span>
+        }
+        {/* <section>
           {
             soqqleEnv === 'production' ?
             <h2>sign up for beta</h2>:
@@ -91,24 +108,18 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
             onClick={() => openSignUpForm()}>
             <p>Sign in</p>
           </button>
-        }
+        } */}
       </div>
     </div>
   );
 };
 
-const AboutComponent = () => {
+const AboutComponent = ({currentLanguage}) => {
   return (
-    <div className="about-wrapper">
-      <div className="top-rectangle">&nbsp;</div>
-      <h2>Available now on Alpha. <span>FREE</span>.</h2>
-      <p>Soqqle is a novel game that brings your heartfelt aspirations to real life.</p>
-      <h3>Join quests across different roles for the #futureofwork and team up with others to
-        accomplish common goals! We call this - <span>The Game For Life.<br /></span> Isn’t
-        this amazing?
-      </h3>
-      <span className="blue-rectangle">&nbsp;</span>
-      <div className="bottom-rectangle">&nbsp;</div>
+    <div className="about-wrapper second-section-bg">
+      <h2 dangerouslySetInnerHTML={{ __html:languageContent[currentLanguage].about_header }}/>
+      <p>{languageContent[currentLanguage].about_second_line}</p>
+      <h3 dangerouslySetInnerHTML={{ __html: languageContent[currentLanguage].about_third_line}}/>
     </div>
   );
 };
@@ -154,11 +165,12 @@ const OurBlog = (props) => {
   }
   return (
     <div className="our-blog">
-      <h2>Our blog</h2>
+      <h2>{languageContent[props.currentLanguage].blog_header}</h2>
       <section>
         {
           firstArticle ?
             <div className="one-news">
+              <div className="overlay"></div>
               <img src={firstArticle.openGraph.image.url} />
               <Article article={firstArticle}></Article>
             </div> : null
@@ -168,6 +180,7 @@ const OurBlog = (props) => {
           {
             secondArticle ?
               <div className="top-news">
+                <div className="overlay"></div>
                 <img src={secondArticle.openGraph.image.url} />
                 <Article article={secondArticle}></Article>
               </div> : null
@@ -175,274 +188,229 @@ const OurBlog = (props) => {
           {
             thirdArticle ?
               <div className="bottom-news">
+                <div className="overlay"></div>
                 <img src={thirdArticle.openGraph.image.url} />
                 <Article article={thirdArticle}></Article>
               </div> : null
           }
         </div>
       </section>
-      <button type="button" className="all-news-button"><p>See all news</p></button>
+      <button type="button" className="btn"><p>{languageContent[props.currentLanguage].blog_button}</p></button>
     </div>
   );
 };
 
-const SoqqleInfo = () => {
+const SoqqleInfo = ({currentLanguage}) => {
   return (
     <div className="soqqle-info">
-      <h2>What is Soqqle</h2>
+      <h2>{languageContent[currentLanguage].info_header}</h2>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/learning-course.png"
           className="learning-course"
           alt="drive purposeful learning" />
-        <p>Drive purposeful learning</p>
+        <p>{languageContent[currentLanguage].info_one}</p>
       </section>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/combine-goals.png"
           className="goals"
           alt="Combine social and learning goals" />
-        <p>Combine social and learning goals</p>
+        <p>{languageContent[currentLanguage].info_two}</p>
       </section>
       <section>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/jorney.png"
           className="jorney"
           alt="Helps identify networks to join the journey" />
-        <p>Helps identify networks to join the journey</p>
+        <p>{languageContent[currentLanguage].info_three}</p>
       </section>
     </div>
   );
 };
 
-const TalkAboutUs = () => {
+const TalkAboutUs = ({currentLanguage}) => {
   return (
     <div className="talk-about-us">
-      <h2>They talk about us</h2>
+      <h2>{languageContent[currentLanguage].talk_header}</h2>
       <section className="background-section-1">
         <div>
           <img className="avatar"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-2.png"
+            src="http://d9hhrg4mnvzow.cloudfront.net/beta.soqqle.com/connect/1d6c97e1-unsplash-u-lay00ifd4-man-wearing-parka-jacket_02d01c01c01c00i000.jpg"
             alt="avatar" />
-          <img className="twitter"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-            alt="twitter" />
         </div>
         <article>
-          <h3>Pek Yun Ning</h3>
-          <p>I think the concept of a Game-Based experienceto explore a world of
-            opportunities is
-            superb. I can’t wait to hear more about and take part in the BETA!</p>
+          <h4>CARLO</h4>
+          <p>I learnt about Soqqle in an event and was floored by the idea that we could learn more about others through games. Can't wait to be a part of Beta!</p>
         </article>
-        <img className="twitter-mobile"
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-          alt="avatar" />
-        <span className="opacity-layout"> </span>
       </section>
       <section className="main-section">
         <div>
           <img className="avatar"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-1.png"
+            src="http:////d9hhrg4mnvzow.cloudfront.net/beta.soqqle.com/edutech/54ac4729-unsplash-rzj4teqze4m-woman-smiling-closing-eyes-while-flipping-her-hair_04p03e03e03e00n000.jpg"
             alt="avatar" />
-          <img className="twitter"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-            alt="twitter" />
         </div>
         <article>
-          <h3>Pek Yun Ning</h3>
-          <p>I think the concept of a Game-Based experience <br />to explore a world of
-            opportunities is
-            superb. <br /> I can’t wait to hear more about and take part <br />in the
-            BETA!</p>
+          <h4>JAYES</h4>
+          <p>It'd be fantastic to be able to to know what my friends are interested in. Can't find anywhere else.</p>
         </article>
-        <img className="twitter-mobile"
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-          alt="avatar" />
       </section>
       <section className="background-section-2">
         <div>
           <img className="avatar"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/avatar-2.png"
+            src="http://d9hhrg4mnvzow.cloudfront.net/beta.soqqle.com/connect/0a28d17b-unsplash-0e4pr7deta8-smiling-woman-holding-her-head_02001c01c01c00c000.jpg"
             alt="avatar" />
-          <img className="twitter"
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-            alt="twitter" />
         </div>
         <article>
-          <h3>David Avetyan</h3>
-          <p>Thank you for a great website.I like it very very <br /> much. It helped me a
-            lot.
-            Thanks a lot..Thank <br /> you for a great website.I like it very very
-            much. <br /> It
-            helped me a lot. Thanks a lot..Thank you for a great <br /> website. I like
-            it very
-            very much. It helped me a lot. <br /> Thanks a lot..</p>
+          <h4>LILY</h4>
+          <p>A new way to find out more about brands, and people around me is very unique and unheard of! I hope to learn more about this cool project.</p>
         </article>
-        <img className="twitter-mobile"
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/twitter.png"
-          alt="avatar" />
-        <span className="opacity-layout"> </span>
       </section>
-      <footer>
-        <button type="button" className="left-arrow"><p>&#60;</p></button>
-        <button type="button" className="right-arrow"><p>&#62;</p></button>
-      </footer>
+      {/* <footer>
+        <a href="#"></a>
+        <a href="#" className="active"></a>
+        <a href="#"></a>
+      </footer> */}
     </div>
   );
 };
 
-const VideoComponent = () => {
+const VideoComponent = ({currentLanguage}) => {
   return (
     <div className="video">
-      <div className="top-rectangle"></div>
-      <h1>Discover Soqqle</h1>
-      <Youtube
-        videoId="GN4XqcrfAWY"
-        id="GN4XqcrfAWY"
-        opts={
-          {
-            width: "740",
-            height: "415",
-            frameborder: "0",
-            allow: "autoplay; encrypted-media",
-            allowfullscreen: true
-          }
-        }
-        onPlay={()=> mixpanel.track('View Video')}
-      />
-      <button type="button" className="all-videos-button"><p>See all videos</p></button>
+      <h1>{languageContent[currentLanguage].video_header}</h1>
+      <div className="video-box-home">
+        <div className="img-box">
+          <Youtube
+            videoId="GN4XqcrfAWY"
+            id="GN4XqcrfAWY"
+            opts={
+              {
+                width: "740",
+                height: "415",
+                frameborder: "0",
+                allow: "autoplay; encrypted-media",
+                allowfullscreen: true
+              }
+            }
+            onPlay={()=> mixpanel.track('View Video')}
+          />
+        </div>
+        <a href="#" className="video-box-home btn-video">See all videos <span><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/video-btn-icon.png" alt="" /></span></a>
+      </div>
     </div>
   );
 };
 
-
-const WorkExplanation = () => {
+const WorkExplanation = ({currentLanguage}) => {
   return (
     <div className="work-explanation">
-      <h2>How it works</h2>
-      <section className="select-house clearfix">
-        <div className="images-wrapper">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.png"
-            alt="select your house" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house-1.png"
-            className="background-img-1"
-            alt="select your house on background" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house-2.png"
-            className="background-img-2"
-            alt="select your house on background" />
+      <h2>{languageContent[currentLanguage].work_header}</h2>
+      <div id="myCarousel" className="carousel slide" data-ride="carousel">
+        <ol className="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+          <li data-target="#myCarousel" data-slide-to="3"></li>
+          <li data-target="#myCarousel" data-slide-to="4"></li>
+        </ol>
+
+        <div className="carousel-inner">
+          <div className="item active">
+            <div className="select-house clearfix">
+              <div className="images-wrapper"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.png" alt="select your house" /></div>
+              <div className="description">
+                <span className="blue-rectangle"> </span>
+                <h1>1</h1>
+                <h3>1. {languageContent[currentLanguage].work_one}</h3>
+                <p>{languageContent[currentLanguage].work_one_text}</p>
+                <p>{languageContent[currentLanguage].work_one_line}</p>
+                <a href="/houses" className="explore-page">{languageContent[currentLanguage].work_one_link} &gt;</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="item">
+            <div className="select-house clearfix">
+              <div className="images-wrapper">
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.png"
+                  alt="select a hero" />
+              </div>
+              <div className="description">
+                <span className="blue-rectangle"> </span>
+                <h1>2</h1>
+                <h3>2. {languageContent[currentLanguage].work_two}</h3>
+                <p>{languageContent[currentLanguage].work_two_text}</p>
+                <p>{languageContent[currentLanguage].work_two_line}</p>
+                <a href="/heroes" className="explore-page">{languageContent[currentLanguage].work_two_link} &#62;</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="item">
+            <div className="select-house clearfix">
+              <div className="images-wrapper">
+                <div className="play-the-game-video">
+                  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/veQyAxuRzD0?rel=0&amp;controls=0&amp;showinfo=0" frameBorder="0" allowFullScreen=""></iframe>
+                </div>
+                {/* <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game.png"
+                  alt="play the game"/> */}
+              </div>
+              <div className="description">
+                <span className="blue-rectangle"> </span>
+                <h1>3</h1>
+                <h3>3. {languageContent[currentLanguage].work_three}</h3>
+                <p>{languageContent[currentLanguage].work_three_text}</p>
+                <a href="" className="explore-page">{languageContent[currentLanguage].work_three_link} &#62;</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="item">
+            <div className="select-house clearfix">
+              <div className="images-wrapper">
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png"
+                  alt="get a reward"/>
+              </div>
+              <div className="description">
+                <span className="blue-rectangle"> </span>
+                <h1>4</h1>
+                <h3>4. {languageContent[currentLanguage].work_four}</h3>
+                <p>{languageContent[currentLanguage].work_four_text}</p>
+                <a href="" className="explore-page">{languageContent[currentLanguage].work_four_link} &#62;</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="item">
+            <div className="select-house clearfix">
+              <div className="images-wrapper">
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.png"
+                  alt="use your rewards" />
+              </div>
+              <div className="description">
+                <span className="blue-rectangle"> </span>
+                <h1>5</h1>
+                <h3>5. {languageContent[currentLanguage].work_five}</h3>
+                <p>{languageContent[currentLanguage].work_five_text}</p>
+                <a href="" className="explore-page">{languageContent[currentLanguage].work_five_link} &#62;</a>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div className="description">
-          <span className="blue-rectangle"> </span>
-          <h1>1</h1>
-          <h3>1. Select your house</h3>
-          <p>Join an environment where people similar to you gather and complete similar
-            tasks.
-            Develop together the same way.</p>
-          <p>There are 6 houses available in BETA.</p>
-          <a href="/houses" className="explore-page">Explore Houses &#62;</a>
-        </div>
-      </section>
-      <section className="select-hero clearfix">
-        <div className="images-wrapper">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.png"
-            alt="select a hero" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero-1.png"
-            className="background-img-1"
-            alt="select a hero on background" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero-2.png"
-            className="background-img-2"
-            alt="select a hero on background" />
-        </div>
-        <div className="description">
-          <span className="blue-rectangle"> </span>
-          <h1>2</h1>
-          <h3>2. Select a Hero</h3>
-          <p>Select a hero and develop it through tasks, answering questions, solving
-            challenges
-            individually or with your friends.</p>
-          <p>There are 4 heros available in BETA.</p>
-          <a href="/heroes" className="explore-page">Explore Heroes &#62;</a>
-        </div>
-      </section>
-      <section className="play-the-game clearfix">
-        <div className="images-wrapper">
-          <div className="play-the-game-video"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/veQyAxuRzD0?rel=0&amp;controls=0&amp;showinfo=0" frameBorder="0" allowFullScreen=""></iframe></div>
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game.png"
-            alt="play the game"/>
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game-1.png"
-            className="background-img-1"
-            alt="play the game on background"/>
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game-2.png"
-            className="background-img-2"
-            alt="play the game on background"/>
-        </div>
-        <div className="description">
-          <span className="blue-rectangle"> </span>
-          <h1>3</h1>
-          <h3>3. Play the game</h3>
-          <p>Complete quests along the story of the hero
-            you chose, and get method to others so form
-            your own dream team.</p>
-          <a href="">Explore Story &#62;</a>
-        </div>
-      </section>
-      <section className="get-reward clearfix">
-        <div className="images-wrapper">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png"
-            alt="get a reward"/>
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward-1.png"
-            className="background-img-1"
-            alt="get a reward on background" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward-2.png"
-            className="background-img-2"
-            alt="get a reward on background" />
-        </div>
-        <div className="description">
-          <span className="blue-rectangle"> </span>
-          <h1>4</h1>
-          <h3>4. Get a Reward</h3>
-          <p>Cumulate SOQQ Sparks, Achievements and Bonuses upon the completion of tasks.
-            Get more
-            for doing Group Tasks.</p>
-          <a href="">Explore Rewards &#62;</a>
-        </div>
-      </section>
-      <section className="use-rewards clearfix">
-        <div className="images-wrapper">
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.png"
-            alt="use your rewards" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards-1.png"
-            className="background-img-1"
-            alt="use your rewards on background" />
-          <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards-2.png"
-            className="background-img-2"
-            alt="use your rewards on background" />
-        </div>
-        <div className="description">
-          <span className="blue-rectangle"> </span>
-          <h1>5</h1>
-          <h3>5. Use your Rewards</h3>
-          <p>SOQQ Sparks are powered by Blockchain Force. Use them to boost experience
-            gain, or
-            obtain character upgrades. </p>
-          <a href="">Explore Character Progression &#62;</a>
-        </div>
-      </section>
+
+        <a className="left carousel-control" href="#myCarousel" data-slide="prev">
+          <span className="glyphicon fa fa-angle-left"></span>
+        </a>
+        <a className="right carousel-control" href="#myCarousel" data-slide="next">
+          <span className="glyphicon fa fa-angle-right"></span>
+        </a>
+      </div>
     </div>
   );
 };
@@ -517,17 +485,18 @@ class LandingPageContent extends React.Component {
             isEmailInputVisible={this.state.isEmailInputVisible}
             onTrailerModalShow={() => this.handleonTrailerModalShow(true)}
             onBetaFormModalShow={() => this.handleonBetaFormModalShow(true)}
+            currentLanguage={this.props.currentLanguage}
           />
         </header>
-        <AboutComponent />
+        <AboutComponent currentLanguage={this.props.currentLanguage} />
         <main>
-          <SoqqleInfo />
-          <WorkExplanation />
+          <SoqqleInfo currentLanguage={this.props.currentLanguage} />
+          <WorkExplanation currentLanguage={this.props.currentLanguage} />
         </main>
-        <VideoComponent />
+        <VideoComponent currentLanguage={this.props.currentLanguage} />
         <main>
-          <OurBlog articles={this.props.articles} />
-          <TalkAboutUs />
+          <OurBlog articles={this.props.articles} currentLanguage={this.props.currentLanguage} />
+          <TalkAboutUs currentLanguage={this.props.currentLanguage} />
         </main>
       </div>
     );
@@ -547,7 +516,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
-  articles: state.articles.articles
+  articles: state.articles.articles,
+  currentLanguage: state.userProfile.locale.selectedLanguage || 'en'
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LandingPageContent));

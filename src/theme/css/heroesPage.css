@@ -33,6 +33,7 @@
   font-size: 34px;
   line-height: 0.75;
   font-family: "MyriadPro Semibold";
+  padding-bottom: 30px;
 }
 .progression-tree-header{
   font-size: 34px;
@@ -52,14 +53,14 @@
   margin: auto;
   line-height: 1.286;
   font-size: 14px;
+  color:rgb(255, 212, 0)
 }
 .show-more-option{
-  color: white;
+  color: rgb(208, 31, 229);
   text-decoration: underline;
   cursor: pointer;
   font-size: 16px;
   line-height: 1.25;
-  
 }
 
 @media (max-width: 768px){

@@ -120,7 +120,7 @@ class HangoutSubmitForm extends React.Component {
     this.props.onHandleStartHangout(midnightToday);
     this.props.toogleTrenScan();
     this.setState({ IsDisplayForm: 'none', IsDeepDiveCreated: 'block' });
-    // this.props.handleToggle();
+    this.props.onCloseModal();
   }
 
   renderForm() {
@@ -193,6 +193,21 @@ class HangoutSubmitForm extends React.Component {
   }
 
   render() {
+    const modalStyleOverrides = {
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      content: {
+        position: 'relative',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      },
+    };
     return !this.state.isSpecificTime ? (
       <Modal
         contentLabel="DeepDive"
@@ -200,27 +215,38 @@ class HangoutSubmitForm extends React.Component {
         onRequestClose={() => {
           this.props.onCloseModal();
         }}
+        style={modalStyleOverrides}
       >
-        <ActionLink
-          href="#"
-          className="glyphicon glyphicon-remove modal-close-button"
-          onClick={() => {
-            this.onCreateTaskInFlexibleTime();
-            this.props.onCloseModal();
-          }}
-        />
         <div className="modal-popup">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <span className="glyphicon glyphicon-ok-sign modal-ok-sign" />
-                <p>Your Task has been started (flexiable)</p>
-                <br />
-                <a href="javascript:" onClick={() => this.setState({ isSpecificTime: true })}>
-                  Set a specific time >
-                </a>
-              </div>
-            </div>
+          <ActionLink
+            href="#"
+            className="modal-close-button"
+            onClick={() => {
+              this.props.onCloseModal();
+            }}
+          />
+          <h5 className="yellow-text modal-msg">Your Task has been started</h5>
+          <div className="deep-dive-btn-container actions-wrapper">
+            <ul className="actions-list">
+              <li>
+                <ActionLink
+                  href="#"
+                  onClick={() => this.onCreateTaskInFlexibleTime()}
+                  className="action-btn blue-btn"
+                >
+                  Ok
+                </ActionLink>
+              </li>
+              <li>
+                <ActionLink
+                  href="#"
+                  onClick={() => this.setState({ isSpecificTime: true })}
+                  className="action-btn pur-btn"
+                >
+                  Set time
+                </ActionLink>
+              </li>
+            </ul>
           </div>
         </div>
       </Modal>
@@ -229,33 +255,37 @@ class HangoutSubmitForm extends React.Component {
         contentLabel="DeepDive"
         isOpen={this.props.isHangoutFormVisible}
         onRequestClose={() => this.props.onCloseModal()}
+        style={modalStyleOverrides}
       >
-        <ActionLink
-          href="#"
-          className="glyphicon glyphicon-remove modal-close-button"
-          onClick={() => this.props.onCloseModal()}
-        />
-
         <div className="modal-popup">
-          <div id="DefaultModal" style={{ display: this.state.IsDisplayForm }}>
+          <ActionLink
+            href="#"
+            className="modal-close-button"
+            onClick={() => {
+              this.props.onCloseModal();
+            }}
+          />
+          <div className="time-container" style={{ display: this.state.IsDisplayForm }}>
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
-                  <h3>PROPOSE A TIME</h3>
+                  <h5 className="yellow-text modal-msg text-center">PROPOSE A TIME</h5>
                 </div>
               </div>
               <div className="row">
                 <div className="col-lg-12">
-                  <p>A task will be created for your friend to match you.</p>
+                  <p className="text-center task-msg">A task will be created for your friend to match you.</p>
                 </div>
               </div>
               <div className="row">
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                    <label for="txtDate">Date</label>
+                    <label htmlFor="txtDate" className="yellow-text">
+                      Date
+                    </label>
                     <input
                       type="date"
-                      className="form-control validate-field required"
+                      className="form-control validate-field time-input required"
                       data-validation-type="string"
                       id="txtDate"
                       name="date"
@@ -267,10 +297,12 @@ class HangoutSubmitForm extends React.Component {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label for="txtTime">Time</label>
+                    <label htmlFor="txtTime" className="yellow-text">
+                      Time
+                    </label>
                     <input
                       type="time"
-                      className=" form-control validate-field required"
+                      className=" form-control validate-field time-input required"
                       data-validation-type="string"
                       id="txtTime"
                       name="date"
@@ -281,41 +313,50 @@ class HangoutSubmitForm extends React.Component {
                     />
                   </div>
                 </div>
-                {/* <div className="col-lg-12">
-                    {this.renderForm()}
-                  </div> */}
               </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <button
-                    className="btn-md btn-outline-inverse pull-right hangout-btn-ok"
-                    onClick={() => this.onCreateTaskInSpecificTime()}
-                  >
-                    OK
-                  </button>
-                  <button
-                    className="btn-md btn-outline-inverse pull-right hangout-btn-cancel"
-                    onClick={() => {
-                      this.props.onCloseModal();
-                      this.setState({ isSpecificTime: false });
-                    }}
-                  >
-                    CANCEL
-                  </button>
-                </div>
+
+              <div className="deep-dive-btn-container actions-wrapper">
+                <ul className="actions-list">
+                  <li>
+                    <ActionLink
+                      href="#"
+                      onClick={() => this.onCreateTaskInSpecificTime()}
+                      className="action-btn blue-btn"
+                    >
+                      Ok
+                    </ActionLink>
+                  </li>
+                  <li>
+                    <ActionLink
+                      href="#"
+                      onClick={() => {
+                        this.props.onCloseModal();
+                        this.setState({ isSpecificTime: false });
+                      }}
+                      className="action-btn pur-btn"
+                    >
+                      Back
+                    </ActionLink>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-          <div id="afterClickModal" style={{ display: this.state.IsDeepDiveCreated }}>
+          <div
+            className="task-confirmation-msg text-center"
+            style={{ display: this.state.IsDeepDiveCreated }}
+          >
             <p>
               Your DeepDive has been created! Let's wait for a match!<br />Find out more about what's
               happening around this topic below.
             </p>
-            <Link to="/taskManagement">
-              <button type="submit" className="btn-md btn-outline-inverse goto-task-manager-btn">
-                Goto Task Manager Instead
-              </button>
-            </Link>
+            <div className="deep-dive-btn-container actions-wrapper">
+              <Link to="/tasks" className="actions-wrapper">
+                <ActionLink type="submit" className="action-btn pur-btn">
+                  Go to Tasks
+                </ActionLink>
+              </Link>
+            </div>
           </div>
         </div>
       </Modal>
