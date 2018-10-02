@@ -106,7 +106,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
       {
         process.env.SOQQLE_ENV !== 'production' && 
         <button type="button" className="sign-up-button right-new-signup" onClick={() => openSignUpForm()}>
-          <p>Sign up</p>
+          <p>Sign in</p>
         </button>
       }
     </div>
