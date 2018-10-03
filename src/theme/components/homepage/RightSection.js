@@ -166,10 +166,9 @@ class RightSection extends Component {
     });
   }
 
-  render() {
+  gamesInNetwork() {
     return (
-      <div className="col pull-right">
-        {this.skills(this.props.skills)}
+      <div>
         <div className="col-box-wp">
           <div className="games-network-wp">
             <h3 className="col-heading">Games in Network <a href="#" className="purpal-text-link">View all</a></h3>
@@ -250,6 +249,15 @@ class RightSection extends Component {
             </ul>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div className="col pull-right">
+        { this.skills(this.props.skills) }
+        {/* { this.gamesInNetwork() } */}
       </div>
     );
   }

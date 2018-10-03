@@ -34,6 +34,7 @@ import { userInteractionPush } from '~/src/redux/actions/userInteractions';
 
 const MAX_LATEST_TASKS = 3;
 const TaskTypesToNameMap = { find_mentor: 'Find Mentor' };
+const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
 import '~/src/theme/css/heroesPage.css';
 
@@ -373,34 +374,34 @@ class Heroes extends React.Component {
     //const SearchForm = this.renderSearhForm();
     const Tasks = this.renderTasks();
     return (
-    <div
+      <div
         className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper stories-wrapper main-bg`}>
         <div className='row'>
           <div className='container'>
-          <div className='row'>
-          <div className='row'>
+            <div className='row'>
+              <div className='row'>
                 <LeftNav
                   accounting={this.props.accounting}
                   userProfile={this.props.userProfile}
-                  profilePic={this.state.profilePic}
+                  profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic}
                 />
 
                 <div className='ml-fixed'>
-                <div className="row progression-tree-header-box">
-                  {/* <div className="progression-tree-header">
-                    <b>My progression skills</b>
-                  </div> */}
-                  <div className="progression-tree-timers">
-                    <div className="progression-tree-clock">
-                    {this.renderTimers()}
+                  <div className="row progression-tree-header-box">
+                    {/* <div className="progression-tree-header">
+                      <b>My progression skills</b>
+                    </div> */}
+                    <div className="progression-tree-timers">
+                      <div className="progression-tree-clock">
+                        {this.renderTimers()}
+                      </div>
                     </div>
+                    {/* <a className="show-more-option">show more</a> */}
                   </div>
-                  {/* <a className="show-more-option">show more</a> */}
+                  {this.renderUserProgressionTrees()}
                 </div>
-                    {this.renderUserProgressionTrees()}
-                </div>
-          </div>
-          </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
