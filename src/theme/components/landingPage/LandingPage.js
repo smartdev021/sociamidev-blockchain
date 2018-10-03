@@ -80,24 +80,22 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
         <p>Markets</p>
       </button>
       {
-        process.env.SOQQLE_ENV !== 'production' &&
-        (
-          !isEmailInputVisible ?
-          <div className="right-new-link">
-            <a className="dd-new-right" onClick={onMoreMenuToggle}>More <i className="fa fa-angle-down"></i></a>
-            {
-              isMoreMenuVisible &&
-              <ul className="right-dropdown-link">
-                <li><a href="#">Enterprice</a></li>
-                <li><a onClick={onEmailInputShow}>Subscribe</a></li>
-                <li><a onClick={()=>changePageLanguage('en')}>en</a></li>
-                <li><a onClick={()=>changePageLanguage('ko')}>ko</a></li>
-              </ul>
-            }
-          </div>
-          :
-          <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
-        )
+
+        !isEmailInputVisible ?
+        <div className="right-new-link">
+          <a className="dd-new-right" onClick={onMoreMenuToggle}>More <i className="fa fa-angle-down"></i></a>
+          {
+            isMoreMenuVisible &&
+            <ul className="right-dropdown-link">
+              <li><a href="#">Enterprice</a></li>
+              <li><a onClick={onEmailInputShow}>Subscribe</a></li>
+              <li><a onClick={()=>changePageLanguage('en')}>en</a></li>
+              <li><a onClick={()=>changePageLanguage('ko')}>ko</a></li>
+            </ul>
+          }
+        </div>
+        :
+        <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
       }
 
       {
