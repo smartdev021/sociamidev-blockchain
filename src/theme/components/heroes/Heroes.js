@@ -62,7 +62,7 @@ class Heroes extends React.Component {
     this.props.onFetchAllTasks(false);
     this.props.fetchRoadmaps();
     this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
-    this.props.prepareTimers(this.props.userProfile.progressionTrees, this.props.userProfile._id);
+    this.props.prepareTimers(this.props.roadmapsAdmin.data, this.props.userProfile._id);
   }
 
   componentDidUpdate(prevProps, prevState) {
