@@ -61,17 +61,17 @@
           <div className="character-panel">
             {characters.map((character, i) => {
               let backgroundImageUrl
-              if(character.name == 'The business clairvoyants'){
+              if(character.name == 'Business Clairvoyants'){
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
-              }else if(character.name == 'The executives'){
+              }else if(character.name == 'Executives'){
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
-              }else if(character.name == 'The network clairvoyants'){
+              }else if(character.name == 'Network Seekers'){
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
-              }else if(character.name == 'The Science illuminati'){
+              }else if(character.name == 'The Science Illuminati'){
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
-              }else if(character.name == 'The bot tinkerers'){
+              }else if(character.name == 'Bot Tinkerer'){
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
-              }else if(character.name == 'The app ninjas'){
+              }else if(character.name == 'App Ninja'){
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
               }else{
                 backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
@@ -107,17 +107,17 @@
             {characters.map((character, i) => {
               if (i >= firstIndex && i <= lastIndex) {
                 let backgroundImageUrl
-                if(character.name == 'The business clairvoyants'){
+                if(character.name == 'Business Clairvoyants'){
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
-                }else if(character.name == 'The executives'){
+                }else if(character.name == 'Executives'){
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
-                }else if(character.name == 'The network clairvoyants'){
+                }else if(character.name == 'Network Seekers'){
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
-                }else if(character.name == 'The Science illuminati'){
+                }else if(character.name == 'The Science Illuminati'){
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
-                }else if(character.name == 'The bot tinkerers'){
+                }else if(character.name == 'Bot Tinkerer'){
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
-                }else if(character.name == 'The app ninjas'){
+                }else if(character.name == 'App Ninja'){
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
                 }else{
                   backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
@@ -145,17 +145,17 @@
     renderMobileView(SelectedCharacter){
       const HouseModal = this.state.isModalOpen ? this.renderHouseModal(SelectedCharacter) : null;
       let backgroundImageUrl
-      if(SelectedCharacter.name == 'The business clairvoyants'){
+      if(SelectedCharacter.name == 'Business Clairvoyants'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
-      }else if(SelectedCharacter.name == 'The executives'){
+      }else if(SelectedCharacter.name == 'Executives'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
-      }else if(SelectedCharacter.name == 'The network clairvoyants'){
+      }else if(SelectedCharacter.name == 'Network Seekers'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
-      }else if(SelectedCharacter.name == 'The Science illuminati'){
+      }else if(SelectedCharacter.name == 'The Science Illuminati'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
-      }else if(SelectedCharacter.name == 'The bot tinkerers'){
+      }else if(SelectedCharacter.name == 'Bot Tinkerer'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
-      }else if(SelectedCharacter.name == 'The app ninjas'){
+      }else if(SelectedCharacter.name == 'App Ninja'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
       }else{
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
@@ -209,17 +209,17 @@
 
     renderHouseModal(SelectedCharacter){
       let backgroundImageUrl
-      if(SelectedCharacter.name == 'The business clairvoyants'){
+      if(SelectedCharacter.name == 'Business Clairvoyants'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
-      }else if(SelectedCharacter.name == 'The executives'){
+      }else if(SelectedCharacter.name == 'Executives'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
-      }else if(SelectedCharacter.name == 'The network clairvoyants'){
+      }else if(SelectedCharacter.name == 'Network Seekers'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
-      }else if(SelectedCharacter.name == 'The Science illuminati'){
+      }else if(SelectedCharacter.name == 'The Science Illuminati'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
-      }else if(SelectedCharacter.name == 'The bot tinkerers'){
+      }else if(SelectedCharacter.name == 'Bot Tinkerer'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
-      }else if(SelectedCharacter.name == 'The app ninjas'){
+      }else if(SelectedCharacter.name == 'App Ninja'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
       }else{
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
@@ -268,17 +268,17 @@
         : this.props.charactersList[this.props.selectedIndex];
         
       let backgroundImageUrl
-      if(SelectedCharacter.name == 'The business clairvoyants'){
+      if(SelectedCharacter.name == 'Business Clairvoyants'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img6.jpg'
-      }else if(SelectedCharacter.name == 'The executives'){
+      }else if(SelectedCharacter.name == 'Executives'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img1.jpg'
-      }else if(SelectedCharacter.name == 'The network clairvoyants'){
+      }else if(SelectedCharacter.name == 'Network Seekers'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img4.jpg'
-      }else if(SelectedCharacter.name == 'The Science illuminati'){
+      }else if(SelectedCharacter.name == 'The Science Illuminati'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img3.jpg'
-      }else if(SelectedCharacter.name == 'The bot tinkerers'){
+      }else if(SelectedCharacter.name == 'Bot Tinkerer'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img2.jpg'
-      }else if(SelectedCharacter.name == 'The app ninjas'){
+      }else if(SelectedCharacter.name == 'App Ninja'){
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
       }else{
         backgroundImageUrl = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/houses/house-img5.jpg'
