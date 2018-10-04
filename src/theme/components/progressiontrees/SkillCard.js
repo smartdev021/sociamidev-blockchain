@@ -45,7 +45,7 @@ class SkillCard extends React.Component {
       flipCardClass: false,
       openVideo: false,
       tree: undefined,
-      selectedTask: undefined,
+      selectedTask: "Illuminate",
       selectedSkill: undefined,
       isHangoutFormVisible: false,
       TrendScannerComponentVisible: false
@@ -112,7 +112,6 @@ class SkillCard extends React.Component {
   }
 
   selectSkill(e, selectedSkill) {
-
     const url = `${ConfigMain.getBackendURL()}/skillGet?name=${selectedSkill}`;
     const that = this;
     that.setState({ isLoading: true, isHangoutFormVisible: false });
@@ -125,21 +124,13 @@ class SkillCard extends React.Component {
       });
 
     $('.pskill-banner').removeClass('active');
-    $(e.target)
-      .closest('div.pskill-banner')
-      .addClass('active');
+    $(e.target).closest('div.pskill-banner').addClass('active');
   }
 
   selectTask(e, selectedTask) {
-
-
-
-
     this.setState({ selectedTask });
     $('.ptask-banner').removeClass('active');
-    $(e.target)
-      .closest('div.ptask-banner')
-      .addClass('active');
+    $(e.target).closest('div.ptask-banner').addClass('active');
   }
 
   onPlayVideo() {
@@ -178,9 +169,6 @@ class SkillCard extends React.Component {
       return (
         <div className="pskill-banner" onClick={e => that.selectSkill(e, skill)} key={i}>
           <div className="pskill-name">{skill}</div>
-          {/* <div className="ptree-checkmark-div">
-            <div className="ptree-checkmark" />
-          </div> */}
         </div>
       );
     });
@@ -217,7 +205,7 @@ class SkillCard extends React.Component {
       <div style={{display:"inline-grid",width:"100%"}}>
         <div className="ptree-back-header">Select task to continue</div>
         <div className="ptree-task-list">
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Illuminate')}>
+          <div className="ptask-banner active" onClick={e => this.selectTask(e, 'Illuminate')}>
             <div className="ptask-left">
               <div className="ptask-name">Illuminate</div>
               <div className="ptask-desc">30 min 3 questions</div>
@@ -249,10 +237,10 @@ class SkillCard extends React.Component {
               <div className="ptask-desc">xxx</div>
             </div>
             <div className="ptask-right">
-              <img
+              {/* <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
-              />
+              /> */}
             </div>
           </div>
 
@@ -262,10 +250,10 @@ class SkillCard extends React.Component {
               <div className="ptask-desc">60 min 1 challenge</div>
             </div>
             <div className="ptask-right">
-              <img
+              {/* <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -440,7 +428,6 @@ class SkillCard extends React.Component {
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
     const imgJson = this.getImgUrl(skillItem.heroimg)
-
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
