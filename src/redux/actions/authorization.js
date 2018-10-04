@@ -106,9 +106,17 @@ export function setUserLocaleDataI18Next(module) {
       (a, b) => {
         if (module && module.language && module.languages && module.languages.length) {
           let selectedLanguage = 'en';
-          if(module.language.includes('ko'))
-          {
+          if(module.language.includes('ko')){
             selectedLanguage = 'ko'
+          }
+          else if (module.language.includes('vi')){
+            selectedLanguage = 'vi'
+          }
+          else if (module.language.includes('th')){
+            selectedLanguage = 'th'
+          }
+          else if (module.language.includes('cn') || module.language.includes('zh')){
+            selectedLanguage = 'cn'
           }
           dispatch(
             setUserLocaleData({

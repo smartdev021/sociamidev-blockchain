@@ -94,6 +94,13 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
                   <a onClick={()=>changePageLanguage('en')}>en</a>
                   <b>|</b>
                   <a onClick={()=>changePageLanguage('ko')}>ko</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('vi')}>vi</a>
+                </li>
+                <li>
+                  <a onClick={()=>changePageLanguage('th')}>th</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('cn')}>cn</a>
                 </li>
               </ul>
             }

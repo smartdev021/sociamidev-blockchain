@@ -1406,7 +1406,6 @@ input:focus {
   .dark-theme-wrapper {
     min-height: 100vh;
     background-size: 100% !important;
-    background-repeat: no-repeat !important;
   }
 }
 @media (min-width: 1920px) {
