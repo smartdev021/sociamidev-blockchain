@@ -230,7 +230,9 @@ class LandingPage extends Component {
           onEmailInputSubmit={(event) => { this.handleEmailInputSubmit(event) }}
           onEmailInput={(event) => { this.handleEmailInput(event) }}
           isEmailInputVisible={this.state.isEmailInputVisible}
-          email={this.state.email} />
+          email={this.state.email}
+          changePageLanguage={this.props.changePageLanguage}
+        />
       </div>
     );
   }
