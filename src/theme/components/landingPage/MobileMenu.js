@@ -27,7 +27,7 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
           <li>The games</li>
           <li>Forums</li>
           <li>Markets</li>
-          <li>Enterprice</li>
+          <li>Enterprise</li>
           <li className="language">
             <a onClick={()=>{
               changePageLanguage('en');
