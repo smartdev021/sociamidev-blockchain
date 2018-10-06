@@ -270,7 +270,7 @@
 }
 .dark-theme-wrapper .main-comment-box .top-head {
   height: 41px;
-  float: left;
+  /* float: left; */
   width: 100%;
   margin-bottom: 5px;
   line-height: 41px;
