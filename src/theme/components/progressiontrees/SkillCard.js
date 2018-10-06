@@ -255,31 +255,32 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'XXX')}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Decode')}>
             <div className="ptask-left">
-              <div className="ptask-name">XXX</div>
-              <div className="ptask-desc">xxx</div>
+              <div className="ptask-name">Decode</div>
+              <div className="ptask-desc">30 min 10 questions</div>
             </div>
             <div className="ptask-right">
-              {/* <img
+              <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
-              /> */}
+              />
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
+          {/* <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
             <div className="ptask-left">
               <div className="ptask-name">Brainstorm</div>
               <div className="ptask-desc">60 min 1 challenge</div>
             </div>
             <div className="ptask-right">
-              {/* <img
+              <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
-              /> */}
+              />
             </div>
-          </div>
+          </div> */}
+
         </div>
         <div className="pskill-btn-group ptree-btn-group">
           <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
