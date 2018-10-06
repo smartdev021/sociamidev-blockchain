@@ -132,6 +132,7 @@ class CharacterCreationFlow extends React.Component {
       data = {
         characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]
           .name,
+        characterImage:  this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex].imageUrl,
         traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
         traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
         characterIndex: this.props.characterCreationData.selectedCharacterIndex,

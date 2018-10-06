@@ -88,7 +88,7 @@
                       onMouseOut={() => this.handleMouseOutCharacter()}
                     >
                       {/* <img src={this.props.charactersList[i].imageURL} /> */}
-                      <img src={backgroundImageUrl} />
+                      <img src={character.imageUrl} />
                     </div>
                     <div className="character-name">{this.props.charactersList[i].name}</div>
                   </div>
@@ -130,7 +130,7 @@
                       }`}
                       onClick={() => this.handleChangeSelectedChatacterMobile(i)}>
                       {/* <img src={this.props.charactersList[i].imageURL} /> */}
-                      <img src={backgroundImageUrl} />
+                      <img src={character.imageUrl} />
                     </div>
                     <div className="character-name">{this.props.charactersList[i].name}</div>
                   </div>
