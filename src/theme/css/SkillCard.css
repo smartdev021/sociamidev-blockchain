@@ -145,6 +145,7 @@
     background-color: rgb(10, 10, 10);
     box-shadow: 0px 0px 32px 0px rgba(255, 176, 0, 0.61);
     width: 90%;
+    min-height: 198px;
 }
 .ptree-back-header{
     /* font-size: 18px;

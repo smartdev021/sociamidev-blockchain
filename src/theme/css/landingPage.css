@@ -1115,7 +1115,18 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-page-wrapper .mobile-menu .mobile-logo a {
   display: inline-block;
 }
+.landing-page-wrapper .mobile-menu .language{
 
+}
+.landing-page-wrapper .mobile-menu .language a{
+  color: white;
+}
+.landing-page-wrapper .mobile-menu .language b{
+  margin: 0 5px;
+}
+.landing-page-wrapper .mobile-menu .language:after{
+  content: unset;
+}
 .landing-page-wrapper .mobile-menu img {
     display: block;
     width: 120px;

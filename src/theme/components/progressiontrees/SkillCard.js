@@ -74,6 +74,7 @@ class SkillCard extends React.Component {
   }
 
   toggleTaskView() {
+    this.selectDefaultSkill();
     this.setState({ isTaskSelected: !this.state.isTaskSelected });
   }
 
@@ -109,6 +110,28 @@ class SkillCard extends React.Component {
 
   quickStart() {
     this.props.onQuickStart(this.state.tree);
+  }
+
+  selectDefaultSkill() {
+    let skillParsed = this.state.tree.weightage1.length > 1 ? this.state.tree.weightage1 : this.state.tree.weightage1[0].split(',');
+    for (let i = 0; i < skillParsed.length; ++i) {
+      skillParsed[i] = skillParsed[i].trim();
+    }
+
+    let selectedSkill = skillParsed[0]
+    
+    if(selectedSkill){
+      const url = `${ConfigMain.getBackendURL()}/skillGet?name=${selectedSkill}`;
+      const that = this;
+      that.setState({ isLoading: true, isHangoutFormVisible: false });
+      Axios.get(url)
+      .then(function(response) {
+        that.setState({ skillInfo: response.data, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+      })
+      .catch(function(error) {
+        that.setState({ skillInfo: undefined, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+      });
+    }
   }
 
   selectSkill(e, selectedSkill) {
@@ -166,8 +189,9 @@ class SkillCard extends React.Component {
       skillParsed[i] = skillParsed[i].trim();
     }
     const listItems = skillParsed.map(function(skill, i) {
+      let activeClass = i == 0 ? 'active' : ''
       return (
-        <div className="pskill-banner" onClick={e => that.selectSkill(e, skill)} key={i}>
+        <div className={`pskill-banner ${activeClass}`} onClick={e => that.selectSkill(e, skill)} key={i}>
           <div className="pskill-name">{skill}</div>
         </div>
       );
@@ -231,31 +255,32 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'XXX')}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Decode')}>
             <div className="ptask-left">
-              <div className="ptask-name">XXX</div>
-              <div className="ptask-desc">xxx</div>
+              <div className="ptask-name">Decode</div>
+              <div className="ptask-desc">30 min 10 questions</div>
             </div>
             <div className="ptask-right">
-              {/* <img
+              <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
-              /> */}
+              />
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
+          {/* <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
             <div className="ptask-left">
               <div className="ptask-name">Brainstorm</div>
               <div className="ptask-desc">60 min 1 challenge</div>
             </div>
             <div className="ptask-right">
-              {/* <img
+              <img
                 src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
                 className="ptask-img-single"
-              /> */}
+              />
             </div>
-          </div>
+          </div> */}
+
         </div>
         <div className="pskill-btn-group ptree-btn-group">
           <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
