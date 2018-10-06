@@ -1037,6 +1037,23 @@ span.landing-email-input-textfield-container input[type="email"] {
     }
 }
 
+.top-popup .modal-content{ background: url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/popupbg.jpg); border-radius: 0; background-repeat: no-repeat; text-align: center; background-size: cover;}
+.top-popup .modal-content h3 {color: #0091fa; font-size: 36px; text-transform: uppercase; margin: 2rem 0;}
+.top-popup .modal-content h4.modal-title {color: #0091fa; font-size: 36px; text-transform: uppercase; margin: 2rem 0;}
+.top-popup .modal-header {border-bottom: 0;}
+.top-popup .modal-body ul{text-align: center; padding: 0;}
+.top-popup .modal-body ul li{display: inline-block; width: 32%; margin-bottom: 2rem;}
+.top-popup .modal-body ul li .img-icon{width: 62px; height: 62px; display: inline-block; margin: 5px auto;}
+.top-popup .modal-body ul li h4 {font-size: 18px; color: #fff; font-weight: normal;}
+.top-popup .modal-header .close{opacity: 1}
+.top-popup .modal-dialog{width: 897px; margin-top: 10%;}
+@media (max-width: 768px){
+  .top-popup .modal-dialog {width: auto;}
+  .top-popup .modal-content h3{font-size: 24px;}
+  .top-popup .modal-body ul li{width: 115px;}
+  .top-popup .modal-body ul li h4{font-size: 14px;}
+}
+
 .landing-page-wrapper .mobile-menu {
     display: none;
     background: #000;
@@ -1661,7 +1678,7 @@ span.landing-email-input-textfield-container input[type="email"] {
     padding: 0 50px 0 15px;
   }
   .landing-page-wrapper .logo{
-    padding: 15px 50px 10px 50px 
+    padding: 15px 50px 10px 50px
   }
   .landing-page-wrapper .header .landing-email-input-textfield-container{
     width: 108px;

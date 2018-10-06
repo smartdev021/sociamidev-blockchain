@@ -104,7 +104,7 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
           <button type="button" className="sign-in-button"
             onClick={onTrailerModalShow}>
             <p>Trailer</p>
-          </button> 
+          </button>
           :
           <button type="button" className="sign-in-button"
             onClick={() => openSignUpForm()}>
@@ -439,7 +439,7 @@ class LandingPageContent extends React.Component {
     }
     this.setState({ isBetaFormModalVisible: show });
   }
-  
+
   handleonTrailerModalShow(show) {
     this.setState({ isTrailerModalVisible: show });
   }
@@ -473,7 +473,7 @@ class LandingPageContent extends React.Component {
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible} email={this.state.email}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <BetaFormModal isVisible={this.state.isBetaFormModalVisible} email={this.state.email}
-            closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} 
+            closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()}
             onBetaFormModalHide={() => this.handleonBetaFormModalShow(false)}
             onEmailInput={(event) => { this.handleEmailInput(event) }}
             email={this.state.email}

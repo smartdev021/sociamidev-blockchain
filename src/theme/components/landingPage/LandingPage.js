@@ -27,6 +27,7 @@ import '~/src/theme/css/materializeCommon.css';
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
+import EnterpriseModal from "~/src/theme/components/landingPage/EnterpriseModal";
 import { Logo } from './Logo';
 import { Footer } from './Footer';
 import { MobileMenu } from './MobileMenu';
@@ -62,7 +63,7 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -88,7 +89,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
             {
               isMoreMenuVisible &&
               <ul className="right-dropdown-link">
-                <li><a href="#">Enterprise</a></li>
+                <li><a onClick={onEnterpriseModalShow}>Enterprise</a></li>
                 <li><a onClick={onEmailInputShow}>Subscribe</a></li>
                 <li>
                   <a onClick={()=>changePageLanguage('en')}>en</a>
@@ -111,7 +112,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
       }
 
       {
-        process.env.SOQQLE_ENV !== 'production' && 
+        process.env.SOQQLE_ENV !== 'production' &&
         <button type="button" className="sign-up-button right-new-signup" onClick={() => openSignUpForm()}>
           <p>Sign in</p>
         </button>
@@ -123,7 +124,14 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: false, isMoreMenuVisible: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
+    this.state = {
+      isOpen: false,
+      isMoreMenuVisible: false,
+      isEmailInputVisible: false,
+      email: "",
+      isSubscriptionModalVisible: false,
+      isEnterpriseModalVisible: false
+    };
 
     this.toggle = this.toggle.bind(this);
   }
@@ -163,7 +171,10 @@ class LandingPage extends Component {
   handleCloseSubscribeThankYouModal() {
     this.setState({ isSubscriptionModalVisible: false });
   }
-  //
+
+  handleEnterpriseModalShow(show) {
+    this.setState({ isEnterpriseModalVisible: show });
+  }
 
   renderSignUpForm() {
     return this.props.isSignUpFormOpen ? (
@@ -202,6 +213,8 @@ class LandingPage extends Component {
       <div className="landing-page-wrapper landing-page-container">
         {this.renderSignUpForm()}
         <header>
+          <EnterpriseModal isVisible={this.state.isEnterpriseModalVisible}
+            onEnterpriseModalHide={() => this.handleEnterpriseModalShow(false)} />
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <Logo />
@@ -217,6 +230,7 @@ class LandingPage extends Component {
             isEmailInputVisible={this.state.isEmailInputVisible}
             email={this.state.email}
             changePageLanguage={this.props.changePageLanguage}
+            onEnterpriseModalShow={() => this.handleEnterpriseModalShow(true)}
           />
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
