@@ -741,6 +741,9 @@ const RenderTask = (task, i, props) => {
     return (
       <div className="col-md-6" key={i}>
         <div className="col-box-wp no-padding">
+          <span className="box-icon-exclam">
+            <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/exclam-icon.svg" />
+          </span>
           {RenderActionIcons(task, props)}
           <div className="top-head" style={{ padding: '10px 10px' }}>
             <div className="profile-icon">
@@ -775,6 +778,9 @@ const RenderTask = (task, i, props) => {
     return (
       <div className="col-md-6" key={i}>
         <div className="col-box-wp no-padding">
+        <span className="box-icon-exclam">
+            <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/exclam-icon.svg" />
+          </span>
           <div className="top-head" style={{ padding: '10px 10px' }}>
             <div className="profile-icon">
               <img
@@ -810,6 +816,9 @@ const RenderTask = (task, i, props) => {
     return (
       <div className="col-md-6" key={i}>
         <div className="col-box-wp no-padding">
+        <span className="box-icon-exclam">
+            <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/exclam-icon.svg" />
+          </span>
           <div className="top-head" style={{ padding: '10px 10px' }}>
             <div className="profile-icon">
               <img

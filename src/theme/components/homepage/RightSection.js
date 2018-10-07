@@ -255,7 +255,10 @@ class RightSection extends Component {
 
   render() {
     return (
-      <div className="col pull-right">
+      <div className="col pull-right box-contain-exclam">
+         <span className="box-icon-exclam">
+            <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/exclam-icon.svg" />
+        </span>
         { this.skills(this.props.skills) }
         {/* { this.gamesInNetwork() } */}
       </div>
