@@ -26,6 +26,19 @@
   padding: 25px;
   position: relative;
 }
+
+.dark-theme-wrapper .col-box-wp .box-icon-exclam{
+  height: 22px;
+  top: 9px;
+  right: 10px;
+  z-index: 1;
+  position: absolute;
+}
+.dark-theme-wrapper .col-box-wp span.box-icon-exclam img {
+  width: 5px;
+  height: 21px;
+}
+
 .dark-theme-wrapper .col-middle .top-box-wp {
   border: 2px solid #73028b;
   box-shadow: 0px 0px 38px 0px #73028b, 0px 0px 11.06px 2.94px rgba(223, 73, 255, 0.5),
@@ -564,12 +577,41 @@ img.achievement-badge-icon {
 }
 .dark-theme-wrapper .left-content ul li a {
   color: #d8d8d8;
+  display: flex;
+  align-items: center;
   text-decoration: none;
 }
 .dark-theme-wrapper .left-content ul li span.icon-wp {
   float: left;
   margin-right: 22px;
 }
+.dark-theme-wrapper .left-content ul li span.icon-exclam {
+  height: 22px;
+  margin-left: 10px;
+  margin-top: -20px;
+}
+
+.dark-theme-wrapper .left-content ul li span.icon-exclam img {
+  width: 5px;
+  height: 21px;
+}
+
+.dark-theme-wrapper .box-contain-exclam{
+  position: relative;
+}
+.dark-theme-wrapper .box-contain-exclam span.box-icon-exclam {
+  height: 22px;
+  top: 5px;
+  right: 10px;
+  z-index: 1;
+  position: absolute;
+}
+.dark-theme-wrapper .box-contain-exclam span.box-icon-exclam img {
+  width: 5px;
+  height: 21px;
+}
+
+
 .dark-theme-wrapper .p-0 {
   padding: 0 !important;
 }
