@@ -285,13 +285,17 @@ export function taskLeave(taskId, user) {
   };
 }
 
-export function hangoutAnswersSave(body) {
+export function hangoutAnswersSave(body, cb) {
   return function(dispatch) {
     dispatch(updateTaskInitiate());
 
     return Axios.post(`${ConfigMain.getBackendURL()}/hangoutAnswersSave`, body)
       .then(response => {
-        dispatch(updateTaskComplete(response.data, true));
+        const d = response && response.data && response.data.foundTask;
+        dispatch(updateTaskComplete(d, true));
+        if (cb) {
+          cb(null, response.data);
+        }
       })
       .catch(function(error) {
         dispatch(updateTaskComplete());
