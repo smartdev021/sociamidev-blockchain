@@ -90,7 +90,11 @@ class Tasks extends React.Component {
       scannerQuery: '',
       timeNow: Date.now(),
       isScannerExpanded: !this.props.isAuthorized,
-      isAnswerSubmitComplete: false,
+      _achievements: false,
+      achievementDetails: {
+        name: '',
+        progress: '',
+      },
       activeHangout: undefined,
       isAnswerQuestionsOpen: false,
 
@@ -640,13 +644,18 @@ class Tasks extends React.Component {
     this.setState({ filterCurrent: newFilter });
   }
 
-  handleAnswersSubmitComplete() {
-    this.setState({ isAnswerSubmitComplete: true });
+  handleAnswersSubmitComplete(returnData) {
+    if (returnData && returnData.updatedAchievements && returnData.updatedAchievements.length) {
+      this.setState({
+        shouldAchievementModalbeOpen: true,
+        achievementDetails: this._selectAchievementDetails(returnData),
+      });
+    }
   }
 
   closeAchievementModal() {
     this.props.resetActiveHangout();
-    this.setState({ isAnswerSubmitComplete: false });
+    this.setState({ shouldAchievementModalbeOpen: false });
   }
 
   handleBackToMyTasks() {
@@ -681,7 +690,49 @@ class Tasks extends React.Component {
     });
   }
 
+  _selectAchievementDetails(returnData) {
+    let data = {},
+      { updatedAchievements, userAchievementResult } = returnData;
+    if (updatedAchievements && updatedAchievements.length) {
+      let updates = updatedAchievements[0]; // for now take only 1
+      let achievementsInfo = userAchievementResult.achievements.filter(
+        info => info.achievementId === updates._id,
+      );
+      updates = { ...updates, conditions: achievementsInfo[0].conditions };
+
+      data = {
+        ...updates,
+        countProgress: updates.conditions[0].counter,
+        countComplete: updates.conditions[0].count,
+        displayName: updates.name,
+        displayProgressVsComplete: `${this._getProgress(updates)}`,
+        generic: false,
+      };
+    }
+
+    return data;
+  }
+
+  _getProgress(updates) {
+    const num1 = updates.conditions[0].counter,
+      num2 = updates.conditions[0].count;
+    if (num1 === num2) {
+      return `Complete!`;
+    }
+
+    return this._getPercentProgress(updates);
+  }
+
+  _getPercentProgress(updates) {
+    const num1 = updates.conditions[0].counter,
+      num2 = updates.conditions[0].count;
+    const mathFloor = ~~((num1 / num2) * 100);
+
+    return `${num1}/${num2} - ${mathFloor}% Complete!`;
+  }
+
   render() {
+    const { achievementDetails } = this.state;
     const myTasks = this.getMyTasksAndHangouts();
 
     const tasksScanner = this.getTaskScannerTasks();
@@ -722,7 +773,7 @@ class Tasks extends React.Component {
                     <AnswerQuestions
                       currentTask={this.props.activeHangout}
                       onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
-                      onSubmitComplete={() => this.handleAnswersSubmitComplete()}
+                      onSubmitComplete={returnData => this.handleAnswersSubmitComplete(returnData)}
                     />
                   </div>
                 ) : (
@@ -788,7 +839,11 @@ class Tasks extends React.Component {
                   </div>
                 )}
               </div>
-              <Achievement isOpen={this.state.isAnswerSubmitComplete} close={this.closeAchievementModal} />
+              <Achievement
+                achievementDetails={achievementDetails}
+                isOpen={this.state.shouldAchievementModalbeOpen}
+                close={this.closeAchievementModal}
+              />
             </div>
           </div>
         </div>
@@ -858,4 +913,9 @@ const mapDispatchToProps = dispatch => ({
   loadURL: bindActionCreators(loadURL, dispatch),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tasks));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Tasks),
+);
