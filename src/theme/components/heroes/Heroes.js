@@ -190,7 +190,7 @@ class Heroes extends React.Component {
         }
         return (
           <div>
-            {this.props.userProfile.progressionTrees.length > 0 &&
+            {this.props.roadmapsAdmin.data.length > 0 &&
               this.props.timers.data.slice(0, this.props.timers.showIndex).map((item, index) => {
                 return (
                   <p key={index} className="skill-in-progress">
