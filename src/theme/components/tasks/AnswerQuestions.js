@@ -429,6 +429,7 @@ class AnswerQuestions extends React.Component {
     PubSub.publish('submitAnswerForTask', body.userId);
     props.hangoutAnswersSave(body, (err, saveResult) => {
       let filteredResult = saveResult.result;
+      console.log('saveResult', saveResult);
       let foundAchievement = filteredResult.map(hangoutAnswer => _getAchievementWithRoadmap(hangoutAnswer));
       foundAchievement = foundAchievement.filter(found => found !== false);
       console.log('foundAchievement 123', foundAchievement);
@@ -442,7 +443,7 @@ class AnswerQuestions extends React.Component {
 
       console.log('we found123', foundCondition);
 
-      props.onSubmitComplete();
+      props.onSubmitComplete(saveResult);
     });
   }
 
