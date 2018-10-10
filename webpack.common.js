@@ -12,7 +12,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: Path.join(__dirname, 'src/index.ejs'),
-      title: 'Soqqle Online Educational Social Game',
+      title: 'Soqqle | Social Game | Blockchain',
       inject: 'body',
     }),
   ],
