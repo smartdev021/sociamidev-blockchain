@@ -50,7 +50,16 @@
     margin-top: -20px;
     margin-left: -30px;
 }
-
+.progression-tree-cyberhero-img {
+    width: 240px;
+    margin-top: -30px;
+    margin-left: -40px;
+}
+.progression-tree-guardian-img {
+    width: 235px;
+    margin-top: -30px;
+    margin-left: -30px;
+}
 .ptree-card-item{
     /* height: 250px; */
     margin-top: 30px;
@@ -407,8 +416,8 @@
         font:normal 15px "MyriadPro Semibold";
     }
     .progression-tree-hero-img{
-        margin: 0 auto;
-        padding-bottom: 30px;
+        margin: 0 auto !important;
+        padding-bottom: 30px !important;
     }
     .ptree-btn-group{
         bottom: -40px;
