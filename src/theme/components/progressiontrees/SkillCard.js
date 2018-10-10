@@ -333,7 +333,7 @@ class SkillCard extends React.Component {
   }
 
   getImgUrl(img) {
-    let imgJson;
+    let imgJson
     if (img == 'Miner') {
       imgJson = {
         imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/miner_new.png',
@@ -353,6 +353,16 @@ class SkillCard extends React.Component {
       imgJson = {
         imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
         imgClass : 'progression-tree-hero-img progression-tree-blockforce-img'
+      }
+    } else if (img == 'cyberhero'){
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/cyberhero.png',
+        imgClass : 'progression-tree-hero-img progression-tree-cyberhero-img'
+      }
+    } else if (img == 'guardian'){
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/guardian.png',
+        imgClass : 'progression-tree-hero-img progression-tree-guardian-img'
       }
     }else{
       imgJson = {
