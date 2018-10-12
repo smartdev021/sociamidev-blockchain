@@ -165,17 +165,12 @@
   padding: 0 10px;
   width: 100%;
 }
-/*.chat-ChatRightSideHolder .search-box{*/
-  /*display: flex;*/
-  /*align-items: center;*/
-/*}*/
 .chat-ChatRightSideHolder .icon-bar{
   display: flex;
   align-items: center;
   font-size: 10px;
 }
 .chat-ChatRightSideHolder .icon-bar ul{
-  /*list-style-type: none;*/
   margin: unset;
 }
 .chat-ChatRightSideHolder .icon-bar ul li{

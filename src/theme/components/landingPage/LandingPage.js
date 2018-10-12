@@ -8,7 +8,7 @@ import { withCookies } from 'react-cookie';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom'; //temporarily here, remove it!!!!!!!
-import { openSignUpForm } from '~/src/redux/actions/authorization';
+import { openSignUpForm,changePageLanguage } from '~/src/redux/actions/authorization';
 import { startCharacterCreation } from '~/src/redux/actions/characterCreation';
 import SignUpFormPopup from '~/src/authentication/SignUpForm';
 import Authorize from '~/src/authentication/Authorize';
@@ -27,6 +27,7 @@ import '~/src/theme/css/materializeCommon.css';
 import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import SubscribeThanksModal from "~/src/theme/components/SubscribeThanksModal";
+import EnterpriseModal from "~/src/theme/components/landingPage/EnterpriseModal";
 import { Logo } from './Logo';
 import { Footer } from './Footer';
 import { MobileMenu } from './MobileMenu';
@@ -62,7 +63,7 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
   return (
     <div className="header">
       <button className="burger" onClick={openMenu}>
@@ -88,8 +89,20 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
             {
               isMoreMenuVisible &&
               <ul className="right-dropdown-link">
-                <li><a href="#">Enterprice</a></li>
+                <li><a onClick={onEnterpriseModalShow}>Enterprise</a></li>
                 <li><a onClick={onEmailInputShow}>Subscribe</a></li>
+                <li>
+                  <a onClick={()=>changePageLanguage('en')}>en</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('ko')}>ko</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('vi')}>vi</a>
+                </li>
+                <li>
+                  <a onClick={()=>changePageLanguage('th')}>th</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('cn')}>cn</a>
+                </li>
               </ul>
             }
           </div>
@@ -99,9 +112,9 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
       }
 
       {
-        process.env.SOQQLE_ENV !== 'production' && 
+        process.env.SOQQLE_ENV !== 'production' &&
         <button type="button" className="sign-up-button right-new-signup" onClick={() => openSignUpForm()}>
-          <p>Sign up</p>
+          <p>Sign in</p>
         </button>
       }
     </div>
@@ -111,7 +124,14 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: false, isMoreMenuVisible: false, isEmailInputVisible: false, email: "", isSubscriptionModalVisible: false, };
+    this.state = {
+      isOpen: false,
+      isMoreMenuVisible: false,
+      isEmailInputVisible: false,
+      email: "",
+      isSubscriptionModalVisible: false,
+      isEnterpriseModalVisible: false
+    };
 
     this.toggle = this.toggle.bind(this);
   }
@@ -151,7 +171,10 @@ class LandingPage extends Component {
   handleCloseSubscribeThankYouModal() {
     this.setState({ isSubscriptionModalVisible: false });
   }
-  //
+
+  handleEnterpriseModalShow(show) {
+    this.setState({ isEnterpriseModalVisible: show });
+  }
 
   renderSignUpForm() {
     return this.props.isSignUpFormOpen ? (
@@ -190,6 +213,8 @@ class LandingPage extends Component {
       <div className="landing-page-wrapper landing-page-container">
         {this.renderSignUpForm()}
         <header>
+          <EnterpriseModal isVisible={this.state.isEnterpriseModalVisible}
+            onEnterpriseModalHide={() => this.handleEnterpriseModalShow(false)} />
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <Logo />
@@ -203,10 +228,13 @@ class LandingPage extends Component {
             onEmailInputSubmit={(value) => { this.handleEmailInputSubmit(value) }}
             onEmailInput={(event) => { this.handleEmailInput(event) }}
             isEmailInputVisible={this.state.isEmailInputVisible}
-            email={this.state.email} />
+            email={this.state.email}
+            changePageLanguage={this.props.changePageLanguage}
+            onEnterpriseModalShow={() => this.handleEnterpriseModalShow(true)}
+          />
         </header>
         {this.renderRoutes() /*This is temporary - remove it!!!!!!!!*/}
-        <Footer localeData={this.props.localeData}/>
+        <Footer localeData={this.props.localeData} currentLanguage={this.props.currentLanguage}/>
         <MobileMenu
           isOpen={this.state.isOpen} closeMenu={this.toggle}
           onMoreMenuToggle={() => this.handleMoreMenuToggle()}
@@ -216,7 +244,10 @@ class LandingPage extends Component {
           onEmailInputSubmit={(event) => { this.handleEmailInputSubmit(event) }}
           onEmailInput={(event) => { this.handleEmailInput(event) }}
           isEmailInputVisible={this.state.isEmailInputVisible}
-          email={this.state.email} />
+          email={this.state.email}
+          changePageLanguage={this.props.changePageLanguage}
+          onEnterpriseModalShow={() => this.handleEnterpriseModalShow(true)}
+        />
       </div>
     );
   }
@@ -230,12 +261,14 @@ LandingPage.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
-  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch)
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
+  changePageLanguage: bindActionCreators(changePageLanguage, dispatch)
 });
 
 const mapStateToProps = state => ({
   isAuthorized: state.userProfile.isAuthorized,
   localeData: state.userProfile.locale,
+  currentLanguage: state.userProfile.locale.selectedLanguage || 'en'
 });
 
 export default connect(

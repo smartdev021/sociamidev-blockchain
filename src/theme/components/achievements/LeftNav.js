@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LeftNav = (props) => {
+const LeftNav = props => {
   return (
     <div className="col fixed-wp achievements-left-wp">
       <div className="col-box-wp p-0">
@@ -9,44 +9,20 @@ const LeftNav = (props) => {
             <div className="icon">
               <img src={props.profilePic} alt="" />
             </div>
-            <span className="col-heading">{props.userProfile.firstName} {props.userProfile.lastName}</span>
+            <span className="col-heading">
+              {props.userProfile.firstName} {props.userProfile.lastName}
+            </span>
           </div>
           <ul className="achievements-left-wap-links">
-            <li>
-              <a href="#">
-                <p>All</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>General</p>
-              </a>
-            </li>
-            <li className="active">
-              <a href="#">
-                <p>House</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>Hero</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>Zara</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>Mango</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p>Apple</p>
-              </a>
-            </li>
+            {props.tempCompaniesNavData.map((company, index) => {
+              return (
+                <li key={ index } onClick={props.onLeftNavCompanyClick.bind(props, index)} href="#" className={index === props.currentCompany ? 'active' : ''}>
+                  <a>
+                    <p>{company.name}</p>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

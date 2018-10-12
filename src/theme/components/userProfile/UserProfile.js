@@ -24,7 +24,8 @@ import '~/src/theme/css/userProfile.css';
 import { fetchListCharacterClasses, fetchListCharacterTraits } from '~/src/redux/actions/characterCreation';
 import { fetchAchievements } from '~/src/redux/actions/achievements';
 
-const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
+const profilePic =
+  'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -73,7 +74,6 @@ class UserProfile extends Component {
       posts: [],
       loadingPosts: true,
       isAddButtonLoading: false,
-
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
@@ -82,21 +82,19 @@ class UserProfile extends Component {
     this.props.history.listen((location, action) => {
       self.props.location.search = location.search;
       this.fetchAllConnections();
-    }); 
+    });
     this.fetchAllConnections();
   }
 
   fetchPosts() {
-    if(this.state.userID) {
+    if (this.state.userID) {
       const postsEndpoint = `${ConfigMain.getBackendURL()}/${this.state.userID}/posts`;
 
       this.setState({ loadingPosts: true });
       Axios.get(postsEndpoint)
-        .then(response =>
-          this.setState({ posts: response.data, loadingPosts: false }))
+        .then(response => this.setState({ posts: response.data, loadingPosts: false }))
         .catch(error => {});
     }
-
   }
 
   componentDidMount() {
@@ -104,7 +102,7 @@ class UserProfile extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.state.userID != prevState.userID) {
+    if (this.state.userID != prevState.userID) {
       this.fetchPosts();
     }
   }
@@ -112,10 +110,10 @@ class UserProfile extends Component {
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();
     this.props.fetchAchievements();
-   
+
     this.updatePromoCodesUsed();
     this.setUserProfile(qs.parse(this.props.location.search).id);
-    this.setUserAchievement(qs.parse(this.props.location.search).id)
+    this.setUserAchievement(qs.parse(this.props.location.search).id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -127,26 +125,30 @@ class UserProfile extends Component {
     var self = this;
     var currentUser;
 
-    if(self.props.location.search === ''){
-      currentUser =  self.props.currentUserId;
-    } else{
+    if (self.props.location.search === '') {
+      currentUser = self.props.currentUserId;
+    } else {
       var id = self.props.location.search;
-      currentUser = id.substr(id.indexOf('=')+1);
+      currentUser = id.substr(id.indexOf('=') + 1);
     }
     this.setState({ otherTabLoading: true });
     Axios.get(connectionsUrl, {
       params: {
         currentUser: currentUser,
       },
-    }).then(function(response) {
-       const friendList = response.data.filter(function(fList) {
-        return fList.connectionStatus === 'Friends';
+    })
+      .then(function(response) {
+        const friendList = response.data.filter(function(fList) {
+          return fList.connectionStatus === 'Friends';
+        });
+        self.setState({
+          otherTabLoading: false,
+          friendList,
+        });
+      })
+      .catch(function(error) {
+        self.setState({ otherTabLoading: false });
       });
-      self.setState({
-        otherTabLoading: false,
-        friendList
-      });
-    }).catch(function(error) { self.setState({ otherTabLoading: false }); });
   }
   navigateToUserProfile(id) {
     return this.props.history.push(`/userprofile?id=${id}`);
@@ -170,18 +172,21 @@ class UserProfile extends Component {
       var userID = this.state.userID;
       var uploadType = this.state.uploadType;
       var imageFormData = new FormData();
-      imageFormData.append("image", file);
-      Axios.post(`${ConfigMain.getBackendURL()}/userProfile/${userID}/${uploadType}/upload-image`, imageFormData).then(response => {
-        if (uploadType == 'avatar') {
-          this.setState({ pictureURL: _.get(response, 'data.profile.pictureURL', '') });
-          this.props.changeAvatar(_.get(response, 'data.profile.pictureURL', ''));
-        } else {
-          this.setState({ coverBackgroundURL: _.get(response, 'data.profile.coverBackgroundURL', '') });
-          this.props.changeCoverBackground(_.get(response, 'data.profile.coverBackgroundURL', ''));
-        }
-      }).catch(err => {
-
-      });
+      imageFormData.append('image', file);
+      Axios.post(
+        `${ConfigMain.getBackendURL()}/userProfile/${userID}/${uploadType}/upload-image`,
+        imageFormData,
+      )
+        .then(response => {
+          if (uploadType == 'avatar') {
+            this.setState({ pictureURL: _.get(response, 'data.profile.pictureURL', '') });
+            this.props.changeAvatar(_.get(response, 'data.profile.pictureURL', ''));
+          } else {
+            this.setState({ coverBackgroundURL: _.get(response, 'data.profile.coverBackgroundURL', '') });
+            this.props.changeCoverBackground(_.get(response, 'data.profile.coverBackgroundURL', ''));
+          }
+        })
+        .catch(err => {});
     }
   }
 
@@ -189,8 +194,9 @@ class UserProfile extends Component {
     const id = queryId && this.state.userID != queryId ? queryId : this.props.userProfile._id;
     Axios(`${ConfigMain.getBackendURL()}/userAchievement/${id}`)
       .then(response => {
-        this.setState({ userAchievement: response.data })
-      }).catch(err => { });
+        this.setState({ userAchievement: response.data });
+      })
+      .catch(err => {});
   }
 
   setUserProfile(queryId) {
@@ -213,7 +219,7 @@ class UserProfile extends Component {
             isProfileLoading: false,
           });
         })
-        .catch(err => { });
+        .catch(err => {});
     } else if (queryId === this.props.userProfile._id || _.isEmpty(queryId)) {
       this.setState({
         firstName: _.get(this, 'props.userProfile.firstName'),
@@ -238,7 +244,7 @@ class UserProfile extends Component {
       .then(results => {
         this.setState({ promocodesUsed: results.data });
       })
-      .catch(error => { });
+      .catch(error => {});
   }
 
   handleInputPromoCode(e) {
@@ -309,8 +315,8 @@ class UserProfile extends Component {
         {CharacterClass.imageURL ? (
           <img src={CharacterClass.imageURL} />
         ) : (
-            <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png" />
-          )}
+          <img src="http://sociamibucket.s3.amazonaws.com/assets/character_creation/character_icons/Nelson.png" />
+        )}
         <h2>{CharacterClass.name}</h2>
         <h3>{CharacterTraits.name}</h3>
         <h4>{CharacterTraits.description}</h4>
@@ -381,7 +387,7 @@ class UserProfile extends Component {
       let ProgressionTreeLevels = this.state.progressionTreeLevels;
 
       if (!ProgressionTreeLevels || ProgressionTreeLevels.length == 0) {
-        UserProgressionTrees.forEach(function (progressionTree) {
+        UserProgressionTrees.forEach(function(progressionTree) {
           ProgressionTreeLevels.push({
             _id: progressionTree._id,
             name: progressionTree.name,
@@ -391,9 +397,9 @@ class UserProfile extends Component {
           });
         });
       } else {
-        UserProgressionTrees.forEach(function (progressionTree) {
+        UserProgressionTrees.forEach(function(progressionTree) {
           if (
-            !ProgressionTreeLevels.find(function (progressionTreeLevel) {
+            !ProgressionTreeLevels.find(function(progressionTreeLevel) {
               return progressionTreeLevel._id == progressionTree._id;
             })
           ) {
@@ -410,7 +416,7 @@ class UserProfile extends Component {
 
       return (
         <div className="experience-list">
-          {ProgressionTreeLevels.map(function (ProgTreeLevel, i) {
+          {ProgressionTreeLevels.map(function(ProgTreeLevel, i) {
             let widthPercent = (ProgTreeLevel.currentLevelXP / ProgTreeLevel.totalXP) * 100;
             return (
               <div className="row skill-bar">
@@ -480,7 +486,7 @@ class UserProfile extends Component {
             return (
               <div key={i}>{`Promo code effective date: ${promocodeUsed.data.benefit.date} ${
                 promocodeUsed.data.benefit.value
-                }`}</div>
+              }`}</div>
             );
           }
         })}
@@ -500,7 +506,7 @@ class UserProfile extends Component {
           let progressionObj = this.state.progressionTrees.find(e => e._id === cond._roadmap);
           tokenCountLabel = `Complete ${cond.count} "${_.get(progressionObj, 'name')}" ${
             cond.count === 1 ? 'task' : 'tasks'
-            }.`;
+          }.`;
           break;
         case 'Achievements':
           // Find list of achievements from this.props.achievements using condition._achievements field which is an array
@@ -509,7 +515,7 @@ class UserProfile extends Component {
             .map(ach => ach.name);
           tokenCountLabel = `Complete the ${
             achievementNames.length > 1 ? 'Achievements' : 'Achievement'
-            } "${achievementNames.join('", "')}".`;
+          } "${achievementNames.join('", "')}".`;
           break;
         case 'Action':
           if (cond.count > 1) {
@@ -522,7 +528,7 @@ class UserProfile extends Component {
           tokenCountLabel = `Reach level ${cond.count}.`;
           break;
         case 'Story':
-          tokenCountLabel = `Requires ${_.get(cond, '_story.name')}.`
+          tokenCountLabel = `Requires ${_.get(cond, '_story.name')}.`;
           break;
       }
       return (
@@ -540,7 +546,6 @@ class UserProfile extends Component {
         <div className="progress-custom">
           {/* {this.getTotalAchievementCount(achievement._id)} */}
           {this.renderProgressLength(achievement._id)}
-
         </div>
         <div className="earned-token">Earned 50 tokens during 7 days</div>
       </Popover>
@@ -548,30 +553,28 @@ class UserProfile extends Component {
   }
 
   renderProgressLength(achievementId) {
-    const total = this.getTotalAchievementCount(achievementId)
-    console.log(total)
+    const total = this.getTotalAchievementCount(achievementId);
+    console.log(total);
     const style = {
-      width: `${(total.totalCtr / total.totalCount) * 100}%`
-    }
-    return (
-      <div className="progress-length-custom" style={style} />
-    )
+      width: `${(total.totalCtr / total.totalCount) * 100}%`,
+    };
+    return <div className="progress-length-custom" style={style} />;
   }
 
   getTotalAchievementCount(achievementId) {
-    const achievements = _.get(this, 'state.userAchievement.achievements', [])
-    const achievementById = _.find(achievements, { achievementId })
+    const achievements = _.get(this, 'state.userAchievement.achievements', []);
+    const achievementById = _.find(achievements, { achievementId });
     let total = {
       totalCtr: 0,
-      totalCount: 0
+      totalCount: 0,
     };
     if (achievementById) {
       _.each(achievementById.conditions, condition => {
         if (condition.type !== 'Story') {
-          total.totalCtr += condition.counter
-          total.totalCount += condition.count
+          total.totalCtr += condition.counter;
+          total.totalCount += condition.count;
         }
-      })
+      });
     } else {
       // set totalCount to 1 so that counter will not be divided to zero
       total.totalCount = 1;
@@ -611,16 +614,21 @@ class UserProfile extends Component {
       let widthPercent = Math.round((ProgTreeLevel.currentLevelXP / ProgTreeLevel.totalXP) * 100);
       return (
         // <div className="col-md-5 experience-container" key={i}>
-          <div className="row">
-            <div className="col-sm-8" style={{ 'text-align': 'right', color: 'white' }}><p>{ProgTreeLevel.name}</p></div>
-            <div className="col-sm-4"><a href="/levels" className="btn-lavel-yellow pull-right">LEVEL {ProgTreeLevel.level}</a></div>
+        <div className="row">
+          <div className="col-sm-8" style={{ 'text-align': 'right', color: 'white' }}>
+            <p>{ProgTreeLevel.name}</p>
           </div>
+          <div className="col-sm-4">
+            <a href="/levels" className="btn-lavel-yellow pull-right">
+              LEVEL {ProgTreeLevel.level}
+            </a>
+          </div>
+        </div>
         // </div>
-      )
-    })
-    return listItems
+      );
+    });
+    return listItems;
   }
-
 
   renderAchievementsList() {
     return (
@@ -657,7 +665,7 @@ class UserProfile extends Component {
                           <Img
                             src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${
                               _achievement._id
-                              }?date=${new Date().toISOString()}`}
+                            }?date=${new Date().toISOString()}`}
                           />
                         </div>
                         <div className="achievement-name">
@@ -676,50 +684,57 @@ class UserProfile extends Component {
   }
   coverStyle() {
     var style = {};
-    style["background"] = "url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/profile-top-bg.jpg)";
+    style['background'] =
+      'url(https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/profile-top-bg.jpg)';
     if (this.state.coverBackgroundURL) {
-      style["background"] = "url(" + this.state.coverBackgroundURL + ")";
+      style['background'] = 'url(' + this.state.coverBackgroundURL + ')';
     }
     return style;
   }
 
   renderIntroEdit() {
     if (!this.state.myProfile) {
-      return <span></span>
+      return <span />;
     }
 
     return (
-      <span className="pull-right"><a href="#" onClick={(e) => {e.preventDefault(); return false;}} className="editbtn"><i className="fa fa-pencil"></i> Edit</a></span>
-    )
+      <span className="pull-right">
+        <a
+          href="#"
+          onClick={e => {
+            e.preventDefault();
+            return false;
+          }}
+          className="editbtn"
+        >
+          <i className="fa fa-pencil" /> Edit
+        </a>
+      </span>
+    );
   }
 
   getConnectionStatus() {
     let statusData = {
       status: -1,
-      buttonLabel: 'Add'
+      buttonLabel: 'Add',
     };
 
     const visitedUserId = qs.parse(this.props.location.search).id;
     const visitorId = this.props.userProfile._id;
     if (this.state.connectionDetails && this.state.connectionDetails.length) {
       this.state.connectionDetails.forEach(connectionDetail => {
-        if (visitedUserId === connectionDetail.userID1
-          && connectionDetail.userID2 === visitorId) {
-            console.log("vvv", visitedUserId === connectionDetail.userID1
-              && connectionDetail.userID2 === visitorId,
-              visitedUserId, connectionDetail.userID2, connectionDetail.userID1, visitorId);
-            statusData = {
-              status: connectionDetail.requestStatus,
-              buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
-            };
-        } else if (visitedUserId === connectionDetail.userID2
-          && connectionDetail.userID1 === visitorId) {
-            statusData = {
-              status: connectionDetail.requestStatus,
-              buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw': 'Add'
-            };
+        if (visitedUserId === connectionDetail.userID1 && connectionDetail.userID2 === visitorId) {
+          statusData = {
+            status: connectionDetail.requestStatus,
+            buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw' : 'Add',
+          };
+        } else if (visitedUserId === connectionDetail.userID2 && connectionDetail.userID1 === visitorId) {
+          statusData = {
+            status: connectionDetail.requestStatus,
+            buttonLabel: [1, 2].indexOf(connectionDetail.requestStatus) > -1 ? 'Withdraw' : 'Add',
+          };
         }
-      })
+      });
     }
 
     return statusData;
@@ -733,17 +748,22 @@ class UserProfile extends Component {
       currentUser: that.props.userProfile,
       otherUser: { id: visitedUserId },
       connectAction: 'Withdraw',
-    }).then(function(response) {
-      if (response.data === 'success') {
-        that.setState(prevState => ({
-          connectionDetails: prevState.connectionDetails
-          .filter(connectionDetail => !(connectionDetail.userID1 === that.props.userProfile._id
-            && connectionDetail.userID2 === visitedUserId)),
-          isAddButtonLoading: false
-        }));
-      }
-    }).catch(function(error) {
-    });
+    })
+      .then(function(response) {
+        if (response.data === 'success') {
+          that.setState(prevState => ({
+            connectionDetails: prevState.connectionDetails.filter(
+              connectionDetail =>
+                !(
+                  connectionDetail.userID1 === that.props.userProfile._id &&
+                  connectionDetail.userID2 === visitedUserId
+                ),
+            ),
+            isAddButtonLoading: false,
+          }));
+        }
+      })
+      .catch(function(error) {});
 
     e.preventDefault();
   }
@@ -757,34 +777,35 @@ class UserProfile extends Component {
         uid1: that.props.userProfile._id,
         uid2: visitedUserId,
         reqStatus: 2,
-      }).then(function(response) {
-        if (response.data === 'success') {
-          that.setState(prevState => ({
-            connectionDetails: [...prevState.connectionDetails, {
-              userID1: that.props.userProfile._id,
-              userID2: visitedUserId,
-              requestStatus: 1,
-            }],
-            isAddButtonLoading: false
-          }));
-        }
       })
-      .catch(function(error) {
-      });
+        .then(function(response) {
+          if (response.data === 'success') {
+            that.setState(prevState => ({
+              connectionDetails: [
+                ...prevState.connectionDetails,
+                {
+                  userID1: that.props.userProfile._id,
+                  userID2: visitedUserId,
+                  requestStatus: 1,
+                },
+              ],
+              isAddButtonLoading: false,
+            }));
+          }
+        })
+        .catch(function(error) {});
     }
 
     e.preventDefault();
   }
 
   renderAddButtonSpinner() {
-    return this.state.isAddButtonLoading
-        ? (<span className="fa fa-spinner fa-spin"></span>)
-        : (<span></span>)
+    return this.state.isAddButtonLoading ? <span className="fa fa-spinner fa-spin" /> : <span />;
   }
 
   renderAddOrFollowUserButton() {
     if (this.state.myProfile) {
-      return (<span></span>)
+      return <span />;
     }
 
     const visitedUserId = qs.parse(this.props.location.search).id;
@@ -800,21 +821,40 @@ class UserProfile extends Component {
     }
 
     return (
-      <p style={{width: '60%',float: 'right'}}>
-        <a href="#" onClick={buttonActionFn} className="btn-join" style={{ width: buttonWidth }}>{this.renderAddButtonSpinner()} { buttonLabel }</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a>
+      <p style={{ width: '60%', float: 'right' }}>
+        <a href="#" onClick={buttonActionFn} className="btn-join" style={{ width: buttonWidth }}>
+          {this.renderAddButtonSpinner()} {buttonLabel}
+        </a>{' '}
+        <a href="#" className="btn-follow">
+          Follow
+        </a>{' '}
+        <a href="#" className="btn-send">
+          <img
+            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png"
+            alt=""
+          />
+        </a>
       </p>
-    )
+    );
   }
 
   render() {
     const { otherTabLoading, friendList } = this.state;
-    let traitsNameLine
-    let characterNameLine
+    let traitsNameLine;
+    let characterNameLine;
     if (this.state.character) {
-      traitsNameLine = (this.state.character.traitsName) ? (<li><span className="icon bt-icon"></span> {this.state.character.traitsName}</li>) : null;
-      characterNameLine = (this.state.character.characterName) ? (<li><span className="icon pc-icon"></span> {this.state.character.characterName}</li>) : null;
+      traitsNameLine = this.state.character.traitsName ? (
+        <li>
+          <span className="icon bt-icon" /> {this.state.character.traitsName}
+        </li>
+      ) : null;
+      characterNameLine = this.state.character.characterName ? (
+        <li>
+          <span className="icon pc-icon" /> {this.state.character.characterName}
+        </li>
+      ) : null;
     }
-    const UserProgressionTreeLevels = this.props.userProfile.progressionTreeLevels
+    const UserProgressionTreeLevels = this.props.userProfile.progressionTreeLevels;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper main-bg`}>
         <div className="row">
@@ -837,35 +877,48 @@ class UserProfile extends Component {
                         <div className="imgbox" onClick={this.openImageDialog.bind(this, 'avatar')}>
                           <a href="#">
                             <img src={this.state.pictureURL ? this.state.pictureURL : profilePic} />
-                            { this.state.myProfile ? (
-                                <span> <i className="fa fa-camera" aria-hidden="true"></i> Edit</span>
-                              ) : (
-                                <span></span>
-                              )
-                            }
+                            {this.state.myProfile ? (
+                              <span>
+                                {' '}
+                                <i className="fa fa-camera" aria-hidden="true" /> Edit
+                              </span>
+                            ) : (
+                              <span />
+                            )}
                           </a>
                         </div>
-                        <h3>{this.state.firstName} {this.state.lastName}</h3>
+                        <h3>
+                          {this.state.firstName} {this.state.lastName}
+                        </h3>
                       </div>
                     </div>
-                    <div className="col-sm-2 h-100" >
-                      { this.state.myProfile ? (
-                          <span className="middle-edit" onClick={this.openImageDialog.bind(this, 'background')}><a href="#"><i className="fa fa-camera" aria-hidden="true"></i> &nbsp; Edit</a></span>
-                        ) : (
-                          <span></span>
-                        )
-                      }
+                    <div className="col-sm-2 h-100">
+                      {this.state.myProfile ? (
+                        <span className="middle-edit" onClick={this.openImageDialog.bind(this, 'background')}>
+                          <a href="#">
+                            <i className="fa fa-camera" aria-hidden="true" /> &nbsp; Edit
+                          </a>
+                        </span>
+                      ) : (
+                        <span />
+                      )}
                     </div>
                     {/* <div className="col-sm-5 last-right">
                       <p>Blockforce enhancer <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
                       <p>Data miner <a href="#" className="btn-lavel-yellow pull-right">level 5</a></p>
                       <p><a href="#" className="btn-join">Add</a> <a href="#" className="btn-follow">Follow</a> <a href="#" className="btn-send"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" /></a></p>
                     </div> */}
-                    <div className="col-sm-5 last-right" style={{width: '40%', 'marginTop': '25px'}}>
+                    <div className="col-sm-5 last-right" style={{ width: '40%', marginTop: '25px' }}>
                       {this.renderProgressionLevels(UserProgressionTreeLevels)}
-                      { this.renderAddOrFollowUserButton() }
+                      {this.renderAddOrFollowUserButton()}
                     </div>
-                    <input type="file" ref="userImageInput" accept=".jpg, .png, .jpeg, .gif" style={{ display: 'none' }} onChange={this.uploadImage.bind(this)} />
+                    <input
+                      type="file"
+                      ref="userImageInput"
+                      accept=".jpg, .png, .jpeg, .gif"
+                      style={{ display: 'none' }}
+                      onChange={this.uploadImage.bind(this)}
+                    />
                   </div>
                 </div>
                 <div className="row">
@@ -874,34 +927,52 @@ class UserProfile extends Component {
                       <div className="intro-wp">
                         <h3 className="col-heading">Intro {this.renderIntroEdit()}</h3>
                         <ul>
-                          <li><span className="icon"></span> {this.state.work}</li>
-                          <li><span className="icon p-icon"></span> Studied at Yoobo</li>
-                          <li><span className="icon bt-icon"></span> Lives in Vietnam</li>
-                          <li><span className="icon pc-icon"></span> Joined September 2017</li>
+                          <li>
+                            <span className="icon" /> {this.state.work}
+                          </li>
+                          <li>
+                            <span className="icon p-icon" /> Studied at Yoobo
+                          </li>
+                          <li>
+                            <span className="icon bt-icon" /> Lives in Vietnam
+                          </li>
+                          <li>
+                            <span className="icon pc-icon" /> Joined September 2017
+                          </li>
                           {traitsNameLine}
                           {characterNameLine}
                         </ul>
                       </div>
                     </div>
-                    {
-                      otherTabLoading
-                      ?
+                    {otherTabLoading ? (
                       <Spinner shown />
-                      :
-                      <Friends handleChange={this.navigateToUserProfile} connections={friendList} heading={this.state.myProfile ? "My friends" : "Friends"} />
-                    }                   
+                    ) : (
+                      <Friends
+                        handleChange={this.navigateToUserProfile}
+                        connections={friendList}
+                        heading={this.state.myProfile ? 'My friends' : 'Friends'}
+                      />
+                    )}
 
-                    <Photos heading={this.state.myProfile ? "My photos" : "Photos"} />
+                    <Photos heading={this.state.myProfile ? 'My photos' : 'Photos'} />
                   </div>
                   <div className="col pull-right">
                     <div className="theme-box-right">
                       <div className="box">
                         <div className="games-network-wp">
                           <h3 className="col-heading">Quest</h3>
-                          <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation</p>
+                          <p>
+                            Innovation is widely known as a value which is worth pursuing or even a corporate
+                            cure-all. However it is important to be aware of the many innovation
+                          </p>
                           <h5>6/12 Slots Open on 13/08</h5>
                           <div className="fot-wp">
-                            <p>0/3 of Creavity Questions <a href="#" className="btn-join pull-right">Join</a></p>
+                            <p>
+                              0/3 of Creavity Questions{' '}
+                              <a href="#" className="btn-join pull-right">
+                                Join
+                              </a>
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -910,10 +981,18 @@ class UserProfile extends Component {
                       <div className="box">
                         <div className="games-network-wp">
                           <h3 className="col-heading">Quest</h3>
-                          <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation</p>
+                          <p>
+                            Innovation is widely known as a value which is worth pursuing or even a corporate
+                            cure-all. However it is important to be aware of the many innovation
+                          </p>
                           <h5>6/12 Slots Open on 13/08</h5>
                           <div className="fot-wp">
-                            <p>0/3 of Creavity Questions <a href="#" className="btn-join pull-right">Join</a></p>
+                            <p>
+                              0/3 of Creavity Questions{' '}
+                              <a href="#" className="btn-join pull-right">
+                                Join
+                              </a>
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -921,18 +1000,39 @@ class UserProfile extends Component {
                     <div className="theme-box-right">
                       <div className="box">
                         <div className="games-network-wp">
-                          <div className="text-center"><a href="#" className="blue-rounded-btn small-text">Challenge</a> <a href="#" className="blue-rounded-btn small-text">Private</a></div>
+                          <div className="text-center">
+                            <a href="#" className="blue-rounded-btn small-text">
+                              Challenge
+                            </a>{' '}
+                            <a href="#" className="blue-rounded-btn small-text">
+                              Private
+                            </a>
+                          </div>
                           <h3 className="col-heading">Growth Hack Timber Logs</h3>
-                          <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation</p>
+                          <p>
+                            Innovation is widely known as a value which is worth pursuing or even a corporate
+                            cure-all. However it is important to be aware of the many innovation
+                          </p>
 
                           <div className="fot-wp">
                             <p className="text-uppercase text-center">You will receive</p>
                             <ul className="bttons-right-box">
-                              <li><a href="#">5 Exp</a></li>
-                              <li><a href="#"> 10 soqq</a></li>
-                              <li><a href="#">Balor</a></li>
+                              <li>
+                                <a href="#">5 Exp</a>
+                              </li>
+                              <li>
+                                <a href="#"> 10 soqq</a>
+                              </li>
+                              <li>
+                                <a href="#">Balor</a>
+                              </li>
                             </ul>
-                            <p>0/5 Open <a href="#" className="btn-join pull-right">Join</a></p>
+                            <p>
+                              0/5 Open{' '}
+                              <a href="#" className="btn-join pull-right">
+                                Join
+                              </a>
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -946,16 +1046,40 @@ class UserProfile extends Component {
                     />
                     <div className="col-box-wp">
                       <div className="main-comment-box">
-                        <h4 className="heading-md">Growth Hack Timber Logs
-                        <span className="pull-right"><a href="#" className="blue-rounded-btn">Challenge</a> <a href="#" className="blue-rounded-btn">Private</a></span></h4>
-                        <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation...</p>
+                        <h4 className="heading-md">
+                          Growth Hack Timber Logs
+                          <span className="pull-right">
+                            <a href="#" className="blue-rounded-btn">
+                              Challenge
+                            </a>{' '}
+                            <a href="#" className="blue-rounded-btn">
+                              Private
+                            </a>
+                          </span>
+                        </h4>
+                        <p>
+                          Innovation is widely known as a value which is worth pursuing or even a corporate
+                          cure-all. However it is important to be aware of the many innovation...
+                        </p>
                       </div>
                     </div>
                     <div className="col-box-wp">
                       <div className="main-comment-box">
-                        <h4 className="heading-md">Growth Hack Timber Logs
-                        <span className="pull-right"><a href="#" className="blue-rounded-btn">Challenge</a> <a href="#" className="blue-rounded-btn">Private</a></span></h4>
-                        <p>Innovation is widely known as a value which is worth pursuing or even a corporate cure-all. However it is important to be aware of the many innovation...</p>
+                        <h4 className="heading-md">
+                          Growth Hack Timber Logs
+                          <span className="pull-right">
+                            <a href="#" className="blue-rounded-btn">
+                              Challenge
+                            </a>{' '}
+                            <a href="#" className="blue-rounded-btn">
+                              Private
+                            </a>
+                          </span>
+                        </h4>
+                        <p>
+                          Innovation is widely known as a value which is worth pursuing or even a corporate
+                          cure-all. However it is important to be aware of the many innovation...
+                        </p>
                       </div>
                     </div>
                   </div>

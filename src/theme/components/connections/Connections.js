@@ -297,7 +297,11 @@ class Connections extends React.Component {
                   userProfile={this.props.userProfile}
                   profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic}
                 />
-                <RightSection />
+                <RightSection
+                  skills={this.props.skills}
+                  roadmapsAdmin={this.props.roadmapsAdmin}
+                  userProfile={this.props.userProfile}
+                />
                 <div className="col-middle ml-fixed">
                   {this.renderMiddle()}
                 </div>
