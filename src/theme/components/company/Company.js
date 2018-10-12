@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ConfigMain from '~/configs/main';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
+import Axios from 'axios';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import AchievementGroup from './AchievementGroup';
@@ -36,7 +38,10 @@ class Company extends Component {
       companyAchievementGroups: [],
       currentAchievementGroup: undefined,
       roadmaps: [],
-      skills: []
+      skills: [],
+      IsQuestionsOpen: 'none',
+      IsAchievementOpen: 'block',
+      questions: []
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -46,6 +51,9 @@ class Company extends Component {
     this.handleEmailUpdate = this.handleEmailUpdate.bind(this);
     this.addCompanyEmail = this.addCompanyEmail.bind(this);
     this.deleteCompanyEmail = this.deleteCompanyEmail.bind(this);
+    this.toggleQuestionsOption = this.toggleQuestionsOption.bind(this);
+    this.toggleAchievementOption = this.toggleAchievementOption.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
   }
 
   componentWillMount() {
@@ -54,6 +62,7 @@ class Company extends Component {
     this.props.fetchAchievements();
     this.props.fetchRoadmapsFromAdmin();
     this.props.fetchStories();
+    this.getQuestions();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -126,13 +135,24 @@ class Company extends Component {
       this.setState({ achievementGroups: [currentAchievementGroup, ...newData], companyAchievementGroups: [currentAchievementGroup, ...companyAchievementGroups] });
     }
   }
-
+  getQuestions(){
+    const that = this;
+    const url = `${ConfigMain.getBackendURL()}/questionsGet`
+    Axios.get(url).then(function(response) {
+      that.setState({ questions: response.data })
+    }).catch(function(error) { console.log(error) });
+  }
   toggleAddTeamGroupState() {
     this.setState({
       addTeamGroupActive: !this.state.addTeamGroupActive
     });
   }
-
+  toggleQuestionsOption(){
+    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none' });
+  }
+  toggleAchievementOption(){
+    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block' });
+  }
   selectAddTeamGroup(addTeamGroup) {
     this.setState({
       addTeamGroupActive: !this.state.addTeamGroupActive,
@@ -267,7 +287,7 @@ class Company extends Component {
 
   render() {
     const { userProfile } = this.props;
-    const { company } = this.state;
+    const { company, questions } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <div className="row">
@@ -283,67 +303,112 @@ class Company extends Component {
                 <div className="col-middle company-middle-wrapper ml-fixed">
                   <div className="col-box-wp wider-strip mb-20 p-0">
                     <ul className="tab-wp">
-                      <li className="active"><a href="#">Achievement</a></li>
+                      <li className={this.state.IsAchievementOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleAchievementOption}>Achievement</a></li>
                       <li><a href="#">Story</a></li>
                       <li><a href="#">Benefits</a></li>
+                      <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                     </ul>
                   </div>
-                  <div className="theme-box-right">
-                    <div className="box">
-                      <div className="devider-box">
-                        <div className="top-sec-wp">
-                          <h3>{company.name}</h3>
-                          <div className="box-wp bb-0">
-                            <button className="btn-yellow" onClick={() => this.toggleAddEmailExpanded()}>Admin +</button>
-                            <div className="company-new-filed" style={{ display: this.state.isAddEmailExpanded ? 'inline-block' : 'none' }}>
-                              <input
-                                type="email"
-                                placeholder="Enter email address"
-                                value={this.state.addEmail}
-                                onChange={e => this.setEmailAddress(e)}
-                              />
-                              <a onClick={() => this.addCompanyEmail()}>Add</a>
-                              <span className="close-new-company" onClick={() => this.toggleAddEmailExpanded()}>&#120273;</span>
+                  <div style={{ display: this.state.IsAchievementOpen }}>
+                    <div className="theme-box-right">
+                      <div className="box">
+                        <div className="devider-box">
+                          <div className="top-sec-wp">
+                            <h3>{company.name}</h3>
+                            <div className="box-wp bb-0">
+                              <button className="btn-yellow" onClick={() => this.toggleAddEmailExpanded()}>Admin +</button>
+                              <div className="company-new-filed" style={{ display: this.state.isAddEmailExpanded ? 'inline-block' : 'none' }}>
+                                <input
+                                  type="email"
+                                  placeholder="Enter email address"
+                                  value={this.state.addEmail}
+                                  onChange={e => this.setEmailAddress(e)}
+                                />
+                                <a onClick={() => this.addCompanyEmail()}>Add</a>
+                                <span className="close-new-company" onClick={() => this.toggleAddEmailExpanded()}>&#120273;</span>
+                              </div>
+                              {this.state.addEmailError ? <span style={{color: "red"}}>Please enter valid email address</span> : ''}
+                              <ul>
+                                {
+                                  company.emails.map((email, index) => {
+                                    return <li key={index}><a href="#">{email} <span className="cross-icon" onClick={() => this.deleteCompanyEmail(email)}>&#120273;</span></a></li>
+                                  })
+                                }
+                              </ul>
                             </div>
-                            {this.state.addEmailError ? <span style={{color: "red"}}>Please enter valid email address</span> : ''}
-                            <ul>
-                              {
-                                company.emails.map((email, index) => {
-                                  return <li key={index}><a href="#">{email} <span className="cross-icon" onClick={() => this.deleteCompanyEmail(email)}>&#120273;</span></a></li>
-                                })
-                              }
-                            </ul>
+                            {/* <div className="box-wp bb-0">
+                              <h5>moderators</h5>
+                              <ul>
+                                <li><a href="#">danielshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                                <li><a href="#">danielshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
+                              </ul>
+                            </div> */}
                           </div>
-                          {/* <div className="box-wp bb-0">
-                            <h5>moderators</h5>
-                            <ul>
-                              <li><a href="#">danielshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                              <li><a href="#">danielshen083@gmail.com <span className="cross-icon">&#120273;</span></a></li>
-                            </ul>
-                          </div> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="theme-box-right">
+                      <div className="box">
+                        <div className="devider-box">
+                          <h3>General Achievement Group <span><a href="#" className="change-btn txt-purpal"> Add +</a></span></h3>
+                          {
+                            !this.props.isFetchingAchievementGroups &&
+                            this.renderAchievementGroups(this.state.companyAchievementGroups)
+                          }
+                          <div className="top-sec-wp mt-20">
+                            <h3>Teams
+                              { this.renderAddTeamGroupSelect([{value: "", label: "Select"}, {value: "AddTeam", label: "Add Team"}, {value: "AddAchievementGroup", label: "Add Achievement Group"}]) }
+                            </h3>
+                          </div>
+
+                          {
+                            !this.props.isFetchingAchievementGroups &&
+                            this.renderTeams(this.props.teams)
+                          }
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="theme-box-right">
-                    <div className="box">
-                      <div className="devider-box">
-                        <h3>General Achievement Group <span><a href="#" className="change-btn txt-purpal"> Add +</a></span></h3>
-                        {
-                          !this.props.isFetchingAchievementGroups &&
-                          this.renderAchievementGroups(this.state.companyAchievementGroups)
-                        }
-                        <div className="top-sec-wp mt-20">
-                          <h3>Teams
-                            { this.renderAddTeamGroupSelect([{value: "", label: "Select"}, {value: "AddTeam", label: "Add Team"}, {value: "AddAchievementGroup", label: "Add Achievement Group"}]) }
-                          </h3>
-                        </div>
-
-                        {
-                          !this.props.isFetchingAchievementGroups &&
-                          this.renderTeams(this.props.teams)
-                        }
-                      </div>
+                </div>
+                <div style={{ display: this.state.IsQuestionsOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
+                  <div id="questions" className="theme-box-right">
+                    <div className="box" style={{ padding: '3px' }}>                                           
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead>
+                                <tr>
+                                  <th></th>
+                                  <th>Question</th>
+                                  <th>Roadmap/Skill</th>
+                                  <th>Category</th>
+                                  <th>SubCategory</th>
+                                  <th>Description</th>
+                                  <th>Conditions</th>
+                                  <th>Evaluation</th>
+                                  <th>Complexity</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {
+                                _.map(questions,(que, index)=>{
+                                  return(
+                                    <tr>
+                                      <td></td>
+                                      <td>{que.question}</td>
+                                      <td>{que.roadmapSkill}</td>
+                                      <td>{que.category}</td>
+                                      <td>{que.subCategory}</td>
+                                      <td>{que.description}</td>
+                                      <td>{que.conditions}</td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+                                  )
+                                })
+                              }                              
+                              </tbody>
+                            </table>
+                          </div>                                         
                     </div>
                   </div>
                 </div>
