@@ -246,6 +246,7 @@ class LandingPage extends Component {
           isEmailInputVisible={this.state.isEmailInputVisible}
           email={this.state.email}
           changePageLanguage={this.props.changePageLanguage}
+          onEnterpriseModalShow={() => this.handleEnterpriseModalShow(true)}
         />
       </div>
     );

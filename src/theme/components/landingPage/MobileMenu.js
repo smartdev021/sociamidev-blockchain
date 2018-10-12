@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage }) => {
+export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
     const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
   
     const handleInputSubmit = (event) => {
@@ -27,7 +27,12 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
           <li>The games</li>
           <li>Forums</li>
           <li>Markets</li>
-          <li>Enterprise</li>
+          <li
+            onClick={() => {
+              onEnterpriseModalShow();
+              closeMenu()
+            }}
+          >Enterprise</li>
           <li className="language">
             <a onClick={()=>{
               changePageLanguage('en');
