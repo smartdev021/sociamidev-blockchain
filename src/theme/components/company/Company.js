@@ -19,6 +19,11 @@ import { fetchAchievements, addAchievementGroup, updateAchievementGroup } from '
 import { fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
 import { fetchStories } from '~/src/redux/actions/story';
 
+import plus from "~/src/theme/images/plus.png";
+import cross from "~/src/theme/images/cross.png";
+import cloud from "~/src/theme/images/cloud.png";
+import deleteimg from "~/src/theme/images/delete.png";
+
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
 class Company extends Component {
@@ -307,8 +312,14 @@ class Company extends Component {
                       <li><a href="#">Story</a></li>
                       <li><a href="#">Benefits</a></li>
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
+                      <li style={{float: 'right'}}>
+                        <img src={cloud}/>
+                        <img style={{marginLeft: '7px'}} src={plus}/>
+                        <img style={{marginLeft: '7px'}} src={cross}/>
+                        <img style={{marginLeft: '7px'}} src={deleteimg}/>
+                      </li>
                     </ul>
-                  </div>
+                  </div>                 
                   <div style={{ display: this.state.IsAchievementOpen }}>
                     <div className="theme-box-right">
                       <div className="box">
@@ -372,9 +383,9 @@ class Company extends Component {
                 </div>
                 <div style={{ display: this.state.IsQuestionsOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
                   <div id="questions" className="theme-box-right">
-                    <div className="box" style={{ padding: '3px' }}>                                           
+                    <div className="box" style={{padding: '1px'}}>                                           
                           <div className="table-responsive">
-                            <table className="table">
+                            <table className="table table-bordered">
                               <thead>
                                 <tr>
                                   <th></th>
@@ -422,19 +433,19 @@ class Company extends Component {
 }
 
 const mapStateToProps = state => ({
-	isUpdatingCompany: state.company.isUpdatingCompany,
-	updatedCompany: state.company.company,
-	isFetchingTeams: state.teams.isFetchingTeams,
-	teams: state.teams.data,
-	isFetchingAchievementGroups: state.achievements.isFetchingAchievements,
-	achievementGroups: state.achievements.data,
-	isAddingAchievementGroup: state.addAchievementGroup.isAddingAchievementGroup,
-	getAchievementGroup: state.addAchievementGroup.data,
-	isUpdatingAchievementGroup: state.updateAchievementGroup.isUpdatingAchievementGroup,
-	isFetchingRoadmaps: state.roadmapsAdmin.isFetching,
-	roadmaps: state.roadmapsAdmin.data,
-	isFetchingSkills: state.skills.isFetchingSkills,
-	skills: state.skills.data
+  isUpdatingCompany: state.company.isUpdatingCompany,
+  updatedCompany: state.company.company,
+  isFetchingTeams: state.teams.isFetchingTeams,
+  teams: state.teams.data,
+  isFetchingAchievementGroups: state.achievements.isFetchingAchievements,
+  achievementGroups: state.achievements.data,
+  isAddingAchievementGroup: state.addAchievementGroup.isAddingAchievementGroup,
+  getAchievementGroup: state.addAchievementGroup.data,
+  isUpdatingAchievementGroup: state.updateAchievementGroup.isUpdatingAchievementGroup,
+  isFetchingRoadmaps: state.roadmapsAdmin.isFetching,
+  roadmaps: state.roadmapsAdmin.data,
+  isFetchingSkills: state.skills.isFetchingSkills,
+  skills: state.skills.data
 });
 
 const mapDispatchToProps = dispatch => ({

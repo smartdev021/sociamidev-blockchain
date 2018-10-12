@@ -307,3 +307,19 @@
     width: 25%;
     margin-right: 10px;
 }
+
+/*13-10-2018*/
+#questions .table th {
+    border: 1px solid rgb(6, 144, 247) !important ;
+}
+#questions .table td {
+    border: 1px solid rgb(6, 144, 247) !important ;
+}
+#questions.theme-box-right
+{
+    border: none !important;
+    box-shadow: none !important;
+}
+#questions .table {
+    margin-bottom: unset !important ;
+}
