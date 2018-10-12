@@ -166,7 +166,11 @@ class Sparks extends Component {
                   }
                 />
 
-                <RightSection />
+                <RightSection
+                  skills={this.props.skills}
+                  roadmapsAdmin={this.props.roadmapsAdmin}
+                  userProfile={this.props.userProfile}
+                />
 
                 <div className="col-middle ml-fixed">
                   <div className="sparks-h4 sparks-golden">Token related</div>

@@ -65,21 +65,12 @@ class CharacterCreationFlow extends React.Component {
   }
 
   componentWillMount() {
-    this.startCharacterCreation()
     this.props.fetchListCharacterClasses();
     this.props.fetchListCharacterTraits();
-    this.restoreCharacterCreation();
+    this.startCharacterCreation()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.characterCreationData != this.props.characterCreationData ||
-      this.state.characterCreationState != prevState.characterCreationState ||
-      this.state.characterCreationFlowStepIndex != prevState.characterCreationFlowStepIndex
-    ) {
-
-    }
-
     if (prevProps.characterCreationData.isInProgress != this.props.characterCreationData.isInProgress) {
       if (this.props.characterCreationData.isInProgress) {
         this.startCharacterCreation();
@@ -141,6 +132,8 @@ class CharacterCreationFlow extends React.Component {
       data = {
         characterName: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]
           .name,
+        characterImage:  this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex].imageUrl,
+        characterId: this.props.listCharacters[this.props.characterCreationData.selectedCharacterIndex]._id,
         traitsName: this.props.listCharacterTraits[this.props.characterCreationData.selectedTraitsIndex].name,
         traitsIndex: this.props.characterCreationData.selectedTraitsIndex,
         characterIndex: this.props.characterCreationData.selectedCharacterIndex,
@@ -223,26 +216,6 @@ class CharacterCreationFlow extends React.Component {
       }
     }
     return FormToRender;
-  }
-
-  restoreCharacterCreation() {
-    /*const { cookies } = this.props;
-
-    
-    
-
-    if (cookies) {
-        
-    }
-
-    if (cookies) {
-        const characterCreationSave = cookies.get("characterCreation");
-
-        if (characterCreationSave) {
-            this.props.setCharacterCreationData(characterCreationSave.data);
-            this.setState({characterCreationState: characterCreationSave.state.data, characterCreationFlowStepIndex: characterCreationSave.state.index});
-        }
-    }*/
   }
 
   render() {

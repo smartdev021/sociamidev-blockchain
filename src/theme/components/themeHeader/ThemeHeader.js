@@ -242,9 +242,11 @@ class ThemeHeader extends React.Component {
     const OpenMenuClass = !this.props.isSidebarOpen ? 'open-menu' : 'open-menu';
     const CloseMenuClass = this.props.isSidebarOpen ? 'close-menu' : 'close-menu';
 
-    let houseImage = defaultHouseCompanyImage;
+    
+    let houseImage = this.props.userProfile.character.characterImage ? this.props.userProfile.character.characterImage : defaultHouseCompanyImage;
     if(this.props.houses.houses.length > 0) {
-      houseImage = this.props.houses.houses[0].imageUrl;
+      const findHouse = this.props.houses.houses.find(item => item.name == this.props.userProfile.character.characterName);
+      if(findHouse && findHouse.imageUrl) houseImage = findHouse.imageUrl;
     }
 
     return (

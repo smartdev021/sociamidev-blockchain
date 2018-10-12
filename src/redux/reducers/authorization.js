@@ -24,7 +24,8 @@ import {
   PROGRESSION_TREE_STOP_COMPLETE,
   USER_LOG_OUT,
   USER_SIGN_UP,
-  SET_USER_LOCALE_DATA
+  SET_USER_LOCALE_DATA,
+  UPDATE_SELECTED_LANGUAGE
 } from '~/src/redux/actions/actionTypes';
 
 export function isOpenProfilePending(state = false, action) {
@@ -184,6 +185,14 @@ export function userProfile(state = userProfileInitialState, action) {
       return {
         ...state,
         locale: { localeTemporary: localeTemporary, ...action.locale }
+      };
+    case UPDATE_SELECTED_LANGUAGE:
+      return{
+        ...state,
+        locale:{
+          ...state.locale,
+          selectedLanguage:action.payload
+        }
       };
     default:
       return state;
