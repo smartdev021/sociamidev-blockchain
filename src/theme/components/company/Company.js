@@ -291,7 +291,6 @@ class Company extends Component {
                       <li className="active"><a href="#">Achievement</a></li>
                       <li><a href="#">Story</a></li>
                       <li><a href="#">Benefits</a></li>
-<<<<<<< HEAD
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                       <li style={{float: 'right'}}>
                         <img src={cloud}/>
@@ -327,26 +326,6 @@ class Company extends Component {
                                   })
                                 }
                               </ul>
-=======
-                    </ul>
-                  </div>
-                  <div className="theme-box-right">
-                    <div className="box">
-                      <div className="devider-box">
-                        <div className="top-sec-wp">
-                          <h3>{company.name}</h3>
-                          <div className="box-wp bb-0">
-                            <button className="btn-yellow" onClick={() => this.toggleAddEmailExpanded()}>Admin +</button>
-                            <div className="company-new-filed" style={{ display: this.state.isAddEmailExpanded ? 'inline-block' : 'none' }}>
-                              <input
-                                type="email"
-                                placeholder="Enter email address"
-                                value={this.state.addEmail}
-                                onChange={e => this.setEmailAddress(e)}
-                              />
-                              <a onClick={() => this.addCompanyEmail()}>Add</a>
-                              <span className="close-new-company" onClick={() => this.toggleAddEmailExpanded()}>&#120273;</span>
->>>>>>> parent of ca2f45b... questions
                             </div>
                             {this.state.addEmailError ? <span style={{color: "red"}}>Please enter valid email address</span> : ''}
                             <ul>
@@ -390,7 +369,6 @@ class Company extends Component {
                     </div>
                   </div>
                 </div>
-<<<<<<< HEAD
                 <div style={{ display: this.state.IsQuestionsOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
                   <div id="questions" className="theme-box-right">
                     <div className="box" style={{padding: '1px'}}>                                           
@@ -433,8 +411,6 @@ class Company extends Component {
                     </div>
                   </div>
                 </div>
-=======
->>>>>>> parent of ca2f45b... questions
               </div>
             </div>
           </div>
