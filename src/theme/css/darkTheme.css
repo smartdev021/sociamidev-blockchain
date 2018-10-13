@@ -16,9 +16,6 @@
   width: 594px;
   margin: 0 30px;
 }
-.dark-theme-wrapper .col-middle.questions{
-  width: 800px !important;
-}
 .dark-theme-wrapper .col-box-wp {
   border: 1px solid rgb(6, 144, 247);
   box-shadow: 0px 0px 5.53px 1.47px rgba(73, 177, 255, 0.53);

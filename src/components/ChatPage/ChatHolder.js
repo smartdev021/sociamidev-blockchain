@@ -13,10 +13,10 @@ class ChatHolder extends Component {
           <ChatHeader
             toggleChatHolder={this.props.toggleChatHolder}
           />
-          {/* <div className="chat-content-holder">
+          <div className="chat-content-holder">
             <ChatLeftSideHolder/>
             <ChatRightSideHolder/>
-          </div> */}
+          </div>
         </div>
       </div>
     )
