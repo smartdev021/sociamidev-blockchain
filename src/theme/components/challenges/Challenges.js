@@ -67,7 +67,11 @@ class Challenges extends Component {
                   profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
                   />
 
-                <RightSection />
+                <RightSection
+                  skills={this.props.skills}
+                  roadmapsAdmin={this.props.roadmapsAdmin}
+                  userProfile={this.props.userProfile}
+                />
 
                 { this.section() }
               </div>

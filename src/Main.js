@@ -14,6 +14,8 @@ import ConfigMain from '~/configs/main';
 import { fetchAllTasks } from '~/src/redux/actions/tasks';
 import { fetchHousesByEmail } from '~/src/redux/actions/houses';
 import { fetchCompanyByEmail } from '~/src/redux/actions/company';
+import { fetchStories } from '~/src/redux/actions/story';
+import { fetchRoadmaps, fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
 import { markActivitySeen } from '~/src/redux/actions/activities';
 
 import { Icon } from 'react-fa';
@@ -83,8 +85,11 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    this.props.onFetchHouseByEmail(this.props.profile.email)
-    this.props.onFetchCompanyByEmail(this.props.profile.email)
+    this.props.onFetchHouseByEmail(this.props.profile.email);
+    this.props.onFetchCompanyByEmail(this.props.profile.email);
+    this.props.onFetchStories();
+    this.props.fetchRoadmaps();
+    this.props.fetchRoadmapsFromAdmin(this.props.isAuthorized ? this.props.userProfile._id : undefined);
   }
 
   renderRoutes() {
@@ -212,14 +217,19 @@ Main.propTypes = {
   userActivities: PropTypes.array.isRequired,
   markActivitySeen: PropTypes.func.isRequired,
   onFetchHouseByEmail: PropTypes.func.isRequired,
-  onFetchCompanyByEmail: PropTypes.func.isRequired
+  onFetchCompanyByEmail: PropTypes.func.isRequired,
+  onFetchStories: PropTypes.func.isRequired,
+  roadmapsAdmin: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
   onFetchAllTasks: bindActionCreators(fetchAllTasks, dispatch),
   markActivitySeen: bindActionCreators(markActivitySeen, dispatch),
   onFetchHouseByEmail: bindActionCreators(fetchHousesByEmail, dispatch),
-  onFetchCompanyByEmail: bindActionCreators(fetchCompanyByEmail, dispatch)
+  onFetchCompanyByEmail: bindActionCreators(fetchCompanyByEmail, dispatch),
+  onFetchStories: bindActionCreators(fetchStories, dispatch),
+  fetchRoadmaps: bindActionCreators(fetchRoadmaps, dispatch),
+  fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch)
 });
 
 const mapStateToProps = state => ({
@@ -232,6 +242,8 @@ const mapStateToProps = state => ({
   company: state.userProfile.company,
   houses: state.houses,
   companies: state.company,
+  skills: state.skills,
+  roadmapsAdmin: state.roadmapsAdmin,
   profile: state.userProfile.profile
 });
 

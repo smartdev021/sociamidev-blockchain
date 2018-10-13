@@ -26,6 +26,19 @@
   padding: 25px;
   position: relative;
 }
+
+.dark-theme-wrapper .col-box-wp .box-icon-exclam{
+  height: 22px;
+  top: 9px;
+  right: 10px;
+  z-index: 1;
+  position: absolute;
+}
+.dark-theme-wrapper .col-box-wp span.box-icon-exclam img {
+  width: 5px;
+  height: 21px;
+}
+
 .dark-theme-wrapper .col-middle .top-box-wp {
   border: 2px solid #73028b;
   box-shadow: 0px 0px 38px 0px #73028b, 0px 0px 11.06px 2.94px rgba(223, 73, 255, 0.5),
@@ -270,7 +283,7 @@
 }
 .dark-theme-wrapper .main-comment-box .top-head {
   height: 41px;
-  float: left;
+  /* float: left; */
   width: 100%;
   margin-bottom: 5px;
   line-height: 41px;
@@ -564,12 +577,41 @@ img.achievement-badge-icon {
 }
 .dark-theme-wrapper .left-content ul li a {
   color: #d8d8d8;
+  display: flex;
+  align-items: center;
   text-decoration: none;
 }
 .dark-theme-wrapper .left-content ul li span.icon-wp {
   float: left;
   margin-right: 22px;
 }
+.dark-theme-wrapper .left-content ul li span.icon-exclam {
+  height: 22px;
+  margin-left: 10px;
+  margin-top: -20px;
+}
+
+.dark-theme-wrapper .left-content ul li span.icon-exclam img {
+  width: 5px;
+  height: 21px;
+}
+
+.dark-theme-wrapper .box-contain-exclam{
+  position: relative;
+}
+.dark-theme-wrapper .box-contain-exclam span.box-icon-exclam {
+  height: 22px;
+  top: 5px;
+  right: 10px;
+  z-index: 1;
+  position: absolute;
+}
+.dark-theme-wrapper .box-contain-exclam span.box-icon-exclam img {
+  width: 5px;
+  height: 21px;
+}
+
+
 .dark-theme-wrapper .p-0 {
   padding: 0 !important;
 }
@@ -1265,6 +1307,7 @@ input:focus {
   padding: 2px 10px;
   float: left;
   margin: 12px 2px;
+  cursor: pointer;
 }
 .achievements-wrapper .top-box ul li.active{
   background:#0069be;
@@ -1288,9 +1331,10 @@ input:focus {
   margin-bottom:12px;
   text-align:center;
   position:relative;
-  padding:20px 15px;
+  padding:20px 0px;
 }
 .achievements-wrapper .bottom-box ul li a {
+  font-size: 12px;
   color: #90019c;
   text-decoration: none;
   border: 1px solid #90019c;
@@ -1404,7 +1448,6 @@ input:focus {
   .dark-theme-wrapper {
     min-height: 100vh;
     background-size: 100% !important;
-    background-repeat: no-repeat !important;
   }
 }
 @media (min-width: 1920px) {

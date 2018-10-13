@@ -26,7 +26,8 @@ import {
   UPDATE_USER_COVERBACKGROUND,
   USER_LOG_OUT,
   USER_SIGN_UP,
-  SET_USER_LOCALE_DATA
+  SET_USER_LOCALE_DATA,
+  UPDATE_SELECTED_LANGUAGE
 } from './actionTypes';
 
 import ConfigMain from '~/configs/main';
@@ -104,10 +105,24 @@ export function setUserLocaleDataI18Next(module) {
       },
       (a, b) => {
         if (module && module.language && module.languages && module.languages.length) {
+          let selectedLanguage = 'en';
+          if(module.language.includes('ko')){
+            selectedLanguage = 'ko'
+          }
+          else if (module.language.includes('vi')){
+            selectedLanguage = 'vi'
+          }
+          else if (module.language.includes('th')){
+            selectedLanguage = 'th'
+          }
+          else if (module.language.includes('cn') || module.language.includes('zh')){
+            selectedLanguage = 'cn'
+          }
           dispatch(
             setUserLocaleData({
               current: module.language,
-              languages: module.languages
+              languages: module.languages,
+              selectedLanguage
             })
           );
         }
@@ -468,5 +483,14 @@ export const signUp = data => {
       payload: data._id,
     });
     return dispatch(fetchUserProfile(null, null, data._id));
+  };
+};
+
+export const changePageLanguage = language => {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_SELECTED_LANGUAGE,
+      payload: language,
+    });
   };
 };

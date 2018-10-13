@@ -52,6 +52,9 @@ const LeftNav = (props) => {
                   <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/achievements-menu-icon.png" />
                 </span>
                 <p>Achievements</p>
+                <span className="icon-exclam">
+                  <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/exclam-icon.svg" />
+                </span>
               </Link>
             </li>
             <li className="l-h40">

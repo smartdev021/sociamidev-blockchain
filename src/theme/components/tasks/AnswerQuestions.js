@@ -286,9 +286,11 @@ class AnswerQuestions extends React.Component {
     }
 
     if (prevProps.isTasksUpdateInProgress != this.props.isTasksUpdateInProgress) {
-      if (!this.props.isTasksUpdateInProgress) {
-        this.props.onSubmitComplete();
-      }
+      /* deprecate this for now, add logic on when to show modal or when to call onSubmitComplete
+      *  if (!this.props.isTasksUpdateInProgress) {
+      *   this.props.onSubmitComplete();
+      * }
+      */
     }
   }
 
@@ -416,15 +418,52 @@ class AnswerQuestions extends React.Component {
     e.preventDefault();
 
     const that = this;
+    const { props, state, _getAchievementWithRoadmap } = that;
 
     const body = {
-      userId: this.props.userProfile._id,
-      taskId: this.state.currentTask._id,
+      userId: props.userProfile._id,
+      taskId: state.currentTask._id,
       roadmapId: _.get(this, 'state.currentTask.metaData.subject.roadmap._id'),
-      answers: this.state.answersMy,
+      answers: state.answersMy,
     };
     PubSub.publish('submitAnswerForTask', body.userId);
-    this.props.hangoutAnswersSave(body);
+    props.hangoutAnswersSave(body, (err, saveResult) => {
+      let filteredResult = saveResult.result;
+      console.log('saveResult', saveResult);
+      let foundAchievement = filteredResult.map(hangoutAnswer => _getAchievementWithRoadmap(hangoutAnswer));
+      foundAchievement = foundAchievement.filter(found => found !== false);
+      console.log('foundAchievement 123', foundAchievement);
+      let foundCondition = [];
+      foundAchievement.forEach(found => {
+        const matchingCondition = found.conditions.filter(cond => cond._roadmap === body.roadmapId);
+        if (matchingCondition && matchingCondition.length) {
+          foundCondition.push(matchingCondition[0]);
+        }
+      });
+
+      console.log('we found123', foundCondition);
+
+      props.onSubmitComplete(saveResult);
+    });
+  }
+
+  _getAchievementWithRoadmap(hangoutAnswer) {
+    let found = false;
+    if (hangoutAnswer._achievements && hangoutAnswer._achievements.length) {
+      hangoutAnswer._achievements.forEach(achievement => {
+        if (found === false && achievement.conditions && achievement.conditions.length) {
+          achievement.conditions.forEach(condition => {
+            // is object id
+            if (condition._roadmap && condition._roadmap.length === 24) {
+              found = achievement;
+              return found;
+            }
+          });
+        }
+      });
+    }
+
+    return found;
   }
 
   handlePopupClose() {
