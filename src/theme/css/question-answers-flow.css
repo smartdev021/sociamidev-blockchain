@@ -154,16 +154,7 @@
 }
 
 .QuestionAnswersFlow-textarea {
-  width: 95%;
   height: 150px;
-  border-radius: 20px;
-  /* border: 1px solid #33389b; */
-  margin-left: 20px;
-  outline: none;
-  /* box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4) inset; */
-  /* padding: 0px 10px 0px 10px; */
-  border-radius: 4px;
-  box-sizing: border-box;
 }
 
 .question-answers-multiple-area {
@@ -174,8 +165,7 @@
   width: 100%;
   height: 100%;
   border: 1px solid #33389b;
-  border-radius: 10px;
-  outline: none;
+  padding: 15px 25px;
 }
 
 .QuestionAnswersFlow-prev-next-ctn {
@@ -203,28 +193,16 @@
 }
 
 .QuestionAnswersFlow-social-share {
-  text-align: right;
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.QuestionAnswersFlow-social-share span {
-  padding-right: 15px;
+  color: white;
+  max-width: 65%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .QuestionAnswersFlow-social-share a {
   padding-right: 5px;
 }
-
-/*.QuestionAnswersFlow-current-question-indicator {*/
-  /*text-align: center;*/
-  /*display: flex;*/
-  /*justify-content: center;*/
-  /*!* align-items: center; *!*/
-  /*!*height: 40px;*!*/
-/*}*/
 
 .QuestionAnswersFlow-back-to-tasks-ctn button {
   background: #000;
@@ -403,7 +381,10 @@
 
 /* added from Mariana */
 .QuestionAnswersFlow-next {
-  /*float: right;*/
+  color: #9b01aa;
+}
+.QuestionAnswersFlow-next-block a, .QuestionAnswersFlow-next-block a:hover{
+  cursor: not-allowed;
   color: #9b01aa;
 }
 .QuestionAnswersFlow-answer{
@@ -411,11 +392,25 @@
   cursor: pointer;
 }
 .QuestionAnswersFlow-previous {
-  /*float: left;*/
   color: #33389b;
 }
 .QuestionAnswersFlow-previous-next-side {
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
+}
+
+.QuestionAnswersFlow-answer-question-holder{
+  padding: 10px 20px;
+  font-size: 20px;
+}
+.QuestionAnswersFlow-answer-question-text{
+  color: #e6b400;
+  margin: unset;
+  display: inline-block;
+}
+.QuestionAnswersFlow-answer-question-indicator{
+  color: #9b01aa;
+  display: inline-block;
+  margin-left: 10px;
 }

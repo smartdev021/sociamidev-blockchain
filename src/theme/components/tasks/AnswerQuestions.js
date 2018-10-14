@@ -444,6 +444,7 @@ class AnswerQuestions extends React.Component {
       console.log('we found123', foundCondition);
 
       props.onSubmitComplete(saveResult);
+      props.onBackToMyTasks();
     });
   }
 
