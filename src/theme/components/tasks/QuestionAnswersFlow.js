@@ -160,15 +160,20 @@ class QuestionAnswersFlow extends React.Component {
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
-          <button type="button" onClick={this.props.onBackToMyTasks} className="close" aria-label="Close">
-            <span aria-hidden="true" style={{ fontSize: '18px' }}>
+          <button type="button" onClick={this.props.onBackToMyTasks} aria-label="Close">
+            <span aria-hidden="true" style={{ fontSize: '19px' }}>
               &times;
             </span>
           </button>
         </div>
+        <div className="QuestionAnswersFlow-current-question-holder">
+          <div className="QuestionAnswersFlow-current-question">
+            {`${currentQuestion + 1} / ${questions.length}`}
+          </div>
+        </div>
         <div className="QuestionAnswersFlow-current-question-indicator">
           <p className="QuestionAnswersFlow-main-question">
-            ({`${currentQuestion + 1} / ${questions.length}`}) {question.question}
+            {question.question}
           </p>
         </div>
         <div className="QuestionAnswersFlow-previous-next-side">
@@ -179,6 +184,9 @@ class QuestionAnswersFlow extends React.Component {
             >
               ◀ previous
             </a>
+          </div>
+          <div className="QuestionAnswersFlow-answer">
+            ANSWER HERE
           </div>
           <div className="QuestionAnswersFlow-next">
             {currentQuestion === questions.length - 1 ? (
@@ -195,7 +203,7 @@ class QuestionAnswersFlow extends React.Component {
             )}
           </div>
         </div>
-        {this.renderAnswerInput()}
+        {/*{this.renderAnswerInput()}*/}
         <div className="QuestionAnswersFlow-social-share">
           {/* <span>Jhon: It will change finance and healthcare the most</span> */}
           <span style={{color:"darkgrey"}}>{partnerMsg}</span>

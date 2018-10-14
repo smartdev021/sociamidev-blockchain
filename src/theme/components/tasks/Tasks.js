@@ -751,13 +751,16 @@ class Tasks extends React.Component {
           <div className="container">
             <div className="row">
               <div className="row">
-                <LeftNav
-                  accounting={this.props.accounting}
-                  userProfile={this.props.userProfile}
-                  profilePic={
-                    this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic
-                  }
-                />
+                {!this.props.activeHangout ? (
+                  <LeftNav
+                    accounting={this.props.accounting}
+                    userProfile={this.props.userProfile}
+                    profilePic={
+                      this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic
+                    }
+                  />
+                ) : null
+                }
 
                 {this.props.activeHangout ? (
                   <RightAnswerSection getLoadURL={url => this.getLoadURL(url)} />
@@ -769,13 +772,11 @@ class Tasks extends React.Component {
                   />
                 )}
                 {this.props.activeHangout ? (
-                  <div className="col-middle ml-fixed">
-                    <AnswerQuestions
-                      currentTask={this.props.activeHangout}
-                      onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
-                      onSubmitComplete={returnData => this.handleAnswersSubmitComplete(returnData)}
-                    />
-                  </div>
+                  <AnswerQuestions
+                    currentTask={this.props.activeHangout}
+                    onBackToMyTasks={this.handleBackToMyTasks.bind(this)}
+                    onSubmitComplete={returnData => this.handleAnswersSubmitComplete(returnData)}
+                  />
                 ) : (
                   <div className="col-middle ml-fixed">
                     <div className="col-box-wp mb-50 p-0">
