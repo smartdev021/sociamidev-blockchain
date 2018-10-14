@@ -235,7 +235,11 @@ class Settings extends Component {
                   profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic} 
                 />
                 
-                <RightSection />
+                <RightSection
+                  skills={this.props.skills}
+                  roadmapsAdmin={this.props.roadmapsAdmin}
+                  userProfile={this.props.userProfile}
+                />
 
                 <div className="col-middle ml-fixed">
                   <div className="col-box-wp mb-20 p-0">

@@ -337,8 +337,6 @@ class Company extends Component {
                           <img src={cloud}/>
                           <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} /> 
                         </label>
-                       {/* <img style={{marginLeft: '7px'}} src={plus}/>
-                                               <img style={{marginLeft: '7px'}} src={cross}/>*/}
                         <img style={{marginLeft: '7px'}} src={deleteimg}/>
                       </li>
                     </ul>
@@ -406,7 +404,7 @@ class Company extends Component {
                 </div>
                 <div style={{ display: this.state.IsQuestionsOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
                   <div id="questions" className="theme-box-right">
-                    <div className="box" style={{ padding: '1px' }}>                                           
+                    <div className="box" style={{ padding: '1px' }}>
                           <div className="table-responsive">
                             <table className="table table-bordered">
                               <thead>

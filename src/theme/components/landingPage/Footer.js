@@ -1,4 +1,5 @@
 import React from 'react';
+import languageContent from './languageWiseContent';
 
 export const Footer = (localeData) => {
     return (
@@ -10,20 +11,19 @@ export const Footer = (localeData) => {
             className="h-auto"
           />
         </a>
-        <h3>Subscribe to our Newsletter</h3>
+        <h3>{languageContent[localeData.currentLanguage].footer_header}</h3>
         <div className="new-subscribe"><input type="email" className="mail new-text" value="Mail" /></div>
         <button type="button" className="subscribe new-btn"><p>Subscribe</p></button>
         <ul className="info-list">
-          <li>About</li>
-          <li>Support</li>
-          <li>Contact</li>
-          <li>Press</li>
+          <li>{languageContent[localeData.currentLanguage].footer_about}</li>
+          <li>{languageContent[localeData.currentLanguage].footer_support}</li>
+          <li>{languageContent[localeData.currentLanguage].footer_contact}</li>
+          <li>{languageContent[localeData.currentLanguage].footer_press}</li>
         </ul>
-        <h4>&#169;2018 SOQQLE, INC. ALL RIGHTS RESERVED.<br />
-          All trademarks referenced herein are the properties of their respective owners.</h4>
+        <h4 dangerouslySetInnerHTML={{ __html: `&#169;${languageContent[localeData.currentLanguage].footer_copy }`}} />
         <ul className="privacy-list">
-          <li><a href="/privacyPolicy" target="_blank">Privacy</a></li>
-          <li><a href="/termsOfUse" target="_blank">Terms</a></li>
+          <li><a href="/privacyPolicy" target="_blank">{languageContent[localeData.currentLanguage].footer_privacy}</a></li>
+          <li><a href="/termsOfUse" target="_blank">{languageContent[localeData.currentLanguage].footer_terms}</a></li>
         </ul>
         {
           localeData && localeData.localeData && localeData.localeData.localeTemporary ? (

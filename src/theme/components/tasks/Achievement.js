@@ -16,7 +16,7 @@ class Achievement extends React.Component {
   }
 
   render() {
-    const { isOpen, close } = this.props;
+    const { isOpen, close, achievementDetails } = this.props;
     const modalStyleOverrides = {
       overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.85)',
@@ -41,8 +41,8 @@ class Achievement extends React.Component {
               <div className="center-wrapper">
                 <ActionLink href="#" className="modal-close-button" onClick={close} />
                 <div className="content-wp">
-                  <h6 className="yellow-text">Achievement completion</h6>
-                  <h4>DEEP DIVER</h4>
+                  <h6 className="yellow-text">{achievementDetails.displayProgressVsComplete}</h6>
+                  <h4>{achievementDetails.displayName}</h4>
                   <p>
                     The Innovator quickly flies into action and arrives at the signal. The Chief of Police is
                     there and tells him that the nefarious Shadow Professor has struck again

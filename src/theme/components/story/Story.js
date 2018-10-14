@@ -53,10 +53,14 @@ class Story extends Component {
                   profilePic={this.state.profilePic}
                 />
 
-                <RightSection />
+                <RightSection
+                  skills={this.props.skills}
+                  roadmapsAdmin={this.props.roadmapsAdmin}
+                  userProfile={this.props.userProfile}
+                />
 
                 <div className='col-middle ml-fixed'>
-                  {this.renderSkillBox(this.props.skills)}
+                  {this.renderSkillBox(this.props.fetchedSkills)}
                 </div>
               </div>
             </div>
@@ -69,11 +73,11 @@ class Story extends Component {
 
 const mapStateToProps = state => ({
 	isFetchingSkills: state.skills.isFetchingSkills,
-	skills: state.skills.data
+	fetchedSkills: state.skills.skills
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchStories: bindActionCreators(fetchStories, dispatch),
+  fetchStories: bindActionCreators(fetchStories, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Story));

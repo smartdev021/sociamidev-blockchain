@@ -45,7 +45,7 @@ class SkillCard extends React.Component {
       flipCardClass: false,
       openVideo: false,
       tree: undefined,
-      selectedTask: undefined,
+      selectedTask: "Illuminate",
       selectedSkill: undefined,
       isHangoutFormVisible: false,
       TrendScannerComponentVisible: false
@@ -74,6 +74,7 @@ class SkillCard extends React.Component {
   }
 
   toggleTaskView() {
+    this.selectDefaultSkill();
     this.setState({ isTaskSelected: !this.state.isTaskSelected });
   }
 
@@ -111,8 +112,29 @@ class SkillCard extends React.Component {
     this.props.onQuickStart(this.state.tree);
   }
 
-  selectSkill(e, selectedSkill) {
+  selectDefaultSkill() {
+    let skillParsed = this.state.tree.weightage1.length > 1 ? this.state.tree.weightage1 : this.state.tree.weightage1[0].split(',');
+    for (let i = 0; i < skillParsed.length; ++i) {
+      skillParsed[i] = skillParsed[i].trim();
+    }
 
+    let selectedSkill = skillParsed[0]
+    
+    if(selectedSkill){
+      const url = `${ConfigMain.getBackendURL()}/skillGet?name=${selectedSkill}`;
+      const that = this;
+      that.setState({ isLoading: true, isHangoutFormVisible: false });
+      Axios.get(url)
+      .then(function(response) {
+        that.setState({ skillInfo: response.data, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+      })
+      .catch(function(error) {
+        that.setState({ skillInfo: undefined, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+      });
+    }
+  }
+
+  selectSkill(e, selectedSkill) {
     const url = `${ConfigMain.getBackendURL()}/skillGet?name=${selectedSkill}`;
     const that = this;
     that.setState({ isLoading: true, isHangoutFormVisible: false });
@@ -125,21 +147,13 @@ class SkillCard extends React.Component {
       });
 
     $('.pskill-banner').removeClass('active');
-    $(e.target)
-      .closest('div.pskill-banner')
-      .addClass('active');
+    $(e.target).closest('div.pskill-banner').addClass('active');
   }
 
   selectTask(e, selectedTask) {
-
-
-
-
     this.setState({ selectedTask });
     $('.ptask-banner').removeClass('active');
-    $(e.target)
-      .closest('div.ptask-banner')
-      .addClass('active');
+    $(e.target).closest('div.ptask-banner').addClass('active');
   }
 
   onPlayVideo() {
@@ -175,12 +189,10 @@ class SkillCard extends React.Component {
       skillParsed[i] = skillParsed[i].trim();
     }
     const listItems = skillParsed.map(function(skill, i) {
+      let activeClass = i == 0 ? 'active' : ''
       return (
-        <div className="pskill-banner" onClick={e => that.selectSkill(e, skill)} key={i}>
+        <div className={`pskill-banner ${activeClass}`} onClick={e => that.selectSkill(e, skill)} key={i}>
           <div className="pskill-name">{skill}</div>
-          {/* <div className="ptree-checkmark-div">
-            <div className="ptree-checkmark" />
-          </div> */}
         </div>
       );
     });
@@ -217,7 +229,7 @@ class SkillCard extends React.Component {
       <div style={{display:"inline-grid",width:"100%"}}>
         <div className="ptree-back-header">Select task to continue</div>
         <div className="ptree-task-list">
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Illuminate')}>
+          <div className="ptask-banner active" onClick={e => this.selectTask(e, 'Illuminate')}>
             <div className="ptask-left">
               <div className="ptask-name">Illuminate</div>
               <div className="ptask-desc">30 min 3 questions</div>
@@ -243,10 +255,10 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'XXX')}>
+          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Decode')}>
             <div className="ptask-left">
-              <div className="ptask-name">XXX</div>
-              <div className="ptask-desc">xxx</div>
+              <div className="ptask-name">Decode</div>
+              <div className="ptask-desc">30 min 10 questions</div>
             </div>
             <div className="ptask-right">
               <img
@@ -256,7 +268,7 @@ class SkillCard extends React.Component {
             </div>
           </div>
 
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
+          {/* <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
             <div className="ptask-left">
               <div className="ptask-name">Brainstorm</div>
               <div className="ptask-desc">60 min 1 challenge</div>
@@ -267,7 +279,8 @@ class SkillCard extends React.Component {
                 className="ptask-img-single"
               />
             </div>
-          </div>
+          </div> */}
+
         </div>
         <div className="pskill-btn-group ptree-btn-group">
           <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
@@ -320,7 +333,7 @@ class SkillCard extends React.Component {
   }
 
   getImgUrl(img) {
-    let imgJson;
+    let imgJson
     if (img == 'Miner') {
       imgJson = {
         imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/miner_new.png',
@@ -340,6 +353,16 @@ class SkillCard extends React.Component {
       imgJson = {
         imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
         imgClass : 'progression-tree-hero-img progression-tree-blockforce-img'
+      }
+    } else if (img == 'cyberhero'){
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/cyberhero.png',
+        imgClass : 'progression-tree-hero-img progression-tree-cyberhero-img'
+      }
+    } else if (img == 'guardian'){
+      imgJson = {
+        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/guardian.png',
+        imgClass : 'progression-tree-hero-img progression-tree-guardian-img'
       }
     }else{
       imgJson = {
@@ -440,7 +463,6 @@ class SkillCard extends React.Component {
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
     const imgJson = this.getImgUrl(skillItem.heroimg)
-
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
