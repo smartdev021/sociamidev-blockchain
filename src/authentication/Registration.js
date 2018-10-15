@@ -57,7 +57,7 @@ class Registration extends Component {
             <input
               name="name"
               type="text"
-              placeholder="Name"
+              placeholder="What is your Name?"
               required
               value={this.state.name}
             />
@@ -67,21 +67,24 @@ class Registration extends Component {
             <input
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="What is your Password?"
               required
               value={this.state.password}
             />
           </div>
         </div>
         <div className="col-xs-12" style={{padding: '10px'}}>
-          <div className="signup-email">
-            <input type="email" className="mail new-text" placeholder="What is your email" 
+          <div className="signup-details">
+            <input type="email" className="mail new-text" placeholder="What is your Email?" 
             name="email" type="email" required value={this.state.email} />
           </div>
-          <button type="submit" className="btn signup-btn">Create</button>
+          
+          <button type="submit" className="btn signup-btn">Sign in</button>
           {this.state.message && <div>{this.state.message}</div>}
+          
         </div>
-        <p className="signup-policy-terms">You agree to our Data Privacy and Terms of Use</p>
+        {/* <p className="signup-policy-terms">You agree to our Data Privacy and Terms of Use</p> */}
+        <p className="signup-policy-terms">&nbsp;</p>
       </form>
     );
   }
