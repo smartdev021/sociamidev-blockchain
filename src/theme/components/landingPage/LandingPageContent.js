@@ -74,7 +74,9 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
           soqqleEnv === 'production' ?
           <span className="col-md-12"><a className="btn-bottom" onClick={onTrailerModalShow}>Trailer</a></span>
           :
-          <span className="col-md-12"><a className="btn-bottom" onClick={() => openSignUpForm()}>Already have an account</a></span>
+          <span className="col-md-12"><a className="btn-bottom" onClick={() => openSignUpForm()}>
+            {languageContent[currentLanguage].banner_small}
+          </a></span>
         }
         {/* <section>
           {

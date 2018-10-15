@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onEnterpriseModalShow }) => {
+export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
     const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
 
     const handleInputSubmit = (event) => {
@@ -33,6 +33,17 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
               closeMenu()
             }}
           >Enterprise</li>
+          <li className="language">
+            <a onClick={()=>{
+              changePageLanguage('en');
+              closeMenu()
+            }}>en</a>
+            <b>|</b>
+            <a onClick={()=>{
+              changePageLanguage('ko');
+              closeMenu()
+            }}>ko</a>
+          </li>
         </ul>
         <footer>
           <div className="mobile-menu-email-subscribe-container">

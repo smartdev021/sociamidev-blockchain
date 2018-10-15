@@ -692,6 +692,10 @@ html.vertical-hidden {
 .right-new-link .right-dropdown-link li a:hover{
   color: #9b01aa;
 }
+.right-new-link .right-dropdown-link li b{
+  color: #fff;
+  margin: 0 5px;
+}
 .right-new-link .dd-new-right {
     color: #9b01aa;
     font-size: 16px;
@@ -1111,7 +1115,18 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-page-wrapper .mobile-menu .mobile-logo a {
   display: inline-block;
 }
+.landing-page-wrapper .mobile-menu .language{
 
+}
+.landing-page-wrapper .mobile-menu .language a{
+  color: white;
+}
+.landing-page-wrapper .mobile-menu .language b{
+  margin: 0 5px;
+}
+.landing-page-wrapper .mobile-menu .language:after{
+  content: unset;
+}
 .landing-page-wrapper .mobile-menu img {
     display: block;
     width: 120px;

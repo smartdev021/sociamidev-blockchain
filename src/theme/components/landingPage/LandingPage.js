@@ -88,7 +88,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
           {
             isMoreMenuVisible &&
             <ul className="right-dropdown-link">
-              <li><a onClick={onEnterpriseModalShow}>Enterprice</a></li>
+              <li><a onClick={onEnterpriseModalShow}>Enterprise</a></li>
               <li><a onClick={onEmailInputShow}>Subscribe</a></li>
               <li><a onClick={()=>changePageLanguage('en')}>en</a></li>
               <li><a onClick={()=>changePageLanguage('ko')}>ko</a></li>
@@ -233,6 +233,7 @@ class LandingPage extends Component {
           onEmailInput={(event) => { this.handleEmailInput(event) }}
           isEmailInputVisible={this.state.isEmailInputVisible}
           email={this.state.email}
+          changePageLanguage={this.props.changePageLanguage}
           onEnterpriseModalShow={() => this.handleEnterpriseModalShow(true)}
         />
       </div>
