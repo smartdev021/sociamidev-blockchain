@@ -262,6 +262,12 @@ class Connections extends React.Component {
             <li className={this.state.activeTabName === 'Received' ? 'active' : ''}>
               <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Received' })}>Received</a>
             </li>
+            <div className="friends-search-container">
+              <input type="text" placeholder="SEARCH.." name="search" />
+              <button type="submit">
+                <i className="fa fa-search" style={{color: "#9601a3"}}></i>
+              </button>
+            </div>
           </ul>
         </div>
         <div>
