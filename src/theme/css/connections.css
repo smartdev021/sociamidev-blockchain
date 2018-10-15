@@ -144,12 +144,13 @@ ul.connection-details > li > span {
   border-style: solid;
   opacity: 0.8;
   margin: 5px;
+  background: #292929;
 }
 .friends-search-container input[type=text] {
   padding: 10px;
   border: none;
   width: 150px;
-  background: black;
+  background: transparent;
   color: white;
   font-size: 12px;
 }
