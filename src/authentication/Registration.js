@@ -54,13 +54,10 @@ class Registration extends Component {
       >
         <div className="col-xs-12" style={{padding: '10px'}}>
           <div className="signup-details">
-            <input
-              name="name"
-              type="text"
-              placeholder="What is your Name?"
-              required
-              value={this.state.name}
-            />
+          <input type="email" className="mail new-text" 
+            placeholder="What is your Email?" 
+            name="email" type="email" required 
+            value={this.state.email} />
           </div>
 
           <div className="signup-details">
@@ -75,8 +72,14 @@ class Registration extends Component {
         </div>
         <div className="col-xs-12" style={{padding: '10px'}}>
           <div className="signup-details">
-            <input type="email" className="mail new-text" placeholder="What is your Email?" 
-            name="email" type="email" required value={this.state.email} />
+            <input
+              name="name"
+              type="text"
+              placeholder="What is your Name?"
+              required
+              value={this.state.name}
+            />
+            
           </div>
           
           <button type="submit" className="btn signup-btn">Sign in</button>
