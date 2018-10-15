@@ -90,8 +90,18 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
             <ul className="right-dropdown-link">
               <li><a onClick={onEnterpriseModalShow}>Enterprise</a></li>
               <li><a onClick={onEmailInputShow}>Subscribe</a></li>
-              <li><a onClick={()=>changePageLanguage('en')}>en</a></li>
-              <li><a onClick={()=>changePageLanguage('ko')}>ko</a></li>
+              <li>
+                <a onClick={()=>changePageLanguage('en')}>en</a>
+                <b>|</b>
+                <a onClick={()=>changePageLanguage('ko')}>ko</a>
+                <b>|</b>
+                <a onClick={()=>changePageLanguage('vi')}>vi</a>
+              </li>
+              <li>
+                <a onClick={()=>changePageLanguage('th')}>th</a>
+                <b>|</b>
+                <a onClick={()=>changePageLanguage('cn')}>cn</a>
+              </li>
             </ul>
           }
         </div>

@@ -43,6 +43,21 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
               changePageLanguage('ko');
               closeMenu()
             }}>ko</a>
+            <b>|</b>
+            <a onClick={()=>{
+              changePageLanguage('vi');
+              closeMenu()
+            }}>vi</a>
+            <b>|</b>
+            <a onClick={()=>{
+              changePageLanguage('th');
+              closeMenu()
+            }}>th</a>
+            <b>|</b>
+            <a onClick={()=>{
+              changePageLanguage('cn');
+              closeMenu()
+            }}>cn</a>
           </li>
         </ul>
         <footer>
