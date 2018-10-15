@@ -518,7 +518,7 @@ class App extends Component {
   }
 
   chatLogIn() {
-    if (this.state.userID && this.state.chatInitialized == false) {
+    if (this.props.userProfile._id && this.state.chatInitialized == false) {
       let username = '';
       let userType = '';
 
@@ -530,13 +530,13 @@ class App extends Component {
         userType = 'linkedin';
       } else {
         userType = 'email';
-        username = this.state.userID;
+        username = this.props.userProfile._id
       }
 
       let userData = {
         username: username,
         userType: userType,
-        userID: this.state.userID,
+        userID: this.props.userProfile._id,
         firstName: this.props.userProfile.firstName || '',
         lastName: this.props.userProfile.lastName || '',
       };

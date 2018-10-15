@@ -96,17 +96,6 @@ class ChatApp extends React.Component {
       chatPanelToggle: false,
       isChatHolder:false,
     };
-
-    if(props.loggedin){
-      var userType = "";
-      if(props.userProfile.facebookId){
-        userType="facebook";
-      }
-      else{
-        userType="linkedin";
-      }
-      this.socket = io(BackendURL, { query: `username=${props.userProfile.email}&userID=${props.userProfile._id}&firstName=${props.userProfile.firstName}&lastName=${props.userProfile.lastName}&userType=${userType}` }).connect();
-    }
   }
 
   openChat(event, data) {
