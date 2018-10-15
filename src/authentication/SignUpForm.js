@@ -61,7 +61,7 @@ class SignupForm extends React.Component {
         }}
       >
         <div className="signup-form-header">
-          Create an Account
+          Sign in
         </div>
         <div className="signup-box">
           <Registration />
