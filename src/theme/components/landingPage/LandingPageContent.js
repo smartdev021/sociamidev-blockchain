@@ -19,8 +19,6 @@ import Axios from 'axios';
 import ConfigMain from '~/configs/main';
 import Youtube from 'react-youtube';
 import languageContent from './languageWiseContent.json';
-import LazyLoad from 'react-lazyload';
-import Image from 'react-image-webp';
 
 const soqqleEnv = process.env.SOQQLE_ENV;
 
@@ -58,12 +56,9 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
 const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, onTrailerModalShow, currentLanguage }) => {
   return (
     <div className="banner-wrapper">
-
-        <Image
-     src='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg'
-     webp='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.webp'
-     alt='banner'
- />
+      <img
+        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg"
+        alt="banner" />
       <div className="banner-content">
         <h2>{ soqqleEnv === 'production' ? 'SIGN UP FOR BETA' : languageContent[currentLanguage].banner_main }</h2>
         <p>{languageContent[currentLanguage].banner_sub}</p>
@@ -123,13 +118,11 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
 
 const AboutComponent = ({currentLanguage}) => {
   return (
-  <LazyLoad>
     <div className="about-wrapper second-section-bg">
       <h2 dangerouslySetInnerHTML={{ __html:languageContent[currentLanguage].about_header }}/>
       <p>{languageContent[currentLanguage].about_second_line}</p>
       <h3 dangerouslySetInnerHTML={{ __html: languageContent[currentLanguage].about_third_line}}/>
     </div>
-    </LazyLoad>
   );
 };
 
@@ -221,21 +214,17 @@ const SoqqleInfo = ({currentLanguage}) => {
         <p>{languageContent[currentLanguage].info_one}</p>
       </section>
       <section>
-      <LazyLoad>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/combine-goals.png"
           className="goals"
           alt="Combine social and learning goals" />
-      </LazyLoad>
         <p>{languageContent[currentLanguage].info_two}</p>
       </section>
       <section>
-      <LazyLoad>
         <img
           src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/jorney.png"
           className="jorney"
           alt="Helps identify networks to join the journey" />
-          </LazyLoad>
         <p>{languageContent[currentLanguage].info_three}</p>
       </section>
     </div>
@@ -244,7 +233,6 @@ const SoqqleInfo = ({currentLanguage}) => {
 
 const TalkAboutUs = ({currentLanguage}) => {
   return (
-  <LazyLoad>
     <div className="talk-about-us">
       <h2>{languageContent[currentLanguage].talk_header}</h2>
       <section className="background-section-1">
@@ -286,7 +274,6 @@ const TalkAboutUs = ({currentLanguage}) => {
         <a href="#"></a>
       </footer> */}
     </div>
-    </LazyLoad>
   );
 };
 
@@ -311,9 +298,7 @@ const VideoComponent = ({currentLanguage}) => {
             onPlay={()=> mixpanel.track('View Video')}
           />
         </div>
-        <a href="#" className="video-box-home btn-video">See all videos <span>
-        <LazyLoad>
-        <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/video-btn-icon.png" alt="" /> </LazyLoad></span></a>
+        <a href="#" className="video-box-home btn-video">See all videos <span><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/video-btn-icon.png" alt="" /></span></a>
       </div>
     </div>
   );
@@ -334,15 +319,8 @@ const WorkExplanation = ({currentLanguage}) => {
 
         <div className="carousel-inner">
           <div className="item active">
-          <LazyLoad>
             <div className="select-house clearfix">
-              <div className="images-wrapper">
-              <Image
-     src='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.png'
-     webp='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.webp'
-     alt='select your house'
- />
-              </div>
+              <div className="images-wrapper"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.png" alt="select your house" /></div>
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>1</h1>
@@ -352,20 +330,14 @@ const WorkExplanation = ({currentLanguage}) => {
                 <a href="/houses" className="explore-page">{languageContent[currentLanguage].work_one_link} &gt;</a>
               </div>
             </div>
-            </LazyLoad>
           </div>
 
           <div className="item">
             <div className="select-house clearfix">
               <div className="images-wrapper">
-              <LazyLoad>
-<Image
-     src='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.png'
-     webp='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.webp'
-     alt='select a hero'
- />
-                
-                  </LazyLoad>
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.png"
+                  alt="select a hero" />
               </div>
               <div className="description">
                 <span className="blue-rectangle"> </span>
@@ -401,12 +373,9 @@ const WorkExplanation = ({currentLanguage}) => {
           <div className="item">
             <div className="select-house clearfix">
               <div className="images-wrapper">
-              <LazyLoad>
-                  <Image
-     src='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png'
-     webp='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.webp'
-     alt='get a reward' />
-              </LazyLoad>
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png"
+                  alt="get a reward"/>
               </div>
               <div className="description">
                 <span className="blue-rectangle"> </span>
@@ -421,12 +390,9 @@ const WorkExplanation = ({currentLanguage}) => {
           <div className="item">
             <div className="select-house clearfix">
               <div className="images-wrapper">
-              <LazyLoad>
-                  <Image
-     src='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.png'
-     webp='https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.webp'
-     alt='use your rewards' />
-                  </LazyLoad>
+                <img
+                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.png"
+                  alt="use your rewards" />
               </div>
               <div className="description">
                 <span className="blue-rectangle"> </span>

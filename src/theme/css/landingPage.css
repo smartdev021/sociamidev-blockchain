@@ -154,16 +154,6 @@ html.vertical-hidden {
     background-size: 100%;
 }
 
-/* Chrome 29+ */
-@media screen and (-webkit-min-device-pixel-ratio:0)
-  and (min-resolution:.001dpcm) {
-    .landing-page-wrapper .about-wrapper.second-section-bg{
-    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/second-section-bg.webp") #0c0c0c;
-    background-size: 100%;
-}
-}
-
-
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .about-wrapper {
         padding: 36px 0 37px;
