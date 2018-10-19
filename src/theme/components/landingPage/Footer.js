@@ -1,8 +1,10 @@
 import React from 'react';
 import languageContent from './languageWiseContent';
+import LazyLoad from 'react-lazyload';
 
 export const Footer = (localeData) => {
     return (
+      <LazyLoad>
       <footer className="footer">
         <a href="/" className="footer-logo">
           <img
@@ -31,5 +33,6 @@ export const Footer = (localeData) => {
           ) : <span></span>
         }
       </footer>
+      </LazyLoad>
     );
   };
