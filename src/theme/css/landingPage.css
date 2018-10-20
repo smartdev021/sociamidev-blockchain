@@ -150,7 +150,7 @@ html.vertical-hidden {
     background: #000;
 }
 .landing-page-wrapper .about-wrapper.second-section-bg{
-    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/second-section-bg.png") #0c0c0c;
+    background: url("../../../assets/img/second-section-bg.png") #0c0c0c;
     background-size: 100%;
 }
 
@@ -454,7 +454,7 @@ html.vertical-hidden {
     padding: 109px 0 51px;
     color: #fff;
     text-align: center;
-    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/footer.jpg") no-repeat;
+    background: url("../../../assets/img/footer.jpg") no-repeat;
     background-size: cover;
 }
 
@@ -1661,7 +1661,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-page-wrapper .talk-about-us section.main-section {
     position: relative;
     z-index: 99;
-    background: url("https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/testimonial-bg.png");
+    background: url("../../../assets/img/testimonial-bg.png");
 }
 .h-auto{height: auto !important;}
 .f-w{max-width: 100% !important}

@@ -20,6 +20,22 @@ import ConfigMain from '~/configs/main';
 import Youtube from 'react-youtube';
 import languageContent from './languageWiseContent.json';
 
+import journeyIcon from '../../../../assets/img/jorney.png'
+import heroImage from '../../../../assets/img/hero.png'
+import rewardImage from '../../../../assets/img/reward.png'
+import useRewardsImage from '../../../../assets/img/use-rewards.png'
+import combineGoalsImage from '../../../../assets/img/combine-goals.png'
+import selectHouseImage from '../../../../assets/img/select-house.png'
+import playGameImage from '../../../../assets/img/play-the-game.png'
+import courseImage from '../../../../assets/img/learning-course.png'
+import videoIconImage from '../../../../assets/img/video-btn-icon.png'
+import backgroundCity from '../../../../assets/img/background-city.jpg'
+
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
+
+
 const soqqleEnv = process.env.SOQQLE_ENV;
 
 const validateEmail = (email) => {
@@ -57,7 +73,7 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
   return (
     <div className="banner-wrapper">
       <img
-        src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/background-city.jpg"
+        src={backgroundCity}
         alt="banner" />
       <div className="banner-content">
         <h2>{ soqqleEnv === 'production' ? 'SIGN UP FOR BETA' : languageContent[currentLanguage].banner_main }</h2>
@@ -208,23 +224,24 @@ const SoqqleInfo = ({currentLanguage}) => {
       <h2>{languageContent[currentLanguage].info_header}</h2>
       <section>
         <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/learning-course.png"
+          src={courseImage}
           className="learning-course"
           alt="drive purposeful learning" />
         <p>{languageContent[currentLanguage].info_one}</p>
       </section>
       <section>
-        <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/combine-goals.png"
-          className="goals"
-          alt="Combine social and learning goals" />
+
+              <LazyLoadImage
+      alt="Combine social and learning goals"
+      src={combineGoalsImage}
+      className="goals" />
         <p>{languageContent[currentLanguage].info_two}</p>
       </section>
       <section>
-        <img
-          src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/jorney.png"
-          className="jorney"
-          alt="Helps identify networks to join the journey" />
+          <LazyLoadImage
+      alt="Helps identify networks to join the journey"
+      src={journeyIcon}
+      className="jorney" />
         <p>{languageContent[currentLanguage].info_three}</p>
       </section>
     </div>
@@ -298,7 +315,7 @@ const VideoComponent = ({currentLanguage}) => {
             onPlay={()=> mixpanel.track('View Video')}
           />
         </div>
-        <a href="#" className="video-box-home btn-video">See all videos <span><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/video-btn-icon.png" alt="" /></span></a>
+        <a href="#" className="video-box-home btn-video">See all videos <span><img src={videoIconImage} alt="" /></span></a>
       </div>
     </div>
   );
@@ -320,7 +337,7 @@ const WorkExplanation = ({currentLanguage}) => {
         <div className="carousel-inner">
           <div className="item active">
             <div className="select-house clearfix">
-              <div className="images-wrapper"><img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/select-house.png" alt="select your house" /></div>
+              <div className="images-wrapper"><img src={selectHouseImage} alt="select your house" /></div>
               <div className="description">
                 <span className="blue-rectangle"> </span>
                 <h1>1</h1>
@@ -336,7 +353,7 @@ const WorkExplanation = ({currentLanguage}) => {
             <div className="select-house clearfix">
               <div className="images-wrapper">
                 <img
-                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/hero.png"
+                  src={heroImage}
                   alt="select a hero" />
               </div>
               <div className="description">
@@ -357,7 +374,7 @@ const WorkExplanation = ({currentLanguage}) => {
                   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/veQyAxuRzD0?rel=0&amp;controls=0&amp;showinfo=0" frameBorder="0" allowFullScreen=""></iframe>
                 </div>
                 {/* <img
-                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/play-the-game.png"
+                  src={playGameImage}
                   alt="play the game"/> */}
               </div>
               <div className="description">
@@ -374,7 +391,7 @@ const WorkExplanation = ({currentLanguage}) => {
             <div className="select-house clearfix">
               <div className="images-wrapper">
                 <img
-                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/reward.png"
+                  src={rewardImage}
                   alt="get a reward"/>
               </div>
               <div className="description">
@@ -391,7 +408,7 @@ const WorkExplanation = ({currentLanguage}) => {
             <div className="select-house clearfix">
               <div className="images-wrapper">
                 <img
-                  src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/use-rewards.png"
+                  src={useRewardsImage}
                   alt="use your rewards" />
               </div>
               <div className="description">
@@ -493,7 +510,9 @@ class LandingPageContent extends React.Component {
         <AboutComponent currentLanguage={this.props.currentLanguage} />
         <main>
           <SoqqleInfo currentLanguage={this.props.currentLanguage} />
+          <LazyLoadComponent>
           <WorkExplanation currentLanguage={this.props.currentLanguage} />
+          </LazyLoadComponent>
         </main>
         <VideoComponent currentLanguage={this.props.currentLanguage} />
         <main>
