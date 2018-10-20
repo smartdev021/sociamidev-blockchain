@@ -33,7 +33,7 @@ module.exports = merge(common, build, {
   new ImageminPlugin({
       disable: false, // Disable during development
       pngquant: {
-        quality: '50'
+        quality: '40'
       },
       jpegtran: { optimizationLevel: 6 }
     }),
