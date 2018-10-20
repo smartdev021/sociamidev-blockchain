@@ -30,7 +30,6 @@ import playGameImage from '../../../../assets/img/play-the-game.png'
 import courseImage from '../../../../assets/img/learning-course.png'
 import videoIconImage from '../../../../assets/img/video-btn-icon.png'
 import backgroundCity from '../../../../assets/img/background-city.jpg'
-import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
 const soqqleEnv = process.env.SOQQLE_ENV;
@@ -507,9 +506,7 @@ class LandingPageContent extends React.Component {
         <AboutComponent currentLanguage={this.props.currentLanguage} />
         <main>
           <SoqqleInfo currentLanguage={this.props.currentLanguage} />
-          <LazyLoadComponent>
           <WorkExplanation currentLanguage={this.props.currentLanguage} />
-          </LazyLoadComponent>
         </main>
         <VideoComponent currentLanguage={this.props.currentLanguage} />
         <main>
