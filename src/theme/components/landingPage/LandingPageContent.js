@@ -30,9 +30,6 @@ import playGameImage from '../../../../assets/img/play-the-game.png'
 import courseImage from '../../../../assets/img/learning-course.png'
 import videoIconImage from '../../../../assets/img/video-btn-icon.png'
 import backgroundCity from '../../../../assets/img/background-city.jpg'
-
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
@@ -231,14 +228,14 @@ const SoqqleInfo = ({currentLanguage}) => {
       </section>
       <section>
 
-              <LazyLoadImage
+              <img
       alt="Combine social and learning goals"
       src={combineGoalsImage}
       className="goals" />
         <p>{languageContent[currentLanguage].info_two}</p>
       </section>
       <section>
-          <LazyLoadImage
+          <img
       alt="Helps identify networks to join the journey"
       src={journeyIcon}
       className="jorney" />
