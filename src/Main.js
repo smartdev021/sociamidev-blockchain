@@ -22,6 +22,7 @@ import { Icon } from 'react-fa';
 
 import '~/src/style.css';
 import '~/src/theme/css/main.css';
+import 'antd/dist/antd.css'; 
 
 import ThemeHeader from '~/src/theme/components/themeHeader/ThemeHeader';
 // import SidebarLeft from '~/src/theme/SidebarLeft';

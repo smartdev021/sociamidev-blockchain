@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import Axios from 'axios';
-
+import { message } from 'antd';
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import AchievementGroup from './AchievementGroup';
 import Team from './Team';
@@ -153,18 +153,20 @@ class Company extends Component {
     let data = new FormData();
     let fileData = this.fileUpload.files[0];
     data.append("csv", fileData);
-
-     Axios.post(`${ConfigMain.getBackendURL()}/addQuestionsFile`, {
-      body: data
-    })
-      .then(response => {
-        console.log(response)
-        this.getQuestions();
-      })
-      .catch(err => {
-        console.log(err)
-      });
-
+    const hide = message.loading('Upload question in progress..', 0);
+      fetch(ConfigMain.getBackendURL() + '/addQuestionsFile', {
+        method: "POST",
+        body: data
+        })
+      .then(record => record.json())
+      .then((record) => {
+            this.getQuestions();
+            setTimeout(hide, 100);
+            message.success(`${record.status} Questions uploaded!`);
+          }).catch((record) => {
+            setTimeout(hide, 100);
+            message.error(record.statusText);
+          });
   }
 
   toggleAddTeamGroupState() {
@@ -425,7 +427,7 @@ class Company extends Component {
                               {
                                 _.map(questions,(que, index)=>{
                                   return(
-                                    <tr>
+                                    <tr key={que._id}>
                                       <td></td>
                                       <td>{que.question}</td>
                                       <td>{que.roadmapSkill}</td>
