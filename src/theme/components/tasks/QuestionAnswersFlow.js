@@ -31,6 +31,7 @@ class QuestionAnswersFlow extends React.Component {
     this.state = {
       currentQuestion: 0,
       viewRight: false,
+      isOpen:false,
     };
     this.getAnswerMy = this.getAnswerMy.bind(this);
     this.getAnswerPartner = this.getAnswerPartner.bind(this);
@@ -61,6 +62,7 @@ class QuestionAnswersFlow extends React.Component {
   handleNextOrPrevious(action) {
     const { currentQuestion } = this.state;
     const { questions } = this.props;
+
     if (
       (currentQuestion === 0 && action === 'prev') ||
       (currentQuestion === questions.length - 1 && action === 'next')
@@ -69,9 +71,30 @@ class QuestionAnswersFlow extends React.Component {
     } else {
       this.setState({
         currentQuestion: action === 'prev' ? currentQuestion - 1 : currentQuestion + 1,
+      },()=>{
+        const { currentQuestion } = this.state;
+        const { questions } = this.props;
+        const question = questions[currentQuestion];
+        const AnswerMy = this.getAnswerMy(question._id) || {};
+        if(AnswerMy.text || (AnswerMy.options && AnswerMy.options.length) || AnswerMy.isTrue === true || AnswerMy.isTrue === false){
+          this.setState({
+            isOpen:true
+          });
+        }
+        else {
+          this.setState({
+            isOpen:false
+          });
+        }
       });
     }
   }
+
+  handleAnswerOpenBox(){
+    this.setState({
+      isOpen:true
+    });
+  };
 
   renderAnswerInput() {
     const { currentQuestion } = this.state;
@@ -141,7 +164,7 @@ class QuestionAnswersFlow extends React.Component {
     const { questions } = this.props;
     const Partner = this.props.partner;
     const question = questions[currentQuestion];
-    const AnswerMy = this.getAnswerMy(question._id);
+    const AnswerMy = this.getAnswerMy(question._id) || {};
     const AnswerPartner = this.getAnswerPartner([question._id]);
     const AnswerOthers = this.getAnswerOthers(question._id);
     const renderAnswerOthers = AnswerOthers.map(ans => {
@@ -157,20 +180,45 @@ class QuestionAnswersFlow extends React.Component {
 
     let partnerMsg = AnswerPartner.trim() ? {partnerName} + ' ' + {AnswerPartner} : null
 
+    const isValidate = (AnswerMy.text || (AnswerMy.options && AnswerMy.options.length) || AnswerMy.isTrue === true || AnswerMy.isTrue === false);
     return (
       <div className="QuestionAnswersFlow-container">
         <div className="QuestionAnswersFlow-back-to-tasks-ctn">
-          <button type="button" onClick={this.props.onBackToMyTasks} className="close" aria-label="Close">
-            <span aria-hidden="true" style={{ fontSize: '18px' }}>
+          <button type="button" onClick={this.props.onBackToMyTasks} aria-label="Close">
+            <span aria-hidden="true" style={{ fontSize: '19px' }}>
               &times;
             </span>
           </button>
         </div>
-        <div className="QuestionAnswersFlow-current-question-indicator">
-          <p className="QuestionAnswersFlow-main-question">
-            ({`${currentQuestion + 1} / ${questions.length}`}) {question.question}
-          </p>
-        </div>
+        {
+          this.state.isOpen ?
+            <div>
+              <div className="QuestionAnswersFlow-answer-question-holder">
+                <p className="QuestionAnswersFlow-answer-question-text">
+                  {question.question}
+                  <span className="QuestionAnswersFlow-answer-question-indicator">
+                    {`(${currentQuestion + 1} / ${questions.length})`}
+                  </span>
+                </p>
+              </div>
+              <div>
+                {this.renderAnswerInput()}
+              </div>
+            </div>
+            :
+            <div>
+             <div className="QuestionAnswersFlow-current-question-holder">
+                <div className="QuestionAnswersFlow-current-question">
+                   {`${currentQuestion + 1} / ${questions.length}`}
+                 </div>
+              </div>
+              <div className="QuestionAnswersFlow-current-question-indicator">
+                 <p className="QuestionAnswersFlow-main-question">
+                   {question.question}
+                 </p>
+              </div>
+            </div>
+        }
         <div className="QuestionAnswersFlow-previous-next-side">
           <div className="QuestionAnswersFlow-previous">
             <a
@@ -180,25 +228,37 @@ class QuestionAnswersFlow extends React.Component {
               ◀ previous
             </a>
           </div>
-          <div className="QuestionAnswersFlow-next">
+          {
+            this.state.isOpen ?
+              <div className="QuestionAnswersFlow-social-share">
+                {/*<span>Jhon: It will change finance and healthcare the most</span>*/}
+                <span style={{color:"darkgrey"}}>{partnerMsg}</span>
+              </div> :
+              <div className="QuestionAnswersFlow-answer" onClick={this.handleAnswerOpenBox.bind(this)}>
+                ANSWER HERE
+              </div>
+          }
+          <div className={`QuestionAnswersFlow-next ${!isValidate ? 'QuestionAnswersFlow-next-block' : ''}`}>
             {currentQuestion === questions.length - 1 ? (
-              <a className="btn-next QuestionAnswersFlow-next" onClick={e => this.props.onSubmit(e)}>
+              <a className="btn-next QuestionAnswersFlow-next" onClick={e => {
+                this.props.onSubmit(e)
+              }}>
                 submit ▶
               </a>
             ) : (
               <a
                 className="btn-next QuestionAnswersFlow-next"
-                onClick={this.handleNextOrPrevious.bind(this, 'next')}
+                onClick={()=>{
+                  if(!isValidate){
+                    return;
+                  }
+                  this.handleNextOrPrevious('next')
+                }}
               >
                 next ▶
               </a>
             )}
           </div>
-        </div>
-        {this.renderAnswerInput()}
-        <div className="QuestionAnswersFlow-social-share">
-          {/* <span>Jhon: It will change finance and healthcare the most</span> */}
-          <span style={{color:"darkgrey"}}>{partnerMsg}</span>
         </div>
       </div>
     );

@@ -81,38 +81,40 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
         <p>Markets</p>
       </button>
       {
-
-        !isEmailInputVisible ?
-        <div className="right-new-link">
-          <a className="dd-new-right" onClick={onMoreMenuToggle}>More <i className="fa fa-angle-down"></i></a>
-          {
-            isMoreMenuVisible &&
-            <ul className="right-dropdown-link">
-              <li><a onClick={onEnterpriseModalShow}>Enterprise</a></li>
-              <li><a onClick={onEmailInputShow}>Subscribe</a></li>
-              <li>
-                <a onClick={()=>changePageLanguage('en')}>en</a>
-                <b>|</b>
-                <a onClick={()=>changePageLanguage('ko')}>ko</a>
-                <b>|</b>
-                <a onClick={()=>changePageLanguage('vi')}>vi</a>
-              </li>
-              <li>
-                <a onClick={()=>changePageLanguage('th')}>th</a>
-                <b>|</b>
-                <a onClick={()=>changePageLanguage('cn')}>cn</a>
-              </li>
-            </ul>
-          }
-        </div>
-        :
-        <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
+        process.env.SOQQLE_ENV !== 'production' &&
+        (
+          !isEmailInputVisible ?
+          <div className="right-new-link">
+            <a className="dd-new-right" onClick={onMoreMenuToggle}>More <i className="fa fa-angle-down"></i></a>
+            {
+              isMoreMenuVisible &&
+              <ul className="right-dropdown-link">
+                <li><a onClick={onEnterpriseModalShow}>Enterprise</a></li>
+                <li><a onClick={onEmailInputShow}>Subscribe</a></li>
+                <li>
+                  <a onClick={()=>changePageLanguage('en')}>en</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('ko')}>ko</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('vi')}>vi</a>
+                </li>
+                <li>
+                  <a onClick={()=>changePageLanguage('th')}>th</a>
+                  <b>|</b>
+                  <a onClick={()=>changePageLanguage('cn')}>cn</a>
+                </li>
+              </ul>
+            }
+          </div>
+          :
+          <EmailInput onEmailInputHide={onEmailInputHide} onEmailInputSubmit={onEmailInputSubmit} onEmailInput={onEmailInput} email={email} />
+        )
       }
 
       {
         process.env.SOQQLE_ENV !== 'production' &&
         <button type="button" className="sign-up-button right-new-signup" onClick={() => openSignUpForm()}>
-          <p>Sign up</p>
+          <p>Sign in</p>
         </button>
       }
     </div>

@@ -104,6 +104,7 @@ class ChatApp extends React.Component {
   }
   chatStartListener(event, data) {
     if (data.eventType == 'server:user') {
+      console.log("MMMMMMMMMMM", data.data);
       this.loadConnectedUsers(data.data);
     } else if (data.eventType == 'newUser') {
       this.loadNewUser(data.data);

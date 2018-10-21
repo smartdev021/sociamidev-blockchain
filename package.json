@@ -80,6 +80,7 @@
     "history": "^4.7.2",
     "i18next": "^11.6.0",
     "i18next-browser-languagedetector": "^2.2.3",
+    "imagemin-webpack-plugin": "^2.3.0",
     "linkifyjs": "^2.1.6",
     "lodash": "^4.17.5",
     "moment": "^2.22.0",

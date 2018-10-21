@@ -137,3 +137,38 @@ ul.connection-details > li > span {
   display: block;
   padding: 0 15px;
 }
+.friends-search-container {
+  float: right;
+  border-width: 1px;
+  border-color: rgb(0, 145, 250);
+  border-style: solid;
+  opacity: 0.8;
+  margin: 5px;
+  background: #292929;
+}
+.friends-search-container input[type=text] {
+  padding: 10px;
+  border: none;
+  width: 150px;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+}
+.friends-search-container input[type=text]::placeholder{
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+  line-height: 1.2;
+  font-weight: bold;
+}
+.friends-search-container button {
+  float: right;
+  padding: 6px 10px;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+.friends-search-container button:hover {
+  background: #ccc;
+}

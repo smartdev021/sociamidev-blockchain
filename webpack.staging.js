@@ -3,6 +3,7 @@ const common = require('./webpack.common');
 const build = require('./webpack.build');
 const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+var ImageminPlugin = require('imagemin-webpack-plugin').default;
 let Path = require('path');
 
 module.exports = merge(common, build, {
@@ -28,6 +29,13 @@ module.exports = merge(common, build, {
       mp_token: '"d7a0113338adc33892f32d3cd488d02a"',
       title: 'Soqqle',
       inject: 'body',
+    }),
+  new ImageminPlugin({
+      disable: false, // Disable during development
+      pngquant: {
+        quality: '40'
+      },
+      jpegtran: { optimizationLevel: 6 }
     }),
   ],
 });

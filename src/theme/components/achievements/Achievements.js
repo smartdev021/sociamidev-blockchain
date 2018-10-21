@@ -16,7 +16,7 @@ class Achievements extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchAllAchievementsTemp();
   }
 
@@ -44,6 +44,7 @@ class Achievements extends Component {
         {groups.map((group, index) => {
           return (
             <li
+              key={ index }
               onClick={this.onAchievementGroupNameClick.bind(this, index)}
               className={currentAchievementsGroup === index ? 'active' : ''}
             >
@@ -75,7 +76,7 @@ class Achievements extends Component {
       <ul>
         {achievementsByAchievementsGroup.map(achievement => {
           return (
-            <li>
+            <li key={ achievement._id }>
               <div className="img-icon">
                 <img
                   src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${achievement._id}`}
@@ -86,7 +87,7 @@ class Achievements extends Component {
               <p>{achievement.result}</p>
               {achievement.conditions.map(requirement => {
                 return (
-                  <a href="#">
+                  <a key={ requirement._id } href="#">
                     {requirement.count} {requirement.taskType} {requirement.type}
                   </a>
                 );
@@ -120,16 +121,14 @@ class Achievements extends Component {
 
         const companyId = company && company.length && company[0]._id ? company[0]._id : '';
 
-        groups = allGroups.filter(group => {
-          return group && group.company && group.company.length && group.company[0]._id === companyId;
-        });
-
-        if (!groups || !groups.length) {
-          () => {}; // noop
-        } else if (!companyId) {
+        if (!companyId) {
           groups = allGroups;
           break;
         }
+
+        groups = allGroups.filter(group => {
+          return group && group.company && group.company.length && group.company[0]._id === companyId;
+        });
 
         break;
     }

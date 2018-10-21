@@ -10,21 +10,39 @@
   background-position: center;
   background-size: cover;
   border: 1px solid #33389b;
+  width: calc(100% - 333px);
+  display: inline-block;
 }
 
 .QuestionAnswersFlow-back-to-tasks-ctn {
-  text-align: right;
+  /*text-align: right;*/
+  display: flex;
+  justify-content: flex-end;
+}
+
+.QuestionAnswersFlow-current-question-holder{
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.QuestionAnswersFlow-current-question{
+  border: 1px solid #9b01aa;
+  border-radius: 40px;
+  padding: 3px 30px;
+  color: #9b01aa;
 }
 
 .QuestionAnswersFlow-current-question-indicator {
   text-align: center;
+  padding: 0 25px;
 }
 
 .QuestionAnswersFlow-main-question {
-  width: 400px;
-  margin: 0px auto 40px;
-  text-align: center;
+  /*width: 400px;*/
+  margin: unset;
+  /*text-align: center;*/
   color: #e6b400;
+  font-size: 55px;
 }
 
 .QuestionAnswersFlow-current-question-indicator span {
@@ -136,16 +154,7 @@
 }
 
 .QuestionAnswersFlow-textarea {
-  width: 95%;
   height: 150px;
-  border-radius: 20px;
-  /* border: 1px solid #33389b; */
-  margin-left: 20px;
-  outline: none;
-  /* box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4) inset; */
-  /* padding: 0px 10px 0px 10px; */
-  border-radius: 4px;
-  box-sizing: border-box;
 }
 
 .question-answers-multiple-area {
@@ -156,8 +165,7 @@
   width: 100%;
   height: 100%;
   border: 1px solid #33389b;
-  border-radius: 10px;
-  outline: none;
+  padding: 15px 25px;
 }
 
 .QuestionAnswersFlow-prev-next-ctn {
@@ -185,27 +193,15 @@
 }
 
 .QuestionAnswersFlow-social-share {
-  text-align: right;
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.QuestionAnswersFlow-social-share span {
-  padding-right: 15px;
+  color: white;
+  max-width: 65%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .QuestionAnswersFlow-social-share a {
   padding-right: 5px;
-}
-
-.QuestionAnswersFlow-current-question-indicator {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  height: 40px;
 }
 
 .QuestionAnswersFlow-back-to-tasks-ctn button {
@@ -214,8 +210,10 @@
   border: transparent;
   outline: none;
   font-weight: bold;
-  width: 20px;
+  /*width: 20px;*/
   z-index: 1;
+  color: white;
+  padding: 0 7px;
 }
 
 .answer-multiple-input-wrapper {
@@ -361,26 +359,58 @@
   background: orange;
 }
 
+@media (max-width: 1199px) and (min-width: 992px){
+
+}
+@media (max-width: 991px) and (min-width: 768px) {
+  .QuestionAnswersFlow-container {
+    width: 89%;
+    margin: 0 30px;
+  }
+}
 @media only screen and (max-width: 600px) {
   .QuestionAnswersFlow-main-question {
     max-width: 300px;
     color: #f68b1f;
   }
   .QuestionAnswersFlow-container {
-    padding: 10px 15px;
+    width: calc(100% - 60px);
+    margin: 0px 30px;
   }
 }
 
 /* added from Mariana */
 .QuestionAnswersFlow-next {
-  float: right;
   color: #9b01aa;
 }
+.QuestionAnswersFlow-next-block a, .QuestionAnswersFlow-next-block a:hover{
+  cursor: not-allowed;
+  color: #9b01aa;
+}
+.QuestionAnswersFlow-answer{
+  color: #9b01aa;
+  cursor: pointer;
+}
 .QuestionAnswersFlow-previous {
-  float: left;
   color: #33389b;
 }
 .QuestionAnswersFlow-previous-next-side {
-  display: list-item;
-  padding: 0px 20px 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.QuestionAnswersFlow-answer-question-holder{
+  padding: 10px 20px;
+  font-size: 20px;
+}
+.QuestionAnswersFlow-answer-question-text{
+  color: #e6b400;
+  margin: unset;
+  display: inline-block;
+}
+.QuestionAnswersFlow-answer-question-indicator{
+  color: #9b01aa;
+  display: inline-block;
+  margin-left: 10px;
 }

@@ -1,12 +1,13 @@
 import React from 'react';
 import languageContent from './languageWiseContent';
+import logoFooter from '../../../../assets/img/logo-footer.png'
 
 export const Footer = (localeData) => {
     return (
       <footer className="footer">
         <a href="/" className="footer-logo">
           <img
-            src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/landingPage/logo-footer.png"
+            src={logoFooter}
             alt="logo"
             className="h-auto"
           />
