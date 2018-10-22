@@ -5,7 +5,7 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 class ChatMessage extends React.Component {
   render() {
     // Was the message sent by the current user. If so, add a css class
-    const fromMe = this.props.fromMe ? 'chat-me' : 'chat-you';
+    const fromMe = this.props.fromMe ? 'chat-me' : '';
     const timeStampClass = this.props.fromMe ? 'timeStampMe' : 'timeStampYou';
     const user = this.props.users.filter(user => (this.props.username == user.userID))
     const fullName = user[0] ? user[0].firstName + " " + user[0].lastName : "You"
