@@ -71,6 +71,7 @@ class ChatMessages extends React.Component {
           fromMe={message.fromMe}
           userProfile={this.props.userProfile}
           users={this.props.users}
+          sender={message.sender}
         />
       );
     });
