@@ -15,9 +15,13 @@ class Connections extends React.Component {
     super(props);
     this.state = {
       activeTabName: 'All',
+      sourceAllFriends: [],
       allFriendList: [],
+      sourceReceived: [],
       receivedList: [],
+      sourceSent: [],
       sentList: [],
+      sourceFriend: [],
       friendList: [],
       facebookFriends: [],
       allTabLoading: false,
@@ -67,7 +71,8 @@ class Connections extends React.Component {
     }).then(function(response) {        
       if (response.data === 'success') {
         that.setState(prevState => ({
-          allFriendList: prevState.allFriendList.filter(el => el.id !== userid)
+          allFriendList: prevState.allFriendList.filter(el => el.id !== userid),
+          sourceAllFriends: prevState.allFriendList.filter(el => el.id !== userid)
         }));
         that.fetchAllConnections();
       }
@@ -113,7 +118,8 @@ class Connections extends React.Component {
           allTabLoading: false,
           moreSoqqlersToFetch: true,
           skip: prevSkip + response.data.length,
-          allFriendList: prevSoqList.concat(response.data) 
+          allFriendList: prevSoqList.concat(response.data),
+          sourceAllFriends: prevSoqList.concat(response.data)
         });
       } else {
         that.setState({ moreSoqqlersToFetch: false, allTabLoading: false });
@@ -144,8 +150,11 @@ class Connections extends React.Component {
       });
       self.setState({
         otherTabLoading: false,
+        sourceReceived: receivedList,
         receivedList,
+        sourceSent: sentList,
         sentList,
+        sourceFriend: friendList,
         friendList
       });
     }).catch(function(error) { self.setState({ otherTabLoading: false }); });
@@ -251,19 +260,19 @@ class Connections extends React.Component {
         <div className="col-box-wp mb-20 p-0" style={{ float: 'none' }}>
           <ul className="tab-wp">
             <li className={this.state.activeTabName === 'All' ? 'active' : ''}>
-              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'All' })}>All</a>
+              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'All', allFriendList: this.state.sourceAllFriends })}>All</a>
             </li>
             <li className={this.state.activeTabName === 'Connections' ? 'active' : ''}>
-              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Connections' })}>Connections</a>
+              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Connections', friendList: this.state.sourceFriend })}>Connections</a>
             </li>
             <li className={this.state.activeTabName === 'Sent' ? 'active' : ''}>
-              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Sent' })}>Sent</a>
+              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Sent', sentList: this.state.sourceSent })}>Sent</a>
             </li>
             <li className={this.state.activeTabName === 'Received' ? 'active' : ''}>
-              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Received' })}>Received</a>
+              <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Received', receivedList: this.state.sourceReceived })}>Received</a>
             </li>
             <div className="friends-search-container">
-              <input type="text" placeholder="SEARCH.." name="search" />
+              <input type="text" placeholder="SEARCH.." name="search" onChange={(e) => this.searchConnection(e,this.state.activeTabName)} />
               <button type="submit">
                 <i className="fa fa-search" style={{color: "#9601a3"}}></i>
               </button>
@@ -290,6 +299,32 @@ class Connections extends React.Component {
         </div>
       </div>
     );
+  }
+
+  searchConnection(event, activeTab){
+     let searchResult = [];
+     let searchValue = event.target.value;
+     if(activeTab == 'All'){
+         searchResult = this.state.sourceAllFriends.filter(connection => this.searchCondition(connection, searchValue));
+         this.setState({ allFriendList: searchResult })
+
+     } else if (activeTab == 'Connections'){
+         searchResult = this.state.sourceFriend.filter(connection => this.searchCondition(connection, searchValue));
+         this.setState({ friendList: searchResult })
+
+     } else if (activeTab == 'Sent'){
+         searchResult = this.state.sourceSent.filter(connection => this.searchCondition(connection, searchValue));
+         this.setState({ sentList: searchResult })
+
+      } else if (activeTab == 'Received'){
+         searchResult = this.state.sourceReceived.filter(connection =>  this.searchCondition(connection, searchValue))
+         this.setState({ receivedList: searchResult })
+    }
+  }
+
+  searchCondition(sourceVal, searchVal){
+    return sourceVal.firstName && sourceVal.firstName.toLowerCase().indexOf(searchVal.toLowerCase()) != -1 || 
+    sourceVal.lastName && sourceVal.lastName.toLowerCase().indexOf(searchVal.toLowerCase()) != -1 || searchVal == '';
   }
 
   render() {
