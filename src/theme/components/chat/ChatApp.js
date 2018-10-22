@@ -7,24 +7,18 @@ import io from 'socket.io-client';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import Messages from './Messages';
-import Users from './Users';
-import ChatInput from './ChatInput';
-
 import PubSub from 'pubsub-js';
 
-import ConfigMain from '../../../configs/main';
+import ConfigMain from '../../../../configs/main';
 
 import ChatMessages from './ChatMessages';
-import ChatWindowInput from './ChatWindowInput';
-import ChatWidget from './ChatWidget';
-
-import ChatHolder from '../ChatPage/ChatHolder';
+import ChatHolder from './ChatHolder';
 
 const BackendURL = ConfigMain.getBackendURL();
 var lastMessageRec = '';
 
 class ChatApp extends React.Component {
+
   componentWillMount() {
     //this.props.cookies.getAll();
     this.token = PubSub.subscribe('ChatStartPoint', this.chatStartListener.bind(this));
@@ -45,34 +39,6 @@ class ChatApp extends React.Component {
     tUsers.push(botUser);
     let copy = Object.assign({}, this.state, { users: tUsers, userID: this.props.userProfile._id });
     this.setState(copy);
-
-    // $(".popout .chat-btn").click(function() {
-    //   $(this).toggleClass("active");
-    //   $(this).closest(".popout").find(".chat-panel").toggleClass("active");
-    // });
-    // $(document).click(function(e) {
-    //       $(".popout .chat-panel").removeClass("active");
-    //       $(".popout .chat-btn").removeClass("active");
-    // });
-    // $(".popout .chat-panel").click(function(event) {
-    //     event.stopPropagation();
-    // });
-    // $(".popout .chat-btn").click(function(event) {
-    //     event.stopPropagation();
-    // });
-
-    $('div.chat-widget-tab-menu>div.list-group>a').click(function(e) {
-      e.preventDefault();
-      $(this)
-        .siblings('a.active')
-        .removeClass('active');
-      $(this).addClass('active');
-      var index = $(this).index();
-      $('div.chat-widget-tab>div.chat-widget-tab-content').removeClass('active');
-      $('div.chat-widget-tab>div.chat-widget-tab-content')
-        .eq(index)
-        .addClass('active');
-    });
   }
 
   constructor(props) {
@@ -102,6 +68,7 @@ class ChatApp extends React.Component {
     this.state.chatButtonToggle = true;
     this.tabChanges(data.user._id, `${data.user.firstName} ${data.user.lastName}`);
   }
+
   chatStartListener(event, data) {
     if (data.eventType == 'server:user') {
       console.log("MMMMMMMMMMM", data.data);
@@ -289,11 +256,6 @@ class ChatApp extends React.Component {
     this.setState(copy);
   }
 
-  closeChatWindow() {
-    let copy = Object.assign({}, this.state, { chatWindowOpen: 0 });
-    this.setState(copy);
-  }
-
   toggleUserWindow(usersWindowOpen) {
     if (usersWindowOpen == 0) {
       let copy = Object.assign({}, this.state, { chatWindowOpen: 2 });
@@ -304,19 +266,6 @@ class ChatApp extends React.Component {
     }
   }
 
-  toggleChatWidgetButton() {
-    let copy = Object.assign({}, this.state, {
-      chatButtonToggle: !this.state.chatButtonToggle,
-      chatPanelToggle: true,
-    });
-    this.setState(copy);
-  }
-
-  toggleChatWindow() {
-    let copy = Object.assign({}, this.state, { chatPanelToggle: !this.state.chatPanelToggle });
-    this.setState(copy);
-  }
-
   toggleChatHolder() {
     let copy = Object.assign({}, this.state, {
       isChatHolder: !this.state.isChatHolder,
@@ -325,27 +274,11 @@ class ChatApp extends React.Component {
   }
 
   render() {
-    const chatWindowClass = this.state.chatWindowOpen == 1 ? 'chatWindowShow' : 'chatWindowHide';
-    const divChatClasses = `chatapp-chatContainer ${chatWindowClass}`;
-    const chatMainClass =
-      this.state.chatWindowOpen == 0
-        ? 'chatapp-main-container-2'
-        : this.state.chatWindowOpen == 1
-          ? 'chatapp-main-container-1'
-          : 'chatapp-main-container-3';
-    const divMainClasses = `chatapp-main-container ${chatMainClass}`;
-    //
-    const chatButtonClass = this.state.chatButtonToggle == true ? 'chat-btn active' : 'chat-btn';
     const chatHolderButtonClass = this.state.isChatHolder == true ? 'chat-btn active' : 'chat-btn';
     const chatPanelClass =
       this.state.chatButtonToggle == true && this.state.chatPanelToggle == true
         ? 'chat-panel active'
         : 'chat-panel';
-    const chatClassWindow =
-      this.state.chatButtonToggle == true && this.state.chatPanelToggle == false
-        ? 'chat-window active'
-        : 'chat-window';
-    //
     var componentMessages = '';
     var active = '';
     var self = this;
@@ -358,6 +291,8 @@ class ChatApp extends React.Component {
             addLastMessage={message => this.addLastMessage(message)}
             sender={this.props.userProfile._id}
             receiver={this.state.activeUserID}
+            userProfile={this.props.userProfile}
+            users={this.state.users}
           />
         );
       } else if (!this.state.userChatHistoryLoaded) {
@@ -382,6 +317,8 @@ class ChatApp extends React.Component {
                 addLastMessage={message => self.addLastMessage(message)}
                 sender={self.props.userProfile._id}
                 receiver={self.state.activeUserID}
+                userProfile={this.props.userProfile}
+                users={this.state.users}
               />
             );
 
@@ -400,50 +337,37 @@ class ChatApp extends React.Component {
     }
     return (
       <div>
+
         <ChatHolder
           isChatHolder={this.state.isChatHolder}
           toggleChatHolder={()=>this.toggleChatHolder()}
-        />
+
+          chatPanelClass={chatPanelClass}
+          userProfile={this.props.userProfile}
+          users={this.state.users}
+          selectedUser={this.state.activeUserID}
+          selectedUserFullName={this.state.activeUserFullName}
+          lastMessageRec={lastMessageRec}
+          lastMessages={this.state.lastMessageStack}
+          unreadCount={this.state.unreadCountStack}
+          onTab={(activeUserID, activeUserFullname) => this.tabChanges(activeUserID, activeUserFullname)}
+          checkUserWin={usersWindowOpen => this.toggleUserWindow(usersWindowOpen)}
+          tabClose={this.state.tabClose}
+          openWindow={this.state.openWindow}
+
+          onSend={message => this.sendHandler(message)}
+
+          users={this.state.users}
+
+          componentMessages={componentMessages} />
+
         <div className="popout">
           <div className={`${chatHolderButtonClass} new-chat-btn`} onClick={() => this.toggleChatHolder()}>
             <i className="fa fa-comments" />
-            <span className="chat-label">15</span>
-          </div>
-          <div className={chatButtonClass} onClick={() => this.toggleChatWidgetButton()}>
-            <i className="fa fa-comments" />
-            <span className="chat-label">15</span>
-          </div>
-
-          <ChatWidget
-            chatPanelClass={chatPanelClass}
-            toggleChatWidgetButton={() => this.toggleChatWidgetButton()}
-            userProfile={this.props.userProfile}
-            users={this.state.users}
-            selectedUser={this.state.activeUserID}
-            selectedUserFullName={this.state.activeUserFullName}
-            lastMessageRec={lastMessageRec}
-            lastMessages={this.state.lastMessageStack}
-            unreadCount={this.state.unreadCountStack}
-            onTab={(activeUserID, activeUserFullname) => this.tabChanges(activeUserID, activeUserFullname)}
-            checkUserWin={usersWindowOpen => this.toggleUserWindow(usersWindowOpen)}
-            tabClose={this.state.tabClose}
-            openWindow={this.state.openWindow}
-          />
-
-          <div className={chatClassWindow}>
-            <div className="chat-window-header">
-              <h4 className="text-center">
-                <a
-                  className="fa fa-arrow-left pull-left toggle-chat-window"
-                  onClick={() => this.toggleChatWindow()}
-                />
-                {active}
-              </h4>
-            </div>
-            <div className="chat-window-body">{componentMessages}</div>
-            <ChatWindowInput onSend={message => this.sendHandler(message)} />
+            <span className="chat-label">17</span>
           </div>
         </div>
+
       </div>
     );
   }
