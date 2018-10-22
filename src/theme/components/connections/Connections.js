@@ -27,6 +27,7 @@ class Connections extends React.Component {
       allTabLoading: false,
       otherTabLoading: false,
       skip: 0,
+      searchValue: '',
       moreSoqqlersToFetch: true,
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
@@ -272,9 +273,9 @@ class Connections extends React.Component {
               <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Received', receivedList: this.state.sourceReceived })}>Received</a>
             </li>
             <div className="friends-search-container">
-              <input type="text" placeholder="SEARCH.." name="search" onChange={(e) => this.searchConnection(e,this.state.activeTabName)} />
-              <button type="submit">
-                <i className="fa fa-search" style={{color: "#9601a3"}}></i>
+              <input type="text" placeholder="SEARCH.." name="search" onChange={(e) => this.setState({searchValue: e.target.value})} />
+              <button type="submit" onClick={(e) => this.searchConnection(this.state.activeTabName)}>
+                <i className="fa fa-search" style={{color: "#9601a3"}} ></i>
               </button>
             </div>
           </ul>
@@ -284,7 +285,7 @@ class Connections extends React.Component {
             {this.state.activeTabName === 'All' && this.renderAllTab()}
             <ScrollHandle 
               progress={this.state.allTabLoading}
-              active={this.state.moreSoqqlersToFetch && this.state.activeTabName === 'All'}
+              active={this.state.moreSoqqlersToFetch && this.state.activeTabName === 'All' && !this.state.searchValue}
               onActive={this.fetchMoreSoqqlers}/>
           </div>
           <div style={{ display: this.state.activeTabName === 'Connections' ? 'block' : 'none' }}>
@@ -301,23 +302,48 @@ class Connections extends React.Component {
     );
   }
 
-  searchConnection(event, activeTab){
+  searchConnection(activeTab){
      let searchResult = [];
-     let searchValue = event.target.value;
      if(activeTab == 'All'){
-         searchResult = this.state.sourceAllFriends.filter(connection => this.searchCondition(connection, searchValue));
-         this.setState({ allFriendList: searchResult })
+        const allFrndUrl = `${ConfigMain.getBackendURL()}/searchSoqqlers`;
+        const that = this;
+       
+        if(this.state.searchValue){
+          this.setState({ allTabLoading: true, allFriendList: []});
+          Axios.get(allFrndUrl, {
+            params: {
+              currentUser: this.props.currentUserId,
+              searchValue: this.state.searchValue,
+            },
+          }).then(function(response) {
+            if (response.data.length) {
+              that.setState({
+                allTabLoading: false,
+                allFriendList: response.data,
+              });
+            } else {
+              that.setState({ allTabLoading: false });
+            }
+          }).catch(function(error) {
+            that.setState({ allTabLoading: false });      
+          });
+        } else {
+           that.setState({
+              allFriendList: this.state.sourceAllFriends,
+              searchValue: ''
+           })
+        }
 
      } else if (activeTab == 'Connections'){
-         searchResult = this.state.sourceFriend.filter(connection => this.searchCondition(connection, searchValue));
+         searchResult = this.state.sourceFriend.filter(connection => this.searchCondition(connection, this.state.searchValue));
          this.setState({ friendList: searchResult })
 
      } else if (activeTab == 'Sent'){
-         searchResult = this.state.sourceSent.filter(connection => this.searchCondition(connection, searchValue));
+         searchResult = this.state.sourceSent.filter(connection => this.searchCondition(connection, this.state.searchValue));
          this.setState({ sentList: searchResult })
 
       } else if (activeTab == 'Received'){
-         searchResult = this.state.sourceReceived.filter(connection =>  this.searchCondition(connection, searchValue))
+         searchResult = this.state.sourceReceived.filter(connection =>  this.searchCondition(connection, this.state.searchValue))
          this.setState({ receivedList: searchResult })
     }
   }
