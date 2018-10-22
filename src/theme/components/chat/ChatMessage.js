@@ -7,7 +7,7 @@ class ChatMessage extends React.Component {
     // Was the message sent by the current user. If so, add a css class
     const fromMe = this.props.fromMe ? 'chat-me' : '';
     const timeStampClass = this.props.fromMe ? 'timeStampMe' : 'timeStampYou';
-    const user = this.props.users.filter(user => (this.props.username == user.userID))
+    const user = this.props.users.filter(user => (this.props.sender == user.userID))
     const fullName = user[0] ? user[0].firstName + " " + user[0].lastName : "You"
     const imgSrc = user[0] ? (user[0].profileImage ? user[0].profileImage : 'http://blog.newrelic.com/wp-content/uploads/chatbot-300x300.jpg' ) : this.props.userProfile.pictureURL
     return (
