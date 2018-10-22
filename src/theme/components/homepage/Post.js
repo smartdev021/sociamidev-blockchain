@@ -73,16 +73,14 @@ export default class Post extends Component {
 
   fetchLinkMeta(link) {
     this.setState({ isFetchMetaLoading: true });
-    const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
+    const linkMetaScraperEndpoint = `${ConfigMain.getBackendURL()}/metadata?url=${link}`;
 
     Axios.get(linkMetaScraperEndpoint)
       .then(({ data }) => {
-        if (data.result.status == 'OK') {
           this.setState({ 
             linkMeta: data.meta, 
             isFetchMetaLoading: false 
           });
-        }
       })
       .catch(error => this.setState({ isFetchMetaLoading: false }));
   }

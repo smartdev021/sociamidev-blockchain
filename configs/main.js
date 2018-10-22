@@ -1,7 +1,7 @@
 const BACKEND_URL_REMOTE_PROD = 'https://api.soqqle.com';
 const BACKEND_URL_REMOTE_STAGING = 'https://stgapi.soqqle.com';
 const BACKEND_URL_LOCAL = 'http://localhost:3001';
-const LINK_SCRAPER_URL = 'https://api.urlmeta.org/';
+const LINK_SCRAPER_URL = 'http://localhost:3001/metadata';
 
 var ConfigMain = {
   getBackendURL: function() {

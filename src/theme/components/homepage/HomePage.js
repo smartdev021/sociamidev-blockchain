@@ -112,16 +112,12 @@ class HomePage extends Component {
   }
 
   fetchLink(link) {
-    const linkMetaScraperEndpoint = `${ConfigMain.getLinkScraperServiceURL()}?url=${link}`;
+    const linkMetaScraperEndpoint = `${ConfigMain.getBackendURL()}/metadata?url=${link}`;
 
     this.loadingLinkPreview(true);
     Axios.get(linkMetaScraperEndpoint)
       .then(({ data }) => {
-        if (data.result.status == 'OK') {
           this.showLinkPreview(data.meta);
-        } else {
-          this.loadingLinkPreview(false)
-        }
       })
       .catch(error => this.loadingLinkPreview(false));
   }
