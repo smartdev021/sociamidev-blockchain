@@ -92,7 +92,7 @@
   position: relative;
 }
 .chat-ChatLeftSideHolder .top-header{
-  padding-bottom: 10px;
+  padding: 5px 0px;
   border-bottom: 1px solid #383838;
   display: block;
   line-height: 36px;
@@ -246,6 +246,9 @@
   width: 35px;
   text-align: center;
   font-size: 18px;
+  background: transparent;
+  padding-left: 3px;
+  margin-right: 12px;
 }
 
 .chat-ChatRightSideHolder .right-middle-messages .message-box{
@@ -327,4 +330,10 @@
   margin-top: -10px;
   background-color: black;
   padding: 0 40px;
+}
+.chat-ChatRightSideHolder .right-middle-messages .message-box .header .chat-you{
+  color: blue;
+}
+.chat-ChatRightSideHolder .right-middle-messages .message-box .header .chat-me{
+  color: green;
 }
