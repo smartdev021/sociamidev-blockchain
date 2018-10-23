@@ -85,6 +85,7 @@
   display: inline-block;
   border-right: 1px solid #0690f7;
   padding: 15px 25px;
+  overflow-y: scroll;
 }
 .chat-ChatRightSideHolder{
   width: calc(100% - 365px);
