@@ -40,7 +40,16 @@ class Connections extends React.Component {
   componentDidMount() {
     this.fetchAllConnections();
     this.fetchMoreSoqqlers();
-    this.fetchFacebookFriends();        
+    this.fetchFacebookFriends();       
+    this.searchByEnter(); 
+  }
+
+  searchByEnter(){
+    document.addEventListener('keydown', (e) => {
+        if(e.keyCode == 13) {
+          this.searchConnection(this.state.activeTabName);
+        }
+     })
   }
 
   handleFriendRequest(user, action) {
