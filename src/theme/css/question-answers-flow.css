@@ -230,6 +230,17 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  margin-left: 2rem;
+  margin-right: 0.3rem;
+  color: white;
+}
+
+.container-cb.checked {
+  color: blue;
+}
+
+.container-cb:hover {
+  color: blue;
 }
 
 /* Hide the browser's default checkbox */
@@ -257,11 +268,15 @@
 
 /* On mouse-over, add a grey background color */
 .container-cb:hover input ~ .checkmark {
+  background-color: transparent;
+  border-color: blue;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container-cb input:checked ~ .checkmark {
-  background-color: #fff;
+  background-color: transparent;
+  border-color: blue;
+
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -274,20 +289,22 @@
 /* Show the checkmark when checked */
 .container-cb input:checked ~ .checkmark:after {
   display: block;
+  content: "\2714";
+  color: blue;
 }
 
 /* Style the checkmark/indicator */
 .container-cb .checkmark:after {
-  left: 3px;
-  top: 0px;
-  width: 10px;
-  height: 15px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(28deg);
-  border-color: orange;
+  position: absolute;
+  top: 0;
+  left: 0.2rem;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
 }
 
 /* The container-rb */

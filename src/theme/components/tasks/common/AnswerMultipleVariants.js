@@ -7,17 +7,18 @@ const AnswerMultipleVariants = props => {
       id={`answer_your_${props.question._id}`}
     >
       {props.question.answers.map((answer, i) => {
+        const checked = props.answerMy.options[i];
         return (
           <div key={i} className="answer-multiple-input-wrapper">
-            <label className="container-cb">
+            <label className={"container-cb " + (checked ? 'checked': '')}>
               <span>{answer}</span>
               <input
                 id={i}
                 type="checkbox"
                 className="validate-field required question-answer-checkbox"
-                name="answer_your"
+                name={"answer_your_"+i}
                 onChange={e => props.onHandleAnswerCheckbox(e)}
-                checked={props.answerMy.options[i]}
+                checked={checked}
               />
               <span className="checkmark" />
             </label>

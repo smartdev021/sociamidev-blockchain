@@ -55,6 +55,7 @@ class Heroes extends React.Component {
     this.handleSkillStart = this.handleSkillStart.bind(this);
     this.saveIlluminate = this.saveIlluminate.bind(this);
     this.saveDeepdive = this.saveDeepdive.bind(this);
+    this.saveDecode = this.saveDecode.bind(this);
   }
 
   componentWillMount() {
@@ -259,6 +260,51 @@ class Heroes extends React.Component {
     that.props.saveTask(illuminate);
   }
 
+  saveDecode(tree, skillInfo) {
+    const that = this;
+    const CurrentTree = tree;
+    const decode = {
+      name: `Decode for roadmap "${CurrentTree.name}"`,
+      description: `Decode for roadmap "${CurrentTree.name}"`,
+      type: TaskTypes.DECODE,
+      userName: `${that.props.userProfile.firstName} ${that.props.userProfile.lastName}`,
+      userID: that.props.userProfile._id,
+      isHidden: 0,
+      creator: {
+        _id: that.props.userProfile._id,
+        firstName: that.props.userProfile.firstName,
+        lastName: that.props.userProfile.lastName,
+      },
+      metaData: {
+        subject: {
+          roadmap: {
+            _id: CurrentTree._id,
+            name: CurrentTree.name,
+          },
+          skill: {
+            _id: skillInfo._id,
+            name: skillInfo.skill,
+          },
+        },
+        participants: [
+          {
+            user: {
+              _id: that.props.userProfile._id,
+              firstName: that.props.userProfile.firstName,
+              lastName: that.props.userProfile.lastName,
+            },
+            status: 'accepted',
+            isCreator: true,
+          },
+        ],
+        ratings: [],
+        time: Date.now(),
+        awardXP: RandomInt(30, 40),
+      },
+    };
+    that.props.saveTask(decode);
+  }
+
   saveDeepdive(tree,skillInfo) {
     const date = new Date();
     const CurrentTree = tree;
@@ -330,7 +376,7 @@ class Heroes extends React.Component {
   }
 
   handleSkillStart(task, skill, tree) {
-    if(task !== 'Illuminate' && task !== 'Deepdive') {
+    if(task !== 'Illuminate' && task !== 'Deepdive' && task !== 'Decode') {
       return;
     }
     const url = `${ConfigMain.getBackendURL()}/skillGet?name=${skill}`;
@@ -342,6 +388,8 @@ class Heroes extends React.Component {
           that.saveIlluminate(tree,skillInfo);
         } else if(task === 'Deepdive') {
           that.saveDeepdive(tree,skillInfo);
+        } else if(task === 'Decode') {
+          that.saveDecode(tree, skillInfo);
         }
       })
       .catch(function(error) {
