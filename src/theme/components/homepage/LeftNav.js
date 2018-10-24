@@ -74,12 +74,12 @@ const LeftNav = (props) => {
               </Link>
             </li>
             <li className="l-h40">
-              <a href="#">
+              <Link to="/rewards">
                 <span className="icon-wp">
                   <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/rewards-menu-icon.png" />
                 </span>
                 <p>Rewards</p>
-              </a>
+              </Link>
             </li>
             <li className="l-h40">
               <a href="#">

@@ -58,6 +58,8 @@ import Levels from './theme/components/levels/Levels';
 import Sparks from './theme/components/sparks/Sparks';
 import Tasks from './theme/components/tasks/Tasks';
 
+import Rewards from './theme/components/rewards/Rewards';
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -173,6 +175,8 @@ class Main extends Component {
         <Route path="/tasks" render={routeProps => <Tasks {...routeProps} {...this.props} />} />)}/>
 
         <Route path="/achievements" render={routeProps => <Achievements {...routeProps} {...this.props} />} />)}/>
+
+        <Route path="/rewards" render={routeProps => <Rewards {...routeProps} {...this.props} />} />)}/>
 
       </Switch>
     );
