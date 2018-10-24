@@ -33,6 +33,7 @@ class Registration extends Component {
       password: this.state.password,
     })
       .then(response => {
+        localStorage.setItem('login_type', 'Email');
         this.props.closeSignUpForm();
         this.props.signUp(response.data);
       })

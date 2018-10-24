@@ -46,6 +46,7 @@ class CharacterAuthentication extends React.Component {
   }
 
   handleSubmit(event) {
+    localStorage.setItem('login_type', 'Email');
     event.preventDefault();
 
     Axios.post(`${ConfigMain.getBackendURL()}/auth/sign-in`, {

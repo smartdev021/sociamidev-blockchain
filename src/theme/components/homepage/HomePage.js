@@ -45,6 +45,23 @@ class HomePage extends Component {
     this.setPostInputRef = element => {
       this.postInput = element;
     };
+       if(localStorage.getItem('login_type')) {
+        mixpanel.identify(this.props.userProfile.email);
+        mixpanel.people.set({
+    "$email": this.props.userProfile.email,
+    "$last_login": new Date(),
+    "house": this.props.userProfile.character ?  this.props.userProfile.character.characterName : '',
+    "name": this.props.userProfile.firstName + ' ' + this.props.userProfile.lastName,
+    "login_type": localStorage.getItem('login_type')            
+});
+        mixpanel.track('Login', {
+         'email': this.props.userProfile.email,
+         'name': this.props.userProfile.firstName + ' ' + this.props.userProfile.lastName,
+         'login_type': localStorage.getItem('login_type'),
+         'house': this.props.userProfile.character ?  this.props.userProfile.character.characterName : ''
+        });
+      localStorage.removeItem('login_type');
+    }
   }
 
   createHousePost() {

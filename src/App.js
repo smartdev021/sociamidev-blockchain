@@ -307,10 +307,12 @@ class App extends Component {
   }
 
   HandleSignUpFacebook() {
+    localStorage.setItem('login_type', 'Facebook');
     this.HandleSignUp('auth/facebook');
   }
 
   HandleSignUpLinkedIn() {
+    localStorage.setItem('login_type', 'LinkedIn');
     this.HandleSignUp('auth/linkedin');
   }
 
