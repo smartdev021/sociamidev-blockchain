@@ -1,0 +1,172 @@
+.rewards-leftpanel-holder{
+  color: white;
+}
+.rewards-leftpanel-header-text{
+  font-size: 24px;
+  color: #ffc500;
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  border-bottom: 1px solid #383838;
+  height: 61px;
+  padding: 0 25px;
+}
+.rewards-leftpanel-drop-down-holder{
+  border-bottom: 1px solid #383838;
+}
+.rewards-leftpanel-drop-down-holder.isOpen{
+  background-color: #1c1c1c;
+}
+.rewards-leftpanel-drop-down-holder.isOpen .rewards-leftpanel-drop-down-header{
+  color: #cf1fe5;
+}
+.rewards-leftpanel-drop-down-holder.isOpen .rewards-leftpanel-drop-down-list{
+  padding-bottom: 10px;
+}
+.rewards-leftpanel-drop-down-header{
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 48px;
+  color: #d8d8d8;
+  font-family: "Myriad Pro";
+  padding: 0 25px;
+}
+.rewards-leftpanel-drop-down-list{
+  font-size: 14px;
+  line-height: 30px;
+  color: #ffffff;
+  font-family: "Myriad Pro";
+  padding: 0 25px;
+}
+.RewardsBox{
+  border: 1px solid #0091f9;
+  margin-bottom: 20px;
+}
+.RewardsBox-content-right{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 12px;
+  color: #d01fe5;
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  padding: 5px 20px;
+  align-items: center;
+}
+.RewardsBox-content-right-number{
+  margin-right: 10px;
+}
+.RewardsBox-main-text{
+  text-align: center;
+  font-size: 18px;
+  line-height: 24px;
+  color: #ffffff;
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  padding: 0 25px;
+}
+.RewardsBox-main-sub-text{
+  font-size: 12px;
+  line-height: 14px;
+  color: #ffffff;
+  font-family: "Myriad Pro";
+  text-align: center;
+  padding: 10px 25px;
+}
+.RewardsBox-main-spend{
+  font-size: 12px;
+  color: #5d5e72;
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #0091f9;
+  margin: 0px 25px;
+  padding-bottom: 10px;
+}
+.RewardsBox-content-progress-right{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 12px;
+  color: #0091fa;
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  padding: 10px 25px;
+}
+.RewardsBox-footer-holder{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  padding-bottom: 15px;
+}
+.RewardsBox-footer-holder i{
+  font-size: 12px;
+  color: #d01fe5;
+}
+.RewardsBox-footer-holder-center{
+  color: white;
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+.RewardsBox-footer-holder-icon{
+  border: 2px solid #9113b1;
+  border-radius: 50%;
+  background-color: #144872;
+  box-shadow: 0 0 8px 0 rgba(222,108,255,.81), 0 0 8px 0 rgba(226,108,255,.99), 0 0 10px 0 rgba(108,192,255,.99);
+  width: 34px;
+  height: 34px;
+  float: left;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.RewardsBox-footer-drop-down-text{
+  cursor: pointer;
+}
+.RewardsBox-footer-drop-down {
+  position: absolute;
+  border: none;
+  z-index: 1;
+  visibility: hidden;
+}
+.RewardsBox-footer-drop-down-open{
+  visibility: visible;
+}
+.RewardsBox-footer-drop-down-list {
+  position: relative;
+  background-color: #090b27;
+  border: 1px solid #ffc700;
+  box-shadow: 0px 0px 10px 3px rgba(184,161,44,0.7);
+  top:15px;
+  padding: 10px 20px;
+}
+.RewardsBox-footer-drop-down-list-option{
+  border: 1px solid #9113b1;
+  border-radius: 25px;
+  padding: 2px 10px;
+  margin-bottom: 10px;
+}
+.RewardsBox-footer-drop-down-list::after{
+  content: "";
+  position: absolute;
+  top: 0px;
+  box-sizing: border-box;
+  border: 10px solid #090b27;
+  border-color: transparent transparent #ffc700 #ffc700;
+  transform-origin: 0 0;
+  transform: rotate(135deg);
+  box-shadow: 0px 0px 15px 5px rgba(184,161,44,0.76);
+  z-index: -1;
+  left: 35px;
+}
+
+.RewardsBox-footer-drop-down-list::before{
+  content: "";
+  position: absolute;
+  top: 2px;
+  box-sizing: border-box;
+  border: 10px solid black;
+  border-color: transparent transparent #0a0a0a #0a0a0a;
+  transform-origin: 0 0;
+  transform: rotate(135deg);
+  left: 35px;
+}

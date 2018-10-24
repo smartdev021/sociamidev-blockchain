@@ -78,12 +78,12 @@ const MobileMainMenu = (props) => {
             </Link>
           </li>
           <li className="mobile-menu-li">
-            <a href="#" onClick={props.closeMenu}>
+            <Link  to="/rewards" onClick={props.closeMenu}>
               <span className="icon-wp">
                 <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/homepage/rewards-menu-icon.png" />
               </span>
               <p>Rewards</p>
-            </a>
+            </Link>
           </li>
           <li className="mobile-menu-li">
             <a href="#" onClick={props.closeMenu}>
