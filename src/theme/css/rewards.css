@@ -99,7 +99,7 @@
   padding-bottom: 15px;
 }
 .RewardsBox-footer-holder i{
-  font-size: 12px;
+  font-size: 25px;
   color: #d01fe5;
 }
 .RewardsBox-footer-holder-center{
@@ -169,4 +169,28 @@
   transform-origin: 0 0;
   transform: rotate(135deg);
   left: 35px;
+}
+.light-theme-wrapper .rewards-leftpanel-drop-down-header,
+.light-theme-wrapper .RewardsBox-main-text,
+.light-theme-wrapper .RewardsBox-main-sub-text,
+.light-theme-wrapper .RewardsBox-footer-drop-down-text{
+  color: #000;
+}
+.light-theme-wrapper .RewardsBox{
+  box-shadow: 0px 0px 5.53px 1.47px rgba(73, 177, 255, 0.53);
+  background: #fff;
+}
+.reward-holder{
+
+}
+@media screen and (max-width: 750px) {
+  .reward-holder .container .fixed-wp, .reward-holder .container .col.fixed-wp.achievements-left-wp {
+    display: block !important;
+  }
+  .reward-holder .col {
+    float: unset !important;
+  }
+  .reward-holder .col-box-wp {
+    float: unset !important;
+  }
 }

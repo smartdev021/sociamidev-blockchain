@@ -10,7 +10,7 @@ class Rewards extends Component{
   render(){
     return(
       <div
-        className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper tasks-wrapper main-bg`}
+        className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper tasks-wrapper main-bg reward-holder`}
       >
         <div className="row">
           <div className="container">

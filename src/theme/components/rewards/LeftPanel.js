@@ -3,7 +3,7 @@ import React from 'react';
 const LeftPanel = () => {
   return(
     <div className="col fixed-wp rewards-leftpanel-holder">
-      <div>
+      <div className="col-box-wp p-0">
         <div className="rewards-leftpanel-header-text">Filter</div>
         <div className="rewards-leftpanel-drop-down-holder">
           <div className="rewards-leftpanel-drop-down-header">
