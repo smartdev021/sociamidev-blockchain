@@ -19,8 +19,7 @@
     "deploy:prod": "python deploy.py Production",
     "publish:dev": "npm run build && npm run deploy:dev",
     "publish:stg": "npm run build-stg && npm run deploy:stg",
-    "publish:prod": "npm run build-prod && npm run deploy:prod",
-    "postbuild": "react-snap"
+    "publish:prod": "npm run build-prod && npm run deploy:prod"
   },
   "repository": {
     "type": "git",
@@ -110,7 +109,6 @@
     "react-masonry-component": "^6.0.2",
     "react-modal": "^2.3.2",
     "react-redux": "^5.0.6",
-    "react-snap": "^1.19.0",
     "react-star-ratings": "^1.4.1",
     "react-textarea-autosize": "^7.0.4",
     "react-timeago": "^3.4.3",
