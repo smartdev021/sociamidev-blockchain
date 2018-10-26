@@ -101,9 +101,9 @@ class AnswerQuestions extends React.Component {
           : [];
 
       //force check other options out
-      for (let i = 0; i < optionsCopy.length; ++i) {
-        optionsCopy[i] = false;
-      }
+      // for (let i = 0; i < optionsCopy.length; ++i) {
+      //   optionsCopy[i] = false;
+      // }
 
       optionsCopy[Number(e.target.id)] = e.target.checked;
 
