@@ -38,9 +38,9 @@ class AchievementGroup extends Component {
     if (this.props.roadmaps.length !== prevProps.roadmaps.length) {
       this.setState({ roadmapData: this.props.roadmaps });
     }
-    if (this.props.skills.length !== prevProps.skills.length) {
-      this.setState({ skillsData: this.props.skills });
-    }
+    // if (this.props.skills.length !== prevProps.skills.length) {
+    //   this.setState({ skillsData: this.props.skills });
+    // }
     if (prevProps.isFetchingAchievementGroups && !this.props.isFetchingAchievementGroups) {
       let achievementGroups = this.props.achievementGroups;
       _.each(achievementGroups, (record) => {

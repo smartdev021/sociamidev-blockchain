@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import Axios from 'axios';
-import { message } from 'antd';
+import Pagination from 'react-js-pagination';         
+import { message, Table } from 'antd';
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import AchievementGroup from './AchievementGroup';
 import Team from './Team';
@@ -46,7 +47,9 @@ class Company extends Component {
       skills: [],
       IsQuestionsOpen: 'none',
       IsAchievementOpen: 'block',
-      questions: []
+      questions: [],
+      activePage: 1,
+      questionCount: 10
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -67,6 +70,8 @@ class Company extends Component {
     this.props.fetchAchievements();
     this.props.fetchRoadmapsFromAdmin();
     this.props.fetchStories();
+  }
+  componentDidMount(){
     this.getQuestions();
   }
 
@@ -142,10 +147,16 @@ class Company extends Component {
   }
   getQuestions(){
     const that = this;
-    const url = `${ConfigMain.getBackendURL()}/questionsGet`
-    Axios.get(url).then(function(response) {
-      that.setState({ questions: response.data })
+    const url = `${ConfigMain.getBackendURL()}/questionsGetAll`
+        Axios.get(url, {params: {
+          page: 1
+        }}
+    ).then(function(response) {
+      if (response.data.listQuestion){
+        that.setState({ questions: response.data.listQuestion, questionCount: response.data.total })
+      }
     }).catch(function(error) { console.log(error) });
+    
   }
   // Upload questions
   uploadFile() {
@@ -290,6 +301,20 @@ class Company extends Component {
     return groups;
   }
 
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    const that = this;
+    const url = `${ConfigMain.getBackendURL()}/questionsGetAll`;
+    Axios.get(url, {params: {
+          page: pageNumber,
+        }}
+    ).then(function(response) {
+      if (response.data.listQuestion){
+        that.setState({ questions: response.data.listQuestion, questionCount: response.data.total })
+      }
+    }).catch(function(error) { console.log(error) });
+  }
+
   renderTeams(teams) {
     let list = teams.map((team, index) => {
       return <Team
@@ -314,7 +339,7 @@ class Company extends Component {
 
   render() {
     const { userProfile } = this.props;
-    const { company, questions } = this.state;
+    const { company, questions, questionCount } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <div className="row">
@@ -444,8 +469,16 @@ class Company extends Component {
                               }                              
                               </tbody>
                             </table>
-                          </div>                                         
+                          </div>                  
                     </div>
+                    <Pagination
+                            hideNavigation
+                            activePage={this.state.activePage}
+                            itemsCountPerPage={10}
+                            totalItemsCount={questionCount}
+                            pageRangeDisplayed={5}
+                            onChange={(pageNumber) => this.handlePageChange(pageNumber)}
+                          />        
                   </div>
                 </div>
               </div>
