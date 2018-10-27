@@ -91,7 +91,7 @@ class Achievement extends React.Component {
     let mathFloor = ~~((num1 / num2) * 100);
     let taskType = updates.conditions[i].taskType;
     if(!taskType) {
-      taskType = updates.conditions[i].task;
+      taskType = updates.conditions[i].type;
     }
 
     return `${num1}/${num2} ${taskType} - ${mathFloor}% Complete!`;
