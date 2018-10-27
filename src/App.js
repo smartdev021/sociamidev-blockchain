@@ -141,6 +141,8 @@ class App extends Component {
     if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
       this.state.suspendRender = true;
     }
+
+    setTimeout(() => window.prerenderReady = true, 10000);
   }
 
   uuidv1() {
