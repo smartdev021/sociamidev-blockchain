@@ -649,6 +649,7 @@ class Tasks extends React.Component {
       this.setState({
         shouldAchievementModalbeOpen: true,
         achievementDetails: this._selectAchievementDetails(returnData),
+        achievementData: returnData
       });
     }
   }
@@ -706,7 +707,7 @@ class Tasks extends React.Component {
         countComplete: updates.conditions[0].count,
         displayName: updates.name,
         displayProgressVsComplete: `${this._getProgress(updates)}`,
-        generic: false,
+        generic: false
       };
     }
 
@@ -733,6 +734,7 @@ class Tasks extends React.Component {
 
   render() {
     const { achievementDetails } = this.state;
+    const { achievementData } = this.state;
     const myTasks = this.getMyTasksAndHangouts();
 
     const tasksScanner = this.getTaskScannerTasks();
@@ -844,6 +846,7 @@ class Tasks extends React.Component {
                 achievementDetails={achievementDetails}
                 isOpen={this.state.shouldAchievementModalbeOpen}
                 close={this.closeAchievementModal}
+                achievementData={achievementData}
               />
             </div>
           </div>

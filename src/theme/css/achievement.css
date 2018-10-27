@@ -95,3 +95,20 @@
     padding: 0 10px;
   }
 }
+.ach-next {
+      top: 45%;
+    position: absolute;
+    right: 10px;
+    color: #ef0bee;
+}
+
+.ach-previous {
+      top: 45%;
+    position: absolute;
+    left: 10px;
+    color: #ef0bee;
+}
+
+.prog-percent {
+  margin-top: 15px !important;
+}
