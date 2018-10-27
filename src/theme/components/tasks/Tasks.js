@@ -718,7 +718,7 @@ class Tasks extends React.Component {
     const num1 = updates.conditions[0].counter,
       num2 = updates.conditions[0].count;
     if (num1 === num2) {
-      return `Complete!`;
+      return `${updates.conditions[0].taskType} Complete!`;
     }
 
     return this._getPercentProgress(updates);
@@ -729,7 +729,7 @@ class Tasks extends React.Component {
       num2 = updates.conditions[0].count;
     const mathFloor = ~~((num1 / num2) * 100);
 
-    return `${num1}/${num2} - ${mathFloor}% Complete!`;
+    return `${num1}/${num2} ${updates.conditions[0].taskType} - ${mathFloor}% Complete!`;
   }
 
   render() {

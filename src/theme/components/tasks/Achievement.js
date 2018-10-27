@@ -74,7 +74,7 @@ class Achievement extends React.Component {
         num1 = 1;
       }
     if (num1 === num2) {
-      data.push(`Complete!`);
+      data.push(`${updates.conditions[i].taskType} Complete!`);
     } else {
     data.push(this._getPercentProgress(updates, i));
   }
@@ -89,8 +89,12 @@ class Achievement extends React.Component {
         num1 = 1;
       }
     let mathFloor = ~~((num1 / num2) * 100);
+    let taskType = updates.conditions[i].taskType;
+    if(!taskType) {
+      taskType = updates.conditions[i].task;
+    }
 
-    return `${num1}/${num2} - ${mathFloor}% Complete!`;
+    return `${num1}/${num2} ${taskType} - ${mathFloor}% Complete!`;
   }
 
   getDisplayName() {
@@ -140,7 +144,7 @@ getPercentage(value) {
                   <h6 className="yellow-text">{this.getPercentage(0)}</h6>
                  {this.index > 0 && this.getPercentage(1) ? <h6 className="yellow-text prog-percent">{this.getPercentage(1)}</h6> : null}
                   
-                  <h4>{this.getDisplayName()}</h4>
+                  <h4 className="ach-heading">{this.getDisplayName()}</h4>
                   <p>
                     The Innovator quickly flies into action and arrives at the signal. The Chief of Police is
                     there and tells him that the nefarious Shadow Professor has struck again

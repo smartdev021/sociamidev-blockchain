@@ -27,7 +27,7 @@
   text-transform: uppercase;
 }
 .achievement-wrapper .center-wrapper .content-wp h6 {
-  font-size: 14px;
+  font-size: 13px;
   margin: 30px 0 5px 0;
 }
 .achievement-wrapper .center-wrapper .content-wp h4 {
@@ -99,14 +99,14 @@
       top: 45%;
     position: absolute;
     right: 10px;
-    color: #ef0bee;
+    color: #ef0bee !important;
 }
 
 .ach-previous {
       top: 45%;
     position: absolute;
     left: 10px;
-    color: #ef0bee;
+    color: #ef0bee !important;
 }
 
 .prog-percent {
@@ -126,5 +126,9 @@
     position: absolute;
     left: 10px;
     color: #ef0bee !important;
+}
+
+.ach-heading {
+  font-size: 26px !important;
 }
 }
