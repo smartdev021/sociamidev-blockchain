@@ -112,3 +112,19 @@
 .prog-percent {
   margin-top: 15px !important;
 }
+
+@media only screen and (max-width: 600px) {
+    .ach-next {
+      top: 90%;
+    position: absolute;
+    right: 10px;
+    color: #ef0bee;
+}
+
+.ach-previous {
+      top: 90%;
+    position: absolute;
+    left: 10px;
+    color: #ef0bee;
+}
+}

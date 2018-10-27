@@ -133,8 +133,8 @@ getPercentage(value) {
             <div className="achievement-wrapper">
               <div className="center-wrapper">
               <ActionLink href="#" className="modal-close-button" onClick={close} />
-              <div class="QuestionAnswersFlow-previous" onClick={()=>this.showPreviousAchievement()}><a className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ prev</a></div>
-              <div class="QuestionAnswersFlow-next QuestionAnswersFlow-next-block" onClick={()=>this.showNextAchievement()}><a className="ach-next" class="btn-next QuestionAnswersFlow-next">next ▶</a></div>
+              <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div>
+              <div class="QuestionAnswersFlow-next QuestionAnswersFlow-next-block"><a href="#" onClick={()=>this.showNextAchievement()} className="ach-next" class="btn-next QuestionAnswersFlow-next">next ▶</a></div>
                 <div className="content-wp">
                 
                   <h6 className="yellow-text">{this.getPercentage(0)}</h6>
