@@ -7,7 +7,7 @@ body {
 }
 .popout {
 	position: fixed;
-	bottom: 3rem;
+	bottom: 5rem;
 	right: 3rem;
 	z-index: 1000000;
 }

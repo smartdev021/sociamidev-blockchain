@@ -115,16 +115,16 @@
 
 @media only screen and (max-width: 600px) {
     .ach-next {
-      top: 90%;
+      top: 94%;
     position: absolute;
     right: 10px;
-    color: #ef0bee;
+    color: #ef0bee !important;
 }
 
 .ach-previous {
-      top: 90%;
+      top: 94%;
     position: absolute;
     left: 10px;
-    color: #ef0bee;
+    color: #ef0bee !important;
 }
 }
