@@ -157,6 +157,15 @@ class HomePage extends Component {
     this.setState({ postLink: currentPostLinkState });
   }
 
+  uploadFile() {
+
+    let data = new FormData();
+    let fileData = this.fileUpload.files[0];
+    data.append("csv", fileData);
+    //this.data = event.target.result;
+    console.log("test")
+  }
+
   componentDidMount() {
     this.fetchPosts();
   }
@@ -198,9 +207,10 @@ class HomePage extends Component {
                     <div style={{marginTop: '15px'}}>
                       <ul style={{paddingLeft: '20px'}}>
                         <li style={{display: 'inline-block', listStyle: 'none'}}>
-                          <a href="#">
+                          <label htmlFor="upload-input">
                             <i style={{color: 'rgb(150, 1, 163)', fontSize: '16px'}} className="fa fa-camera"></i>
-                          </a>
+                            <input id="upload-input" name="file" type="file" accept="image/gif,image/jpeg,image/png,image/jpg" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} /> 
+                          </label>
                         </li>
                         <li style={{display: 'inline-block', listStyle: 'none', paddingLeft: '20px'}}>
                           <a href="#">
