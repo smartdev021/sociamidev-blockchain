@@ -8,7 +8,6 @@
 }
 
 .achievement-wrapper {
-  background: url('../images/bg-achievement.png');
   position: absolute;
   max-width: 500px;
   height: 500px;
@@ -82,6 +81,7 @@
   }
   .achievement-modal.modal-popup{
     width: 270px;
+    border: none !mportant;
   }
   .achievement-modal.modal-popup .achievement-container{
     display: inline-block;
@@ -94,19 +94,6 @@
     margin: 14rem 0rem 0 0;
     padding: 0 10px;
   }
-}
-.ach-next {
-      top: 45%;
-    position: absolute;
-    right: 10px;
-    color: #ef0bee !important;
-}
-
-.ach-previous {
-      top: 45%;
-    position: absolute;
-    left: 10px;
-    color: #ef0bee !important;
 }
 
 .prog-percent {
@@ -130,5 +117,28 @@
 
 .ach-heading {
   font-size: 26px !important;
+}
+}
+
+@media only screen and (min-width: 600px) {
+.ach-content {
+  width: 500px !important;
+}
+.ach-next {
+    top: 50%;
+    position: absolute;
+    right: 10px;
+    color: #ef0bee !important;
+}
+
+.ach-previous {
+    top: 50%;
+    position: absolute;
+    left: 10px;
+    color: #ef0bee !important;
+}
+
+.ach-modal {
+  border: none !important;
 }
 }

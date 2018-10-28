@@ -693,11 +693,14 @@ class Tasks extends React.Component {
 
   _selectAchievementDetails(returnData) {
     let data = {},
-      { updatedAchievements, userAchievementResult } = returnData;
+      { updatedAchievements, userAchievementResult, result } = returnData;
     if (updatedAchievements && updatedAchievements.length) {
       let updates = updatedAchievements[0]; // for now take only 1
       let achievementsInfo = userAchievementResult.achievements.filter(
         info => info.achievementId === updates._id,
+      );
+      let achievementDescription = result.filter(
+        info => info._id === updates._id,
       );
       updates = { ...updates, conditions: achievementsInfo[0].conditions };
 
@@ -706,8 +709,10 @@ class Tasks extends React.Component {
         countProgress: updates.conditions[0].counter,
         countComplete: updates.conditions[0].count,
         displayName: updates.name,
+        id: updates._id,
         displayProgressVsComplete: `${this._getProgress(updates)}`,
-        generic: false
+        generic: false,
+        description: achievementDescription[0].description
       };
     }
 
