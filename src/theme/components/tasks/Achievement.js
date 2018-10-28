@@ -62,6 +62,7 @@ class Achievement extends React.Component {
         displayName: updates.name,
         displayProgressVsComplete: this._getProgress(updates),
         generic: false,
+        id: updates._id,
         description: achievementDescription[0].description
       };
     }
@@ -123,6 +124,13 @@ getDescription() {
    return this.achievementDetails.description;
 }
 
+getId() {
+  if(this.index == 0) {
+    return this.props.achievementDetails.id;
+  }
+   return this.achievementDetails.id;
+}
+
 showNext() {
 
   if (this.props.achievementData && this.props.achievementData.updatedAchievements) {
@@ -140,6 +148,9 @@ let totalAchievements = this.props.achievementData.updatedAchievements.length;
 
   render() {
     const { isOpen, close } = this.props;
+    const wrapperStyle = {
+      backgroundImage: `url(https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${this.getId()})`
+    }
      const modalStyleOverrides = {
       overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.85)',
@@ -160,7 +171,7 @@ let totalAchievements = this.props.achievementData.updatedAchievements.length;
       <Modal isOpen={isOpen} style={modalStyleOverrides} onRequestClose={close}>
         <div className="achievement-modal modal-popup ach-modal">
           <div className="achievement-container">
-            <div className="achievement-wrapper">
+            <div style={wrapperStyle} className="achievement-wrapper">
               <div className="center-wrapper ach-content">
               <ActionLink href="#" className="modal-close-button" onClick={close} />
               {this.index > 0 ? <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div> : null};

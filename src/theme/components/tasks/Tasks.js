@@ -709,6 +709,7 @@ class Tasks extends React.Component {
         countProgress: updates.conditions[0].counter,
         countComplete: updates.conditions[0].count,
         displayName: updates.name,
+        id: updates._id,
         displayProgressVsComplete: `${this._getProgress(updates)}`,
         generic: false,
         description: achievementDescription[0].description
