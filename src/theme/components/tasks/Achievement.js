@@ -44,10 +44,14 @@ class Achievement extends React.Component {
     let data = {};
       let {updatedAchievements}= this.props.achievementData;
       let {userAchievementResult} = this.props.achievementData;
+      let {result} = this.props.achievementData;
     if (updatedAchievements && updatedAchievements.length) {
       let updates = updatedAchievements[this.index]; // for now take only 1
       let achievementsInfo = userAchievementResult.achievements.filter(
         info => info.achievementId === updates._id,
+      );
+      let achievementDescription = result.filter(
+        info => info._id === updates._id,
       );
       updates = { ...updates, conditions: achievementsInfo[0].conditions };
 
@@ -57,7 +61,8 @@ class Achievement extends React.Component {
         countComplete: updates.conditions[0].count,
         displayName: updates.name,
         displayProgressVsComplete: this._getProgress(updates),
-        generic: false
+        generic: false,
+        description: achievementDescription[0].description
       };
     }
 
@@ -111,6 +116,27 @@ getPercentage(value) {
    return this.achievementDetails.displayProgressVsComplete[value];
 }
 
+getDescription() {
+  if(this.index == 0) {
+    return this.props.achievementDetails.description;
+  }
+   return this.achievementDetails.description;
+}
+
+showNext() {
+
+  if (this.props.achievementData && this.props.achievementData.updatedAchievements) {
+let totalAchievements = this.props.achievementData.updatedAchievements.length;
+    if(this.index < totalAchievements - 1) {
+      return true;
+    } else {
+      return false;
+    }
+    } else {
+      return true;
+    }
+}
+
 
   render() {
     const { isOpen, close } = this.props;
@@ -132,13 +158,13 @@ getPercentage(value) {
     };
     return (
       <Modal isOpen={isOpen} style={modalStyleOverrides} onRequestClose={close}>
-        <div className="achievement-modal modal-popup">
+        <div className="achievement-modal modal-popup ach-modal">
           <div className="achievement-container">
             <div className="achievement-wrapper">
-              <div className="center-wrapper">
+              <div className="center-wrapper ach-content">
               <ActionLink href="#" className="modal-close-button" onClick={close} />
-              <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div>
-              <div class="QuestionAnswersFlow-next QuestionAnswersFlow-next-block"><a href="#" onClick={()=>this.showNextAchievement()} className="ach-next" class="btn-next QuestionAnswersFlow-next">next ▶</a></div>
+              {this.index > 0 ? <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div> : null};
+              {this.showNext() ? <div class="QuestionAnswersFlow-next QuestionAnswersFlow-next-block"><a href="#" onClick={()=>this.showNextAchievement()} className="ach-next" class="btn-next QuestionAnswersFlow-next">next ▶</a></div> : null}
                 <div className="content-wp">
                 
                   <h6 className="yellow-text">{this.getPercentage(0)}</h6>
@@ -146,8 +172,7 @@ getPercentage(value) {
                   
                   <h4 className="ach-heading">{this.getDisplayName()}</h4>
                   <p>
-                    The Innovator quickly flies into action and arrives at the signal. The Chief of Police is
-                    there and tells him that the nefarious Shadow Professor has struck again
+                    {this.getDescription()}
                   </p>
                 </div>
               </div>
