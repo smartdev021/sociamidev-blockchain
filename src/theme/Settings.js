@@ -222,6 +222,9 @@ class Settings extends Component {
   }
 
   render() {
+    var styles = {
+      color: 'white'
+    };
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper settings-wrapper main-bg`}>
         <div className="row">
@@ -252,7 +255,7 @@ class Settings extends Component {
                   <div id="account" className="theme-box-right" style={{ display: this.state.IsAccountOpen }}>
                     <div className="box">
                       <div className="devider-box">
-                        <h3>
+                        <h3 style={styles}>
                           Color Theme
                           <span>
                             <a href="javascript:;" className="change-btn" onClick={this.toggleTheme}>
@@ -264,7 +267,7 @@ class Settings extends Component {
                         { this.renderThemeSelect([{value: "Dark", label: "Dark"}, {value: "Light", label: "Light"}]) }
                       </div>
                       <div className="devider-box">
-                        <h3>
+                        <h3 style={styles}>
                           Email Address
                           <span>
                             <a href="javascript:;" className="change-btn" onClick={this.toggleTheme}>
@@ -287,7 +290,7 @@ class Settings extends Component {
                         </div>
                       </div>
                       <div className="devider-box">
-                        <h3>
+                        <h3 style={styles}>
                           Link accounts
                           <span>
                             <a href="javascript:;" className="change-btn">

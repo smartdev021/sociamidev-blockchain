@@ -131,9 +131,9 @@ const Banner = ({ openSignUpForm, startCharacterCreation, onBetaFormModalShow, o
 const AboutComponent = ({currentLanguage}) => {
   return (
     <div className="about-wrapper second-section-bg">
-      <h2 dangerouslySetInnerHTML={{ __html:languageContent[currentLanguage].about_header }}/>
+      <h2 className="landing-footer" dangerouslySetInnerHTML={{ __html:languageContent[currentLanguage].about_header }}/>
       <p>{languageContent[currentLanguage].about_second_line}</p>
-      <h3 dangerouslySetInnerHTML={{ __html: languageContent[currentLanguage].about_third_line}}/>
+      <h3 className="landing-footer" dangerouslySetInnerHTML={{ __html: languageContent[currentLanguage].about_third_line}}/>
     </div>
   );
 };

@@ -2487,3 +2487,7 @@ span.landing-email-input-textfield-container input[type="email"] {
   }
   .right-new-link{display: none;}
 }
+
+.landing-footer {
+  color: white !important;
+}
