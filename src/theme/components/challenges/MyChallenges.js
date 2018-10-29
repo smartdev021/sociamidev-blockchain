@@ -14,9 +14,6 @@ const Challenges = (props) => {
               <th>Reward</th>
               <th>Detail</th>
               <th>Submitted</th>
-              <th>Company</th>
-              <th>Quota</th>
-              <th>Public/Private</th>
             </tr>
           </thead>
           <tbody>
@@ -28,9 +25,6 @@ const Challenges = (props) => {
               <td>Tokens</td>
               <td>500</td>
               <td className="yellow-text">3</td>
-              <td>Soqqle1</td>
-              <td>20</td>
-              <td>private</td>
             </tr>
           </tbody>
         </table>

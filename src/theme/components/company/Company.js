@@ -24,12 +24,6 @@ import plus from "~/src/theme/images/plus.png";
 import cross from "~/src/theme/images/cross.png";
 import cloud from "~/src/theme/images/cloud.png";
 import deleteimg from "~/src/theme/images/delete.png";
-import Challenges from '~/src/theme/components/challenges/Challenges';
-
-import RightSection from '~/src/theme/components/homepage/RightSection';
-import MyChallenges from '~/src/theme/components/challenges/MyChallenges';
-import AddChallenge from '~/src/theme/components/challenges/AddChallenge';
-import ApproveChallenge from '~/src/theme/components/challenges/ApproveChallenge';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -53,11 +47,9 @@ class Company extends Component {
       skills: [],
       IsQuestionsOpen: 'none',
       IsAchievementOpen: 'block',
-      IsChallengeOpen: 'none',
       questions: [],
       activePage: 1,
-      questionCount: 10,
-      currentPage: "MyChallenges"
+      questionCount: 10
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -69,14 +61,7 @@ class Company extends Component {
     this.deleteCompanyEmail = this.deleteCompanyEmail.bind(this);
     this.toggleQuestionsOption = this.toggleQuestionsOption.bind(this);
     this.toggleAchievementOption = this.toggleAchievementOption.bind(this);
-    this.toggleChallengesOption = this.toggleChallengesOption.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
-  }
-
-  togglePage(page) {
-    this.setState({
-      currentPage: page
-    });
   }
 
   componentWillMount() {
@@ -88,31 +73,6 @@ class Company extends Component {
   }
   componentDidMount(){
     this.getQuestions();
-  }
-
-  section() {
-    switch(this.state.currentPage) {
-      case "MyChallenges":
-        return (
-          <div className="col-middle ml-fixed">
-            <div className="row">
-              <div className="col-sm-5">
-                <h3>My Challenges</h3>
-              </div>
-              <div className="col-sm-7 text-right">
-                <button className="yellow-btn" onClick={ () => this.togglePage("AddChallenge") }>+ Add challenge</button>
-                <button className="pur-btn" onClick={ () => this.togglePage("ApproveChallenge") }>Approve submission</button>
-              </div>
-            </div>
-
-            <MyChallenges />
-          </div>
-        );
-      case "AddChallenge":
-        return <AddChallenge />;
-      case "ApproveChallenge":
-        return <ApproveChallenge profilePic={this.state.profilePic} />;
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -226,13 +186,10 @@ class Company extends Component {
     });
   }
   toggleQuestionsOption(){
-    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none', IsChallengeOpen: 'none' });
+    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none' });
   }
   toggleAchievementOption(){
-    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block', IsChallengeOpen: 'none' });
-  }
-  toggleChallengesOption() {
-    this.setState({ IsQuestionsOpen: 'none', IsChallengeOpen: 'block', IsAchievementOpen: 'none', currentPage: "MyChallenges" });
+    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block' });
   }
   selectAddTeamGroup(addTeamGroup) {
     this.setState({
@@ -402,7 +359,6 @@ class Company extends Component {
                       <li><a href="#">Story</a></li>
                       <li><a href="#">Benefits</a></li>
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
-                      <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
                       <li style={{float: 'right'}}>
                         <label htmlFor="upload-input">
                           <img src={cloud}/>
@@ -524,19 +480,6 @@ class Company extends Component {
                             onChange={(pageNumber) => this.handlePageChange(pageNumber)}
                           />        
                   </div>
-                </div>
-                <div style={{ display: this.state.IsChallengeOpen }}> 
-                 <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper mychallenges-wrapper main-bg`}>
-        <div className="row">
-          <div className="container">
-            <div className="row">
-              <div className="row">
-                 <div>{ this.section() }</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
                 </div>
               </div>
             </div>

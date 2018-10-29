@@ -55,7 +55,7 @@ class Challenges extends Component {
 
   render() {
     return (
-      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper challenges-table mychallenges-wrapper main-bg`}>
+      <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper profile-wrapper mychallenges-wrapper main-bg`}>
         <div className="row">
           <div className="container">
             <div className="row">
