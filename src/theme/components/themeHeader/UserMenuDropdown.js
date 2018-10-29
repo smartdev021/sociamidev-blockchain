@@ -36,11 +36,6 @@ class UserMenuDropdown extends React.Component {
             </span>
           </div>
           <div className="row user-links">
-            <Link className="user-link-text" to="/challenges">
-              Challenges
-            </Link>
-          </div>
-          <div className="row user-links">
             <Link className="user-link-text" to="/userProfile">
               Your Profile
             </Link>

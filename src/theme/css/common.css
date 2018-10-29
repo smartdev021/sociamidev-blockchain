@@ -88,4 +88,19 @@
 }
 /* <- shoud be deleted after new ui of landing page*/
 
+.challege-right {
+  margin-top: 2px !important;
+}
+
+@media only screen and (min-width: 900px) {
+  .mychallenges-wrapper.dark-theme-wrapper .col-middle {
+  width: 60% !important;
+}
+}
+
+@media only screen and (max-width: 600px) {
+.challenge-select {
+  width: 100% !important;
+}
+}
 
