@@ -6,7 +6,9 @@ import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import Axios from 'axios';
 import Pagination from 'react-js-pagination';         
-import { message, Table } from 'antd';
+import { message, Table, Button, Icon, Upload} from 'antd';
+import Img from 'react-image';
+
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import AchievementGroup from './AchievementGroup';
 import Team from './Team';
@@ -54,10 +56,14 @@ class Company extends Component {
       IsQuestionsOpen: 'none',
       IsAchievementOpen: 'block',
       IsChallengeOpen: 'none',
+	  IsStoryOpen: 'none',
       questions: [],
       activePage: 1,
+      activeStoryPage: 1,
       questionCount: 10,
-      currentPage: "MyChallenges"
+      currentPage: "MyChallenges",
+	  storiesData: [],
+      storiesCount: 10
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -70,7 +76,9 @@ class Company extends Component {
     this.toggleQuestionsOption = this.toggleQuestionsOption.bind(this);
     this.toggleAchievementOption = this.toggleAchievementOption.bind(this);
     this.toggleChallengesOption = this.toggleChallengesOption.bind(this);
+    this.toggleStoryOption = this.toggleStoryOption.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
+    this.onHandleUploadStoryImg = this.onHandleUploadStoryImg.bind(this);
   }
 
   togglePage(page) {
@@ -88,6 +96,7 @@ class Company extends Component {
   }
   componentDidMount(){
     this.getQuestions();
+    this.getStories();
   }
 
   section() {
@@ -198,6 +207,21 @@ class Company extends Component {
     }).catch(function(error) { console.log(error) });
     
   }
+
+  getStories(){
+    const that = this;
+    const url = `${ConfigMain.getBackendURL()}/storiesGet`
+    Axios.get(url, {params: {
+      page: 1
+    }}
+    ).then(function(response) {
+      if (response.data && response.data.lstStories) {
+        that.setState({ storiesData: response.data.lstStories, storiesCount: response.data.totalStories });
+      }
+
+    }).catch(function(error) { console.log(error) });
+    
+  }
   // Upload questions
   uploadFile() {
 
@@ -226,13 +250,16 @@ class Company extends Component {
     });
   }
   toggleQuestionsOption(){
-    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none', IsChallengeOpen: 'none' });
+    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none', IsStoryOpen: 'none', IsChallengeOpen: 'none' });
   }
   toggleAchievementOption(){
-    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block', IsChallengeOpen: 'none' });
+    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block', IsStoryOpen: 'none', IsChallengeOpen: 'none' });
   }
   toggleChallengesOption() {
-    this.setState({ IsQuestionsOpen: 'none', IsChallengeOpen: 'block', IsAchievementOpen: 'none', currentPage: "MyChallenges" });
+    this.setState({ IsQuestionsOpen: 'none', IsStoryOpen:'none', IsChallengeOpen: 'block', IsAchievementOpen: 'none', currentPage: "MyChallenges" });
+   }
+	toggleStoryOption(){
+    this.setState({IsStoryOpen: 'block', IsAchievementOpen: 'none', IsQuestionsOpen: 'none', IsChallengeOpen: 'none'})
   }
   selectAddTeamGroup(addTeamGroup) {
     this.setState({
@@ -358,6 +385,20 @@ class Company extends Component {
     }).catch(function(error) { console.log(error) });
   }
 
+  handlePageStoryChange(pageNumber) {
+    this.setState({ activeStoryPage: pageNumber });
+    const that = this;
+    const url = `${ConfigMain.getBackendURL()}/storiesGet`;
+    Axios.get(url, {params: {
+          page: pageNumber,
+        }}
+    ).then(function(response) {
+      if (response.data && response.data.lstStories) {
+        that.setState({ storiesData: response.data.lstStories, storiesCount: response.data.totalStories });
+      }
+    }).catch(function(error) { console.log(error) });
+  }
+
   renderTeams(teams) {
     let list = teams.map((team, index) => {
       return <Team
@@ -380,9 +421,24 @@ class Company extends Component {
     return list;
   }
 
+  onHandleUploadStoryImg(info){ 
+    message.loading('Upload image in progress..', 0.1);
+   
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`, 0);
+     
+      this.setState({storiesData: this.state.storiesData}); //re-render image
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.response.error}`);
+    }
+  }
+
   render() {
     const { userProfile } = this.props;
-    const { company, questions, questionCount } = this.state;
+    const { company, questions, questionCount, storiesData, storiesCount } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <div className="row">
@@ -399,7 +455,7 @@ class Company extends Component {
                   <div className="col-box-wp wider-strip mb-20 p-0">
                     <ul className="tab-wp">
                       <li className={this.state.IsAchievementOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleAchievementOption}>Achievement</a></li>
-                      <li><a href="#">Story</a></li>
+                      <li className={this.state.IsStoryOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleStoryOption}>Story</a></li>
                       <li><a href="#">Benefits</a></li>
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                       <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
@@ -473,6 +529,82 @@ class Company extends Component {
                     </div>
                   </div>
                 </div>
+                <div style={{ display: this.state.IsStoryOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
+                  <div id="stories" className="theme-box-right">
+                    <div className="box" style={{ padding: '1px' }}>
+                          <div className="table-responsive">
+                            <table className="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th></th>
+                                  <th>Skill</th>
+                                  <th>Description</th>
+                                  <th>Category</th>
+                                  <th>SubCategory</th>
+                                  <th>Related Topics</th>
+                                  <th>Achievements</th>
+                                  <th>Image</th>
+                                  <th>Objective</th>
+                                  <th>Objective Value</th>
+                                  <th>Reward</th>
+                                  <th>Reward Value</th>
+                                  <th>Quota</th>
+                                  <th>Refresh</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {
+                                _.map(storiesData,(que, index)=>{
+                                  return(
+                                    <tr key={que._id}>
+                                      <td></td>
+                                      <td>{que.skill}</td>
+                                      <td>{que.description}</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td><Img key={`${new Date()}${que._id}`}
+                                          src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
+                                          style={{maxWidth: 90, maxHeight: 90}}
+                                        />
+                                        <Upload 
+                                          name="image"
+                                          listType="picture"
+                                          action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
+                                          onChange= {this.onHandleUploadStoryImg}
+                                          showUploadList={false}
+                                          key={`upload${que._id}`}
+                                        >
+                                          <Button key={`btn${que._id}`}>
+                                            <Icon type="upload" key={`icon${que._id}`}/>Upload
+                                          </Button>
+                                        </Upload></td>
+                                      <td>{que._objective ? que._objective.name : ''}</td>
+                                      <td>{que.objectiveValue}</td>
+                                      <td>{que.reward ? que.reward.type : ''}</td>
+                                      <td>{que.reward ? que.reward.value : ''}</td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+                                  )
+                                })
+                              }                              
+                              </tbody>
+                            </table>
+                          </div>                  
+                    </div>
+                    <Pagination
+                            key={'pagingStory'}
+                            hideNavigation
+                            activePage={this.state.activeStoryPage}
+                            itemsCountPerPage={10}
+                            totalItemsCount={storiesCount}
+                            pageRangeDisplayed={5}
+                            onChange={(pageNumber) => this.handlePageStoryChange(pageNumber)}
+                          />        
+                  </div>
+                </div>
                 <div style={{ display: this.state.IsQuestionsOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
                   <div id="questions" className="theme-box-right">
                     <div className="box" style={{ padding: '1px' }}>
@@ -517,6 +649,7 @@ class Company extends Component {
                     </div>
                     <Pagination
                             hideNavigation
+                            key={'pagingQuestion'}
                             activePage={this.state.activePage}
                             itemsCountPerPage={10}
                             totalItemsCount={questionCount}

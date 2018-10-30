@@ -309,46 +309,47 @@
 }
 
 /*13-10-2018*/
-#questions {
+#questions, #stories {
     background: none !important;
 }
-#questions .table th {
+#questions .table th, #stories .table th {
     border: 1px solid rgb(6, 144, 247) !important ;
 }
-#questions .table td {
+#questions .table td, #stories .table td {
     border: 1px solid rgb(6, 144, 247) !important ;
 }
-#questions.theme-box-right
-{
+#questions.theme-box-right, #stories.theme-box-right {
     border: none !important;
     box-shadow: none !important;
     width: 895px !important;
 }
-#questions .table {
+#questions .table, #stories .table {
     margin-bottom: unset !important ;
 }
-#questions .box {
+#questions .box, #stories .box {
     background: #111222;
 }
 
-#questions.theme-box-right .pagination{
+#questions.theme-box-right .pagination, #stories.theme-box-right .pagination{
     border-radius: 0 !important;
     border: 1px solid rgb(6, 144, 247) !important;
     box-shadow: 0px 0px 1px 0.47px rgba(73, 177, 255, 0.53) !important;
     background: #121212;
 }
 
-#questions.theme-box-right .pagination>li>a {
+#questions.theme-box-right .pagination>li>a, #stories.theme-box-right .pagination>li>a {
     background-color: #121212 !important;
     border: none !important;
     color: #777;
 }
 
-#questions.theme-box-right .pagination>li:first-child>a, #questions.theme-box-right .pagination>li:last-child>a{
+#questions.theme-box-right .pagination>li:first-child>a, #questions.theme-box-right .pagination>li:last-child>a,
+#stories.theme-box-right .pagination>li:first-child>a, #stories.theme-box-right .pagination>li:last-child>a{
     visibility: hidden;
 }
 
-#questions.theme-box-right .pagination>li:first-child>a::after{
+#questions.theme-box-right .pagination>li:first-child>a::after,
+#stories.theme-box-right .pagination>li:first-child>a::after{
     content: "";
     position: absolute;
     width: 0;
@@ -363,7 +364,8 @@
     visibility: visible;
 }
 
-#questions.theme-box-right .pagination>li:last-child>a::after{
+#questions.theme-box-right .pagination>li:last-child>a::after,
+#stories.theme-box-right .pagination>li:last-child>a::after{
     content: "";
     position: absolute;
     width: 0;
@@ -378,13 +380,14 @@
     visibility: visible;
 }
 
-#questions.theme-box-right .pagination>.active>a, #questions.theme-box-right .pagination>.active>a:hover {
+#questions.theme-box-right .pagination>.active>a, #questions.theme-box-right .pagination>.active>a:hover,
+#stories.theme-box-right .pagination>.active>a, #stories.theme-box-right .pagination>.active>a:hover {
     z-index: 3;
     color: #9601a3 !important;
     cursor: default;
 }
 
-#questions.theme-box-right .pagination>.active>a::after{
+#questions.theme-box-right .pagination>.active>a::after, #stories.theme-box-right .pagination>.active>a::after{
     content: "";
     position: absolute;
     background: #9601a3;
