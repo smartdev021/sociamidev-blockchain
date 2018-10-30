@@ -856,7 +856,6 @@ input:focus {
 @media (min-width: 1920px) {
   .light-theme-wrapper {
     background-size: cover;
-    position: absolute;
     min-height: 100vh;
   }
 }

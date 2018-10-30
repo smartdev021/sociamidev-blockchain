@@ -1457,7 +1457,6 @@ input:focus {
 @media (min-width: 1920px) {
   .dark-theme-wrapper {
     background-size: cover;
-    position: absolute;
     min-height: 100vh;
   }
 }
