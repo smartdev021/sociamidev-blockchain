@@ -9,10 +9,12 @@ export class AddChallenge extends Component {
       validation: '3rd party basic',
       isRewardClose: true,
       isCompanyClose: true,
-      isAccessClose: true, 
+      isAccessClose: true,
+      isRefreshClose: true, 
       reward: 'Token',
       company: 'Soqqle1',
-      access: 'private'
+      access: 'private',
+      refresh: 'Daily'
     };
   }
 
@@ -192,6 +194,51 @@ export class AddChallenge extends Component {
     );
   }
 
+
+  toggleRefreshState() {
+    this.setState({
+      isRefreshClose: !this.state.isRefreshClose
+    });
+  }
+
+  selectRefresh(refresh) {
+    this.setState({
+      isRefreshClose: !this.state.isRefreshClose,
+      refresh: refresh
+    });
+  }
+
+  renderRefreshSelect(options) {
+    return (
+      <div className="custom-select challenge-select">
+        <select>
+          {options.map((refresh, i) => {
+            return(
+              <option value={ refresh.value } key={ i }>{ refresh.label }</option>
+            )
+          })}
+        </select>
+        <div
+          className={ !this.state.isRefreshClose ? 'select-selected select-arrow-active' : 'select-selected' }
+          onClick={ () => this.toggleRefreshState() }>
+          { this.state.refresh }
+        </div>
+
+        <div
+          className={ this.state.isRefreshClose ? 'select-items select-hide' : 'select-items' }>
+          {options.map((refresh, i) => {
+            return(
+              <div
+                onClick={ () => this.selectRefresh(refresh.label) } key={ i }>
+                { refresh.label }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="col-middle ml-fixed">
@@ -219,17 +266,21 @@ export class AddChallenge extends Component {
                       ])
                     }
                   </div>
+
                   <div className="col-sm-4 pr-7 pl-7 pt-3">
                     {
-                      this.renderAccessSelect([
-                        { value: "private", label: "private" },
-                        { value: "public", label: "public" }
+                      this.renderRewardSelect([
+                        { value: "Token", label: "Token" },
+                        { value: "Achievement", label: "Achievement" },
+                        { value: "Cash", label: "Cash" }
                       ])
                     }
                   </div>
+
                   <div className="col-sm-4 pl-7 challege-right">
-                    <input type="text" className="form-control" placeholder="Quota" />
+                    <input type="text" className="form-control" placeholder="How Much" />
                   </div>
+                  
                 </div>
               </div>
               <div className="col-sm-12">
@@ -244,17 +295,32 @@ export class AddChallenge extends Component {
                       ])
                     }
                   </div>
+
                   <div className="col-sm-4 pr-7 pl-7 pt-3">
                     {
-                      this.renderRewardSelect([
-                        { value: "Token", label: "Token" },
-                        { value: "Achievement", label: "Achievement" },
-                        { value: "Cash", label: "Cash" }
+                      this.renderRefreshSelect([
+                        { value: "Daily", label: "Daily" },
+                        { value: "Weekly", label: "Weekly" },
+                        { value: "Monthly", label: "Monthly" }
                       ])
                     }
                   </div>
+
                   <div className="col-sm-4 pl-7 challege-right">
-                    <input type="text" className="form-control" placeholder="How Much" />
+                    <input type="text" className="form-control" placeholder="Quota" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-sm-12">
+                <div className="row">
+                  <div className="col-sm-4 pr-7 pt-3">
+                    {
+                      this.renderAccessSelect([
+                        { value: "private", label: "private" },
+                        { value: "public", label: "public" }
+                      ])
+                    }
                   </div>
                 </div>
               </div>
