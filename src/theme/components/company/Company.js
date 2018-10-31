@@ -99,6 +99,26 @@ class Company extends Component {
     this.getStories();
   }
 
+  handleChallengeSubmit() {
+    var that = this;
+      const url = `${ConfigMain.getBackendURL()}/challenges`
+        Axios.get(url).then(function(response) {
+      if (response.data){
+        that.setState({ challenges: response.data })
+      }
+    }).catch(function(error) { console.log(error) });
+
+    this.setState({
+      currentPage: "MyChallenges"
+    });
+  }
+
+  handleChallengeClose() {
+    this.setState({
+      currentPage: "MyChallenges"
+    });
+  }
+
   section() {
     switch(this.state.currentPage) {
       case "MyChallenges":
@@ -114,13 +134,13 @@ class Company extends Component {
               </div>
             </div>
 
-            <MyChallenges />
+            <MyChallenges challenges={this.state.challenges} />
           </div>
         );
       case "AddChallenge":
-        return <AddChallenge />;
+        return <AddChallenge onClose={() => this.handleChallengeClose()} onSubmit={() => this.handleChallengeSubmit()} />;
       case "ApproveChallenge":
-        return <ApproveChallenge profilePic={this.state.profilePic} />;
+        return <ApproveChallenge onClose={() => this.handleChallengeClose()} profilePic={this.state.profilePic} />;
     }
   }
 
@@ -256,6 +276,15 @@ class Company extends Component {
     this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block', IsStoryOpen: 'none', IsChallengeOpen: 'none' });
   }
   toggleChallengesOption() {
+    var that = this;
+    if (!this.state.challenges){
+      const url = `${ConfigMain.getBackendURL()}/challenges`
+        Axios.get(url).then(function(response) {
+      if (response.data){
+        that.setState({ challenges: response.data })
+      }
+    }).catch(function(error) { console.log(error) });
+    }
     this.setState({ IsQuestionsOpen: 'none', IsStoryOpen:'none', IsChallengeOpen: 'block', IsAchievementOpen: 'none', currentPage: "MyChallenges" });
    }
 	toggleStoryOption(){

@@ -96,9 +96,14 @@
   padding-top: 0px !important;
 }
 
+.challenge-mandatory {
+  color: crimson;
+  text-align: center;
+}
+
 @media only screen and (min-width: 900px) {
   .mychallenges-wrapper.dark-theme-wrapper .col-middle {
-  width: 60% !important;
+  width: 70% !important;
 }
 }
 

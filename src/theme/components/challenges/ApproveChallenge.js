@@ -1,4 +1,5 @@
 import React from 'react';
+import ActionLink from '~/src/components/common/ActionLink';
 
 const ApproveChallenge = (props) => {
   return (
@@ -6,6 +7,7 @@ const ApproveChallenge = (props) => {
       <div className="row">
         <div className="col-sm-12">
           <h3 className="yellow-text">Approve Submission</h3>
+          <ActionLink href="#" className="modal-close-button" onClick={ () => props.onClose() } />
         </div>
       </div>
       <div className="col-box-wp">

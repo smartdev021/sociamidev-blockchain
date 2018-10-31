@@ -15,23 +15,31 @@ const Challenges = (props) => {
               <th>Detail</th>
               <th>Submitted</th>
               <th>Company</th>
+              <th>Refresh</th>
               <th>Quota</th>
               <th>Public/Private</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Mine 100 Iron Ore</td>
-              <td className="gray-text">To Mine 100 Ion Ore in World of Warcraft and give to the Guild</td>
-              <td className="yellow-text">100 Iron Ore Mined. Screenshot to be provided</td>
-              <td>Creator</td>
-              <td>Tokens</td>
-              <td>500</td>
-              <td className="yellow-text">3</td>
-              <td>Soqqle1</td>
-              <td>20</td>
-              <td>private</td>
+          {
+            _.map(props.challenges,(que, index)=>{
+              return(
+              <tr key={que._id}>
+              <td>{que.name}</td>
+              <td className="gray-text">{que.description}</td>
+              <td className="yellow-text">{que.success ? que.success : ''}</td>
+              <td>{que.validation ? que.validation : ''}</td>
+              <td>{que.reward ? que.reward : ''}</td>
+              <td>{que.rewardValue ? que.rewardValue : ''}</td>
+              <td className="yellow-text">{que.reward ? que.reward : ''}</td>
+              <td>{que.company ? que.company : ''}</td>
+              <td>{que.refresh ? que.refresh : ''}</td>
+              <td>{que.quota ? que.quota : ''}</td>
+              <td>{que.access ? que.access : ''}</td>
             </tr>
+            )
+          })
+        }
           </tbody>
         </table>
       </div>

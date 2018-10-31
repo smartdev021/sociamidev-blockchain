@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
+import ConfigMain from '~/configs/main';
+import ActionLink from '~/src/components/common/ActionLink';
 
 export class AddChallenge extends Component {
   constructor(props) {
@@ -14,14 +17,87 @@ export class AddChallenge extends Component {
       reward: 'Token',
       company: 'Soqqle1',
       access: 'private',
-      refresh: 'Daily'
+      refresh: 'Daily',
+      name: '',
+      description: '',
+      success: '',
+      rewardValue: '',
+      quota: ''
     };
+    this.updateName = this.updateName.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
+    this.updateSuccess = this.updateSuccess.bind(this);
+    this.updateQuota = this.updateQuota.bind(this);
+    this.updateRewardValue = this.updateRewardValue.bind(this);
   }
 
   toggleValidationState() {
     this.setState({
       isValidationClose: !this.state.isValidationClose
     });
+  }
+
+  updateDescription(event) {
+    this.setState({
+      description: event.target.value
+    });
+  }
+
+  updateName(event) {
+    this.setState({
+      name: event.target.value
+    });
+  }
+
+  updateSuccess(event) {
+    this.setState({
+      success: event.target.value
+    });
+  }
+
+  updateRewardValue(event) {
+    this.setState({
+      rewardValue: event.target.value
+    });
+  }
+
+  handleClose() {
+    this.props.onClose();
+  }
+
+  updateQuota(event) {
+    this.setState({
+      quota: event.target.value
+    });
+  }
+
+  submitChallenges() {
+    if (this.state.name == '' || this.state.description == '' || this.state.success == '') {
+      this.setState({ message: '* Name, Description, Success are mandatory' });
+      return;
+    }
+    var soqqleAuthorisation = JSON.parse(localStorage.soqqleAuth);
+    var userId = soqqleAuthorisation.userID || soqqleAuthorisation.faceBookID || soqqleAuthorisation.linkedInID;
+    Axios.post(`${ConfigMain.getBackendURL()}/challenges`, {
+      userID: userId,
+      name: this.state.name,
+      description: this.state.description,
+      success: this.state.success,
+      validation: this.state.validation,
+      reward: this.state.reward,
+      rewardValue: this.state.rewardValue,
+      company: this.state.company,
+      refresh: this.state.refresh,
+      quota: this.state.quota,
+      access: this.state.access
+    })
+      .then(response => {
+        this.setState({ message: null });
+        this.props.onSubmit();
+      })
+      .catch(err => {
+        this.setState({ message: '* Name, Description, Success are mandatory' });
+      });
   }
 
   selectValidation(validation) {
@@ -242,18 +318,18 @@ export class AddChallenge extends Component {
   render() {
     return (
       <div className="col-middle ml-fixed">
+      <ActionLink href="#" className="modal-close-button" onClick={ () => this.handleClose() } />
         <div className="col-box-wp black-bg">
           <h4 className="top-heading">Add Challenge</h4>
-          <form>
             <div className="row">
               <div className="col-sm-12">
-                <input type="text" className="form-control" placeholder="Name" />
+                <input value={this.state.name} onChange={this.updateName} type="text" className="form-control" placeholder="Name" />
               </div>
               <div className="col-sm-12">
-                <textarea className="form-control" placeholder="Description" className="form-control" rows="3"></textarea>
+                <textarea value={this.state.description} onChange={this.updateDescription} className="form-control" placeholder="Description" className="form-control" rows="3"></textarea>
               </div>
               <div className="col-sm-12">
-                <textarea className="form-control" placeholder="Success" className="form-control" rows="3"></textarea>
+                <textarea value={this.state.success} onChange={this.updateSuccess} className="form-control" placeholder="Success" className="form-control" rows="3"></textarea>
               </div>
               <div className="col-sm-12">
                 <div className="row">
@@ -278,7 +354,7 @@ export class AddChallenge extends Component {
                   </div>
 
                   <div className="col-sm-4 pl-7 challege-right">
-                    <input type="text" className="form-control" placeholder="How Much" />
+                    <input value={this.state.rewardValue} onChange={this.updateRewardValue} type="text" className="form-control" placeholder="How Much" />
                   </div>
                   
                 </div>
@@ -307,7 +383,7 @@ export class AddChallenge extends Component {
                   </div>
 
                   <div className="col-sm-4 pl-7 challege-right">
-                    <input type="text" className="form-control" placeholder="Quota" />
+                    <input value={this.state.quota} onChange={this.updateQuota} type="text" className="form-control" placeholder="Quota" />
                   </div>
                 </div>
               </div>
@@ -324,9 +400,10 @@ export class AddChallenge extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-sm-12 text-center"><button type="submit" className="yellow-btn mtb-1">+ Add challenge</button></div>
+              this.state.message ? <p className="challenge-mandatory">{this.state.message}</p> : ''
+              <div className="col-sm-12 text-center"><button onClick={ () => this.submitChallenges() } className="yellow-btn mtb-1">+ Add challenge</button></div>
             </div>
-          </form>
+    
         </div>
       </div>
     )
