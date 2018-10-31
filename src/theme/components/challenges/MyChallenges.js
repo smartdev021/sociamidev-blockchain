@@ -12,7 +12,6 @@ const Challenges = (props) => {
               <th>Success</th>
               <th>Validation</th>
               <th>Reward</th>
-              <th>Detail</th>
               <th>Submitted</th>
               <th>Company</th>
               <th>Refresh</th>
@@ -31,7 +30,6 @@ const Challenges = (props) => {
               <td>{que.validation ? que.validation : ''}</td>
               <td>{que.reward ? que.reward : ''}</td>
               <td>{que.rewardValue ? que.rewardValue : ''}</td>
-              <td className="yellow-text">{que.reward ? que.reward : ''}</td>
               <td>{que.company ? que.company : ''}</td>
               <td>{que.refresh ? que.refresh : ''}</td>
               <td>{que.quota ? que.quota : ''}</td>
