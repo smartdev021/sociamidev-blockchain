@@ -62,7 +62,7 @@ class StoryItem extends Component {
         <div className='img-box-wp'>
           <img
             src={
-              'https://s3.us-east-2.amazonaws.com/admin.soqqle.com/skillImages/' +
+              'https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/' +
               _.get(this, 'state.data._id')
             }
             alt=''
