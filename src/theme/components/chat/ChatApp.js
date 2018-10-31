@@ -362,7 +362,7 @@ class ChatApp extends React.Component {
           componentMessages={componentMessages} />
 
         <div className="popout">
-          <div className={`${chatHolderButtonClass} new-chat-btn`} onClick={() => this.toggleChatHolder()}>
+          <div id="chat-popout" className={`${chatHolderButtonClass} new-chat-btn`} onClick={() => this.toggleChatHolder()}>
             <i className="fa fa-comments" />
             <span className="chat-label">17</span>
           </div>

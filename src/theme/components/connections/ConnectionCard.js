@@ -1,7 +1,21 @@
 import React from 'react';
-var fallbackProfilePic =
-      'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
-function ConnectionCard(props) {
+import PubSub from 'pubsub-js';
+
+let  fallbackProfilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
+
+const openChatWindow = (user) => {
+  console.log('user', user)
+  const chatWindow = document.getElementById('chat-popout');
+  chatWindow.click();
+  const chatBoxElement = document.getElementById(user.id);
+  if (chatBoxElement) {
+    chatBoxElement.click();
+  } else {
+    PubSub.publish('OpenChat', user);
+  }
+}
+
+const ConnectionCard = props => {
   return (
     <div className="connection-card">
       <div className="connection-profile-pic">
@@ -20,7 +34,7 @@ function ConnectionCard(props) {
         <a href="#" className="btn-prim" onClick={props.onPrimaryAction}>{props.actionName || 'Add'}</a>
         {props.secondaryAction
           && <a href="#" className="btn-prim" onClick={props.onSecondaryAction}>{props.secondaryAction}</a> }
-        <a href="#" className="btn-circ">
+        <a href="#" className="btn-circ" onClick={openChatWindow(props.connection)}>
           <img src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/send-arrow.png" alt="" />
         </a>
       </div>

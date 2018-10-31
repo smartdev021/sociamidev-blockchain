@@ -138,15 +138,16 @@ const RenderDecodeActions = (task, props) => {
   }
 };
 
-const openChat = partner => {
-  const chatBoxElemet = document.getElementById(partner.user_id);
-
+const openChat = user => {
+  const chatWindow = document.getElementById('chat-popout');
+  chatWindow.click();
+  const chatBoxElemet = document.getElementById(user.user_id);
   if (chatBoxElemet) {
     chatBoxElemet.click();
   } else {
-    PubSub.publish('OpenChat', partner);
+    PubSub.publish('OpenChat', user);
   }
-};
+}
 
 const RenderActions = (hangout, props) => {
   const Partner = GetHangoutPartner(hangout, props);
