@@ -151,7 +151,7 @@ let totalAchievements = this.props.achievementData.updatedAchievements.length;
     const wrapperStyle = {
       backgroundImage: `url(https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${this.getId()})`
     }
-     const modalStyleOverrides = {
+    const modalStyleOverrides = {
       overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.85)',
         display: 'flex',
@@ -171,10 +171,13 @@ let totalAchievements = this.props.achievementData.updatedAchievements.length;
       <Modal isOpen={isOpen} style={modalStyleOverrides} onRequestClose={close}>
         <div className="achievement-modal modal-popup ach-modal">
           <div className="achievement-container">
-            <div style={wrapperStyle} className="achievement-wrapper">
+            <div className="achievement-wrapper">
+              <ActionLink href="#" className="modal-close-button achievement__modal-close-button" onClick={close} />
+              <img src={'https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/' + this.getId()}
+                   alt="Achievement Image"
+                   className="achievement-top-img"/>
               <div className="center-wrapper ach-content">
-              <ActionLink href="#" className="modal-close-button" onClick={close} />
-              {this.index > 0 ? <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div> : null};
+              {this.index > 0 ? <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div> : null}
               {this.showNext() ? <div class="QuestionAnswersFlow-next QuestionAnswersFlow-next-block"><a href="#" onClick={()=>this.showNextAchievement()} className="ach-next" class="btn-next QuestionAnswersFlow-next">next ▶</a></div> : null}
                 <div className="content-wp">
                 

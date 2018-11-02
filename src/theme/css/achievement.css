@@ -19,18 +19,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 35% auto 20px;
-  width: 80%;
+  margin: auto;
   color: #fff;
   position: relative;
   text-transform: uppercase;
 }
 .achievement-wrapper .center-wrapper .content-wp h6 {
   font-size: 13px;
-  margin: 30px 0 5px 0;
+  margin: 0 0 5px 0;
 }
 .achievement-wrapper .center-wrapper .content-wp h4 {
-  margin: 1rem;
+  margin: 1rem 0;
   color: #0091fa;
 }
 
@@ -58,15 +57,7 @@
   }
 }
 @media (max-width: 767px) {
-  .achievement-wrapper .center-wrapper {
-    width: 320px;
-    height: 150px;
-    background-size: 100%;
-  }
-  .achievement-wrapper .center-wrapper .content-wp {
-    width: 60%;
-    margin: 3rem 3rem 0 0;
-  }
+
   .achievement-wrapper .center-wrapper .content-wp .numbering-heading {
     font-size: 30px;
     right: 17px;
@@ -89,56 +80,59 @@
   .achievement-modal.modal-popup .achievement-container .achievement-wrapper {
     width: 100%;
   }
-  .achievement-wrapper .center-wrapper .content-wp {
-    width: 83%;
-    margin: 14rem 0rem 0 0;
-    padding: 0 10px;
-  }
 }
 
 .prog-percent {
   margin-top: 15px !important;
 }
 
-@media only screen and (max-width: 600px) {
-    .ach-next {
-      top: 94%;
-    position: absolute;
-    right: 10px;
-    color: #ef0bee !important;
+.ach-content {
+  background-image: url('../images/achievement-bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding: 60px 10px;
+}
+.ach-next {
+  top: 50%;
+  position: absolute;
+  right: 10px;
+  color: #ef0bee !important;
+  z-index: 1;
 }
 
 .ach-previous {
-      top: 94%;
-    position: absolute;
-    left: 10px;
-    color: #ef0bee !important;
+  top: 50%;
+  position: absolute;
+  left: 10px;
+  color: #ef0bee !important;
+  z-index: 1;
 }
-
-.ach-heading {
-  font-size: 26px !important;
-}
+@media only screen and (max-width: 767px) {
+  .ach-content {
+    padding: 20px 10px 40px;
+  }
+  .ach-heading {
+    font-size: 25px;
+  }
+  .ach-next, .ach-previous {
+    top: auto;
+    bottom: 10px;
+  }
 }
 
 @media only screen and (min-width: 600px) {
-.ach-content {
-  width: 500px !important;
-}
-.ach-next {
-    top: 50%;
-    position: absolute;
-    right: 10px;
-    color: #ef0bee !important;
+  .ach-modal {
+    border: none !important;
+  }
 }
 
-.ach-previous {
-    top: 50%;
-    position: absolute;
-    left: 10px;
-    color: #ef0bee !important;
+.achievement-top-img {
+  width: 100%;
 }
 
-.ach-modal {
-  border: none !important;
-}
+.achievement__modal-close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
