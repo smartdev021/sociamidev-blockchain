@@ -31,8 +31,9 @@ class TooltipUser extends Component {
   }
 
   openChat(user) {
+    const chatWindow = document.getElementById('chat-popout');
+    chatWindow.click();
     const chatBoxElemet = document.getElementById(user.user_id);
-
     if (chatBoxElemet) {
       chatBoxElemet.click();
     } else {

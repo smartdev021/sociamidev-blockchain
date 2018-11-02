@@ -21,7 +21,7 @@ class ChatHeader extends Component {
         </div>
         <div className="chat-header-action">
           <ul>
-            <li onClick={()=>this.props.toggleChatHolder()}>
+            <li id="close-chat-window" onClick={()=>this.props.toggleChatHolder()}>
               <a className="fa fa-times"></a>
             </li>
             <li>

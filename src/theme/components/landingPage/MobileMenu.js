@@ -2,14 +2,14 @@ import React from 'react';
 
 export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
     const mobileClass = isOpen ? 'mobile-menu open' : 'mobile-menu close';
-  
+
     const handleInputSubmit = (event) => {
       event.preventDefault();
       if (validateEmail(email)) {
         onEmailInputSubmit(email);
       }
     }
-  
+
     return (
       <div className={mobileClass}>
         <button type="button" className="close-menu" onClick={closeMenu}>
