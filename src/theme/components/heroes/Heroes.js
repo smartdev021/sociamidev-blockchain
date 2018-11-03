@@ -49,7 +49,8 @@ class Heroes extends React.Component {
     this.state = {
       isDetailsOpen: false,
       currentTask: {},
-      quickStarts: {}
+      quickStarts: {},
+      taskReference: []
     };
     this.handleQuickStart = this.handleQuickStart.bind(this);
     this.handleSkillStart = this.handleSkillStart.bind(this);
@@ -59,6 +60,13 @@ class Heroes extends React.Component {
   }
 
   componentWillMount() {
+    var that = this;
+    Axios.get(`${ConfigMain.getBackendURL()}/taskRefs`)
+      .then(function(response) {
+        that.setState({ taskReference : response.data });
+      })
+      .catch(function(error) {
+      });
     mixpanel.track("View Heroes");
     this.props.onFetchAllTasks(false);
     this.props.fetchRoadmaps();
@@ -407,7 +415,7 @@ class Heroes extends React.Component {
       <div className="progression-tree-skill-list">
         {this.props.roadmapsAdmin.data.length != 0 &&
           this.props.roadmapsAdmin.data.map((item, index) => {
-            return <SkillCard key={index} skillItem={item} 
+            return <SkillCard taskReference={this.state.taskReference} key={index} skillItem={item} 
             quickStartProgress={this.state.quickStarts[item.name] === true} 
             onQuickStart={(skill,tree)=>this.handleQuickStart(skill,tree)} 
             onStart={(type,skill,tree)=>this.handleSkillStart(type,skill,tree)}

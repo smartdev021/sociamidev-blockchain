@@ -2,35 +2,40 @@
     author: Akshay Menon
 */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Axios from 'axios';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Axios from "axios";
 
-import Countdown from 'react-countdown-now';
+import Countdown from "react-countdown-now";
 
-import _ from 'lodash';
+import _ from "lodash";
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { Icon } from 'react-fa';
+import { Icon } from "react-fa";
 
-import { fetchRoadmaps, fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
+import {
+  fetchRoadmaps,
+  fetchRoadmapsFromAdmin
+} from "~/src/redux/actions/roadmaps";
 
-import { startProgressionTree, stopProgressionTree } from '~/src/redux/actions/authorization';
+import {
+  startProgressionTree,
+  stopProgressionTree
+} from "~/src/redux/actions/authorization";
 
-import { saveTask } from '~/src/redux/actions/tasks';
-import { userInteractionPush } from '~/src/redux/actions/userInteractions';
+import { saveTask } from "~/src/redux/actions/tasks";
+import { userInteractionPush } from "~/src/redux/actions/userInteractions";
 
-import ConfigMain from '~/configs/main';
+import ConfigMain from "~/configs/main";
 
-import '~/src/theme/css/SkillCard.css';
+import "~/src/theme/css/SkillCard.css";
 
-import UserInteractions from '~/src/common/UserInteractions';
-import TaskTypes from '~/src/common/TaskTypes';
-import HangoutSubmitForm from '~/src/theme/components/progressiontrees/HangoutSubmitForm';
-import TrendScannerComponent from '~/src/theme/components/trends/TrendScannerComponent';
-
+import UserInteractions from "~/src/common/UserInteractions";
+import TaskTypes from "~/src/common/TaskTypes";
+import HangoutSubmitForm from "~/src/theme/components/progressiontrees/HangoutSubmitForm";
+import TrendScannerComponent from "~/src/theme/components/trends/TrendScannerComponent";
 
 const RandomInt = function RandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -50,14 +55,17 @@ class SkillCard extends React.Component {
       isHangoutFormVisible: false,
       TrendScannerComponentVisible: false
     };
+
+    this.getImmuminate = this.getImmuminate.bind(this);
+    this.getDeepdive = this.getDeepdive.bind(this);
+    this.getDecode = this.getDecode.bind(this);
   }
 
   componentDidMount() {
     const treeId = this.props.skillItem._id;
     if (treeId) {
       this.setState({ isLoading: true });
-      Axios
-        .get(`${ConfigMain.getBackendURL()}/roadmapGet?id=${treeId}`)
+      Axios.get(`${ConfigMain.getBackendURL()}/roadmapGet?id=${treeId}`)
         .then(response => this.treeFetchSuccess(response))
         .catch(error => this.treeFetchFailed(error));
     } else {
@@ -85,52 +93,66 @@ class SkillCard extends React.Component {
   handleSelectCategory(e) {
     this.props.selectResultsCategory(e.currentTarget.id);
   }
-  
+
   startTask() {
-    if(this.state.selectedTask && this.state.selectedSkill) {
-      if(this.state.selectedTask == "Deepdive"){
+    if (this.state.selectedTask && this.state.selectedSkill) {
+      if (this.state.selectedTask == "Deepdive") {
         this.setState({
           isHangoutFormVisible: true
-          }
-        )
-      }else{
-        this.props.onStart(this.state.selectedTask, this.state.selectedSkill, this.state.tree);
+        });
+      } else {
+        this.props.onStart(
+          this.state.selectedTask,
+          this.state.selectedSkill,
+          this.state.tree
+        );
         this.setState({
           isHangoutFormVisible: false,
           isTaskSelected: false,
           selectedTask: undefined,
           selectedSkill: undefined,
           flipCardClass: false
-          }
-        )
+        });
       }
     }
   }
-  
 
   quickStart() {
     this.props.onQuickStart(this.state.tree);
   }
 
   selectDefaultSkill() {
-    let skillParsed = this.state.tree.weightage1.length > 1 ? this.state.tree.weightage1 : this.state.tree.weightage1[0].split(',');
+    let skillParsed =
+      this.state.tree.weightage1.length > 1
+        ? this.state.tree.weightage1
+        : this.state.tree.weightage1[0].split(",");
     for (let i = 0; i < skillParsed.length; ++i) {
       skillParsed[i] = skillParsed[i].trim();
     }
 
-    let selectedSkill = skillParsed[0]
-    
-    if(selectedSkill){
+    let selectedSkill = skillParsed[0];
+
+    if (selectedSkill) {
       const url = `${ConfigMain.getBackendURL()}/skillGet?name=${selectedSkill}`;
       const that = this;
       that.setState({ isLoading: true, isHangoutFormVisible: false });
       Axios.get(url)
-      .then(function(response) {
-        that.setState({ skillInfo: response.data, selectedSkill, isLoading: true, isHangoutFormVisible: false });
-      })
-      .catch(function(error) {
-        that.setState({ skillInfo: undefined, selectedSkill, isLoading: true, isHangoutFormVisible: false });
-      });
+        .then(function(response) {
+          that.setState({
+            skillInfo: response.data,
+            selectedSkill,
+            isLoading: true,
+            isHangoutFormVisible: false
+          });
+        })
+        .catch(function(error) {
+          that.setState({
+            skillInfo: undefined,
+            selectedSkill,
+            isLoading: true,
+            isHangoutFormVisible: false
+          });
+        });
     }
   }
 
@@ -140,24 +162,128 @@ class SkillCard extends React.Component {
     that.setState({ isLoading: true, isHangoutFormVisible: false });
     Axios.get(url)
       .then(function(response) {
-        that.setState({ skillInfo: response.data, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+        that.setState({
+          skillInfo: response.data,
+          selectedSkill,
+          isLoading: true,
+          isHangoutFormVisible: false
+        });
       })
       .catch(function(error) {
-        that.setState({ skillInfo: undefined, selectedSkill, isLoading: true, isHangoutFormVisible: false });
+        that.setState({
+          skillInfo: undefined,
+          selectedSkill,
+          isLoading: true,
+          isHangoutFormVisible: false
+        });
       });
 
-    $('.pskill-banner').removeClass('active');
-    $(e.target).closest('div.pskill-banner').addClass('active');
+    $(".pskill-banner").removeClass("active");
+    $(e.target)
+      .closest("div.pskill-banner")
+      .addClass("active");
   }
 
   selectTask(e, selectedTask) {
     this.setState({ selectedTask });
-    $('.ptask-banner').removeClass('active');
-    $(e.target).closest('div.ptask-banner').addClass('active');
+    $(".ptask-banner").removeClass("active");
+    $(e.target)
+      .closest("div.ptask-banner")
+      .addClass("active");
   }
 
   onPlayVideo() {
     this.setState({ openVideo: !this.state.openVideo });
+  }
+
+  getImmuminate() {
+    const taskObject = this.props.taskReference.filter(obj => {
+      return obj.name === "Illuminate";
+    });
+    if (taskObject.length > 0) {
+      return (
+        <div
+          className="ptask-banner active"
+          onClick={e => this.selectTask(e, "Illuminate")}
+        >
+          <div className="ptask-left">
+            <div className="ptask-name">
+              <span>Illuminate</span>{" "}
+              <span className="task-group">group = 1</span>
+            </div>
+            <div className="ptask-desc">
+              {taskObject[0].value} {taskObject[0].type}
+            </div>
+          </div>
+          <div className="ptask-right">
+            <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
+              className="ptask-img-single"
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+
+  getDeepdive() {
+    const taskObject = this.props.taskReference.filter(obj => {
+      return obj.name === "Deepdive";
+    });
+    if (taskObject.length > 0) {
+      return (
+        <div
+          className="ptask-banner"
+          onClick={e => this.selectTask(e, "Deepdive")}
+        >
+          <div className="ptask-left">
+            <div className="ptask-name">
+              <span>Deepdive </span>{" "}
+              <span className="task-group">group = 2</span>
+            </div>
+            <div className="ptask-desc">
+              {taskObject[0].value} {taskObject[0].type}
+            </div>
+          </div>
+          <div className="ptask-right">
+            <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two_new.png"
+              className="ptask-img-double"
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+
+  getDecode() {
+    const taskObject = this.props.taskReference.filter(obj => {
+      return obj.name === "Decode";
+    });
+    if (taskObject.length > 0) {
+      return (
+        <div
+          className="ptask-banner"
+          onClick={e => this.selectTask(e, "Decode")}
+        >
+          <div className="ptask-left">
+            <div className="ptask-name">
+              <span> Decode </span>{" "}
+              <span className="task-group">group = 1</span>
+            </div>
+            <div className="ptask-desc">
+              {taskObject[0].value} {taskObject[0].type}
+            </div>
+          </div>
+          <div className="ptask-right">
+            <img
+              src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
+              className="ptask-img-single"
+            />
+          </div>
+        </div>
+      );
+    }
   }
 
   renderVideo() {
@@ -173,7 +299,7 @@ class SkillCard extends React.Component {
           />
           <a
             className="fa fa-2x fa-times"
-            style={{ color: 'white', verticalAlign: 'top' }}
+            style={{ color: "white", verticalAlign: "top" }}
             onClick={() => this.onPlayVideo()}
           />
         </div>
@@ -184,14 +310,18 @@ class SkillCard extends React.Component {
   renderSkills(skills) {
     const that = this;
     //TODO: Fix incorrect database structure
-    let skillParsed = skills.length > 1 ? skills : skills[0].split(',');
+    let skillParsed = skills.length > 1 ? skills : skills[0].split(",");
     for (let i = 0; i < skillParsed.length; ++i) {
       skillParsed[i] = skillParsed[i].trim();
     }
     const listItems = skillParsed.map(function(skill, i) {
-      let activeClass = i == 0 ? 'active' : ''
+      let activeClass = i == 0 ? "active" : "";
       return (
-        <div className={`pskill-banner ${activeClass}`} onClick={e => that.selectSkill(e, skill)} key={i}>
+        <div
+          className={`pskill-banner ${activeClass}`}
+          onClick={e => that.selectSkill(e, skill)}
+          key={i}
+        >
           <div className="pskill-name">{skill}</div>
         </div>
       );
@@ -200,74 +330,38 @@ class SkillCard extends React.Component {
   }
 
   renderTaskCard(skillItem) {
-    let lockedSkill = this.props.timers.data.reduce((a,i) => {
-      let skillTask =  i.name.split(' - ')
-      if(a[skillTask[0]]){
-        a[skillTask[0]][skillTask[1]] = i.date
-      }else{
+    let lockedSkill = this.props.timers.data.reduce((a, i) => {
+      let skillTask = i.name.split(" - ");
+      if (a[skillTask[0]]) {
+        a[skillTask[0]][skillTask[1]] = i.date;
+      } else {
         a[skillTask[0]] = {
-          [skillTask[1]] : i.date
-        }
+          [skillTask[1]]: i.date
+        };
       }
-      return a
-    },{})
+      return a;
+    }, {});
 
-    let showButton
-    let timeCounter
-    if(lockedSkill[skillItem.name]){
-      if(lockedSkill[skillItem.name][this.state.selectedTask]){
-        showButton = true
-        timeCounter = lockedSkill[skillItem.name][this.state.selectedTask]
-      }else{
-        showButton = false
+    let showButton;
+    let timeCounter;
+    if (lockedSkill[skillItem.name]) {
+      if (lockedSkill[skillItem.name][this.state.selectedTask]) {
+        showButton = true;
+        timeCounter = lockedSkill[skillItem.name][this.state.selectedTask];
+      } else {
+        showButton = false;
       }
-    }else{
-      showButton = false
+    } else {
+      showButton = false;
     }
 
     return (
-      <div style={{display:"inline-grid",width:"100%"}}>
+      <div style={{ display: "inline-grid", width: "100%" }}>
         <div className="ptree-back-header">Select task to continue</div>
         <div className="ptree-task-list">
-          <div className="ptask-banner active" onClick={e => this.selectTask(e, 'Illuminate')}>
-            <div className="ptask-left">
-              <div className="ptask-name">Illuminate</div>
-              <div className="ptask-desc">30 min 3 questions</div>
-            </div>
-            <div className="ptask-right">
-              <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
-                className="ptask-img-single"
-              />
-            </div>
-          </div>
-
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Deepdive')}>
-            <div className="ptask-left">
-              <div className="ptask-name">Deepdive</div>
-              <div className="ptask-desc">30 min 10 questions</div>
-            </div>
-            <div className="ptask-right">
-              <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Two_new.png"
-                className="ptask-img-double"
-              />
-            </div>
-          </div>
-
-          <div className="ptask-banner" onClick={e => this.selectTask(e, 'Decode')}>
-            <div className="ptask-left">
-              <div className="ptask-name">Decode</div>
-              <div className="ptask-desc">30 min 10 questions</div>
-            </div>
-            <div className="ptask-right">
-              <img
-                src="https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/custom_ui/Single_new.png"
-                className="ptask-img-single"
-              />
-            </div>
-          </div>
-
+          {this.getImmuminate()}
+          {this.getDeepdive()}
+          {this.getDecode()}
           {/* <div className="ptask-banner" onClick={e => this.selectTask(e, 'Brainstorm')}>
             <div className="ptask-left">
               <div className="ptask-name">Brainstorm</div>
@@ -280,25 +374,29 @@ class SkillCard extends React.Component {
               />
             </div>
           </div> */}
-
         </div>
         <div className="pskill-btn-group ptree-btn-group">
-          <button className="ptree-btn ptree-start" onClick={() => this.flipCard()}>
+          <button
+            className="ptree-btn ptree-start"
+            onClick={() => this.flipCard()}
+          >
             Back
           </button>
-          {
-              showButton ?
-
-              <button disabled={true} className="ptree-btn ptree-start-task">
-                Locked
-                <span className="ptree-lock-timer">for <Countdown daysInHours={false} date={timeCounter} /></span>
-                
-              </button>
-
-              : <button className="ptree-btn ptree-view" onClick={() => this.toggleTaskView()}>
+          {showButton ? (
+            <button disabled={true} className="ptree-btn ptree-start-task">
+              Locked
+              <span className="ptree-lock-timer">
+                for <Countdown daysInHours={false} date={timeCounter} />
+              </span>
+            </button>
+          ) : (
+            <button
+              className="ptree-btn ptree-view"
+              onClick={() => this.toggleTaskView()}
+            >
               Next
             </button>
-            }
+          )}
         </div>
       </div>
     );
@@ -306,25 +404,34 @@ class SkillCard extends React.Component {
 
   renderSkillCard(skillItem) {
     return (
-      <div style={{display:"inline-grid",width:"100%"}}>
+      <div style={{ display: "inline-grid", width: "100%" }}>
         <div className="ptree-skill-list">
           <div className="ptree-back-header">
             {/* <div> */}
-              Select one skill to improve it
+            Select one skill to improve it
             {/* </div> */}
             {/* <a className="view-video" onClick={() => this.onPlayVideo()}>
               View the video >
             </a> */}
           </div>
 
-          <div className="ptree-skill-set">{this.renderSkills(this.state.tree.weightage1)}</div>
+          <div className="ptree-skill-set">
+            {this.renderSkills(this.state.tree.weightage1)}
+          </div>
 
           <div className="pskill-btn-group ptree-btn-group">
-            <button className="ptree-btn ptree-start" onClick={() => this.toggleTaskView()}>
+            <button
+              className="ptree-btn ptree-start"
+              onClick={() => this.toggleTaskView()}
+            >
               Back
             </button>
-            <button disabled={!this.state.selectedTask || !this.state.selectedSkill} className="ptree-btn ptree-view" onClick={() => this.startTask()}>
-                Start
+            <button
+              disabled={!this.state.selectedTask || !this.state.selectedSkill}
+              className="ptree-btn ptree-view"
+              onClick={() => this.startTask()}
+            >
+              Start
             </button>
           </div>
         </div>
@@ -333,58 +440,68 @@ class SkillCard extends React.Component {
   }
 
   getImgUrl(img) {
-    let imgJson
-    if (img == 'Miner') {
+    let imgJson;
+    if (img == "Miner") {
       imgJson = {
-        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/miner_new.png',
-        imgClass : 'progression-tree-hero-img progression-tree-miner-img'
-      }
-    } else if (img == 'Nomad') {
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/miner_new.png",
+        imgClass: "progression-tree-hero-img progression-tree-miner-img"
+      };
+    } else if (img == "Nomad") {
       imgJson = {
-        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/nomad_new.png',
-        imgClass : 'progression-tree-hero-img progression-tree-nomad-img'
-      }
-    } else if (img == 'Innovator') {
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/nomad_new.png",
+        imgClass: "progression-tree-hero-img progression-tree-nomad-img"
+      };
+    } else if (img == "Innovator") {
       imgJson = {
-        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png',
-        imgClass : 'progression-tree-hero-img progression-tree-innovator-img'
-      }
-    } else if (img == 'Blockforce'){
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png",
+        imgClass: "progression-tree-hero-img progression-tree-innovator-img"
+      };
+    } else if (img == "Blockforce") {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png',
-        imgClass : 'progression-tree-hero-img progression-tree-blockforce-img'
-      }
-    } else if (img == 'cyberhero'){
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/Blockforce.png",
+        imgClass: "progression-tree-hero-img progression-tree-blockforce-img"
+      };
+    } else if (img == "cyberhero") {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/cyberhero.png',
-        imgClass : 'progression-tree-hero-img progression-tree-cyberhero-img'
-      }
-    } else if (img == 'guardian'){
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/cyberhero.png",
+        imgClass: "progression-tree-hero-img progression-tree-cyberhero-img"
+      };
+    } else if (img == "guardian") {
       imgJson = {
-        imgUrl:'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/guardian.png',
-        imgClass : 'progression-tree-hero-img progression-tree-guardian-img'
-      }
-    }else{
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/guardian.png",
+        imgClass: "progression-tree-hero-img progression-tree-guardian-img"
+      };
+    } else {
       imgJson = {
-        imgUrl : 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png',
-        imgClass : 'progression-tree-hero-img progression-tree-innovator-img'
-      }
+        imgUrl:
+          "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/heroes/innovator_new.png",
+        imgClass: "progression-tree-hero-img progression-tree-innovator-img"
+      };
     }
     return imgJson;
   }
 
   onCloseModal() {
-    this.setState({ isIlluminateFormVisible: false, isHangoutFormVisible: false });
+    this.setState({
+      isIlluminateFormVisible: false,
+      isHangoutFormVisible: false
+    });
   }
 
   handleToggle() {
-    this.setState({ IsDisplayForm: 'none' });
+    this.setState({ IsDisplayForm: "none" });
   }
 
   toggleTrendScannerComponent() {
     this.setState({
       TrendScannerComponentVisible: true,
-      isHangoutFormVisible: true,
+      isHangoutFormVisible: true
     });
   }
 
@@ -397,45 +514,51 @@ class SkillCard extends React.Component {
 
     const hangout = {
       name: `Hangout for roadmap "${CurrentTree.name}"`,
-      description: 'Hangout with John, and answer questions together',
+      description: "Hangout with John, and answer questions together",
       type: TaskTypes.DEEPDIVE,
-      userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`,
+      userName: `${this.props.userProfile.firstName} ${
+        this.props.userProfile.lastName
+      }`,
       userID: this.props.userProfile._id,
       isHidden: 0,
       creator: {
         _id: this.props.userProfile._id,
         firstName: this.props.userProfile.firstName,
-        lastName: this.props.userProfile.lastName,
+        lastName: this.props.userProfile.lastName
       },
       metaData: {
         subject: {
           roadmap: {
             _id: CurrentTree._id,
-            name: CurrentTree.name,
+            name: CurrentTree.name
           },
           skill: {
             _id: this.state.skillInfo._id,
-            name: this.state.skillInfo.skill,
-          },
+            name: this.state.skillInfo.skill
+          }
         },
         participants: [
           {
             user: {
               _id: this.props.userProfile._id,
               firstName: this.props.userProfile.firstName,
-              lastName: this.props.userProfile.lastName,
+              lastName: this.props.userProfile.lastName
             },
-            status: 'accepted',
-            isCreator: true,
-          },
+            status: "accepted",
+            isCreator: true
+          }
         ], //userId, name, proposedTime(optional), status: sent/accepted/rejected
         ratings: [],
         time: date.getTime(),
-        awardXP: RandomInt(30, 40),
-      },
+        awardXP: RandomInt(30, 40)
+      }
     };
 
-    if (hangout.userName != '' && hangout.name != '' && hangout.description != '') {
+    if (
+      hangout.userName != "" &&
+      hangout.name != "" &&
+      hangout.description != ""
+    ) {
       this.props.saveTask(hangout);
 
       if (this.props.userProfile && this.props.userProfile._id) {
@@ -446,8 +569,8 @@ class SkillCard extends React.Component {
           {
             roadmapId: CurrentTree._id,
             skillId: this.state.skillInfo._id,
-            deepdiveTime: date.getTime(),
-          },
+            deepdiveTime: date.getTime()
+          }
         );
       }
     }
@@ -457,24 +580,24 @@ class SkillCard extends React.Component {
 
   render() {
     const { skillItem } = this.props;
-    const flipClass = this.state.flipCardClass ? ' hover' : '';
+    const flipClass = this.state.flipCardClass ? " hover" : "";
     const CardPanel = this.state.isTaskSelected
       ? this.renderSkillCard(skillItem)
       : this.renderTaskCard(skillItem);
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
-    const imgJson = this.getImgUrl(skillItem.heroimg)
+    const imgJson = this.getImgUrl(skillItem.heroimg);
     return (
       <div className="col-md-6 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
 
         <HangoutSubmitForm
-        isHangoutFormVisible={this.state.isHangoutFormVisible}
-        onHandleStartHangout={date => this.handleStartHangout(date)}
-        onTimeChange={e => handleTimeChange(e)}
-        toogleTrenScan={() => this.toggleTrendScannerComponent()}
-        handleToggle={() => this.handleToggle()}
-        onCloseModal={() => this.onCloseModal()} />
-
+          isHangoutFormVisible={this.state.isHangoutFormVisible}
+          onHandleStartHangout={date => this.handleStartHangout(date)}
+          onTimeChange={e => handleTimeChange(e)}
+          toogleTrenScan={() => this.toggleTrendScannerComponent()}
+          handleToggle={() => this.handleToggle()}
+          onCloseModal={() => this.onCloseModal()}
+        />
 
         <div className="progression-tree-skill-content">
           <div className="progression-tree-skill-item">
@@ -486,12 +609,24 @@ class SkillCard extends React.Component {
                 <div className="ptree-card">
                   <div className="ptree-card-front">
                     <div className="ptree-card-heading">{skillItem.name}</div>
-                    <div className="ptree-card-body">{skillItem.description}</div>
+                    <div className="ptree-card-body">
+                      {skillItem.description}
+                    </div>
                     <div className="pskill-btn-group ptree-btn-group">
-                      <button className="ptree-btn ptree-start" disabled={this.props.quickStartProgress} onClick={() => this.quickStart()}>
-                        Quick start   { this.props.quickStartProgress && <Icon spin name="spinner" /> }
+                      <button
+                        className="ptree-btn ptree-start"
+                        disabled={this.props.quickStartProgress}
+                        onClick={() => this.quickStart()}
+                      >
+                        Quick start{" "}
+                        {this.props.quickStartProgress && (
+                          <Icon spin name="spinner" />
+                        )}
                       </button>
-                      <button className="ptree-btn ptree-view" onClick={() => this.flipCard()}>
+                      <button
+                        className="ptree-btn ptree-view"
+                        onClick={() => this.flipCard()}
+                      >
                         View tasks
                       </button>
                     </div>
@@ -519,7 +654,6 @@ class SkillCard extends React.Component {
               </div>
             </div>
           )} */}
-          
       </div>
     );
   }
@@ -539,10 +673,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   userInteractionPush: bindActionCreators(userInteractionPush, dispatch),
-  saveTask: bindActionCreators(saveTask, dispatch),
+  saveTask: bindActionCreators(saveTask, dispatch)
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SkillCard);
