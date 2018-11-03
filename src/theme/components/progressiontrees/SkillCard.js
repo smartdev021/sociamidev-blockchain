@@ -208,8 +208,7 @@ class SkillCard extends React.Component {
         >
           <div className="ptask-left">
             <div className="ptask-name">
-              <span>Illuminate</span>{" "}
-              <span className="task-group">group = 1</span>
+              <span>Illuminate</span>
             </div>
             <div className="ptask-desc">
               {taskObject[0].value} {taskObject[0].type}
@@ -238,8 +237,7 @@ class SkillCard extends React.Component {
         >
           <div className="ptask-left">
             <div className="ptask-name">
-              <span>Deepdive </span>{" "}
-              <span className="task-group">group = 2</span>
+              <span>Deepdive </span>
             </div>
             <div className="ptask-desc">
               {taskObject[0].value} {taskObject[0].type}
@@ -268,8 +266,7 @@ class SkillCard extends React.Component {
         >
           <div className="ptask-left">
             <div className="ptask-name">
-              <span> Decode </span>{" "}
-              <span className="task-group">group = 1</span>
+              <span> Decode </span>
             </div>
             <div className="ptask-desc">
               {taskObject[0].value} {taskObject[0].type}

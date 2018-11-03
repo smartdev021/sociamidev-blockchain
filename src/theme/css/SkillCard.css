@@ -209,7 +209,7 @@
     cursor: pointer;
     font: normal 14px "MyriadPro Bold";
     line-height: .6 !important;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 .ptask-desc{
     /* color: #FFD149; */
@@ -504,14 +504,4 @@
         -ms-transform: rotate(360deg);  /* IE 9 */
         transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
     }
-}
-
-.task-group {
-    margin-left: 30px;
-    color: white;
-    font-weight: 700;
-    color: #b72c2c;
-    background: white;
-    padding: 2px;
-    padding-bottom: 1px;
 }
