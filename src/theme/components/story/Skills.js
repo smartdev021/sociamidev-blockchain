@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+
 class StoryItem extends Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      data: this.props.data
+      data: this.props.data,
+      signUpText: 'Sign up',
     };
   }
 
@@ -37,6 +39,15 @@ class StoryItem extends Component {
       rewardDisplay = _.get(this, 'state.data.reward._achievement.name', '');
     }
     return rewardDisplay;
+  }
+
+  signUp(){
+    if(this.state.data._objective.name == 'Decode'){
+      this.props.onSignup(this.state.data);
+      this.setState({
+        signUpText: 'Task Created'
+      })
+    }
   }
 
   render () {
@@ -84,8 +95,8 @@ class StoryItem extends Component {
                   {`${_.get(this, 'state.data.refresh', '')}: 0/
                     ${_.get(this, 'state.data.quota', '0')} completed`}
                 </span>
-                <a href='#' className='btn-join pull-right'>
-                  Sign Up
+                <a href='javascript:void(0)' style={{pointerEvents: this.state.signUpText != 'Sign up' ? 'none' : ''}} onClick={() => this.signUp()} className='btn-join pull-right'>
+                  {this.state.signUpText}
                 </a>
               </p>
             </div>
