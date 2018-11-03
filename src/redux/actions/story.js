@@ -21,7 +21,7 @@ export function fetchStories () {
   return (dispatch) => {
     dispatch(fetchStoriesInitiate());
 
-    const url = `${ConfigMain.getBackendURL()}/skillsGet`;
+    const url = `${ConfigMain.getBackendURL()}/storiesGetAll`;
     return Axios.get(url)
       .then((response) => {
         dispatch(fetchStoriesComplete(response.data));
