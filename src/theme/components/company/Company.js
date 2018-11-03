@@ -62,8 +62,11 @@ class Company extends Component {
       activeStoryPage: 1,
       questionCount: 10,
       currentPage: "MyChallenges",
-	  storiesData: [],
-      storiesCount: 10
+    storiesData: [],
+    storiesDataBackup: [],
+      storiesCount: 10,
+      editableStoryKey: "",
+      editableStoryIndex: "",
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -79,6 +82,10 @@ class Company extends Component {
     this.toggleStoryOption = this.toggleStoryOption.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
     this.onHandleUploadStoryImg = this.onHandleUploadStoryImg.bind(this);
+    this.onClickEditable = this.onClickEditable.bind(this);
+    this.handleStoryDataChange = this.handleStoryDataChange.bind(this);
+    this.handleStoryInputClick = this.handleStoryInputClick.bind(this);
+    this.undoStoryData = this.undoStoryData.bind(this);
   }
 
   togglePage(page) {
@@ -236,7 +243,7 @@ class Company extends Component {
     }}
     ).then(function(response) {
       if (response.data && response.data.lstStories) {
-        that.setState({ storiesData: response.data.lstStories, storiesCount: response.data.totalStories });
+        that.setState({ storiesData: response.data.lstStories, storiesDataBackup: response.data.lstStories, storiesCount: response.data.totalStories });
       }
 
     }).catch(function(error) { console.log(error) });
@@ -465,6 +472,45 @@ class Company extends Component {
     }
   }
 
+  /* Handle Editable TR click event */
+  onClickEditable(e){ 
+    if(this.state.editableStoryKey != e.currentTarget.dataset.key){
+      this.setState({ storiesDataBackup: this.state.storiesData, editableStoryKey: e.currentTarget.dataset.key, editableStoryIndex: e.currentTarget.dataset.index }); //make tr editable in story table
+    } else {
+      this.setState({ editableStoryKey: "", editableStoryIndex: "" }); //make tr non-editable on doubleclick
+    }
+    
+  }
+
+  /* Prevent child element click to update state */
+  handleStoryInputClick(e){
+    e.stopPropagation();
+  }
+
+  /* Update new value in state after editing */
+  handleStoryDataChange(e){
+    let storyParent = e.currentTarget.dataset.indexparent;
+    let storyChild = "";
+    if(e.currentTarget.dataset.indexchild){
+      storyChild = e.currentTarget.dataset.indexchild;
+    }
+    let index = this.state.editableStoryIndex;
+    let storiesCopy = JSON.parse(JSON.stringify(this.state.storiesData));
+    if(storyChild === ""){
+      storiesCopy[index][storyParent] = e.currentTarget.value;
+    } else {
+      storiesCopy[index][storyParent][storyChild] = e.currentTarget.value;
+    }
+    this.setState({
+      storiesData: storiesCopy
+    });    
+  }
+
+  /* Undo Story Data */
+  undoStoryData(){
+    this.setState({ storiesData: this.state.storiesDataBackup });
+  }
+
   render() {
     const { userProfile } = this.props;
     const { company, questions, questionCount, storiesData, storiesCount } = this.state;
@@ -489,6 +535,7 @@ class Company extends Component {
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                       <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
                       <li style={{float: 'right'}}>
+                      <input type="button" value="Undo" class="ant-btn" onClick={this.undoStoryData} />
                         <label htmlFor="upload-input">
                           <img src={cloud}/>
                           <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} /> 
@@ -584,39 +631,76 @@ class Company extends Component {
                               <tbody>
                               {
                                 _.map(storiesData,(que, index)=>{
-                                  return(
-                                    <tr key={que._id}>
-                                      <td></td>
-                                      <td>{que.skill}</td>
-                                      <td>{que.description}</td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td><Img key={`${new Date()}${que._id}`}
-                                          src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
-                                          style={{maxWidth: 90, maxHeight: 90}}
-                                        />
-                                        <Upload 
-                                          name="image"
-                                          listType="picture"
-                                          action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
-                                          onChange= {this.onHandleUploadStoryImg}
-                                          showUploadList={false}
-                                          key={`upload${que._id}`}
-                                        >
-                                          <Button key={`btn${que._id}`}>
-                                            <Icon type="upload" key={`icon${que._id}`}/>Upload
-                                          </Button>
-                                        </Upload></td>
-                                      <td>{que._objective ? que._objective.name : ''}</td>
-                                      <td>{que.objectiveValue}</td>
-                                      <td>{que.reward ? que.reward.type : ''}</td>
-                                      <td>{que.reward ? que.reward.value : ''}</td>
-                                      <td></td>
-                                      <td></td>
-                                    </tr>
-                                  )
+                                  if(this.state.editableStoryKey === que._id) {
+                                    return(
+                                      <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
+                                        <td></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="description" value={que.description} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="category" value={que.category} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="subCategory" value={que.subCategory} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="relatedTopics" value={que.relatedTopics} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="_achievements" value={que._achievements} /></td>
+                                        <td><Img key={`${new Date()}${que._id}`}
+                                            src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
+                                            style={{maxWidth: 90, maxHeight: 90}}
+                                          />
+                                          <Upload 
+                                            name="image"
+                                            listType="picture"
+                                            action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
+                                            onChange= {this.onHandleUploadStoryImg}
+                                            showUploadList={false}
+                                            key={`upload${que._id}`}
+                                          >
+                                            <Button key={`btn${que._id}`}>
+                                              <Icon type="upload" key={`icon${que._id}`}/>Upload
+                                            </Button>
+                                          </Upload></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="_objective" data-indexChild="name" value={que._objective ? que._objective.name : ''} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="objectiveValue" value={que.objectiveValue} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="reward" data-indexChild="type" value={que.reward ? que.reward.type : ''} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="reward" data-indexChild="value" value={que.reward ? que.reward.value : ''} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="quota" value={que.quota} /></td>
+                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="refresh" value={que.refresh} /></td>
+                                      </tr>
+                                    )
+                                  } else {
+                                    return(
+                                      <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
+                                        <td></td>
+                                        <td>{que.skill}</td>
+                                        <td>{que.description}</td>
+                                        <td>{que.category}</td>
+                                        <td>{que.subCategory}</td>
+                                        <td>{que.relatedTopics}</td>
+                                        <td>{que._achievements}</td>
+                                        <td><Img key={`${new Date()}${que._id}`}
+                                            src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
+                                            style={{maxWidth: 90, maxHeight: 90}}
+                                          />
+                                          <Upload 
+                                            name="image"
+                                            listType="picture"
+                                            action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
+                                            onChange= {this.onHandleUploadStoryImg}
+                                            showUploadList={false}
+                                            key={`upload${que._id}`}
+                                          >
+                                            <Button key={`btn${que._id}`}>
+                                              <Icon type="upload" key={`icon${que._id}`}/>Upload
+                                            </Button>
+                                          </Upload></td>
+                                        <td>{que._objective ? que._objective.name : ''}</td>
+                                        <td>{que.objectiveValue}</td>
+                                        <td>{que.reward ? que.reward.type : ''}</td>
+                                        <td>{que.reward ? que.reward.value : ''}</td>
+                                        <td>{que.quota}</td>
+                                        <td>{que.refresh}</td>
+                                      </tr>
+                                    )                                                
+                                  } 
+                                  
                                 })
                               }                              
                               </tbody>
