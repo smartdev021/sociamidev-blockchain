@@ -8,6 +8,7 @@ import Axios from 'axios';
 import Pagination from 'react-js-pagination';         
 import { message, Table, Button, Icon, Upload} from 'antd';
 import Img from 'react-image';
+import Textarea from 'react-textarea-autosize';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import AchievementGroup from './AchievementGroup';
@@ -26,6 +27,7 @@ import plus from "~/src/theme/images/plus.png";
 import cross from "~/src/theme/images/cross.png";
 import cloud from "~/src/theme/images/cloud.png";
 import deleteimg from "~/src/theme/images/delete.png";
+import undoimg from "~/src/theme/images/undo.png";
 import Challenges from '~/src/theme/components/challenges/Challenges';
 
 import RightSection from '~/src/theme/components/homepage/RightSection';
@@ -535,7 +537,7 @@ class Company extends Component {
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                       <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
                       <li style={{float: 'right'}}>
-                      <input type="button" value="Undo" class="ant-btn" onClick={this.undoStoryData} />
+                      <img style={{marginRight: '7px'}} src={undoimg} onClick={this.undoStoryData} />
                         <label htmlFor="upload-input">
                           <img src={cloud}/>
                           <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} /> 
@@ -635,12 +637,12 @@ class Company extends Component {
                                     return(
                                       <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
                                         <td></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="description" value={que.description} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="category" value={que.category} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="subCategory" value={que.subCategory} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="relatedTopics" value={que.relatedTopics} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="_achievements" value={que._achievements} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="description" value={que.description} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="category" value={que.category} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="subCategory" value={que.subCategory} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="relatedTopics" value={que.relatedTopics} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="_achievements" value={que._achievements} /></td>
                                         <td><Img key={`${new Date()}${que._id}`}
                                             src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
                                             style={{maxWidth: 90, maxHeight: 90}}
@@ -657,12 +659,12 @@ class Company extends Component {
                                               <Icon type="upload" key={`icon${que._id}`}/>Upload
                                             </Button>
                                           </Upload></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="_objective" data-indexChild="name" value={que._objective ? que._objective.name : ''} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="objectiveValue" value={que.objectiveValue} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="reward" data-indexChild="type" value={que.reward ? que.reward.type : ''} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="reward" data-indexChild="value" value={que.reward ? que.reward.value : ''} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="quota" value={que.quota} /></td>
-                                        <td><input onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="refresh" value={que.refresh} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="_objective" data-indexChild="name" value={que._objective ? que._objective.name : ''} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="objectiveValue" value={que.objectiveValue} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="reward" data-indexChild="type" value={que.reward ? que.reward.type : ''} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="reward" data-indexChild="value" value={que.reward ? que.reward.value : ''} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="quota" value={que.quota} /></td>
+                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="refresh" value={que.refresh} /></td>
                                       </tr>
                                     )
                                   } else {
