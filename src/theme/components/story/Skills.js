@@ -42,7 +42,8 @@ class StoryItem extends Component {
   }
 
   signUp(){
-    if(this.state.data._objective.name == 'Decode'){
+    const type = this.state.data._objective ? this.state.data._objective.name : '';
+    if(type == 'Decode' || type == 'Illuminate' || type == 'Deepdive'){
       this.props.onSignup(this.state.data);
       this.setState({
         signUpText: 'Task Created'

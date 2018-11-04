@@ -41,9 +41,18 @@ class Story extends Component {
     mixpanel.track("Enter Story page");
   }
 
-  onSigupDecode(data){
-    const decode = {
-      type: TaskTypes.DECODE,
+  onSigup(data){
+    let type = '';
+    if(data._objective && data._objective.name == 'Decode'){
+       type = TaskTypes.DECODE;
+    } else if(data._objective && data._objective.name == 'Illuminate'){
+      type = TaskTypes.ILLUMINATE;
+    } else if(data._objective && data._objective.name == 'Deepdive'){
+      type = TaskTypes.DEEPDIVE;
+    }
+
+    const signupData = {
+      type,
       userName: `${this.props.userProfile.firstName} ${this.props.userProfile.lastName}`,
       userID: this.props.userProfile._id,
       isHidden: 0,
@@ -54,6 +63,9 @@ class Story extends Component {
       },
       metaData: {
         subject: {
+          roadmap: {
+            name: '',
+          },
           skill: {
             _id: data._id,
             name: data.skill,
@@ -75,11 +87,11 @@ class Story extends Component {
         awardXP: RandomInt(30, 40),
       },
     };
-    this.props.saveTask(decode);
+    this.props.saveTask(signupData);
   }
 
   renderSkillBox(skills) {
-    return _.map(skills, skill => <Skills key={skill._id} data={skill} onSignup={(data) => this.onSigupDecode(data)}/>)
+    return _.map(skills, skill => <Skills key={skill._id} data={skill} onSignup={(data) => this.onSigup(data)}/>)
   }
 
   render () {

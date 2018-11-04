@@ -197,7 +197,7 @@ class Tasks extends React.Component {
           <div className="col-box-wp col-box-join-task">
             <p className="task-desc">
               <a className="link-yellow">{task.creator.firstName}</a> is looking to discuss
-              <a className="link-yellow"> {task.metaData.subject.roadmap.name} </a>
+              <a className="link-yellow"> {task.metaData.subject.roadmap ? task.metaData.subject.roadmap.name : ''} </a>
               at <a className="link-yellow"> {time}.</a>
             </p>
             <a className="btn-join task-join" onClick={() => this.handleOpenConfirmTaskDetailsPopup(task)}>
