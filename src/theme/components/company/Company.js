@@ -772,7 +772,7 @@ class Company extends Component {
                   </div>
                 </div>
                 <div style={{ display: this.state.IsChallengeOpen }}> 
-                 <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper challenges-top profile-wrapper mychallenges-wrapper main-bg`}>
+     <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper challenges-top profile-wrapper mychallenges-wrapper main-bg`}>
         <div className="row">
           <div className="container">
             <div className="row">
