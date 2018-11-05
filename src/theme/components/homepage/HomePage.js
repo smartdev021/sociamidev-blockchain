@@ -101,7 +101,9 @@ class HomePage extends Component {
     this.setState({ loadingPosts: true });
     Axios.get(feedsEndoint)
       .then(response => 
-        this.setState({ posts: response.data, loadingPosts: false }))
+        {
+          console.log(response.data)
+          this.setState({ posts: response.data, loadingPosts: false })})
       .catch(error => {});
   }
 
