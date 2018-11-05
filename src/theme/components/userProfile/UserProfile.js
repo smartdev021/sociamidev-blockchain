@@ -16,6 +16,7 @@ import Img from 'react-image';
 import ConfigMain from '~/configs/main';
 import Friends from '~/src/theme/components/userProfile/Friends';
 import Photos from '~/src/theme/components/userProfile/Photos';
+import HouseEdit from './HouseEdit';
 
 import Spinner from '~/src/theme/components/homepage/Spinner';
 import PostList from '~/src/theme/components/homepage/PostList';
@@ -74,6 +75,7 @@ class UserProfile extends Component {
       posts: [],
       loadingPosts: true,
       isAddButtonLoading: false,
+      isHouseEdit:false,
     };
     this.fetchAllConnections = this.fetchAllConnections.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
@@ -838,6 +840,12 @@ class UserProfile extends Component {
     );
   }
 
+  handleHouseEditModal() {
+    this.setState({
+      isHouseEdit:!this.state.isHouseEdit,
+    })
+  };
+
   render() {
     const { otherTabLoading, friendList } = this.state;
     let traitsNameLine;
@@ -941,6 +949,9 @@ class UserProfile extends Component {
                           </li>
                           {traitsNameLine}
                           {characterNameLine}
+                          <li className="house-edit-icon" onClick={this.handleHouseEditModal.bind(this)}>
+                            <span className="icon p-icon" /> House Detail
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -1088,6 +1099,10 @@ class UserProfile extends Component {
             )}
           </div>
         </div>
+        <HouseEdit
+          isHouseEdit={this.state.isHouseEdit}
+          handleHouseEditModal={this.handleHouseEditModal.bind(this)}
+        />
       </div>
     );
   }
