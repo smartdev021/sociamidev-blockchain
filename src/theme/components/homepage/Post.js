@@ -43,30 +43,74 @@ const CommentBox = (props) => {
       </div>
       {
         comments.length > 0 &&
-        _.map(comments, (item, index) => 
-          <div key={index} className="comments">
-          <div className="top-head">
-            <div className="profile-icon">
-             <img src={item.profileUrl} alt="" />
-            </div>
-            <span className="col-heading">{item.commentator_name}</span>
-           </div>
-            <div className="input-filed">
-               <input type="text" name="comment" readOnly value={item.comment}/>
-            </div>
-            <div className="bot-share-btns">
-              <ul>
+        _.map(comments, (item, index) =>  {
+          return(
+            <div key={index} >
+            {
+              index < 2 
+              ?
+              <div className="comments">
+                <div className="top-head">
+                <div className="profile-icon">
+                 <img src={item.profileUrl} alt="" />
+                </div>
+                <span className="col-heading">{item.commentator_name}</span>
+               </div>
+                <div className="input-filed">
+                   <input type="text" name="comment" readOnly value={item.comment}/>
+                </div>
+                <div className="bot-share-btns">
+                  <ul>
+                    {
+                      (item.like.length > 0)
+                      ?
+                      <li><a><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></a></li>
+                      :
+                      <li><div className="text-blue" ><i className="fa fa-heart"></i></div></li>
+                    }
+                  </ul>
+                </div>
+              </div>
+              :
+              <div>
                 {
-                  (item.like.length > 0)
+                  props.state.showComments === true 
                   ?
-                  <li><a><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></a></li>
+                  <div className="comments">
+                    <div className="top-head">
+                    <div className="profile-icon">
+                     <img src={item.profileUrl} alt="" />
+                    </div>
+                    <span className="col-heading">{item.commentator_name}</span>
+                   </div>
+                    <div className="input-filed">
+                       <input type="text" name="comment" readOnly value={item.comment}/>
+                    </div>
+                    <div className="bot-share-btns">
+                      <ul>
+                        {
+                          (item.like.length > 0)
+                          ?
+                          <li><a><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></a></li>
+                          :
+                          <li><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></li>
+                        }
+                      </ul>
+                    </div>
+                  </div>
                   :
-                  <li><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></li>
+                  <div>
+                    {
+                      index === 2 &&
+                      <div className="comments" style={{ textAlign: "center", color: "#9a4da6" }} onClick = { () => props.viewMore() }> View more comments </div>
+                    }
+                  </div>                 
                 }
-              </ul>
+              </div>
+            }            
             </div>
-          </div>
-        )  
+            )
+            })  
       }
     </div>
   )  
@@ -92,7 +136,7 @@ const Reaction = (props) => {
 const PostFooter = (props) => (
   <div className="bot-wp">
     <Reaction  />
-    <CommentBox state = { props.state } comments = {props.comments} postId = {props.postId} commentLike = {props.commentLike} commentPost = {props.commentPost} handleChange = {props.handleChange}/>
+    <CommentBox state = { props.state } comments = {props.comments} postId = {props.postId} commentLike = {props.commentLike} viewMore = {props.viewMore} commentPost = {props.commentPost} handleChange = {props.handleChange}/>
   </div>
 );
 
@@ -104,12 +148,14 @@ export default class Post extends Component {
       linkMeta: {},
       comment: '',
       posts: [],
-      comments: []
+      comments: [],
+      showComments: false
     };
     this.commentPost = this.commentPost.bind(this);
     this.commentLike = this.commentLike.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
+    this.viewMore = this.viewMore.bind(this);
   }
 
   componentDidMount() {
@@ -191,6 +237,9 @@ export default class Post extends Component {
       .catch(error => {});
   }
 
+  viewMore() {
+    this.setState({ showComments: true })
+  }
   handleChange(e, name) {
     if(name === 'comment'){
       this.setState({ comment: e.target.value })
@@ -207,7 +256,7 @@ export default class Post extends Component {
           <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile} />
           <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
           { this.linkSnippet() }
-          <PostFooter comments = {comments} postId = {_id} commentLike = {this.commentLike} commentPost = {this.commentPost} state = {this.state} handleChange = {this.handleChange} />
+          <PostFooter comments = {comments} postId = {_id} commentLike = {this.commentLike} commentPost = {this.commentPost} viewMore = {this.viewMore} state = {this.state} handleChange = {this.handleChange} />
         </div>
       </div>
     );
