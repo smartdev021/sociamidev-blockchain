@@ -97,7 +97,7 @@
     "react-cookie": "^2.1.1",
     "react-countdown-now": "^1.3.0",
     "react-custom-scroll": "^2.0.3",
-    "react-datepicker": "^1.4.1",
+    "react-datepicker": "1.4.1",
     "react-dom": "^15.6.1",
     "react-fa": "^5.0.0",
     "react-file-loader": "^1.2.3",
