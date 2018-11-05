@@ -733,10 +733,13 @@ class Company extends Component {
                                   <th>Category</th>
                                   <th>SubCategory</th>
                                   <th>Description</th>
+                                  <th>Cover Image</th>
+                                  <th>Body Image</th>
                                   <th>Conditions</th>
                                   <th>Evaluation</th>
                                   <th>Complexity</th>
                                   <th>Company</th>
+                                  <th>Preload</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -750,7 +753,40 @@ class Company extends Component {
                                       <td>{que.category}</td>
                                       <td>{que.subCategory}</td>
                                       <td>{que.description}</td>
+                                      <td><Img key={`cover_${new Date()}${que._id}`}
+                                            src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/questionImages/${que._id}_cover`}
+                                            style={{maxWidth: 90, maxHeight: 90}}
+                                          />
+                                          <Upload 
+                                            name="image"
+                                            listType="picture"
+                                            action={`${ConfigMain.getBackendURL()}/questions/${que._id}/upload-cover-image`}
+                                            onChange= {this.onHandleUploadStoryImg}
+                                            showUploadList={false}
+                                            key={`upload-cover-image${que._id}`}
+                                          >
+                                            <Button key={`btn-q-cover${que._id}`}>
+                                              <Icon type="upload" key={`icon-q-cover${que._id}`}/>Upload
+                                            </Button>
+                                          </Upload></td>
+                                        <td><Img key={`body_${new Date()}${que._id}`}
+                                            src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/questionImages/${que._id}_body`}
+                                            style={{maxWidth: 90, maxHeight: 90}}
+                                          />
+                                          <Upload 
+                                            name="image"
+                                            listType="picture"
+                                            action={`${ConfigMain.getBackendURL()}/questions/${que._id}/upload-body-image`}
+                                            onChange= {this.onHandleUploadStoryImg}
+                                            showUploadList={false}
+                                            key={`upload-body-image${que._id}`}
+                                          >
+                                            <Button key={`btn-q-body${que._id}`}>
+                                              <Icon type="upload" key={`icon-q-body${que._id}`}/>Upload
+                                            </Button>
+                                          </Upload></td>
                                       <td>{que.conditions}</td>
+                                      <td></td>
                                       <td></td>
                                       <td></td>
                                       <td></td>
@@ -774,7 +810,7 @@ class Company extends Component {
                   </div>
                 </div>
                 <div style={{ display: this.state.IsChallengeOpen }}> 
-     <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper challenges-top profile-wrapper mychallenges-wrapper main-bg`}>
+                 <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper challenges-top profile-wrapper mychallenges-wrapper main-bg`}>
         <div className="row">
           <div className="container">
             <div className="row">
