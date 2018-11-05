@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Moment from 'moment';
+import moment from 'moment';
 import Axios from 'axios';
 import nl2br from 'nl2br';
 
@@ -8,6 +8,7 @@ import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
 import ConfigMain from '~/configs/main';
 import { message } from 'antd';
 import _ from 'lodash';
+import Moment from 'react-moment';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -22,22 +23,35 @@ const PostHeader = ({ author, authorName, date, userProfile }) => {
        <img src={userPictureUrl} alt="" />
       </div>
       <span className="col-heading">{newAuthorName}</span>
-      <span className="date">{Moment(date).format('DD.MM.YYYY')}</span>
+      <span className="date">{moment(date).format('DD.MM.YYYY')}</span>
      </div>
   )
 }
 
 const CommentBox = (props) => {
   var comments = props.comments;
+  comments.sort(function(dateFirst, dateSecond) {
+    var dateA = dateFirst.createdAt;
+    var dateB = dateSecond.createdAt; // ignore upper and lowercase
+    if (dateA > dateB) {
+      return -1;
+    }
+    if (dateA < dateB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
   return(
     <div className="input-wp">
       <div className="input-filed">
-        <input type="text" name="" value = {props.state.comment} onChange = {(e) => props.handleChange(e, 'comment')} placeholder="Write comment..." />
+        <input type="text" name="" value = {props.state.comment} onKeyPress = {(event) => props.commentPost(props.postId, event)} onChange = {(e) => props.handleChange(e, 'comment')} placeholder="Write comment..." />
         <a href="#" className="camera-icon"><i className="fa fa-camera"></i></a>
       </div>
       <div className="bot-share-btns">
         <ul>
-        <li><a><div className="icon-white icon-purpal" onClick = {() => props.commentPost(props.postId)} ><i className="fa fa-paper-plane"></i></div></a></li>
+        <li><a><div className="icon-white icon-purpal" onClick = {() => props.commentPost(props.postId, "comment post")} ><i className="fa fa-paper-plane"></i></div></a></li>
 
         </ul>
       </div>
@@ -58,6 +72,7 @@ const CommentBox = (props) => {
                </div>
                 <div className="input-filed">
                    <input type="text" name="comment" readOnly value={item.comment}/>
+                   <div style={{float: "right"}}><Moment fromNow>{item.createdAt}</Moment></div>
                 </div>
                 <div className="bot-share-btns">
                   <ul>
@@ -85,6 +100,7 @@ const CommentBox = (props) => {
                    </div>
                     <div className="input-filed">
                        <input type="text" name="comment" readOnly value={item.comment}/>
+                       <div style={{float: "right"}}><Moment fromNow>{item.createdAt}</Moment></div>
                     </div>
                     <div className="bot-share-btns">
                       <ul>
@@ -191,25 +207,29 @@ export default class Post extends Component {
       /> : '';
   }
 
-  commentPost(id) {
-    const that = this;
-    const postCommentData = {
-      post_id: id,
-      commentator_id: this.props.userProfile._id,
-      commentator_name: this.props.userProfile.firstName+' '+this.props.userProfile.lastName,
-      profilePic: this.props.userProfile.pictureURL,
-      comment: this.state.comment
-    };
+  commentPost(id, event) {
+    console.log("xfbc",event.key)
+    if(event.key === 'Enter' || event === "comment post"){
+      const that = this;
+      const postCommentData = {
+        post_id: id,
+        commentator_id: this.props.userProfile._id,
+        commentator_name: this.props.userProfile.firstName+' '+this.props.userProfile.lastName,
+        profilePic: this.props.userProfile.pictureURL,
+        comment: this.state.comment
+      };
 
-    Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/commentpost`, postCommentData)
-      .then((response) => {
-        message.success(`Comment Added!`);
-        that.setState({ comment: ' ', comments: response.data.comments });
-      })
-      .catch((error) => {
-        console.log(error);
-        message.error(`Something went wrong!`);
-      });
+      Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/commentpost`, postCommentData)
+        .then((response) => {
+          message.success(`Comment Added!`);
+          that.setState({ comment: ' ', comments: response.data.comments });
+        })
+        .catch((error) => {
+          console.log(error);
+          message.error(`Something went wrong!`);
+        });
+    }
+   
   }
 
   commentLike(id, comment_id){

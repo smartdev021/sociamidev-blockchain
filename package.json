@@ -110,6 +110,7 @@
     "react-loading-overlay": "^0.3.0",
     "react-masonry-component": "^6.0.2",
     "react-modal": "^2.3.2",
+    "react-moment": "^0.8.3",
     "react-redux": "^5.0.6",
     "react-star-ratings": "^1.4.1",
     "react-tagsinput": "^3.19.0",
