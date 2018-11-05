@@ -281,7 +281,7 @@ html, body {
     -moz-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.3);
     position: absolute;
-    background: #e7403f url("https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-category.jpg") no-repeat bottom right;
+    background: #ac9999 url("https://sociamibucket.s3.amazonaws.com/assets/new_ui_color_scheme/img/bg-category.jpg") no-repeat bottom right;
     padding: 0px 10px;
     z-index: 9999;
     display: block;
@@ -1475,5 +1475,9 @@ html, body {
 
 /* Pencil icon on hover for company tab */
 div#stories table.table tbody tr{
-    cursor: url('data:image/x-icon;base64,AAACAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAhYWFAPqv6ADgm4sASkpKAJ/l7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAEiIAAAAAAAAAAAAAAAAAAxEiIAAAAAAAAAAAAAAAADMxEgAAAAAAAAAAAAAAAAMzMxAAAAAAAAAAAAAAAAAzMzMAAAAAAAAAAAAAAAADMzMwAAAAAAAAAAAAAAAAMzMzAAAAAAAAAAAAAAAAAzMzMAAAAAAAAAAAAAAAADMzMwAAAAAAAAAAAAAAAABTMzAAAAAAAAAAAAAAAAAFVTMAAAAAAAAAAAAAAAAABFVQAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///////////////////////////////////////////////////////////////////////////////////////P////h////wP///4H///8D///+B////A////gf///wP///4H///+D////B////w////8///////////////w=='), auto;
+    cursor: url(https://s3-ap-southeast-1.amazonaws.com/stg.soqqle.com/pointer-white.png), auto;
+}
+
+div#stories table.table tbody tr textarea{
+    width: 100%;
 }
