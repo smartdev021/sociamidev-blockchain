@@ -857,7 +857,7 @@ class UserProfile extends Component {
         </li>
       ) : null;
       characterNameLine = this.state.character.characterName ? (
-        <li>
+        <li className="house-edit-icon" onClick={this.handleHouseEditModal.bind(this)}>
           <span className="icon pc-icon" /> {this.state.character.characterName}
         </li>
       ) : null;
@@ -949,9 +949,6 @@ class UserProfile extends Component {
                           </li>
                           {traitsNameLine}
                           {characterNameLine}
-                          <li className="house-edit-icon" onClick={this.handleHouseEditModal.bind(this)}>
-                            <span className="icon p-icon" /> House Detail
-                          </li>
                         </ul>
                       </div>
                     </div>
