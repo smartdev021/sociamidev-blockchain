@@ -196,3 +196,6 @@
     display: inline-block;
     text-decoration: none;
 }
+.tasks__exclam-icon {
+    z-index: 0 !important;
+}

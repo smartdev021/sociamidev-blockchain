@@ -148,7 +148,7 @@ let totalAchievements = this.props.achievementData.updatedAchievements.length;
 
   render() {
     const { isOpen, close } = this.props;
-    const wrapperStyle = {
+    const imageStyle = {
       backgroundImage: `url(https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${this.getId()})`
     }
     const modalStyleOverrides = {
@@ -173,9 +173,7 @@ let totalAchievements = this.props.achievementData.updatedAchievements.length;
           <div className="achievement-container">
             <div className="achievement-wrapper">
               <ActionLink href="#" className="modal-close-button achievement__modal-close-button" onClick={close} />
-              <img src={'https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/' + this.getId()}
-                   alt="Achievement Image"
-                   className="achievement-top-img"/>
+              <div role="img" style={imageStyle} className="achievement-top-img"></div>
               <div className="center-wrapper ach-content">
               {this.index > 0 ? <div class="QuestionAnswersFlow-previous"><a href="#" onClick={()=>this.showPreviousAchievement()} className="ach-previous" class="btn-prev QuestionAnswersFlow-previous">◀ previous</a></div> : null}
               {this.showNext() ? <div class="QuestionAnswersFlow-next QuestionAnswersFlow-next-block"><a href="#" onClick={()=>this.showNextAchievement()} className="ach-next" class="btn-next QuestionAnswersFlow-next">next ▶</a></div> : null}
