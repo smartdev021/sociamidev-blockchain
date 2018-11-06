@@ -76,7 +76,7 @@ class Achievements extends Component {
 
     const blockChainIconStyle = {
       position: 'absolute',
-      marginLeft: '37%',
+      marginLeft: '38%',
       marginTop: '-12px'
     };
 
