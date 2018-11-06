@@ -3,6 +3,8 @@ import LeftNav from '~/src/theme/components/achievements/LeftNav';
 import ConfigMain from '~/configs/main';
 import Axios from 'axios';
 
+import blockChainIcon from '../../../../assets/img/network.png'
+
 const profilePic =
   'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -72,18 +74,26 @@ class Achievements extends Component {
         ? currentAchievementsGroupData[0].achievements
         : [];
 
+    const blockChainIconStyle = {
+      position: 'absolute',
+      marginLeft: '37%',
+      marginTop: '-12px'
+    };
+
     return (
       <ul>
         {achievementsByAchievementsGroup.map(achievement => {
           return (
             <li key={ achievement._id }>
+            {achievement.blockChain ? <img src={blockChainIcon} alt="" style={blockChainIconStyle} /> : null};
               <div className="img-icon">
                 <img
                   src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/achievementImages/${achievement._id}`}
                   alt=""
                 />
               </div>
-              <h4>{achievement.name}</h4>
+              
+              <h4>{achievement.name}</h4> 
               <p>{achievement.result}</p>
               {achievement.conditions.map(requirement => {
                 return (
