@@ -46,6 +46,8 @@ import ConnectionsViewOld from '~/src/theme/ConnectionsViewOld.js';
 import Story from '~/src/theme/components/story/Story';
 // import UserProfile from '~/src/theme/UserProfile.js';
 import UserProfile from '~/src/theme/components/userProfile/UserProfile';
+
+import Admin from '~/src/theme/components/Admin/Admin';
 import Teams from '~/src/theme/components/teams/Teams.js';
 import Company from '~/src/theme/components/company/Company';
 import Achievements from '~/src/theme/components/achievements/Achievements';
@@ -155,6 +157,7 @@ class Main extends Component {
           render={routeProps => <PrivacyPolicy {...routeProps} {...this.props} />}
         />
         <Route path="/userProfile" render={routeProps => <UserProfile {...routeProps} {...this.props} />} />
+        <Route path="/admin" render={routeProps => <Admin {...routeProps} {...this.props} />} />
         {this.props.isAdmin && (
           <Route path="/company" render={routeProps => <Company {...routeProps} {...this.props} />} />
         )}

@@ -24,6 +24,7 @@ class AddAchievementModal extends Component {
         result: 'Title',
         resultValue: '',
         generic: true,
+        blockChain: false,
         conditions: [
           {
             id: 0,
@@ -271,6 +272,27 @@ class AddAchievementModal extends Component {
             }}
             value={this.state.formData.generic}
             onChange={e => this.setState({formData: _.merge(this.state.formData, {generic: e.target.value})})}
+          >
+            {[{val: true, name: 'Yes'}, {val: false, name: 'No'}].map((item) => (<option key={item.val} value={item.val}>{item.name}</option>))}
+          </select>
+        </div>
+
+        <div>
+          <span style={{ color: 'white' }} className="col-lg-6">Blockchain:</span>
+          <select
+            className="col-lg-6"
+            style={{
+              borderRadius: 0,
+              background: 'white',
+              marginBottom: '5px',
+              fontFamily: 'Berlin-Sans-FB-Regular, sans-serif',
+              height: 'auto',
+              border: 'none',
+              padding: '0',
+              fontSize: 'initial'
+            }}
+            value={this.state.formData.blockChain}
+            onChange={e => this.setState({formData: _.merge(this.state.formData, {blockChain: e.target.value})})}
           >
             {[{val: true, name: 'Yes'}, {val: false, name: 'No'}].map((item) => (<option key={item.val} value={item.val}>{item.name}</option>))}
           </select>
