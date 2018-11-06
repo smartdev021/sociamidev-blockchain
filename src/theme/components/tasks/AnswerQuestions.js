@@ -25,6 +25,8 @@ import QuestionTypes from '~/src/common/QuestionTypes';
 
 import QuestionAnswersFlow from '~/src/theme/components/tasks/QuestionAnswersFlow';
 
+import DecodeResult from './DecodeResult';
+
 import '~/src/theme/appearance.css';
 import '~/src/theme/layout.css';
 import '~/src/theme/css/taskBrowser.css';
@@ -53,6 +55,7 @@ class AnswerQuestions extends React.Component {
       isAnswersFetchFromCookiesInProgress: false,
 
       isLoading: false,
+      isShowResult: false,
     };
 
     this.getPartnerProfile = this.getPartnerProfile.bind(this);
@@ -416,36 +419,14 @@ class AnswerQuestions extends React.Component {
 
   handlePopupSubmit(e) {
     e.preventDefault();
-
-    const that = this;
-    const { props, state, _getAchievementWithRoadmap } = that;
-
-    const body = {
-      userId: props.userProfile._id,
-      taskId: state.currentTask._id,
-      roadmapId: _.get(this, 'state.currentTask.metaData.subject.roadmap._id'),
-      answers: state.answersMy,
-    };
-    PubSub.publish('submitAnswerForTask', body.userId);
-    props.hangoutAnswersSave(body, (err, saveResult) => {
-      let filteredResult = saveResult.result;
-      console.log('saveResult', saveResult);
-      let foundAchievement = filteredResult.map(hangoutAnswer => _getAchievementWithRoadmap(hangoutAnswer));
-      foundAchievement = foundAchievement.filter(found => found !== false);
-      console.log('foundAchievement 123', foundAchievement);
-      let foundCondition = [];
-      foundAchievement.forEach(found => {
-        const matchingCondition = found.conditions.filter(cond => cond._roadmap === body.roadmapId);
-        if (matchingCondition && matchingCondition.length) {
-          foundCondition.push(matchingCondition[0]);
-        }
-      });
-
-      console.log('we found123', foundCondition);
-
-      props.onSubmitComplete(saveResult);
-      props.onBackToMyTasks();
-    });
+    if(this.state.currentTask.type === TaskTypes.DECODE){
+       this.setState({
+          isShowResult: true
+       })
+    } else {
+      this.submitAction();
+    }
+   
   }
 
   _getAchievementWithRoadmap(hangoutAnswer) {
@@ -471,6 +452,48 @@ class AnswerQuestions extends React.Component {
     this.props.onSubmitComplete();
   }
 
+  submitAction(){
+    const that = this;
+    const { props, state, _getAchievementWithRoadmap } = that;
+
+    const body = {
+      userId: props.userProfile._id,
+      taskId: state.currentTask._id,
+      roadmapId: _.get(this, 'state.currentTask.metaData.subject.roadmap._id'),
+      answers: state.answersMy,
+    };
+   
+    PubSub.publish('submitAnswerForTask', body.userId);
+    props.hangoutAnswersSave(body, (err, saveResult) => {
+      let filteredResult = saveResult.result;
+      console.log('saveResult', saveResult);
+      let foundAchievement = filteredResult.map(hangoutAnswer => _getAchievementWithRoadmap(hangoutAnswer));
+      foundAchievement = foundAchievement.filter(found => found !== false);
+      console.log('foundAchievement 123', foundAchievement);
+      let foundCondition = [];
+      foundAchievement.forEach(found => {
+        const matchingCondition = found.conditions.filter(cond => cond._roadmap === body.roadmapId);
+        if (matchingCondition && matchingCondition.length) {
+          foundCondition.push(matchingCondition[0]);
+        }
+      });
+
+      console.log('we found123', foundCondition);
+
+      props.onSubmitComplete(saveResult);
+      props.onBackToMyTasks();
+    });
+  }
+
+  onCloseResult(){
+    if(this.state.currentTask.type === TaskTypes.DECODE){
+      this.setState({
+        isShowResult: false
+      })
+      this.submitAction();
+    }
+  }
+
   render() {
     const CurrentUserID = this.props.userProfile._id;
 
@@ -483,22 +506,26 @@ class AnswerQuestions extends React.Component {
     const Questions =
       this.state.questions.length > 0 ? this.state.questions.slice(0, limit /*limit questions to 10*/) : [];
     return (
-      <QuestionAnswersFlow
-        onSubmit={e => this.handlePopupSubmit(e)}
-        onCloseModal={() => this.handlePopupClose()}
-        questions={Questions}
-        partner={Partner}
-        answersMy={this.state.answersMy}
-        answersPartner={this.state.answersPartner}
-        answersOtherUsers={this.state.answersOtherUsers}
-        isLoading={this.state.isLoading}
-        isSubmitting={this.props.isTasksUpdateInProgress}
-        onBackToMyTasks={this.props.onBackToMyTasks}
-        onHandleAnswerInput={e => this.handleAnswerInput(e)}
-        currentTaskType={this.state.currentTask.type}
-        onHandleAnswerCheckbox={e => this.handleAnswerCheckbox(e)}
-        onHandleAnswerTrueFalse={e => this.handleAnswerTrueFalse(e)}
-      />
+      <div style={{position: 'relative'}}>
+        <QuestionAnswersFlow
+          onSubmit={e => this.handlePopupSubmit(e)}
+          onCloseModal={() => this.handlePopupClose()}
+          questions={Questions}
+          partner={Partner}
+          answersMy={this.state.answersMy}
+          answersPartner={this.state.answersPartner}
+          answersOtherUsers={this.state.answersOtherUsers}
+          isLoading={this.state.isLoading}
+          isSubmitting={this.props.isTasksUpdateInProgress}
+          onBackToMyTasks={this.props.onBackToMyTasks}
+          onHandleAnswerInput={e => this.handleAnswerInput(e)}
+          currentTaskType={this.state.currentTask.type}
+          onHandleAnswerCheckbox={e => this.handleAnswerCheckbox(e)}
+          onHandleAnswerTrueFalse={e => this.handleAnswerTrueFalse(e)}
+        />
+        {this.state.isShowResult ? <DecodeResult questions={Questions} answersMy={this.state.answersMy} onCloseResult={() => this.onCloseResult()} /> : ''}
+      </div>
+     
     );
   }
 }

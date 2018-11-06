@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Moment from 'moment';
+import moment from 'moment';
 import Axios from 'axios';
 import nl2br from 'nl2br';
 
@@ -8,6 +8,7 @@ import LinkPreview from '~/src/theme/components/homepage/LinkPreview';
 import ConfigMain from '~/configs/main';
 import { message } from 'antd';
 import _ from 'lodash';
+import Moment from 'react-moment';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -22,51 +23,110 @@ const PostHeader = ({ author, authorName, date, userProfile }) => {
        <img src={userPictureUrl} alt="" />
       </div>
       <span className="col-heading">{newAuthorName}</span>
-      <span className="date">{Moment(date).format('DD.MM.YYYY')}</span>
+      <span className="date">{moment(date).format('DD.MM.YYYY')}</span>
      </div>
   )
 }
 
 const CommentBox = (props) => {
   var comments = props.comments;
+  comments.sort(function(dateFirst, dateSecond) {
+    var dateA = dateFirst.createdAt;
+    var dateB = dateSecond.createdAt; // ignore upper and lowercase
+    if (dateA > dateB) {
+      return -1;
+    }
+    if (dateA < dateB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
   return(
     <div className="input-wp">
       <div className="input-filed">
-        <input type="text" name="" value = {props.state.comment} onChange = {(e) => props.handleChange(e, 'comment')} placeholder="Write comment..." />
+        <input type="text" name="" value = {props.state.comment} onKeyPress = {(event) => props.commentPost(props.postId, event)} onChange = {(e) => props.handleChange(e, 'comment')} placeholder="Write comment..." />
         <a href="#" className="camera-icon"><i className="fa fa-camera"></i></a>
       </div>
       <div className="bot-share-btns">
         <ul>
-        <li><a><div className="icon-white icon-purpal" onClick = {() => props.commentPost(props.postId)} ><i className="fa fa-paper-plane"></i></div></a></li>
+        <li><a><div className="icon-white icon-purpal" onClick = {() => props.commentPost(props.postId, "comment post")} ><i className="fa fa-paper-plane"></i></div></a></li>
 
         </ul>
       </div>
       {
         comments.length > 0 &&
-        _.map(comments, (item, index) => 
-          <div key={index} className="comments">
-          <div className="top-head">
-            <div className="profile-icon">
-             <img src={item.profileUrl} alt="" />
-            </div>
-            <span className="col-heading">{item.commentator_name}</span>
-           </div>
-            <div className="input-filed">
-               <input type="text" name="comment" readOnly value={item.comment}/>
-            </div>
-            <div className="bot-share-btns">
-              <ul>
+        _.map(comments, (item, index) =>  {
+          return(
+            <div key={index} >
+            {
+              index < 2 
+              ?
+              <div className="comments">
+                <div className="top-head">
+                <div className="profile-icon">
+                 <img src={item.profileUrl} alt="" />
+                </div>
+                <span className="col-heading">{item.commentator_name}</span>
+               </div>
+                <div className="input-filed">
+                   <input type="text" name="comment" readOnly value={item.comment}/>
+                   <div style={{float: "right"}}><Moment fromNow>{item.createdAt}</Moment></div>
+                </div>
+                <div className="bot-share-btns">
+                  <ul>
+                    {
+                      (item.like.length > 0)
+                      ?
+                      <li><a><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></a></li>
+                      :
+                      <li><div className="text-blue" ><i className="fa fa-heart"></i></div></li>
+                    }
+                  </ul>
+                </div>
+              </div>
+              :
+              <div>
                 {
-                  (item.like.length > 0)
+                  props.state.showComments === true 
                   ?
-                  <li><a><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></a></li>
+                  <div className="comments">
+                    <div className="top-head">
+                    <div className="profile-icon">
+                     <img src={item.profileUrl} alt="" />
+                    </div>
+                    <span className="col-heading">{item.commentator_name}</span>
+                   </div>
+                    <div className="input-filed">
+                       <input type="text" name="comment" readOnly value={item.comment}/>
+                       <div style={{float: "right"}}><Moment fromNow>{item.createdAt}</Moment></div>
+                    </div>
+                    <div className="bot-share-btns">
+                      <ul>
+                        {
+                          (item.like.length > 0)
+                          ?
+                          <li><a><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></a></li>
+                          :
+                          <li><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></li>
+                        }
+                      </ul>
+                    </div>
+                  </div>
                   :
-                  <li><div className="text-blue" onClick = {() => props.commentLike(props.postId, item._id)} ><i className="fa fa-heart"></i></div></li>
+                  <div>
+                    {
+                      index === 2 &&
+                      <div className="comments" style={{ textAlign: "center", color: "#9a4da6" }} onClick = { () => props.viewMore() }> View more comments </div>
+                    }
+                  </div>                 
                 }
-              </ul>
+              </div>
+            }            
             </div>
-          </div>
-        )  
+            )
+            })  
       }
     </div>
   )  
@@ -92,7 +152,7 @@ const Reaction = (props) => {
 const PostFooter = (props) => (
   <div className="bot-wp">
     <Reaction  />
-    <CommentBox state = { props.state } comments = {props.comments} postId = {props.postId} commentLike = {props.commentLike} commentPost = {props.commentPost} handleChange = {props.handleChange}/>
+    <CommentBox state = { props.state } comments = {props.comments} postId = {props.postId} commentLike = {props.commentLike} viewMore = {props.viewMore} commentPost = {props.commentPost} handleChange = {props.handleChange}/>
   </div>
 );
 
@@ -104,12 +164,14 @@ export default class Post extends Component {
       linkMeta: {},
       comment: '',
       posts: [],
-      comments: []
+      comments: [],
+      showComments: false
     };
     this.commentPost = this.commentPost.bind(this);
     this.commentLike = this.commentLike.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.fetchPosts = this.fetchPosts.bind(this);
+    this.viewMore = this.viewMore.bind(this);
   }
 
   componentDidMount() {
@@ -145,25 +207,29 @@ export default class Post extends Component {
       /> : '';
   }
 
-  commentPost(id) {
-    const that = this;
-    const postCommentData = {
-      post_id: id,
-      commentator_id: this.props.userProfile._id,
-      commentator_name: this.props.userProfile.firstName+' '+this.props.userProfile.lastName,
-      profilePic: this.props.userProfile.pictureURL,
-      comment: this.state.comment
-    };
+  commentPost(id, event) {
+    console.log("xfbc",event.key)
+    if(event.key === 'Enter' || event === "comment post"){
+      const that = this;
+      const postCommentData = {
+        post_id: id,
+        commentator_id: this.props.userProfile._id,
+        commentator_name: this.props.userProfile.firstName+' '+this.props.userProfile.lastName,
+        profilePic: this.props.userProfile.pictureURL,
+        comment: this.state.comment
+      };
 
-    Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/commentpost`, postCommentData)
-      .then((response) => {
-        message.success(`Comment Added!`);
-        that.setState({ comment: ' ', comments: response.data.comments });
-      })
-      .catch((error) => {
-        console.log(error);
-        message.error(`Something went wrong!`);
-      });
+      Axios.post(`${ConfigMain.getBackendURL()}/${this.props.userProfile._id}/commentpost`, postCommentData)
+        .then((response) => {
+          message.success(`Comment Added!`);
+          that.setState({ comment: ' ', comments: response.data.comments });
+        })
+        .catch((error) => {
+          console.log(error);
+          message.error(`Something went wrong!`);
+        });
+    }
+   
   }
 
   commentLike(id, comment_id){
@@ -191,6 +257,9 @@ export default class Post extends Component {
       .catch(error => {});
   }
 
+  viewMore() {
+    this.setState({ showComments: true })
+  }
   handleChange(e, name) {
     if(name === 'comment'){
       this.setState({ comment: e.target.value })
@@ -207,7 +276,7 @@ export default class Post extends Component {
           <PostHeader author={author} authorName={authorName} date={date} userProfile={userProfile} />
           <p dangerouslySetInnerHTML={{ __html: nl2br(message) }} />
           { this.linkSnippet() }
-          <PostFooter comments = {comments} postId = {_id} commentLike = {this.commentLike} commentPost = {this.commentPost} state = {this.state} handleChange = {this.handleChange} />
+          <PostFooter comments = {comments} postId = {_id} commentLike = {this.commentLike} commentPost = {this.commentPost} viewMore = {this.viewMore} state = {this.state} handleChange = {this.handleChange} />
         </div>
       </div>
     );
