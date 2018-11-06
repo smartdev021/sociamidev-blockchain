@@ -419,9 +419,14 @@ class AnswerQuestions extends React.Component {
 
   handlePopupSubmit(e) {
     e.preventDefault();
-    this.setState({
-      isShowResult: true
-    })
+    if(this.state.currentTask.type === TaskTypes.DECODE){
+       this.setState({
+          isShowResult: true
+       })
+    } else {
+      this.submitAction();
+    }
+   
   }
 
   _getAchievementWithRoadmap(hangoutAnswer) {
@@ -447,10 +452,7 @@ class AnswerQuestions extends React.Component {
     this.props.onSubmitComplete();
   }
 
-  onCloseResult(){
-    this.setState({
-      isShowResult: false
-    })
+  submitAction(){
     const that = this;
     const { props, state, _getAchievementWithRoadmap } = that;
 
@@ -481,7 +483,15 @@ class AnswerQuestions extends React.Component {
       props.onSubmitComplete(saveResult);
       props.onBackToMyTasks();
     });
+  }
 
+  onCloseResult(){
+    if(this.state.currentTask.type === TaskTypes.DECODE){
+      this.setState({
+        isShowResult: false
+      })
+      this.submitAction();
+    }
   }
 
   render() {
