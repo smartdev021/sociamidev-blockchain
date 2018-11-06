@@ -9,6 +9,7 @@ import Pagination from 'react-js-pagination';
 import { message, Table, Button, Icon, Upload} from 'antd';
 import Img from 'react-image';
 import Textarea from 'react-textarea-autosize';
+import nl2br from 'nl2br';
 
 import LeftNav from '~/src/theme/components/homepage/LeftNav';
 import AchievementGroup from './AchievementGroup';
@@ -21,7 +22,7 @@ import { updateCompany } from '~/src/redux/actions/company';
 import { fetchTeams, addNewTeam, saveTeam, addTeamEmail, updateTeamEmail, deleteTeam, cancelTeam } from '~/src/redux/actions/teams';
 import { fetchAchievements, addAchievementGroup, updateAchievementGroup } from '~/src/redux/actions/achievements';
 import { fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
-import { fetchStories } from '~/src/redux/actions/story';
+import { fetchStories, updateStory, saveStory, deleteStory } from '~/src/redux/actions/story';
 
 import plus from "~/src/theme/images/plus.png";
 import cross from "~/src/theme/images/cross.png";
@@ -69,6 +70,7 @@ class Company extends Component {
       storiesCount: 10,
       editableStoryKey: "",
       editableStoryIndex: "",
+      selectedStoryKeys: []
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -88,6 +90,9 @@ class Company extends Component {
     this.handleStoryDataChange = this.handleStoryDataChange.bind(this);
     this.handleStoryInputClick = this.handleStoryInputClick.bind(this);
     this.undoStoryData = this.undoStoryData.bind(this);
+    this.addStory = this.addStory.bind(this);
+    this.removeStory = this.removeStory.bind(this);
+    this.setSelectedStory = this.setSelectedStory.bind(this);
   }
 
   togglePage(page) {
@@ -475,13 +480,18 @@ class Company extends Component {
   }
 
   /* Handle Editable TR click event */
-  onClickEditable(e){ 
-    if(this.state.editableStoryKey != e.currentTarget.dataset.key){
-      this.setState({ storiesDataBackup: this.state.storiesData, editableStoryKey: e.currentTarget.dataset.key, editableStoryIndex: e.currentTarget.dataset.index }); //make tr editable in story table
-    } else {
-      this.setState({ editableStoryKey: "", editableStoryIndex: "" }); //make tr non-editable on doubleclick
-    }
-    
+  async onClickEditable(e){
+    // if(this.state.editableStoryKey != ""){
+    //   this.setState({ editableStoryKey: "" });
+    // } else {
+       if(this.state.editableStoryKey != e.currentTarget.dataset.key){
+        this.setState({ storiesDataBackup: this.state.storiesData, editableStoryKey: e.currentTarget.dataset.key, editableStoryIndex: e.currentTarget.dataset.index }); //make tr editable in story table
+      } else {
+        message.success(`Data edited successfully.`);
+        await this.props.updateStory(this.state.storiesData[this.state.editableStoryIndex]);
+        this.setState({ editableStoryKey: "" }); //make tr non-editable on doubleclick     
+      }
+   // }
   }
 
   /* Prevent child element click to update state */
@@ -499,7 +509,13 @@ class Company extends Component {
     let index = this.state.editableStoryIndex;
     let storiesCopy = JSON.parse(JSON.stringify(this.state.storiesData));
     if(storyChild === ""){
-      storiesCopy[index][storyParent] = e.currentTarget.value;
+      if(storyParent === "_achievements" || storyParent === "relatedTopics" || storyParent === "refresh"){
+        //leave for now
+        
+      } else {
+        storiesCopy[index][storyParent] = e.currentTarget.value;
+      }
+      
     } else {
       storiesCopy[index][storyParent][storyChild] = e.currentTarget.value;
     }
@@ -509,13 +525,43 @@ class Company extends Component {
   }
 
   /* Undo Story Data */
-  undoStoryData(){
-    this.setState({ storiesData: this.state.storiesDataBackup });
+  async undoStoryData(){
+    if(this.state.editableStoryIndex != ""){
+      this.setState({ storiesData: this.state.storiesDataBackup });
+      message.success(`Data undo successfully.`);
+      await this.props.updateStory(this.state.storiesDataBackup[this.state.editableStoryIndex]);    
+    }
+  }
+
+  /* Handle checkbox click for stories */
+  setSelectedStory(e){
+    e.stopPropagation();
+    var ids = this.state.selectedStoryKeys;
+    var index = ids.indexOf(e.currentTarget.dataset.key);
+    if(index > -1){
+      ids.splice(index, 1);
+    } else {
+      ids.push(e.currentTarget.dataset.key);
+    }
+    
+    this.setState({ selectedStoryKeys: ids });
+  }
+
+  async addStory(){
+    await this.props.saveStory(new Array());
+    await this.getStories();
+    message.success(`New story added.`);
+  }
+
+  async removeStory(){
+    await this.props.deleteStory(this.state.selectedStoryKeys);
+    await this.getStories();
+    message.success(`Story(ies) was deleted.`);
   }
 
   render() {
     const { userProfile } = this.props;
-    const { company, questions, questionCount, storiesData, storiesCount } = this.state;
+    const { company, questions, questionCount, storiesData, storiesCount, message } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <div className="row">
@@ -530,6 +576,7 @@ class Company extends Component {
 
                 <div className="col-middle company-middle-wrapper ml-fixed">
                   <div className="col-box-wp wider-strip mb-20 p-0">
+                    <p dangerouslySetInnerHTML={{ __html: nl2br(message ? message : '') }} />
                     <ul className="tab-wp">
                       <li className={this.state.IsAchievementOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleAchievementOption}>Achievement</a></li>
                       <li className={this.state.IsStoryOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleStoryOption}>Story</a></li>
@@ -537,7 +584,9 @@ class Company extends Component {
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                       <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
                       <li style={{float: 'right'}}>
-                      <img style={{marginRight: '7px'}} src={undoimg} onClick={this.undoStoryData} />
+                      <img src={undoimg} onClick={this.undoStoryData} />
+                      <img style={{marginLeft: '7px'}} src={plus} onClick={this.addStory}  />
+                      <img style={{margin: '0px 7px'}} src={cross} onClick={this.removeStory} />
                         <label htmlFor="upload-input">
                           <img src={cloud}/>
                           <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} /> 
@@ -670,13 +719,13 @@ class Company extends Component {
                                   } else {
                                     return(
                                       <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
-                                        <td></td>
+                                        <td><input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedStory} /></td>
                                         <td>{que.skill}</td>
                                         <td>{que.description}</td>
                                         <td>{que.category}</td>
                                         <td>{que.subCategory}</td>
                                         <td>{que.relatedTopics}</td>
-                                        <td>{que._achievements}</td>
+                                        <td>{que._achievements[0]}</td>
                                         <td><Img key={`${new Date()}${que._id}`}
                                             src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
                                             style={{maxWidth: 90, maxHeight: 90}}
@@ -824,7 +873,10 @@ const mapDispatchToProps = dispatch => ({
   addAchievementGroup: bindActionCreators(addAchievementGroup, dispatch),
   updateAchievementGroup: bindActionCreators(updateAchievementGroup, dispatch),
   fetchRoadmapsFromAdmin: bindActionCreators(fetchRoadmapsFromAdmin, dispatch),
-  fetchStories: bindActionCreators(fetchStories, dispatch)
+  fetchStories: bindActionCreators(fetchStories, dispatch),
+  updateStory: bindActionCreators(updateStory, dispatch),
+  saveStory: bindActionCreators(saveStory, dispatch),
+  deleteStory: bindActionCreators(deleteStory, dispatch)
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Company));

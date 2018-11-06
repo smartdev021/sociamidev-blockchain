@@ -188,6 +188,12 @@ export const UPDATE_COMPANY_COMPLETE = 'update_company_complete';
 // Company
 export const FETCH_SKILLS_INITIATE = 'fetch_skills_initiate';
 export const FETCH_SKILLS_COMPLETE = 'fetch_skills_complete';
+export const UPDATE_SKILLS_INITIATE = 'update_skills_initiate';
+export const UPDATE_SKILLS_COMPLETE = 'update_skills_complete';
+export const SAVE_SKILLS_INITIATE = 'save_skills_initiate';
+export const SAVE_SKILLS_COMPLETE = 'save_skills_complete';
+export const DELETE_SKILLS_INITIATE = 'delete_skills_initiate';
+export const DELETE_SKILLS_COMPLETE = 'delete_skills_complete';
 
 export const LOAD_ACTIVATE_URL = 'load_activate_url';
 
