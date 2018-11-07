@@ -293,6 +293,7 @@ class ChatApp extends React.Component {
             receiver={this.state.activeUserID}
             userProfile={this.props.userProfile}
             users={this.state.users}
+            selectedUserFullName={this.state.activeUserFullName}
           />
         );
       } else if (!this.state.userChatHistoryLoaded) {
@@ -319,6 +320,7 @@ class ChatApp extends React.Component {
                 receiver={self.state.activeUserID}
                 userProfile={this.props.userProfile}
                 users={this.state.users}
+                selectedUserFullName={this.state.activeUserFullName}
               />
             );
 
@@ -341,7 +343,6 @@ class ChatApp extends React.Component {
         <ChatHolder
           isChatHolder={this.state.isChatHolder}
           toggleChatHolder={()=>this.toggleChatHolder()}
-
           chatPanelClass={chatPanelClass}
           userProfile={this.props.userProfile}
           users={this.state.users}

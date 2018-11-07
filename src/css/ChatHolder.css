@@ -205,6 +205,15 @@
   display: flex;
   justify-content: space-between;
 }
+.chat-ChatRightSideHolder .non-friend{
+  color: white;
+  position: sticky;
+  font-size: 15px;
+  font-weight: bold;
+  width: 100%;
+  top: 10px;
+  text-align: center;
+}
 .chat-ChatRightSideHolder .right-middle-messages{
   height: calc(100% - 112px);
   overflow: auto;

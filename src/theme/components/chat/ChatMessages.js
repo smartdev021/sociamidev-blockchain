@@ -76,8 +76,19 @@ class ChatMessages extends React.Component {
       );
     });
 
+    let nonFriend = ''
+    let nonFriendExists = this.props.users.find(user => user.userID === this.props.receiver)
+    if(nonFriendExists === undefined && this.props.selectedUserFullName){
+      nonFriend = (
+        <div className="non-friend">
+          {this.props.selectedUserFullName}
+        </div>
+      )
+    }
+
     return (
       <div className="right-middle-messages" id="messageList">
+        {nonFriend}
         {messages}
         <br className="clear" />
       </div>
