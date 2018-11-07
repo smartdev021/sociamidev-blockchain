@@ -2,6 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 
+import axios from 'axios';
+
+import ConfigMain from '~/configs/main';
+
 import '~/src/theme/css/characterHouseSelection.css';
 
 class HouseEdit extends React.Component {
@@ -44,7 +48,22 @@ class HouseEdit extends React.Component {
   }
 
   handleHouseChange() {
+     this.props.afterUpdateHouse(this.props.charactersList[this.state.selectedIndex]);
+     const updatedCharacter = {
+        characterId: this.props.charactersList[this.state.selectedIndex]._id,
+        characterName: this.props.charactersList[this.state.selectedIndex].name,
+        characterImage: this.props.charactersList[this.state.selectedIndex].imageUrl,
+        characterIndex: this.state.selectedIndex
+     };
 
+     const data = {
+       id: this.props.userProfileId,
+       updatedCharacter: updatedCharacter
+     };
+     axios
+     .post(`${ConfigMain.getBackendURL()}/updateHouseUserProfile`, data)
+     .then(response => { })
+     .catch(error => { });
   }
 
   renderCharacters(characters, firstIndex, lastIndex) {
