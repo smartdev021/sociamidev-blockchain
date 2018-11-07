@@ -9,8 +9,7 @@
 
 .achievement-wrapper {
   position: absolute;
-  max-width: 500px;
-  height: 500px;
+  width: 100%;
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -130,6 +129,9 @@
 .achievement-top-img {
   width: 100%;
   padding-bottom: 33%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .achievement__modal-close-button {

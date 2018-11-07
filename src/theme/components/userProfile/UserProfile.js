@@ -846,6 +846,17 @@ class UserProfile extends Component {
     })
   };
 
+  afterUpdateHouse(data){
+    let character = this.state.character;
+    character.characterId = data._id;
+    character.characterImage = data.imageUrl;
+    character.characterName = data.name;
+    this.setState({
+      isHouseEdit: !this.state.isHouseEdit,
+      character: character
+    })
+  }
+
   render() {
     const { otherTabLoading, friendList } = this.state;
     let traitsNameLine;
@@ -1098,7 +1109,9 @@ class UserProfile extends Component {
         </div>
         <HouseEdit
           isHouseEdit={this.state.isHouseEdit}
+          afterUpdateHouse={(data) => this.afterUpdateHouse(data)}
           handleHouseEditModal={this.handleHouseEditModal.bind(this)}
+          userProfileId={this.props.userProfile._id}
         />
       </div>
     );
