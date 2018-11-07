@@ -1474,7 +1474,7 @@ html, body {
 }
 
 /* Pencil icon on hover for company tab */
-div#stories table.table tbody tr{
+div#stories table.table tbody tr td.hover-pencil{
     cursor: url(https://s3-ap-southeast-1.amazonaws.com/stg.soqqle.com/pointer-white.png), auto;
 }
 

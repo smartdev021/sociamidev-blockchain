@@ -481,17 +481,17 @@ class Company extends Component {
 
   /* Handle Editable TR click event */
   async onClickEditable(e){
-    // if(this.state.editableStoryKey != ""){
-    //   this.setState({ editableStoryKey: "" });
-    // } else {
-       if(this.state.editableStoryKey != e.currentTarget.dataset.key){
-        this.setState({ storiesDataBackup: this.state.storiesData, editableStoryKey: e.currentTarget.dataset.key, editableStoryIndex: e.currentTarget.dataset.index }); //make tr editable in story table
-      } else {
-        message.success(`Data edited successfully.`);
+    if(this.state.editableStoryKey != ""){
         await this.props.updateStory(this.state.storiesData[this.state.editableStoryIndex]);
         this.setState({ editableStoryKey: "" }); //make tr non-editable on doubleclick     
-      }
-   // }
+        message.success(`Data edited successfully.`);
+    } else {
+       //if(this.state.editableStoryKey != e.currentTarget.dataset.key){
+        this.setState({ storiesDataBackup: this.state.storiesData, editableStoryKey: e.currentTarget.dataset.key, editableStoryIndex: e.currentTarget.dataset.index }); //make tr editable in story table
+      //} else {
+        
+      //}
+    }
   }
 
   /* Prevent child element click to update state */
@@ -564,6 +564,8 @@ class Company extends Component {
     const { company, questions, questionCount, storiesData, storiesCount, message } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
+        <p dangerouslySetInnerHTML={{ __html: nl2br(message ? message : '') }} />
+      
         <div className="row">
           <div className="container">
             <div className="row">
@@ -576,7 +578,6 @@ class Company extends Component {
 
                 <div className="col-middle company-middle-wrapper ml-fixed">
                   <div className="col-box-wp wider-strip mb-20 p-0">
-                    <p dangerouslySetInnerHTML={{ __html: nl2br(message ? message : '') }} />
                     <ul className="tab-wp">
                       <li className={this.state.IsAchievementOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleAchievementOption}>Achievement</a></li>
                       <li className={this.state.IsStoryOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleStoryOption}>Story</a></li>
@@ -704,7 +705,7 @@ class Company extends Component {
                                             showUploadList={false}
                                             key={`upload${que._id}`}
                                           >
-                                            <Button key={`btn${que._id}`}>
+                                            <Button data-imagebutton="true" key={`btn${que._id}`}>
                                               <Icon type="upload" key={`icon${que._id}`}/>Upload
                                             </Button>
                                           </Upload></td>
@@ -720,10 +721,10 @@ class Company extends Component {
                                     return(
                                       <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
                                         <td><input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedStory} /></td>
-                                        <td>{que.skill}</td>
-                                        <td>{que.description}</td>
-                                        <td>{que.category}</td>
-                                        <td>{que.subCategory}</td>
+                                        <td className="hover-pencil">{que.skill}</td>
+                                        <td className="hover-pencil">{que.description}</td>
+                                        <td className="hover-pencil">{que.category}</td>
+                                        <td className="hover-pencil">{que.subCategory}</td>
                                         <td>{que.relatedTopics}</td>
                                         <td>{que._achievements[0]}</td>
                                         <td><Img key={`${new Date()}${que._id}`}
@@ -738,16 +739,16 @@ class Company extends Component {
                                             showUploadList={false}
                                             key={`upload${que._id}`}
                                           >
-                                            <Button key={`btn${que._id}`}>
+                                            <Button key={`btn${que._id}`} >
                                               <Icon type="upload" key={`icon${que._id}`}/>Upload
                                             </Button>
                                           </Upload></td>
                                         <td>{que._objective ? que._objective.name : ''}</td>
-                                        <td>{que.objectiveValue}</td>
+                                        <td className="hover-pencil">{que.objectiveValue}</td>
                                         <td>{que.reward ? que.reward.type : ''}</td>
                                         <td>{que.reward ? que.reward.value : ''}</td>
-                                        <td>{que.quota}</td>
-                                        <td>{que.refresh}</td>
+                                        <td className="hover-pencil">{que.quota}</td>
+                                        <td className="hover-pencil">{que.refresh}</td>
                                       </tr>
                                     )                                                
                                   } 
