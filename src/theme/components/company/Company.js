@@ -70,7 +70,8 @@ class Company extends Component {
       storiesCount: 10,
       editableStoryKey: "",
       editableStoryIndex: "",
-      selectedStoryKeys: []
+      selectedStoryKeys: [],
+      IsSettingsOpen:'none'
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -93,6 +94,7 @@ class Company extends Component {
     this.addStory = this.addStory.bind(this);
     this.removeStory = this.removeStory.bind(this);
     this.setSelectedStory = this.setSelectedStory.bind(this);
+    this.toggleSettingsOption = this.toggleSettingsOption.bind(this);
   }
 
   togglePage(page) {
@@ -155,6 +157,8 @@ class Company extends Component {
         return <AddChallenge onClose={() => this.handleChallengeClose()} onSubmit={() => this.handleChallengeSubmit()} />;
       case "ApproveChallenge":
         return <ApproveChallenge onClose={() => this.handleChallengeClose()} profilePic={this.state.profilePic} />;
+      case "Settings":
+        return <div/>;
     }
   }
 
@@ -284,10 +288,10 @@ class Company extends Component {
     });
   }
   toggleQuestionsOption(){
-    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none', IsStoryOpen: 'none', IsChallengeOpen: 'none' });
+    this.setState({IsQuestionsOpen: 'block',IsAchievementOpen: 'none', IsStoryOpen: 'none', IsChallengeOpen: 'none',IsSettingsOpen:'none' });
   }
   toggleAchievementOption(){
-    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block', IsStoryOpen: 'none', IsChallengeOpen: 'none' });
+    this.setState({ IsQuestionsOpen: 'none', IsAchievementOpen: 'block', IsStoryOpen: 'none', IsChallengeOpen: 'none',IsSettingsOpen:'none' });
   }
   toggleChallengesOption() {
     var that = this;
@@ -299,15 +303,25 @@ class Company extends Component {
       }
     }).catch(function(error) { console.log(error) });
     }
-    this.setState({ IsQuestionsOpen: 'none', IsStoryOpen:'none', IsChallengeOpen: 'block', IsAchievementOpen: 'none', currentPage: "MyChallenges" });
+    this.setState({ IsQuestionsOpen: 'none', IsStoryOpen:'none', IsChallengeOpen: 'block', IsAchievementOpen: 'none', currentPage: "MyChallenges",IsSettingsOpen:'none' });
    }
 	toggleStoryOption(){
-    this.setState({IsStoryOpen: 'block', IsAchievementOpen: 'none', IsQuestionsOpen: 'none', IsChallengeOpen: 'none'})
+    this.setState({IsStoryOpen: 'block', IsAchievementOpen: 'none', IsQuestionsOpen: 'none', IsChallengeOpen: 'none',IsSettingsOpen:'none'})
   }
   selectAddTeamGroup(addTeamGroup) {
     this.setState({
       addTeamGroupActive: !this.state.addTeamGroupActive,
       addTeamGroup
+    });
+  }
+  toggleSettingsOption() {
+    this.setState({
+      IsQuestionsOpen: 'none',
+      IsStoryOpen:'none',
+      IsChallengeOpen: 'none',
+      IsAchievementOpen: 'none',
+      IsSettingsOpen: 'block',
+      currentPage: "Settings"
     });
   }
 
@@ -584,6 +598,9 @@ class Company extends Component {
                       <li><a href="#">Benefits</a></li>
                       <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
                       <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
+                      <li className={this.state.IsSettingsOpen == 'block' ? 'active' : ''}>
+                        <a href="javascript:;" onClick={this.toggleSettingsOption}>Settings</a>
+                      </li>
                       <li style={{float: 'right'}}>
                       <img src={undoimg} onClick={this.undoStoryData} />
                       <img style={{marginLeft: '7px'}} src={plus} onClick={this.addStory}  />
