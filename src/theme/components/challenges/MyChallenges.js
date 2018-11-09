@@ -17,6 +17,11 @@ const Challenges = (props) => {
               <th>Refresh</th>
               <th>Quota</th>
               <th>Public/Private</th>
+              <th>Type</th>
+              <th>Type Detail</th>
+              <th>Requirement</th>
+              <th>Requirement Value</th>
+              <th>Group</th>
             </tr>
           </thead>
           <tbody>
@@ -34,6 +39,11 @@ const Challenges = (props) => {
               <td>{que.refresh ? que.refresh : ''}</td>
               <td>{que.quota ? que.quota : ''}</td>
               <td>{que.access ? que.access : ''}</td>
+              <td>{que.type ? que.type : ''}</td>
+              <td>{que.typeDetail ? que.typeDetail : ''}</td>
+              <td>{que.requirement ? que.requirement : ''}</td>
+              <td>{que.requirementValue ? que.requirementValue : ''}</td>
+              <td>{que.group ? que.group : ''}</td>
             </tr>
             )
           })
