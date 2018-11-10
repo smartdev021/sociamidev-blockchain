@@ -676,6 +676,7 @@ class Company extends Component {
                           <thead>
                             <tr>
                               <th></th>
+                              <th>Name</th>
                               <th>Skill</th>
                               <th>Description</th>
                               <th>Category</th>
@@ -698,6 +699,7 @@ class Company extends Component {
                                 return(
                                   <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
                                     <td></td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="name" value={que.name} /></td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="description" value={que.description} /></td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="category" value={que.category} /></td>

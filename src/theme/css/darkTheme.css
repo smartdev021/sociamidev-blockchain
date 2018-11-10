@@ -906,6 +906,7 @@ input:focus {
 .mychallenges-wrapper .col-middle .table > thead > tr > th {
   font-weight: 600;
   border-bottom: 0;
+  vertical-align: middle;
 }
 .mychallenges-wrapper .col-middle .top-heading {
   font-size: 18px;

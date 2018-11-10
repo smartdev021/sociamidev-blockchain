@@ -14,6 +14,8 @@ export class AddChallenge extends Component {
       isCompanyClose: true,
       isAccessClose: true,
       isRefreshClose: true, 
+      isRequiredClose: true,
+      isRequiredValueClose: true,
       reward: 'Token',
       company: 'Soqqle1',
       access: 'private',
@@ -22,13 +24,23 @@ export class AddChallenge extends Component {
       description: '',
       success: '',
       rewardValue: '',
-      quota: ''
+      quota: '',
+      requirement: 'Achievement',
+      requirementValue: '',
+      lstStories: [],
+      lstAchievements: [],
+      type: '',
+      typeDetail: '',
+      group: ''
     };
     this.updateName = this.updateName.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
     this.updateSuccess = this.updateSuccess.bind(this);
     this.updateQuota = this.updateQuota.bind(this);
     this.updateRewardValue = this.updateRewardValue.bind(this);
+    this.updateTypeValue = this.updateTypeValue.bind(this);
+    this.updateTypeDetailValue = this.updateTypeDetailValue.bind(this);
+    this.updateGroupValue = this.updateGroupValue.bind(this);
   }
 
   toggleValidationState() {
@@ -71,6 +83,24 @@ export class AddChallenge extends Component {
     });
   }
 
+  updateTypeValue(event){
+    this.setState({
+      type: event.target.value
+    });
+  }
+
+  updateTypeDetailValue(event){
+    this.setState({
+      typeDetail: event.target.value
+    });
+  }
+
+  updateGroupValue(event){
+    this.setState({
+      group: event.target.value
+    });
+  }
+
   submitChallenges() {
     if (this.state.name == '' || this.state.description == '' || this.state.success == '') {
       this.setState({ message: '* Name, Description, Success are mandatory' });
@@ -89,7 +119,12 @@ export class AddChallenge extends Component {
       company: this.state.company,
       refresh: this.state.refresh,
       quota: this.state.quota,
-      access: this.state.access
+      access: this.state.access,
+      type: this.state.type,
+      typeDetail: this.state.typeDetail,
+      requirement: this.state.requirement,
+      requirementValue: this.state.requirementValue,
+      group: this.state.group
     })
       .then(response => {
         this.setState({ message: null });
@@ -130,6 +165,94 @@ export class AddChallenge extends Component {
               <div
                 onClick={ () => this.selectValidation(validation.label) } key={ i }>
                 { validation.label }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  selectRequirement(req) {
+    this.setState({
+      isRequiredClose: !this.state.isRequiredClose,
+      requirement: req
+    });
+  }
+
+  toggleRequirementState() {
+    this.setState({
+      isRequiredClose: !this.state.isRequiredClose
+    });
+  }
+
+  renderRequirementSelect(options){
+    return (
+      <div className="custom-select challenge-select">
+        <select>
+          {options.map((req, i) => {
+            return(
+              <option value={ req.value } key={ i }>{ req.label }</option>
+            )
+          })}
+        </select>
+        <div
+          className={ !this.state.isRequiredClose ? 'select-selected select-arrow-active' : 'select-selected' }
+          onClick={ () => this.toggleRequirementState() }>
+          { this.state.requirement }
+        </div>
+
+        <div
+          className={ this.state.isRequiredClose ? 'select-items select-hide' : 'select-items' }>
+          {options.map((req, i) => {
+            return(
+              <div
+                onClick={ () => this.selectRequirement(req.label) } key={ i }>
+                { req.label }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  selectRequirementValue(reqValue) {
+    this.setState({
+      isRequiredValueClose: !this.state.isRequiredValueClose,
+      requirementValue: reqValue
+    });
+  }
+
+  toggleRequirementValueState() {
+    this.setState({
+      isRequiredValueClose: !this.state.isRequiredValueClose
+    });
+  }
+
+  renderRequirementValueSelect(options){
+    return (
+      <div className="custom-select challenge-select">
+        <select>
+          {options.map((req, i) => {
+            return(
+              <option value={ req.value } key={ i }>{ req.label }</option>
+            )
+          })}
+        </select>
+        <div
+          className={ !this.state.isRequiredValueClose ? 'select-selected select-arrow-active' : 'select-selected' }
+          onClick={ () => this.toggleRequirementValueState() }>
+          { this.state.requirementValue }
+        </div>
+
+        <div
+          className={ this.state.isRequiredValueClose ? 'select-items select-hide' : 'select-items' }>
+          {options.map((req, i) => {
+            return(
+              <div
+                onClick={ () => this.selectRequirementValue(req.label) } key={ i }>
+                { req.label }
               </div>
             )
           })}
@@ -315,6 +438,38 @@ export class AddChallenge extends Component {
     );
   }
 
+  getStories(){
+    Axios.get(`${ConfigMain.getBackendURL()}/storiesGetAll`)
+      .then(response => {
+        const stories = response.data.filter(item => item.name).map(item => {
+          return {
+            value: item.name, 
+            label: item.name
+          }
+        })
+        this.setState({ lstStories: stories });
+      })
+      .catch(err => {});
+  }
+
+  getAchievements(){
+    Axios.get(`${ConfigMain.getBackendURL()}/achievements`)
+      .then(response => {
+        const achievements = response.data.filter(item => item.name).map(item => {
+          return {
+            value: item.name, 
+            label: item.name
+          }
+        })
+        this.setState({ lstAchievements: achievements });
+      })
+      .catch(err => {});
+  }
+  componentDidMount(){
+     this.getStories();
+     this.getAchievements();
+  }
+
   render() {
     return (
       <div className="col-middle ml-fixed">
@@ -381,7 +536,6 @@ export class AddChallenge extends Component {
                       ])
                     }
                   </div>
-
                   <div className="col-sm-4 pl-7 challege-right">
                     <input value={this.state.quota} onChange={this.updateQuota} type="text" className="form-control" placeholder="Quota" />
                   </div>
@@ -397,6 +551,32 @@ export class AddChallenge extends Component {
                         { value: "public", label: "public" }
                       ])
                     }
+                  </div>
+                  <div className="col-sm-4 pl-7 pt-3">
+                    <input value={this.state.type} style={{width: '178px'}} onChange={this.updateTypeValue} type="text" className="form-control" placeholder="Type" />
+                  </div>
+                  <div className="col-sm-4 pl-7 challege-right">
+                    <input value={this.state.typeDetail} onChange={this.updateTypeDetailValue} type="text" className="form-control" placeholder="Type Detail" />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-12">
+                <div className="row">
+                  <div className="col-sm-4 pr-7 pt-3">
+                    {
+                      this.renderRequirementSelect([
+                        { value: "Achievement", label: "Achievement" },
+                        { value: "Story", label: "Story" }
+                      ])
+                    }
+                  </div>
+                  <div className="col-sm-4 pr-7 pt-3">
+                  {
+                      this.renderRequirementValueSelect(this.state.requirement == 'Achievement' ? this.state.lstAchievements : this.state.lstStories)
+                  }
+                </div>
+                  <div className="col-sm-4 pl-7 challege-right">
+                    <input value={this.state.group} onChange={this.updateGroupValue} type="text" className="form-control" placeholder="Group" />
                   </div>
                 </div>
               </div>
