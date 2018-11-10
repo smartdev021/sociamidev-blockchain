@@ -1,0 +1,67 @@
+.company-holder .col-box-wp{
+  float: unset;
+}
+.achievement-holder{
+  width: auto;
+  max-width: 594px;
+}
+.ThemeSettings-holder{
+
+}
+.ThemeSettings-box{
+  border: 1px solid #0690f7;
+  box-shadow: 0 0 5.53px 1.47px rgba(73,177,255,.53);
+  background: #111222;
+  padding: 20px 30px;
+  max-width: 650px;
+}
+.ThemeSettings-box-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ThemeSettings-box-header h3{
+  color: #0066bb;
+}
+.ThemeSettings-box-header-icon{
+  color: #ffd400;
+}
+.ThemeSettings-form-holder{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid;
+  flex-wrap: wrap;
+}
+.ThemeSettings-form-row{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.ThemeSettings-form-row input{
+  margin-left: 30px;
+}
+.ThemeSettings-option{
+  margin-top: 15px;
+}
+.ThemeSettings-form-label{
+  color: white;
+}
+.ThemeSettings-gamifi{
+  margin-top: 15px;
+}
+
+/* Light theme */
+.light-theme-wrapper .ThemeSettings-box{
+  background: #fff;
+}
+.light-theme-wrapper .ThemeSettings-form-label{
+  color: black;
+}
+
+@media (max-width: 767px) {
+  .company-holder{
+    margin: 0 30px;
+  }
+}

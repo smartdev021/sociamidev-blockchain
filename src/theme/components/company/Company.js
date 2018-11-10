@@ -17,6 +17,7 @@ import Team from './Team';
 import '~/src/theme/css/darkTheme.css';
 import '~/src/theme/css/lightTheme.css';
 import '~/src/theme/css/teams.css';
+import '~/src/theme/css/company.css';
 
 import { updateCompany } from '~/src/redux/actions/company';
 import { fetchTeams, addNewTeam, saveTeam, addTeamEmail, updateTeamEmail, deleteTeam, cancelTeam } from '~/src/redux/actions/teams';
@@ -35,6 +36,7 @@ import RightSection from '~/src/theme/components/homepage/RightSection';
 import MyChallenges from '~/src/theme/components/challenges/MyChallenges';
 import AddChallenge from '~/src/theme/components/challenges/AddChallenge';
 import ApproveChallenge from '~/src/theme/components/challenges/ApproveChallenge';
+import ThemeSettings from './ThemeSettings';
 
 const profilePic = 'https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png';
 
@@ -157,8 +159,6 @@ class Company extends Component {
         return <AddChallenge onClose={() => this.handleChallengeClose()} onSubmit={() => this.handleChallengeSubmit()} />;
       case "ApproveChallenge":
         return <ApproveChallenge onClose={() => this.handleChallengeClose()} profilePic={this.state.profilePic} />;
-      case "Settings":
-        return <div/>;
     }
   }
 
@@ -321,7 +321,6 @@ class Company extends Component {
       IsChallengeOpen: 'none',
       IsAchievementOpen: 'none',
       IsSettingsOpen: 'block',
-      currentPage: "Settings"
     });
   }
 
@@ -583,37 +582,32 @@ class Company extends Component {
         <div className="row">
           <div className="container">
             <div className="row">
-              <div className="row">
-                <LeftNav
-                  accounting={this.props.accounting}
-                  userProfile={userProfile}
-                  profilePic={userProfile.pictureURL ? userProfile.pictureURL : profilePic} 
-                />
-
-                <div className="col-middle company-middle-wrapper ml-fixed">
-                  <div className="col-box-wp wider-strip mb-20 p-0">
-                    <ul className="tab-wp">
-                      <li className={this.state.IsAchievementOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleAchievementOption}>Achievement</a></li>
-                      <li className={this.state.IsStoryOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleStoryOption}>Story</a></li>
-                      <li><a href="#">Benefits</a></li>
-                      <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
-                      <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
-                      <li className={this.state.IsSettingsOpen == 'block' ? 'active' : ''}>
-                        <a href="javascript:;" onClick={this.toggleSettingsOption}>Settings</a>
-                      </li>
-                      <li style={{float: 'right'}}>
+              <div className="row company-holder">
+                <div className="col-box-wp wider-strip mb-20 p-0">
+                  <ul className="tab-wp">
+                    <li className={this.state.IsAchievementOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleAchievementOption}>Achievement</a></li>
+                    <li className={this.state.IsStoryOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleStoryOption}>Story</a></li>
+                    <li><a href="#">Benefits</a></li>
+                    <li className={this.state.IsQuestionsOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleQuestionsOption}>Questions</a></li>
+                    <li className={this.state.IsChallengeOpen == 'block' ? 'active' : ''}><a href="javascript:;" onClick={this.toggleChallengesOption}>Challenges</a></li>
+                    <li className={this.state.IsSettingsOpen == 'block' ? 'active' : ''}>
+                      <a href="javascript:;" onClick={this.toggleSettingsOption}>Settings</a>
+                    </li>
+                    <li style={{float: 'right'}}>
                       <img src={undoimg} onClick={this.undoStoryData} />
                       <img style={{marginLeft: '7px'}} src={plus} onClick={this.addStory}  />
                       <img style={{margin: '0px 7px'}} src={cross} onClick={this.removeStory} />
-                        <label htmlFor="upload-input">
-                          <img src={cloud}/>
-                          <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} /> 
-                        </label>
-                        <img style={{marginLeft: '7px'}} src={deleteimg}/>
-                      </li>
-                    </ul>
-                  </div>                 
-                  <div style={{ display: this.state.IsAchievementOpen }}>
+                      <label htmlFor="upload-input">
+                        <img src={cloud}/>
+                        <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} />
+                      </label>
+                      <img style={{marginLeft: '7px'}} src={deleteimg}/>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="company-middle-wrapper">
+                  <div className="achievement-holder" style={{ display: this.state.IsAchievementOpen }}>
                     <div className="theme-box-right">
                       <div className="box">
                         <div className="devider-box">
@@ -674,120 +668,120 @@ class Company extends Component {
                     </div>
                   </div>
                 </div>
-                <div style={{ display: this.state.IsStoryOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
+                <div style={{ display: this.state.IsStoryOpen }} className="questions company-middle-wrapper">
                   <div id="stories" className="theme-box-right">
                     <div className="box" style={{ padding: '1px' }}>
-                          <div className="table-responsive">
-                            <table className="table table-bordered">
-                              <thead>
-                                <tr>
-                                  <th></th>
-                                  <th>Skill</th>
-                                  <th>Description</th>
-                                  <th>Category</th>
-                                  <th>SubCategory</th>
-                                  <th>Related Topics</th>
-                                  <th>Achievements</th>
-                                  <th>Image</th>
-                                  <th>Objective</th>
-                                  <th>Objective Value</th>
-                                  <th>Reward</th>
-                                  <th>Reward Value</th>
-                                  <th>Quota</th>
-                                  <th>Refresh</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                              {
-                                _.map(storiesData,(que, index)=>{
-                                  if(this.state.editableStoryKey === que._id) {
-                                    return(
-                                      <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
-                                        <td></td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="description" value={que.description} /></td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="category" value={que.category} /></td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="subCategory" value={que.subCategory} /></td>
-                                        <td>{que.relatedTopics}</td>
-                                        <td>{que._achievements[0]}</td>
-                                        <td><Img key={`${new Date()}${que._id}`}
-                                            src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
-                                            style={{maxWidth: 90, maxHeight: 90}}
-                                          />
-                                          <Upload 
-                                            name="image"
-                                            listType="picture"
-                                            action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
-                                            onChange= {this.onHandleUploadStoryImg}
-                                            showUploadList={false}
-                                            key={`upload${que._id}`}
-                                          >
-                                            <Button data-imagebutton="true" key={`btn${que._id}`}>
-                                              <Icon type="upload" key={`icon${que._id}`}/>Upload
-                                            </Button>
-                                          </Upload></td>
-                                        <td>{que._objective ? que._objective.name : ''}</td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="objectiveValue" value={que.objectiveValue} /></td>
-                                        <td>{que.reward ? que.reward.type : ''}</td>
-                                        <td>{que.reward ? que.reward.value : ''}</td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="quota" value={que.quota} /></td>
-                                        <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="refresh" value={que.refresh} /></td>
-                                      </tr>
-                                    )
-                                  } else {
-                                    return(
-                                      <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
-                                        <td><input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedStory} /></td>
-                                        <td className="hover-pencil">{que.skill}</td>
-                                        <td className="hover-pencil">{que.description}</td>
-                                        <td className="hover-pencil">{que.category}</td>
-                                        <td className="hover-pencil">{que.subCategory}</td>
-                                        <td>{que.relatedTopics}</td>
-                                        <td>{que._achievements[0]}</td>
-                                        <td><Img key={`${new Date()}${que._id}`}
-                                            src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
-                                            style={{maxWidth: 90, maxHeight: 90}}
-                                          />
-                                          <Upload 
-                                            name="image"
-                                            listType="picture"
-                                            action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
-                                            onChange= {this.onHandleUploadStoryImg}
-                                            showUploadList={false}
-                                            key={`upload${que._id}`}
-                                          >
-                                            <Button key={`btn${que._id}`} >
-                                              <Icon type="upload" key={`icon${que._id}`}/>Upload
-                                            </Button>
-                                          </Upload></td>
-                                        <td>{que._objective ? que._objective.name : ''}</td>
-                                        <td className="hover-pencil">{que.objectiveValue}</td>
-                                        <td>{que.reward ? que.reward.type : ''}</td>
-                                        <td>{que.reward ? que.reward.value : ''}</td>
-                                        <td className="hover-pencil">{que.quota}</td>
-                                        <td className="hover-pencil">{que.refresh}</td>
-                                      </tr>
-                                    )                                                
-                                  } 
-                                  
-                                })
-                              }                              
-                              </tbody>
-                            </table>
-                          </div>                  
+                      <div className="table-responsive">
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Skill</th>
+                              <th>Description</th>
+                              <th>Category</th>
+                              <th>SubCategory</th>
+                              <th>Related Topics</th>
+                              <th>Achievements</th>
+                              <th>Image</th>
+                              <th>Objective</th>
+                              <th>Objective Value</th>
+                              <th>Reward</th>
+                              <th>Reward Value</th>
+                              <th>Quota</th>
+                              <th>Refresh</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {
+                            _.map(storiesData,(que, index)=>{
+                              if(this.state.editableStoryKey === que._id) {
+                                return(
+                                  <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
+                                    <td></td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="description" value={que.description} /></td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="category" value={que.category} /></td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="subCategory" value={que.subCategory} /></td>
+                                    <td>{que.relatedTopics}</td>
+                                    <td>{que._achievements[0]}</td>
+                                    <td><Img key={`${new Date()}${que._id}`}
+                                        src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
+                                        style={{maxWidth: 90, maxHeight: 90}}
+                                      />
+                                      <Upload
+                                        name="image"
+                                        listType="picture"
+                                        action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
+                                        onChange= {this.onHandleUploadStoryImg}
+                                        showUploadList={false}
+                                        key={`upload${que._id}`}
+                                      >
+                                        <Button data-imagebutton="true" key={`btn${que._id}`}>
+                                          <Icon type="upload" key={`icon${que._id}`}/>Upload
+                                        </Button>
+                                      </Upload></td>
+                                    <td>{que._objective ? que._objective.name : ''}</td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="objectiveValue" value={que.objectiveValue} /></td>
+                                    <td>{que.reward ? que.reward.type : ''}</td>
+                                    <td>{que.reward ? que.reward.value : ''}</td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="quota" value={que.quota} /></td>
+                                    <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="refresh" value={que.refresh} /></td>
+                                  </tr>
+                                )
+                              } else {
+                                return(
+                                  <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
+                                    <td><input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedStory} /></td>
+                                    <td className="hover-pencil">{que.skill}</td>
+                                    <td className="hover-pencil">{que.description}</td>
+                                    <td className="hover-pencil">{que.category}</td>
+                                    <td className="hover-pencil">{que.subCategory}</td>
+                                    <td>{que.relatedTopics}</td>
+                                    <td>{que._achievements[0]}</td>
+                                    <td><Img key={`${new Date()}${que._id}`}
+                                        src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/storyImages/${que._id}`}
+                                        style={{maxWidth: 90, maxHeight: 90}}
+                                      />
+                                      <Upload
+                                        name="image"
+                                        listType="picture"
+                                        action={`${ConfigMain.getBackendURL()}/story/${que._id}/upload-image`}
+                                        onChange= {this.onHandleUploadStoryImg}
+                                        showUploadList={false}
+                                        key={`upload${que._id}`}
+                                      >
+                                        <Button key={`btn${que._id}`} >
+                                          <Icon type="upload" key={`icon${que._id}`}/>Upload
+                                        </Button>
+                                      </Upload></td>
+                                    <td>{que._objective ? que._objective.name : ''}</td>
+                                    <td className="hover-pencil">{que.objectiveValue}</td>
+                                    <td>{que.reward ? que.reward.type : ''}</td>
+                                    <td>{que.reward ? que.reward.value : ''}</td>
+                                    <td className="hover-pencil">{que.quota}</td>
+                                    <td className="hover-pencil">{que.refresh}</td>
+                                  </tr>
+                                )
+                              }
+
+                            })
+                          }
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                     <Pagination
-                            key={'pagingStory'}
-                            hideNavigation
-                            activePage={this.state.activeStoryPage}
-                            itemsCountPerPage={10}
-                            totalItemsCount={storiesCount}
-                            pageRangeDisplayed={5}
-                            onChange={(pageNumber) => this.handlePageStoryChange(pageNumber)}
-                          />        
+                        key={'pagingStory'}
+                        hideNavigation
+                        activePage={this.state.activeStoryPage}
+                        itemsCountPerPage={10}
+                        totalItemsCount={storiesCount}
+                        pageRangeDisplayed={5}
+                        onChange={(pageNumber) => this.handlePageStoryChange(pageNumber)}
+                      />
                   </div>
                 </div>
-                <div style={{ display: this.state.IsQuestionsOpen }} className="col-middle questions company-middle-wrapper ml-fixed">
+                <div style={{ display: this.state.IsQuestionsOpen }} className="questions company-middle-wrapper">
                   <div id="questions" className="theme-box-right">
                     <div className="box" style={{ padding: '1px' }}>
                           <div className="table-responsive">
@@ -876,18 +870,21 @@ class Company extends Component {
                           />        
                   </div>
                 </div>
-                <div style={{ display: this.state.IsChallengeOpen }}> 
+                <div style={{ display: this.state.IsChallengeOpen }}>
                  <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper challenges-top profile-wrapper mychallenges-wrapper main-bg`}>
-        <div className="row">
-          <div className="container">
-            <div className="row">
-              <div className="row">
-                 <div>{ this.section() }</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                  <div className="row">
+                    <div className="container">
+                      <div className="row">
+                        <div className="row">
+                          <div>{ this.section() }</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+                <div style={{ display: this.state.IsSettingsOpen }}>
+                  <ThemeSettings/>
                 </div>
               </div>
             </div>

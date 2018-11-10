@@ -321,7 +321,6 @@
 #questions.theme-box-right, #stories.theme-box-right {
     border: none !important;
     box-shadow: none !important;
-    width: 895px !important;
 }
 #questions .table, #stories .table {
     margin-bottom: unset !important ;
