@@ -21,7 +21,7 @@ class Challenges extends React.Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`, 0);
+      message.success(`${info.file.name} file uploaded successfully`);
      
       this.setState({isUploaded: true}); //re-render image
     } else if (info.file.status === 'error') {
