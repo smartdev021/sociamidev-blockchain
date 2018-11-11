@@ -23,6 +23,10 @@ class ThemeSettings extends Component{
                 <input/>
               </div>
               <div className="ThemeSettings-form-row">
+                <div className="ThemeSettings-form-label">Background2</div>
+                <input/>
+              </div>
+              <div className="ThemeSettings-form-row">
                 <div className="ThemeSettings-form-label">Accent</div>
                 <input/>
               </div>
