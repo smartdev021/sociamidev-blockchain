@@ -11,6 +11,9 @@
 }
 .progression-tree-skill-list{
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .progression-tree-skill-container{
     padding-top: 20px;
@@ -373,7 +376,7 @@
         padding-left: 10px;
     }
     .progression-tree-skill-list{
-        
+      display: block;
     }
     .progression-tree-skill-card {
         padding-right: 20px;

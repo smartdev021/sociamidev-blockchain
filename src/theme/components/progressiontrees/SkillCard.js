@@ -584,7 +584,7 @@ class SkillCard extends React.Component {
     const VideoPanel = this.state.openVideo ? this.renderVideo() : null;
     const imgJson = this.getImgUrl(skillItem.heroimg);
     return (
-      <div className="col-md-6 col-sm-12 progression-tree-skill-container">
+      <div className="col-md-5 col-sm-12 progression-tree-skill-container">
         {VideoPanel}
 
         <HangoutSubmitForm
