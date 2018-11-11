@@ -1679,3 +1679,17 @@ input:focus {
     float: right;
   }
 }
+
+.ach-complete {
+  color: #ffa300 !important;
+  font-weight: 500;
+  font-size: 17px !important;
+  padding: 10px;
+}
+
+.ach-in-progress {
+  color: #0069be !important;
+  font-weight: 500;
+  font-size: 17px !important;
+  padding: 10px;
+}

@@ -37,6 +37,25 @@ class Achievements extends Component {
     this.setState({ currentAchievementsGroup: index });
   }
 
+  getProgress(achievement) {
+    let achievementInfo = this.props.userProfile.userAchievements.achievements.filter(
+        info => info.achievementId === achievement._id,
+      );
+    if (achievementInfo.length > 0 && achievementInfo[0].status) {
+    return (
+      <p className="ach-complete">
+       COMPLETE
+       </p>
+      );
+    } else {
+    return (
+      <p className="ach-in-progress">
+       IN PROGRESS
+       </p>
+      );
+    }
+  }
+
   renderAchievementsGroupsByCompany() {
     const { currentAchievementsGroup } = this.state;
     let groups = this.getAchievementGroupsByCompany();
@@ -95,6 +114,7 @@ class Achievements extends Component {
               
               <h4>{achievement.name}</h4> 
               <p>{achievement.result}</p>
+              {this.getProgress(achievement)}
               {achievement.conditions.map(requirement => {
                 return (
                   <a key={ requirement._id } href="#">

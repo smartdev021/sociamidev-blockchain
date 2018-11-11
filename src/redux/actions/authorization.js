@@ -406,7 +406,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
       url = `${ConfigMain.getBackendURL()}/fetchUserProfileById?id=${id}`;
     }
 
-    const userAchievementsUrl = `${ConfigMain.getBackendURL()}/userAchievementTemp`;
+    const userAchievementsUrl = `${ConfigMain.getBackendURL()}/userAchievement/${id}`;
 
     return Axios.get(url)
       .then(function(response) {
