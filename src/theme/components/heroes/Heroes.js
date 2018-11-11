@@ -11,7 +11,6 @@ import { Icon } from 'react-fa';
 import Async from 'async';
 import Countdown from 'react-countdown-now';
 
-import LeftNav from '~/src/theme/components/homepage/LeftNav';
 
 import ActionLink from '~/src/components/common/ActionLink';
 import DetailsPopup from '~/src/theme/components/DetailsPopupLatestTask';
@@ -436,13 +435,7 @@ class Heroes extends React.Component {
           <div className='container'>
             <div className='row'>
               <div className='row'>
-                <LeftNav
-                  accounting={this.props.accounting}
-                  userProfile={this.props.userProfile}
-                  profilePic={this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic}
-                />
-
-                <div className='ml-fixed'>
+                <div className=''>
                   <div className="row progression-tree-header-box">
                     {/* <div className="progression-tree-header">
                       <b>My progression skills</b>

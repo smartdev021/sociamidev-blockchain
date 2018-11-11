@@ -14,8 +14,6 @@ import ConfigMain from '~/configs/main';
 
 import PropTypes from 'prop-types';
 
-import LeftNav from '~/src/theme/components/homepage/LeftNav';
-import RightSection from '~/src/theme/components/homepage/RightSection';
 import RightAnswerSection from '~/src/theme/components/homepage/RightAnswerSection';
 import MyTasks from '~/src/theme/components/tasks/MyTasks';
 
@@ -758,26 +756,9 @@ class Tasks extends React.Component {
           <div className="container">
             <div className="row">
               <div className="row">
-                {!this.props.activeHangout ? (
-                  <LeftNav
-                    accounting={this.props.accounting}
-                    userProfile={this.props.userProfile}
-                    profilePic={
-                      this.props.userProfile.pictureURL ? this.props.userProfile.pictureURL : profilePic
-                    }
-                  />
-                ) : null
-                }
-
                 {this.props.activeHangout ? (
                   <RightAnswerSection getLoadURL={url => this.getLoadURL(url)} />
-                ) : (
-                  <RightSection
-                    skills={this.props.skills}
-                    roadmapsAdmin={this.props.roadmapsAdmin}
-                    userProfile={this.props.userProfile}
-                  />
-                )}
+                ) : null}
                 {this.props.activeHangout ? (
                   <AnswerQuestions
                     currentTask={this.props.activeHangout}

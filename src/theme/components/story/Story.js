@@ -9,8 +9,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-import LeftNav from '~/src/theme/components/homepage/LeftNav';
-import RightSection from '~/src/theme/components/homepage/RightSection';
 import Skills from './Skills';
 
 import TaskTypes from '~/src/common/TaskTypes';
@@ -102,18 +100,6 @@ class Story extends Component {
           <div className='container'>
             <div className='row'>
               <div className='row'>
-                <LeftNav
-                  accounting={this.props.accounting}
-                  userProfile={this.props.userProfile}
-                  profilePic={this.state.profilePic}
-                />
-
-                <RightSection
-                  skills={this.props.skills}
-                  roadmapsAdmin={this.props.roadmapsAdmin}
-                  userProfile={this.props.userProfile}
-                />
-
                 <div className='col-middle ml-fixed'>
                   {this.renderSkillBox(this.props.fetchedSkills)}
                 </div>
