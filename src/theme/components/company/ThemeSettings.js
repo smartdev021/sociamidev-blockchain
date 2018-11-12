@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 
 import ConfigMain from '~/configs/main';
+import Modal from 'react-modal';
 import Axios from 'axios';
 
 class ThemeSettings extends Component{
@@ -17,7 +18,8 @@ class ThemeSettings extends Component{
       accent3: '',
       gamified: 'default',
       settingsFetched: false,
-      settingsFinished: false
+      settingsFinished: false,
+      showModal: false
     };
     this.updateDominate = this.updateDominate.bind(this);
     this.updateBackground = this.updateBackground.bind(this);
@@ -27,6 +29,7 @@ class ThemeSettings extends Component{
     this.updateAccent3 = this.updateAccent3.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
 
   componentDidMount(){
     this.fetchThemes();
@@ -125,9 +128,36 @@ class ThemeSettings extends Component{
     });
   }
 
+  onCloseModal() {
+    this.setState({
+      showModal: false
+    });
+  }
+
   saveSettings() {
 
-    if(!this.state.settingsFetched) {
+    if (this.state.companyName && this.state.companyName != localStorage.getItem('company_name')) {
+      this.setState({
+      newCompany: true
+    });
+    }
+
+    this.setState({
+      companyName: localStorage.getItem('company_name')
+    });
+
+    this.setState({
+      showModal: true
+    });
+  }
+
+  submitSettings() {
+
+    this.setState({
+      showModal: false
+    });
+
+    if( this.state.newCompany || !this.state.settingsFetched ) {
       Axios.post(`${ConfigMain.getBackendURL()}/personalise`, {
       userType: 'Company',
       userValue: '1',
@@ -143,7 +173,8 @@ class ThemeSettings extends Component{
       .then(response => {
         this.fetchThemes();
         this.setState({
-          settingsFinished: true
+          settingsFinished: true,
+          newCompany: false
         });
       })
       .catch(err => {
@@ -228,8 +259,28 @@ class ThemeSettings extends Component{
               <option value="Low">Low</option>
             </select>
           </div>
+
+          <Modal
+        contentLabel=''
+        isOpen={this.state.showModal}
+        onRequestClose={() => this.onCloseModal()}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.85)'
+          },
+          content: {
+            textAlign: 'center',
+            background: 'black',
+            width: '500px'
+          }
+        }}>
+
+        <p className="confirm-submit"> You just submitted information for company {this.state.companyName}, are you sure? </p>
+
+        <button onClick={ () => this.submitSettings() } className="yellow-btn mtb-1 theme-submit-button">YES</button>
+      </Modal>
           
-          {this.state.settingsFinished ? <p className="settings-finished">Settings are updated sueccesfully</p> : null}
+          {this.state.settingsFinished ? <p className="settings-finished">Settings are updated successfully</p> : null}
           <div className="col-sm-12 text-center">
           <button onClick={ () => this.saveSettings() } className="yellow-btn mtb-1 theme-save-button">SAVE</button>
           </div>

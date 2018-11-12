@@ -84,3 +84,20 @@
   text-align: center;
   margin-bottom: 10px;
 }
+
+.confirm-submit {
+  color: white !important;
+}
+
+.theme-submit-button {
+  margin-top: 10px;
+  padding-left: 10px;
+  background: #00497d !important;
+  color: #ffd400;
+  font-size: 15px;
+  padding-right: 10px;
+  border: none;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: 1px solid #807853;
+}
