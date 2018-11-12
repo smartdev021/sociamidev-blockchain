@@ -14,6 +14,7 @@
   background: #111222;
   padding: 20px 30px;
   max-width: 650px;
+  height: 440px;
 }
 .ThemeSettings-box-header{
   display: flex;
@@ -64,4 +65,22 @@
   .company-holder{
     margin: 0 30px;
   }
+}
+
+.theme-save-button {
+    padding-left: 10px;
+    background: #00497d !important;
+    color: #ffd400;
+    font-size: 15px;
+    padding-right: 10px;
+    border: none;
+    padding-top: 7px;
+    padding-bottom: 3px;
+    border: 1px solid #807853;
+}
+
+.settings-finished {
+  color: #0066bb;
+  text-align: center;
+  margin-bottom: 10px;
 }

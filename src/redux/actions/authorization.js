@@ -431,6 +431,7 @@ export function fetchUserProfile(userIdFacebook, userIdLinkedIn, id) {
           .then(function(response) {
             //async action exit point
             if (response.data && response.data._id) {
+              localStorage.setItem('company_id', response.data._id);
               dispatch(fetchUserProfileComplete(newUserProfile, true, true, response.data));
             } else {
               dispatch(fetchUserProfileComplete(newUserProfile, true, false));
