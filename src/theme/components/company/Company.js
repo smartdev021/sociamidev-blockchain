@@ -95,6 +95,7 @@ class Company extends Component {
     this.undoStoryData = this.undoStoryData.bind(this);
     this.addStory = this.addStory.bind(this);
     this.removeStory = this.removeStory.bind(this);
+    this.deleteQuestions = this.deleteQuestions.bind(this);
     this.setSelectedStory = this.setSelectedStory.bind(this);
     this.toggleSettingsOption = this.toggleSettingsOption.bind(this);
   }
@@ -572,6 +573,20 @@ class Company extends Component {
     message.success(`Story(ies) was deleted.`);
   }
 
+  deleteQuestions() {
+    var that = this;
+    if(this.state.IsQuestionsOpen == 'block') {
+    const url = `${ConfigMain.getBackendURL()}/questionsRemove`;
+    return Axios.delete(url)
+      .then(response => {
+        that.setState({ questions: [], questionCount: 0 });
+      })
+      .catch(error => {
+
+      });
+    }
+  }
+
   render() {
     const { userProfile } = this.props;
     const { company, questions, questionCount, storiesData, storiesCount, message } = this.state;
@@ -601,7 +616,7 @@ class Company extends Component {
                         <img src={cloud}/>
                         <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} />
                       </label>
-                      <img style={{marginLeft: '7px'}} src={deleteimg}/>
+                      <img style={{marginLeft: '7px'}} src={deleteimg} onClick={this.deleteQuestions}/>
                     </li>
                   </ul>
                 </div>
