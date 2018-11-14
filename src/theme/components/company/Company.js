@@ -97,7 +97,7 @@ class Company extends Component {
     this.undoStoryData = this.undoStoryData.bind(this);
     this.addStory = this.addStory.bind(this);
     this.removeStory = this.removeStory.bind(this);
-    // this.deleteQuestions = this.deleteQuestions.bind(this);
+    this.deleteQuestions = this.deleteQuestions.bind(this);
     this.setSelectedStory = this.setSelectedStory.bind(this);
     this.toggleSettingsOption = this.toggleSettingsOption.bind(this);
   }
@@ -595,6 +595,19 @@ class Company extends Component {
     message.success(`Story(ies) was deleted.`);
   }
 
+  deleteQuestions() {
+    var that = this;
+    if(this.state.IsQuestionsOpen == 'block') {
+    const url = `${ConfigMain.getBackendURL()}/questionsRemove`;
+    return Axios.delete(url)
+      .then(response => {
+        that.setState({ questions: [], questionCount: 0 });
+      })
+      .catch(error => {
+      });
+    }
+  }
+  
   handleStartClick(id, question){
      const preloadState = this.state.storePreload;
      preloadState[id] = true;
