@@ -804,6 +804,7 @@ class Company extends Component {
                                 return(
                                   <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
                                     <td><input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedStory} /></td>
+                                    <td className="hover-pencil">{que.name}</td>
                                     <td className="hover-pencil">{que.skill}</td>
                                     <td className="hover-pencil">{que.description}</td>
                                     <td className="hover-pencil">{que.category}</td>

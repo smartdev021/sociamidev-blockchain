@@ -22,17 +22,48 @@ class Achievements extends Component {
   }
 
   handleMouseHover(achievement, index, requirement) {
-
+    if (this.props.userProfile.userAchievements && this.props.userProfile.userAchievements.achievements && this.props.userProfile.userAchievements.achievements.length > 0 ) {
     let achievementInfo = this.props.userProfile.userAchievements.achievements.filter(
         info => info.achievementId == achievement._id,
       );
 
+    if (achievementInfo.length > 0) {
+      let isConditionMapped = achievementInfo[0].conditions.filter(
+        info => info._id == achievement.conditions[index]._id,
+      );
+
+    if (isConditionMapped.length > 0) {
     this.setState({ 
       achievementCount: achievementInfo[0].conditions[index].count,
       achievementId: achievement._id,
       taskType: achievementInfo[0].conditions[index].taskType,
       achievementCounter: achievementInfo[0].conditions[index].counter 
     });
+   } else {
+    this.setState({ 
+      achievementCount: achievement.conditions[index].count,
+      achievementId: achievement._id,
+      taskType: requirement.taskType,
+      achievementCounter: 0
+     });
+  }
+
+  } else {
+    this.setState({ 
+      achievementCount: achievement.conditions[index].count,
+      achievementId: achievement._id,
+      taskType: requirement.taskType,
+      achievementCounter: 0
+     });
+  }
+  } else {
+    this.setState({ 
+      achievementCount: achievement.conditions[index].count,
+      achievementId: achievement._id,
+      taskType: requirement.taskType,
+      achievementCounter: 0
+     });
+  }
     if(!this.state.isHovering) {
       this.setState({ isHovering: true });
     }
@@ -75,6 +106,7 @@ class Achievements extends Component {
   }
 
   getProgress(achievement) {
+    if (this.props.userProfile.userAchievements && this.props.userProfile.userAchievements.achievements && this.props.userProfile.userAchievements.achievements.length > 0 ) {
     let achievementInfo = this.props.userProfile.userAchievements.achievements.filter(
         info => info.achievementId === achievement._id,
       );
@@ -92,6 +124,7 @@ class Achievements extends Component {
        </p>
       );
     }
+  }
   }
 
   renderAchievementsGroupsByCompany() {
@@ -153,16 +186,14 @@ class Achievements extends Component {
               <h4>{achievement.name}</h4> 
               <p>{achievement.result}</p>
               {this.getProgress(achievement)}
-              {this.getConditions(achievement).map((requirement, index) => {
+              {achievement.conditions.map((requirement, index) => {
                 return (
                 <div>
-                { requirement.count && 
+                
                   <a onMouseEnter={this.handleMouseHover.bind(this, achievement, index, requirement)}
              onMouseLeave={this.handleMouseLeave.bind(this, achievement, index, requirement)} key={ requirement._id } href="#">
                     {requirement.count} {requirement.taskType} {requirement.type}
                   </a>
-                }
-
                   {
                   this.state.isHovering && this.state.achievementId == achievement._id && requirement.taskType == this.state.taskType && 
                   <div className='RewardsBox-footer-drop-down-open RewardsBox-footer-drop-down achievementPopup'>
