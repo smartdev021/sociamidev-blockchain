@@ -194,3 +194,12 @@
     float: unset !important;
   }
 }
+
+.achievementPopup {
+  margin-left: 40px;
+  z-index: 100000 !important;
+}
+
+.achievementPopup {
+  color: white !important;
+}

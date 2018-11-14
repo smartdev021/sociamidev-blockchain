@@ -61,19 +61,21 @@ class Company extends Component {
       IsQuestionsOpen: 'none',
       IsAchievementOpen: 'block',
       IsChallengeOpen: 'none',
-	  IsStoryOpen: 'none',
+	    IsStoryOpen: 'none',
       questions: [],
       activePage: 1,
       activeStoryPage: 1,
       questionCount: 10,
       currentPage: "MyChallenges",
-    storiesData: [],
-    storiesDataBackup: [],
+      storiesData: [],
+      storiesDataBackup: [],
       storiesCount: 10,
       editableStoryKey: "",
       editableStoryIndex: "",
       selectedStoryKeys: [],
-      IsSettingsOpen:'none'
+      IsSettingsOpen:'none',
+      storePreload: '',
+      preloadData: ''
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -95,6 +97,7 @@ class Company extends Component {
     this.undoStoryData = this.undoStoryData.bind(this);
     this.addStory = this.addStory.bind(this);
     this.removeStory = this.removeStory.bind(this);
+    this.deleteQuestions = this.deleteQuestions.bind(this);
     this.setSelectedStory = this.setSelectedStory.bind(this);
     this.toggleSettingsOption = this.toggleSettingsOption.bind(this);
   }
@@ -240,7 +243,9 @@ class Company extends Component {
         }}
     ).then(function(response) {
       if (response.data.listQuestion){
-        that.setState({ questions: response.data.listQuestion, questionCount: response.data.total })
+        const storePreload = that.storePreloadState(response.data.listQuestion);
+        const preloadData = that.storePreloadData(response.data.listQuestion);
+        that.setState({ questions: response.data.listQuestion, questionCount: response.data.total, storePreload, preloadData })
       }
     }).catch(function(error) { console.log(error) });
     
@@ -436,9 +441,27 @@ class Company extends Component {
         }}
     ).then(function(response) {
       if (response.data.listQuestion){
-        that.setState({ questions: response.data.listQuestion, questionCount: response.data.total })
+        const storePreload = that.storePreloadState(response.data.listQuestion);
+        const preloadData = that.storePreloadData(response.data.listQuestion);
+        that.setState({ questions: response.data.listQuestion, questionCount: response.data.total, storePreload, preloadData });
       }
     }).catch(function(error) { console.log(error) });
+  }
+
+  storePreloadState(data){
+    const preloadState = {};
+      data.map(item => {
+         preloadState[item._id] = false;
+      })
+    return preloadState;
+  }
+
+  storePreloadData(data){
+    const preloadData = {};
+      data.map(item => {
+        preloadData[item._id] = item.preLoad;
+      })
+     return preloadData;
   }
 
   handlePageStoryChange(pageNumber) {
@@ -572,6 +595,53 @@ class Company extends Component {
     message.success(`Story(ies) was deleted.`);
   }
 
+  deleteQuestions() {
+    var that = this;
+    if(this.state.IsQuestionsOpen == 'block') {
+    const url = `${ConfigMain.getBackendURL()}/questionsRemove`;
+    return Axios.delete(url)
+      .then(response => {
+        that.setState({ questions: [], questionCount: 0 });
+      })
+      .catch(error => {
+      });
+    }
+  }
+  
+  handleStartClick(id, question){
+     const preloadState = this.state.storePreload;
+     preloadState[id] = true;
+     const preloadData = this.state.preloadData;
+     const data = {
+       id: id,
+       questionContent: question
+     }
+     message.config({
+      top: 100,
+      duration: 4,
+      maxCount: 1,
+    });
+     message.loading("Preload in progress");
+     Axios.post(`${ConfigMain.getBackendURL()}/questionScrapper`, data)
+      .then(response => { 
+        if(response.data && response.data.preload){
+          preloadData[id] = response.data.preload;
+          message.success("Preload completed");
+          this.setState({
+            storePreload: preloadState,
+            preloadData: preloadData
+          })
+        }
+      }).catch(error => { message.error("Preload failed");});
+     
+  }
+
+  showScraperData(id, data){
+    var tab = window.open('about:blank', '_blank');
+    tab.document.write(JSON.stringify(data));
+    tab.document.close();
+  }
+
   render() {
     const { userProfile } = this.props;
     const { company, questions, questionCount, storiesData, storiesCount, message } = this.state;
@@ -601,7 +671,7 @@ class Company extends Component {
                         <img src={cloud}/>
                         <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} />
                       </label>
-                      <img style={{marginLeft: '7px'}} src={deleteimg}/>
+                      <img style={{marginLeft: '7px'}} src={deleteimg} onClick={this.deleteQuestions}/>
                     </li>
                   </ul>
                 </div>
@@ -853,7 +923,10 @@ class Company extends Component {
                                       <td></td>
                                       <td></td>
                                       <td></td>
-                                      <td></td>
+                                      <td>
+                                        <a className="preload-button" onClick={() => this.handleStartClick(que._id, que.question) }> {this.state.storePreload && this.state.storePreload[que._id] || this.state.preloadData[que._id] ? 'Reload' : 'Start'} </a>
+                                        {(this.state.storePreload && this.state.storePreload[que._id]) || this.state.preloadData[que._id] ? <a className="preload-button" onClick={() => this.showScraperData(que._id, this.state.preloadData[que._id]) }> Saved </a> : '' }
+                                      </td>
                                     </tr>
                                   )
                                 })

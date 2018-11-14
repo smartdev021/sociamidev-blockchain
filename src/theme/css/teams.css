@@ -398,6 +398,14 @@
     z-index: 3;
 }
 
+.preload-button{
+    color: #f04134;
+    border-bottom: 1px solid;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 .admin-list {
     margin-left: 0px !important;
 }
