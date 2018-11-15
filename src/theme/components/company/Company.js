@@ -75,7 +75,8 @@ class Company extends Component {
       selectedStoryKeys: [],
       IsSettingsOpen:'none',
       storePreload: '',
-      preloadData: ''
+      preloadData: '',
+      taskReference: []
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -109,6 +110,13 @@ class Company extends Component {
   }
 
   componentWillMount() {
+    var that = this;
+    Axios.get(`${ConfigMain.getBackendURL()}/taskRefs`)
+      .then(function(response) {
+        that.setState({ taskReference : response.data });
+      })
+      .catch(function(error) {
+      });
     mixpanel.track("View Company");
     this.props.fetchTeams();
     this.props.fetchAchievements();
@@ -547,7 +555,16 @@ class Company extends Component {
     if(storyChild === ""){
       if(storyParent === "_achievements" || storyParent === "relatedTopics" || storyParent === "refresh"){
         //leave for now
-        
+      } else if (storyParent === "_objective") {
+        const findObject = (this.state.taskReference || [])
+          .find(f => f._id ===e.currentTarget.value);
+        storiesCopy[index]._objective = findObject;
+      } else if (storyParent === "reward.type"){
+        storiesCopy[index].reward = storiesCopy[index].reward || {}
+        storiesCopy[index].reward.type = e.currentTarget.value
+      } else if (storyParent === "reward.value"){
+        storiesCopy[index].reward = storiesCopy[index].reward || {}
+        storiesCopy[index].reward.value = e.currentTarget.value
       } else {
         storiesCopy[index][storyParent] = e.currentTarget.value;
       }
@@ -643,8 +660,8 @@ class Company extends Component {
   }
 
   render() {
-    const { userProfile } = this.props;
-    const { company, questions, questionCount, storiesData, storiesCount, message } = this.state;
+    const { userProfile, achievementGroups } = this.props;
+    const { company, questions, questionCount, storiesData, storiesCount, message, taskReference } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
         <p dangerouslySetInnerHTML={{ __html: nl2br(message ? message : '') }} />
@@ -792,10 +809,65 @@ class Company extends Component {
                                           <Icon type="upload" key={`icon${que._id}`}/>Upload
                                         </Button>
                                       </Upload></td>
-                                    <td>{que._objective ? que._objective.name : ''}</td>
+                                    <td>
+                                      <select
+                                        onClick={this.handleStoryInputClick}
+                                        onChange={this.handleStoryDataChange}
+                                        data-indexParent="_objective"
+                                      >
+                                        <option/>
+                                        {
+                                          (taskReference || [])
+                                            .map(e=>(
+                                              <option value={e._id} selected={que._objective && que._objective._id === e._id}>
+                                                {e.name}
+                                              </option>
+                                            ))
+                                        }
+                                      </select>
+                                    </td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="objectiveValue" value={que.objectiveValue} /></td>
-                                    <td>{que.reward ? que.reward.type : ''}</td>
-                                    <td>{que.reward ? que.reward.value : ''}</td>
+                                    <td>
+                                      <select
+                                        onClick={this.handleStoryInputClick}
+                                        onChange={this.handleStoryDataChange}
+                                        data-indexParent="reward.type"
+                                      >
+                                        <option/>
+                                        <option value="Token" selected={que.reward && que.reward.type === 'Token'}>Token</option>
+                                        <option value="Fiat" selected={que.reward && que.reward.type === 'Fiat'}>Fiat</option>
+                                        <option value="Achievement" selected={que.reward && que.reward.type === 'Achievement'}>Achievement</option>
+                                      </select>
+                                      {/*{que.reward ? que.reward.type : ''}*/}
+                                    </td>
+                                    <td>
+                                      {
+                                        que.reward && (que.reward.type || '').toLowerCase() === 'achievement' ?
+                                          <select
+                                            onClick={this.handleStoryInputClick}
+                                            onChange={this.handleStoryDataChange}
+                                            data-indexParent="reward.value"
+                                          >
+                                            <option/>
+                                            {
+                                              (achievementGroups || [])
+                                                .map(e=>(
+                                                  <option value={e.name} selected={que.reward && que.reward.value === e.name}>
+                                                    {e.name}
+                                                  </option>
+                                                ))
+                                            }
+                                          </select>
+                                          :
+                                          <Textarea
+                                            onClick={this.handleStoryInputClick}
+                                            onChange={this.handleStoryDataChange}
+                                            data-indexParent="reward.value"
+                                            value={que.reward ? que.reward.value : ''}
+                                          />
+                                      }
+                                      {/*{que.reward ? que.reward.value : ''}*/}
+                                    </td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="quota" value={que.quota} /></td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="refresh" value={que.refresh} /></td>
                                   </tr>
@@ -827,10 +899,10 @@ class Company extends Component {
                                           <Icon type="upload" key={`icon${que._id}`}/>Upload
                                         </Button>
                                       </Upload></td>
-                                    <td>{que._objective ? que._objective.name : ''}</td>
+                                    <td className="hover-pencil">{que._objective ? que._objective.name : ''}</td>
                                     <td className="hover-pencil">{que.objectiveValue}</td>
-                                    <td>{que.reward ? que.reward.type : ''}</td>
-                                    <td>{que.reward ? que.reward.value : ''}</td>
+                                    <td className="hover-pencil">{que.reward ? que.reward.type : ''}</td>
+                                    <td className="hover-pencil">{que.reward ? que.reward.value : ''}</td>
                                     <td className="hover-pencil">{que.quota}</td>
                                     <td className="hover-pencil">{que.refresh}</td>
                                   </tr>
