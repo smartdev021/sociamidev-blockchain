@@ -264,6 +264,14 @@ class Connections extends React.Component {
     );
   }
 
+  handleSearchChange(e){
+    this.setState({searchValue: e.target.value});
+  }
+
+  handleSubmit(e, activeTab){
+    this.searchConnection(activeTab);
+  }
+
   renderMiddle() {
     return (
       <div>  
@@ -282,8 +290,8 @@ class Connections extends React.Component {
               <a href="javascript:;" onClick={() => this.setState({ activeTabName: 'Received', receivedList: this.state.sourceReceived })}>Received</a>
             </li>
             <div className="friends-search-container">
-              <input type="text" placeholder="SEARCH.." name="search" onChange={(e) => this.setState({searchValue: e.target.value})} />
-              <button type="submit" onClick={(e) => this.searchConnection(this.state.activeTabName)}>
+              <input type="text" placeholder="SEARCH.." name="search" onChange={this.handleSearchChange.bind(this)} />
+              <button type="submit" onClick={(e) => this.handleSubmit(e, this.state.activeTabName)}>
                 <i className="fa fa-search" style={{color: "#9601a3"}} ></i>
               </button>
             </div>
@@ -314,30 +322,32 @@ class Connections extends React.Component {
   searchConnection(activeTab){
      let searchResult = [];
      if(activeTab == 'All'){
-        const allFrndUrl = `${ConfigMain.getBackendURL()}/searchSoqqlers`;
-        const that = this;
+        const searchUrl = `${ConfigMain.getBackendURL()}/searchSoqqlers`;
        
         if(this.state.searchValue){
-          this.setState({ allTabLoading: true, allFriendList: []});
-          Axios.get(allFrndUrl, {
+          this.setState({ 
+            allTabLoading: true, 
+            allFriendList: []
+          });
+          Axios.get(searchUrl, {
             params: {
               currentUser: this.props.currentUserId,
               searchValue: this.state.searchValue,
             },
-          }).then(function(response) {
-            if (response.data.length) {
-              that.setState({
+          }).then(response => {
+            if (response.data.length > 0) {
+              this.setState({
                 allTabLoading: false,
                 allFriendList: response.data,
               });
             } else {
-              that.setState({ allTabLoading: false });
+              this.setState({ allTabLoading: false });
             }
-          }).catch(function(error) {
-            that.setState({ allTabLoading: false });      
+          }).catch(error => {
+            this.setState({ allTabLoading: false });      
           });
         } else {
-           that.setState({
+           this.setState({
               allFriendList: this.state.sourceAllFriends,
               searchValue: ''
            })
