@@ -3341,7 +3341,7 @@ span.landing-email-input-textfield-container input[type="email"] {
             }
             @media screen and (max-width: 480px) {
               .landing-section-world-slider .carousel .item .description {
-                height: 500px;
+                height: 520px;
               }
             }
             .landing-section-world-slider .carousel .item .description .text {
@@ -3803,8 +3803,7 @@ span.landing-email-input-textfield-container input[type="email"] {
   height: 36px;
   margin-top: 20px;
   background: inherit;
-  background-size: cover;
-  background-position: center bottom;
+  background-position: center;
   border: 0;
   border-radius: 3px;
   overflow: hidden;
@@ -3820,7 +3819,7 @@ span.landing-email-input-textfield-container input[type="email"] {
     bottom: 0;
     margin: 0;
     padding: 0;
-    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 0 10px rgba(29, 27, 58, 1);
     filter: blur(10px);
   }
     .landing-section-home-sign-up p {

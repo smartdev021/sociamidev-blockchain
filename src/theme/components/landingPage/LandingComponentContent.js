@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { withCookies } from 'react-cookie';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Authorize from '~/src/authentication/Authorize';
 import { openSignUpForm } from '~/src/redux/actions/authorization';
 import { fetchArticles } from '~/src/redux/actions/articles';
@@ -473,21 +473,21 @@ const WorkExplanation = ({currentLanguage}) => {
 
 
 // HOME SECTION
-const SectionHome = ({ currentLanguage, startCharacterCreation, openSignUpForm }) => {
-  return (
-    <div className="landing-section-home">
+const SectionHome = ({ currentLanguage, startCharacterCreation, openSignUpForm, history }) => {
 
+  const HomeElement = withRouter(({ history }) => (
+    <div className="landing-section-home">
       <h2 className="landing-section-home-title">{languageContent[currentLanguage].home_title}</h2>
       <p className="landing-section-home-subtitle">{languageContent[currentLanguage].home_subtitile}</p>
-    
-      <Dropdown className="landing-section-choose-hero-dropdown" options={[languageContent[currentLanguage].choose_hero_dropdown_1,languageContent[currentLanguage].choose_hero_dropdown_2,languageContent[currentLanguage].choose_hero_dropdown_3,languageContent[currentLanguage].choose_hero_dropdown_4]} placeholder={languageContent[currentLanguage].choose_hero_dropdown_placeholder} />
-
+      <Dropdown className="landing-section-choose-hero-dropdown" options={[languageContent[currentLanguage].choose_hero_dropdown_1,languageContent[currentLanguage].choose_hero_dropdown_2,languageContent[currentLanguage].choose_hero_dropdown_3,languageContent[currentLanguage].choose_hero_dropdown_4]} placeholder={languageContent[currentLanguage].choose_hero_dropdown_placeholder} onChange={() => { startCharacterCreation(); history.push('/characterCreation'); }} />
       <button type="button" className="landing-section-home-sign-up" onClick={() => openSignUpForm()}>
         <div className="bg"></div>
         <p>Already have an account</p>
       </button>
-
     </div>
+  ))
+  return (
+    <HomeElement />
   );
 };
 
@@ -916,22 +916,26 @@ const SectionHeroes = ({ currentLanguage, startCharacterCreation }) => {
 
 
 
-const SectionChooseHero = ({ currentLanguage, startCharacterCreation }) => {
-  return (
-    <div className="landing-section-choose-hero">
 
+
+
+
+const SectionChooseHero = ({ currentLanguage, startCharacterCreation }) => {
+  const HeroElement = withRouter(({ history }) => (
+    <div className="landing-section-choose-hero">
       <div className="landing-wrapper">
-        
         <h2 className="landing-section-choose-hero-title">{languageContent[currentLanguage].choose_hero_title}</h2>
         <h2 className="landing-section-choose-hero-title">{languageContent[currentLanguage].choose_hero_title_2}</h2>
-
-        <Dropdown className="landing-section-choose-hero-dropdown" options={[languageContent[currentLanguage].choose_hero_dropdown_1,languageContent[currentLanguage].choose_hero_dropdown_2,languageContent[currentLanguage].choose_hero_dropdown_3,languageContent[currentLanguage].choose_hero_dropdown_4]} placeholder={languageContent[currentLanguage].choose_hero_dropdown_placeholder} />
-
+        <Dropdown className="landing-section-choose-hero-dropdown" options={[languageContent[currentLanguage].choose_hero_dropdown_1,languageContent[currentLanguage].choose_hero_dropdown_2,languageContent[currentLanguage].choose_hero_dropdown_3,languageContent[currentLanguage].choose_hero_dropdown_4]} placeholder={languageContent[currentLanguage].choose_hero_dropdown_placeholder} onChange={() => { startCharacterCreation(); history.push('/characterCreation'); }} />
       </div>
-
     </div>
+  ))
+  return (
+    <HeroElement />   
   );
 };
+
+
 
 
 
@@ -1047,6 +1051,10 @@ class LandingPageContent extends React.Component {
   }
 
   render() {
+
+    // console.log('jojojojojojojojo222: ', this.context);
+
+
     return (
       <div className="landing-page-wrapper">
         <div className="pixel-perfect"></div>
@@ -1139,6 +1147,7 @@ LandingPageContent.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   openSignUpForm: bindActionCreators(openSignUpForm, dispatch),
+  startCharacterCreation: bindActionCreators(startCharacterCreation, dispatch),
   fetchArticles: bindActionCreators(fetchArticles, dispatch)
 });
 
