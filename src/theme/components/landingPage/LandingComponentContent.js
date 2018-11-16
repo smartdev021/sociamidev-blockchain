@@ -544,7 +544,7 @@ const SectionWorld = ({ currentLanguage }) => {
 
         </div>
 
-        <button type="button" className="landing-section-world-btn">{languageContent[currentLanguage].world_button}</button>
+        <a href="/characterCreation" className="landing-section-world-btn">{languageContent[currentLanguage].world_button}</a>
 
       </div>
 
@@ -628,7 +628,7 @@ const SectionGame = ({ currentLanguage }) => {
 
         </div>
 
-        <button type="button" className="landing-section-game-btn">{languageContent[currentLanguage].game_button}</button>
+        <a href="/characterCreation" className="landing-section-game-btn">{languageContent[currentLanguage].game_button}</a>
 
       </div>
 
@@ -684,7 +684,7 @@ const SectionTasks = ({ currentLanguage }) => {
 
         </div>
 
-        <button type="button" className="landing-section-game-btn">{languageContent[currentLanguage].tasks_button}</button>
+        <a href="/characterCreation" className="landing-section-game-btn">{languageContent[currentLanguage].tasks_button}</a>
 
       </div>
 
@@ -778,7 +778,7 @@ const SectionWorldSlider = ({ currentLanguage }) => {
         
         </div>
 
-        <button type="button" className="landing-section-world-slider-btn">{languageContent[currentLanguage].word_slider_button}</button>
+        <a href="/characterCreation" className="landing-section-world-slider-btn">{languageContent[currentLanguage].word_slider_button}</a>
 
       </div>
 
@@ -889,7 +889,7 @@ const SectionHeroes = ({ currentLanguage }) => {
         
         </div>
 
-        <button type="button" className="landing-section-world-slider-btn">{languageContent[currentLanguage].heroes_button}</button>
+        <a href="/characterCreation" className="landing-section-world-slider-btn">{languageContent[currentLanguage].heroes_button}</a>
 
       </div>
 
@@ -952,7 +952,7 @@ const SectionJoin = ({ currentLanguage }) => {
 
         </div>
 
-        <button type="button" className="landing-section-world-btn">{languageContent[currentLanguage].join_item_button}</button>
+        <a href="/characterCreation" className="landing-section-world-btn">{languageContent[currentLanguage].join_item_button}</a>
 
       </div>
 

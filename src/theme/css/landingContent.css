@@ -520,7 +520,7 @@ html.vertical-hidden {
     box-shadow: 0px 0px 15px 0px rgba(207, 0, 254, 0.36);
     background: #191919;
     border-radius: 50px;
-    min-width: 204;
+    min-width: 204px;
     height: 42px;
     line-height: 36px;
 }
@@ -2449,6 +2449,60 @@ span.landing-email-input-textfield-container input[type="email"] {
         left: -31px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 767px){
   .landing-page-wrapper .banner-wrapper div.banner-content p {
     font: normal 16px "MyriadPro Semibold";
@@ -2461,25 +2515,25 @@ span.landing-email-input-textfield-container input[type="email"] {
   .landing-page-wrapper .banner-wrapper div.banner-content h2{
     font-size: 30px;
   }
-  .landing-page-wrapper .carousel-indicators{
+  .landing-page-wrapper .carousel-indicators {
     left: 0;
     margin-left: 0;
     bottom: -15px;
   }
-  .landing-page-wrapper .work-explanation a{
+  .landing-page-wrapper .work-explanation a {
     margin-bottom: 25px;
   }
-  .landing-page-wrapper .left.carousel-control, .landing-page-wrapper .right.carousel-control{
+  .landing-page-wrapper .left.carousel-control, .landing-page-wrapper .right.carousel-control {
     font-size: 36px;
-    top: 100px;
+    top: 250px;
   }
-  .landing-page-wrapper .left.carousel-control{
+  .landing-page-wrapper .left.carousel-contro l{
       left: -9px;
   }
-  .landing-page-wrapper .right.carousel-control{
+  .landing-page-wrapper .right.carousel-control {
       right: 8%;
   }
-  .landing-page-wrapper .work-explanation .select-house .images-wrapper{
+  .landing-page-wrapper .work-explanation .select-house .images-wrapper {
     margin-left: 15px;
     text-align: center;
     width: 100%;
@@ -2497,39 +2551,6 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-footer {
   color: white !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2582,11 +2603,32 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-section-home {
   background: url("../../../assets/img/landing-home.jpg") center 0 no-repeat;
   text-align: center;
-  padding: 280px 0 210px;  
+  padding: 300px 0 420px; 
 }
+  @media screen and (min-width: 1900px) {
+    .landing-section-home {
+      background-size: 100% auto;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    .landing-section-home {
+      padding: 150px 0 210px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .landing-section-home {
+      padding: 100px 0 160px;
+    }
+  }
+  /*@media screen and (max-width: 640px) {
+    .landing-section-home {
+      padding: 100px 0 160px;
+    }
+  }*/
   .landing-section-home .landing-section-home-title {
-    font-size: 78px;
-    line-height: 78px;
+    font-size: 85px;
+    line-height: 85px;
+    letter-spacing: -0.8px;
     font-weight: 600;
     color: #ffc300;
     text-transform: uppercase;
@@ -2608,11 +2650,14 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 
   .landing-section-home .landing-section-home-subtitle {
-    margin-top: 10px;
+    margin-top: 0;
     font-size: 34px;
     line-height: 34px;
     font-weight: 400;
     color: #ffffff;
+    font-size: 36px;
+    line-height: 36px;
+    letter-spacing: -0.5px;
   }
     @media screen and (max-width: 640px) {
         .landing-section-home .landing-section-home-subtitle {
@@ -2633,7 +2678,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 /* SECTION CONNECT */
 .landing-section-connect {
   width: 100%;
-  height: 210px;
+  height: 205px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2645,19 +2690,30 @@ span.landing-email-input-textfield-container input[type="email"] {
   background: linear-gradient(132deg, rgba(24,20,24,1) 0%, rgba(29,27,58,1) 62%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#181418', endColorstr='#1d1b3a',GradientType=1 );
 }
+  @media screen and (max-width: 640px) {
+    .landing-section-connect {
+      height: 400px;
+    }
+  }
+
   .landing-section-connect .landing-wrapper {
     width: 1200px;
-    /*margin: 0 auto;*/
   }
     .landing-section-connect .landing-wrapper .landing-section-connect-title {
-      padding: 0 50px;
-      font-size: 32px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
+      padding: 2px 50px 0;
+      font-size: 36px;
+      line-height: 36px;
+      font-family: 'MyriadPro Semibold';
+      letter-spacing: -0.3px;
       color: #0091fa;
       text-transform: uppercase;
       text-align: center;
     }
+      @media screen and (max-width: 640px) {
+        .landing-section-connect .landing-wrapper .landing-section-connect-title {
+          padding: 0 20px;
+        }
+      }
     .landing-section-connect .landing-wrapper .landing-section-connect-magic {
       position: relative;
       width: 10px;
@@ -2670,27 +2726,57 @@ span.landing-email-input-textfield-container input[type="email"] {
         height: 19px;
       }
         .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-1 {
-          left: -365px;
-          bottom: -43px;
+          left: -355px;
+          bottom: -33px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-1 {
+              left: -125px;
+              bottom: -75px;
+            }
+          }
         .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-2 {
           width: 28px;
           height: 28px;
-          left: -265px;
-          bottom: -61px;
+          left: -255px;
+          bottom: -51px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-2 {
+              left: 115px;
+              bottom: -20px;
+            }
+          }
         .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-3 {
-          left: -89px;
-          top: -74px;
+          left: -79px;
+          top: -84px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-3 {
+              left: -79px;
+              top: -224px;
+            }
+          }
         .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-4 {
-          left: 215px;
-          bottom: -46px;
+          left: 225px;
+          bottom: -36px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-4 {
+              left: 25px;
+              bottom: 225px;
+            }
+          }
         .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-5 {
-          left: 264px;
-          top: -81px;
+          left: 274px;
+          top: -91px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-connect .landing-wrapper .landing-section-connect-title-item.landing-section-connect-title-item-5 {
+              left: 64px;
+              top: 19px;
+            }
+          }
 /* // SECTION CONNECT */
 
 
@@ -2706,18 +2792,23 @@ span.landing-email-input-textfield-container input[type="email"] {
   }
 
     .landing-section-world .landing-section-world-title {
-      margin-top: 70px;
-      font-size: 32px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
+      margin-top: 68px;
+      font-size: 36px;
+      line-height: 36px;
+      font-family: 'MyriadPro Semibold';
+      letter-spacing: -0.2px;
       color: #0091fa;
       text-transform: uppercase;
       text-align: center;
     }
-
+      @media screen and (max-width: 640px) {
+        .landing-section-world .landing-section-world-title {
+          padding: 0 20px;
+        }
+      }
     .landing-section-world .landing-section-world-advantages {
       display: flex;
-      margin-top: 40px;
+      margin-top: 30px;
     }
       @media screen and (max-width: 640px) {
         .landing-section-world .landing-section-world-advantages {
@@ -2727,17 +2818,25 @@ span.landing-email-input-textfield-container input[type="email"] {
 
       .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
         width: 33.33333%;
-        margin: 0 20px;
-        padding: 0 20px;
+        margin: 0 40px;
+        padding: 0 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         text-align: center;
       }
+        .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:first-child {
+          margin-left: 0;
+          padding-left: 0;
+        }
+        .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child {
+          margin-right: 0;
+          padding-right: 0;
+        }
 
 
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 1000px) {
             .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
               margin: 0 10px;
               padding: 0 10px;
@@ -2747,7 +2846,7 @@ span.landing-email-input-textfield-container input[type="email"] {
             .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
               width: 100%;
               margin: 0 0 40px 0;
-              padding: 0 40px;
+              padding: 0;
             }
         }
 
@@ -2758,20 +2857,34 @@ span.landing-email-input-textfield-container input[type="email"] {
           height: 60px;
         }
         .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-title {
-          margin-top: 30px;
-          font-size: 18px;
-          line-height: 20px;
-          font-weight: 600;
-          color: #343434;
+          margin-top: 21px;
+          font-family: 'MyriadPro Semibold';
+          font-size: 20px;
+          line-height: 23px;
+          letter-spacing: -0.2px;
+          padding: 0 10px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-title {
+              padding: 0 20px;
+            }
+          }
         .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-subtitle {
-          margin-top: 20px;
-          font-size: 16px;
-          line-height: 18px;
+          margin-top: 12px;
+          font-size: 18px;
+          line-height: 21px;
+          letter-spacing: -0.6px;
           color: #323232;
         }
+          .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child .landing-section-world-advantages-subtitle {
+            margin-top: 35px;
+          }
         @media screen and (max-width: 640px) {
             .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-subtitle {
+              margin-top: 5px;
+              padding: 0 20px;
+            }
+            .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child .landing-section-world-advantages-subtitle {
               margin-top: 5px;
             }
         }
@@ -2781,18 +2894,20 @@ span.landing-email-input-textfield-container input[type="email"] {
 
       .landing-section-world .landing-section-world-btn {
         display: block;
-        min-width: 164px;
+        max-width: 164px;
         margin: 30px auto 0;
-        height: 70px;
+        height: 68px;
         padding: 0 30px;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 70px;
-        font-weight: 600;
+        font-family: "MyriadPro Bold";
+        letter-spacing: -0.2px;
         border: 0;
         color: #fff;
         background: #9601a3;
         border-radius: 35px;
         box-shadow: 0 0 4px #9601a3;
+        text-align: center;
       }
 /* // SECTION WORLD */
 
@@ -2816,7 +2931,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 /* SECTION BUTTON */
 .landing-section-button {
   width: 100%;
-  height: 260px;
+  height: 440px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2827,13 +2942,22 @@ span.landing-email-input-textfield-container input[type="email"] {
   }
 
     .landing-section-button .landing-section-button-title {
-      font-size: 32px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
+      margin-top: 4px;
+      font-size: 36px;
+      line-height: 36px;
+      letter-spacing: -0.3px;
+      font-family: 'MyriadPro Semibold';
+      letter-spacing: -0.8px;
       color: #0091fa;
       text-transform: uppercase;
       text-align: center;
     } 
+      @media screen and (max-width: 768px) {
+        .landing-section-button .landing-section-button-title,
+        .landing-section-button .landing-section-button-subtitle {
+          padding: 0 40px;
+        }
+      }
       @media screen and (max-width: 640px) {
         .landing-section-button .landing-section-button-title {
           padding: 0 20px;
@@ -2841,10 +2965,10 @@ span.landing-email-input-textfield-container input[type="email"] {
       }
     .landing-section-button .landing-section-button-subtitle {
       display: block;
-      max-width: 600px; 
+      max-width: 740px; 
       margin: 10px auto 0;
-      font-size: 16px;
-      line-height: 18px;
+      font-size: 18px;
+      line-height: 20px;
       color: #fff;
       text-align: center;
     } 
@@ -2867,23 +2991,48 @@ span.landing-email-input-textfield-container input[type="email"] {
         height: 19px;
       }
         .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-1 {
-          left: -345px;
-          bottom: 9px;
+          left: -355px;
+          bottom: 98px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-1 {
+              left: -105px;
+              bottom: -62px;
+            }
+          }
         .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-2 {
           width: 28px;
           height: 28px;
-          left: 280px;
-          top: -138px;
+          left: 270px;
+          top: -228px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-2 {
+              left: 100px;
+              top: -278px;
+            }
+          }
+          
         .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-3 {
-          left: -69px;
-          top: -127px;
+          left: -79px;
+          top: -216px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-3 {
+              left: -49px;
+              top: -246px;
+            }
+          }
         .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-4 {
-          left: 235px;
-          bottom: 7px;
+          left: 225px;
+          bottom: 96px;
         }
+          @media screen and (max-width: 640px) {
+            .landing-section-button .landing-wrapper .landing-section-button-title-item.landing-section-button-title-item-4 {
+              left: 75px;
+              bottom: -104px;
+            }
+          }
 /* // SECTION BUTTON */
 
 
@@ -2894,7 +3043,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 /* SECTION GAME */
 .landing-section-game {
-  padding: 75px 0;
+  padding: 63px 0 76px;
   background: -moz-linear-gradient(318deg, rgba(24,20,24,1) 0%, rgba(29,27,58,1) 62%);
   background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(24,20,24,1)), color-stop(62%, rgba(29,27,58,1)));
   background: -webkit-linear-gradient(318deg, rgba(24,20,24,1) 0%, rgba(29,27,58,1) 62%);
@@ -2908,9 +3057,10 @@ span.landing-email-input-textfield-container input[type="email"] {
   }
 
     .landing-section-game .landing-section-game-title {
-      font-size: 32px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
+      font-size: 36px;
+      line-height: 36px;
+      font-family: 'MyriadPro Semibold';
+      letter-spacing: -0.3px;
       color: #0091fa;
       text-transform: uppercase;
       text-align: center;
@@ -2919,7 +3069,7 @@ span.landing-email-input-textfield-container input[type="email"] {
     .landing-section-game .landing-section-game-items {
       display: flex;
       flex-direction: column;
-      margin-top: 30px;
+      margin-top: 42px;
       padding: 0 30px;
     }
 
@@ -2928,8 +3078,11 @@ span.landing-email-input-textfield-container input[type="email"] {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        margin-bottom: 30px;
+        margin-bottom: 68px;
       }
+        .landing-section-game .landing-section-game-items .landing-section-game-item:last-child {
+          margin-bottom: 0;
+        }
 
         
         .landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse {
@@ -2940,7 +3093,7 @@ span.landing-email-input-textfield-container input[type="email"] {
           width: 53%;
           /*display: flex;*/
           justify-content: flex-end;
-          margin-right: 50px;
+          margin-right: 60px;
         }
           .landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse .landing-section-game-item-imgwrapper {
             justify-content: flex-start;
@@ -2956,23 +3109,31 @@ span.landing-email-input-textfield-container input[type="email"] {
           padding-right: 20px;
         }
           .landing-section-game .landing-section-game-item .landing-section-game-item-content .landing-section-game-item-content-title {
+            margin-top: -5px;
             margin-bottom: 20px;
-            font-size: 18px;
-            line-height: 18px;
+            font-family: 'MyriadPro Semibold';
+            font-size: 20px;
+            line-height: 20px;
             font-weight: 600;
             color: #ffc300;
+            letter-spacing: -0.3px;
           }
           .landing-section-game .landing-section-game-item .landing-section-game-item-content .landing-section-game-item-content-subtitle {
-            font-size: 17px;
-            line-height: 18px;
+            font-size: 18px;
+            line-height: 21px;
+            letter-spacing: -0.7px;
             color: #fff;
           }
-
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 1000px) {
+            .landing-section-game .landing-section-game-item .landing-section-game-item-imgwrapper {
+              margin-right: 20px; 
+            }
+        }
+        @media screen and (max-width: 768px) {
             .landing-section-game .landing-section-game-items .landing-section-game-item,
             .landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse {
               flex-direction: column;
-              margin-bottom: 40px;
+              margin-bottom: 60px;
             }
             .landing-section-game .landing-section-game-item .landing-section-game-item-imgwrapper {
               width: 100%;
@@ -2983,8 +3144,6 @@ span.landing-email-input-textfield-container input[type="email"] {
             }
             .landing-section-game .landing-section-game-item .landing-section-game-item-content {
               width: 100%;
-              text-align: center;
-              padding-right: 0;
             }
             .landing-section-game .landing-section-game-item .landing-section-game-item-content .landing-section-game-item-content-title {
               margin-top: 10px;
@@ -2995,18 +3154,20 @@ span.landing-email-input-textfield-container input[type="email"] {
 
       .landing-section-game .landing-section-game-btn {
         display: block;
-        min-width: 164px;
-        margin: 30px auto 0;
-        height: 70px;
+        max-width: 230px;
+        margin: 48px auto 0;
+        height: 68px;
         padding: 0 30px;
-        font-size: 15px;
-        line-height: 70px;
-        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        line-height: 68px;
+        font-family: 'MyriadPro Bold';
         border: 0;
         color: #fff;
         background: #9601a3;
         border-radius: 35px;
         box-shadow: 0 0 4px #9601a3;
+        text-align: center;
       }
 /* // SECTION GAME */
 
@@ -3018,14 +3179,65 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-section-tasks.landing-section-game {
   background: #fff;
   filter: none;
+  margin-top: 10px;
+  padding-bottom: 67px;
 }
+  .landing-section-tasks.landing-section-game-title {
+    margin-top: 7px;
+  }
+  .landing-section-tasks.landing-section-game .landing-section-game-items {
+    margin-top: 32px;
+  }
+
   .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item {
     margin-bottom: 50px;
   }
 
+  .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse {
+    margin-top: 10px
+  }
+    .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse .landing-section-game-item-content {
+      margin-top: 89px;
+    }
+      .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse .landing-section-game-item-content  .landing-section-game-item-content-title {
+        margin-bottom: 17px;
+      }
+  .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item:last-child {
+    margin-top: 42px;
+  }
+    .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item:last-child .landing-section-game-item-content {
+      margin-top: 38px;
+    }
+      .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item:last-child .landing-section-game-item-content .landing-section-game-item-content-title {
+        margin-bottom: 17px;
+      }
+
   .landing-section-tasks.landing-section-game .landing-section-game-item-content .landing-section-game-item-content-subtitle {
     color: #000;
   }
+
+  .landing-section-tasks.landing-section-game .landing-section-game-btn {
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .landing-section-game .landing-section-game-item .landing-section-game-item-content,
+    .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse .landing-section-game-item-content,
+    .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item:last-child .landing-section-game-item-content {
+      margin-top: 20px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .landing-section-game .landing-section-game-item .landing-section-game-item-content,
+    .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item.landing-section-game-item-reverse .landing-section-game-item-content,
+    .landing-section-tasks.landing-section-game .landing-section-game-items .landing-section-game-item:last-child .landing-section-game-item-content {
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+      padding-right: 0;
+    }
+  }
+
 /* // SECTION TASKS */
 
 
@@ -3052,9 +3264,10 @@ span.landing-email-input-textfield-container input[type="email"] {
   }
 
     .landing-section-world-slider .landing-section-world-slider-title {
-      font-size: 32px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
+      font-size: 36px;
+      line-height: 36px;
+      letter-spacing: -0.3px;
+      font-family: 'MyriadPro Semibold';
       color: #0091fa;
       text-transform: uppercase;
       text-align: center;
@@ -3092,32 +3305,68 @@ span.landing-email-input-textfield-container input[type="email"] {
                 }
 
             }
+            @media screen and (max-width: 480px) {
+                .landing-section-world-slider .carousel .item .image-wrapper .img {
+                  max-width: 400px;
+                }
+            }
+            @media screen and (max-width: 400px) {
+                .landing-section-world-slider .carousel .item .image-wrapper .img {
+                  max-width: 320px;
+                }
+            }
 
 
 
           .landing-section-world-slider .carousel .item .description {
             max-width: 900px;
             margin: 30px auto 0;
+            height: 250px;
           }
+            @media screen and (max-width: 1000px) {
+              .landing-section-world-slider .carousel .item .description {
+                height: 300px;
+                padding: 0 20px;
+              }
+            }
+            @media screen and (max-width: 768px) {
+              .landing-section-world-slider .carousel .item .description {
+                height: 340px;
+              }
+            }
+            @media screen and (max-width: 480px) {
+              .landing-section-world-slider .carousel .item .description {
+                height: 500px;
+              }
+            }
             .landing-section-world-slider .carousel .item .description .text {
               display: block;
-              font-size: 16px;
-              line-height: 18px;
+              font-size: 18px;
+              line-height: 21px;
+              letter-spacing: -0.7px;
               color: #fff;
               margin-bottom: 20px;
               text-align: center;
             }
               @media screen and (max-width: 640px) {
                 .landing-section-world-slider .carousel .item .description .text {
-                  padding: 0 20px;
+                  padding: 0 6px;
+                  font-size: 16px;
+                  line-height: 17px;
                 }
-              }
+              } 
 
 
         .landing-section-world-slider .carousel-control {
           margin: 0;
           top: 250px;
         }
+          @media screen and (max-width: 1000px) {
+            .landing-page-wrapper .left.carousel-control, 
+            .landing-page-wrapper .right.carousel-control {
+              top: 210px;
+            }
+          }
           @media screen and (max-width: 640px) {
             .landing-page-wrapper .left.carousel-control, 
             .landing-page-wrapper .right.carousel-control {
@@ -3145,18 +3394,21 @@ span.landing-email-input-textfield-container input[type="email"] {
 
         .landing-section-world-slider .landing-section-world-slider-btn {
           display: block;
-          min-width: 164px;
+          max-width: 210px;
           margin: 30px auto 0;
-          height: 70px;
+          height: 68px;
           padding: 0 30px;
           font-size: 15px;
-          line-height: 70px;
-          font-weight: 600;
+          line-height: 15px;
+          line-height: 68px;
+          font-family: 'MyriadPro Bold';
           border: 0;
           color: #fff;
           background: #9601a3;
           border-radius: 35px;
           box-shadow: 0 0 4px #9601a3;
+          letter-spacing: -0.2px;
+          text-align: center; 
         }
 
 
@@ -3172,10 +3424,43 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-section-heroes.landing-section-world-slider {
   background: #eee;
   filter: none;
+  padding-top: 48px;
+  padding-bottom: 72px;
 }
-  .landing-section-heroes.landing-section-world-slider .carousel .item .description .text {
-    color: #000;
+  .landing-section-heroes.landing-section-world-slider .carousel .item .description {
+   height: 90px; 
   }
+    @media screen and (max-width: 1000px) {
+      .landing-section-heroes.landing-section-world-slider .carousel-control.left, 
+      .landing-section-heroes.landing-section-world-slider .carousel-control.right {
+        top: 180px;
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .landing-section-heroes.landing-section-world-slider .carousel-control.left, 
+      .landing-section-heroes.landing-section-world-slider .carousel-control.right {
+        top: 200px;
+      }
+    }
+    @media screen and (max-width: 640px) {
+      .landing-section-heroes.landing-section-world-slider .carousel .item .description {
+        height: 120px;
+      }
+      .landing-section-heroes.landing-section-world-slider .carousel-control.left, 
+      .landing-section-heroes.landing-section-world-slider .carousel-control.right {
+        top: 80px;
+      }
+    } 
+        
+    .landing-section-heroes.landing-section-world-slider .carousel .item .description .text {
+      color: #000;
+    }
+  .landing-section-heroes.landing-section-world-slider .carousel .item .image-wrapper {
+    margin-top: 20px;
+  }
+  .landing-section-heroes.landing-section-world-slider .landing-section-world-slider-btn {
+    max-width: 210px;
+   }
 
 
 /* // SECTION HEROES */
@@ -3189,21 +3474,25 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 /* SECTION CHOOSE HERO */
 .landing-section-choose-hero {
-  padding: 75px 0;
+  padding: 120px 0 295px;
   background: url("../../../assets/img/chooseHero.jpg") 0 0;
 }
   .landing-section-choose-hero .landing-section-choose-hero-title {
-    font-size: 32px;
-    line-height: 32px;
-    font-weight: 600;
+    font-size: 36px;
+    line-height: 36px;
+    letter-spacing: -0.8px;
+    font-family: 'MyriadPro Semibold';
     color: #ffc300;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
   @media screen and (max-width: 640px) {
     .landing-section-choose-hero .landing-section-choose-hero-title {
       padding: 0 20px;
     }
+  }
+  .landing-section-choose-hero .landing-section-choose-hero-dropdown {
+    margin-top: 37px;
   }
 
 /* // SECTION CHOOSE HERO */
@@ -3239,9 +3528,10 @@ span.landing-email-input-textfield-container input[type="email"] {
   margin: 20px auto;
   font-size: 18px;
   line-height: 50px;
-  font-weight: 600;
+  /*font-weight: 600;*/
   color: #d01fe5;
   cursor: pointer;
+  z-index: 1000;
 }
   @media screen and (max-width: 640px) {
       .landing-section-choose-hero-dropdown {
@@ -3274,13 +3564,22 @@ span.landing-email-input-textfield-container input[type="email"] {
       -webkit-animation: rotation 0.3s linear;
       animation: rotation 0.3s linear;
     }
+    @media screen and (max-width: 640px) {
+      .landing-section-choose-hero-dropdown:before {
+        top: 32px;
+        right: 15px;
+      }
+    }
 
     .landing-section-choose-hero-dropdown .Dropdown-placeholder {
+      font-family: 'MyriadPro Semibold';
       display: flex;
       align-items: center;
-      height: 50px;  
+      height: 50px; 
+      font-size: 18px; 
       line-height: 18px;
-      padding: 0 30px;
+      letter-spacing: -0.1px;
+      padding: 2px 30px 0 33px;
       border: 1px solid #1b5cd0;
       text-align: left;
       background: -moz-linear-gradient(318deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
@@ -3291,6 +3590,12 @@ span.landing-email-input-textfield-container input[type="email"] {
       background: linear-gradient(132deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#191828', endColorstr='#282a7e',GradientType=1 );
     }
+      @media screen and (max-width: 640px) {
+          .landing-section-choose-hero-dropdown .Dropdown-placeholder {
+            height: 70px;
+            padding-left: 13px;
+          }
+      }
 
     .landing-section-choose-hero-dropdown .Dropdown-menu {
       margin-top: -2px;
@@ -3305,15 +3610,24 @@ span.landing-email-input-textfield-container input[type="email"] {
     }
       .landing-section-choose-hero-dropdown .Dropdown-option {
         height: 50px;
-        padding: 0 30px;
+        padding: 2px 33px 0;
+        letter-spacing: -0.1px;
         color: #fff;
         border: 1px solid #1b5cd0;
         border-top: 0;
         text-align: left;
+        font-family: 'MyriadPro Semibold';
+        font-size: 18px;
         line-height: 18px;
         display: flex;
         align-items: center;
       }
+        @media screen and (max-width: 640px) {
+          .landing-section-choose-hero-dropdown .Dropdown-option {
+            height: 70px;
+            padding: 0 13px;
+          }
+        }
 /* // DROPDOWN */
 
 
@@ -3343,23 +3657,49 @@ span.landing-email-input-textfield-container input[type="email"] {
 .landing-section-rewards.landing-section-world {
 
 }
+  .landing-section-rewards.landing-section-world .landing-section-world-advantages {
+    margin-left: 0px;
+  }
   .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
     width: 50%;
     align-items: flex-start;
+    margin: 0 60px;
   }
-
-    @media screen and (max-width: 640px) {
-      .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
-        width: 100%;
-      }
+    .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child {
+      margin-top: 0;
     }
 
   .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-title {
     color: #9b01aa;
     text-align: left;
+    padding: 0;
   }
+
   .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-subtitle {
     text-align: left;
+    margin-top: 8px;
+    letter-spacing: -0.9px;
+  }
+   .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child .landing-section-world-advantages-subtitle {
+    margin-top: 8px;
+   }
+
+   @media screen and (max-width: 640px) {
+    .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
+      width: 100%;
+      margin: 0;
+    }
+    .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-img {
+      margin-left: 10px;
+    }
+    .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-title,
+    .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-subtitle
+     {
+      padding: 0 10px;
+    }
+    .landing-section-rewards.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child {
+      margin: 50px 0 80px;
+    }
   }
 
 /*  */
@@ -3375,7 +3715,9 @@ span.landing-email-input-textfield-container input[type="email"] {
 }
   .landing-section-join.landing-section-world .landing-section-world-title {
     max-width: 540px;
-    margin: 75px auto 0;
+    margin: 81px auto 0;
+    line-height: 40px;
+    letter-spacing: -0.3px;
   }
 
   .landing-section-join.landing-section-world .landing-section-world-advantages {
@@ -3384,7 +3726,8 @@ span.landing-email-input-textfield-container input[type="email"] {
   }
     .landing-section-join.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item {
       width: 50%;
-      padding-bottom: 30px;
+      margin: 0;
+      padding: 0 0 22px 0;
       border-bottom: 1px solid #7fc8fc;
     }
 
@@ -3406,21 +3749,30 @@ span.landing-email-input-textfield-container input[type="email"] {
         padding-bottom: 0;
       }
       .landing-section-join.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-title {
+        margin-top: 22px;
         text-transform: uppercase;
         color: #d01fe5;
         font-size: 16px;
-        line-height: 16px;
-        font-weight: 600;
+        line-height: 18px;
+        font-family: 'MyriadPro Bold';
       }
+      .landing-section-join.landing-section-world .landing-section-world-advantages-item:first-child .landing-section-world-advantages-title {
+        margin-top: 3px;
+        }
       .landing-section-join.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-subtitle {
+        margin-top: 9px;
         font-size: 16px;
-        line-height: 16px;
-        font-weight: 500;
+        line-height: 18px;
         padding: 0 10%;
+        font-family: 'MyriadPro Semibold';
       }
+        .landing-section-join.landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child .landing-section-world-advantages-subtitle {
+          margin-top: 9px;
+        }
 
     .landing-section-join.landing-section-world .landing-section-world-btn {
-      margin-top: 50px;
+      margin-top: 34px;
+      max-width: 194px;
     }
 
 
@@ -3444,24 +3796,23 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 
 /* PIXEL PERFECT BG IMAGE */
-/*.landing-page-wrapper.landing-page-container {
+.landing-page-wrapper.landing-page-container {
   position: relative;
 }
 .landing-page-wrapper .pixel-perfect {
-
   display: none;
-
   position: absolute;
   width: 1920px;
   height: 100%;
   background: url("../../../assets/img/landing-homepage-design.jpg") no-repeat;
   z-index: 100;
-  opacity: 0.2;
+  opacity: 0.4;
   left: 50%;
-  margin-left: -940px;
+  margin-left: -950px;
+  /*top: 406px;*/
 }
 .landing-page-wrapper .footer {
-}*/
+}
 
 
 /* PIXEL PERFECT BG IMAGE */
