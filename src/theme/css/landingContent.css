@@ -3530,7 +3530,7 @@ span.landing-email-input-textfield-container input[type="email"] {
   line-height: 50px;
   color: #d01fe5;
   cursor: pointer;
-  z-index: 950;
+  z-index: 2;
 }
   @media screen and (max-width: 640px) {
       .landing-section-choose-hero-dropdown {
@@ -3791,3 +3791,52 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 
 
+.landing-section-home-sign-up {
+  position: relative;
+  width: 240px;
+  height: 36px;
+  margin-top: 20px;
+  background: inherit;
+  background-size: cover;
+  background-position: center bottom;
+  border: 0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+  .landing-section-home-sign-up .bg {
+    position: absolute;
+    background: inherit;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    filter: blur(10px);
+  }
+    .landing-section-home-sign-up p {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 15px;
+      line-height: 15px;
+      font-family: "MyriadPro Bold";
+      z-index: 1;
+    }
+
+  .ReactModal__Overlay {
+    z-index: 10;
+  }

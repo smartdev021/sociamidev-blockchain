@@ -473,7 +473,7 @@ const WorkExplanation = ({currentLanguage}) => {
 
 
 // HOME SECTION
-const SectionHome = ({ currentLanguage, startCharacterCreation }) => {
+const SectionHome = ({ currentLanguage, startCharacterCreation, openSignUpForm }) => {
   return (
     <div className="landing-section-home">
 
@@ -481,6 +481,11 @@ const SectionHome = ({ currentLanguage, startCharacterCreation }) => {
       <p className="landing-section-home-subtitle">{languageContent[currentLanguage].home_subtitile}</p>
     
       <Dropdown className="landing-section-choose-hero-dropdown" options={[languageContent[currentLanguage].choose_hero_dropdown_1,languageContent[currentLanguage].choose_hero_dropdown_2,languageContent[currentLanguage].choose_hero_dropdown_3,languageContent[currentLanguage].choose_hero_dropdown_4]} placeholder={languageContent[currentLanguage].choose_hero_dropdown_placeholder} />
+
+      <button type="button" className="landing-section-home-sign-up" onClick={() => openSignUpForm()}>
+        <div className="bg"></div>
+        <p>Already have an account</p>
+      </button>
 
     </div>
   );
@@ -1065,6 +1070,7 @@ class LandingPageContent extends React.Component {
           <SectionHome
             currentLanguage={this.props.currentLanguage}
             startCharacterCreation={this.props.startCharacterCreation}
+            openSignUpForm={this.props.openSignUpForm}
           />
 
           <SectionConnect
