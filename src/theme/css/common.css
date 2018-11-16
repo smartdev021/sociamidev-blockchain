@@ -101,6 +101,10 @@
   text-align: center;
 }
 
+.width-type{
+  width: 178px;
+}
+
 @media only screen and (min-width: 900px) {
   .mychallenges-wrapper.dark-theme-wrapper .col-middle {
   width: 70% !important;

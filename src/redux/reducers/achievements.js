@@ -1,6 +1,8 @@
 import {
   FETCH_ACHIEVEMENTS_INITIATE,
   FETCH_ACHIEVEMENTS_COMPLETE,
+  FETCH_CHALLENGE_ACHIEVEMENTS_INITIATE,
+  FETCH_CHALLENGE_ACHIEVEMENTS_COMPLETE,
   FETCH_ACHIEVEMENT_GROUPS_INITIATE,
   FETCH_ACHIEVEMENT_GROUPS_COMPLETE,
   ADD_ACHIEVEMENT_GROUP_INITIATE,
@@ -34,6 +36,17 @@ export function achievements(state = achievementsInitialState, action) {
     case FETCH_ACHIEVEMENTS_INITIATE:
       return { ...state, isFetchingAchievements: true };
     case FETCH_ACHIEVEMENTS_COMPLETE:
+      return { ...state, data: action.data, isFetchingAchievements: false };
+    default:
+      return state;
+  }
+}
+
+export function challengeAchievements(state = achievementsInitialState, action) {
+  switch (action.type) {
+    case FETCH_CHALLENGE_ACHIEVEMENTS_INITIATE:
+      return { ...state, isFetchingAchievements: true };
+    case FETCH_CHALLENGE_ACHIEVEMENTS_COMPLETE:
       return { ...state, data: action.data, isFetchingAchievements: false };
     default:
       return state;

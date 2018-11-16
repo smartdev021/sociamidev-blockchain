@@ -1,6 +1,8 @@
 import {
   FETCH_ACHIEVEMENTS_INITIATE,
   FETCH_ACHIEVEMENTS_COMPLETE,
+  FETCH_CHALLENGE_ACHIEVEMENTS_INITIATE,
+  FETCH_CHALLENGE_ACHIEVEMENTS_COMPLETE,
   FETCH_ACHIEVEMENT_GROUPS_INITIATE,
   FETCH_ACHIEVEMENT_GROUPS_COMPLETE,
   ADD_ACHIEVEMENT_GROUP_INITIATE,
@@ -22,6 +24,19 @@ export function fetchAchievementsInitiate() {
 export function fetchAchievementsComplete(data) {
   return {
     type: FETCH_ACHIEVEMENTS_COMPLETE,
+    data: data,
+  };
+}
+
+export function fetchChallengeAchievementsInitiate() {
+  return {
+    type: FETCH_CHALLENGE_ACHIEVEMENTS_INITIATE,
+  };
+}
+
+export function fetchChallengeAchievementsComplete(data) {
+  return {
+    type: FETCH_CHALLENGE_ACHIEVEMENTS_COMPLETE,
     data: data,
   };
 }
@@ -129,4 +144,19 @@ export function updateAchievementGroup(achievementGroup) {
       })
     );
   }
+}
+
+export function fetchChallengeAchievements() {
+  return function(dispatch) {
+    dispatch(fetchChallengeAchievementsInitiate());
+
+    const url = `${ConfigMain.getBackendURL()}/achievements`;
+    return Axios.get(url)
+      .then(function(response) {
+        dispatch(fetchChallengeAchievementsComplete(response.data));
+      })
+      .catch(function(error) {
+        dispatch(fetchChallengeAchievementsComplete([]));
+      });
+  };
 }
