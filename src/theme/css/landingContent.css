@@ -3791,27 +3791,3 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 
 
-
-
-
-/* PIXEL PERFECT BG IMAGE */
-.landing-page-wrapper.landing-page-container {
-  position: relative;
-}
-.landing-page-wrapper .pixel-perfect {
-  display: none;
-  position: absolute;
-  width: 1920px;
-  height: 100%;
-  background: url("../../../assets/img/landing-homepage-design.jpg") no-repeat;
-  z-index: 100;
-  opacity: 0.4;
-  left: 50%;
-  margin-left: -950px;
-  /*top: 406px;*/
-}
-.landing-page-wrapper .footer {
-}
-
-
-/* PIXEL PERFECT BG IMAGE */
