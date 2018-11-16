@@ -473,7 +473,7 @@ const WorkExplanation = ({currentLanguage}) => {
 
 
 // HOME SECTION
-const SectionHome = ({ currentLanguage }) => {
+const SectionHome = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-home">
 
@@ -489,7 +489,7 @@ const SectionHome = ({ currentLanguage }) => {
 
 
 // SECTION CONNECT
-const SectionConnect = ({ currentLanguage }) => {
+const SectionConnect = ({ currentLanguage, startCharacterCreation}) => {
   return (
     <div className="landing-section-connect">
 
@@ -513,7 +513,7 @@ const SectionConnect = ({ currentLanguage }) => {
 
 
 // SECTION WORLD
-const SectionWorld = ({ currentLanguage }) => {
+const SectionWorld = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-world">
 
@@ -544,7 +544,9 @@ const SectionWorld = ({ currentLanguage }) => {
 
         </div>
 
-        <a href="/characterCreation" className="landing-section-world-btn">{languageContent[currentLanguage].world_button}</a>
+          <Link to="/characterCreation" className="landing-section-world-btn" onClick={() => startCharacterCreation() }>
+            {languageContent[currentLanguage].world_button}
+          </Link>
 
       </div>
 
@@ -556,7 +558,7 @@ const SectionWorld = ({ currentLanguage }) => {
 
 
 // SECTION BUTTON
-const SectionButton = ({ currentLanguage }) => {
+const SectionButton = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-button">
 
@@ -585,7 +587,7 @@ const SectionButton = ({ currentLanguage }) => {
 
 
 // SECTION GAME
-const SectionGame = ({ currentLanguage }) => {
+const SectionGame = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-game">
 
@@ -628,7 +630,10 @@ const SectionGame = ({ currentLanguage }) => {
 
         </div>
 
-        <a href="/characterCreation" className="landing-section-game-btn">{languageContent[currentLanguage].game_button}</a>
+        <Link to="/characterCreation" className="landing-section-game-btn" onClick={() => startCharacterCreation() }>
+          {languageContent[currentLanguage].game_button}
+        </Link>
+
 
       </div>
 
@@ -641,7 +646,7 @@ const SectionGame = ({ currentLanguage }) => {
 
 
 // SECTION TASKS
-const SectionTasks = ({ currentLanguage }) => {
+const SectionTasks = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-game landing-section-tasks">
 
@@ -684,7 +689,9 @@ const SectionTasks = ({ currentLanguage }) => {
 
         </div>
 
-        <a href="/characterCreation" className="landing-section-game-btn">{languageContent[currentLanguage].tasks_button}</a>
+        <Link to="/characterCreation" className="landing-section-game-btn" onClick={() => startCharacterCreation() }>
+          {languageContent[currentLanguage].tasks_button}
+        </Link>
 
       </div>
 
@@ -702,7 +709,7 @@ const SectionTasks = ({ currentLanguage }) => {
 
 
 // SECTION WORLD SLIDER
-const SectionWorldSlider = ({ currentLanguage }) => {
+const SectionWorldSlider = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-world-slider">
 
@@ -778,7 +785,9 @@ const SectionWorldSlider = ({ currentLanguage }) => {
         
         </div>
 
-        <a href="/characterCreation" className="landing-section-world-slider-btn">{languageContent[currentLanguage].word_slider_button}</a>
+          <Link to="/characterCreation" className="landing-section-world-slider-btn" onClick={() => startCharacterCreation() }>
+            {languageContent[currentLanguage].word_slider_button}
+          </Link>
 
       </div>
 
@@ -791,7 +800,7 @@ const SectionWorldSlider = ({ currentLanguage }) => {
 
 
 // SECTION REWARDS
-const SectionRewards = ({ currentLanguage }) => {
+const SectionRewards = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-world landing-section-rewards">
 
@@ -830,7 +839,7 @@ const SectionRewards = ({ currentLanguage }) => {
 
 
 // SECTION WORLD SLIDER
-const SectionHeroes = ({ currentLanguage }) => {
+const SectionHeroes = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-world-slider landing-section-heroes">
 
@@ -889,7 +898,9 @@ const SectionHeroes = ({ currentLanguage }) => {
         
         </div>
 
-        <a href="/characterCreation" className="landing-section-world-slider-btn">{languageContent[currentLanguage].heroes_button}</a>
+        <Link to="/characterCreation" className="landing-section-world-slider-btn" onClick={() => startCharacterCreation() }>
+          {languageContent[currentLanguage].heroes_button}
+        </Link>
 
       </div>
 
@@ -900,7 +911,7 @@ const SectionHeroes = ({ currentLanguage }) => {
 
 
 
-const SectionChooseHero = ({ currentLanguage }) => {
+const SectionChooseHero = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-choose-hero">
 
@@ -924,7 +935,7 @@ const SectionChooseHero = ({ currentLanguage }) => {
 
 
 // SECTION JOIN
-const SectionJoin = ({ currentLanguage }) => {
+const SectionJoin = ({ currentLanguage, startCharacterCreation }) => {
   return (
     <div className="landing-section-world landing-section-join">
 
@@ -952,7 +963,9 @@ const SectionJoin = ({ currentLanguage }) => {
 
         </div>
 
-        <a href="/characterCreation" className="landing-section-world-btn">{languageContent[currentLanguage].join_item_button}</a>
+        <Link to="/characterCreation" className="landing-section-world-btn" onClick={() => startCharacterCreation() }>
+          {languageContent[currentLanguage].join_item_button}
+        </Link>
 
       </div>
 
@@ -1029,9 +1042,6 @@ class LandingPageContent extends React.Component {
   }
 
   render() {
-    const options = ['one', 'two', 'three']
-
-
     return (
       <div className="landing-page-wrapper">
         <div className="pixel-perfect"></div>
@@ -1054,47 +1064,60 @@ class LandingPageContent extends React.Component {
 
           <SectionHome
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionConnect
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionWorld
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionButton
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionGame
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionTasks
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionWorldSlider
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionRewards
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionHeroes
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
           <SectionChooseHero
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
 
            <SectionJoin
             currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
           />
+
+
 
 
         

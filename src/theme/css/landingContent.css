@@ -3528,10 +3528,9 @@ span.landing-email-input-textfield-container input[type="email"] {
   margin: 20px auto;
   font-size: 18px;
   line-height: 50px;
-  /*font-weight: 600;*/
   color: #d01fe5;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 950;
 }
   @media screen and (max-width: 640px) {
       .landing-section-choose-hero-dropdown {
