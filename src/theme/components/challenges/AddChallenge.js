@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { connect }from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ConfigMain from '~/configs/main';
 import ActionLink from '~/src/components/common/ActionLink';
+import { fetchChallengeAchievements } from '~/src/redux/actions/achievements';
+import { fetchStories} from '~/src/redux/actions/story';
 
 export class AddChallenge extends Component {
   constructor(props) {
@@ -198,7 +202,7 @@ export class AddChallenge extends Component {
         </select>
         <div
           className={ !this.state.isRequiredClose ? 'select-selected select-arrow-active' : 'select-selected' }
-          onClick={ () => this.toggleRequirementState() }>
+          onClick={this.toggleRequirementState.bind(this)}>
           { this.state.requirement }
         </div>
 
@@ -439,38 +443,30 @@ export class AddChallenge extends Component {
   }
 
   getStories(){
-    Axios.get(`${ConfigMain.getBackendURL()}/storiesGetAll`)
-      .then(response => {
-        const stories = response.data.filter(item => item.name).map(item => {
-          return {
-            value: item.name, 
-            label: item.name
-          }
-        })
-        this.setState({ lstStories: stories });
-      })
-      .catch(err => {});
+    return this.props.stories.filter(item => item.name).map(item => {
+      return {
+        value: item.name, 
+        label: item.name
+      }
+    });
   }
 
   getAchievements(){
-    Axios.get(`${ConfigMain.getBackendURL()}/achievements`)
-      .then(response => {
-        const achievements = response.data.filter(item => item.name).map(item => {
-          return {
-            value: item.name, 
-            label: item.name
-          }
-        })
-        this.setState({ lstAchievements: achievements });
-      })
-      .catch(err => {});
+    return this.props.achievements.filter(item => item.name).map(item => {
+      return {
+        value: item.name, 
+        label: item.name
+      }
+    })
   }
   componentDidMount(){
-     this.getStories();
-     this.getAchievements();
+     this.props.fetchStories();
+     this.props.fetchAchievements();
   }
 
   render() {
+    const stories = this.getStories();
+    const achievements = this.getAchievements();
     return (
       <div className="col-middle ml-fixed">
       <ActionLink href="#" className="modal-close-button" onClick={ () => this.handleClose() } />
@@ -553,7 +549,7 @@ export class AddChallenge extends Component {
                     }
                   </div>
                   <div className="col-sm-4 pl-7 pt-3">
-                    <input value={this.state.type} style={{width: '178px'}} onChange={this.updateTypeValue} type="text" className="form-control" placeholder="Type" />
+                    <input value={this.state.type} onChange={this.updateTypeValue} type="text" className="form-control width-type" placeholder="Type" />
                   </div>
                   <div className="col-sm-4 pl-7 challege-right">
                     <input value={this.state.typeDetail} onChange={this.updateTypeDetailValue} type="text" className="form-control" placeholder="Type Detail" />
@@ -572,7 +568,7 @@ export class AddChallenge extends Component {
                   </div>
                   <div className="col-sm-4 pr-7 pt-3">
                   {
-                      this.renderRequirementValueSelect(this.state.requirement == 'Achievement' ? this.state.lstAchievements : this.state.lstStories)
+                      this.renderRequirementValueSelect(this.state.requirement == 'Achievement' ? achievements : stories)
                   }
                 </div>
                   <div className="col-sm-4 pl-7 challege-right">
@@ -590,4 +586,14 @@ export class AddChallenge extends Component {
   }
 }
 
-export default AddChallenge;
+const mapStateToProps = state => ({
+    achievements: state.challengeAchievements.data,
+    stories: state.skills.skills
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchAchievements: bindActionCreators(fetchChallengeAchievements, dispatch),
+  fetchStories: bindActionCreators(fetchStories, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddChallenge);
