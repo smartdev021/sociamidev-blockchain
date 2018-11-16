@@ -2658,6 +2658,7 @@ span.landing-email-input-textfield-container input[type="email"] {
     font-size: 36px;
     line-height: 36px;
     letter-spacing: -0.5px;
+    font-family: 'MyriadPro Regular';          
   }
     @media screen and (max-width: 640px) {
         .landing-section-home .landing-section-home-subtitle {
@@ -2875,6 +2876,7 @@ span.landing-email-input-textfield-container input[type="email"] {
           line-height: 21px;
           letter-spacing: -0.6px;
           color: #323232;
+          font-family: 'MyriadPro Regular';      
         }
           .landing-section-world .landing-section-world-advantages .landing-section-world-advantages-item:last-child .landing-section-world-advantages-subtitle {
             margin-top: 35px;
@@ -2971,6 +2973,7 @@ span.landing-email-input-textfield-container input[type="email"] {
       line-height: 20px;
       color: #fff;
       text-align: center;
+      font-family: 'MyriadPro Regular';      
     } 
 
     @media screen and (max-width: 640px) {
@@ -3123,6 +3126,7 @@ span.landing-email-input-textfield-container input[type="email"] {
             line-height: 21px;
             letter-spacing: -0.7px;
             color: #fff;
+            font-family: 'MyriadPro Regular';    
           }
         @media screen and (max-width: 1000px) {
             .landing-section-game .landing-section-game-item .landing-section-game-item-imgwrapper {
@@ -3214,6 +3218,7 @@ span.landing-email-input-textfield-container input[type="email"] {
 
   .landing-section-tasks.landing-section-game .landing-section-game-item-content .landing-section-game-item-content-subtitle {
     color: #000;
+    font-family: 'MyriadPro Regular';    
   }
 
   .landing-section-tasks.landing-section-game .landing-section-game-btn {
@@ -3347,6 +3352,7 @@ span.landing-email-input-textfield-container input[type="email"] {
               color: #fff;
               margin-bottom: 20px;
               text-align: center;
+              font-family: 'MyriadPro Regular';
             }
               @media screen and (max-width: 640px) {
                 .landing-section-world-slider .carousel .item .description .text {
