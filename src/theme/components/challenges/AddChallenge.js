@@ -246,7 +246,7 @@ export class AddChallenge extends Component {
         </select>
         <div
           className={ !this.state.isRequiredValueClose ? 'select-selected select-arrow-active' : 'select-selected' }
-          onClick={ () => this.toggleRequirementValueState() }>
+          onClick={this.toggleRequirementValueState.bind(this) }>
           { this.state.requirementValue }
         </div>
 
