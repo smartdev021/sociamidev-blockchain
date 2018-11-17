@@ -21,7 +21,7 @@ import '~/src/theme/css/company.css';
 
 import { updateCompany } from '~/src/redux/actions/company';
 import { fetchTeams, addNewTeam, saveTeam, addTeamEmail, updateTeamEmail, deleteTeam, cancelTeam } from '~/src/redux/actions/teams';
-import { fetchAchievements, addAchievementGroup, updateAchievementGroup } from '~/src/redux/actions/achievements';
+import { fetchAchievements, addAchievementGroup, updateAchievementGroup, fetchChallengeAchievements } from '~/src/redux/actions/achievements';
 import { fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
 import { fetchStories, updateStory, saveStory, deleteStory } from '~/src/redux/actions/story';
 
@@ -126,6 +126,7 @@ class Company extends Component {
   componentDidMount(){
     this.getQuestions();
     this.getStories();
+    this.props.fetchAchievementsList();
   }
 
   handleChallengeSubmit() {
@@ -660,7 +661,7 @@ class Company extends Component {
   }
 
   render() {
-    const { userProfile, achievementGroups } = this.props;
+    const { userProfile, challengeAchievements } = this.props;
     const { company, questions, questionCount, storiesData, storiesCount, message, taskReference } = this.state;
     return (
       <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}>
@@ -850,7 +851,8 @@ class Company extends Component {
                                           >
                                             <option/>
                                             {
-                                              (achievementGroups || [])
+                                              (challengeAchievements || [])
+                                                .filter(f => f.name)
                                                 .map(e=>(
                                                   <option value={e.name} selected={que.reward && que.reward.value === e.name}>
                                                     {e.name}
@@ -1056,7 +1058,8 @@ const mapStateToProps = state => ({
   isFetchingRoadmaps: state.roadmapsAdmin.isFetching,
   roadmaps: state.roadmapsAdmin.data,
   isFetchingSkills: state.skills.isFetchingSkills,
-  skills: state.skills.data
+  skills: state.skills.data,
+  challengeAchievements: state.challengeAchievements.data,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -1075,7 +1078,8 @@ const mapDispatchToProps = dispatch => ({
   fetchStories: bindActionCreators(fetchStories, dispatch),
   updateStory: bindActionCreators(updateStory, dispatch),
   saveStory: bindActionCreators(saveStory, dispatch),
-  deleteStory: bindActionCreators(deleteStory, dispatch)
+  deleteStory: bindActionCreators(deleteStory, dispatch),
+  fetchAchievementsList: bindActionCreators(fetchChallengeAchievements, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Company));
