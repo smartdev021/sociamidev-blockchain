@@ -325,7 +325,7 @@ class Achievements extends Component {
                       </div>
                     </div>
                     <div className="top-box">{this.renderAchievementsGroupsByCompany()}</div>
-                    <div className="bottom-box">{this.renderAchievementsByAchievementsGroup()}</div>
+                    <div className="bottom-box achievemen-List-show">{this.renderAchievementsByAchievementsGroup()}</div>
                   </div>
                 </div>
               </div>
