@@ -78,9 +78,9 @@ export function fetchQuestions () {
 export function updateQuestion(question) {
   return function (dispatch) {
     dispatch(updateQuestionsInitiate());
-    const url = `${ConfigMain.getBackendURL()}/questionUpdate?id=${question._id}`;
+    const url = `${ConfigMain.getBackendURL()}/questionUpdate`;
     return (
-      Axios.put(url, question)
+      Axios.post(url, question)
       .then(function(response) {
         dispatch(updateQuestionsComplete(response.data));
       })

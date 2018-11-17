@@ -719,7 +719,7 @@ class Company extends Component {
   }
 
   async addQuestion(){
-    await this.props.saveQuestion(new Array());
+    await this.props.saveQuestion({question:{}});
     await this.getQuestions();
     message.success(`New question added.`);
   }
