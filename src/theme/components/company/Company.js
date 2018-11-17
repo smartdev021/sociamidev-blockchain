@@ -24,6 +24,7 @@ import { fetchTeams, addNewTeam, saveTeam, addTeamEmail, updateTeamEmail, delete
 import { fetchAchievements, addAchievementGroup, updateAchievementGroup, fetchChallengeAchievements } from '~/src/redux/actions/achievements';
 import { fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
 import { fetchStories, updateStory, saveStory, deleteStory } from '~/src/redux/actions/story';
+import { updateQuestion, saveQuestion, deleteQuestion } from '../../../redux/actions/question';
 
 import plus from "~/src/theme/images/plus.png";
 import cross from "~/src/theme/images/cross.png";
@@ -63,6 +64,7 @@ class Company extends Component {
       IsChallengeOpen: 'none',
 	    IsStoryOpen: 'none',
       questions: [],
+      questionsDataBackup: [],
       activePage: 1,
       activeStoryPage: 1,
       questionCount: 10,
@@ -76,7 +78,10 @@ class Company extends Component {
       IsSettingsOpen:'none',
       storePreload: '',
       preloadData: '',
-      taskReference: []
+      taskReference: [],
+      editableQuestionKey: "",
+      editableQuestionIndex: "",
+      selectedQuestionKeys:[],
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -92,7 +97,7 @@ class Company extends Component {
     this.toggleStoryOption = this.toggleStoryOption.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
     this.onHandleUploadStoryImg = this.onHandleUploadStoryImg.bind(this);
-    this.onClickEditable = this.onClickEditable.bind(this);
+    this.onClickStoryEditable = this.onClickStoryEditable.bind(this);
     this.handleStoryDataChange = this.handleStoryDataChange.bind(this);
     this.handleStoryInputClick = this.handleStoryInputClick.bind(this);
     this.undoStoryData = this.undoStoryData.bind(this);
@@ -101,6 +106,16 @@ class Company extends Component {
     this.deleteQuestions = this.deleteQuestions.bind(this);
     this.setSelectedStory = this.setSelectedStory.bind(this);
     this.toggleSettingsOption = this.toggleSettingsOption.bind(this);
+    this.handleUndoTableData = this.handleUndoTableData.bind(this);
+    this.handleAddTableRowData = this.handleAddTableRowData.bind(this);
+    this.handleRemoveTableRowData = this.handleRemoveTableRowData.bind(this);
+    this.onClickQuestionEditable = this.onClickQuestionEditable.bind(this);
+    this.undoQuestionData = this.undoQuestionData.bind(this);
+    this.addQuestion = this.addQuestion.bind(this);
+    this.removeQuestion = this.removeQuestion.bind(this);
+    this.handleQuestionInputClick = this.handleQuestionInputClick.bind(this);
+    this.handleQuestionDataChange = this.handleQuestionDataChange.bind(this);
+    this.setSelectedQuestion = this.setSelectedQuestion.bind(this);
   }
 
   togglePage(page) {
@@ -524,8 +539,8 @@ class Company extends Component {
     }
   }
 
-  /* Handle Editable TR click event */
-  async onClickEditable(e){
+  /* Handle Story Editable TR click event */
+  async onClickStoryEditable(e){
     if(this.state.editableStoryKey != ""){
         await this.props.updateStory(this.state.storiesData[this.state.editableStoryIndex]);
         this.setState({ editableStoryKey: "" }); //make tr non-editable on doubleclick     
@@ -613,6 +628,108 @@ class Company extends Component {
     message.success(`Story(ies) was deleted.`);
   }
 
+  /* Handle main bar undo click for each different table */
+  handleUndoTableData(){
+    const that = this;
+    if(that.state.IsStoryOpen === 'block'){
+      return that.undoStoryData();
+    } else if (that.state.IsQuestionsOpen === 'block'){
+      return that.undoQuestionData();
+    }
+  }
+  /* Handle main bar add click for each different table */
+  handleAddTableRowData(){
+    const that = this;
+    if(that.state.IsStoryOpen === 'block'){
+      return that.addStory();
+    } else if(that.state.IsQuestionsOpen === 'block'){
+      return that.addQuestion();
+    }
+  }
+  /* Handle main bar remove click for each different table */
+  handleRemoveTableRowData(){
+    const that = this;
+    if(that.state.IsStoryOpen === 'block'){
+      return that.removeStory();
+    } else if(that.state.IsQuestionsOpen === 'block'){
+      return that.removeQuestion();
+    }
+  }
+
+  /* Handle Question Editable TR click event */
+  async onClickQuestionEditable(e){
+    if(this.state.editableQuestionKey != ""){
+      await this.props.updateQuestion(this.state.questions[this.state.editableQuestionIndex]);
+      this.setState({ editableQuestionKey: "" }); //make tr non-editable on doubleclick
+      message.success(`Data edited successfully.`);
+    } else {
+      this.setState({
+        questionsDataBackup: this.state.questions,
+        editableQuestionKey: e.currentTarget.dataset.key,
+        editableQuestionIndex: e.currentTarget.dataset.index
+      }); //make tr editable in story table
+    }
+  }
+
+  /* Prevent child element click to update state */
+  handleQuestionInputClick(e){
+    e.stopPropagation();
+  }
+
+  /* Update new value in state after editing */
+  handleQuestionDataChange(e){
+    let questionParent = e.currentTarget.dataset.indexparent;
+    let questionChild = "";
+    if(e.currentTarget.dataset.indexchild){
+      questionChild = e.currentTarget.dataset.indexchild;
+    }
+    let index = this.state.editableQuestionIndex;
+    let questionsCopy = JSON.parse(JSON.stringify(this.state.questions));
+    if(questionChild === ""){
+      questionsCopy[index][questionParent] = e.currentTarget.value;
+    } else {
+      questionsCopy[index][questionParent][questionChild] = e.currentTarget.value;
+    }
+    this.setState({
+      questions: questionsCopy
+    });
+  }
+
+  /* Handle checkbox click for question */
+  setSelectedQuestion(e){
+    e.stopPropagation();
+    var ids = this.state.selectedQuestionKeys;
+    var index = ids.indexOf(e.currentTarget.dataset.key);
+    if(index > -1){
+      ids.splice(index, 1);
+    } else {
+      ids.push(e.currentTarget.dataset.key);
+    }
+
+    this.setState({ selectedQuestionKeys: ids });
+  }
+
+  /* Undo Question Data */
+  async undoQuestionData(){
+    if(this.state.editableQuestionIndex != ""){
+      this.setState({ question: this.state.questionsDataBackup });
+      message.success(`Data undo successfully.`);
+      await this.props.updateQuestion(this.state.questionsDataBackup[this.state.editableQuestionIndex]);
+    }
+  }
+
+  async addQuestion(){
+    await this.props.saveQuestion({question:{}});
+    await this.getQuestions();
+    message.success(`New question added.`);
+  }
+
+  async removeQuestion(){
+    await this.props.deleteQuestion(this.state.selectedQuestionKeys);
+    await this.getQuestions();
+    message.success(`Question was deleted.`);
+  }
+
   deleteQuestions() {
     var that = this;
     if(this.state.IsQuestionsOpen == 'block') {
@@ -682,9 +799,9 @@ class Company extends Component {
                       <a href="javascript:;" onClick={this.toggleSettingsOption}>Settings</a>
                     </li>
                     <li style={{float: 'right'}}>
-                      <img src={undoimg} onClick={this.undoStoryData} />
-                      <img style={{marginLeft: '7px'}} src={plus} onClick={this.addStory}  />
-                      <img style={{margin: '0px 7px'}} src={cross} onClick={this.removeStory} />
+                      <img src={undoimg} onClick={this.handleUndoTableData} />
+                      <img style={{marginLeft: '7px'}} src={plus} onClick={this.handleAddTableRowData}  />
+                      <img style={{margin: '0px 7px'}} src={cross} onClick={this.handleRemoveTableRowData} />
                       <label htmlFor="upload-input">
                         <img src={cloud}/>
                         <input id="upload-input" name="file" type="file" accept=".csv" ref={(ref) => this.fileUpload = ref} style={{display: 'none'}} onChange={value => this.uploadFile()} />
@@ -785,7 +902,7 @@ class Company extends Component {
                             _.map(storiesData,(que, index)=>{
                               if(this.state.editableStoryKey === que._id) {
                                 return(
-                                  <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
+                                  <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickStoryEditable} >
                                     <td></td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="name" value={que.name} /></td>
                                     <td><Textarea onClick={this.handleStoryInputClick} onChange={this.handleStoryDataChange} data-indexParent="skill" value={que.skill} /></td>
@@ -876,7 +993,7 @@ class Company extends Component {
                                 )
                               } else {
                                 return(
-                                  <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickEditable} >
+                                  <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickStoryEditable} >
                                     <td><input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedStory} /></td>
                                     <td className="hover-pencil">{que.name}</td>
                                     <td className="hover-pencil">{que.skill}</td>
@@ -953,14 +1070,80 @@ class Company extends Component {
                               <tbody>
                               {
                                 _.map(questions,(que, index)=>{
+                                  if(this.state.editableQuestionKey === que._id) {
+                                    return(
+                                      <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickQuestionEditable} >
+                                        <td></td>
+                                        <td>
+                                          <Textarea onClick={this.handleQuestionInputClick} onChange={this.handleQuestionDataChange} data-indexParent="question" value={que.question} />
+                                        </td>
+                                        <td>
+                                          <Textarea onClick={this.handleQuestionInputClick} onChange={this.handleQuestionDataChange} data-indexParent="roadmapSkill" value={que.roadmapSkill} />
+                                        </td>
+                                        <td>
+                                          <Textarea onClick={this.handleQuestionInputClick} onChange={this.handleQuestionDataChange} data-indexParent="category" value={que.category} />
+                                        </td>
+                                        <td>
+                                          <Textarea onClick={this.handleQuestionInputClick} onChange={this.handleQuestionDataChange} data-indexParent="subCategory" value={que.subCategory} />
+                                        </td>
+                                        <td>
+                                          <Textarea onClick={this.handleQuestionInputClick} onChange={this.handleQuestionDataChange} data-indexParent="description" value={que.description} />
+                                        </td>
+                                        <td><Img key={`cover_${new Date()}${que._id}`}
+                                                 src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/questionImages/${que._id}_cover`}
+                                                 style={{maxWidth: 90, maxHeight: 90}}
+                                        />
+                                          <Upload
+                                            name="image"
+                                            listType="picture"
+                                            action={`${ConfigMain.getBackendURL()}/questions/${que._id}/upload-cover-image`}
+                                            onChange= {this.onHandleUploadStoryImg}
+                                            showUploadList={false}
+                                            key={`upload-cover-image${que._id}`}
+                                          >
+                                            <Button key={`btn-q-cover${que._id}`}>
+                                              <Icon type="upload" key={`icon-q-cover${que._id}`}/>Upload
+                                            </Button>
+                                          </Upload></td>
+                                        <td><Img key={`body_${new Date()}${que._id}`}
+                                                 src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/questionImages/${que._id}_body`}
+                                                 style={{maxWidth: 90, maxHeight: 90}}
+                                        />
+                                          <Upload
+                                            name="image"
+                                            listType="picture"
+                                            action={`${ConfigMain.getBackendURL()}/questions/${que._id}/upload-body-image`}
+                                            onChange= {this.onHandleUploadStoryImg}
+                                            showUploadList={false}
+                                            key={`upload-body-image${que._id}`}
+                                          >
+                                            <Button key={`btn-q-body${que._id}`}>
+                                              <Icon type="upload" key={`icon-q-body${que._id}`}/>Upload
+                                            </Button>
+                                          </Upload></td>
+                                        <td>
+                                          <Textarea onClick={this.handleQuestionInputClick} onChange={this.handleQuestionDataChange} data-indexParent="conditions" value={que.conditions} />
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                          <a className="preload-button" onClick={() => this.handleStartClick(que._id, que.question) }> {this.state.storePreload && this.state.storePreload[que._id] || this.state.preloadData[que._id] ? 'Reload' : 'Start'} </a>
+                                          {(this.state.storePreload && this.state.storePreload[que._id]) || this.state.preloadData[que._id] ? <a className="preload-button" onClick={() => this.showScraperData(que._id, this.state.preloadData[que._id]) }> Saved </a> : '' }
+                                        </td>
+                                      </tr>
+                                    )
+                                  }
                                   return(
-                                    <tr key={que._id}>
-                                      <td></td>
-                                      <td>{que.question}</td>
-                                      <td>{que.roadmapSkill}</td>
-                                      <td>{que.category}</td>
-                                      <td>{que.subCategory}</td>
-                                      <td>{que.description}</td>
+                                    <tr key={que._id} data-key={que._id} data-index={index} onClick={this.onClickQuestionEditable} >
+                                      <td>
+                                        <input type="checkbox" style={{cursor: "pointer"}} data-key={que._id} onClick={this.setSelectedQuestion} />
+                                      </td>
+                                      <td className="hover-pencil">{que.question}</td>
+                                      <td className="hover-pencil">{que.roadmapSkill}</td>
+                                      <td className="hover-pencil">{que.category}</td>
+                                      <td className="hover-pencil">{que.subCategory}</td>
+                                      <td className="hover-pencil">{que.description}</td>
                                       <td><Img key={`cover_${new Date()}${que._id}`}
                                             src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/questionImages/${que._id}_cover`}
                                             style={{maxWidth: 90, maxHeight: 90}}
@@ -977,7 +1160,7 @@ class Company extends Component {
                                               <Icon type="upload" key={`icon-q-cover${que._id}`}/>Upload
                                             </Button>
                                           </Upload></td>
-                                        <td><Img key={`body_${new Date()}${que._id}`}
+                                      <td><Img key={`body_${new Date()}${que._id}`}
                                             src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/questionImages/${que._id}_body`}
                                             style={{maxWidth: 90, maxHeight: 90}}
                                           />
@@ -993,7 +1176,7 @@ class Company extends Component {
                                               <Icon type="upload" key={`icon-q-body${que._id}`}/>Upload
                                             </Button>
                                           </Upload></td>
-                                      <td>{que.conditions}</td>
+                                      <td className="hover-pencil">{que.conditions}</td>
                                       <td></td>
                                       <td></td>
                                       <td></td>
@@ -1080,6 +1263,9 @@ const mapDispatchToProps = dispatch => ({
   saveStory: bindActionCreators(saveStory, dispatch),
   deleteStory: bindActionCreators(deleteStory, dispatch),
   fetchAchievementsList: bindActionCreators(fetchChallengeAchievements, dispatch),
+  updateQuestion: bindActionCreators(updateQuestion, dispatch),
+  saveQuestion: bindActionCreators(saveQuestion, dispatch),
+  deleteQuestion: bindActionCreators(deleteQuestion, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Company));

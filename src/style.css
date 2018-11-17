@@ -1481,3 +1481,8 @@ div#stories table.table tbody tr td.hover-pencil{
 div#stories table.table tbody tr textarea{
     width: 100%;
 }
+
+/* Pencil icon on hover for company tab */
+div#questions table.table tbody tr td.hover-pencil{
+  cursor: url(https://s3-ap-southeast-1.amazonaws.com/stg.soqqle.com/pointer-white.png), auto;
+}
