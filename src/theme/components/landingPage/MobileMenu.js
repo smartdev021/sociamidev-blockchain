@@ -26,7 +26,7 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
         <ul>
           <li><a className="ancher" href="#game" onClick={closeMenu}>Game</a></li>
           <li><a className="ancher" href="#history" onClick={closeMenu}>World</a></li>
-          <li>Connect</li>
+          <li><a className="ancher" href="#communication">Connect</a></li>
           <li
             onClick={() => {
               onEnterpriseModalShow();
