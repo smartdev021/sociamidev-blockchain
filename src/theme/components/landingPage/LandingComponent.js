@@ -221,7 +221,6 @@ class LandingPage extends Component {
             onEnterpriseModalHide={() => this.handleEnterpriseModalShow(false)} />
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
-          <Logo />
           <Header
             openMenu={this.toggle}
             isMobileMenuOpen={this.state.isOpen}

@@ -481,7 +481,6 @@ const SectionHome = ({ currentLanguage, startCharacterCreation, openSignUpForm, 
       <p className="landing-section-home-subtitle">{languageContent[currentLanguage].home_subtitile}</p>
       <Dropdown className="landing-section-choose-hero-dropdown" options={[languageContent[currentLanguage].choose_hero_dropdown_1,languageContent[currentLanguage].choose_hero_dropdown_2,languageContent[currentLanguage].choose_hero_dropdown_3,languageContent[currentLanguage].choose_hero_dropdown_4]} placeholder={languageContent[currentLanguage].choose_hero_dropdown_placeholder} onChange={() => { startCharacterCreation(); history.push('/characterCreation'); }} />
       <button type="button" className="landing-section-home-sign-up" onClick={() => openSignUpForm()}>
-        <div className="bg"></div>
         <p>Already have an account</p>
       </button>
     </div>
