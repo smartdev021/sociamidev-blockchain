@@ -53,11 +53,49 @@
   margin-top: 15px;
 }
 
+.company-holder .approve-challenge.pur-btn {
+  border: 2px solid #8e019c;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 50px;
+  height: 34px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+  cursor: pointer;
+}
+.company-holder .approve-challenge.pur-btn:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
 /* Light theme */
 .light-theme-wrapper .ThemeSettings-box{
   background: #fff;
 }
 .light-theme-wrapper .ThemeSettings-form-label{
+  color: black;
+}
+.light-theme-wrapper.company-holder .approve-challenge.pur-btn{
+  color: #000;
+}
+.light-theme-wrapper.company-holder .approve-challenge.pur-btn:hover {
+  border-color: #000;
+  color: #000;
+}
+.light-theme-wrapper.company-holder .approve-challenge.pur-btn {
+  border-color: #0069ba;
+  color: #0069ba;
+}
+
+.mychallenges-wrapper.dark-theme-wrapper .MyChallenges .col-middle{
+  width: 100% !important;
+  margin: unset !important;
+}
+
+.MyChallenges .table-responsive .table td.black-text textarea, .MyChallenges .table-responsive .table td.black-text select{
   color: black;
 }
 

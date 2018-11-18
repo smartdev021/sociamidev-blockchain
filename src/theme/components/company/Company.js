@@ -25,6 +25,7 @@ import { fetchAchievements, addAchievementGroup, updateAchievementGroup, fetchCh
 import { fetchRoadmapsFromAdmin } from '~/src/redux/actions/roadmaps';
 import { fetchStories, updateStory, saveStory, deleteStory } from '~/src/redux/actions/story';
 import { updateQuestion, saveQuestion, deleteQuestion } from '../../../redux/actions/question';
+import { updateChallenge, saveChallenge, deleteChallenge } from '../../../redux/actions/challenge';
 
 import plus from "~/src/theme/images/plus.png";
 import cross from "~/src/theme/images/cross.png";
@@ -82,6 +83,10 @@ class Company extends Component {
       editableQuestionKey: "",
       editableQuestionIndex: "",
       selectedQuestionKeys:[],
+      challengesDataBackup:[],
+      editableChallengeKey: "",
+      editableChallengeIndex: "",
+      selectedChallengeKeys:[],
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -116,6 +121,12 @@ class Company extends Component {
     this.handleQuestionInputClick = this.handleQuestionInputClick.bind(this);
     this.handleQuestionDataChange = this.handleQuestionDataChange.bind(this);
     this.setSelectedQuestion = this.setSelectedQuestion.bind(this);
+    this.undoChallengeData = this.undoChallengeData.bind(this);
+    this.addChallenge = this.addChallenge.bind(this);
+    this.removeChallenge = this.removeChallenge.bind(this);
+    this.handleChallengeCopyChange = this.handleChallengeCopyChange.bind(this);
+    this.onClickChallengeEditable = this.onClickChallengeEditable.bind(this);
+    this.handleSelectdChallengeKeysSet = this.handleSelectdChallengeKeysSet.bind(this);
   }
 
   togglePage(page) {
@@ -169,21 +180,18 @@ class Company extends Component {
       case "MyChallenges":
         return (
           <div className="col-middle ml-fixed">
-            <div className="row">
-              <div className="col-sm-5">
-                <h3>My Challenges</h3>
-              </div>
-              <div className="col-sm-7 text-right">
-                <button className="yellow-btn" onClick={ () => this.togglePage("AddChallenge") }>+ Add challenge</button>
-                <button className="pur-btn" onClick={ () => this.togglePage("ApproveChallenge") }>Approve submission</button>
-              </div>
-            </div>
-
-            <MyChallenges challenges={this.state.challenges} />
+            <MyChallenges
+              challenges={this.state.challenges}
+              editableChallengeKey={this.state.editableChallengeKey}
+              editableChallengeIndex={this.state.editableChallengeIndex}
+              handleChallengeCopyChange={this.handleChallengeCopyChange}
+              onClickChallengeEditable={this.onClickChallengeEditable}
+              handleSelectdChallengeKeysSet={this.handleSelectdChallengeKeysSet}
+              challengeAchievements={this.props.challengeAchievements}
+              storiesList={this.props.storiesList}
+            />
           </div>
         );
-      case "AddChallenge":
-        return <AddChallenge onClose={() => this.handleChallengeClose()} onSubmit={() => this.handleChallengeSubmit()} />;
       case "ApproveChallenge":
         return <ApproveChallenge onClose={() => this.handleChallengeClose()} profilePic={this.state.profilePic} />;
     }
@@ -259,6 +267,7 @@ class Company extends Component {
       this.setState({ achievementGroups: [currentAchievementGroup, ...newData], companyAchievementGroups: [currentAchievementGroup, ...companyAchievementGroups] });
     }
   }
+
   getQuestions(){
     const that = this;
     const url = `${ConfigMain.getBackendURL()}/questionsGetAll`
@@ -288,6 +297,16 @@ class Company extends Component {
 
     }).catch(function(error) { console.log(error) });
     
+  }
+
+  getChallenges(){
+    var that = this;
+    const url = `${ConfigMain.getBackendURL()}/challenges`
+    Axios.get(url).then(function(response) {
+      if (response.data){
+        that.setState({ challenges: response.data })
+      }
+    }).catch(function(error) { console.log(error) });
   }
   // Upload questions
   uploadFile() {
@@ -635,6 +654,8 @@ class Company extends Component {
       return that.undoStoryData();
     } else if (that.state.IsQuestionsOpen === 'block'){
       return that.undoQuestionData();
+    } else if (that.state.IsChallengeOpen === 'block'){
+      return that.undoChallengeData();
     }
   }
   /* Handle main bar add click for each different table */
@@ -644,6 +665,8 @@ class Company extends Component {
       return that.addStory();
     } else if(that.state.IsQuestionsOpen === 'block'){
       return that.addQuestion();
+    } else if (that.state.IsChallengeOpen === 'block'){
+      return that.addChallenge();
     }
   }
   /* Handle main bar remove click for each different table */
@@ -653,6 +676,8 @@ class Company extends Component {
       return that.removeStory();
     } else if(that.state.IsQuestionsOpen === 'block'){
       return that.removeQuestion();
+    } else if (that.state.IsChallengeOpen === 'block'){
+      return that.removeChallenge();
     }
   }
 
@@ -742,6 +767,63 @@ class Company extends Component {
       });
     }
   }
+
+  /* Undo Question Data */
+  async undoChallengeData(){
+    if(this.state.editableChallengeIndex != ""){
+      this.setState({ challenges: this.state.challengesDataBackup });
+      message.success(`Data undo successfully.`);
+      await this.props.updateQuestion(this.state.challengesDataBackup[this.state.editableChallengeIndex]);
+    }
+  }
+
+  async addChallenge(){
+    var soqqleAuthorisation = JSON.parse(localStorage.soqqleAuth);
+    var userID = soqqleAuthorisation.userID || soqqleAuthorisation.faceBookID || soqqleAuthorisation.linkedInID;
+    await this.props.saveChallenge({
+      userID,
+      name:'name of challenge',
+      description:'description of challenge',
+      success:'how to complete the challenge'
+    });
+    await this.getChallenges();
+    message.success(`New challenge added.`);
+  }
+
+  async removeChallenge(){
+    //TODO : need to create multiple select delete API after handle that feature here
+    // await this.props.deleteChallenge(this.state.selectedChallengeKeys);
+    // await this.getChallenges();
+    // message.success(`Challenge was deleted.`);
+  }
+
+  /* Handle Challenges Editable TR click event */
+  async onClickChallengeEditable(e){
+    const that = this;
+    if(that.state.editableChallengeKey != ""){
+      await that.props.updateChallenge(that.state.challenges[that.state.editableChallengeIndex]);
+      this.setState({ editableChallengeKey: "" }); //make tr non-editable on doubleclick
+      message.success(`Data edited successfully.`);
+    } else {
+      that.setState({
+        challengesDataBackup: that.state.challenges,
+        editableChallengeKey: e.currentTarget.dataset.key,
+        editableChallengeIndex: e.currentTarget.dataset.index
+      }); //make tr editable in story table
+    }
+  }
+
+  handleChallengeCopyChange(challenges){
+    this.setState({
+      challenges
+    })
+  }
+
+  handleSelectdChallengeKeysSet(selectedChallengeKeys){
+    this.setState({
+      selectedChallengeKeys
+    })
+  }
   
   handleStartClick(id, question){
      const preloadState = this.state.storePreload;
@@ -808,6 +890,13 @@ class Company extends Component {
                       </label>
                       <img style={{marginLeft: '7px'}} src={deleteimg} onClick={this.deleteQuestions}/>
                     </li>
+                    {
+                      this.state.IsChallengeOpen === 'block'
+                      ?
+                        <li style={{float: 'right'}}>
+                          <div className="approve-challenge pur-btn" onClick={ () => this.togglePage("ApproveChallenge") }>Approve submission</div>
+                        </li> : null
+                    }
                   </ul>
                 </div>
 
@@ -1205,11 +1294,11 @@ class Company extends Component {
                 </div>
                 <div style={{ display: this.state.IsChallengeOpen }}>
                  <div className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper challenges-top profile-wrapper mychallenges-wrapper main-bg`}>
-                  <div className="row">
+                  <div id="challenges" className="row">
                     <div className="container">
                       <div className="row">
                         <div className="row">
-                          <div>{ this.section() }</div>
+                          <div className="MyChallenges">{ this.section() }</div>
                         </div>
                       </div>
                     </div>
@@ -1243,6 +1332,7 @@ const mapStateToProps = state => ({
   isFetchingSkills: state.skills.isFetchingSkills,
   skills: state.skills.data,
   challengeAchievements: state.challengeAchievements.data,
+  storiesList: state.skills.skills,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -1266,6 +1356,9 @@ const mapDispatchToProps = dispatch => ({
   updateQuestion: bindActionCreators(updateQuestion, dispatch),
   saveQuestion: bindActionCreators(saveQuestion, dispatch),
   deleteQuestion: bindActionCreators(deleteQuestion, dispatch),
+  updateChallenge: bindActionCreators(updateChallenge, dispatch),
+  saveChallenge: bindActionCreators(saveChallenge, dispatch),
+  deleteChallenge: bindActionCreators(deleteChallenge, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Company));
