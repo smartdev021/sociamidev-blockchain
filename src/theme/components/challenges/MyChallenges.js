@@ -207,6 +207,7 @@ class Challenges extends React.Component {
                           onChange={this.handleChallengeDataChange}
                           data-indexParent="requirement"
                         >
+                          <option/>
                           <option value="Achievement" selected={que.requirement === 'Achievement'}>Achievement</option>
                           <option value="Story" selected={que.requirement === 'Story'}>Story</option>
                         </select>
