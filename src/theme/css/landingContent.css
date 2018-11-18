@@ -22,7 +22,7 @@
 
 
 * {
-  font-family: "MyriadPro Regular",
+  font-family: "MyriadPro Regular";
 }
 
 button {
@@ -121,6 +121,11 @@ html.vertical-hidden {
 }
 
 @media screen and (max-width: 750px) {
+  .landing-page-wrapper .header-navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 100000;
+  }
     .landing-page-wrapper main {
         padding: 52px 0 9px;
     }
@@ -637,14 +642,12 @@ html.vertical-hidden {
   text-align: right;
 }
 .right-new-link{
-  transform: skew(37deg);
   display: inline-block;
   position: relative;
   text-align: right;
   margin-right: 15px;
 }
 .right-new-link .right-dropdown-link{
-  transform: skew(0deg);
   position: absolute;
   padding: 10px;
   border: 1px solid #7d018a;
@@ -658,10 +661,8 @@ html.vertical-hidden {
     background: #191919 !important;
     border: 1px solid #2c82df;
     border-radius: 50px;
-    transform: skew(37deg);
 }
 .landing-page-wrapper .header button.right-new-signup p{
-  transform: skew(0deg);
   color: #2c82df;
 }
 .right-new-link .right-dropdown-link:after, .right-new-link .right-dropdown-link:before {
@@ -760,13 +761,18 @@ html.vertical-hidden {
     z-index: 2;
     padding: 0 89px 0 43px;
     background: #000;
-    transform: skew(-37deg);
+    width: calc(80% - 132px);
+    display: flex;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .header {
         right: -31px;
         padding: 0;
+        transform: skew(-37deg);
+        display: unset;
+        width: unset;
     }
 }
 
@@ -813,7 +819,6 @@ html.vertical-hidden {
     background: none;
     border: 0;
     outline: 0;
-    transform: skew(8deg);
 }
 
 /* BetaForm email */
@@ -1011,7 +1016,6 @@ span.landing-email-input-textfield-container input[type="email"] {
 
 .landing-page-wrapper .header button p {
     margin: 0;
-    transform: skew(29deg);
 }
 
 .landing-page-wrapper .logo {
@@ -2803,6 +2807,9 @@ span.landing-email-input-textfield-container input[type="email"] {
       text-align: center;
     }
       @media screen and (max-width: 640px) {
+        .landing-section-world.landing-section-rewards{
+          padding-bottom: unset;
+        }
         .landing-section-world .landing-section-world-title {
           padding: 0 20px;
         }
@@ -3493,6 +3500,9 @@ span.landing-email-input-textfield-container input[type="email"] {
     margin-bottom: 6px;
   }
   @media screen and (max-width: 640px) {
+    .landing-section-choose-hero{
+      padding-bottom: 120px;
+    }
     .landing-section-choose-hero .landing-section-choose-hero-title {
       padding: 0 20px;
     }
@@ -3802,8 +3812,12 @@ span.landing-email-input-textfield-container input[type="email"] {
   width: 240px;
   height: 36px;
   margin-top: 20px;
-  background: inherit;
-  background-position: center;
+  background: -moz-linear-gradient(318deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(25,24,40,1)), color-stop(64%, rgba(39,41,123,1)), color-stop(66%, rgba(40,42,126,1)));
+  background: -webkit-linear-gradient(318deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
+  background: -o-linear-gradient(318deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
+  background: -ms-linear-gradient(318deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
+  background: linear-gradient(132deg, rgba(25,24,40,1) 0%, rgba(39,41,123,1) 64%, rgba(40,42,126,1) 66%);
   border: 0;
   border-radius: 3px;
   overflow: hidden;

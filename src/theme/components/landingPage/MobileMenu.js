@@ -24,9 +24,9 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
           </a>
         </div>
         <ul>
-          <li>The games</li>
-          <li>Forums</li>
-          <li>Markets</li>
+          <li>Game</li>
+          <li>World</li>
+          <li>Connect</li>
           <li
             onClick={() => {
               onEnterpriseModalShow();

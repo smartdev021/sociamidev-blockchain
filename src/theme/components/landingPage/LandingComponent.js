@@ -73,14 +73,15 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
         <span> </span>
       </button>
       <button type="button">
-        <p>The Game</p>
+        <p>Game</p>
       </button>
       <button type="button">
-        <p>Forums</p>
+        <p>World</p>
       </button>
       <button type="button">
-        <p>Markets</p>
+        <p>Connect</p>
       </button>
+      <div>
       {
         process.env.SOQQLE_ENV !== 'production' &&
         (
@@ -118,6 +119,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
           <p>Sign in</p>
         </button>
       }
+      </div>
     </div>
   );
 };
@@ -214,7 +216,7 @@ class LandingPage extends Component {
     return (
       <div className="landing-page-wrapper landing-page-container">
         {this.renderSignUpForm()}
-        <header>
+        <header className="header-navbar">
           <EnterpriseModal isVisible={this.state.isEnterpriseModalVisible}
             onEnterpriseModalHide={() => this.handleEnterpriseModalShow(false)} />
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}

@@ -1059,7 +1059,6 @@ class LandingPageContent extends React.Component {
       <div className="landing-page-wrapper">
         <div className="pixel-perfect"></div>
         <header>
-          
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible} email={this.state.email}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
           <BetaFormModal isVisible={this.state.isBetaFormModalVisible} email={this.state.email}
@@ -1071,7 +1070,6 @@ class LandingPageContent extends React.Component {
           <TrailerModal isVisible={this.state.isTrailerModalVisible}
             onTrailerModalHide={() => this.handleonTrailerModalShow(false)}
           />
-
         </header>
 
 
