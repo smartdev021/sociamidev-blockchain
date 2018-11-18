@@ -594,7 +594,7 @@ const SectionButton = ({ currentLanguage, startCharacterCreation }) => {
 // SECTION GAME
 const SectionGame = ({ currentLanguage, startCharacterCreation }) => {
   return (
-    <div className="landing-section-game">
+    <div className="landing-section-game" id="game">
 
       <div className="landing-wrapper">
         
@@ -716,7 +716,7 @@ const SectionTasks = ({ currentLanguage, startCharacterCreation }) => {
 // SECTION WORLD SLIDER
 const SectionWorldSlider = ({ currentLanguage, startCharacterCreation }) => {
   return (
-    <div className="landing-section-world-slider">
+    <div className="landing-section-world-slider" id="history">
 
       <div className="landing-wrapper">
         

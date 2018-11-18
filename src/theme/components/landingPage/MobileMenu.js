@@ -24,8 +24,8 @@ export const MobileMenu = ({ isOpen, closeMenu, onMoreMenuToggle, isMoreMenuVisi
           </a>
         </div>
         <ul>
-          <li>Game</li>
-          <li>World</li>
+          <li><a className="ancher" href="#game" onClick={closeMenu}>Game</a></li>
+          <li><a className="ancher" href="#history" onClick={closeMenu}>World</a></li>
           <li>Connect</li>
           <li
             onClick={() => {

@@ -64,19 +64,19 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow, isMobileMenuOpen }) => {
   return (
-    <div className="header">
+    <div className="header" style={{display:isMobileMenuOpen ? 'none' : 'flex'}}>
       <button className="burger" onClick={openMenu}>
         <span> </span>
         <span> </span>
         <span> </span>
       </button>
       <button type="button">
-        <p>Game</p>
+        <p><a className="ancher" href="#game">Game</a></p>
       </button>
       <button type="button">
-        <p>World</p>
+        <p><a className="ancher" href="#history">World</a></p>
       </button>
       <button type="button">
         <p>Connect</p>
@@ -224,6 +224,7 @@ class LandingPage extends Component {
           <Logo />
           <Header
             openMenu={this.toggle}
+            isMobileMenuOpen={this.state.isOpen}
             openSignUpForm={this.props.openSignUpForm}
             onMoreMenuToggle={() => this.handleMoreMenuToggle()}
             isMoreMenuVisible={this.state.isMoreMenuVisible}

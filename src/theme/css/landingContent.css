@@ -766,6 +766,10 @@ html.vertical-hidden {
     justify-content: space-between;
 }
 
+.landing-page-wrapper .header p a.ancher,.mobile-menu a.ancher{
+  color: #fff;
+}
+
 @media screen and (max-width: 750px) {
     .landing-page-wrapper .header {
         right: -31px;
