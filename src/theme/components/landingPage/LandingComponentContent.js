@@ -65,6 +65,9 @@ import sliderHeroes3 from '../../../../assets/img/sliderHeroes3.jpg'
 import sliderHeroes4 from '../../../../assets/img/sliderHeroes4.jpg'
 
 
+import communication1 from '../../../../assets/img/communication1.png'
+
+
 const soqqleEnv = process.env.SOQQLE_ENV;
 
 const validateEmail = (email) => {
@@ -838,6 +841,40 @@ const SectionRewards = ({ currentLanguage, startCharacterCreation }) => {
 
 
 
+// SECTION COMMUNICATIONS
+const SectionCommunicates = ({ currentLanguage, startCharacterCreation }) => {
+  return (
+    <div className="landing-section-world-slider landing-section-communication landing-section-heroes" id="communication">
+
+      <div className="landing-wrapper">
+
+        <h2 className="landing-section-world-slider-title">{languageContent[currentLanguage].communication_title}</h2>
+
+        <div className="carousel slide" data-ride="carousel">
+
+          <div className="carousel-inner">
+
+            <div className="item active">
+              <div className="image-wrapper">
+                <img src={communication1} alt="world" className="img" />
+              </div>
+              <div className="description">
+                <p className="text">{languageContent[currentLanguage].communication_desc}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <Link to="/characterCreation" className="landing-section-world-slider-btn" onClick={() => startCharacterCreation() }>
+          {languageContent[currentLanguage].communication_button}
+        </Link>
+
+      </div>
+
+    </div>
+  );
+};
 
 
 
@@ -1109,6 +1146,11 @@ class LandingPageContent extends React.Component {
           />
 
           <SectionRewards
+            currentLanguage={this.props.currentLanguage}
+            startCharacterCreation={this.props.startCharacterCreation}
+          />
+
+          <SectionCommunicates
             currentLanguage={this.props.currentLanguage}
             startCharacterCreation={this.props.startCharacterCreation}
           />

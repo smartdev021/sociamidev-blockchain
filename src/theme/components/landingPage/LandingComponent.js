@@ -79,7 +79,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
         <p><a className="ancher" href="#history">World</a></p>
       </button>
       <button type="button">
-        <p>Connect</p>
+        <p><a className="ancher" href="#communication">Connect</a></p>
       </button>
       <div>
       {
@@ -221,6 +221,7 @@ class LandingPage extends Component {
             onEnterpriseModalHide={() => this.handleEnterpriseModalShow(false)} />
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
             closeSubscribeThankYouModal={() => this.handleCloseSubscribeThankYouModal()} />
+          <Logo />
           <Header
             openMenu={this.toggle}
             isMobileMenuOpen={this.state.isOpen}
