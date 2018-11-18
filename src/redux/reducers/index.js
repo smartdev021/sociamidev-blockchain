@@ -20,6 +20,7 @@ import { accounting } from './accounting';
 import { progression } from './progression';
 import { achievements, achievementGroups, addAchievementGroup, updateAchievementGroup, challengeAchievements } from './achievements';
 import { timers } from './timers';
+import { admin } from './admin';
 import { teams } from './teams';
 import { articles } from './articles';
 import { houses } from './houses';
@@ -33,6 +34,7 @@ export default combineReducers({
   isFetchInProgress,
   searchResults,
   userProfile,
+  admin,
   userFriends,
   userFriendsActivities,
   bookmarks,
