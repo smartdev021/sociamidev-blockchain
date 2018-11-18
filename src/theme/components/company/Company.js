@@ -190,8 +190,13 @@ class Company extends Component {
               challengeAchievements={this.props.challengeAchievements}
               storiesList={this.props.storiesList}
             />
+            <div className="text-right" style={{marginTop: '-35px'}}>
+              <button className="yellow-btn" onClick={ () => this.togglePage("AddChallenge") }>+ Guided Add</button>
+            </div>
           </div>
         );
+      case "AddChallenge":
+        return <AddChallenge onClose={() => this.handleChallengeClose()} onSubmit={() => this.handleChallengeSubmit()} />;
       case "ApproveChallenge":
         return <ApproveChallenge onClose={() => this.handleChallengeClose()} profilePic={this.state.profilePic} />;
     }
