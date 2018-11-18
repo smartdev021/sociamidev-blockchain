@@ -1,6 +1,8 @@
 import {
   FETCH_SKILLS_INITIATE,
   FETCH_SKILLS_COMPLETE,
+  FETCH_CHALLENGE_STORY_INITIATE,
+  FETCH_CHALLENGE_STORY_COMPLETE,
   UPDATE_SKILLS_INITIATE,
   UPDATE_SKILLS_COMPLETE,
   SAVE_SKILLS_INITIATE,
@@ -14,7 +16,8 @@ const skillsInitialState = {
   isFetchingSkills: false,
   isUpdatingStory: false,
   isSavingStory: false,
-  isDeletingStory: false
+  isDeletingStory: false,
+  challengeStory: []
 }
 
 export function skills (state = skillsInitialState, action) {
@@ -33,6 +36,9 @@ export function skills (state = skillsInitialState, action) {
       return { ...state, isDeletingStory: true };
     case DELETE_SKILLS_COMPLETE:
       return { ...state, skills: action.skills, isDeletingStory: false };  
+    case FETCH_CHALLENGE_STORY_INITIATE: return {...state, isFetchingSkills: true};
+    case FETCH_CHALLENGE_STORY_COMPLETE: 
+        return {...state, challengeStory: action.challengeStory, isFetchingSkills: false};
     default: return state;
   }
 }

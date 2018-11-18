@@ -1,0 +1,28 @@
+.margin-top-10{
+    margin-top: 10px;
+}
+
+.challenge-button{
+    color: #9b01aa;
+    font-weight: bold;
+    display: inline-block;
+    border: 1px solid;
+    padding: 2px 9px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.challenge-title{
+   color: #f4bd00;
+}
+
+.type-detail-btn{
+    background-color: #496ab7;
+    color: #fff;
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 2px;
+    text-shadow: 1px 1px black;
+    margin-left: 10px;
+    cursor: pointer;
+}
