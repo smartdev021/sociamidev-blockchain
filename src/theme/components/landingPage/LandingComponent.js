@@ -64,23 +64,24 @@ const EmailInput = ({ onEmailInputHide, onEmailInputSubmit, onEmailInput, email 
   )
 }
 
-const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow }) => {
+const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible, onEmailInputShow, onEmailInputHide, onEmailInputSubmit, onEmailInput, isEmailInputVisible, email, changePageLanguage, onEnterpriseModalShow, isMobileMenuOpen }) => {
   return (
-    <div className="header">
+    <div className="header" style={{display:isMobileMenuOpen ? 'none' : 'flex'}}>
       <button className="burger" onClick={openMenu}>
         <span> </span>
         <span> </span>
         <span> </span>
       </button>
       <button type="button">
-        <p>The Game</p>
+        <p><a className="ancher" href="#game">Game</a></p>
       </button>
       <button type="button">
-        <p>Forums</p>
+        <p><a className="ancher" href="#history">World</a></p>
       </button>
       <button type="button">
-        <p>Markets</p>
+        <p>Connect</p>
       </button>
+      <div>
       {
         process.env.SOQQLE_ENV !== 'production' &&
         (
@@ -118,6 +119,7 @@ const Header = ({ openMenu, openSignUpForm, onMoreMenuToggle, isMoreMenuVisible,
           <p>Sign in</p>
         </button>
       }
+      </div>
     </div>
   );
 };
@@ -214,7 +216,7 @@ class LandingPage extends Component {
     return (
       <div className="landing-page-wrapper landing-page-container">
         {this.renderSignUpForm()}
-        <header>
+        <header className="header-navbar">
           <EnterpriseModal isVisible={this.state.isEnterpriseModalVisible}
             onEnterpriseModalHide={() => this.handleEnterpriseModalShow(false)} />
           <SubscribeThanksModal isVisible={this.state.isSubscriptionModalVisible}
@@ -222,6 +224,7 @@ class LandingPage extends Component {
           <Logo />
           <Header
             openMenu={this.toggle}
+            isMobileMenuOpen={this.state.isOpen}
             openSignUpForm={this.props.openSignUpForm}
             onMoreMenuToggle={() => this.handleMoreMenuToggle()}
             isMoreMenuVisible={this.state.isMoreMenuVisible}

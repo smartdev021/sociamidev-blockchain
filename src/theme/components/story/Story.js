@@ -10,11 +10,13 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import Skills from './Skills';
+import ChallengeCard from './ChallengeCard';
 
 import TaskTypes from '~/src/common/TaskTypes';
 
 import { 
-  fetchStories
+  fetchStories,
+  fetchChallengesStory
 } from '~/src/redux/actions/story';
 import { saveTask } from '~/src/redux/actions/tasks';
 
@@ -92,6 +94,26 @@ class Story extends Component {
     return _.map(skills, skill => <Skills key={skill._id} data={skill} onSignup={(data) => this.onSigup(data)}/>)
   }
 
+  getChallenges(){
+    const listAchievementIds = this.props.userProfile.userAchievements ? 
+        this.props.userProfile.userAchievements.achievements
+        .filter(item => item.status == "Complete")
+        .map(item => item.achievementId) : [];
+    const data = {
+       emailId: _.get(this, 'props.userProfile.email'),
+       achievementIds: listAchievementIds
+    }
+    this.props.fetchChallengesStory(data);
+  }
+
+  componentDidMount(){
+    this.getChallenges();
+  }
+
+  renderChallengesBox(challenges){
+    return _.map(challenges, challenge => <ChallengeCard key={challenge._id} data={challenge} />);
+  }
+
   render () {
     return (
       <div
@@ -102,6 +124,7 @@ class Story extends Component {
               <div className='row'>
                 <div className='col-middle ml-fixed'>
                   {this.renderSkillBox(this.props.fetchedSkills)}
+                  {this.renderChallengesBox(this.props.challenges)}
                 </div>
               </div>
             </div>
@@ -114,12 +137,15 @@ class Story extends Component {
 
 const mapStateToProps = state => ({
 	isFetchingSkills: state.skills.isFetchingSkills,
-	fetchedSkills: state.skills.skills
+  fetchedSkills: state.skills.skills,
+  userProfile: state.userProfile.profile,
+  challenges: state.skills.challengeStory
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchStories: bindActionCreators(fetchStories, dispatch),
-  saveTask: bindActionCreators(saveTask, dispatch)
+  saveTask: bindActionCreators(saveTask, dispatch),
+  fetchChallengesStory: bindActionCreators(fetchChallengesStory, dispatch)
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Story));

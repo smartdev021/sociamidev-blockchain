@@ -190,6 +190,8 @@ export const UPDATE_COMPANY_COMPLETE = 'update_company_complete';
 // Company
 export const FETCH_SKILLS_INITIATE = 'fetch_skills_initiate';
 export const FETCH_SKILLS_COMPLETE = 'fetch_skills_complete';
+export const FETCH_CHALLENGE_STORY_INITIATE = 'fetch_challenges_story_initiate';
+export const FETCH_CHALLENGE_STORY_COMPLETE = 'fetch_challenges_story_complete';
 export const UPDATE_SKILLS_INITIATE = 'update_skills_initiate';
 export const UPDATE_SKILLS_COMPLETE = 'update_skills_complete';
 export const SAVE_SKILLS_INITIATE = 'save_skills_initiate';
