@@ -84,11 +84,10 @@ export function fetchUserGuides({activePage}) {
 
 export function updateUserGuide(data) {
   return (dispatch) => {
-    dispatch(updateUserGuidesInitiate());
     const url = `${ConfigMain.getBackendURL()}/user-guide/${data._id}`;
     return Axios.put(url, data)
       .then((response) => {
-        dispatch(updateUserGuidesComplete(data));
+        dispatch(updateUserGuidesComplete({...data, hasChanged: false}));
       })
       .catch(() => {
         updateUserGuidesComplete([]);
@@ -98,7 +97,6 @@ export function updateUserGuide(data) {
 
 export function addUserGuide(data) {
   return (dispatch) => {
-    dispatch(addUserGuidesInitiate());
     const url = `${ConfigMain.getBackendURL()}/user-guide`;
     return Axios.post(url, data)
       .then((response) => {
@@ -112,7 +110,6 @@ export function addUserGuide(data) {
 
 export function deleteUserGuides(data) {
   return (dispatch) => {
-    dispatch(deleteUserGuidesInitiate());
     const url = `${ConfigMain.getBackendURL()}/user-guide`;
     return Axios.put(url, data)
       .then((response) => {
