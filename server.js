@@ -2,6 +2,7 @@ let path = require('path');
 let webpack = require('webpack');
 let express = require('express');
 let fs = require('fs');
+let helmet = require('helmet');
 let config = require('./webpack.local');
 
 const env = process.env.SOQQLE_ENV || 'development';
@@ -12,6 +13,9 @@ if (fs.existsSync(configFile)) {
 }
 
 let app = express();
+
+app.use(helmet());
+
 let compiler = webpack(config);
 
 let port = env == 'staging' ? 8080 : 3000;
