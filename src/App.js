@@ -20,10 +20,10 @@ import io from 'socket.io-client';
 import PubSub from 'pubsub-js';
 import ReactGA from 'react-ga';
 
-import LandingPage from '~/src/theme/components/landingPage/LandingComponent';
+import LandingPage from '~/src/theme/components/landingPage/LandingPage';
 
 import Main from './Main';
-import ChatApp from '~/src/theme/components/chat/ChatApp';
+import ChatApp from '~/src/components/chat/ChatApp';
 import ConfigMain from '~/configs/main';
 import ActionLink from '~/src/components/common/ActionLink';
 
@@ -141,7 +141,8 @@ class App extends Component {
     if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
       this.state.suspendRender = true;
     }
-    setTimeout(() => window.prerenderReady = true, 5000);
+
+    setTimeout(() => window.prerenderReady = true, 10000);
   }
 
   uuidv1() {
@@ -308,12 +309,10 @@ class App extends Component {
   }
 
   HandleSignUpFacebook() {
-    localStorage.setItem('login_type', 'Facebook');
     this.HandleSignUp('auth/facebook');
   }
 
   HandleSignUpLinkedIn() {
-    localStorage.setItem('login_type', 'LinkedIn');
     this.HandleSignUp('auth/linkedin');
   }
 
