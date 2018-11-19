@@ -27,19 +27,6 @@ class ChallengeCard extends Component {
         return '';
     }
   }
-
-  getRewardDisplay () {
-    let rewardDisplay = '';
-    const type = _.get(this, 'state.data.reward.type');
-
-    if (type === 'Token' || type === 'Fiat') {
-      rewardDisplay = `${_.get(this, 'state.data.reward.value')} ${type}`;
-    } else if (type === 'Achievement') {
-      rewardDisplay = _.get(this, 'state.data.reward._achievement.name', '');
-    }
-    return rewardDisplay;
-  }
-
   componeneDidMount(){
       this.getChallenges();
   }
