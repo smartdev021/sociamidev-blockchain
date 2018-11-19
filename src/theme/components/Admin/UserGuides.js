@@ -32,7 +32,8 @@ class UserGuides extends Component {
     this.setState({
       userGuides: userGuides.map(item => item._id === id ? {
         ...item,
-        [field]: field === 'selected' ? e.target.checked : e.target.value
+        [field]: field === 'selected' ? e.target.checked : e.target.value,
+        hasChanged: true,
       } : item)
     })
   }
@@ -69,21 +70,24 @@ class UserGuides extends Component {
     }
     if (info.file.status === 'done') {
       message.success(`${info.file.name} file uploaded successfully`, 0.5);
-      this.setState({userGuides: userGuides.map(step => step._id === id?{...step, newImage: true}:step)})
+      this.setState({userGuides: userGuides.map(step => step._id === id?{...step, timestamp: new Date().getMilliseconds()}:step)})
     } else if (info.file.status === 'error') {
       message.error(`${info.file.response.error}`, 0.5);
     }
   }
 
-  onClickEditable(id) {
+  async onClickEditable(id) {
     const {editingId, userGuides} = this.state;
-    this.setState({editingId: id}, async () => {
-      if (editingId) {
-        const editingData = userGuides.find(step => step._id === editingId)
+    if (editingId) {
+      const editingData = userGuides.find(step => step._id === editingId)
+      if (editingData.hasChanged) {
         await this.props.updateUserGuide(editingData);
         message.success(`Data edited successfully.`);
       }
-    });
+      this.setState({editingId: null})
+    } else {
+      this.setState({editingId: id})
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -91,6 +95,10 @@ class UserGuides extends Component {
     if (userGuides && userGuides.data) {
       this.setState({userGuides: userGuides.data, total: userGuides.total})
     }
+  }
+
+  onClickInput(e) {
+    e.stopPropagation();
   }
 
   componentDidMount() {
@@ -128,21 +136,19 @@ class UserGuides extends Component {
                 _.map(userGuides, (step, index) => {
                   if (editingId === step._id) {
                     return (
-                      <tr key={step._id} data-key={step._id} data-index={index}>
-                        <td><input checked={!!step.selected} type="checkbox" style={{cursor: "pointer"}}
-                                   data-key={step._id}
-                                   onChange={e => this.onChange(step._id, 'selected', e)}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'step', e)} data-indexParent="name"
+                      <tr key={step._id} data-key={step._id} data-index={index}  onClick={() => this.onClickEditable(step._id)}>
+                        <td></td>
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'step', e)} data-indexParent="name"
                                       value={step.step}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'description', e)}
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'description', e)}
                                       value={step.description}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'x', e)} value={step.x}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'y', e)} value={step.y}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'component', e)} value={step.component}/>
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'x', e)} value={step.x}/></td>
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'y', e)} value={step.y}/></td>
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'component', e)} value={step.component}/>
                         </td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'page', e)} value={step.page}/></td>
-                        <td><Img
-                                 src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userGuideImages/${step._id}?t=${step.newImage ? new Date().getMilliseconds() : ''}`}
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'page', e)} value={step.page}/></td>
+                        <td style={{display: 'flex', flexDirection: 'column'}}><Img
+                                 src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userGuideImages/${step._id}?t=${step.timestamp?step.timestamp:''}`}
                                  style={{maxWidth: 90, maxHeight: 90}}
                         />
                           <Upload
@@ -157,9 +163,9 @@ class UserGuides extends Component {
                               <Icon type="upload" key={`icon${step._id}`}/>Upload
                             </Button>
                           </Upload></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'video', e)} value={step.video}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'trigger', e)} value={step.trigger}/></td>
-                        <td><Textarea onChange={e => this.onChange(step._id, 'triggerDetails', e)}
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'video', e)} value={step.video}/></td>
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'trigger', e)} value={step.trigger}/></td>
+                        <td><Textarea onClick={this.onClickInput} onChange={e => this.onChange(step._id, 'triggerDetails', e)}
                                       value={step.triggerDetails}/></td>
                       </tr>
                     )
@@ -176,8 +182,8 @@ class UserGuides extends Component {
                         <td className="hover-pencil">{step.y}</td>
                         <td className="hover-pencil">{step.component}</td>
                         <td className="hover-pencil">{step.page}</td>
-                        <td><Img
-                                 src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userGuideImages/${step._id}?t=${step.newImage?new Date().getMilliseconds():''}`}
+                        <td style={{display: 'flex', flexDirection: 'column'}}><Img
+                                 src={`https://s3.us-east-2.amazonaws.com/admin.soqqle.com/userGuideImages/${step._id}?t=${step.timestamp?step.timestamp:''}`}
                                  style={{maxWidth: 90, maxHeight: 90}}
                         />
                           <Upload
