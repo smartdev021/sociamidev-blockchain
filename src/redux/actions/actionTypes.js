@@ -203,3 +203,14 @@ export const LOAD_ACTIVATE_URL = 'load_activate_url';
 
 //Language
 export const UPDATE_SELECTED_LANGUAGE = 'update_selected_language';
+
+//Admin
+
+export const FETCH_USER_GUIDES_INITIATE = 'fetch_user_guides_initiate';
+export const FETCH_USER_GUIDES_COMPLETE = 'fetch_user_guides_complete';
+export const UPDATE_USER_GUIDES_INITIATE = 'update_user_guides_initiate';
+export const UPDATE_USER_GUIDES_COMPLETE = 'update_user_guides_complete';
+export const ADD_USER_GUIDES_INITIATE = 'add_user_guides_initiate';
+export const ADD_USER_GUIDES_COMPLETE = 'add_user_guides_complete';
+export const DELETE_USER_GUIDES_INITIATE = 'delete_user_guides_initiate';
+export const DELETE_USER_GUIDES_COMPLETE = 'delete_user_guides_complete';

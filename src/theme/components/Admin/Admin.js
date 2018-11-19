@@ -1,6 +1,4 @@
-
-import React, { Component } from "react";
-
+import React, { Component, useRef } from "react";
 import plus from "~/src/theme/images/plus.png";
 import cross from "~/src/theme/images/cross.png";
 import cloud from "~/src/theme/images/cloud.png";
@@ -12,11 +10,8 @@ import "~/src/theme/css/teams.css";
 import "~/src/theme/css/darkTheme.css";
 import "~/src/theme/css/lightTheme.css";
 import AddRole from "~/src/theme/components/Admin/AddRole";
-
-import DatePicker from "react-datepicker";
-import moment from "moment";
-
 import "react-datepicker/dist/react-datepicker.css";
+import UserGuides from "./UserGuides";
 
 const profilePic =
   "https://s3.us-east-2.amazonaws.com/sociamibucket/assets/images/userProfile/default-profile.png";
@@ -32,14 +27,17 @@ class Admin extends Component {
       RoleData: [],
       page: "view",
       modifiedData: undefined,
-      deleteItems: []
+      deleteItems: [],
+      activeTab: 'users',
     };
 
     this.handleStoryInputClick = this.handleStoryInputClick.bind(this);
     this.handleStoryDataChange = this.handleStoryDataChange.bind(this);
     this.onClickEditable = this.onClickEditable.bind(this);
     this.pageSwitch = this.pageSwitch.bind(this);
-    this.showAdduser = this.showAdduser.bind(this);
+    this.onChangeTab = this.onChangeTab.bind(this);
+    this.onAddRecord = this.onAddRecord.bind(this);
+    this.onRemoveRecords = this.onRemoveRecords.bind(this);
     this.deleteUsers = this.deleteUsers.bind(this);
   }
 
@@ -179,7 +177,6 @@ class Admin extends Component {
     if (this.state.page == "view") {
       if (this.state.RoleData.length > 0) {
         return (
-          <div className="col-middle admin-list questions company-middle-wrapper ml-fixed">
             <div id="stories" className="theme-box-right admin-list-inner">
               <div className="box" style={{ padding: "1px" }}>
                 <div className="table-responsive">
@@ -294,7 +291,6 @@ class Admin extends Component {
                 </div>
               </div>
             </div>
-          </div>
         );
       }
     } else {
@@ -308,13 +304,28 @@ class Admin extends Component {
     }
   }
 
-  showAdduser() {
-    this.setState({ page: "add" });
+  onChangeTab(activeTab) {
+    this.setState({activeTab})
+  }
+
+  onAddRecord() {
+    const {activeTab} = this.state;
+    if (activeTab === 'users') {
+      this.setState({ page: "add" });
+    } else if (this.child) {
+      this.child.addNewStep({});
+    }
+  }
+
+  onRemoveRecords() {
+    const {activeTab} = this.state;
+    if (activeTab === 'userGuides') {
+      this.child.removeSteps();
+    }
   }
 
   render() {
-    const RoleData = this.state.RoleData;
-
+    const { activeTab } = this.state;
     return (
       <div
         className={`${this.props.userProfile.theme.toLowerCase()}-theme-wrapper settings-wrapper main-bg profile-wrapper`}
@@ -323,38 +334,28 @@ class Admin extends Component {
           <div className="container">
             <div className="row">
               <div className="row">
-                <div className="col-middle admin-list company-middle-wrapper ml-fixed">
-                  <div className="col-box-wp admin-list-inner wider-strip mb-20 p-0">
+                <div className="col-box-wp wider-strip mb-20 p-0">
                     <ul className="tab-wp">
-                      <li>Users</li>
+                      <li onClick={()=> this.onChangeTab('users')} className={activeTab === 'users'?'active':''}><a href="#">Users</a></li>
+                      <li onClick={()=> this.onChangeTab('userGuides')} className={activeTab === 'userGuides'?'active':''}><a>User Guides</a></li>
                       <li style={{ float: "right" }}>
-                        <label htmlFor="upload-input">
-                          <img src={cloud} />
-                          <input
-                            id="upload-input"
-                            name="file"
-                            type="file"
-                            accept=".csv"
-                            style={{ display: "none" }}
-                          />
-                        </label>
-                        <img
+                        <a title="Add new item"><img
                           style={{ marginLeft: "7px" }}
-                          onClick={this.showAdduser}
+                          onClick={() => this.onAddRecord()}
                           src={plus}
                         />
-                        <img style={{ marginLeft: "7px" }} src={cross} />
-                        <img
+                        </a>
+                        <a title="Remove selected item(s)"><img style={{ marginLeft: "7px" }} src={cross} onClick={() => this.onRemoveRecords()} /></a>
+                        {activeTab === 'users' && <a><img
                           style={{ marginLeft: "7px" }}
                           onClick={this.deleteUsers}
                           src={deleteimg}
-                        />
+                        /></a>}
                       </li>
                     </ul>
-                  </div>
                 </div>
-
-                {this.pageSwitch()}
+                {activeTab === 'users' && this.pageSwitch()}
+                {activeTab === 'userGuides' && <UserGuides onRef={ref => (this.child = ref)} />}
               </div>
             </div>
           </div>
